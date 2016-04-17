@@ -3,10 +3,10 @@
 Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
 
-- [Example][#example-use]
-- [Install][#install]
-- [Boostrap][#bootstrap]
-- [Inject][#inject-angular2apollo]
+- [Example](#example-use)
+- [Install](#install)
+- [Boostrap](#bootstrap)
+- [Inject](#inject-angular2apollo)
 - [ApolloQueryPipe](#apolloquerypipe)
 
 ## Example use:
