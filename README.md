@@ -2,7 +2,14 @@
 
 Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
-### Example use:
+
+- [Example][#example-use]
+- [Install][#install]
+- [Boostrap][#bootstrap]
+- [Inject][#inject-angular2apollo]
+- [ApolloQueryPipe](#apolloquerypipe)
+
+## Example use:
 
 ```ts
 import {Component, Injectable} from "angular2/core";
@@ -43,13 +50,7 @@ class postsList {
 npm install angular2-apollo --save
 ```
 
-- [Boostrap][#bootstrap]
-- [Inject][#inject]
-- [ApolloQueryPipe](#apolloQueryPipe)
-
-### Bootstrap
-
-### 7. Bootstrap
+## Bootstrap
 
 ```ts
 import {bootstrap} from "angular2/platform/browser";
@@ -59,7 +60,7 @@ import {MyAppClass} from './app/<my-app-class>';
 bootstrap(<MyAppClass>, [APOLLO_ANGULAR2_PROVIDERS]);
 ```
 
-### Inject Angular2Apollo
+## Inject Angular2Apollo
 
 ```ts
 import {Component, Injectable} from "angular2/core";
@@ -77,7 +78,7 @@ class postsList {
 }
 ```
 
-### Bind to query
+## Bind to query
 
 ```ts
 import {Component, Injectable} from "angular2/core";
@@ -112,7 +113,7 @@ class postsList {
 }
 ```
 
-### ApolloQueryPipe
+## ApolloQueryPipe
 
 Apollo client exposes queries as observables, but each Apollo query can include few queries.
 
@@ -131,11 +132,11 @@ template:
 
 We are pondering about a solution that will return an observable per single query and then we won't need that pipe anymore.
 
-### Query parameters
+## Query parameters
 
-### Mutations
+## Mutations
 
-### Development
+## Development
 
 Running tests locally:
 
