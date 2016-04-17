@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="#post of obs | async | apolloQuery:'posts'">
+      {{ post.title }}
+  </li>
+</ul>
