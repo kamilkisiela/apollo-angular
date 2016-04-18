@@ -37,4 +37,4 @@ script:
 
 after_script:
   # send code-coverage report to coveralls
-  # - coveralls < ./coverage/lcov.info || true
+  - coveralls < ./coverage/lcov.info || true
