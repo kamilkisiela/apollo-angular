@@ -1,6 +1,26 @@
-import {bootstrap} from "angular2/platform/browser";
-import {Component, Injectable} from "angular2/core";
-import {ApolloQueryPipe, APOLLO_ANGULAR2_PROVIDERS, ApolloAngular2} from "angular2-apollo";
+import {
+  bootstrap,
+} from "angular2/platform/browser";
+
+import {
+  Component,
+  Injectable,
+} from "angular2/core";
+
+import {
+  ApolloQueryPipe,
+  APOLLO_PROVIDERS,
+  Angular2Apollo,
+  defaultApolloClient,
+} from 'angular2-apollo';
+
+import ApolloClient, {
+  createNetworkInterface
+} from 'apollo-client';
+
+const client = new ApolloClient(
+  networkInterface: createNetworkInterface('http://localhost:8080')
+);
 
 @Component({
   selector: 'app',
@@ -9,12 +29,10 @@ import {ApolloQueryPipe, APOLLO_ANGULAR2_PROVIDERS, ApolloAngular2} from "angula
 })
 @Injectable()
 class Main {
-  obs : any;
+  obs: any;
 
-  constructor(private angularApollo : ApolloAngular2) {
-    const client = angularApollo.createNetworkInterface('http://localhost:8080');
-
-    this.obs = client.watchQuery({
+  constructor(private angularApollo: Angular2Apollo) {
+    this.obs = angularApollo.watchQuery({
       query: `
         query getPosts($tag: String) {
           posts(tag: $tag) {
@@ -29,4 +47,7 @@ class Main {
   }
 }
 
-bootstrap(Main, [APOLLO_ANGULAR2_PROVIDERS]);
+bootstrap(Main, [
+  APOLLO_PROVIDERS,
+  defaultApolloClient(client),
+]);

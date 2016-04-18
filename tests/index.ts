@@ -3,4 +3,5 @@ import 'es6-shim';
 import 'reflect-metadata';
 
 // tests
-import './pipe';
+import './angular2Apollo';
+import './apolloQueryPipe';

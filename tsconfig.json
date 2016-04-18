@@ -14,6 +14,7 @@
     "src/index.ts",
     "tests/index.ts",
     "typings/main.d.ts",
+    "src/apolloClient.d.ts",
     "node_modules/angular2/testing.d.ts",
     "node_modules/angular2/typings/browser.d.ts"
   ]

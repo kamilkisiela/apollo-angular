@@ -45,9 +45,9 @@ module.exports = function(config) {
 
 
     coverageReporter: {
-      type : 'json',
-      subdir : '.',
-      file : 'coverage-final.json'
+      type: 'json',
+      subdir: '.',
+      file: 'coverage.json'
     },
 
     // test results reporter to use
@@ -75,7 +75,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'Firefox'],
 
 
     // Continuous Integration mode
