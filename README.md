@@ -54,17 +54,23 @@ npm install angular2-apollo --save
 
 ```ts
 import {bootstrap} from "angular2/platform/browser";
-import {ApolloQueryPipe, APOLLO_ANGULAR2_PROVIDERS, ApolloAngular2} from "angular2-apollo";
+import {defaultApolloClient, APOLLO_PROVIDERS} from "angular2-apollo";
+import {ApolloClient} from 'apollo-client';
 import {MyAppClass} from './app/<my-app-class>';
 
-bootstrap(<MyAppClass>, [APOLLO_ANGULAR2_PROVIDERS]);
+const client = new ApolloClient();
+
+bootstrap(<MyAppClass>, [
+  APOLLO_PROVIDERS,
+  defaultApolloClient(client)
+  ]);
 ```
 
 ## Inject Angular2Apollo
 
 ```ts
 import {Component, Injectable} from "angular2/core";
-import {ApolloQueryPipe, APOLLO_ANGULAR2_PROVIDERS, ApolloAngular2} from "angular2-apollo";
+import {ApolloQueryPipe, ApolloAngular2} from "angular2-apollo";
 
 @Component({
   selector: 'postsList',
@@ -82,7 +88,7 @@ class postsList {
 
 ```ts
 import {Component, Injectable} from "angular2/core";
-import {ApolloQueryPipe, APOLLO_ANGULAR2_PROVIDERS, ApolloAngular2} from "angular2-apollo";
+import {ApolloQueryPipe, ApolloAngular2} from "angular2-apollo";
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -95,9 +101,7 @@ class postsList {
   posts: Observable<any[]>;
 
   constructor(private angularApollo : ApolloAngular2) {
-    const client = angularApollo.createNetworkInterface('http://localhost:8080');
-
-    this.posts = client.watchQuery({
+    this.posts = angularApollo.watchQuery({
       query: `
         query getPosts($tag: String) {
           posts(tag: $tag) {

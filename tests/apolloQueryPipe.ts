@@ -1,5 +1,5 @@
-import {it, describe, expect, beforeEach, inject} from 'angular2/testing';
-import {ApolloQueryPipe} from '../src/pipe';
+import {it, describe, expect, beforeEach} from 'angular2/testing';
+import {ApolloQueryPipe} from '../src/apolloQueryPipe';
 
 describe('ApolloQueryPipe', () => {
   let pipe: ApolloQueryPipe;
