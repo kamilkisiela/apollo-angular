@@ -15,7 +15,8 @@
     "remap": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json",
     "lint": "tslint src/*.ts && tslint test/*.ts",
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "clear": "rimraf build/*"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
     "karma-jasmine": "^0.3.8",
     "karma-webpack": "^1.7.0",
     "remap-istanbul": "^0.6.3",
+    "rimraf": "^2.5.2",
     "tsc": "^1.20150623.0",
     "tslint": "^3.7.4",
     "typescript": "^1.8.10",
