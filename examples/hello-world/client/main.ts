@@ -5,6 +5,7 @@ import {
 import {
   Component,
   Injectable,
+  ChangeDetectionStrategy,
 } from "angular2/core";
 
 import {
@@ -15,34 +16,40 @@ import {
 } from 'angular2-apollo';
 
 import ApolloClient, {
-  createNetworkInterface
+  createNetworkInterface,
 } from 'apollo-client';
 
+import {
+  Observable,
+} from 'rxjs/Rx';
+
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface('http://localhost:8080')
+  networkInterface: createNetworkInterface('/graphql'),
 });
 
 @Component({
   selector: 'app',
   templateUrl: 'client/main.html',
-  pipes: [ApolloQueryPipe]
+  pipes: [ApolloQueryPipe],
 })
 @Injectable()
 class Main {
-  obs: any;
+  users: Observable<any[]>;
 
   constructor(private angularApollo: Angular2Apollo) {
-    this.obs = angularApollo.watchQuery({
+    this.users = angularApollo.watchQuery({
       query: `
-        query getPosts($tag: String) {
-          posts(tag: $tag) {
-            title
+        query getUsers {
+          users {
+            firstName
+            lastName
+            emails {
+              address
+              verified
+            }
           }
         }
       `,
-      variables: {
-        tag: "1234"
-      }
     });
   }
 }
