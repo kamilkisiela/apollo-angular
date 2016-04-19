@@ -13,8 +13,15 @@ type User {
 type Query {
   users(name: String): [User]
 }
+type Mutation {
+  addUser(
+    firstName: String!
+    lastName: String!
+  ): User
+}
 schema {
   query: Query
+  mutation: Mutation
 }
 `];
 
@@ -41,7 +48,16 @@ export const resolvers = {
   },
   User: {
     emails: () => casual.user.emails,
-    firstName: () => casual.user.firstName,
-    lastName: () => casual.user.lastName,
-  }
+    firstName: ({firstName}) => firstName || casual.user.firstName,
+    lastName: ({lastName}) => lastName || casual.user.lastName,
+  },
+  Mutation: {
+    addUser: (root, { firstName, lastName }) => {
+      const user = casual.user;
+      user.firstName = firstName;
+      user.lastName = lastName;
+
+      return user;
+    },
+  },
 }
