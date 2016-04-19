@@ -15,7 +15,7 @@
     "test-only": "karma start",
     "test-watch": "karma start --no-single-run",
     "remap": "remap-istanbul -i coverage/coverage.json -t lcovonly -o coverage/lcov.info",
-    "lint": "tslint -e src/*.d.ts src/*.ts && tslint test/*.ts ",
+    "lint": "tslint -e src/*.ts && tslint test/*.ts ",
     "build": "tsc",
     "watch": "tsc -w",
     "clear": "rimraf build/* coverage/*"
