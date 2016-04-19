@@ -3,6 +3,10 @@
 import ApolloClient from 'apollo-client';
 
 import {
+  GraphQLResult,
+} from 'graphql';
+
+import {
   isEqual,
   noop,
   forIn,
@@ -27,11 +31,7 @@ export function Apollo({
   queries,
   mutations,
 }: ApolloOptions) {
-  if (!(client instanceof ApolloClient)) {
-    throw new Error('Client must be a ApolloClient instance');
-  }
-
-  const { watchQuery } = client;
+  const { watchQuery, mutate } = client;
 
   // noop by default
   queries = queries || noop;
@@ -51,10 +51,8 @@ export function Apollo({
        */
       ngOnInit() {
         // use component's context
-        const component = this;
-        handleQueries(component, (key, { query, variables }) => {
-          assign(component, key, { query, variables });
-        });
+        handleQueries(this);
+        handleMutations(this);
       },
       /**
        * Detect and act upon changes that Angular can or won't detect on its own.
@@ -62,13 +60,8 @@ export function Apollo({
        */
       ngDoCheck() {
         // use component's context
-        const component = this;
-        handleQueries(component, (queryName, { query, variables }) => {
-          // check if query needs to be rerun
-          if (!equalVariablesOf(queryName, variables)) {
-            assign(component, queryName, { query, variables });
-          }
-        });
+        handleQueries(this);
+        handleMutations(this);
       },
     };
 
@@ -77,33 +70,49 @@ export function Apollo({
       wrapPrototype(name, hook);
     });
 
-    /**
-     * Gets the result of the `queries` method
-     * from decorator's options with component's context to compile variables.
-     *
-     * Then goes through all defined queries and calls a `touch` function.
-     *
-     * @param  {any}      component   Component's context
-     * @param  {Function} touch       Receives name and options
-     */
-    function handleQueries(component: any, touch: Function) {
-      forIn(queries(component), (opts: any, queryName: string) => {
-        touch(queryName, opts);
+    function handleQueries(component: any) {
+      forIn(queries(component), ({ query, variables }, queryName: string) => {
+        if (!equalVariablesOf(queryName, variables)) {
+          createQuery(component, queryName, { query, variables });
+        }
+      });
+    }
+
+    function handleMutations(component: any) {
+      forIn(mutations(component), (method: Function, mutationName: string) => {
+        createMutation(component, mutationName, method);
       });
     }
 
     /**
-     * Assings WatchQueryHandle to component
+     * Assings WatchQueryHandle to the component
      *
      * @param  {any}    component   Component's context
      * @param  {string} queryName   Query's name
      * @param  {Object} options     Query's options
      */
-    function assign(component: any, queryName: string, { query, variables }) {
+    function createQuery(component: any, queryName: string, { query, variables }) {
       // save variables so they can be used in futher comparasion
       lastQueryVariables[queryName] = variables;
       // assign to component's context
       component[queryName] = watchQuery({ query, variables });
+    }
+
+    /**
+     * Assings wrapper of mutation to the component
+     *
+     * @param  {any}      component    Component's context
+     * @param  {string}   mutationName Mutation's name
+     * @param  {Function} method       Method returning mutation options
+     * @return {Promise}               Mutation result
+     */
+    function createMutation(component: any, mutationName: string, method: Function) {
+      // assign to component's context
+      component[mutationName] = (...args): Promise<GraphQLResult> => {
+        const { mutation, variables } = method.apply(client, args);
+
+        return mutate({ mutation, variables });
+      };
     }
 
     /**
@@ -121,8 +130,8 @@ export function Apollo({
      * Creates a new prototype method which is a wrapper function
      * that calls new function before old one.
      *
-     * @param  {string}   name [description]
-     * @param  {Function} func [description]
+     * @param  {string}   name
+     * @param  {Function} func
      */
     function wrapPrototype(name: string, func: Function) {
       oldHooks[name] = sourceTarget.prototype[name];
