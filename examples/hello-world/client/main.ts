@@ -20,6 +20,10 @@ import ApolloClient, {
   createNetworkInterface,
 } from 'apollo-client';
 
+import {
+  graphQLResult
+} from 'graphql';
+
 const client = new ApolloClient({
   networkInterface: createNetworkInterface('/graphql'),
 });
@@ -53,10 +57,57 @@ const client = new ApolloClient({
       },
     };
   },
+  mutations(state: any) {
+    return {
+      addUser: (firstName: string) => ({
+        mutation: `
+          mutation addUser(
+            $firstName: String!
+            $lastName: String!
+          ) {
+            addUser(
+              firstName: $firstName
+              lastName: $lastName
+            ) {
+              firstName
+              lastName,
+              emails {
+                address
+                verified
+              }
+            }
+          }
+        `,
+        variables: {
+          firstName,
+          lastName: state.lastName,
+        },
+      }),
+    };
+  },
 })
 class Main {
   users: Observable<any[]>;
-  name: string;
+  firstName: string;
+  lastName: string;
+
+  public newUser() {
+    this.addUser(this.firstName)
+      .then((graphQLResult) => {
+        const { errors, data } = graphQLResult;
+
+        if (data) {
+          console.log('got data', data);
+        }
+
+        if (errors) {
+          console.log('got some GraphQL execution errors', errors);
+        }
+      })
+      .catch((error: any) => {
+        console.log('there was an error sending the query', error);
+      });
+  }
 }
 
 bootstrap(Main);
