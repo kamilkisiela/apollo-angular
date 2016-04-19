@@ -7,51 +7,9 @@
 
 Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
-- [Example](#example-use)
 - [Install](#install)
 - [Docs](http://docs.apollostack.com/apollo-client/angular2.html)
 - [Development](#development)
-
-## Example use:
-
-```ts
-import {
-  Component,
-  Injectable
-} from 'angular2/core';
-
-import {
-  Angular2Apollo
-} from 'angular2-apollo';
-
-import {
-  Observable
-} from 'rxjs/Observable';
-
-@Component({
-  selector: 'postsList',
-  templateUrl: 'client/postsList.html'
-})
-@Injectable()
-class postsList {
-  posts: Observable<any[]>;
-
-  constructor(private angularApollo : Angular2Apollo) {
-    this.posts = angularApollo.watchQuery({
-      query: `
-        query getPosts($tag: String) {
-          posts(tag: $tag) {
-            title
-          }
-        }
-      `,
-      variables: {
-        tag: "1234"
-      }
-    });
-  }
-}
-```
 
 ## Install
 
