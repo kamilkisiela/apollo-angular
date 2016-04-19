@@ -1,5 +1,6 @@
+<h1>Hello World</h1>
 <ul>
-  <li *ngFor="#post of obs | async | apolloQuery:'posts'">
-      {{ post.title }}
+  <li *ngFor="#user of users | async | apolloQuery:'users'">
+    {{ user.firstName }} {{ user.lastName }}
   </li>
 </ul>
