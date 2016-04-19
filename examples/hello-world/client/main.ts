@@ -18,9 +18,9 @@ import ApolloClient, {
   createNetworkInterface
 } from 'apollo-client';
 
-const client = new ApolloClient(
+const client = new ApolloClient({
   networkInterface: createNetworkInterface('http://localhost:8080')
-);
+});
 
 @Component({
   selector: 'app',
