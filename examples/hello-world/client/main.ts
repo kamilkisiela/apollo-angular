@@ -5,14 +5,10 @@ import {
 import {
   Component,
   Injectable,
-  ChangeDetectionStrategy,
 } from "angular2/core";
 
 import {
-  ApolloQueryPipe,
-  APOLLO_PROVIDERS,
-  Angular2Apollo,
-  defaultApolloClient,
+  Apollo,
 } from 'angular2-apollo';
 
 import ApolloClient, {
@@ -33,28 +29,14 @@ const client = new ApolloClient({
   pipes: [ApolloQueryPipe],
 })
 @Injectable()
+@Apollo({
+  client
+})
 class Main {
   users: Observable<any[]>;
 
-  constructor(private angularApollo: Angular2Apollo) {
-    this.users = angularApollo.watchQuery({
-      query: `
-        query getUsers {
-          users {
-            firstName
-            lastName
-            emails {
-              address
-              verified
-            }
-          }
-        }
-      `,
-    });
+  constructor() {    
   }
 }
 
-bootstrap(Main, [
-  APOLLO_PROVIDERS,
-  defaultApolloClient(client),
-]);
+bootstrap(Main);

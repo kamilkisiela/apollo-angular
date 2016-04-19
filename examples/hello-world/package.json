@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "angular2": "^2.0.0-beta.15",
-    "angular2-apollo": "0.0.1",
+    "angular2-apollo": "file:../../",
     "apollo-client": "0.1.2",
     "casual-browserify": "^1.5.2",
     "express": "^4.13.4",
