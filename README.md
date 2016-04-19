@@ -1,5 +1,10 @@
 # angular2-apollo
 
+[![npm version](https://badge.fury.io/js/angular2-apollo.svg)](https://badge.fury.io/js/angular2-apollo)
+[![Get on Slack](http://slack.apollostack.com/badge.svg)](http://slack.apollostack.com/)
+[![Build status](https://travis-ci.org/apollostack/angular2-apollo.svg?branch=master)](https://travis-ci.org/apollostack/angular2-apollo)
+[![Coverage Status](https://coveralls.io/repos/github/apollostack/angular2-apollo/badge.svg?branch=master)](https://coveralls.io/github/apollostack/angular2-apollo?branch=master)
+
 Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
 - [Example](#example-use)
