@@ -10,7 +10,7 @@ import ApolloClient from 'apollo-client';
 
 import {
   APOLLO_PROVIDERS,
-} from '../src';
+} from '../src/index';
 
 import {
   Angular2Apollo,
