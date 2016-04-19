@@ -1,52 +1,15 @@
 # angular2-apollo
 
+[![npm version](https://badge.fury.io/js/angular2-apollo.svg)](https://badge.fury.io/js/angular2-apollo)
+[![Get on Slack](http://slack.apollostack.com/badge.svg)](http://slack.apollostack.com/)
+[![Build status](https://travis-ci.org/apollostack/angular2-apollo.svg?branch=master)](https://travis-ci.org/apollostack/angular2-apollo)
+[![Coverage Status](https://coveralls.io/repos/github/apollostack/angular2-apollo/badge.svg?branch=master)](https://coveralls.io/github/apollostack/angular2-apollo?branch=master)
+
 Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
-- [Example](#example-use)
 - [Install](#install)
 - [Docs](http://docs.apollostack.com/apollo-client/angular2.html)
 - [Development](#development)
-
-## Example use:
-
-```ts
-import {
-  Component,
-  Injectable
-} from 'angular2/core';
-
-import {
-  Angular2Apollo
-} from 'angular2-apollo';
-
-import {
-  Observable
-} from 'rxjs/Observable';
-
-@Component({
-  selector: 'postsList',
-  templateUrl: 'client/postsList.html'
-})
-@Injectable()
-class postsList {
-  posts: Observable<any[]>;
-
-  constructor(private angularApollo : Angular2Apollo) {
-    this.posts = angularApollo.watchQuery({
-      query: `
-        query getPosts($tag: String) {
-          posts(tag: $tag) {
-            title
-          }
-        }
-      `,
-      variables: {
-        tag: "1234"
-      }
-    });
-  }
-}
-```
 
 ## Install
 
