@@ -15,7 +15,7 @@
     "test-only": "karma start",
     "test-watch": "karma start --no-single-run",
     "remap": "remap-istanbul -i coverage/coverage.json -t lcovonly -o coverage/lcov.info",
-    "lint": "tslint -e src/*.d.ts src/*.ts && tslint test/*.ts ",
+    "lint": "tslint -e src/*.ts && tslint test/*.ts ",
     "build": "tsc",
     "watch": "tsc -w",
     "clear": "rimraf build/* coverage/*"
@@ -35,6 +35,7 @@
     "apollo-client": "0.1.2",
     "es6-shim": "0.35.0",
     "graphql": "^0.5.0",
+    "lodash": "^4.11.1",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "zone.js": "0.6.11"

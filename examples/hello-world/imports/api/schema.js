@@ -11,7 +11,7 @@ type User {
   lastName: String
 }
 type Query {
-  users: [User]
+  users(name: String): [User]
 }
 schema {
   query: Query

@@ -5,14 +5,15 @@ import {
 import {
   Component,
   Injectable,
-  ChangeDetectionStrategy,
 } from "angular2/core";
 
 import {
+  Observable,
+} from 'rxjs/Rx';
+
+import {
   ApolloQueryPipe,
-  APOLLO_PROVIDERS,
-  Angular2Apollo,
-  defaultApolloClient,
+  Apollo,
 } from 'angular2-apollo';
 
 import ApolloClient, {
@@ -20,8 +21,8 @@ import ApolloClient, {
 } from 'apollo-client';
 
 import {
-  Observable,
-} from 'rxjs/Rx';
+  graphQLResult
+} from 'graphql';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface('/graphql'),
@@ -33,28 +34,80 @@ const client = new ApolloClient({
   pipes: [ApolloQueryPipe],
 })
 @Injectable()
-class Main {
-  users: Observable<any[]>;
-
-  constructor(private angularApollo: Angular2Apollo) {
-    this.users = angularApollo.watchQuery({
-      query: `
-        query getUsers {
-          users {
-            firstName
-            lastName
-            emails {
-              address
-              verified
+@Apollo({
+  client,
+  queries(state: any) {
+    return {
+      users: {
+        query: `
+          query getUsers($name: String) {
+            users(name: $name) {
+              firstName
+              lastName
+              emails {
+                address
+                verified
+              }
             }
           }
+        `,
+        variables: {
+          name: state.name,
+        },
+      },
+    };
+  },
+  mutations(state: any) {
+    return {
+      addUser: (firstName: string) => ({
+        mutation: `
+          mutation addUser(
+            $firstName: String!
+            $lastName: String!
+          ) {
+            addUser(
+              firstName: $firstName
+              lastName: $lastName
+            ) {
+              firstName
+              lastName,
+              emails {
+                address
+                verified
+              }
+            }
+          }
+        `,
+        variables: {
+          firstName,
+          lastName: state.lastName,
+        },
+      }),
+    };
+  },
+})
+class Main {
+  users: Observable<any[]>;
+  firstName: string;
+  lastName: string;
+
+  public newUser() {
+    this.addUser(this.firstName)
+      .then((graphQLResult) => {
+        const { errors, data } = graphQLResult;
+
+        if (data) {
+          console.log('got data', data);
         }
-      `,
-    });
+
+        if (errors) {
+          console.log('got some GraphQL execution errors', errors);
+        }
+      })
+      .catch((error: any) => {
+        console.log('there was an error sending the query', error);
+      });
   }
 }
 
-bootstrap(Main, [
-  APOLLO_PROVIDERS,
-  defaultApolloClient(client),
-]);
+bootstrap(Main);
