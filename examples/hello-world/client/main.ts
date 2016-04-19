@@ -8,16 +8,17 @@ import {
 } from "angular2/core";
 
 import {
+  Observable,
+} from 'rxjs/Rx';
+
+import {
+  ApolloQueryPipe,
   Apollo,
 } from 'angular2-apollo';
 
 import ApolloClient, {
   createNetworkInterface,
 } from 'apollo-client';
-
-import {
-  Observable,
-} from 'rxjs/Rx';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface('/graphql'),
@@ -30,13 +31,32 @@ const client = new ApolloClient({
 })
 @Injectable()
 @Apollo({
-  client
+  client,
+  queries(state: any) {
+    return {
+      users: {
+        query: `
+          query getUsers($name: String) {
+            users(name: $name) {
+              firstName
+              lastName
+              emails {
+                address
+                verified
+              }
+            }
+          }
+        `,
+        variables: {
+          name: state.name,
+        },
+      },
+    };
+  },
 })
 class Main {
   users: Observable<any[]>;
-
-  constructor() {    
-  }
+  name: string;
 }
 
 bootstrap(Main);

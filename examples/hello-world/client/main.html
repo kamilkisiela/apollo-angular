@@ -1,4 +1,7 @@
 <h1>Hello World</h1>
+
+<input type="text" placeholder="Name..." [(ngModel)]="name" />
+
 <ul>
   <li *ngFor="#user of users | async | apolloQuery:'users'">
     {{ user.firstName }} {{ user.lastName }}
