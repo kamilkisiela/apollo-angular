@@ -1,3 +1,5 @@
+/// <reference path="../typings/main.d.ts" />
+
 import ApolloClient from 'apollo-client';
 
 import {

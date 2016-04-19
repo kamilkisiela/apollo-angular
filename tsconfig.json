@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
+    "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "rootDir": ".",
@@ -10,12 +11,10 @@
     "experimentalDecorators": true,
     "noImplicitAny": false
   },
-  "files": [
-    "src/index.ts",
-    "tests/index.ts",
-    "typings/main.d.ts",
-    "src/apolloClient.d.ts",
-    "node_modules/angular2/testing.d.ts",
-    "node_modules/angular2/typings/browser.d.ts"
+  "exclude": [
+    "build",
+    "examples",
+    "node_modules",
+    "typings"
   ]
 }
