@@ -23,7 +23,11 @@ export class Angular2Apollo {
 
   }
 
-  public watchQuery(query) {
-    return this.client.watchQuery(query);
+  public watchQuery(options) {
+    return this.client.watchQuery(options);
+  }
+
+  public mutate(options) {
+    return this.client.mutate(options);
   }
 }

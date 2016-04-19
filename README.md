@@ -8,27 +8,34 @@ Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](h
 - [Boostrap](#bootstrap)
 - [Inject](#inject-angular2apollo)
 - [ApolloQueryPipe](#apolloquerypipe)
+- [Mutations](#mutations)
 
 ## Example use:
 
 ```ts
-import {Component, Injectable} from "angular2/core";
-import {ApolloQueryPipe, APOLLO_ANGULAR2_PROVIDERS, ApolloAngular2} from "angular2-apollo";
-import {Observable} from 'rxjs/Observable';
+import {
+  Component,
+  Injectable
+} from 'angular2/core';
+
+import {
+  Angular2Apollo
+} from 'angular2-apollo';
+
+import {
+  Observable
+} from 'rxjs/Observable';
 
 @Component({
   selector: 'postsList',
-  templateUrl: 'client/postsList.html',
-  pipes: [ApolloQueryPipe]
+  templateUrl: 'client/postsList.html'
 })
 @Injectable()
 class postsList {
   posts: Observable<any[]>;
 
-  constructor(private angularApollo : ApolloAngular2) {
-    const client = angularApollo.createNetworkInterface('http://localhost:8080');
-
-    this.posts = client.watchQuery({
+  constructor(private angularApollo : Angular2Apollo) {
+    this.posts = angularApollo.watchQuery({
       query: `
         query getPosts($tag: String) {
           posts(tag: $tag) {
@@ -53,12 +60,26 @@ npm install angular2-apollo --save
 ## Bootstrap
 
 ```ts
-import {bootstrap} from "angular2/platform/browser";
-import {defaultApolloClient, APOLLO_PROVIDERS} from "angular2-apollo";
-import {ApolloClient} from 'apollo-client';
-import {MyAppClass} from './app/<my-app-class>';
+import {
+  bootstrap
+} from 'angular2/platform/browser';
 
-const client = new ApolloClient();
+import {
+  defaultApolloClient,
+  APOLLO_PROVIDERS
+} from 'angular2-apollo';
+
+import ApolloClient, {
+  createNetworkInterface
+} from 'apollo-client';
+
+import {
+  MyAppClass
+} from './app/<my-app-class>';
+
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface('http://localhost:8080')
+});
 
 bootstrap(<MyAppClass>, [
   APOLLO_PROVIDERS,
@@ -69,17 +90,22 @@ bootstrap(<MyAppClass>, [
 ## Inject Angular2Apollo
 
 ```ts
-import {Component, Injectable} from "angular2/core";
-import {ApolloQueryPipe, ApolloAngular2} from "angular2-apollo";
+import {
+  Component,
+  Injectable
+} from 'angular2/core';
+
+import {
+  Angular2Apollo
+} from 'angular2-apollo';
 
 @Component({
   selector: 'postsList',
-  templateUrl: 'client/postsList.html',
-  pipes: [ApolloQueryPipe]
+  templateUrl: 'client/postsList.html'
 })
 @Injectable()
 class postsList {
-  constructor(private angularApollo : ApolloAngular2) {
+  constructor(private angularApollo : Angular2Apollo) {
   }
 }
 ```
@@ -87,20 +113,25 @@ class postsList {
 ## Bind to query
 
 ```ts
-import {Component, Injectable} from "angular2/core";
-import {ApolloQueryPipe, ApolloAngular2} from "angular2-apollo";
-import {Observable} from 'rxjs/Observable';
+import {
+  Component, Injectable
+} from 'angular2/core';
+import {
+  Angular2Apollo
+} from 'angular2-apollo';
+import {
+  Observable
+} from 'rxjs/Observable';
 
 @Component({
   selector: 'postsList',
-  templateUrl: 'client/postsList.html',
-  pipes: [ApolloQueryPipe]
+  templateUrl: 'client/postsList.html'
 })
 @Injectable()
 class postsList {
   posts: Observable<any[]>;
 
-  constructor(private angularApollo : ApolloAngular2) {
+  constructor(private angularApollo : Angular2Apollo) {
     this.posts = angularApollo.watchQuery({
       query: `
         query getPosts($tag: String) {
@@ -139,6 +170,77 @@ We are pondering about a solution that will return an observable per single quer
 ## Query parameters
 
 ## Mutations
+
+```ts
+import {
+  Component, Injectable
+} from 'angular2/core';
+
+import {
+  Angular2Apollo
+} from 'angular2-apollo';
+
+import {
+  graphQLResult
+} from 'graphql';
+
+@Component({
+  selector: 'postsList',
+  templateUrl: 'client/postsList.html'
+})
+@Injectable()
+class postsList {
+  constructor(private angularApollo : Angular2Apollo) {
+
+  }
+
+  postReply({
+    token,
+    topicId,
+    categoryId,
+    raw
+  }) {
+    angularApollo.mutate({
+      mutation: `
+        mutation postReply(
+          $token: String!
+          $topic_id: ID!
+          $category_id: ID!
+          $raw: String!
+        ) {
+          createPost(
+            token: $token
+            topic_id: $topic_id
+            category: $category_id
+            raw: $raw
+          ) {
+            id
+            cooked
+          }
+        }
+      `,
+      variables: {
+        token: token,
+        topic_id: topicId,
+        category_id: categoryId,
+        raw: raw,
+      }
+    }).then((graphQLResult) => {
+      const { errors, data } = graphQLResult;
+
+      if (data) {
+        console.log('got data', data);
+      }
+
+      if (errors) {
+        console.log('got some GraphQL execution errors', errors);
+      }
+    }).catch((error) => {
+      console.log('there was an error sending the query', error);
+    });
+  }
+}
+```
 
 ## Development
 
