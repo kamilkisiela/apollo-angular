@@ -5,3 +5,4 @@ import 'reflect-metadata';
 // tests
 import './angular2Apollo';
 import './apolloQueryPipe';
+import './apolloDecorator';
