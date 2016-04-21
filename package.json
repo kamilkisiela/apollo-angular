@@ -41,6 +41,7 @@
     "zone.js": "0.6.11"
   },
   "devDependencies": {
+    "ghooks": "^1.2.1",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
@@ -55,6 +56,12 @@
     "tsc": "^1.20150623.0",
     "tslint": "^3.7.4",
     "typescript": "^1.8.10",
+    "validate-commit-msg": "^2.6.1",
     "webpack": "^1.13.0"
+  },
+  "config": {
+    "ghooks": {
+      "commit-msg": "validate-commit-msg"
+    }
   }
 }
