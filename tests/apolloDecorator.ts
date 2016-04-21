@@ -12,6 +12,37 @@ class Lifecycle {
 describe('Apollo - decorator', () => {
   const client = new ApolloClient();
 
+  describe('common', () => {
+    it('should save already existing prototype', () => {
+      const onInitSpy = jasmine.createSpy('onInitSpy');
+      const onCheckSpy = jasmine.createSpy('onCheckSpy');
+
+      @Apollo({
+        client,
+        queries: () => ({
+          foo: {
+            query: 'query',
+          },
+        }),
+      })
+      class Foo {
+        public ngOnInit() {
+          onInitSpy();
+        }
+        public ngDoCheck() {
+          onCheckSpy();
+        }
+      }
+
+      const decorated = new Foo;
+      decorated.ngOnInit();
+      decorated.ngDoCheck();
+
+      expect(onInitSpy).toHaveBeenCalled();
+      expect(onCheckSpy).toHaveBeenCalled();
+    });
+  });
+
   describe('queries()', () => {
     let spyWatchQuery;
 
