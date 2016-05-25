@@ -1,10 +1,6 @@
 import {
-  it, describe, expect
-} from 'angular2/testing';
-
-import {
-  Provider, Injector,
-} from 'angular2/core';
+  Provider, ReflectiveInjector,
+} from '@angular/core';
 
 import ApolloClient from 'apollo-client';
 
@@ -37,7 +33,7 @@ describe('angular2Apollo', () => {
     function rawApiCall(method: string, options = 'options', result = 'result') {
       spyOn(client, method).and.returnValue(result);
 
-      const injector = Injector.resolveAndCreate([defaultApolloClient(client), APOLLO_PROVIDERS]);
+      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client), APOLLO_PROVIDERS]);
       const service = injector.get(Angular2Apollo);
 
       expect(service[method](options)).toBe(result);
@@ -60,11 +56,11 @@ describe('angular2Apollo', () => {
   describe('defaultApolloClient', () => {
     it('should create a provider', () => {
       const provider = defaultApolloClient(client);
-      expect(provider).toBeAnInstanceOf(Provider);
+      expect(provider instanceof Provider).toBe(true);
     });
 
     it('should set a AngularApolloClient', () => {
-      const injector = Injector.resolveAndCreate([defaultApolloClient(client)]);
+      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client)]);
       expect(injector.get(angularApolloClient)).toBe(client);
     });
   });

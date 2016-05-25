@@ -1,4 +1,3 @@
-import {it, describe, expect, beforeEach} from 'angular2/testing';
 import {ApolloQueryPipe} from '../src/apolloQueryPipe';
 
 describe('ApolloQueryPipe', () => {
@@ -11,8 +10,8 @@ describe('ApolloQueryPipe', () => {
   it('should capitalize all words in a string', () => {
     const object = {
       data: {
-        foo: 'bar'
-      }
+        foo: 'bar',
+      },
     };
     const result = pipe.transform(object, ['foo']);
 
