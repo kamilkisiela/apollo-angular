@@ -24,8 +24,6 @@ install:
   - npm i
   - npm install -g typings
   - npm install -g coveralls
-  # temporary fix
-  - (cd node_modules/apollo-client && npm run compile)
 
 script:
   # remove unused node modules from cache
