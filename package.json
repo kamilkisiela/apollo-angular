@@ -18,7 +18,8 @@
     "lint": "tslint -e src/*.ts && tslint test/*.ts ",
     "build": "tsc",
     "watch": "tsc -w",
-    "clear": "rimraf build/* coverage/*"
+    "clear": "rimraf build/* coverage/*",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
