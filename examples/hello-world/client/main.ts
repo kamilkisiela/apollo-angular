@@ -1,11 +1,11 @@
 import {
   bootstrap,
-} from "angular2/platform/browser";
+} from "@angular/platform-browser-dynamic";
 
 import {
   Component,
   Injectable,
-} from "angular2/core";
+} from "@angular/core";
 
 import {
   Observable,
@@ -19,6 +19,8 @@ import {
 import ApolloClient, {
   createNetworkInterface,
 } from 'apollo-client';
+
+import gql from 'apollo-client/gql';
 
 import {
   graphQLResult
@@ -39,7 +41,7 @@ const client = new ApolloClient({
   queries(state: any) {
     return {
       users: {
-        query: `
+        query: gql`
           query getUsers($name: String) {
             users(name: $name) {
               firstName
@@ -60,7 +62,7 @@ const client = new ApolloClient({
   mutations(state: any) {
     return {
       addUser: (firstName: string) => ({
-        mutation: `
+        mutation: gql`
           mutation addUser(
             $firstName: String!
             $lastName: String!

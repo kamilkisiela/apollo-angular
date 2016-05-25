@@ -6,8 +6,9 @@
 <input type="submit" value="Add user" (click)="newUser(firstName)" />
 
 <h2>List</h2>
+
 <ul>
-  <li *ngFor="#user of users | async | apolloQuery:'users'">
+  <li *ngFor="let user of users | async | apolloQuery:'users'">
     {{ user.firstName }} {{ user.lastName }}
   </li>
 </ul>
