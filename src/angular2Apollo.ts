@@ -8,7 +8,7 @@ import {
   OpaqueToken,
   Injectable,
   Inject,
-} from 'angular2/core';
+} from '@angular/core';
 
 export const angularApolloClient = new OpaqueToken('AngularApolloClient');
 export const defaultApolloClient = (client: ApolloClient): Provider => {
