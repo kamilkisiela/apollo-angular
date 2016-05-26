@@ -18,7 +18,8 @@
     "lint": "tslint -e src/*.ts && tslint test/*.ts ",
     "build": "tsc",
     "watch": "tsc -w",
-    "clear": "rimraf build/* coverage/*"
+    "clear": "rimraf build/* coverage/*",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,7 @@
     "@angular/common": "2.0.0-rc.1",
     "@angular/compiler": "2.0.0-rc.1",
     "@angular/platform-browser-dynamic": "2.0.0-rc.1",
-    "apollo-client": "0.1.2",
+    "apollo-client": "^0.3.0",
     "es6-shim": "0.35.0",
     "graphql": "^0.5.0",
     "lodash": "^4.11.1",

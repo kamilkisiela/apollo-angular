@@ -13,7 +13,7 @@ describe('ApolloQueryPipe', () => {
         foo: 'bar',
       },
     };
-    const result = pipe.transform(object, ['foo']);
+    const result = pipe.transform(object, 'foo');
 
     expect(result).toEqual(object.data.foo);
   });
