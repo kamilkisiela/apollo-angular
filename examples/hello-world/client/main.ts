@@ -54,7 +54,7 @@ const client = new ApolloClient({
           }
         `,
         variables: {
-          name: state.name,
+          name: state.nameFilter,
         },
       },
     };
@@ -92,6 +92,8 @@ class Main {
   users: Observable<any[]>;
   firstName: string;
   lastName: string;
+  nameFilter: string;
+  addUser: Function;
 
   public newUser() {
     this.addUser(this.firstName)
