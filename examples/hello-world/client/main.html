@@ -10,7 +10,7 @@
 <input type="search" placeholder="Type name..." [(ngModel)]="nameFilter" />
 
 <ul>
-  <li *ngFor="let user of users | async | apolloQuery:'users'">
+  <li *ngFor="let user of users | apolloQuery:'users'">
     {{ user.firstName }} {{ user.lastName }}
   </li>
 </ul>

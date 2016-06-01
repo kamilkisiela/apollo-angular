@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "apollo-client": "file:node_modules/apollo-client/index.d.ts",
-    "lodash": "registry:npm/lodash#4.0.0+20160416211519"
+    "lodash": "registry:npm/lodash#4.0.0+20160416211519",
+    "object-assign": "registry:npm/object-assign#4.0.1+20160301180549"
   }
 }

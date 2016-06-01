@@ -89,7 +89,7 @@ const client = new ApolloClient({
   },
 })
 class Main {
-  users: Observable<any[]>;
+  users: any;
   firstName: string;
   lastName: string;
   nameFilter: string;
@@ -107,6 +107,8 @@ class Main {
         if (errors) {
           console.log('got some GraphQL execution errors', errors);
         }
+
+        this.users.refetch();
       })
       .catch((error: any) => {
         console.log('there was an error sending the query', error);

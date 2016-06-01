@@ -2,6 +2,8 @@
 
 import ApolloClient from 'apollo-client';
 
+import assign = require('object-assign');
+
 import {
   GraphQLResult,
 } from 'graphql';
@@ -12,11 +14,11 @@ import {
   forIn,
 } from 'lodash';
 
-export declare interface ApolloOptionsQueries {
+export interface ApolloOptionsQueries {
   context: any;
 };
 
-export declare interface ApolloOptionsMutations {
+export interface ApolloOptionsMutations {
   context: any;
 };
 
@@ -39,6 +41,7 @@ export function Apollo({
 
   // holds latest values to track changes
   const lastQueryVariables = {};
+  const queryHandles = {};
 
   return (sourceTarget: any) => {
     const target = sourceTarget;
@@ -63,6 +66,12 @@ export function Apollo({
         handleQueries(this);
         handleMutations(this);
       },
+      /**
+       * Stop all of watchQuery subscriptions
+       */
+      ngOnDestroy() {
+        unsubscribe();
+      },
     };
 
     // attach hooks
@@ -71,9 +80,9 @@ export function Apollo({
     });
 
     function handleQueries(component: any) {
-      forIn(queries(component), ({ query, variables }, queryName: string) => {
-        if (!equalVariablesOf(queryName, variables)) {
-          createQuery(component, queryName, { query, variables });
+      forIn(queries(component), (options, queryName: string) => {
+        if (!equalVariablesOf(queryName, options.variables)) {
+          createQuery(component, queryName, options);
         }
       });
     }
@@ -91,11 +100,11 @@ export function Apollo({
      * @param  {string} queryName   Query's name
      * @param  {Object} options     Query's options
      */
-    function createQuery(component: any, queryName: string, { query, variables }) {
+    function createQuery(component: any, queryName: string, options) {
       // save variables so they can be used in futher comparasion
-      lastQueryVariables[queryName] = variables;
+      lastQueryVariables[queryName] = options.variables;
       // assign to component's context
-      component[queryName] = watchQuery({ query, variables });
+      subscribe(component, queryName, watchQuery(options));
     }
 
     /**
@@ -113,6 +122,54 @@ export function Apollo({
 
         return mutate({ mutation, variables });
       };
+    }
+
+    function subscribe(component: any, queryName: string, obs: any) {
+      component[queryName] = {
+        errors: null,
+        loading: true,
+      };
+
+      const setQuery = ({ errors, data = {} }: any) => {
+        component[queryName] = assign({
+          errors,
+          loading: false,
+          unsubscribe: queryHandles[queryName].unsubscribe,
+          refetch: queryHandles[queryName].refetch,
+          stopPolling: queryHandles[queryName].stopPolling,
+          startPolling: queryHandles[queryName].startPolling,
+        }, data);
+
+        console.log(queryName, component[queryName]);
+      };
+
+      queryHandles[queryName] = obs.subscribe({
+        next: setQuery,
+        error(errors) {
+          setQuery({ errors });
+        },
+      });
+    };
+
+    function unsubscribe(queryName?: string) {
+      if (queryHandles) {
+        if (queryName && queryHandles[queryName]) {
+          // just one
+          queryHandles[queryName].unsubscribe();
+        } else {
+          // loop through all
+          for (const key in queryHandles) {
+            if (!queryHandles.hasOwnProperty(key)) {
+              continue;
+            }
+
+            if (queryName && key !== queryName) {
+              continue;
+            }
+            queryHandles[key].unsubscribe();
+          }
+        }
+      }
     }
 
     /**
