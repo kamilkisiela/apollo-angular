@@ -23,7 +23,7 @@ import ApolloClient, {
 import gql from 'apollo-client/gql';
 
 import {
-  graphQLResult
+  graphQLResult,
 } from 'graphql';
 
 const client = new ApolloClient({
@@ -89,9 +89,10 @@ const client = new ApolloClient({
   },
 })
 class Main {
-  users: Observable<any[]>;
-  firstName: string;
-  lastName: string;
+  public addUser: Function;
+  public users: Observable<any[]>;
+  public firstName: string;
+  public lastName: string;
 
   public newUser() {
     this.addUser(this.firstName)
