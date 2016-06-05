@@ -23,12 +23,14 @@ import ApolloClient, {
 import gql from 'apollo-client/gql';
 
 import {
-  graphQLResult
+  GraphQLResult
 } from 'graphql';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface('/graphql'),
 });
+
+interface Main { addUser(firstName : string): Promise<any> }
 
 @Component({
   selector: 'app',
@@ -95,7 +97,7 @@ class Main {
 
   public newUser() {
     this.addUser(this.firstName)
-      .then((graphQLResult) => {
+      .then((graphQLResult : GraphQLResult) => {
         const { errors, data } = graphQLResult;
 
         if (data) {
