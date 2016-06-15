@@ -41,7 +41,6 @@
     "es6-shim": "0.35.0",
     "graphql": "^0.5.0",
     "lodash": "^4.11.1",
-    "object-assign": "^4.1.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.6",
     "zone.js": "0.6.11"

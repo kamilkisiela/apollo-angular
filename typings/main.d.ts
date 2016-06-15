@@ -4,4 +4,3 @@
 /// <reference path="main/ambient/jasmine/index.d.ts" />
 /// <reference path="main/definitions/apollo-client/index.d.ts" />
 /// <reference path="main/definitions/lodash/index.d.ts" />
-/// <reference path="main/definitions/object-assign/index.d.ts" />
