@@ -12,9 +12,10 @@ import {
 
 describe('Apollo - decorator - mutations()', () => {
   let spyMutate;
-  const client = mockClient();
+  let client;
 
   beforeEach(() => {
+    client = mockClient();
     spyMutate = spyOn(client, 'mutate')
       .and
       .returnValue('mutate');
