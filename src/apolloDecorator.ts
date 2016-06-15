@@ -2,7 +2,9 @@
 
 import ApolloClient from 'apollo-client';
 
-import assign = require('object-assign');
+import {
+  assign,
+} from 'lodash';
 
 import {
   GraphQLResult,
@@ -34,7 +36,6 @@ export function Apollo({
   mutations,
 }: ApolloOptions) {
   const { watchQuery, mutate } = client;
-
   // noop by default
   queries = queries || noop;
   mutations = mutations || noop;
@@ -139,9 +140,10 @@ export function Apollo({
           stopPolling: queryHandles[queryName].stopPolling,
           startPolling: queryHandles[queryName].startPolling,
         }, data);
-
-        console.log(queryName, component[queryName]);
       };
+
+      // we don't want to have multiple subscriptions
+      unsubscribe(queryName);
 
       queryHandles[queryName] = obs.subscribe({
         next: setQuery,
@@ -153,9 +155,11 @@ export function Apollo({
 
     function unsubscribe(queryName?: string) {
       if (queryHandles) {
-        if (queryName && queryHandles[queryName]) {
+        if (queryName) {
           // just one
-          queryHandles[queryName].unsubscribe();
+          if (queryHandles[queryName]) {
+            queryHandles[queryName].unsubscribe();
+          }
         } else {
           // loop through all
           for (const key in queryHandles) {
@@ -163,9 +167,6 @@ export function Apollo({
               continue;
             }
 
-            if (queryName && key !== queryName) {
-              continue;
-            }
             queryHandles[key].unsubscribe();
           }
         }
@@ -180,7 +181,7 @@ export function Apollo({
      * @return {boolean}            comparasion result
      */
     function equalVariablesOf(queryName: string, variables: any): boolean {
-      return isEqual(lastQueryVariables[queryName], variables);
+      return lastQueryVariables.hasOwnProperty(queryName) && isEqual(lastQueryVariables[queryName], variables);
     }
 
     /**
