@@ -1,15 +1,11 @@
 import {
   bootstrap,
-} from "@angular/platform-browser-dynamic";
+} from '@angular/platform-browser-dynamic';
 
 import {
   Component,
   Injectable,
-} from "@angular/core";
-
-import {
-  Observable,
-} from 'rxjs/Rx';
+} from '@angular/core';
 
 import {
   ApolloQueryPipe,
@@ -23,7 +19,7 @@ import ApolloClient, {
 import gql from 'apollo-client/gql';
 
 import {
-  graphQLResult
+  GraphQLResult,
 } from 'graphql';
 
 const client = new ApolloClient({
@@ -33,14 +29,13 @@ const client = new ApolloClient({
 @Component({
   selector: 'app',
   templateUrl: 'client/main.html',
-  pipes: [ApolloQueryPipe],
 })
 @Injectable()
 @Apollo({
   client,
   queries(state: any) {
     return {
-      users: {
+      data: {
         query: gql`
           query getUsers($name: String) {
             users(name: $name) {
@@ -54,7 +49,7 @@ const client = new ApolloClient({
           }
         `,
         variables: {
-          name: state.name,
+          name: state.nameFilter,
         },
       },
     };
@@ -89,13 +84,15 @@ const client = new ApolloClient({
   },
 })
 class Main {
-  users: Observable<any[]>;
+  users: any;
   firstName: string;
   lastName: string;
+  nameFilter: string;
+  addUser: Function;
 
   public newUser() {
     this.addUser(this.firstName)
-      .then((graphQLResult) => {
+      .then((graphQLResult: GraphQLResult) => {
         const { errors, data } = graphQLResult;
 
         if (data) {
@@ -105,6 +102,8 @@ class Main {
         if (errors) {
           console.log('got some GraphQL execution errors', errors);
         }
+
+        this.users.refetch();
       })
       .catch((error: any) => {
         console.log('there was an error sending the query', error);
