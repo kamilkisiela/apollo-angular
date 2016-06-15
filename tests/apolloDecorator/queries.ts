@@ -12,6 +12,15 @@ import {
   mockClient,
 } from '../_mocks';
 
+const query = gql`
+  query GetHeroes {
+    heroes {
+      name
+    }
+  }
+`;
+
+
 describe('Apollo - decorator - queries()', () => {
   it('should set queries with ngOnInit', () => {
     const component = createComponent(mockClient());
@@ -36,13 +45,6 @@ describe('Apollo - decorator - queries()', () => {
   });
 
   it('should rebuil queries on ngDoCheck', () => {
-    const query = gql`
-      query GetHeroes {
-        heroes {
-          name
-        }
-      }
-    `;
     const calls = new Counter;
     const queries = () => {
       calls.tick();
@@ -72,13 +74,6 @@ describe('Apollo - decorator - queries()', () => {
   });
 
   it('should rebuild query only when variables have changed', () => {
-    const query = gql`
-      query GetHeroes {
-        heroes {
-          name
-        }
-      }
-    `;
     const variables1 = { name: 1 };
     const variables2 = { name: 2 };
     const queries = (state) => {
@@ -119,13 +114,6 @@ describe('Apollo - decorator - queries()', () => {
   });
 
   it('should NOT rebuild query if its variables have not changed', () => {
-    const query = gql`
-      query GetHeroes {
-        heroes {
-          name
-        }
-      }
-    `;
     const variablesA = { id: 0 };
     const variablesB1 = { name: 1 };
     const variablesB2 = { name: 2 };
@@ -210,6 +198,45 @@ describe('Apollo - decorator - queries()', () => {
     }, 0);
   });
 
+  it('should unsubscribe all queries on ngOnDestroy', (done) => {
+    const queries = (state) => {
+      return {
+        dataA: { query },
+        dataB: { query },
+      };
+    };
+    const data = { heroes: { name: 'Mr Foo' } };
+
+    const client = mockClient({
+      request: { query },
+      result: { data },
+    });
+
+    const unsubscribe = jasmine.createSpy('unsubscribe');
+    spyOn(client, 'watchQuery').and.returnValue({
+      subscribe() {
+        return { unsubscribe };
+      },
+    });
+
+    const component = request({
+      queries,
+      client,
+    });
+
+    component.ngOnInit();
+
+    setTimeout(() => {
+      // destroy component
+      component.ngOnDestroy();
+
+      // for two queries
+      expect(unsubscribe.calls.count()).toEqual(2);
+
+      done();
+    }, 0);
+  });
+
   function request(options?: any) {
     if (!options.client) {
       options.client = mockClient(...options.requests);
@@ -241,6 +268,8 @@ describe('Apollo - decorator - queries()', () => {
     })
     class Foo extends Lifecycle {
       public data: any;
+      public dataA: any;
+      public dataB: any;
       public name: any;
       public id: any;
     }
