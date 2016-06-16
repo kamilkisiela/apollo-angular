@@ -13,9 +13,11 @@ import {
 } from '../_mocks';
 
 const query = gql`
-  query GetHeroes {
-    heroes {
-      name
+  query heroes {
+    allHeroes(first: 1) {
+      heroes {
+        name
+      }
     }
   }
 `;
@@ -53,7 +55,11 @@ describe('Apollo - decorator - queries()', () => {
         data: { query },
       };
     };
-    const data = { heroes: { name: 'Mr Foo' } };
+    const data = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Foo' }],
+      },
+    };
 
     const component = request({
       queries,
@@ -84,7 +90,11 @@ describe('Apollo - decorator - queries()', () => {
         },
       };
     };
-    const data = { heroes: { name: 'Mr Foo' } };
+    const data = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Foo' }],
+      },
+    };
 
     const client = mockClient({
       request: { query, variables: variables1 },
@@ -129,7 +139,11 @@ describe('Apollo - decorator - queries()', () => {
         },
       };
     };
-    const data = { heroes: { name: 'Mr Foo' } };
+    const data = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Foo' }],
+      },
+    };
 
     const client = mockClient({
       request: { query, variables: variablesB1 },
@@ -162,40 +176,44 @@ describe('Apollo - decorator - queries()', () => {
     expect(spy.calls.count()).toEqual(3);
   });
 
-  it('should has refetch method in result object', () => {
+  it('should has refetch method in result object', (done) => {
     const component = request({});
     component.ngOnInit();
 
     setTimeout(() => {
       expect(typeof component.data.refetch).toEqual('function');
-    }, 0);
+      done();
+    }, 200);
   });
 
-  it('should has unsubscribe method in result object', () => {
+  it('should has unsubscribe method in result object', (done) => {
     const component = request({});
     component.ngOnInit();
 
     setTimeout(() => {
       expect(typeof component.data.unsubscribe).toEqual('function');
-    }, 0);
+      done();
+    }, 200);
   });
 
-  it('should has startPolling method in result object', () => {
+  it('should has startPolling method in result object', (done) => {
     const component = request({});
     component.ngOnInit();
 
     setTimeout(() => {
       expect(typeof component.data.startPolling).toEqual('function');
-    }, 0);
+      done();
+    }, 200);
   });
 
-  it('should has stopPolling method in result object', () => {
+  it('should has stopPolling method in result object', (done) => {
     const component = request({});
     component.ngOnInit();
 
     setTimeout(() => {
       expect(typeof component.data.startPolling).toEqual('function');
-    }, 0);
+      done();
+    }, 200);
   });
 
   it('should unsubscribe all queries on ngOnDestroy', (done) => {
@@ -205,7 +223,11 @@ describe('Apollo - decorator - queries()', () => {
         dataB: { query },
       };
     };
-    const data = { heroes: { name: 'Mr Foo' } };
+    const data = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Foo' }],
+      },
+    };
 
     const client = mockClient({
       request: { query },
@@ -234,7 +256,58 @@ describe('Apollo - decorator - queries()', () => {
       expect(unsubscribe.calls.count()).toEqual(2);
 
       done();
-    }, 0);
+    }, 200);
+  });
+
+  it('should refetch data with new variables', (done) => {
+    const variables1 = { name: 'foo' };
+    const variables2 = { name: 'bar' };
+    const queries = (state) => {
+      return {
+        data: {
+          query,
+          variables: { name: state.name },
+        },
+      };
+    };
+    const data1 = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Foo' }],
+      },
+    };
+    const data2 = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Bar' }],
+      },
+    };
+
+    const client = mockClient({
+      request: { query, variables: variables1 },
+      result: { data: data1 },
+    }, {
+      request: { query, variables: variables2 },
+      result: { data: data2 },
+    });
+
+    const component = request({
+      queries,
+      client,
+    });
+    component.name = variables1.name;
+
+    component.ngOnInit();
+
+    setTimeout(() => {
+      // should receive proper data
+      expect(component.data.allHeroes).toEqual(data1.allHeroes);
+
+      // do refetch with new variables
+      component.data.refetch(variables2).then(() => {
+        // should contain new data
+        expect(component.data.allHeroes).toEqual(data2.allHeroes);
+        done();
+      });
+    }, 200);
   });
 
   function request(options?: any) {
