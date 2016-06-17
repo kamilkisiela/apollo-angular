@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 
 import {
-  ApolloQueryPipe,
   Apollo,
 } from 'angular2-apollo';
 
@@ -84,14 +83,14 @@ const client = new ApolloClient({
   },
 })
 class Main {
-  users: any;
-  firstName: string;
-  lastName: string;
-  nameFilter: string;
-  addUser: Function;
+  public data: any;
+  public firstName: string;
+  public lastName: string;
+  public nameFilter: string;
+  public addUser: (firstName: string) => Promise<GraphQLResult>;
 
-  public newUser() {
-    this.addUser(this.firstName)
+  public newUser(firstName: string) {
+    this.addUser(firstName)
       .then((graphQLResult: GraphQLResult) => {
         const { errors, data } = graphQLResult;
 
@@ -103,7 +102,8 @@ class Main {
           console.log('got some GraphQL execution errors', errors);
         }
 
-        this.users.refetch();
+        // get new data
+        this.data.refetch();
       })
       .catch((error: any) => {
         console.log('there was an error sending the query', error);

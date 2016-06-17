@@ -1,9 +1,9 @@
 <h1>Hello World</h1>
 
 <h2>Add new</h2>
-<input type="text" placeholder="First name" [(ngModel)]="firstName" />
+<input type="text" placeholder="First name" #firstName />
 <input type="text" placeholder="Last name" [(ngModel)]="lastName" />
-<input type="submit" value="Add user" (click)="newUser(firstName)" />
+<input type="submit" value="Add user" (click)="newUser(firstName.value)" />
 
 <h2>List</h2>
 
