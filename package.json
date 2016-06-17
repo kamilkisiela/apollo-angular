@@ -32,21 +32,22 @@
   },
   "homepage": "https://github.com/apollostack/angular2-apollo#readme",
   "dependencies": {
-    "@angular/common": "2.0.0-rc.1",
-    "@angular/compiler": "2.0.0-rc.1",
-    "@angular/core": "2.0.0-rc.1",
-    "@angular/platform-browser": "2.0.0-rc.1",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
-    "apollo-client": "^0.3.0",
-    "es6-shim": "0.35.0",
-    "graphql": "^0.5.0",
-    "lodash": "^4.11.1",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.6",
-    "zone.js": "0.6.11"
+    "lodash": "^4.11.1"
+  },
+  "peerDependencies": {
+    "@angular/core": "^2.0.0-rc.1",
+    "apollo-client": "^0.3.0"
   },
   "devDependencies": {
+    "@angular/core": "^2.0.0-rc.1",
+    "@angular/common": "^2.0.0-rc.1",
+    "@angular/compiler": "^2.0.0-rc.1",
+    "@angular/platform-browser": "^2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
+    "apollo-client": "^0.3.0",
+    "es6-shim": "^0.35.0",
     "ghooks": "^1.2.1",
+    "graphql": "^0.5.0",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
@@ -56,13 +57,16 @@
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.8",
     "karma-webpack": "^1.7.0",
+    "reflect-metadata": "0.1.2",
     "remap-istanbul": "^0.6.3",
     "rimraf": "^2.5.2",
+    "rxjs": "5.0.0-beta.6",
     "tsc": "^1.20150623.0",
     "tslint": "^3.7.4",
     "typescript": "^1.8.10",
     "validate-commit-msg": "^2.6.1",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "zone.js": "^0.6.11"
   },
   "config": {
     "ghooks": {

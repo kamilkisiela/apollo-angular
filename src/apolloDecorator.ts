@@ -1,5 +1,3 @@
-/// <reference path="../typings/browser.d.ts" />
-
 import ApolloClient from 'apollo-client';
 
 import {
@@ -16,19 +14,11 @@ import {
   forIn,
 } from 'lodash';
 
-export interface ApolloOptionsQueries {
-  context: any;
-};
-
-export interface ApolloOptionsMutations {
-  context: any;
-};
-
-export declare interface ApolloOptions {
+export interface ApolloOptions {
   client: ApolloClient;
-  queries?(opts: ApolloOptionsQueries): any;
-  mutations?(opts: ApolloOptionsMutations): any;
-};
+  queries?: Function;
+  mutations?: Function;
+}
 
 export function Apollo({
   client,
@@ -163,11 +153,9 @@ export function Apollo({
         } else {
           // loop through all
           for (const key in queryHandles) {
-            if (!queryHandles.hasOwnProperty(key)) {
-              continue;
+            if (queryHandles.hasOwnProperty(key)) {
+              queryHandles[key].unsubscribe();
             }
-
-            queryHandles[key].unsubscribe();
           }
         }
       }
