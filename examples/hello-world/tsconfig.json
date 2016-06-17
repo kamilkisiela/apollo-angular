@@ -4,5 +4,9 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "noImplicitAny": true
-  }
+  },
+  "files": [
+    "typings/index.d.ts",
+    "client/main.ts"
+  ]
 }

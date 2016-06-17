@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
+    "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "rootDir": ".",
@@ -10,10 +11,9 @@
     "experimentalDecorators": true,
     "noImplicitAny": false
   },
-  "exclude": [
-    "build",
-    "examples",
-    "node_modules",
-    "typings"
-  ]
+  "files": [
+    "typings/index.d.ts",
+    "src/index.ts",
+    "tests/index.ts"
+   ]
 }
