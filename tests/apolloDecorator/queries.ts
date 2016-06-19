@@ -66,7 +66,7 @@ describe('Apollo - decorator - queries()', () => {
       requests: [ {
         request: { query },
         result: { data },
-      }, ],
+      } ],
     });
 
     component.ngOnInit();
@@ -176,44 +176,83 @@ describe('Apollo - decorator - queries()', () => {
     expect(spy.calls.count()).toEqual(3);
   });
 
-  it('should has refetch method in result object', (done) => {
-    const component = request({});
-    component.ngOnInit();
+  describe('result object', () => {
+    const queries = (state) => {
+      return { data: { query } };
+    };
+    const data = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Foo' }],
+      },
+    };
+    let client;
+    let component;
 
-    setTimeout(() => {
-      expect(typeof component.data.refetch).toEqual('function');
-      done();
-    }, 200);
-  });
+    beforeEach(() => {
+      client = mockClient({
+        request: { query },
+        result: { data },
+      });
+      component = request({queries, client});
+    });
 
-  it('should has unsubscribe method in result object', (done) => {
-    const component = request({});
-    component.ngOnInit();
+    it('should be able to refetch', (done) => {
+      component.ngOnInit();
 
-    setTimeout(() => {
-      expect(typeof component.data.unsubscribe).toEqual('function');
-      done();
-    }, 200);
-  });
+      setTimeout(() => {
+        expect(typeof component.data.refetch).toEqual('function');
 
-  it('should has startPolling method in result object', (done) => {
-    const component = request({});
-    component.ngOnInit();
+        const spy = spyOn(component.__apolloHandle.getQuery('data'), 'refetch')
+          .and.returnValue('promise');
 
-    setTimeout(() => {
-      expect(typeof component.data.startPolling).toEqual('function');
-      done();
-    }, 200);
-  });
+        expect(component.data.refetch('variables')).toBe('promise');
+        expect(spy).toHaveBeenCalledWith('variables');
 
-  it('should has stopPolling method in result object', (done) => {
-    const component = request({});
-    component.ngOnInit();
+        done();
+      }, 200);
+    });
 
-    setTimeout(() => {
-      expect(typeof component.data.startPolling).toEqual('function');
-      done();
-    }, 200);
+    it('should be able to unsubscribe', (done) => {
+      component.ngOnInit();
+
+      setTimeout(() => {
+        expect(typeof component.data.unsubscribe).toEqual('function');
+
+        const spy = spyOn(component.__apolloHandle.getQuery('data'), 'unsubscribe');
+        component.data.unsubscribe();
+
+        expect(spy).toHaveBeenCalled();
+        done();
+      }, 200);
+    });
+
+    it('should be able to start polling', (done) => {
+      component.ngOnInit();
+
+      setTimeout(() => {
+        expect(typeof component.data.startPolling).toEqual('function');
+
+        const spy = spyOn(component.__apolloHandle.getQuery('data'), 'startPolling');
+        component.data.startPolling(1234);
+
+        expect(spy).toHaveBeenCalledWith(1234);
+        done();
+      }, 200);
+    });
+
+    it('should be able to stop polling', (done) => {
+      component.ngOnInit();
+
+      setTimeout(() => {
+        expect(typeof component.data.stopPolling).toEqual('function');
+
+        const spy = spyOn(component.__apolloHandle.getQuery('data'), 'stopPolling');
+        component.data.stopPolling();
+
+        expect(spy).toHaveBeenCalled();
+        done();
+      }, 200);
+    });
   });
 
   it('should unsubscribe all queries on ngOnDestroy', (done) => {

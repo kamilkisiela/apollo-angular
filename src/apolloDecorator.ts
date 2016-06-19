@@ -20,6 +20,45 @@ export interface ApolloOptions {
   mutations?: Function;
 }
 
+class ApolloHandle {
+  private lastQueryVariables: Object = {};
+  private queryHandles: Object = {};
+
+  public setQuery(name, handle): void {
+    this.queryHandles[name] = handle;
+  }
+
+  public getQuery(name) {
+    return this.queryHandles[name];
+  }
+
+  public getAllQueries() {
+    return this.queryHandles;
+  }
+
+  /**
+   * Saves variables so they can be used in futher comparasion
+   * @param {string} queryName Query's name
+   * @param {any}    variables used variables
+   */
+  public saveVariables(queryName: string, variables: any): void {
+    this.lastQueryVariables[queryName] = variables;
+  }
+
+  /**
+   * Compares current variables with previous ones.
+   * @param  {string}  name      Query's name
+   * @param  {any}     variables current variables
+   * @return {boolean}           comparasion result
+   */
+  public shouldRebuildQuery(name: string, variables: any): boolean {
+    return !(
+      this.lastQueryVariables.hasOwnProperty(name)
+      && isEqual(this.lastQueryVariables[name], variables)
+    );
+  }
+}
+
 export function Apollo({
   client,
   queries,
@@ -30,9 +69,7 @@ export function Apollo({
   queries = queries || noop;
   mutations = mutations || noop;
 
-  // holds latest values to track changes
-  const lastQueryVariables = {};
-  const queryHandles = {};
+  const apolloProp = '__apolloHandle';
 
   return (sourceTarget: any) => {
     const target = sourceTarget;
@@ -44,6 +81,7 @@ export function Apollo({
        * after Angular initializes the data-bound input properties.
        */
       ngOnInit() {
+        init(this);
         // use component's context
         handleQueries(this);
         handleMutations(this);
@@ -61,7 +99,7 @@ export function Apollo({
        * Stop all of watchQuery subscriptions
        */
       ngOnDestroy() {
-        unsubscribe();
+        unsubscribe(this);
       },
     };
 
@@ -70,9 +108,15 @@ export function Apollo({
       wrapPrototype(name, hook);
     });
 
+    function init(component: any) {
+      if (!component[apolloProp]) {
+        component[apolloProp] = new ApolloHandle;
+      }
+    }
+
     function handleQueries(component: any) {
       forIn(queries(component), (options, queryName: string) => {
-        if (!equalVariablesOf(queryName, options.variables)) {
+        if (getApollo(component).shouldRebuildQuery(queryName, options.variables)) {
           createQuery(component, queryName, options);
         }
       });
@@ -93,7 +137,7 @@ export function Apollo({
      */
     function createQuery(component: any, queryName: string, options) {
       // save variables so they can be used in futher comparasion
-      lastQueryVariables[queryName] = options.variables;
+      getApollo(component).saveVariables(queryName, options.variables);
       // assign to component's context
       subscribe(component, queryName, watchQuery(options));
     }
@@ -125,51 +169,56 @@ export function Apollo({
         component[queryName] = assign({
           errors,
           loading: false,
-          unsubscribe: queryHandles[queryName].unsubscribe,
-          refetch: queryHandles[queryName].refetch,
-          stopPolling: queryHandles[queryName].stopPolling,
-          startPolling: queryHandles[queryName].startPolling,
+          unsubscribe() {
+            return getApollo(component).getQuery(queryName).unsubscribe();
+          },
+          refetch(...args) {
+            return getApollo(component).getQuery(queryName).refetch(...args);
+          },
+          stopPolling() {
+            return getApollo(component).getQuery(queryName).stopPolling();
+          },
+          startPolling(...args) {
+            return getApollo(component).getQuery(queryName).startPolling(...args);
+          },
         }, data);
       };
 
       // we don't want to have multiple subscriptions
-      unsubscribe(queryName);
+      unsubscribe(component, queryName);
 
-      queryHandles[queryName] = obs.subscribe({
+      getApollo(component).setQuery(queryName, obs.subscribe({
         next: setQuery,
         error(errors) {
           setQuery({ errors });
         },
-      });
+      }));
     };
 
-    function unsubscribe(queryName?: string) {
-      if (queryHandles) {
+    function unsubscribe(component: any, queryName?: string) {
+      const apollo = getApollo(component);
+      const allQueries = apollo.getAllQueries();
+
+      if (allQueries) {
         if (queryName) {
+          const single = allQueries[queryName];
           // just one
-          if (queryHandles[queryName]) {
-            queryHandles[queryName].unsubscribe();
+          if (single) {
+            single.unsubscribe();
           }
         } else {
           // loop through all
-          for (const key in queryHandles) {
-            if (queryHandles.hasOwnProperty(key)) {
-              queryHandles[key].unsubscribe();
+          for (const name in allQueries) {
+            if (allQueries.hasOwnProperty(name)) {
+              allQueries[name].unsubscribe();
             }
           }
         }
       }
     }
 
-    /**
-     * Compares current variables with previous ones.
-     *
-     * @param  {string}  queryName  Query's name
-     * @param  {any}     variables  current variables
-     * @return {boolean}            comparasion result
-     */
-    function equalVariablesOf(queryName: string, variables: any): boolean {
-      return lastQueryVariables.hasOwnProperty(queryName) && isEqual(lastQueryVariables[queryName], variables);
+    function getApollo(component: any) {
+      return component[apolloProp];
     }
 
     /**
