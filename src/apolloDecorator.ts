@@ -1,38 +1,99 @@
 import ApolloClient from 'apollo-client';
 
 import {
-  assign,
-} from 'lodash';
-
-import {
   GraphQLResult,
 } from 'graphql';
 
 import {
   isEqual,
-  noop,
   forIn,
+  assign,
 } from 'lodash';
 
 export interface ApolloOptions {
   client: ApolloClient;
-  queries?: Function;
-  mutations?: Function;
+  queries?: (component?: any) => any;
+  mutations?: (component?: any) => any;
+}
+
+interface ApolloHandleOptions extends ApolloOptions {
+  component: any;
 }
 
 class ApolloHandle {
   private lastQueryVariables: Object = {};
   private queryHandles: Object = {};
 
-  public setQuery(name, handle): void {
+  private component;
+  private client;
+  private queries;
+  private mutations;
+
+
+  public constructor({
+    component,
+    client,
+    queries,
+    mutations,
+  }: ApolloHandleOptions) {
+    this.component = component;
+    this.client = client;
+    this.queries = queries;
+    this.mutations = mutations;
+  }
+
+  public handleQueries(): void {
+    if (!this.queries) {
+      return;
+    }
+
+    forIn(this.queries(this.component), (options, queryName: string) => {
+      if (this.shouldRebuildQuery(queryName, options.variables)) {
+        this.createQuery(queryName, options);
+      }
+    });
+  }
+
+  public handleMutations(): void {
+    if (!this.mutations) {
+      return;
+    }
+
+    forIn(this.mutations(this.component), (method: Function, mutationName: string) => {
+      this.createMutation(mutationName, method);
+    });
+  }
+
+  public unsubscribe(queryName?: string): void {
+    const allQueries = this.getAllQueries();
+
+    if (allQueries) {
+      if (queryName) {
+        const single = allQueries[queryName];
+        // just one
+        if (single) {
+          single.unsubscribe();
+        }
+      } else {
+        // loop through all
+        for (const name in allQueries) {
+          if (allQueries.hasOwnProperty(name)) {
+            allQueries[name].unsubscribe();
+          }
+        }
+      }
+    }
+  }
+
+  private setQuery(name, handle): void {
     this.queryHandles[name] = handle;
   }
 
-  public getQuery(name) {
+  private getQuery(name) {
     return this.queryHandles[name];
   }
 
-  public getAllQueries() {
+  private getAllQueries() {
     return this.queryHandles;
   }
 
@@ -41,7 +102,7 @@ class ApolloHandle {
    * @param {string} queryName Query's name
    * @param {any}    variables used variables
    */
-  public saveVariables(queryName: string, variables: any): void {
+  private saveVariables(queryName: string, variables: any): void {
     this.lastQueryVariables[queryName] = variables;
   }
 
@@ -51,11 +112,55 @@ class ApolloHandle {
    * @param  {any}     variables current variables
    * @return {boolean}           comparasion result
    */
-  public shouldRebuildQuery(name: string, variables: any): boolean {
+  private shouldRebuildQuery(name: string, variables: any): boolean {
     return !(
       this.lastQueryVariables.hasOwnProperty(name)
       && isEqual(this.lastQueryVariables[name], variables)
     );
+  }
+
+  private createQuery(queryName: string, options: any) {
+    // save variables so they can be used in futher comparasion
+    this.saveVariables(queryName, options.variables);
+    // assign to component's context
+    this.subscribe(queryName, this.client.watchQuery(options));
+  }
+
+  private createMutation(mutationName: string, method: Function) {
+    // assign to component's context
+    this.component[mutationName] = (...args): Promise<GraphQLResult> => {
+      const { mutation, variables } = method.apply(this.client, args);
+
+      return this.client.mutate({ mutation, variables });
+    };
+  }
+
+  private subscribe(queryName: string, obs: any) {
+    this.component[queryName] = {
+      errors: null,
+      loading: true,
+    };
+
+    const setQuery = ({ errors, data = {} }: any) => {
+      this.component[queryName] = assign({
+        errors,
+        loading: false,
+        unsubscribe: () => this.getQuery(queryName).unsubscribe(),
+        refetch: (...args) => this.getQuery(queryName).refetch(...args),
+        stopPolling: () => this.getQuery(queryName).stopPolling(),
+        startPolling: (...args) => this.getQuery(queryName).startPolling(...args),
+      }, data);
+    };
+
+    // we don't want to have multiple subscriptions
+    this.unsubscribe(queryName);
+
+    this.setQuery(queryName, obs.subscribe({
+      next: setQuery,
+      error(errors) {
+        setQuery({ errors });
+      },
+    }));
   }
 }
 
@@ -64,11 +169,6 @@ export function Apollo({
   queries,
   mutations,
 }: ApolloOptions) {
-  const { watchQuery, mutate } = client;
-  // noop by default
-  queries = queries || noop;
-  mutations = mutations || noop;
-
   const apolloProp = '__apolloHandle';
 
   return (sourceTarget: any) => {
@@ -81,25 +181,31 @@ export function Apollo({
        * after Angular initializes the data-bound input properties.
        */
       ngOnInit() {
-        init(this);
-        // use component's context
-        handleQueries(this);
-        handleMutations(this);
+        if (!this[apolloProp]) {
+          this[apolloProp] = new ApolloHandle({
+            component: this,
+            client,
+            queries,
+            mutations,
+          });
+        }
+
+        this[apolloProp].handleQueries();
+        this[apolloProp].handleMutations();
       },
       /**
        * Detect and act upon changes that Angular can or won't detect on its own.
        * Called every change detection run.
        */
       ngDoCheck() {
-        // use component's context
-        handleQueries(this);
-        handleMutations(this);
+        this[apolloProp].handleQueries();
+        this[apolloProp].handleMutations();
       },
       /**
        * Stop all of watchQuery subscriptions
        */
       ngOnDestroy() {
-        unsubscribe(this);
+        this[apolloProp].unsubscribe();
       },
     };
 
@@ -107,119 +213,6 @@ export function Apollo({
     forIn(hooks, (hook, name) => {
       wrapPrototype(name, hook);
     });
-
-    function init(component: any) {
-      if (!component[apolloProp]) {
-        component[apolloProp] = new ApolloHandle;
-      }
-    }
-
-    function handleQueries(component: any) {
-      forIn(queries(component), (options, queryName: string) => {
-        if (getApollo(component).shouldRebuildQuery(queryName, options.variables)) {
-          createQuery(component, queryName, options);
-        }
-      });
-    }
-
-    function handleMutations(component: any) {
-      forIn(mutations(component), (method: Function, mutationName: string) => {
-        createMutation(component, mutationName, method);
-      });
-    }
-
-    /**
-     * Assings WatchQueryHandle to the component
-     *
-     * @param  {any}    component   Component's context
-     * @param  {string} queryName   Query's name
-     * @param  {Object} options     Query's options
-     */
-    function createQuery(component: any, queryName: string, options) {
-      // save variables so they can be used in futher comparasion
-      getApollo(component).saveVariables(queryName, options.variables);
-      // assign to component's context
-      subscribe(component, queryName, watchQuery(options));
-    }
-
-    /**
-     * Assings wrapper of mutation to the component
-     *
-     * @param  {any}      component    Component's context
-     * @param  {string}   mutationName Mutation's name
-     * @param  {Function} method       Method returning mutation options
-     * @return {Promise}               Mutation result
-     */
-    function createMutation(component: any, mutationName: string, method: Function) {
-      // assign to component's context
-      component[mutationName] = (...args): Promise<GraphQLResult> => {
-        const { mutation, variables } = method.apply(client, args);
-
-        return mutate({ mutation, variables });
-      };
-    }
-
-    function subscribe(component: any, queryName: string, obs: any) {
-      component[queryName] = {
-        errors: null,
-        loading: true,
-      };
-
-      const setQuery = ({ errors, data = {} }: any) => {
-        component[queryName] = assign({
-          errors,
-          loading: false,
-          unsubscribe() {
-            return getApollo(component).getQuery(queryName).unsubscribe();
-          },
-          refetch(...args) {
-            return getApollo(component).getQuery(queryName).refetch(...args);
-          },
-          stopPolling() {
-            return getApollo(component).getQuery(queryName).stopPolling();
-          },
-          startPolling(...args) {
-            return getApollo(component).getQuery(queryName).startPolling(...args);
-          },
-        }, data);
-      };
-
-      // we don't want to have multiple subscriptions
-      unsubscribe(component, queryName);
-
-      getApollo(component).setQuery(queryName, obs.subscribe({
-        next: setQuery,
-        error(errors) {
-          setQuery({ errors });
-        },
-      }));
-    };
-
-    function unsubscribe(component: any, queryName?: string) {
-      const apollo = getApollo(component);
-      const allQueries = apollo.getAllQueries();
-
-      if (allQueries) {
-        if (queryName) {
-          const single = allQueries[queryName];
-          // just one
-          if (single) {
-            single.unsubscribe();
-          }
-        } else {
-          // loop through all
-          for (const name in allQueries) {
-            if (allQueries.hasOwnProperty(name)) {
-              allQueries[name].unsubscribe();
-            }
-          }
-        }
-      }
-    }
-
-    function getApollo(component: any) {
-      return component[apolloProp];
-    }
 
     /**
      * Creates a new prototype method which is a wrapper function
