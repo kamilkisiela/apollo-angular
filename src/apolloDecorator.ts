@@ -48,7 +48,7 @@ class ApolloHandle {
     }
 
     forIn(this.queries(this.component), (options, queryName: string) => {
-      if (this.shouldRebuildQuery(queryName, options.variables)) {
+      if (this.hasVariablesChanged(queryName, options.variables)) {
         this.createQuery(queryName, options);
       }
     });
@@ -108,15 +108,28 @@ class ApolloHandle {
 
   /**
    * Compares current variables with previous ones.
-   * @param  {string}  name      Query's name
+   * @param  {string}  queryName Query's name
    * @param  {any}     variables current variables
    * @return {boolean}           comparasion result
    */
-  private shouldRebuildQuery(name: string, variables: any): boolean {
+  private hasVariablesChanged(queryName: string, variables: any): boolean {
     return !(
-      this.lastQueryVariables.hasOwnProperty(name)
-      && isEqual(this.lastQueryVariables[name], variables)
+      this.lastQueryVariables.hasOwnProperty(queryName)
+      && isEqual(this.lastQueryVariables[queryName], variables)
     );
+  }
+
+  private hasDataChanged(queryName: string, data: any): boolean {
+    let changed = false;
+
+    forIn(data, (value, key) => {
+      if (!isEqual(this.component[queryName][key], value)) {
+        changed = true;
+        return;
+      }
+    });
+
+    return changed;
   }
 
   private createQuery(queryName: string, options: any) {
@@ -142,14 +155,16 @@ class ApolloHandle {
     };
 
     const setQuery = ({ errors, data = {} }: any) => {
-      this.component[queryName] = assign({
+      const changed = this.hasDataChanged(queryName, data);
+
+      assign(this.component[queryName], {
         errors,
         loading: false,
         unsubscribe: () => this.getQuery(queryName).unsubscribe(),
         refetch: (...args) => this.getQuery(queryName).refetch(...args),
         stopPolling: () => this.getQuery(queryName).stopPolling(),
         startPolling: (...args) => this.getQuery(queryName).startPolling(...args),
-      }, data);
+      }, changed ? data : {});
     };
 
     // we don't want to have multiple subscriptions
