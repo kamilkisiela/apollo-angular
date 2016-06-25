@@ -5,6 +5,7 @@
 - Added SSR support
 - Left `lodash` as the only one dependency and `@angular/core` with `apollo-client` as peerDependecies ([PR #29](https://github.com/apollostack/angular2-apollo/pull/29))
 - Fixed missing data in reused component ([PR #30](https://github.com/apollostack/angular2-apollo/pull/30))
+- Fixed overwriting query data with the same value on every poll interval ([PR #34](https://github.com/apollostack/angular2-apollo/pull/34))
 
 ### v0.2.0
 
