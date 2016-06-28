@@ -32,19 +32,15 @@
   },
   "homepage": "https://github.com/apollostack/angular2-apollo#readme",
   "dependencies": {
+    "@angular/core": "^2.0.0-rc.1",
+    "apollo-client": "^0.3.0",
     "lodash": "^4.11.1"
   },
-  "peerDependencies": {
-    "@angular/core": "^2.0.0-rc.1",
-    "apollo-client": "^0.3.0"
-  },
   "devDependencies": {
-    "@angular/core": "^2.0.0-rc.1",
     "@angular/common": "^2.0.0-rc.1",
     "@angular/compiler": "^2.0.0-rc.1",
     "@angular/platform-browser": "^2.0.0-rc.1",
     "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
-    "apollo-client": "^0.3.0",
     "es6-shim": "^0.35.0",
     "ghooks": "^1.2.1",
     "graphql": "^0.5.0",
@@ -61,7 +57,6 @@
     "remap-istanbul": "^0.6.3",
     "rimraf": "^2.5.2",
     "rxjs": "5.0.0-beta.6",
-    "tsc": "^1.20150623.0",
     "tslint": "^3.7.4",
     "typescript": "^1.8.10",
     "validate-commit-msg": "^2.6.1",

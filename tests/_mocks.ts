@@ -2,19 +2,17 @@ import ApolloClient from 'apollo-client';
 
 import {
   NetworkInterface,
-  Request,
 } from 'apollo-client/networkInterface';
 
 import {
   GraphQLResult,
   Document,
-  parse,
   print,
 } from 'graphql';
 
 // Pass in multiple mocked responses, so that you can test flows that end up
 // making multiple queries to the server
-function mockNetworkInterface(
+export default function mockNetworkInterface(
   ...mockedResponses: MockedResponse[]
 ): NetworkInterface {
   return new MockNetworkInterface(...mockedResponses);
@@ -52,10 +50,10 @@ export class MockNetworkInterface implements NetworkInterface {
     mockedResponses.push(mockedResponse);
   }
 
-  public query(request: Request) {
+  public query(request) {
     return new Promise((resolve, reject) => {
       const parsedRequest: ParsedRequest = {
-        query: parse(request.query),
+        query: request.query,
         variables: request.variables,
         debugName: request.debugName,
       };
@@ -63,7 +61,7 @@ export class MockNetworkInterface implements NetworkInterface {
       const key = requestToKey(parsedRequest);
 
       if (!this.mockedResponsesByKey[key]) {
-        throw new Error(`No more mocked responses for the query: ${request.query}`);
+        throw new Error('No more mocked responses for the query: ' + request.query);
       }
 
       const { result, error, delay } = this.mockedResponsesByKey[key].shift();
