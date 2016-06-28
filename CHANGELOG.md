@@ -1,6 +1,6 @@
 # Change log
 
-### vNEXT
+### v0.3.0
 
 - Added SSR support
 - Left `lodash` as the only one dependency and `@angular/core` with `apollo-client` as peerDependecies ([PR #29](https://github.com/apollostack/angular2-apollo/pull/29))
