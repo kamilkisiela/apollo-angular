@@ -142,9 +142,9 @@ class ApolloHandle {
   private createMutation(mutationName: string, method: Function) {
     // assign to component's context
     this.component[mutationName] = (...args): Promise<GraphQLResult> => {
-      const { mutation, variables } = method.apply(this.client, args);
+      const options = method.apply(this.client, args);
 
-      return this.client.mutate({ mutation, variables });
+      return this.client.mutate(options);
     };
   }
 
