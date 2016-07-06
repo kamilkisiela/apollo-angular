@@ -33,7 +33,7 @@
   "homepage": "https://github.com/apollostack/angular2-apollo#readme",
   "dependencies": {
     "@angular/core": "^2.0.0-rc.1",
-    "apollo-client": "^0.3.0",
+    "apollo-client": "^0.3.0 || ^0.4.0",
     "graphql-tag": "^0.1.7",
     "lodash": "^4.11.1"
   },

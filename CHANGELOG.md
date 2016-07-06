@@ -3,6 +3,7 @@
 ### vNEXT
 
 - Passing all the options of mutation in `Apollo` decorator [PR #39](https://github.com/apollostack/angular2-apollo/pull/39)
+- Added support for `apollo-client` breaking change that moves methods to query's observable ([PR #40](https://github.com/apollostack/angular2-apollo/pull/40))
 
 ### v0.3.0
 
