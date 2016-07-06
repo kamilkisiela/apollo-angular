@@ -1,5 +1,9 @@
 # Change log
 
+### vNEXT
+
+- Passing all the options of mutation in `Apollo` decorator [PR #39](https://github.com/apollostack/angular2-apollo/pull/39)
+
 ### v0.3.0
 
 - Added SSR support
