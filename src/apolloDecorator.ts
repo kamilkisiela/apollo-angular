@@ -161,9 +161,9 @@ class ApolloHandle {
         errors,
         loading: false,
         unsubscribe: () => this.getQuery(queryName).unsubscribe(),
-        refetch: (...args) => this.getQuery(queryName).refetch(...args),
-        stopPolling: () => this.getQuery(queryName).stopPolling(),
-        startPolling: (...args) => this.getQuery(queryName).startPolling(...args),
+        refetch: (...args) => obs.refetch(...args),
+        stopPolling: () => obs.stopPolling(),
+        startPolling: (...args) => obs.startPolling(...args),
       }, changed ? data : {});
     };
 
