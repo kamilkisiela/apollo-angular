@@ -189,12 +189,13 @@ class ApolloHandle {
       loading: true,
     };
 
-    const setQuery = ({ errors, data = {} }: any) => {
+    const setQuery = ({ errors, loading, data = {} }: any) => {
       const changed = this.hasDataChanged(queryName, data);
 
       assign(this.component[queryName], {
         errors,
-        loading: false,
+        // XXX backwards compatibility of loading property
+        loading: !!loading,
         unsubscribe: () => this.getQuerySub(queryName).unsubscribe(),
         refetch: (...args) => this.backcompat(queryName, 'refetch', args),
         stopPolling: () => this.backcompat(queryName, 'stopPolling'),
