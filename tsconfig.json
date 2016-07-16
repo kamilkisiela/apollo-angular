@@ -13,6 +13,7 @@
   },
   "files": [
     "typings/index.d.ts",
+    "global.d.ts",
     "src/index.ts",
     "tests/index.ts"
    ]

@@ -22,14 +22,11 @@ install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - npm i
-  - npm install -g typings
   - npm install -g coveralls
 
 script:
   # remove unused node modules from cache
   - npm prune
-  # install typings
-  - typings i
   # karma tests
   - npm test
 

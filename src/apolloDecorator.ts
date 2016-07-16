@@ -1,14 +1,10 @@
-import ApolloClient from 'apollo-client';
+import ApolloClient, {
+  ApolloQueryResult,
+} from 'apollo-client';
 
-import {
-  GraphQLResult,
-} from 'graphql';
-
-import {
-  isEqual,
-  forIn,
-  assign,
-} from 'lodash';
+import isEqual = require('lodash.isequal');
+import forIn = require('lodash.forin');
+import assign = require('lodash.assign');
 
 export interface ApolloOptions {
   client: ApolloClient;
@@ -150,7 +146,7 @@ class ApolloHandle {
 
   private createMutation(mutationName: string, method: Function) {
     // assign to component's context
-    this.component[mutationName] = (...args): Promise<GraphQLResult> => {
+    this.component[mutationName] = (...args): Promise<ApolloQueryResult> => {
       const options = method.apply(this.client, args);
 
       return this.client.mutate(options);

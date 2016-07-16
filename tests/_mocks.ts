@@ -2,13 +2,18 @@ import ApolloClient from 'apollo-client';
 
 import {
   NetworkInterface,
+  BatchedNetworkInterface,
+  Request,
 } from 'apollo-client/networkInterface';
 
 import {
   GraphQLResult,
   Document,
-  print,
 } from 'graphql';
+
+import {
+  print,
+} from 'graphql-tag/printer';
 
 // Pass in multiple mocked responses, so that you can test flows that end up
 // making multiple queries to the server
@@ -16,6 +21,12 @@ export default function mockNetworkInterface(
   ...mockedResponses: MockedResponse[]
 ): NetworkInterface {
   return new MockNetworkInterface(...mockedResponses);
+}
+
+export function mockBatchedNetworkInterface(
+    ...mockedResponses: MockedResponse[]
+): NetworkInterface {
+  return new MockBatchedNetworkInterface(...mockedResponses);
 }
 
 export interface ParsedRequest {
@@ -50,7 +61,7 @@ export class MockNetworkInterface implements NetworkInterface {
     mockedResponses.push(mockedResponse);
   }
 
-  public query(request) {
+  public query(request: Request) {
     return new Promise((resolve, reject) => {
       const parsedRequest: ParsedRequest = {
         query: request.query,
@@ -59,12 +70,13 @@ export class MockNetworkInterface implements NetworkInterface {
       };
 
       const key = requestToKey(parsedRequest);
+      const responses = this.mockedResponsesByKey[key];
 
-      if (!this.mockedResponsesByKey[key]) {
-        throw new Error('No more mocked responses for the query: ' + request.query);
+      if (!responses || responses.length === 0) {
+        throw new Error('No more mocked responses for the query: ' + print(request.query));
       }
 
-      const { result, error, delay } = this.mockedResponsesByKey[key].shift();
+      const { result, error, delay } = responses.shift();
 
       if (!result && !error) {
         throw new Error(`Mocked response should contain either result or error: ${key}`);
@@ -78,6 +90,18 @@ export class MockNetworkInterface implements NetworkInterface {
         }
       }, delay ? delay : 0);
     });
+  }
+}
+
+export class MockBatchedNetworkInterface
+extends MockNetworkInterface implements BatchedNetworkInterface {
+  public batchQuery(requests: Request[]): Promise<GraphQLResult[]> {
+    const resultPromises: Promise<GraphQLResult>[] = [];
+    requests.forEach((request) => {
+      resultPromises.push(this.query(request));
+    });
+
+    return Promise.all(resultPromises);
   }
 }
 
