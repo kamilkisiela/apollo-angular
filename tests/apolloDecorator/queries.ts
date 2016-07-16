@@ -218,7 +218,7 @@ describe('Apollo - decorator - queries()', () => {
       setTimeout(() => {
         expect(typeof component.data.unsubscribe).toEqual('function');
 
-        const spy = spyOn(component.__apolloHandle.getQuery('data'), 'unsubscribe');
+        const spy = spyOn(component.__apolloHandle.getQuerySub('data'), 'unsubscribe');
         component.data.unsubscribe();
 
         expect(spy).toHaveBeenCalled();

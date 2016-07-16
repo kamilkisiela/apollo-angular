@@ -1,10 +1,14 @@
+import 'reflect-metadata';
+import 'rxjs';
+import 'zone.js/dist/zone';
+import 'zone.js/dist/long-stack-trace-zone';
+
 import {
   bootstrap,
 } from '@angular/platform-browser-dynamic';
 
 import {
   Component,
-  Injectable,
 } from '@angular/core';
 
 import {
@@ -15,11 +19,13 @@ import ApolloClient, {
   createNetworkInterface,
 } from 'apollo-client';
 
-import gql from 'apollo-client/gql';
+import gql from 'graphql-tag';
 
 import {
-  GraphQLResult,
-} from 'graphql';
+  ApolloQueryResult,
+} from 'apollo-client';
+
+import template from './main.html';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface('/graphql'),
@@ -27,12 +33,11 @@ const client = new ApolloClient({
 
 @Component({
   selector: 'app',
-  templateUrl: 'client/main.html',
+  template,
 })
-@Injectable()
 @Apollo({
   client,
-  queries(state: any) {
+  queries(component: Main) {
     return {
       data: {
         query: gql`
@@ -48,12 +53,12 @@ const client = new ApolloClient({
           }
         `,
         variables: {
-          name: state.nameFilter,
+          name: component.nameFilter,
         },
       },
     };
   },
-  mutations(state: any) {
+  mutations(component: Main) {
     return {
       addUser: (firstName: string) => ({
         mutation: gql`
@@ -76,7 +81,7 @@ const client = new ApolloClient({
         `,
         variables: {
           firstName,
-          lastName: state.lastName,
+          lastName: component.lastName,
         },
       }),
     };
@@ -87,26 +92,18 @@ class Main {
   public firstName: string;
   public lastName: string;
   public nameFilter: string;
-  public addUser: (firstName: string) => Promise<GraphQLResult>;
+  public addUser: (firstName: string) => Promise<ApolloQueryResult>;
 
   public newUser(firstName: string) {
     this.addUser(firstName)
-      .then((graphQLResult: GraphQLResult) => {
-        const { errors, data } = graphQLResult;
-
-        if (data) {
-          console.log('got data', data);
-        }
-
-        if (errors) {
-          console.log('got some GraphQL execution errors', errors);
-        }
+      .then(({ data }: ApolloQueryResult) => {
+        console.log('got data', data);
 
         // get new data
         this.data.refetch();
       })
-      .catch((error: any) => {
-        console.log('there was an error sending the query', error);
+      .catch((errors: any) => {
+        console.log('there was an error sending the query', errors);
       });
   }
 }
