@@ -2,9 +2,22 @@ import ApolloClient, {
   ApolloQueryResult,
 } from 'apollo-client';
 
+import {
+  ApolloError,
+} from 'apollo-client/errors';
+
 import isEqual = require('lodash.isequal');
 import forIn = require('lodash.forin');
 import assign = require('lodash.assign');
+
+export interface ApolloQuery {
+  errors: ApolloError;
+  loading: boolean;
+  refetch: (variables?: any) => Promise<ApolloQueryResult>;
+  stopPolling: () => void;
+  startPolling: (pollInterval: number) => void;
+  unsubscribe: () => void;
+}
 
 export interface ApolloOptions {
   client: ApolloClient;

@@ -13,6 +13,7 @@ import {
 
 import {
   Apollo,
+  ApolloQuery,
 } from 'angular2-apollo';
 
 import ApolloClient, {
@@ -88,7 +89,7 @@ const client = new ApolloClient({
   },
 })
 class Main {
-  public data: any;
+  public data: ApolloQuery;
   public firstName: string;
   public lastName: string;
   public nameFilter: string;
