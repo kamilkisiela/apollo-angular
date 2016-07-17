@@ -5,6 +5,7 @@
 - Passing all the options of mutation in `Apollo` decorator [PR #39](https://github.com/apollostack/angular2-apollo/pull/39)
 - Added support for `apollo-client` breaking change that moves methods to query's observable ([PR #40](https://github.com/apollostack/angular2-apollo/pull/40))
 - Replaced `lodash` with subpackages, removed `graphql-tag` from dependencies, moved `apollo-client` and `@angular/core` to peerDependecies ([PR #44](https://github.com/apollostack/angular2-apollo/pull/44))
+- Added `ApolloQuery` interface ([PR #45](https://github.com/apollostack/angular2-apollo/pull/45))
 
 ### v0.3.0
 
