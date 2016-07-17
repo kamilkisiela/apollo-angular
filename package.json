@@ -4,9 +4,16 @@
   "description": "Angular 2.0 client for Apollo",
   "main": "build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "directories": {
-    "example": "examples"
+  "author": "Uri Goldshtein <uri.goldshtein@gmail.com> (http://github.com/urigo/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apollostack/angular2-apollo.git"
   },
+  "bugs": {
+    "url": "https://github.com/apollostack/angular2-apollo/issues"
+  },
+  "homepage": "https://github.com/apollostack/angular2-apollo#readme",
   "scripts": {
     "pretest": "npm run build",
     "test": "npm run test-ci",
@@ -22,16 +29,6 @@
     "typings": "typings i",
     "prepublish": "npm run clean && npm run typings && npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/apollostack/angular2-apollo.git"
-  },
-  "author": "Uri Goldshtein <uri.goldshtein@gmail.com> (http://github.com/urigo/)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/apollostack/angular2-apollo/issues"
-  },
-  "homepage": "https://github.com/apollostack/angular2-apollo#readme",
   "peerDependencies": {
     "apollo-client": "^0.3.0 || ^0.4.0",
     "@angular/core": "^2.0.0-rc.1"
