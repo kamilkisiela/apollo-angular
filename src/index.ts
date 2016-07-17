@@ -4,6 +4,7 @@ import {
 
 import {
   Apollo,
+  ApolloQuery,
 } from './apolloDecorator';
 
 import {
@@ -17,6 +18,7 @@ export const APOLLO_PROVIDERS: any[] = [
 
 export {
   Apollo,
+  ApolloQuery,
   ApolloQueryPipe,
   Angular2Apollo,
   defaultApolloClient
