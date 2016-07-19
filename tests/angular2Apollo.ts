@@ -78,15 +78,29 @@ describe('angular2Apollo', () => {
       });
     });
 
+    describe('query()', () => {
+      it('should be called with the same options', () => {
+        const options = {query: '', variables: {}};
+
+        spyOn(client, 'query').and.returnValue('query');
+
+        const result = angular2Apollo.query(options);
+
+        expect(client.query).toHaveBeenCalledWith(options);
+        expect(result).toEqual('query');
+      });
+    });
+
     describe('mutate()', () => {
       it('should be called with the same options', () => {
         const options = {mutation: '', variables: {}};
 
-        spyOn(client, 'mutate').and.returnValue('return');
+        spyOn(client, 'mutate').and.returnValue('mutate');
 
-        angular2Apollo.mutate(options);
+        const result = angular2Apollo.mutate(options);
 
         expect(client.mutate).toHaveBeenCalledWith(options);
+        expect(result).toEqual('mutate');
       });
     });
   });
