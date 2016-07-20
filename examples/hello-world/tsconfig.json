@@ -1,4 +1,6 @@
 {
+  "compileOnSave": false,
+  "buildOnSave": false,
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
