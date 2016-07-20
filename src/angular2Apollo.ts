@@ -31,6 +31,10 @@ export class Angular2Apollo {
     return new ApolloQueryObservable(this.client.watchQuery(options));
   }
 
+  public query(options) {
+    return this.client.query(options);
+  }
+
   public mutate(options) {
     return this.client.mutate(options);
   }
