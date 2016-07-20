@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.4.1
+
 - Added `ApolloQueryObservable` to support `Rx.Observable` in `Angular2Apollo.watchQuery` method ([PR #52](https://github.com/apollostack/angular2-apollo/pull/52))
 - Added `query` method to `Angular2Apollo` service ([PR #51](https://github.com/apollostack/angular2-apollo/pull/51))
 
