@@ -8,6 +8,10 @@ import {
   Inject,
 } from '@angular/core';
 
+import {
+  ApolloQueryObservable,
+} from './apolloQueryObservable';
+
 export const angularApolloClient = new OpaqueToken('AngularApolloClient');
 export const defaultApolloClient = (client: ApolloClient): Provider => {
   return provide(angularApolloClient, {
@@ -23,8 +27,8 @@ export class Angular2Apollo {
 
   }
 
-  public watchQuery(options) {
-    return this.client.watchQuery(options);
+  public watchQuery(options): ApolloQueryObservable<any> {
+    return new ApolloQueryObservable(this.client.watchQuery(options));
   }
 
   public mutate(options) {

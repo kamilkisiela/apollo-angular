@@ -2,7 +2,9 @@ import {
   Provider, ReflectiveInjector,
 } from '@angular/core';
 
-import ApolloClient from 'apollo-client';
+import {
+  mockClient,
+} from './_mocks';
 
 import {
   APOLLO_PROVIDERS,
@@ -14,41 +16,77 @@ import {
   angularApolloClient,
 } from '../src/angular2Apollo';
 
-describe('angular2Apollo', () => {
-  const client = new ApolloClient();
+import {
+  ApolloQueryObservable,
+} from '../src/apolloQueryObservable';
 
-  describe('Angular2Apollo', () => {
-    /**
-     * Gets Angular2Apollo service and calls a method
-     *
-     * Checks if method with the same name has been called
-     * with the same same options
-     *
-     * It also checks if service method returns result of ApolloClient method
-     *
-     * @param  {string} method  Name of method you want to test
-     * @param  {any} options    Used options
-     * @param  {any} result     Mock result
-     */
-    function rawApiCall(method: string, options = 'options', result = 'result') {
-      spyOn(client, method).and.returnValue(result);
+import ApolloClient from 'apollo-client';
 
-      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client), APOLLO_PROVIDERS]);
-      const service = injector.get(Angular2Apollo);
+import gql from 'graphql-tag';
 
-      expect(service[method](options)).toBe(result);
-      expect(client[method]).toHaveBeenCalledWith(options);
+const query = gql`
+  query heroes {
+    allHeroes {
+      heroes {
+        name
+      }
     }
+  }
+`;
+
+const data = {
+  allHeroes: {
+    heroes: [{ name: 'Mr Foo' }, { name: 'Mr Bar' }],
+  },
+};
+
+const client = mockClient({
+  request: { query },
+  result: { data },
+});
+
+describe('angular2Apollo', () => {
+  describe('Angular2Apollo', () => {
+    let angular2Apollo;
+
+    beforeEach(() => {
+      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client), APOLLO_PROVIDERS]);
+      angular2Apollo = injector.get(Angular2Apollo);
+    });
 
     describe('watchQuery()', () => {
-      it('should call same method on client with same args and return it', () => {
-        rawApiCall('watchQuery');
+      it('should be called with the same options', () => {
+        const options = { query };
+
+        spyOn(client, 'watchQuery').and.callThrough();
+
+        angular2Apollo.watchQuery(options);
+
+        expect(client.watchQuery).toHaveBeenCalledWith(options);
+      });
+
+      describe('result', () => {
+        let obs;
+
+        beforeEach(() => {
+          obs = angular2Apollo.watchQuery({ query });
+        });
+
+        it('should return the ApolloQueryObserable', () => {
+          expect(obs instanceof ApolloQueryObservable).toEqual(true);
+        });
       });
     });
 
     describe('mutate()', () => {
-      it('should call same method on client with same args and return it', () => {
-        rawApiCall('mutate');
+      it('should be called with the same options', () => {
+        const options = {mutation: '', variables: {}};
+
+        spyOn(client, 'mutate').and.returnValue('return');
+
+        angular2Apollo.mutate(options);
+
+        expect(client.mutate).toHaveBeenCalledWith(options);
       });
     });
   });
