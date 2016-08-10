@@ -12,6 +12,10 @@ import {
   defaultApolloClient,
 } from './angular2Apollo';
 
+import {
+  ApolloQueryObservable,
+} from './apolloQueryObservable';
+
 export const APOLLO_PROVIDERS: any[] = [
   Angular2Apollo,
 ];
@@ -19,6 +23,7 @@ export const APOLLO_PROVIDERS: any[] = [
 export {
   Apollo,
   ApolloQuery,
+  ApolloQueryObservable,
   ApolloQueryPipe,
   Angular2Apollo,
   defaultApolloClient

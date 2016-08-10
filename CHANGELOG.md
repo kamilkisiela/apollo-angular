@@ -3,6 +3,7 @@
 ### vNEXT
 
 - Added `fetchMore` support ([PR #58](https://github.com/apollostack/angular2-apollo/pull/58))
+- Exposed `ApolloQueryObservable` in the index module ([PR #54](https://github.com/apollostack/angular2-apollo/pull/54))
 
 ### v0.4.1
 
