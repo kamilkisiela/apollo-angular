@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Added `fetchMore` support ([PR #58](https://github.com/apollostack/angular2-apollo/pull/58))
+
 ### v0.4.1
 
 - Added `ApolloQueryObservable` to support `Rx.Observable` in `Angular2Apollo.watchQuery` method ([PR #52](https://github.com/apollostack/angular2-apollo/pull/52))
