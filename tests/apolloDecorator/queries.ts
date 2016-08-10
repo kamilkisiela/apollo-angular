@@ -253,6 +253,20 @@ describe('Apollo - decorator - queries()', () => {
         done();
       }, 200);
     });
+
+    it('should be able to fetch more', (done) => {
+      component.ngOnInit();
+
+      setTimeout(() => {
+        expect(typeof component.data.fetchMore).toEqual('function');
+
+        const spy = spyOn(component.__apolloHandle.getQuery('data'), 'fetchMore');
+        component.data.fetchMore(1234);
+
+        expect(spy).toHaveBeenCalledWith(1234);
+        done();
+      }, 200);
+    });
   });
 
   it('should unsubscribe all queries on ngOnDestroy', (done) => {

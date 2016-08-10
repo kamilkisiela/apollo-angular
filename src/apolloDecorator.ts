@@ -175,6 +175,14 @@ class ApolloHandle {
     return this.getQuery(queryName)[method](...args);
   }
 
+  private missingCompat(queryName: string, method: string, args?) {
+    if (!this.getQuery(queryName)[method]) {
+      throw new Error(`Your version of the ApolloClient does not support '${method}'. Try to update.`);
+    }
+
+    return this.getQuery(queryName)[method](...args);
+  }
+
   private subscribe(queryName: string, obs: any) {
     this.component[queryName] = {
       errors: null,
@@ -191,6 +199,7 @@ class ApolloHandle {
         refetch: (...args) => this.backcompat(queryName, 'refetch', args),
         stopPolling: () => this.backcompat(queryName, 'stopPolling'),
         startPolling: (...args) => this.backcompat(queryName, 'startPolling', args),
+        fetchMore: (...args) => this.missingCompat(queryName, 'fetchMore', args),
       }, changed ? data : {});
     };
 
