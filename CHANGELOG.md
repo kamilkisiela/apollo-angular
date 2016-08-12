@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.4.2
+
 - Added `fetchMore` support ([PR #58](https://github.com/apollostack/angular2-apollo/pull/58))
 - Exposed `ApolloQueryObservable` in the index module ([PR #54](https://github.com/apollostack/angular2-apollo/pull/54))
 - Added support for getting `loading` state from ApolloQueryResult [Issue #36](https://github.com/apollostack/angular2-apollo/issues/36) ([PR #43](https://github.com/apollostack/angular2-apollo/pull/43))
