@@ -1,18 +1,11 @@
-import {
-  Observable,
-} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
+import { Subscription } from 'rxjs/Subscription';
+import { Operator } from 'rxjs/Operator';
+import { $$observable } from 'rxjs/symbol/observable';
 
-import {
-  Operator,
-} from 'rxjs/Operator';
-
-import {
-  Subscriber,
-} from 'rxjs/Subscriber';
-
-import {
-  Subscription,
-} from 'rxjs/Subscription';
+import { FetchMoreOptions } from 'apollo-client/ObservableQuery';
+import { FetchMoreQueryOptions } from 'apollo-client/watchQueryOptions';
 
 export class ApolloQueryObservable<T> extends Observable<T> {
   constructor(public apollo: any, subscribe?: <R>(subscriber: Subscriber<R>) => Subscription | Function | void) {
@@ -28,6 +21,8 @@ export class ApolloQueryObservable<T> extends Observable<T> {
     return observable;
   }
 
+  // apollo-specific methods
+
   public refetch(variables?: any): Promise<any> {
     return this.apollo.refetch(variables);
   }
@@ -38,5 +33,16 @@ export class ApolloQueryObservable<T> extends Observable<T> {
 
   public startPolling(p: number): void {
     return this.apollo.startPolling(p);
+  }
+
+  public fetchMore(options: FetchMoreQueryOptions & FetchMoreOptions): Promise<any> {
+    return this.apollo.fetchMore(options);
+  }
+
+  // where magic happens
+
+  protected _subscribe(subscriber: Subscriber<T>) {
+    const apollo = this.apollo;
+    return apollo[$$observable]().subscribe(subscriber);
   }
 }
