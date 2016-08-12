@@ -15,8 +15,6 @@ import {
   print,
 } from 'graphql-tag/printer';
 
-// Pass in multiple mocked responses, so that you can test flows that end up
-// making multiple queries to the server
 export default function mockNetworkInterface(
   ...mockedResponses: MockedResponse[]
 ): NetworkInterface {
@@ -25,7 +23,7 @@ export default function mockNetworkInterface(
 
 export function mockBatchedNetworkInterface(
     ...mockedResponses: MockedResponse[]
-): NetworkInterface {
+): BatchedNetworkInterface {
   return new MockBatchedNetworkInterface(...mockedResponses);
 }
 
@@ -71,9 +69,8 @@ export class MockNetworkInterface implements NetworkInterface {
 
       const key = requestToKey(parsedRequest);
       const responses = this.mockedResponsesByKey[key];
-
       if (!responses || responses.length === 0) {
-        throw new Error('No more mocked responses for the query: ' + print(request.query));
+        throw new Error(`No more mocked responses for the query: ${print(request.query)}, variables: ${JSON.stringify(request.variables)}`);
       }
 
       const { result, error, delay } = responses.shift();
@@ -92,7 +89,6 @@ export class MockNetworkInterface implements NetworkInterface {
     });
   }
 }
-
 export class MockBatchedNetworkInterface
 extends MockNetworkInterface implements BatchedNetworkInterface {
   public batchQuery(requests: Request[]): Promise<GraphQLResult[]> {
@@ -100,14 +96,11 @@ extends MockNetworkInterface implements BatchedNetworkInterface {
     requests.forEach((request) => {
       resultPromises.push(this.query(request));
     });
-
     return Promise.all(resultPromises);
   }
 }
-
 function requestToKey(request: ParsedRequest): string {
   const queryString = request.query && print(request.query);
-
   return JSON.stringify({
     variables: request.variables,
     debugName: request.debugName,

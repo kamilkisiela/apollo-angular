@@ -3,6 +3,12 @@ import {
 } from '@angular/core';
 
 import {
+  Subject,
+} from 'rxjs/Subject';
+
+import 'rxjs/add/operator/map';
+
+import {
   mockClient,
 } from './_mocks';
 
@@ -19,8 +25,6 @@ import {
 import {
   ApolloQueryObservable,
 } from '../src/apolloQueryObservable';
-
-import ApolloClient from 'apollo-client';
 
 import gql from 'graphql-tag';
 
@@ -40,12 +44,40 @@ const data = {
   },
 };
 
-const client = mockClient({
-  request: { query },
-  result: { data },
-});
+const data2 = {
+  allHeroes: {
+    heroes: [{ name: 'Mrs Foo' }, { name: 'Mrs Bar' }],
+  },
+};
+
+const data3 = {
+  allHeroes: {
+    heroes: [{ name: 'Mr Bar' }],
+  },
+};
 
 describe('angular2Apollo', () => {
+  let client;
+
+  beforeEach(() => {
+    client = mockClient({
+      request: { query },
+      result: { data },
+    }, {
+      request: { query, variables: { foo: 'Foo' } },
+      result: { data: data2 },
+    }, {
+      request: { query, variables: { foo: 'Bar' } },
+      result: { data: data3 },
+    }, {
+      request: { query, variables: { foo: 'Foo', bar: 'Bar' } },
+      result: { data: data2 },
+    }, {
+      request: { query, variables: { foo: 'Foo', bar: 'Baz' } },
+      result: { data: data3 },
+    });
+  });
+
   describe('Angular2Apollo', () => {
     let angular2Apollo;
 
@@ -65,14 +97,90 @@ describe('angular2Apollo', () => {
         expect(client.watchQuery).toHaveBeenCalledWith(options);
       });
 
-      describe('result', () => {
-        let obs;
+      it('should be able to use obserable variable', (done) => {
+        const variables = {
+          foo: new Subject(),
+        };
+        // XXX forceFetch? see https://github.com/apollostack/apollo-client/issues/535
+        const options = { query, variables, forceFetch: true };
+        let calls = 0;
 
-        beforeEach(() => {
-          obs = angular2Apollo.watchQuery({ query });
+        angular2Apollo
+          .watchQuery(options)
+          .map(result => result.data)
+          .subscribe((result) => {
+            calls++;
+            if (calls === 1) {
+              expect(result).toEqual(data2);
+            } else if (calls === 2) {
+              expect(result).toEqual(data3);
+              done();
+            }
+          });
+
+        variables.foo.next('Foo');
+
+        setTimeout(() => {
+          variables.foo.next('Bar');
+        }, 200);
+      });
+
+      it('should be able to use obserable variables', (done) => {
+        const variables = {
+          foo: new Subject(),
+          bar: new Subject(),
+        };
+        // XXX forceFetch? see https://github.com/apollostack/apollo-client/issues/535
+        const options = { query, variables, forceFetch: true };
+        let calls = 0;
+
+        angular2Apollo
+          .watchQuery(options)
+          .map(result => result.data)
+          .subscribe((result) => {
+            calls++;
+            if (calls === 1) {
+              expect(result).toEqual(data2);
+            } else if (calls === 2) {
+              expect(result).toEqual(data3);
+              done();
+            }
+          });
+
+        variables.foo.next('Foo');
+        variables.bar.next('Bar');
+
+        setTimeout(() => {
+          variables.bar.next('Baz');
+        }, 200);
+      });
+
+      it('should be able to refetch', (done) => {
+        const variables = { foo: 'foo' };
+        const options = { query, variables };
+
+        const obs = angular2Apollo
+          .watchQuery(options);
+
+        obs.subscribe(() => {});
+
+        obs.refetch({ foo: 'Bar' }).then(result => {
+          expect(result.data).toEqual(data3);
+          done();
+        });
+      });
+
+      describe('result', () => {
+        it('should return the ApolloQueryObserable when no variables', () => {
+          const obs = angular2Apollo.watchQuery({ query });
+          expect(obs instanceof ApolloQueryObservable).toEqual(true);
         });
 
-        it('should return the ApolloQueryObserable', () => {
+        it('should return the ApolloQueryObserable when variables', () => {
+          const variables = {
+            foo: new Subject(),
+          };
+          const obs = angular2Apollo.watchQuery({ query, variables });
           expect(obs instanceof ApolloQueryObservable).toEqual(true);
         });
       });
