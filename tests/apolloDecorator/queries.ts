@@ -267,6 +267,20 @@ describe('Apollo - decorator - queries()', () => {
         done();
       }, 200);
     });
+
+    it('should throw an error on missing feature', (done) => {
+      component.ngOnInit();
+
+      setTimeout(() => {
+        component.__apolloHandle.getQuery('data').fetchMore = undefined;
+
+        expect(() => {
+          component.data.fetchMore(1234);
+        }).toThrowError(/support/);
+
+        done();
+      }, 200);
+    });
   });
 
   it('should unsubscribe all queries on ngOnDestroy', (done) => {
