@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Added `ApolloModule` (with RC5 of Angular2 comes NgModules) ([PR #63](https://github.com/apollostack/angular2-apollo/pull/63))
+
 ### v0.4.2
 
 - Added `fetchMore` support ([PR #58](https://github.com/apollostack/angular2-apollo/pull/58))

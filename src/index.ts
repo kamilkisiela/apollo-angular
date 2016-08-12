@@ -16,12 +16,17 @@ import {
   ApolloQueryObservable,
 } from './apolloQueryObservable';
 
+import {
+  ApolloModule,
+} from './apolloModule';
+
 export const APOLLO_PROVIDERS: any[] = [
   Angular2Apollo,
 ];
 
 export {
   Apollo,
+  ApolloModule,
   ApolloQuery,
   ApolloQueryObservable,
   ApolloQueryPipe,
