@@ -9,7 +9,9 @@
 
 <input type="search" placeholder="Type name..." [(ngModel)]="nameFilter" />
 
-<ul>
+<div *ngIf="data.loading">loading ...</div>
+
+<ul *ngIf="!data.loading">
   <li *ngFor="let user of data.users">
     {{ user.firstName }} {{ user.lastName }}
   </li>
