@@ -9,10 +9,8 @@
 
 <input type="search" placeholder="Type name..." [(ngModel)]="nameFilter" />
 
-<div *ngIf="data.loading">loading ...</div>
-
-<ul *ngIf="!data.loading">
-  <li *ngFor="let user of data.users">
-    {{ user.firstName }} {{ user.lastName }}
+<ul>
+  <li *ngFor="let user of data | async | apolloQuery: 'users'">
+    {{user.firstName}} {{user.lastName}}
   </li>
 </ul>
