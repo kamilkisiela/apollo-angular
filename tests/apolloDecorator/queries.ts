@@ -281,6 +281,21 @@ describe('Apollo - decorator - queries()', () => {
         done();
       }, 200);
     });
+
+    it('should use method from subscription if available', (done) => {
+      component.ngOnInit();
+
+      setTimeout(() => {
+        let called = false;
+        component.__apolloHandle.getQuerySub('data').refetch = () => {called = true};
+
+        component.data.refetch(1234);
+
+        expect(called).toBe(true);
+
+        done();
+      }, 200);
+    });
   });
 
   it('should unsubscribe all queries on ngOnDestroy', (done) => {
