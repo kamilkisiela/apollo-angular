@@ -9,6 +9,7 @@
   },
   "files": [
     "typings/index.d.ts",
-    "client/main.ts"
+    "custom.d.ts",
+    "client/index.ts"
   ]
 }
