@@ -7,7 +7,7 @@
 
 <h2>List</h2>
 
-<input type="search" placeholder="Type name..." [(ngModel)]="nameFilter" />
+<input type="search" placeholder="Type name..." [formControl]="nameControl" />
 
 <ul>
   <li *ngFor="let user of data | async | apolloQuery: 'users'">
