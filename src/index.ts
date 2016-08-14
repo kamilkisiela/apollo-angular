@@ -1,24 +1,8 @@
-import {
-  ApolloQueryPipe,
-} from './apolloQueryPipe';
-
-import {
-  Apollo,
-  ApolloQuery,
-} from './apolloDecorator';
-
-import {
-  Angular2Apollo,
-  defaultApolloClient,
-} from './angular2Apollo';
-
-import {
-  ApolloQueryObservable,
-} from './apolloQueryObservable';
-
-import {
-  ApolloModule,
-} from './apolloModule';
+import { ApolloQueryPipe } from './ApolloQueryPipe';
+import { Apollo, ApolloQuery } from './ApolloDecorator';
+import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
+import { ApolloQueryObservable } from './ApolloQueryObservable';
+import { ApolloModule } from './ApolloModule';
 
 export const APOLLO_PROVIDERS: any[] = [
   Angular2Apollo,

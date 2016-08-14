@@ -1,14 +1,6 @@
-import {
-  Apollo,
-} from '../../src';
-
-import {
-  exampleQuery,
-} from '../_helpers';
-
-import {
-  mockClient,
-} from '../_mocks';
+import { Apollo } from '../../src';
+import { exampleQuery } from '../_helpers';
+import { mockClient } from '../_mocks';
 
 describe('Apollo - decorator - common', () => {
   it('should save already existing prototype', () => {

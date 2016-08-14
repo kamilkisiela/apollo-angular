@@ -3,8 +3,8 @@ import 'es6-shim';
 import 'reflect-metadata';
 
 // tests
-import './angular2Apollo';
+import './Angular2Apollo';
 import './utils';
-import './apolloQueryObservable';
-import './apolloQueryPipe';
-import './apolloDecorator';
+import './ApolloQueryObservable';
+import './ApolloQueryPipe';
+import './ApolloDecorator';

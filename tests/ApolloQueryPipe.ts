@@ -1,6 +1,4 @@
-import {
-  ApolloQueryPipe,
-} from '../src';
+import { ApolloQueryPipe } from '../src';
 
 describe('ApolloQueryPipe', () => {
   let pipe: ApolloQueryPipe;
