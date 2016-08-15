@@ -16,19 +16,19 @@ export interface IObservableQuery {
 export class ObservableQueryRef implements IObservableQuery {
   public apollo: ObservableQuery;
 
-  public refetch(variables) {
+  public refetch(variables?: any): Promise<ApolloQueryResult> {
     return this.apollo.refetch(variables);
   }
 
-  public stopPolling() {
+  public stopPolling(): void {
     return this.apollo.stopPolling();
   }
 
-  public startPolling(p) {
+  public startPolling(p: number): void {
     return this.apollo.startPolling(p);
   }
 
-  public fetchMore(options) {
+  public fetchMore(options: any): Promise<any> {
     return this.apollo.fetchMore(options);
   }
 }

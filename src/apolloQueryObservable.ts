@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { Subscription } from 'rxjs/Subscription';
 import { Operator } from 'rxjs/Operator';
+import { ApolloQueryResult } from 'apollo-client';
 
 import { ObservableQueryRef, IObservableQuery } from './utils/observableQuery';
 
@@ -21,19 +22,19 @@ export class ApolloQueryObservable<T> extends Observable<T> implements IObservab
 
   // apollo-specific methods
 
-  public refetch(variables) {
+  public refetch(variables?: any): Promise<ApolloQueryResult> {
     return this.apollo.refetch(variables);
   }
 
-  public stopPolling() {
+  public stopPolling(): void {
     return this.apollo.stopPolling();
   }
 
-  public startPolling(p) {
+  public startPolling(p: number): void {
     return this.apollo.startPolling(p);
   }
 
-  public fetchMore(options) {
+  public fetchMore(options: any): Promise<any> {
     return this.apollo.fetchMore(options);
   }
 }
