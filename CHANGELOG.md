@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.4.3
+
 - Added `ApolloModule` (with RC5 of Angular2 comes NgModules) ([PR #63](https://github.com/apollostack/angular2-apollo/pull/63))
 - Added ability to use query variables as observables. With this, the query can be automatically re-run when those obserables emit new values. ([PR #64](https://github.com/apollostack/angular2-apollo/pull/64))
 
