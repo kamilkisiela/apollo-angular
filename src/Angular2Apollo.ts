@@ -1,29 +1,14 @@
+import { Provider, provide, OpaqueToken, Injectable, Inject } from '@angular/core';
+
+import { ApolloQueryObservable } from './ApolloQueryObservable';
+import { ObservableQueryRef } from './utils/ObservableQuery';
+import { observeVariables } from './utils/observeVariables';
+
 import ApolloClient from 'apollo-client';
-
-import {
-  Provider,
-  provide,
-  OpaqueToken,
-  Injectable,
-  Inject,
-} from '@angular/core';
-
-import 'rxjs/add/operator/switchMap';
-
 import assign = require('lodash.assign');
 import omit = require('lodash.omit');
 
-import {
-  ApolloQueryObservable,
-} from './apolloQueryObservable';
-
-import {
-  ObservableQueryRef,
-} from './utils/observableQuery';
-
-import {
-  observeVariables,
-} from './utils/observeVariables';
+import 'rxjs/add/operator/switchMap';
 
 export const angularApolloClient = new OpaqueToken('AngularApolloClient');
 export const defaultApolloClient = (client: ApolloClient): Provider => {

@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Operator } from 'rxjs/Operator';
 import { ApolloQueryResult } from 'apollo-client';
 
-import { ObservableQueryRef, IObservableQuery } from './utils/observableQuery';
+import { ObservableQueryRef, IObservableQuery } from './utils/ObservableQuery';
 
 export class ApolloQueryObservable<T> extends Observable<T> implements IObservableQuery  {
   constructor(public apollo: ObservableQueryRef, subscribe?: <R>(subscriber: Subscriber<R>) => Subscription | Function | void) {

@@ -1,14 +1,6 @@
-import {
-  ApolloQueryObservable,
-} from '../src/apolloQueryObservable';
-
-import {
-  ObservableQueryRef,
-} from '../src/utils/observableQuery';
-
-import {
-  mockClient,
-} from './_mocks';
+import { ApolloQueryObservable } from '../src/ApolloQueryObservable';
+import { ObservableQueryRef } from '../src/utils/ObservableQuery';
+import { mockClient } from './_mocks';
 
 import gql from 'graphql-tag';
 import ApolloClient from 'apollo-client';

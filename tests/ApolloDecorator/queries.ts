@@ -1,16 +1,8 @@
+import { Apollo } from '../../src';
+import { Lifecycle } from '../_helpers';
+import { mockClient } from '../_mocks';
+
 import gql from 'graphql-tag';
-
-import {
-  Apollo,
-} from '../../src';
-
-import {
-  Lifecycle,
-} from '../_helpers';
-
-import {
-  mockClient,
-} from '../_mocks';
 
 const query = gql`
   query heroes {
@@ -21,7 +13,6 @@ const query = gql`
     }
   }
 `;
-
 
 describe('Apollo - decorator - queries()', () => {
   it('should set queries with ngOnInit', () => {

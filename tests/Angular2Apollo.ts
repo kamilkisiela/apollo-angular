@@ -1,32 +1,14 @@
-import {
-  Provider, ReflectiveInjector,
-} from '@angular/core';
+import { Provider, ReflectiveInjector } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
-import {
-  Subject,
-} from 'rxjs/Subject';
-
-import 'rxjs/add/operator/map';
-
-import {
-  mockClient,
-} from './_mocks';
-
-import {
-  APOLLO_PROVIDERS,
-} from '../src/index';
-
-import {
-  Angular2Apollo,
-  defaultApolloClient,
-  angularApolloClient,
-} from '../src/angular2Apollo';
-
-import {
-  ApolloQueryObservable,
-} from '../src/apolloQueryObservable';
+import { mockClient } from './_mocks';
+import { APOLLO_PROVIDERS } from '../src/index';
+import { Angular2Apollo, defaultApolloClient, angularApolloClient } from '../src/Angular2Apollo';
+import { ApolloQueryObservable } from '../src/ApolloQueryObservable';
 
 import gql from 'graphql-tag';
+
+import 'rxjs/add/operator/map';
 
 const query = gql`
   query heroes {

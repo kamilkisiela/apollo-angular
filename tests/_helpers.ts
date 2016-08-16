@@ -1,8 +1,6 @@
-import gql from 'graphql-tag';
+import { Document } from 'graphql';
 
-import {
-  Document,
-} from 'graphql';
+import gql from 'graphql-tag';
 
 export class Lifecycle {
   public ngOnInit() {};

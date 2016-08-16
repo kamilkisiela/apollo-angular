@@ -1,14 +1,6 @@
-import {
-  Apollo,
-} from '../../src';
-
-import {
-  Lifecycle,
-} from '../_helpers';
-
-import {
-  mockClient,
-} from '../_mocks';
+import { Apollo } from '../../src';
+import { Lifecycle } from '../_helpers';
+import { mockClient } from '../_mocks';
 
 describe('Apollo - decorator - mutations()', () => {
   let spyMutate;

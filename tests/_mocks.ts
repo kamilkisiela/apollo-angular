@@ -1,19 +1,8 @@
+import { NetworkInterface, BatchedNetworkInterface, Request } from 'apollo-client/networkInterface';
+import { GraphQLResult, Document } from 'graphql';
+import { print } from 'graphql-tag/printer';
+
 import ApolloClient from 'apollo-client';
-
-import {
-  NetworkInterface,
-  BatchedNetworkInterface,
-  Request,
-} from 'apollo-client/networkInterface';
-
-import {
-  GraphQLResult,
-  Document,
-} from 'graphql';
-
-import {
-  print,
-} from 'graphql-tag/printer';
 
 export default function mockNetworkInterface(
   ...mockedResponses: MockedResponse[]
