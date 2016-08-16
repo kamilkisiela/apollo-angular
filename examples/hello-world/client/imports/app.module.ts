@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule  } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApolloModule } from 'angular2-apollo';
 
 import { AppComponent } from './app.component';
@@ -11,6 +11,7 @@ import { client } from './client';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     ApolloModule.withClient(client),
   ],
   bootstrap: [ AppComponent ],

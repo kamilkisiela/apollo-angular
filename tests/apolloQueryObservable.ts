@@ -3,10 +3,15 @@ import {
 } from '../src/apolloQueryObservable';
 
 import {
+  ObservableQueryRef,
+} from '../src/utils/observableQuery';
+
+import {
   mockClient,
 } from './_mocks';
 
 import gql from 'graphql-tag';
+import ApolloClient from 'apollo-client';
 
 import 'rxjs/add/operator/map';
 
@@ -26,17 +31,23 @@ const data = {
 };
 
 describe('ApolloQueryObservable', () => {
+  let apolloRef: ObservableQueryRef;
   let obsApollo;
-  let obsQuery;
-  let client;
+  let obsQuery: ApolloQueryObservable<any>;
+  let client: ApolloClient;
 
   beforeEach(() => {
     client = mockClient({
       request: { query },
       result: { data },
     });
+    apolloRef = new ObservableQueryRef();
     obsApollo = client.watchQuery({ query });
-    obsQuery = new ApolloQueryObservable(obsApollo);
+    apolloRef.apollo = obsApollo;
+    obsQuery = new ApolloQueryObservable(apolloRef, subscriber => {
+      const sub = obsApollo.subscribe(subscriber);
+      return () => sub.unsubscribe();
+    });
   });
 
   describe('regular', () => {

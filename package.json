@@ -37,7 +37,8 @@
   "dependencies": {
     "lodash.assign": "^4.0.9",
     "lodash.forin": "^4.2.0",
-    "lodash.isequal": "^4.2.0"
+    "lodash.isequal": "^4.2.0",
+    "lodash.omit": "^4.4.1"
   },
   "devDependencies": {
     "@angular/common": "^2.0.0-rc.5",

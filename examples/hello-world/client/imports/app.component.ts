@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Angular2Apollo, ApolloQueryPipe, ApolloQueryObservable } from 'angular2-apollo';
 import { ApolloQueryResult } from 'apollo-client';
+import { Subject } from 'rxjs/Subject';
 
 import { User } from './user.interface';
 
 import gql from 'graphql-tag';
+
+import 'rxjs/add/operator/debounceTime';
 
 import template from './app.component.html';
 
@@ -17,15 +21,16 @@ interface Data {
   template,
   pipes: [ApolloQueryPipe],
 })
-export class AppComponent implements OnInit {
-  data: ApolloQueryObservable<Data>;
-  firstName: string;
-  lastName: string;
-  nameFilter: string;
+export class AppComponent implements OnInit, AfterViewInit {
+  public data: ApolloQueryObservable<Data>;
+  public firstName: string;
+  public lastName: string;
+  public nameControl = new FormControl();
+  public nameFilter: Subject<string> = new Subject<string>();
 
   constructor(private angular2Apollo: Angular2Apollo) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.data = this.angular2Apollo.watchQuery({
       query: gql`
         query getUsers($name: String) {
@@ -43,9 +48,17 @@ export class AppComponent implements OnInit {
         name: this.nameFilter,
       },
     });
+
+    this.nameControl.valueChanges.debounceTime(300).subscribe(name => {
+      this.nameFilter.next(name);
+    });
   }
 
-  newUser(firstName: string) {
+  public ngAfterViewInit() {
+    this.nameFilter.next(null);
+  }
+
+  public newUser(firstName: string) {
     this.angular2Apollo.mutate({
       mutation: gql`
         mutation addUser(
