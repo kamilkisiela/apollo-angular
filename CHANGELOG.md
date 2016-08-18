@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Fixed `ApolloQueryObservable` incompatibility with operators ([PR #71](https://github.com/apollostack/angular2-apollo/pull/71))
+
 ### v0.4.3
 
 - Added `ApolloModule` (with RC5 of Angular2 comes NgModules) ([PR #63](https://github.com/apollostack/angular2-apollo/pull/63))

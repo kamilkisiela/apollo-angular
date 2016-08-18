@@ -1,34 +1,19 @@
-import {
-  ObservableQuery,
-} from 'apollo-client/ObservableQuery';
+import { ObservableQuery } from 'apollo-client/ObservableQuery';
 
-import {
-  ApolloQueryResult,
-} from 'apollo-client';
+export class ObservableQueryRef {
+  private ref: ObservableQuery;
 
-export interface IObservableQuery {
-  refetch: (variables?: any) => Promise<ApolloQueryResult>;
-  fetchMore: (options: any) => Promise<any>;
-  stopPolling: () => void;
-  startPolling: (p: number) => void;
-}
-
-export class ObservableQueryRef implements IObservableQuery {
-  public apollo: ObservableQuery;
-
-  public refetch(variables?: any): Promise<ApolloQueryResult> {
-    return this.apollo.refetch(variables);
+  constructor(ref?: ObservableQuery) {
+    if (ref) {
+      this.setRef(ref);
+    }
   }
 
-  public stopPolling(): void {
-    return this.apollo.stopPolling();
+  public setRef(ref: ObservableQuery) {
+    this.ref = ref;
   }
 
-  public startPolling(p: number): void {
-    return this.apollo.startPolling(p);
-  }
-
-  public fetchMore(options: any): Promise<any> {
-    return this.apollo.fetchMore(options);
+  public getRef(): ObservableQuery {
+    return this.ref;
   }
 }

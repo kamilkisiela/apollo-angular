@@ -25,6 +25,7 @@ export class Angular2Apollo {
 
   public watchQuery(options): ApolloQueryObservable<any> {
     const apolloRef = new ObservableQueryRef();
+
     if (typeof options.variables === 'object') {
       const varObs = observeVariables(options.variables);
 
@@ -33,17 +34,16 @@ export class Angular2Apollo {
           const cleanOptions = omit(options, 'variables');
           const newOptions = assign(cleanOptions, { variables: newVariables });
 
-          apolloRef.apollo = this.client.watchQuery(newOptions);
+          apolloRef.setRef(this.client.watchQuery(newOptions));
 
-          return apolloRef.apollo;
+          return apolloRef.getRef();
         }).subscribe(subscriber);
 
         return () => sub.unsubscribe();
       });
     }
 
-    apolloRef.apollo = this.client.watchQuery(options);
-    return new ApolloQueryObservable(apolloRef);
+    return new ApolloQueryObservable(this.client.watchQuery(options));
   }
 
   public query(options) {
