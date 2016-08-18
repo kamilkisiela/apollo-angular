@@ -1,2 +1,13 @@
-examples
+.github
 build/tests
+examples
+src
+tests
+typings
+.travis.yml
+.typingsrc
+global.d.ts
+karma.conf.js
+tsconfig.json
+tslint.json
+typings.json
