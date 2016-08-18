@@ -35,7 +35,7 @@ describe('ApolloQueryObservable', () => {
     });
     apolloRef = new ObservableQueryRef();
     obsApollo = client.watchQuery({ query });
-    apolloRef.apollo = obsApollo;
+    apolloRef.setRef(obsApollo);
     obsQuery = new ApolloQueryObservable(apolloRef, subscriber => {
       const sub = obsApollo.subscribe(subscriber);
       return () => sub.unsubscribe();
