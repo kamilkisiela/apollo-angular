@@ -100,18 +100,23 @@ describe('Apollo - decorator - queries()', () => {
     const component = request({
       queries,
       client,
-    });
+    }) as any;
     component.name = variables1.name;
 
     component.ngOnInit();
+    const refetchSpy = spyOn(component.__apolloHandle.getQuery('data'), 'refetch')
+      .and.callThrough();
+
     expect(spy.calls.count()).toEqual(1);
 
     component.ngDoCheck();
     expect(spy.calls.count()).toEqual(1);
+    expect(refetchSpy.calls.count()).toEqual(0);
 
     component.name = variables2.name;
     component.ngDoCheck();
-    expect(spy.calls.count()).toEqual(2);
+    expect(spy.calls.count()).toEqual(1);
+    expect(refetchSpy.calls.count()).toEqual(1);
   });
 
   it('should NOT rebuild query if its variables have not changed', () => {
@@ -149,22 +154,33 @@ describe('Apollo - decorator - queries()', () => {
     const component = request({
       queries,
       client,
-    });
+    }) as any;
     component.name = variablesB1.name;
     component.id = variablesA.id;
 
     component.ngOnInit();
+    const refetchASpy = spyOn(component.__apolloHandle.getQuery('dataA'), 'refetch')
+      .and.callThrough();
+    const refetchBSpy = spyOn(component.__apolloHandle.getQuery('dataB'), 'refetch')
+      .and.callThrough();
+
     // should call for two queries
     expect(spy.calls.count()).toEqual(2);
+    expect(refetchASpy.calls.count()).toEqual(0);
+    expect(refetchBSpy.calls.count()).toEqual(0);
 
     component.ngDoCheck();
     // should not call again because there are no changes
     expect(spy.calls.count()).toEqual(2);
+    expect(refetchASpy.calls.count()).toEqual(0);
+    expect(refetchBSpy.calls.count()).toEqual(0);
 
     component.name = variablesB2.name;
     component.ngDoCheck();
     // should call just one because only name property has changed
-    expect(spy.calls.count()).toEqual(3);
+    expect(spy.calls.count()).toEqual(2);
+    expect(refetchASpy.calls.count()).toEqual(0);
+    expect(refetchBSpy.calls.count()).toEqual(1);
   });
 
   describe('result object', () => {
@@ -380,6 +396,60 @@ describe('Apollo - decorator - queries()', () => {
         expect(component.data.allHeroes).toEqual(data2.allHeroes);
         done();
       });
+    }, 200);
+  });
+
+  // XXX see #73
+  it('should refetch with new variables instead of resubscribing', (done) => {
+    const variables1 = { name: 'foo' };
+    const variables2 = { name: 'bar' };
+    const queries = (state) => {
+      return {
+        data: {
+          query,
+          variables: { name: state.name },
+        },
+      };
+    };
+    const data = {
+      allHeroes: {
+        heroes: [{ name: 'Mr Foo' }],
+      },
+    };
+
+    const client = mockClient({
+      request: { query, variables: variables1 },
+      result: { data },
+    }, {
+      request: { query, variables: variables2 },
+      result: { data },
+    });
+
+    const watchQuerySpy = spyOn(client, 'watchQuery').and.callThrough();
+
+    const component = request({
+      queries,
+      client,
+    }) as any;
+    component.name = variables1.name;
+
+    component.ngOnInit();
+
+    const refetchSpy = spyOn(component.__apolloHandle.getQuery('data'), 'refetch').and.callThrough();
+
+    setTimeout(() => {
+      expect(component.data.allHeroes).toEqual(data.allHeroes);
+      expect(refetchSpy.calls.count()).toBe(0);
+      expect(watchQuerySpy.calls.count()).toBe(1);
+
+      component.name = variables2.name;
+      component.ngDoCheck();
+      setTimeout(() => {
+        expect(refetchSpy.calls.count()).toBe(1);
+        expect(watchQuerySpy.calls.count()).toBe(1);
+        expect(component.data.allHeroes).toEqual(data.allHeroes);
+        done();
+      }, 200);
     }, 200);
   });
 
