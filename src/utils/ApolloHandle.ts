@@ -55,7 +55,11 @@ export class ApolloHandle {
 
     forIn(this.queries(this.component), (options, queryName: string) => {
       if (this.hasVariablesChanged(queryName, options.variables)) {
-        this.createQuery(queryName, options);
+        if (this.getQuery(queryName)) {
+          this.reuseQuery(queryName, options);
+        } else {
+          this.createQuery(queryName, options);
+        }
       }
     });
   }
@@ -163,7 +167,7 @@ export class ApolloHandle {
   }
 
   // XXX https://github.com/apollostack/apollo-client/pull/362
-  private backcompat(queryName: string, method: string, args?) {
+  private backcompat(queryName: string, method: string, ...args) {
     if (this.getQuerySub(queryName)[method]) {
       return this.getQuerySub(queryName)[method](...args);
     }
@@ -171,7 +175,7 @@ export class ApolloHandle {
     return this.getQuery(queryName)[method](...args);
   }
 
-  private missingCompat(queryName: string, method: string, args?) {
+  private missingCompat(queryName: string, method: string, ...args) {
     if (!this.getQuery(queryName)[method]) {
       throw new Error(`Your version of the ApolloClient does not support '${method}'. Try to update.`);
     }
@@ -183,6 +187,11 @@ export class ApolloHandle {
     this.component[queryName] = {
       errors: null,
       loading: true,
+      unsubscribe: () => this.getQuerySub(queryName).unsubscribe(),
+      refetch: (...args) => this.backcompat(queryName, 'refetch', ...args),
+      stopPolling: () => this.backcompat(queryName, 'stopPolling'),
+      startPolling: (...args) => this.backcompat(queryName, 'startPolling', ...args),
+      fetchMore: (...args) => this.missingCompat(queryName, 'fetchMore', ...args),
     };
 
     const setQuery = ({ errors, loading, data = {} }: any) => {
@@ -192,11 +201,6 @@ export class ApolloHandle {
         errors,
         // XXX backwards compatibility of loading property
         loading: !!loading,
-        unsubscribe: () => this.getQuerySub(queryName).unsubscribe(),
-        refetch: (...args) => this.backcompat(queryName, 'refetch', args),
-        stopPolling: () => this.backcompat(queryName, 'stopPolling'),
-        startPolling: (...args) => this.backcompat(queryName, 'startPolling', args),
-        fetchMore: (...args) => this.missingCompat(queryName, 'fetchMore', args),
       }, changed ? data : {});
     };
 
@@ -205,11 +209,18 @@ export class ApolloHandle {
 
     this.setQuery(queryName, obs);
 
-    this.setQuerySub(queryName, obs.subscribe({
+    this.setQuerySub(queryName, this.getQuery(queryName).subscribe({
       next: setQuery,
       error(errors) {
         setQuery({ errors });
       },
     }));
+  }
+
+  private reuseQuery(queryName, { variables }) {
+    // save variables so they can be used in futher comparasion
+    this.saveVariables(queryName, variables);
+    // refetch query
+    this.backcompat(queryName, 'refetch', variables);
   }
 }
