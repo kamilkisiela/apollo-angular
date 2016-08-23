@@ -79,6 +79,15 @@ describe('angular2Apollo', () => {
         expect(client.watchQuery).toHaveBeenCalledWith(options);
       });
 
+      it('should be able to use obserable without variable', (done) => {
+        angular2Apollo
+          .watchQuery({ query })
+          .map(result => result.data)
+          .subscribe((result) => {
+              done();
+          });
+      });
+
       it('should be able to use obserable variable', (done) => {
         const variables = {
           foo: new Subject(),

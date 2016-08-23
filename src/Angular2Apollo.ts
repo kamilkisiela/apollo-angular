@@ -43,7 +43,9 @@ export class Angular2Apollo {
     }
 
     apolloRef.apollo = this.client.watchQuery(options);
-    return new ApolloQueryObservable(apolloRef);
+    return new ApolloQueryObservable(apolloRef, subscriber => {
+        return apolloRef.apollo.subscribe(subscriber).unsubscribe;
+    })
   }
 
   public query(options) {
