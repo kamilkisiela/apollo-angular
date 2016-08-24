@@ -1,28 +1,22 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Angular2Apollo, ApolloQueryPipe, ApolloQueryObservable } from 'angular2-apollo';
+import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
 import { ApolloQueryResult } from 'apollo-client';
 import { Subject } from 'rxjs/Subject';
-
-import { User } from './user.interface';
 
 import gql from 'graphql-tag';
 
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
 
 import template from './app.component.html';
 
-interface Data {
-  users: User[];
-}
-
 @Component({
   selector: 'app',
-  template,
-  pipes: [ApolloQueryPipe],
+  template
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  public data: ApolloQueryObservable<Data>;
+  public users: ApolloQueryObservable<any>;
   public firstName: string;
   public lastName: string;
   public nameControl = new FormControl();
@@ -31,7 +25,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(private angular2Apollo: Angular2Apollo) {}
 
   public ngOnInit() {
-    this.data = this.angular2Apollo.watchQuery({
+    this.users = this.angular2Apollo.watchQuery({
       query: gql`
         query getUsers($name: String) {
           users(name: $name) {
@@ -47,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       variables: {
         name: this.nameFilter,
       },
-    });
+    }).map(result => result.data.users);
 
     this.nameControl.valueChanges.debounceTime(300).subscribe(name => {
       this.nameFilter.next(name);
@@ -87,7 +81,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log('got data', data);
 
         // get new data
-        this.data.refetch();
+        this.users.refetch();
       })
       .catch((errors: any) => {
         console.log('there was an error sending the query', errors);
