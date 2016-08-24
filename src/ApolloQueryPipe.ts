@@ -3,6 +3,9 @@ import { Pipe } from '@angular/core';
 @Pipe({
   name: 'apolloQuery',
 })
+/**
+ * @deprecated since version 0.4.4 - use SelectPipe
+ */
 export class ApolloQueryPipe {
   public transform(obj: any, name: string = '') {
     if (obj && name !== '') {
