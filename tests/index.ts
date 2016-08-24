@@ -6,3 +6,4 @@ import 'reflect-metadata';
 import './Angular2Apollo';
 import './ApolloQueryPipe';
 import './ApolloDecorator';
+import './decorators';

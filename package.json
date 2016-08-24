@@ -37,7 +37,9 @@
   "dependencies": {
     "apollo-client-rxjs": "^0.0.1",
     "lodash.assign": "^4.0.9",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.forin": "^4.2.0",
+    "lodash.isarray": "^4.0.0",
     "lodash.isequal": "^4.2.0"
   },
   "devDependencies": {
