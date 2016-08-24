@@ -1,10 +1,10 @@
 import { Provider, ReflectiveInjector } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { RxObservableQuery } from 'apollo-client-rxjs';
 
 import { mockClient } from './_mocks';
 import { APOLLO_PROVIDERS } from '../src/index';
 import { Angular2Apollo, defaultApolloClient, angularApolloClient } from '../src/Angular2Apollo';
-import { ApolloQueryObservable } from '../src/ApolloQueryObservable';
 
 import gql from 'graphql-tag';
 
@@ -155,7 +155,7 @@ describe('angular2Apollo', () => {
       describe('result', () => {
         it('should return the ApolloQueryObserable when no variables', () => {
           const obs = angular2Apollo.watchQuery({ query });
-          expect(obs instanceof ApolloQueryObservable).toEqual(true);
+          expect(obs instanceof RxObservableQuery).toEqual(true);
         });
 
         it('should return the ApolloQueryObserable when variables', () => {
@@ -163,7 +163,7 @@ describe('angular2Apollo', () => {
             foo: new Subject(),
           };
           const obs = angular2Apollo.watchQuery({ query, variables });
-          expect(obs instanceof ApolloQueryObservable).toEqual(true);
+          expect(obs instanceof RxObservableQuery).toEqual(true);
         });
       });
     });

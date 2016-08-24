@@ -4,6 +4,8 @@
 
 - Fixed format of arguments in backward compatible methods ([PR #74](https://github.com/apollostack/angular2-apollo/pull/74))
 - Made queries reusable (use refetch on new variables) ([PR #74](https://github.com/apollostack/angular2-apollo/pull/74))
+- Used [`apollo-client-rxjs`](https://github.com/kamilkisiela/apollo-client-rxjs) ([PR #72](https://github.com/apollostack/angular2-apollo/pull/72))
+- Fixed an issue that prevents from subscribing to `ApolloQueryObservable` ([PR #71](https://github.com/apollostack/angular2-apollo/pull/71))
 
 ### v0.4.3
 
