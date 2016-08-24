@@ -1,10 +1,10 @@
 import { makeDecorator } from '@angular/core/src/util/decorators';
 
-import { Definition } from './interfaces';
+import { DefinitionsMap } from './definitions';
 
 class GraphQLMetadata {
   constructor(
-    public definitions: Map<string, Definition>
+    public definitions: DefinitionsMap
   ) {}
 }
 

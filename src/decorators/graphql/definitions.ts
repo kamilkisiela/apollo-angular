@@ -5,7 +5,7 @@ import { Options } from './interfaces';
 import cloneDeep = require('lodash.clonedeep');
 
 export interface Definition {
-  kind: string;
+  operation: string;
   doc: Document;
   options?: Options;
 }
@@ -32,7 +32,7 @@ export class DefinitionsMap {
     const def: Definition = {
       doc,
       options: cloneDeep(options),
-      kind: this.isQuery(doc) ? 'query' : 'mutation',
+      operation: this.isQuery(doc) ? 'query' : 'mutation',
     };
 
     this.map.set(name, def);
@@ -60,6 +60,6 @@ export class DefinitionsMap {
   }
 
   private isQuery(doc: Document): boolean {
-    return doc.kind === 'query';
+    return doc.definitions[0]['operation'] === 'query';
   }
 }

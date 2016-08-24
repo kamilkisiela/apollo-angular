@@ -1,7 +1,7 @@
 import { Document } from 'graphql';
 
 import { Options } from './interfaces';
-import { DefinitionsMap } from './Definitions';
+import { DefinitionsMap } from './definitions';
 
 import isArray = require('lodash.isarray');
 

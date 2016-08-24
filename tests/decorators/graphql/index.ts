@@ -1,1 +1,2 @@
 import './arguments';
+import './graphql';

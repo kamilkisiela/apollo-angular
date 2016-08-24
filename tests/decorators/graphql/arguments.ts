@@ -39,7 +39,7 @@ describe('Arguments', () => {
 
     expect(def.options).toBeUndefined();
     expect(def.doc).toBe(query);
-    expect(def.kind).toBe('query');
+    expect(def.operation).toBe('query');
   });
 
   it('should handle: Document, Options', () => {
@@ -47,7 +47,7 @@ describe('Arguments', () => {
 
     expect(def.options).toEqual(options);
     expect(def.doc).toBe(query);
-    expect(def.kind).toBe('query');
+    expect(def.operation).toBe('query');
   });
 
   it('should handle: Document, Document ...', () => {
@@ -57,11 +57,11 @@ describe('Arguments', () => {
 
     expect(def1.options).toBeUndefined();
     expect(def1.doc).toBe(query);
-    expect(def1.kind).toBe('query');
+    expect(def1.operation).toBe('query');
 
     expect(def2.options).toBeUndefined();
     expect(def2.doc).toBe(query2);
-    expect(def2.kind).toBe('query');
+    expect(def2.operation).toBe('query');
   });
 
   it('should handle: [Document, Document ...]', () => {
@@ -71,11 +71,11 @@ describe('Arguments', () => {
 
     expect(def1.options).toBeUndefined();
     expect(def1.doc).toBe(query);
-    expect(def1.kind).toBe('query');
+    expect(def1.operation).toBe('query');
 
     expect(def2.options).toBeUndefined();
     expect(def2.doc).toBe(query2);
-    expect(def2.kind).toBe('query');
+    expect(def2.operation).toBe('query');
   });
 
   it('should handle: Options', () => {
@@ -83,7 +83,7 @@ describe('Arguments', () => {
 
     expect(def.options).toBeUndefined();
     expect(def.doc).toBe(query);
-    expect(def.kind).toBe('query');
+    expect(def.operation).toBe('query');
   });
 
   it('should handle: Options, Options ...', () => {
@@ -93,11 +93,11 @@ describe('Arguments', () => {
 
     expect(def1.options).toBeUndefined();
     expect(def1.doc).toBe(query);
-    expect(def1.kind).toBe('query');
+    expect(def1.operation).toBe('query');
 
     expect(def2.options.variables).toEqual(options.variables);
     expect(def2.doc).toBe(query2);
-    expect(def2.kind).toBe('query');
+    expect(def2.operation).toBe('query');
   });
 
   it('should handle: [Options, Options ...]', () => {
@@ -108,10 +108,10 @@ describe('Arguments', () => {
 
     expect(def1.options).toBeUndefined();
     expect(def1.doc).toBe(query);
-    expect(def1.kind).toBe('query');
+    expect(def1.operation).toBe('query');
 
     expect(def2.options.variables).toEqual(options.variables);
     expect(def2.doc).toBe(query2);
-    expect(def2.kind).toBe('query');
+    expect(def2.operation).toBe('query');
   });
 });
