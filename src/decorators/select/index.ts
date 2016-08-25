@@ -3,6 +3,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import { Angular2Apollo } from '../../Angular2Apollo';
 import { ApolloQueryObservable } from '../../ApolloQueryObservable';
 import { getGraphQLMetadata } from '../graphql/metadata';
+import { Definition } from '../graphql/definitions';
 import { Options } from '../graphql/interfaces';
 import { getSelectedProps, GraphQLSelectMetadataFactory } from './metadata';
 import { parseArguments } from './arguments';
@@ -28,45 +29,21 @@ export function defineProperties(apollo: Angular2Apollo) {
     for (const prop in props) {
       if (props.hasOwnProperty(prop)) {
         const selector: Selector = props[prop].selector;
-        const def = definitions.get(selector.docName);
-        let propValue: ApolloQueryObservable<ApolloQueryResult> | ((options: Options) => Promise<ApolloQueryResult>);
+        const definition = definitions.get(selector.docName);
 
-        if (!def) {
+        if (!definition) {
           throw new Error('Definition is missing');
         }
 
-        const mergedOptions: Options = assign(
+        const options: Options = assign(
           {},
-          cloneDeep(def.options),
-          cloneDeep(selector.options)
+          cloneDeep(definition.options),  // options from the graphql decorator
+          cloneDeep(selector.options)     // options from the select decorator
         );
 
-        if (def.operation === 'query') {
-          // QUERY
-          mergedOptions.query = def.doc;
-          propValue = apollo.watchQuery(mergedOptions);
-
-          if (selector.mapTo) {
-            propValue = (propValue as any).map(result => pathToValue(result.data, selector.mapTo));
-          }
-        } else {
-          // MUTATION
-          mergedOptions.mutation = def.doc;
-          propValue = (opts: Options) => {
-            let options = cloneDeep(mergedOptions);
-
-            if (opts) {
-              delete opts.mutation;
-              options = assign(options, opts);
-            }
-
-            return apollo.mutate(options);
-          };
-        }
-
         Object.defineProperty(target, prop, {
-          value: propValue,
-          writable: true, // important
+          value: createValue(options, definition, selector, apollo),
+          writable: true,
           enumerable: true,
           configurable: true,
         });
@@ -85,4 +62,35 @@ export function select(...args) {
 
     GraphQLSelectMetadataFactory(selector)(target, name);
   };
+}
+
+function createValue(
+  options: Options, 
+  definition: Definition,
+  selector: Selector,
+  apollo: Angular2Apollo
+) {
+  if (definition.operation === 'query') {
+    // QUERY
+    options.query = definition.doc;
+    const watch = apollo.watchQuery(options);
+      
+    if (selector.mapTo) {
+      return (watch as any).map(result => pathToValue(result.data, selector.mapTo));
+    }
+
+    return watch;
+  } else {
+    // MUTATION
+    options.mutation = definition.doc;
+  
+    return (customOptions: Options) => {
+      if (customOptions) {
+        delete customOptions.mutation;
+        return apollo.mutate(assign(options, cloneDeep(customOptions)));
+      }
+
+      return apollo.mutate(options);
+    };
+  } 
 }
