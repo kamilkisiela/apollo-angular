@@ -16,5 +16,5 @@
     "global.d.ts",
     "src/index.ts",
     "tests/index.ts"
-   ]
+  ]
 }

@@ -1,9 +1,8 @@
 import { ApolloQueryResult } from 'apollo-client';
 
 import { Angular2Apollo } from '../../Angular2Apollo';
-import { ApolloQueryObservable } from '../../ApolloQueryObservable'; 
+import { ApolloQueryObservable } from '../../ApolloQueryObservable';
 import { getGraphQLMetadata } from '../graphql/metadata';
-import { Definition } from '../graphql/definitions';
 import { Options } from '../graphql/interfaces';
 import { getSelectedProps, GraphQLSelectMetadataFactory } from './metadata';
 import { parseArguments } from './arguments';
@@ -29,14 +28,8 @@ export function defineProperties(apollo: Angular2Apollo) {
     for (const prop in props) {
       if (props.hasOwnProperty(prop)) {
         const selector: Selector = props[prop].selector;
-        let def: Definition;
+        const def = definitions.get(selector.docName);
         let propValue: ApolloQueryObservable<ApolloQueryResult> | ((options: Options) => Promise<ApolloQueryResult>);
-
-        if (!selector.docName) {
-          def = definitions.default();
-        } else {
-          def = definitions.get(selector.docName);
-        }
 
         if (!def) {
           throw new Error('Definition is missing');
@@ -83,9 +76,13 @@ export function defineProperties(apollo: Angular2Apollo) {
 }
 
 export function select(...args) {
-  const selector: Selector = parseArguments(...args);
-
   return (target, name: string) => {
+    const selector: Selector = parseArguments(...args);
+
+    if (!selector.docName) {
+      selector.docName = name;
+    }
+
     GraphQLSelectMetadataFactory(selector)(target, name);
   };
 }

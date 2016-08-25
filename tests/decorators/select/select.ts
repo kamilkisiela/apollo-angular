@@ -15,12 +15,11 @@ const query = gql`
   }
 `;
 
-/*describe('select', () => {
+describe('select', () => {
   it('should call parseArguments properly', () => {
     const spy = spyOn(args, 'parseArguments').and.callThrough();
     const mapTo = ['foo', 'bar'];
 
-    @graphql(query)
     class Foo {
       @select(mapTo) public bar: any;
     }
@@ -33,7 +32,6 @@ const query = gql`
     // check if it sets same value as the result of parseArguments
     spyOn(args, 'parseArguments').and.returnValue({mapTo});
 
-    @graphql(query)
     class Foo {
       @select() public bar: any;
     }
@@ -44,4 +42,16 @@ const query = gql`
     expect(metadata instanceof GraphQLSelectMetadata).toBe(true);
     expect(metadata.selector.mapTo).toEqual(mapTo);
   });
-});*/
+
+  it('should use property name if docName is not defined', () => {
+    class Foo {
+      @select() public bar: any;
+    }
+
+    const foo = new Foo();
+    const metadata:GraphQLSelectMetadata = getSelectedProps(foo)['bar'];
+
+    expect(metadata instanceof GraphQLSelectMetadata).toBe(true);
+    expect(metadata.selector.docName).toEqual('bar');
+  });
+});

@@ -51,14 +51,14 @@ const addUserMutation = gql`
 export class AppComponent {
   @select('getUsers', ['users'], { forceFetch: true})
   public data: ApolloQueryObservable<any>;
-  
-  @select('addUser')
-  private addUser: (options?: any) => Promise<any>;
-  
+
   public firstName: string;
   public lastName: string;
   public nameControl = new FormControl();
   public nameFilter: Subject<string> = new Subject<string>();
+
+  @select('addUser')
+  private addUser: (options?: any) => Promise<any>;
 
   constructor(private angular2Apollo: Angular2Apollo) {
     console.log('data', this.data);

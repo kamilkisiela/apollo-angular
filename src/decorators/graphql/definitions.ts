@@ -19,7 +19,7 @@ export class DefinitionsMap {
 
   public default(): Definition {
     if (this.map.size === 1) {
-      return Array.from(this.map.values())[0];
+      return (Array.from(this.map.values()) as Definition[])[0];
     }
 
     return;

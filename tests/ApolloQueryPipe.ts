@@ -10,7 +10,7 @@ pipes.forEach(pipe => {
     it('should return nothing if name is empty', () => {
       expect(pipe.transform({ foo: 'bar' }, '')).toBe(undefined);
     });
-    
+
     it('should return nothing if object is empty', () => {
       expect(pipe.transform({}, 'foo')).toBe(undefined);
     });
@@ -37,4 +37,4 @@ pipes.forEach(pipe => {
       expect(pipe.transform(result, 'foo')).toEqual(result.data.foo);
     });
   });
-})
+});
