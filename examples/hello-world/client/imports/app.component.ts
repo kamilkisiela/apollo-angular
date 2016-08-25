@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
+import { Angular2Apollo, ApolloQueryObservable, graphql, select } from 'angular2-apollo';
 import { ApolloQueryResult } from 'apollo-client';
 import { Subject } from 'rxjs/Subject';
 
@@ -11,67 +11,61 @@ import 'rxjs/add/operator/map';
 
 import template from './app.component.html';
 
+const getUsersQuery = gql`
+  query getUsers {
+    users {
+      firstName
+      lastName
+      emails {
+        address
+        verified
+      }
+    }
+  }
+`;
+
+const addUserMutation = gql`
+  mutation addUser(
+    $firstName: String!
+    $lastName: String!
+  ) {
+    addUser(
+      firstName: $firstName
+      lastName: $lastName
+    ) {
+      firstName
+      lastName,
+      emails {
+        address
+        verified
+      }
+    }
+  }
+`;
+
 @Component({
   selector: 'app',
-  template
+  template,
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  public users: ApolloQueryObservable<any>;
+@graphql(getUsersQuery, addUserMutation)
+export class AppComponent {
+  @select('getUsers', ['users'], { forceFetch: true})
+  public data: ApolloQueryObservable<any>;
+  
+  @select('addUser')
+  private addUser: (options?: any) => Promise<any>;
+  
   public firstName: string;
   public lastName: string;
   public nameControl = new FormControl();
   public nameFilter: Subject<string> = new Subject<string>();
 
-  constructor(private angular2Apollo: Angular2Apollo) {}
-
-  public ngOnInit() {
-    this.users = this.angular2Apollo.watchQuery({
-      query: gql`
-        query getUsers($name: String) {
-          users(name: $name) {
-            firstName
-            lastName
-            emails {
-              address
-              verified
-            }
-          }
-        }
-      `,
-      variables: {
-        name: this.nameFilter,
-      },
-    }).map(result => result.data.users);
-
-    this.nameControl.valueChanges.debounceTime(300).subscribe(name => {
-      this.nameFilter.next(name);
-    });
-  }
-
-  public ngAfterViewInit() {
-    this.nameFilter.next(null);
+  constructor(private angular2Apollo: Angular2Apollo) {
+    console.log('data', this.data);
   }
 
   public newUser(firstName: string) {
-    this.angular2Apollo.mutate({
-      mutation: gql`
-        mutation addUser(
-          $firstName: String!
-          $lastName: String!
-        ) {
-          addUser(
-            firstName: $firstName
-            lastName: $lastName
-          ) {
-            firstName
-            lastName,
-            emails {
-              address
-              verified
-            }
-          }
-        }
-      `,
+    this.addUser({
       variables: {
         firstName,
         lastName: this.lastName,
@@ -81,7 +75,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log('got data', data);
 
         // get new data
-        this.users.refetch();
+        this.data.refetch();
       })
       .catch((errors: any) => {
         console.log('there was an error sending the query', errors);

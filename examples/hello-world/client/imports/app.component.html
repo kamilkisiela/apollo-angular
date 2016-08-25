@@ -10,7 +10,7 @@
 <input type="search" placeholder="Type name..." [formControl]="nameControl" />
 
 <ul>
-  <li *ngFor="let user of users | async">
+  <li *ngFor="let user of data | async">
     {{user.firstName}} {{user.lastName}}
   </li>
 </ul>

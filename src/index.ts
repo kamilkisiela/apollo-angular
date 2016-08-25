@@ -5,6 +5,7 @@ import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 import { ApolloModule } from './ApolloModule';
 import { graphql } from './decorators/graphql';
+import { select } from './decorators/select';
 
 export const APOLLO_PROVIDERS: any[] = [
   Angular2Apollo,
@@ -12,6 +13,7 @@ export const APOLLO_PROVIDERS: any[] = [
 
 export {
   graphql,
+  select,
   Apollo,
   ApolloModule,
   ApolloQuery,

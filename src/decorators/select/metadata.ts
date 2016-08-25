@@ -14,7 +14,7 @@ export interface PropsSelectMetadata {
   [propName: string]: GraphQLSelectMetadata;
 }
 
-export function getSelectedProps(target): PropsSelectMetadata {
+export function getSelectedProps(target): PropsSelectMetadata | Object {
   const propMetadata = Reflect.getMetadata('propMetadata', target.constructor) || [];
   const filtered: PropsSelectMetadata = {};
 

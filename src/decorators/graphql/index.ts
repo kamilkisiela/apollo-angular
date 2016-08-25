@@ -2,7 +2,7 @@ import { Angular2Apollo } from '../../Angular2Apollo';
 import { parseArguments } from './arguments';
 import { GraphQLMetadataFactory } from './metadata';
 import { replaceConstructor } from './utils';
-import { use } from '../select';
+import { defineProperties } from '../select';
 
 export function graphql(...args) {
   // 
@@ -16,7 +16,7 @@ export function graphql(...args) {
 
     // wrap constructor
     const wrapped = replaceConstructor(target, function(apollo, ...injects) {
-      use(apollo)(this);
+      defineProperties(apollo)(this);
 
       target.apply(this, injects);
     });

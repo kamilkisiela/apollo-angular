@@ -13,8 +13,16 @@ export interface Definition {
 export class DefinitionsMap {
   private map: Map<string, Definition> = new Map<string, Definition>();
 
-  public get(name: string) {
+  public get(name: string): Definition {
     return this.map.get(name);
+  }
+
+  public default(): Definition {
+    if (this.map.size === 1) {
+      return Array.from(this.map.values())[0];
+    }
+
+    return;
   }
 
   public add(doc: Document | Options, options?: Options): void {

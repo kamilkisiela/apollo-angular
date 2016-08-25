@@ -10,7 +10,7 @@ export class GraphQLMetadata {
 
 export const GraphQLMetadataFactory: (d: DefinitionsMap) => any = makeDecorator(GraphQLMetadata);
 
-export function getGraphQLMetadata(target): GraphQLMetadata | void {
+export function getGraphQLMetadata(target): GraphQLMetadata {
   const annotations = Reflect.getMetadata('annotations', target.constructor) || [];
   return annotations.filter(an => an instanceof GraphQLMetadata)[0];
 }
