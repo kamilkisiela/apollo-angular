@@ -25,6 +25,10 @@ export class DefinitionsMap {
     return;
   }
 
+  public forEach(cb) {
+    return this.map.forEach(cb);
+  }
+
   public add(doc: Document | Options, options?: Options): void {
     if ((doc as Document).kind) {
       return this.addDocument(doc as Document, options);

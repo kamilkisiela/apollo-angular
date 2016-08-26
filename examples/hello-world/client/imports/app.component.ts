@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 import template from './app.component.html';
 
 const getUsersQuery = gql`
-  query getUsers {
+  query data {
     users {
       firstName
       lastName
@@ -49,7 +49,6 @@ const addUserMutation = gql`
 })
 @graphql(getUsersQuery, addUserMutation)
 export class AppComponent {
-  @select('getUsers', ['users'], { forceFetch: true})
   public data: ApolloQueryObservable<any>;
 
   public firstName: string;
@@ -57,7 +56,6 @@ export class AppComponent {
   public nameControl = new FormControl();
   public nameFilter: Subject<string> = new Subject<string>();
 
-  @select('addUser')
   private addUser: (options?: any) => Promise<any>;
 
   constructor(private angular2Apollo: Angular2Apollo) {
