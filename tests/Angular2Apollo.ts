@@ -1,4 +1,4 @@
-import { Provider, ReflectiveInjector } from '@angular/core';
+import { ReflectiveInjector } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { RxObservableQuery } from 'apollo-client-rxjs';
 
@@ -196,10 +196,6 @@ describe('angular2Apollo', () => {
   });
 
   describe('defaultApolloClient', () => {
-    it('should create a provider', () => {
-      const provider = defaultApolloClient(client);
-      expect(provider instanceof Provider).toBe(true);
-    });
 
     it('should set a AngularApolloClient', () => {
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client)]);
