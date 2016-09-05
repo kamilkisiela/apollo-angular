@@ -1,4 +1,4 @@
-import casual from 'casual-browserify';
+import casual from 'casual';
 
 export const schema = [`
 type Email {
@@ -52,8 +52,9 @@ export const resolvers = {
     lastName: ({lastName}) => lastName || casual.user.lastName,
   },
   Mutation: {
-    addUser: (root, { firstName, lastName }) => {
+    addUser: (_, { firstName, lastName }) => {
       const user = casual.user;
+      
       user.firstName = firstName;
       user.lastName = lastName;
 

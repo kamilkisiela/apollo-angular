@@ -1,5 +1,5 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { BrowserModule  } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApolloModule } from 'angular2-apollo';
 
@@ -7,13 +7,16 @@ import { AppComponent } from './app.component';
 import { client } from './client';
 
 @NgModule({
-  declarations: [ AppComponent ],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    // Define the default ApolloClient
     ApolloModule.withClient(client),
   ],
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
