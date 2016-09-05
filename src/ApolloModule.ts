@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import { angularApolloClient, Angular2Apollo } from './Angular2Apollo';
+import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
 import { ApolloQueryPipe } from './ApolloQueryPipe';
 import { SelectPipe } from './SelectPipe';
 
@@ -24,7 +24,7 @@ export class ApolloModule {
     return {
       ngModule: ApolloModule,
       providers: [
-        { provide: angularApolloClient, useValue: client },
+        defaultApolloClient(client),
       ],
     };
   }

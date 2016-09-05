@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Moved to Angular2 RC6 ([PR #81](https://github.com/apollostack/angular2-apollo/pull/81))
+
 ### v0.4.4
 
 - Fixed format of arguments in backward compatible methods ([PR #74](https://github.com/apollostack/angular2-apollo/pull/74))

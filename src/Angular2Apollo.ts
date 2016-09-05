@@ -1,4 +1,4 @@
-import { Provider, provide, OpaqueToken, Injectable, Inject } from '@angular/core';
+import { OpaqueToken, Injectable, Inject } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
 import { ApolloQueryResult } from 'apollo-client';
 
@@ -9,10 +9,11 @@ import ApolloClient from 'apollo-client';
 import 'rxjs/add/operator/switchMap';
 
 export const angularApolloClient = new OpaqueToken('AngularApolloClient');
-export const defaultApolloClient = (client: ApolloClient): Provider => {
-  return provide(angularApolloClient, {
+export const defaultApolloClient = (client: ApolloClient): any => {
+  return {
+    provide: angularApolloClient,
     useValue: client,
-  });
+  };
 };
 
 @Injectable()
