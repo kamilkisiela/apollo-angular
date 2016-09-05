@@ -10,6 +10,7 @@ export interface ApolloQuery {
   errors: ApolloError;
   loading: boolean;
   refetch: (variables?: any) => Promise<ApolloQueryResult>;
+  fetchMore: (options: any) => Promise<any>;
   stopPolling: () => void;
   startPolling: (pollInterval: number) => void;
   unsubscribe: () => void;
