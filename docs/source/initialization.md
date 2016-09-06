@@ -4,17 +4,15 @@ order: 2
 ---
 <h2 id="installation">Installation</h2>
 
-To get started with Apollo and React, install the `apollo-client` npm package, the `react-apollo` integration package, and the `graphql-tag` library for constructing query documents:
+To get started with Apollo and React, install the `apollo-client` npm package, the `angular2-apollo` integration package, and the `graphql-tag` library for constructing query documents:
 
 ```bash
-npm install apollo-client react-apollo graphql-tag --save
+npm install apollo-client angular2-apollo graphql-tag --save
 ```
-
-> Note: You don't have to do anything special to get Apollo Client to work in React Native, just install and import it as usual.
 
 <h2 id="initialization">Initialization</h2>
 
-To get started using Apollo, we need to create an `ApolloClient` and an `ApolloProvider`. `ApolloClient` serves as a central store of query result data which caches and distributes the results of our queries. `ApolloProvider` wires that client into our React component hierarchy.
+To get started using Apollo, we need to create an `ApolloClient` and use `ApolloModule`. `ApolloClient` serves as a central store of query result data which caches and distributes the results of our queries. `ApolloModule` wires that client into your application.
 
 <h3 id="creating-client">Creating a client</h3>
 
@@ -40,24 +38,41 @@ const client = new ApolloClient({
 
 The other options control the behavior of the client, and we'll see examples of their use throughout this guide.
 
-<h3 id="creating-provider">Creating a provider</h3>
+<h3 id="bootstrap">Bootstrap</h3>
 
-To connect your client instance to your component tree, use an `ApolloProvider` component. You should be sure to place the `ApolloProvider` somewhere high in your view hierarchy, above any places where you need to access GraphQL data.
+**Angular Modules**, also known as **NgModules**, are the powerful new way to organize and bootstrap your Angular application.
+
+<h3 id="providing-apollomodule">Providing ApolloModule</h3>
+
+To connect your client instance to your app, use the `ApolloModule.withClient`.
 
 ```js
 import ApolloClient from 'apollo-client';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloModule } from 'angular2-apollo';
+
+import { NgModule } from '@angular/core';
+import { BrowserModule  } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppComponent } from './app.component';
 
 // Create the client as outlined above
 const client = new ApolloClient();
 
-ReactDOM.render(
-  <ApolloProvider client={client}>
-    <MyRootComponent />
-  </ApolloProvider>,
-  rootEl
-)
+@NgModule({
+  imports: [
+    BrowserModule,
+    ApolloModule.withClient(client)
+  ],
+  declarations: [ AppComponent ],
+  bootstrap: [ AppComponent ]
+})
+class AppModule {}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
+
+**NOT RELATED TO ANGULAR**
 
 <h2 id="connecting-to-components">Connecting to Components</h2>
 

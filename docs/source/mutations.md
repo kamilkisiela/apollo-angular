@@ -36,18 +36,12 @@ When we use mutations in Apollo, the result is typically integrated into the cac
 
 <h2 id="basics">Basic Mutations</h2>
 
-
-Using `graphql` with mutations makes it easy to bind actions to components. Unlike queries, mutations provide only a simple prop (the `mutate` function) to the wrapped component.
+Using `Angular2Apollo` it easy to call mutation. You can simply use `mutate` method.      
 
 ```js
-import React, { Component, PropTypes } from 'react';
-import { graphql } from 'react-apollo';
+import { Component } from '@angular/core';
+import { Angular2Apollo } from 'angular2-apollo';
 import { gql } from 'graphql-tag';
-
-class NewEntry extends Component { ... }
-NewEntry.propTypes = {
-  mutate: PropTypes.func.isRequired,
-};
 
 const submitRepository = gql`
   mutation submitRepository {
@@ -57,7 +51,16 @@ const submitRepository = gql`
   }
 `;
 
-const NewEntryWithData = graphql(submitRepository)(NewEntry);
+@Component({ ... })
+class NewEntryComponent {
+  constructor(private apollo: Angular2Apollo) {}
+
+  newRepository() {
+    this.apollo.mutate({
+      mutation: submitRepository
+    });
+  } 
+}
 ```
 
 <h3 id="calling-mutations">Calling mutations</h3>
@@ -65,66 +68,40 @@ const NewEntryWithData = graphql(submitRepository)(NewEntry);
 Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](/core/apollo-client-api.html#mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
 
 ```js
-import React, { Component, PropTypes } from 'react';
-import { graphql } from 'react-apollo';
+import { Component } from '@angular/core';
+import { Angular2Apollo } from 'angular2-apollo';
 import { gql } from 'graphql-tag';
 
-class NewEntry extends Component {
-  onClick() {
-    this.props.mutate({ variables: { repoFullName: 'apollostack/apollo-client' } })
-      .then(({ data }) => {
-        console.log('got data', data);
-      }).catch((error) => {
-        console.log('there was an error sending the query', error);
-      });      
-  }
-  render() {
-    return <div onClick={this.onClick.bind(this)}>Click me</div>;
-  }
-}
-NewEntry.propTypes = {
-  mutate: PropTypes.func.isRequired,
-};
-
 const submitRepository = gql`
-  mutation submitRepository {
-    submitRepository(repoFullName: "apollostack/apollo-client") {
+  mutation submitRepository($repoFullName: String!) {
+    submitRepository(repoFullName: $repoFullName) {
       createdAt
     }
   }
 `;
 
-const NewEntryWithData = graphql(submitRepository)(NewEntry);
-```
-
-However, typically you'd want to keep the concern of understanding the mutation's structure out of your presentational component. The best way to do this is to use the [`props`](queries.html#graphql-props) argument to bind your mutate function:
-
-```js
-import React, { Component, PropTypes } from 'react';
-import { graphql } from 'react-apollo';
-import { gql } from 'graphql-tag';
-
-class NewEntry extends Component {
-  render() {
-    return <div onClick={this.props.submit('apollostack/apollo-client')}>Click me</div>;
+@Component({ ... })
+class NewEntryComponent {
+  constructor(private apollo: Angular2Apollo) {}
+  
+  newRepository() {
+    this.apollo.mutate({
+      query: submitRepository,
+      variables: {
+        repoFullName: 'apollostack/apollo-client' 
+      }
+    }).then(({ data }) => {
+      console.log('got data', data);
+    }).catch((error) => {
+      console.log('there was an error sending the query', error);
+    }); 
   }
 }
-NewEntry.propTypes = {
-  submit: PropTypes.func.isRequired,
-};
-
-const submitRepository = /* as above */;
-
-const NewEntryWithData = graphql(submitRepository, {
-  props({ mutate }) {
-    return {
-      submit(repoFullName) {
-        return mutate({ variables: { repoFullName } });
-      },
-    };
-  },
-})(NewEntry);
 ```
+
+As you can see, `mutate` method returns a `Promise` that resolves with `ApolloQueryResult`. It is the same result we get when we fetch queries.
+
+However, typically you'd want to keep the concern of understanding the mutation's structure out of your presentational component. The best way to do this is to use the [`props`](queries.html#graphql-props) argument to bind your mutate function:
 
 > Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing a [`updateQueries`](cache-updates.html#updateQueries) callback to update the result of relevant queries with your mutation results.
 
@@ -135,15 +112,9 @@ Sometimes your client code can easily predict the result of the mutation, if it 
 Apollo Client gives you a way to specify the `optimisticResponse` option, that will be used to update active queries immediately, in the same way that the server's mutation response will. Once the actual mutation response returns, the optimistic part will be thrown away and replaced with the real result.
 
 ```js
-import React, { Component, PropTypes } from 'react';
-import { graphql } from 'react-apollo';
+import { Component } from '@angular/core';
+import { Angular2Apollo } from 'react-apollo';
 import { gql } from 'graphql-tag';
-
-class CommentPage extends Component { ... }
-CommentPage.propTypes = {
-  submit: PropTypes.func.isRequired,
-};
-
 
 const submitComment = gql`
   mutation submitComment($repoFullName: String!, $commentContent: String!) {
@@ -158,25 +129,28 @@ const submitComment = gql`
   }
 `;
 
-const CommentPageWithData = graphql(submitComment, {
-  props: ({ ownProps, mutate }) => ({
-    submit({ repoFullName, commentContent }) {
-      return mutate({
-        variables: { repoFullName, commentContent },
-        optimisticResponse: {
-          __typename: 'Mutation',
-          submitComment: {
-            __typename: 'Comment',
-            // Note that we can access the props of the container at `ownProps`
-            postedBy: ownProps.currentUser,
-            createdAt: +new Date,
-            content: commentContent,
-          },
+@Component({ ... })
+class CommentPageComponent {
+  currentUser: User;
+  
+  constructor(private apollo: Angular2Apollo) {}
+
+  submit({ repoFullName, commentContent }) {
+    this.apollo.mutate({
+      query: submitComment,
+      variables: { repoFullName, commentContent },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitComment: {
+          __typename: 'Comment',
+          postedBy: this.currentUser,
+          createdAt: +new Date,
+          content: commentContent,
         },
-      };
+      },
     });
-  }),
-})(CommentPage);
+  }
+}
 ```
 
 For the example above, it is easy to construct an optimistic response, since we know the shape of the new comment and can approximately predict the created date. The optimistic response doesn't have to be exactly correct because it will always will be replaced with the real result from the server, but it should be close enough to make users feel like there is no delay.

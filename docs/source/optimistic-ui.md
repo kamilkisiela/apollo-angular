@@ -55,13 +55,12 @@ In that case we need to specify how to integrate the new data into existing quer
 Here is a concrete example from GitHunt, which inserts a comment into an existing list of comments. A very quick and easy way to update the list of comments would be to refetch the entire list from the server every time a comment is inserted, but that would be a bit wasteful. Instead, we can use `updateQueries` here and just insert the new comment into the list of comments we already have in the store:
 
 ```js
-import React from 'react';
-import { graphql } from 'react-apollo';
+import { Component } from '@angular/core';
+import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'graphql-tag';
-import update from 'react-addons-update';
 
 
-const SUBMIT_COMMENT_MUTATION = gql`
+const submitCommentMutation = gql`
   mutation submitComment($repoFullName: String!, $commentContent: String!) {
     submitComment(repoFullName: $repoFullName, commentContent: $commentContent) {
       postedBy {
@@ -74,36 +73,38 @@ const SUBMIT_COMMENT_MUTATION = gql`
   }
 `;
 
-const CommentsPageWithMutations = graphql(SUBMIT_COMMENT_MUTATION, {
-  props({ ownProps, mutate }) {
-    return {
-      submit({ repoFullName, commentContent }) {
-        return mutate({
-          variables: { repoFullName, commentContent },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            submitComment: {
-              __typename: 'Comment',
-              postedBy: ownProps.currentUser,
-              createdAt: +new Date,
-              content: commentContent,
-            },
-          },
-          updateQueries: {
-            Comment: (previousResult, { mutationResult }) => {
-              const newComment = mutationResult.data.submitComment;
-              return update(previousResult, {
-                entry: {
-                  comments: {
-                    $unshift: [newComment],
-                  },
-                },
-              });
-            },
-          },
-        });
+@Component({ ... })
+class CommentsPageComponent {
+  currentUser: any;
+
+  constructor(private apollo: Angular2Apollo) {}
+
+  submit({ repoFullName, commentContent }) {
+    this.apollo.mutate({
+      query: submitCommentMutation,
+      variables: { repoFullName, commentContent },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitComment: {
+          __typename: 'Comment',
+          postedBy: this.currentUser,
+          createdAt: +new Date,
+          content: commentContent,
+        },
       },
-    };
-  },
-})(CommentsPage);
+      updateQueries: {
+        Comment: (previousResult, { mutationResult }) => {
+          const newComment = mutationResult.data.submitComment;
+          const prevComments = prev.entry.comments;
+
+          return {
+            entry: Object.assign(prev.entry, {
+              comments: [newComment, ...prevComments]
+            })
+          };
+        },
+      },
+    }); 
+  }
+}
 ```

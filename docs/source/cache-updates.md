@@ -42,58 +42,54 @@ For example, if you want to add something to a list of objects without refetchin
 
 `fetchMore` can be used to manually update the result of one query based on the data returned by another query. Most often, it is used to handle pagination. In our GitHunt example, we have a paginated feed that displays a list of GitHub respositories. When we hit the "Load More" button, we don't Apollo Client to throw away the repository information it has already loaded. Instead, it should just append the newly loaded repositories to the list of repositories that Apollo Client already has in the store. With this update, our UI component should re-render and show us all of the available repositories.
 
-This is possible with `fetchMore`. The `fetchMore` method allows us to fetch another query and incorporate that query's result into the result that our component query previously received. We can see it in action within the [GitHunt](https://github.com/apollostack/GitHunt-React) code:
+This is possible with `fetchMore`. The `fetchMore` method allows us to fetch another query and incorporate that query's result into the result that our component query previously received. We can see it in action within the [GitHunt](https://github.com/apollostack/GitHunt-Angular2) code:
 
 ```javascript
-const FEED_QUERY = gql`
+const feedQuery = gql`
   query Feed($type: FeedType!, $offset: Int, $limit: Int) {
     // ...
   }`;
-const FeedWithData = graphql(FEED_QUERY, {
-  props({ data: { loading, feed, currentUser, fetchMore } }) {
-    return {
-      loading,
-      feed,
-      currentUser,
-      loadNextPage() {
-        return fetchMore({
-          variables: {
-            offset: feed.length,
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (!fetchMoreResult.data) { return previousResult; }
-            return Object.assign({}, previousResult, {
-              feed: [...prev.feed, ...fetchMoreResult.data.feed],
-            });
-          },
+
+class FeedComponent implements OnInit {
+  type: Subject<string> = new Subject<string>();
+  offset: number = 0;
+  itemsPerPage: number = 10;
+  feedObs: ApolloQueryObservable<any>;
+  
+  ngOnInit() {
+    this.feedObs = this.apollo.watchQuery({
+      query: feedQuery,
+      variables: {
+        type: this.type,
+        offset: this.offset,
+        limit: this.itemsPerPage,
+      },
+      forceFetch: true,
+    });
+  }
+
+  fetchMore() {
+    this.feedObs.fetchMore({
+      variables: {
+        offset: this.offset + this.itemsPerPage,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.data) { return prev; }
+        return Object.assign({}, prev, {
+          feed: [...prev.feed, ...fetchMoreResult.data.feed],
         });
       },
-    };
-  },
-})(Feed);
-```
-
-We have two components here: `FeedWithData` and `Feed`. The `FeedWithData` implementation produces the `props` to be passed to the `Feed` component which serves as the presentation layer, i.e. it produces the UI. Specifically, we're mapping the `loadNextPage` prop to the following:
-
-```
-return fetchMore({
-  variables: {
-    offset: feed.length,
-  },
-  updateQuery: (prev, { fetchMoreResult }) => {
-    if (!fetchMoreResult.data) { return prev; }
-    return Object.assign({}, prev, {
-      feed: [...prev.feed, ...fetchMoreResult.data.feed],
     });
-  },
-});
+    this.offset += this.itemsPerPage;
+  }
+}
 ```
 
-The `fetchMore` method takes a map of `variables` to be sent with the new query. Here, we're setting the offset to `feed.length` so that we fetch items that aren't already displayed on the feed. This variable map is merged with the one that's been specified for the query associated with the component. This means that other variables, e.g. the `limit` variable, will have the same value as they do within the component query.
+The `fetchMore` method takes a map of `variables` to be sent with the new query. Here, we're setting the new offsetso that we fetch items that aren't already displayed on the feed. This variable map is merged with the one that's been specified for the query associated with the component. This means that other variables, e.g. the `limit` variable, will have the same value as they do within the component query.
 
-It can also take a `query` named argument, which can be a GraphQL document containing a query that will be fetched in order to fetch more information; we refer to this as the `fetchMore` query. By default, the `fetchMore` query is the query associated with the component, i.e. the `FEED_QUERY` in this case.
+It can also take a `query` named argument, which can be a GraphQL document containing a query that will be fetched in order to fetch more information; we refer to this as the `fetchMore` query. By default, the `fetchMore` query is the query associated with the component, i.e. the `feedQuery` in this case.
 
-When we call `fetchMore`, Apollo Client will fire the `fetchMore` query and it needs to know how to incorporate the result of the query into the information the component is asking for. This is accomplished through `updateQuery`. The named argument `updateQuery` should be a function that takes the previous result of the query associated with your component (i.e. `FEED_QUERY` in this case) and the information returned by the `fetchMore` query and combine the two.
+When we call `fetchMore`, Apollo Client will fire the `fetchMore` query and it needs to know how to incorporate the result of the query into the information the component is asking for. This is accomplished through `updateQuery`. The named argument `updateQuery` should be a function that takes the previous result of the query associated with your component (i.e. `feedQuery` in this case) and the information returned by the `fetchMore` query and combine the two.
 
 Here, the `fetchMore` query is the same as the query associated with the component. Our `updateQuery` takes the new feed items returned and just appends them onto the feed items that we'd asked for previously. With this, the UI will update and the feed will contain the next page of items!
 
@@ -109,8 +105,8 @@ We'll take the comments page within GitHunt as our example. When we submit a new
 
 We expose this mutation through a function prop that the `CommentsPage` component can call. This is what the code looks like:
 
-```javascript
-const SUBMIT_COMMENT_MUTATION = gql`
+```js
+const submitCommentMutation = gql`
   mutation submitComment($repoFullName: String!, $commentContent: String!) {
     submitComment(repoFullName: $repoFullName, commentContent: $commentContent) {
       postedBy {
@@ -121,51 +117,58 @@ const SUBMIT_COMMENT_MUTATION = gql`
       content
     }
   }
-`
-const CommentsPageWithMutations = graphql(SUBMIT_COMMENT_MUTATION, {
-  props({ ownProps, mutate }) {
-    return {
-      submit({ repoFullName, commentContent }) {
-        return mutate({
-          variables: { repoFullName, commentContent },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            submitComment: {
-              __typename: 'Comment',
-              postedBy: ownProps.currentUser,
-              createdAt: +new Date,
-              content: commentContent,
-            },
+`;
+
+class CommentsPageComponent {
+  apollo: Angular2Apollo;
+  currentUser: any;
+
+  submit({ repoFullName, commentContent }) {
+    this.apollo.mutate({
+      mutation: submitCommentMutation,
+      variables: { repoFullName, commentContent },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          submitComment: {
+            __typename: 'Comment',
+            postedBy: this.currentUser,
+            createdAt: +new Date,
+            content: commentContent,
           },
-          updateQueries: {
-            Comment: (prev, { mutationResult }) => {
-              const newComment = mutationResult.data.submitComment;
-              return update(prev, {
-                entry: {
-                  comments: {
-                    $unshift: [newComment],
-                  },
+        },
+        updateQueries: {
+          Comment: (prev, { mutationResult }) => {
+            if (!mutationResult.data) { return prev; }
+            const newComments = mutationResult.data.submitComment;
+            
+            return Object.assign({}, prev, {
+              entry: {
+                comments: {}
+              },
+            });
+
+            const newComment = mutationResult.data.submitComment;
+            return update(prev, {
+              entry: {
+                comments: {
+                  $unshift: [newComment],
                 },
-              });
-            },
+              },
+            });
           },
-        });
-      },
-    };
-  },
-})(CommentsPage);
+        },
+    })
+  }
+}
 ```
 
 If we were to look carefully at the server schema, we'd see that the mutation actually returns information about the single new comment that was added; it doesn't refetch the whole list of comments. This makes a lot of sense: if we have a thousand comments on a page, we don't want to refetch each of them if we add a single new comment.
 
 The comments page itself is rendered with the following query:
 
-```javascript
-const COMMENT_QUERY = gql`
+```js
+const commentQuery = gql`
   query Comment($repoName: String!) {
-    # Eventually move this into a no fetch query right on the entry
-    # since we literally just need this info to determine whether to
-    # show upvote/downvote buttons
     currentUser {
       login
       html_url
@@ -193,31 +196,32 @@ const COMMENT_QUERY = gql`
         stargazers_count
       }
     }
-  }`;
+  }
+`;
 ```
 
-Now, we have to incorporate the newly added comment returned by the mutation into the information that was already returned by the `COMMENT_QUERY` that was fired when the page was loaded. We accomplish this through `updateQueries`. Zooming in on that portion of the code:
+Now, we have to incorporate the newly added comment returned by the mutation into the information that was already returned by the `commentQuery` that was fired when the page was loaded. We accomplish this through `updateQueries`. Zooming in on that portion of the code:
 
-```javascript
-mutate({
+```js
+{
   //...
   updateQueries: {
     Comment: (prev, { mutationResult }) => {
       const newComment = mutationResult.data.submitComment;
-      return update(prev, {
-        entry: {
-          comments: {
-            $unshift: [newComment],
-          },
-        },
-      });
+      const prevComments = prev.entry.comments;
+
+      return {
+        entry: Object.assign(prev.entry, {
+          comments: [newComment, ...prevComments]
+        })
+      };
     },
   },
-})
+}
 ```
 
 Fundamentally, `updateQueries` is a map going from the name of a query (in our case, `Comment`) to a function that receives the previous result that this query received as well as the result returned by the mutation. In our case, the mutation returns information about the new comment. This function should then incorporate the mutation result into the result previously received by the query and return the combined result.
 
-In our `updateQueries` function for the `Comment` query, we're doing something really simple: just adding the comment we just submitted to the list of comments that the query asks for. We're doing that using the `update` function from the `react-addons-update` package, just to do it concisely. But, if you wanted to, you could write some no-helper Javascript to combine the two objects.
+In our `updateQueries` function for the `Comment` query, we're doing something really simple: just adding the comment we just submitted to the list of comments that the query asks for.
 
-Once the mutation fires and the result arrives from the server (or, a result is provided through optimistic UI), our `updateQueries` function for the `Comment` query will be called and the `Comment` query will be updated accordingly. These changes in the result will be mapped to React props and our UI will update as well with the new information!
+Once the mutation fires and the result arrives from the server (or, a result is provided through optimistic UI), our `updateQueries` function for the `Comment` query will be called and the `Comment` query will be updated accordingly. These changes in the result will be mapped to component's property and our UI will update as well with the new information!

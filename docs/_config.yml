@@ -44,7 +44,7 @@ typescript_api_box:
   data_file: docs.json
 
 nav_links:
-  'Angular2':
+  'Angular 2':
     url: http://dev.apollodata.com/angular2
     active: true
   'React':

@@ -12,18 +12,10 @@ Refetches are the simplest way to force a portion of your cache to reflect the i
 
 For example, continuing with the GitHunt schema, we may have the following component implementation:
 
-```javascript
-import React, { Component } from 'react';
+```js
+import { Component, OnInit } from '@angular/core';
+import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'grapqhl-tag';
-import { graphql } from 'react-apollo';
-
-class Feed extends Component {
-  // ...
-  onRefreshClicked() {
-    this.props.data.refetch();
-  }
-  // ...
-}
 
 const FeedEntries = gql`
   query FeedEntries($type: FeedType!, $offset: Int, $limit: Int) {
@@ -38,10 +30,24 @@ const FeedEntries = gql`
     }
   }`;
 
-const FeedWithData = graphql(FeedEntries)(Feed);
+@Component({ ... })
+class FeedComponent implements OnInit {
+  data: any;
+  
+  constructor(private apollo: Angular2Apollo) {}
+
+  ngOnInit() {
+    this.data = this.apollo.watchQuery({ ... }); 
+  }
+  // ...
+  onRefreshClicked() {
+    this.data.refetch();
+  }
+  // ...
+}
 ```
 
-In particular, suppose we have a "refresh" button somewhere on the page and when that button is clicked, the `onRefreshClicked` method is called on our component. We have the method `this.props.data.refetch`, which allows us to refetch the query associated with the `FeedCompoment`. This means that instead of resolving information about the `feed` field from the cache (even if we have it!), the query will hit the server and will update the cache with new results from the server.
+In particular, suppose we have a "refresh" button somewhere on the page and when that button is clicked, the `onRefreshClicked` method is called on our component. We have the method `this.data.refetch`, which allows us to refetch the query associated with the `FeedCompoment`. This means that instead of resolving information about the `feed` field from the cache (even if we have it!), the query will hit the server and will update the cache with new results from the server.
 
 So, if there's been some kind of update in the information that the query requests (e.g. a new repository added to the feed), the Apollo Client store will have the update and the UI will re-render as necessary.
 
@@ -52,16 +58,22 @@ If you have a query whose result can change pretty frequently, it probably makes
 
 Continuing with our refetch example, we can add a polling interval with an additional option:
 
-```javascript
-const FeedWithData = graphql(FeedEntries, {
-  options: (props) => {
-    return { pollInterval: 20000 };
-  },
-})(Feed);
+```js
+class FeedComponent {
+  apollo: Angular2Apollo;
 
+  // ...
+  ngOnInit() {
+    this.apollo.watchQuery({
+      query: FeedEntries,
+      pollInterval: 20000
+    });
+  }
+  // ...
+}
 ```
 
-By adding a function that returns the options for this particular component and setting a `pollInterval` key within the options, we can set the polling interval in milliseconds. Apollo will then take care of refetching this query every twenty seconds and your UI will be updated with the newest information from the server every twenty seconds.
+By using `pollInterval` key within the options, we can set the polling interval in milliseconds. Apollo will then take care of refetching this query every twenty seconds and your UI will be updated with the newest information from the server every twenty seconds.
 
 Generally, you shouldn't have polling intervals that are very small, say, less than 10 seconds. If you have data that changes this frequently and need those updates on your client that quickly, you should use GraphQL subscriptions.
 
