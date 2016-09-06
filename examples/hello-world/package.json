@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "client": "ng serve",
+    "client": "ng serve --proxy-conf proxy.conf.json",
     "server": "nodemon api/index.js --watch api --exec babel-node"
   },
   "private": true,
