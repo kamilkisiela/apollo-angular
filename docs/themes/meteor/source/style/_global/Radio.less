@@ -1,0 +1,9 @@
+@import "../_util/index.import.less";
+@import "Checkbox.less";
+
+label.radio {
+	&:extend(label.checkbox all);
+
+	input[type="radio"] + span:before,
+  input[type="radio"] + span:after { border-radius: 1em; }
+}

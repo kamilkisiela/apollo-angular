@@ -1,0 +1,31 @@
+.panel {
+	@media screen and (min-width: @breakpoint) { display: none; }
+
+	.panel-item {
+		.std-xpadding;
+		.font-s2;
+		.type-semibold;
+		display: block;
+		padding-top: .5rem;
+		padding-bottom: .5rem;
+		position: relative;
+
+		&.active,
+		&:hover {
+			background: @color-primary;
+
+			a { .link(@color-lightest); }
+
+			&:before {
+				.transform(scale3d(1,1,1));
+				background: @color-primary;
+			}
+		}
+
+		a {
+			.link(@color-dark);
+			.type-semibold;
+			display: block;
+		}
+	}
+}

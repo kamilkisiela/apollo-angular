@@ -1,0 +1,62 @@
+<div class="sidebar">
+  <div class="panel">
+    <div class="panel-item">
+      <a class="" href="<%- theme.logo.url %>" title="<%- theme.logo.title %>" <%- theme.logo.target && 'target=' + theme.logo.target %> >
+        <span><%- theme.logo.title %></span>
+      </a>
+    </div>
+    <% _.each(config.nav_links || theme.nav_links, function (link, title) { %>
+      <div class="panel-item <%- link.active && 'active' %>"">
+        <a class="" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
+          <span><%- title %></span>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="sidebar-content">
+    <div class="topcap">
+      <span class="title-sidebar"><%- config.title %></span>
+      <% if (config.versions.length > 1) { %>
+        <span class="select version-sidebar nochrome">
+          <select class="version-select">
+            <% config.versions.forEach(function (v) { %>
+              <option value="v<%- v %>"><%- v %></option>
+            <% }) %>
+          </select>
+        </span>
+      <% } %>
+    </div>
+
+    <% if (config.apis && config.apis.docsearch) { %>
+    <div class="wrapper-search">
+      <div class="input-symbol small round">
+        <input type="text" placeholder="Search <%- config.subtitle %>" id="desktop-search-input" />
+        <span class="icon-search"></span>
+      </div>
+      <div class="wrapper-desktop-search-results"></div>
+    </div>
+
+    <% } %>
+
+    <ul class="toc">
+      <% _.each(config.sidebar_categories, function(pages, category) { %>
+        <li>
+          <% if (category !== 'null') { %>
+            <div class="heading-toc"><%- category %></div>
+          <% } %>
+          <ul class="list-toc">
+            <% pages.forEach(function(path) { %>
+              <% p = site.pages.findOne({path: path + '.html'}); %>
+              <li class="item-toc <%- page.title === p.title ? ' current' : '' %>">
+                <a href="<%- relative_url(page.path, p.path) %>" class="sidebar-link <%- page.title === p.title ? ' current' : '' %>">
+                  <span><%- p.title %></span>
+                </a>
+              </li>
+            <% }); %>
+          </ul>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</div>
