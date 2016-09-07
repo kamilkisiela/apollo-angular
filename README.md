@@ -4,6 +4,7 @@
 [![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollostack.com/#slack)
 [![Build status](https://travis-ci.org/apollostack/angular2-apollo.svg?branch=master)](https://travis-ci.org/apollostack/angular2-apollo)
 [![Coverage Status](https://coveralls.io/repos/github/apollostack/angular2-apollo/badge.svg?branch=master)](https://coveralls.io/github/apollostack/angular2-apollo?branch=master)
+[![bitHound Overall Score](https://www.bithound.io/github/apollostack/angular2-apollo/badges/score.svg)](https://www.bithound.io/github/apollostack/angular2-apollo)
 
 Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
