@@ -12,7 +12,7 @@ Refetches are the simplest way to force a portion of your cache to reflect the i
 
 For example, continuing with the GitHunt schema, we may have the following component implementation:
 
-```js
+```ts
 import { Component, OnInit } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'grapqhl-tag';
@@ -58,7 +58,7 @@ If you have a query whose result can change pretty frequently, it probably makes
 
 Continuing with our refetch example, we can add a polling interval with an additional option:
 
-```js
+```ts
 class FeedComponent {
   apollo: Angular2Apollo;
 

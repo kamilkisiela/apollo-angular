@@ -18,7 +18,7 @@ To get started using Apollo, we need to create an `ApolloClient` and use `Apollo
 
 To get started, create an [`ApolloClient`](/core/apollo-client-api.html#constructor) instance and point it at your GraphQL server:
 
-```js
+```ts
 import ApolloClient from 'apollo-client';
 
 // by default, this client will send queries to `/graphql` (relative to the URL of your app)
@@ -27,7 +27,7 @@ const client = new ApolloClient();
 
 The client takes a variety of [options](/core/apollo-client-api.html#constructor), but in particular, if you want to change the URL of the GraphQL server, you can pass in a custom [`NetworkInterface`](/core/apollo-client-api.html#NetworkInterface):
 
-```js
+```ts
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
 // by default, this client will send queries to `/graphql` (relative to the URL of your app)
@@ -46,7 +46,7 @@ The other options control the behavior of the client, and we'll see examples of 
 
 To connect your client instance to your app, use the `ApolloModule.withClient`.
 
-```js
+```ts
 import ApolloClient from 'apollo-client';
 import { ApolloModule } from 'angular2-apollo';
 
@@ -80,7 +80,7 @@ The `graphql` container is the recommended approach for fetching data or making 
 
 The basic usage of `graphql` is as follows:
 
-```js
+```ts
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -108,7 +108,7 @@ const MyComponentWithMutation = graphql(MyMutation)(MyComponent);
 
 If you are using [ES2016 decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841#.nn723s5u2), you may prefer the decorator syntax:
 
-```js
+```ts
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 
@@ -126,7 +126,7 @@ In this guide, we'll use separate components for instructional purposes.
 
 `withApollo` is a simple higher order component which provides direct access to your `ApolloClient` instance as a prop to your wrapped component. This is useful if you want to do custom logic with apollo, without using the `graphql` container.
 
-```js
+```ts
 import React, { Component } from 'react';
 import { withApollo } from 'react-apollo';
 import ApolloClient from 'apollo-client';
@@ -147,7 +147,7 @@ class MyComponent extends Component { ... }
 If you need to get access to the instance of the wrapped component, you can use `withRef` in the options.
 This will allow a `getWrappedInstance` method on the returned component which will return the wrapped instance.
 
-```js
+```ts
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 

@@ -13,7 +13,7 @@ The list of comments is not driven by the mutation query, so if we want our opti
 
 Here's what this looks like in the code:
 
-```js
+```ts
 
 const updateComment = gql`
   mutation updateComment($commentId: ID!, $commentContent: String!) {
@@ -54,7 +54,7 @@ In that case we need to specify how to integrate the new data into existing quer
 
 Here is a concrete example from GitHunt, which inserts a comment into an existing list of comments. A very quick and easy way to update the list of comments would be to refetch the entire list from the server every time a comment is inserted, but that would be a bit wasteful. Instead, we can use `updateQueries` here and just insert the new comment into the list of comments we already have in the store:
 
-```js
+```ts
 import { Component } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'graphql-tag';

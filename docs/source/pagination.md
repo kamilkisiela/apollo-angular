@@ -20,7 +20,7 @@ Offset based pagination - also called numbered pages - is a very common pattern,
 
 Here is an example with numbered pages taken from [GitHunt](https://github.com/apollostack/GitHunt-Angular2):
 
-```js
+```ts
 
 const feedQuery = gql`
   query Feed($type: FeedType!, $offset: Int, $limit: Int) {
@@ -103,7 +103,7 @@ In cursor-based pagination a cursor is used to keep track of where in the data s
 
 In the example below, we use a `fetchMore` query to continuously load new comments, which then appear at the top. The cursor to be used in the `fetchMore` query is provided in the initial server response, and has to be updated whenever more data is fetched.
 
-```js
+```ts
 const moreComments = gql`
   query moreComments($cursor: String) {
     moreComments(cursor: $cursor) {

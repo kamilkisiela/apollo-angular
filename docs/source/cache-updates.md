@@ -13,7 +13,7 @@ Apollo's store is [constructed](http://dev.apollodata.com/core/how-it-works.html
 
 By default, Apollo cannot determine the IDs to use for object except through the position that they take in queries. However, if you specify a function to generate an ID from each object, and supply it as the `dataIdFromObject` in the [`ApolloClient` constructor](initialization.html#creating-client), you can create an unique ID for each "real" object.
 
-```js
+```ts
 import ApolloClient from 'apollo-client';
 
 // If your database has unique IDs across all types of objects, you can use
@@ -105,7 +105,7 @@ We'll take the comments page within GitHunt as our example. When we submit a new
 
 We expose this mutation through a function prop that the `CommentsPage` component can call. This is what the code looks like:
 
-```js
+```ts
 const submitCommentMutation = gql`
   mutation submitComment($repoFullName: String!, $commentContent: String!) {
     submitComment(repoFullName: $repoFullName, commentContent: $commentContent) {
@@ -166,7 +166,7 @@ If we were to look carefully at the server schema, we'd see that the mutation ac
 
 The comments page itself is rendered with the following query:
 
-```js
+```ts
 const commentQuery = gql`
   query Comment($repoName: String!) {
     currentUser {
@@ -202,7 +202,7 @@ const commentQuery = gql`
 
 Now, we have to incorporate the newly added comment returned by the mutation into the information that was already returned by the `commentQuery` that was fired when the page was loaded. We accomplish this through `updateQueries`. Zooming in on that portion of the code:
 
-```js
+```ts
 {
   //...
   updateQueries: {

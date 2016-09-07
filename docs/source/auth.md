@@ -8,7 +8,7 @@ Some applications don't deal with sensitive data and have no need to authenticat
 Apollo Client has a pluggable [network interface](/core/network.html) that lets you modify requests before they are sent to the server.
 That makes it easy to add a network interface middleware that adds the `authorization` header to every HTTP request:
 
-```js
+```ts
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
 const networkInterface = createNetworkInterface('/graphql');
@@ -33,7 +33,7 @@ The example above shows how to send an authorization header along with every req
 
 Another common way of adding credentials for authentication to a request is to use cookies. GitHunt uses GitHub's OAuth authentication, and stores the token in a cookie. Cookies can be added to every request with the `credentials` option (the network interface simply passes that option on to the [fetch](https://github.com/github/fetch) call):
 
-```js
+```ts
 const client = new ApolloClient({
   networkInterface: createNetworkInterface('/graphql', {
     credentials: 'same-origin',

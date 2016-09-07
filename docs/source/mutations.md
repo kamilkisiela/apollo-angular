@@ -5,7 +5,7 @@ order: 11
 
 In addition to fetching data using queries, Apollo also handles GraphQL mutations. Mutations are identical to queries in syntax, the only difference being that you use the keyword `mutation` instead of `query` to indicate that the operation is used to change the dataset behind the schema.
 
-```js
+```ts
 mutation {
   submitRepository(repoFullName: "apollostack/apollo-client") {
     id
@@ -21,7 +21,7 @@ GraphQL mutations consist of two parts:
 
 The result of the above mutation might be be:
 
-```
+```json
 {
   "data": {
     "submitRepository": {
@@ -38,7 +38,7 @@ When we use mutations in Apollo, the result is typically integrated into the cac
 
 Using `Angular2Apollo` it easy to call mutation. You can simply use `mutate` method.      
 
-```js
+```ts
 import { Component } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import { gql } from 'graphql-tag';
@@ -67,7 +67,7 @@ class NewEntryComponent {
 
 Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](/core/apollo-client-api.html#mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
 
-```js
+```ts
 import { Component } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import { gql } from 'graphql-tag';
@@ -111,7 +111,7 @@ Sometimes your client code can easily predict the result of the mutation, if it 
 
 Apollo Client gives you a way to specify the `optimisticResponse` option, that will be used to update active queries immediately, in the same way that the server's mutation response will. Once the actual mutation response returns, the optimistic part will be thrown away and replaced with the real result.
 
-```js
+```ts
 import { Component } from '@angular/core';
 import { Angular2Apollo } from 'react-apollo';
 import { gql } from 'graphql-tag';

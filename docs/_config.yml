@@ -27,8 +27,6 @@ sidebar_categories:
     - pagination
     - optimistic-ui
     - prefetching
-    - redux
-    - server-side-rendering
 github_repo: apollostack/angular2-docs
 content_root: source
 

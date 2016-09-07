@@ -10,7 +10,7 @@ In Apollo Client, prefetching is very simple and can be done by running a compon
 GitHunt uses `Angular2Apollo` and calls `query` method as soon as the user hovers over a link to the comments page. 
 With the data prefetched, the comments page renders immediately, and the user often experiences no delay at all:
 
-```js
+```ts
 import { Component } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'graphql-tag';

@@ -11,7 +11,7 @@ When we are using a basic query we can use the `Angular2Apollo.watchQuery` metho
 
 For instance, in GitHunt, we want to display the current user (if logged in) in the `Profile` component:
 
-```js
+```ts
 import { Component, OnInit } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'graphql-tag';
@@ -58,7 +58,7 @@ To be more specific, `watchQuery` method returns an Observable called `ApolloQue
 
 Those options will be passed to [`ApolloClient.watchQuery`][ApolloClient.watchQuery]. If your query takes variables, this is the place to pass them in: 
 
-```js
+```ts
 // Suppose our profile query took an avatar size
 const CurrentUserForProfile = gql`
   query CurrentUserForProfile($avatarSize: Int!) {
@@ -85,7 +85,7 @@ class ProfileComponent {
 
 Instead of using just primitive values inside `options.variables`, you can specify an observable. This way `watchQuery` method will wait for all the variables for being provided before it will do anything.
 
-```js
+```ts
 import { Subject } from 'rxjs/Subject';
 
 // Suppose our profile query took an avatar size
@@ -137,7 +137,7 @@ An observable returned by `watchQuery` method holds the actual result under the 
 
 This is why we created `SelectPipe`. The only argument it receives is the name of property you want to get from `data`.
 
-```js
+```ts
 import { Component, OnInit } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'graphql-tag'; 
@@ -191,7 +191,7 @@ Without using `SelectPipe` you would get the whole object instead of only the `d
 
 What's really interesting, because of this you can avoid using `SelectPipe`:
 
-```js
+```ts
 import { Component, OnInit } from '@angular/core';
 import { Angular2Apollo } from 'angular2-apollo';
 import gql from 'graphql-tag'; 
