@@ -9,7 +9,17 @@
     "outDir": "build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "isomorphic-fetch",
+      "jasmine",
+      "es6-shim",
+      "lodash"
+    ]
   },
   "files": [
     "typings/index.d.ts",
