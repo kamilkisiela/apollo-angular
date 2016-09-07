@@ -10,16 +10,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "types": [
-      "node",
-      "isomorphic-fetch",
-      "jasmine",
-      "es6-shim",
-      "lodash"
-    ]
+    "lib": ["es6", "dom"]
   },
   "files": [
     "typings/index.d.ts",
