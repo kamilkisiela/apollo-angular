@@ -29,21 +29,10 @@ The best way to use `apollo-client` in your Angular app is with `angular2-apollo
 
 Angular 2 Apollo provides a idiomatic Angular 2 API, and is known to work in a straightforward way with many tools used in a typical Angular 2 app. In particular:
 
- - **EDIT** It works with React Native out of the box;
  - It can integrate naturally with routers, such as Angular Router;
  - Uses Redux internally and you can [take advantage](redux.html) of this, but also can be used with any other client-side data library that integrates with Angular 2.
 
 If you want to use Apollo with a different front-end environment (for instance a different JavaScript framework, or a native mobile app), it is possible too! Please check out the links at the top of this document, or head to our [developer site](http://apollostack.com) to get started.
-
-<h2 id="comparison">How does Apollo compare to other GraphQL clients?</h2>
-
-**EDIT** Apollo is the only one.
-
-**EDIT** If you are deciding whether to use `angular2-apollo` or some other GraphQL client, it's worth considering the [goals](#apollo-client) of the project, and how they compare. In particular:
-
- - [Relay](https://facebook.github.io/relay/) is an awesome and performant GraphQL client built by Facebook for their mobile applications. It is designed to emphasize the co-location of queries and components, and is thus tightly integrated with the React framework (which is also developed at Facebook).
-
- - [Lokka](https://github.com/kadirahq/lokka) is a simple GraphQL Javascript client with a basic query cache.
 
 <h2 id="learn-more">Learn More</h2>
 
