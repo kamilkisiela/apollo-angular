@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.4.5
+
 - Moved to Angular2 RC6 ([PR #81](https://github.com/apollostack/angular2-apollo/pull/81))
 - Added `fetchMore` to the `ApolloQuery` interface ([PR #82](https://github.com/apollostack/angular2-apollo/pull/82)) ([Issue #80](https://github.com/apollostack/angular2-apollo/issues/80))
 
