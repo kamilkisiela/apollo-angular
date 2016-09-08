@@ -8,7 +8,7 @@ import { client } from './client';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -17,6 +17,6 @@ import { client } from './client';
     // Define the default ApolloClient
     ApolloModule.withClient(client),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -144,7 +144,9 @@ describe('angular2Apollo', () => {
         const obs = angular2Apollo
           .watchQuery(options);
 
-        obs.subscribe(() => {});
+        obs.subscribe(() => {
+          //
+        });
 
         obs.refetch({ foo: 'Bar' }).then(result => {
           expect(result.data).toEqual(data3);
