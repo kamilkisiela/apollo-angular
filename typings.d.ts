@@ -1,3 +1,5 @@
+/// <reference types="graphql-typings" />
+
 declare module 'lodash.isequal' {
   import main = require('lodash');
   export = main.isEqual;
