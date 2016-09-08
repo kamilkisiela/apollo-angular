@@ -25,9 +25,8 @@
     "lint": "tslint -e src/*.ts && tslint tests/*.ts ",
     "build": "tsc",
     "watch": "tsc -w",
-    "clean": "rimraf build/* coverage/* typings/*",
-    "typings": "typings i",
-    "prepublish": "npm run clean && npm run typings && npm run build"
+    "clean": "rimraf build/* coverage/*",
+    "prepublish": "npm run clean && npm run build"
   },
   "peerDependencies": {
     "apollo-client": "^0.3.0 || ^0.4.0",
