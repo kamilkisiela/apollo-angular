@@ -294,7 +294,9 @@ describe('Apollo - decorator - queries()', () => {
 
       setTimeout(() => {
         let called = false;
-        component.__apolloHandle.getQuerySub('data').refetch = () => {called = true};
+        component.__apolloHandle.getQuerySub('data').refetch = () => {
+          called = true;
+        };
 
         component.data.refetch(1234);
 

@@ -22,9 +22,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   public nameControl = new FormControl();
   // Observable variable of the graphql query
   public nameFilter: Subject<string> = new Subject<string>();
+  private apollo: Angular2Apollo;
 
   // Inject Angular2Apollo service
-  constructor(private apollo: Angular2Apollo) {}
+  constructor(apollo: Angular2Apollo) {
+    this.apollo = apollo;
+  }
 
   public ngOnInit() {
     // Query users data with observable variables
