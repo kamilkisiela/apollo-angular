@@ -22,13 +22,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   public nameControl = new FormControl();
   // Observable variable of the graphql query
   public nameFilter: Subject<string> = new Subject<string>();
+  private apollo: Angular2Apollo;
 
   // Inject Angular2Apollo service
-  constructor(private angular2Apollo: Angular2Apollo) {}
+  constructor(apollo: Angular2Apollo) {
+    this.apollo = apollo;
+  }
 
   public ngOnInit() {
     // Query users data with observable variables
-    this.users = this.angular2Apollo.watchQuery({
+    this.users = this.apollo.watchQuery({
       query: gql`
         query getUsers($name: String) {
           users(name: $name) {
@@ -61,7 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public newUser(firstName: string) {
     // Call the mutation called addUser
-    this.angular2Apollo.mutate({
+    this.apollo.mutate({
       mutation: gql`
         mutation addUser(
           $firstName: String!

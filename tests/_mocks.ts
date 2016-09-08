@@ -98,7 +98,7 @@ function requestToKey(request: ParsedRequest): string {
 }
 
 export function mockClient(...args): ApolloClient {
-  const networkInterface = mockNetworkInterface(...args)
+  const networkInterface = mockNetworkInterface(...args);
 
   return new ApolloClient({
     networkInterface,
