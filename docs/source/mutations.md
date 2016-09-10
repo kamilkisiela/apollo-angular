@@ -113,7 +113,7 @@ Apollo Client gives you a way to specify the `optimisticResponse` option, that w
 
 ```ts
 import { Component } from '@angular/core';
-import { Angular2Apollo } from 'react-apollo';
+import { Angular2Apollo } from 'angular2-apollo';
 import { gql } from 'graphql-tag';
 
 const submitComment = gql`
