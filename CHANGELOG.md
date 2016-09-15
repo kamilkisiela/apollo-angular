@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v0.4.6
+
+- Moved to Angular 2 final and updated RxJS to the latest version ([PR #96](https://github.com/apollostack/angular2-apollo/pull/96))
+
 ### v0.4.5
 
 - Moved to Angular2 RC6 ([PR #81](https://github.com/apollostack/angular2-apollo/pull/81))
