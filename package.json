@@ -55,7 +55,7 @@
     "graphql": "^0.7.0",
     "graphql-tag": "^0.1.9",
     "graphql-typings": "0.0.1-beta-2",
-    "istanbul-instrumenter-loader": "^0.2.0",
+    "istanbul-instrumenter-loader": "^1.0.0",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "karma": "^1.3.0",
