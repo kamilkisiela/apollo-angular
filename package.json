@@ -30,8 +30,8 @@
   },
   "peerDependencies": {
     "apollo-client": "^0.3.0 || ^0.4.0",
-    "@angular/core": "^2.0.0-rc.6",
-    "rxjs": "^5.0.0-beta.11"
+    "@angular/core": "^2.0.0",
+    "rxjs": "^5.0.0-beta.12"
   },
   "dependencies": {
     "apollo-client-rxjs": "^0.0.1",
@@ -40,16 +40,16 @@
     "lodash.isequal": "^4.2.0"
   },
   "devDependencies": {
-    "@angular/common": "^2.0.0-rc.6",
-    "@angular/compiler": "^2.0.0-rc.6",
-    "@angular/core": "^2.0.0-rc.6",
-    "@angular/platform-browser": "^2.0.0-rc.6",
-    "@angular/platform-browser-dynamic": "^2.0.0-rc.6",
+    "@angular/common": "^2.0.0",
+    "@angular/compiler": "^2.0.0",
+    "@angular/core": "^2.0.0",
+    "@angular/platform-browser": "^2.0.0",
+    "@angular/platform-browser-dynamic": "^2.0.0",
     "@types/isomorphic-fetch": "0.0.30",
     "@types/jasmine": "^2.2.33",
     "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.38",
-    "apollo-client": "^0.4.13",
+    "apollo-client": "^0.4.15",
     "es6-shim": "^0.35.0",
     "ghooks": "^1.2.1",
     "graphql": "^0.7.0",
@@ -67,12 +67,12 @@
     "reflect-metadata": "^0.1.8",
     "remap-istanbul": "^0.6.3",
     "rimraf": "^2.5.2",
-    "rxjs": "5.0.0-beta.11",
+    "rxjs": "5.0.0-beta.12",
     "tslint": "^3.7.4",
     "typescript": "^2.0.0",
     "validate-commit-msg": "^2.6.1",
     "webpack": "^1.13.0",
-    "zone.js": "^0.6.11"
+    "zone.js": "^0.6.23"
   },
   "config": {
     "ghooks": {
