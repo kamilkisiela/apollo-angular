@@ -1,4 +1,4 @@
-/// <reference types="graphql-typings" />
+/// <reference types="typed-graphql" />
 
 declare module 'lodash.isequal' {
   import main = require('lodash');
