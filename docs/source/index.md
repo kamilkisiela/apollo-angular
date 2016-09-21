@@ -5,6 +5,8 @@ order: 0
 
 This is the guide to using the [Apollo](http://apollostack.com) JavaScript GraphQL client with the [Angular 2](https://angular.io) rendering library.
 
+* In order to use Apollo with Angular 1.x apps, follow the instructions on the [Github repo](https://github.com/apollostack/angular1-apollo).
+
 The Apollo team builds and maintains a collection of utilities designed to make it easier to use [GraphQL](http://graphql.org) across a range of front-end and server technologies. Although this guide focuses on the integration with Angular 2, there is a similar [guide](/react) in the works for React, and the [core](/core) `apollo-client` JavaScript package can be used in many other contexts too.
 
 If you are looking to use Apollo with a native mobile client, there is a [iOS Client](https://github.com/apollostack/apollo-ios) in development and plans for an Android client too. On the other hand, the React integration works with [React Native](https://facebook.github.io/react-native/) on both platforms without changes.
