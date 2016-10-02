@@ -86,7 +86,7 @@ class NewEntryComponent {
   
   newRepository() {
     this.apollo.mutate({
-      query: submitRepository,
+      mutation: submitRepository,
       variables: {
         repoFullName: 'apollostack/apollo-client' 
       }
@@ -137,7 +137,7 @@ class CommentPageComponent {
 
   submit({ repoFullName, commentContent }) {
     this.apollo.mutate({
-      query: submitComment,
+      mutation: submitComment,
       variables: { repoFullName, commentContent },
       optimisticResponse: {
         __typename: 'Mutation',
