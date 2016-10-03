@@ -44,7 +44,6 @@
     "express": "^4.14.0",
     "graphql": "^0.7.0",
     "graphql-tools": "^0.6.5",
-    "graphql-typings": "0.0.1-beta-2",
     "nodemon": "^1.10.2",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
