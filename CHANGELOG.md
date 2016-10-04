@@ -1,9 +1,12 @@
 # Change log
 
-### vNEXT
+### v0.5.0
 
 - Added `subscribe` method to `Angular2Apollo` service ([PR #113](https://github.com/apollostack/angular2-apollo/pull/113))
 - Added `updateQuery` to `ApolloQueryObservable` ([PR #113](https://github.com/apollostack/angular2-apollo/pull/113))
+- **Deprecated** `ApolloQueryPipe` (use `SelectPipe` instead)
+- **Deprecated** `Apollo` decorator (use `Angular2Apollo` service)
+- **BREAKING CHANGE** No longer support for ApolloClient v0.3.X
 
 ### v0.4.6
 
