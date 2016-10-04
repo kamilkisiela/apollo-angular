@@ -2,6 +2,9 @@
 
 ### vNEXT
 
+- Added `subscribe` method to `Angular2Apollo` service ([PR #113](https://github.com/apollostack/angular2-apollo/pull/113))
+- Added `updateQuery` to `ApolloQueryObservable` ([PR #113](https://github.com/apollostack/angular2-apollo/pull/113))
+
 ### v0.4.6
 
 - Moved to Angular 2 final and updated RxJS to the latest version ([PR #96](https://github.com/apollostack/angular2-apollo/pull/96))
