@@ -71,7 +71,7 @@
     "tslint": "^3.7.4",
     "typed-graphql": "^1.0.1",
     "typescript": "^2.0.0",
-    "validate-commit-msg": "^2.6.1",
+    "validate-commit-msg": "^2.8.2",
     "webpack": "^1.13.0",
     "zone.js": "^0.6.23"
   },
