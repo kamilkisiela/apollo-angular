@@ -32,7 +32,7 @@ The best way to use `apollo-client` in your Angular app is with `angular2-apollo
 Angular 2 Apollo provides a idiomatic Angular 2 API, and is known to work in a straightforward way with many tools used in a typical Angular 2 app. In particular:
 
  - It can integrate naturally with routers, such as Angular Router;
- - Uses Redux internally and you can [take advantage](redux.html) of this, but also can be used with any other client-side data library that integrates with Angular 2.
+ - Uses Redux internally and you can take advantage of this, but also can be used with any other client-side data library that integrates with Angular 2.
 
 If you want to use Apollo with a different front-end environment (for instance a different JavaScript framework, or a native mobile app), it is possible too! Please check out the links at the top of this document, or head to our [developer site](http://apollostack.com) to get started.
 
