@@ -50,7 +50,7 @@
     "@types/jasmine": "^2.2.33",
     "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.38",
-    "apollo-client": "^0.4.15",
+    "apollo-client": "^0.4.19",
     "es6-shim": "^0.35.0",
     "ghooks": "^1.2.1",
     "graphql": "^0.7.0",
