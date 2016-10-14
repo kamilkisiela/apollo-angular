@@ -2,6 +2,9 @@
 
 ### vNEXT
 
+- Added support for **Ahead of Time** compilation
+
+
 ### v0.6.0
 
 - Added support for ApolloClient `v0.5.X` ([PR #])

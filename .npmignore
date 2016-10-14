@@ -1,5 +1,6 @@
 .github/
 build/tests/
+compiled/
 examples/
 src/
 tests/

@@ -22,7 +22,7 @@
     "test-watch": "jest --watch",
     "remap": "remap-istanbul -i coverage/coverage-final.json -t lcovonly -o coverage/lcov.info",
     "lint": "tslint -e src/*.ts && tslint tests/*.ts ",
-    "build": "tsc",
+    "build": "./node_modules/.bin/ngc -p tsconfig.json",
     "clean": "rimraf build/* coverage/*",
     "prepublish": "npm run clean && npm run build"
   },
@@ -40,9 +40,11 @@
   "devDependencies": {
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
+    "@angular/compiler-cli": "^2.1.0",
     "@angular/core": "^2.0.0",
     "@angular/platform-browser": "^2.0.0",
     "@angular/platform-browser-dynamic": "^2.0.0",
+    "@angular/platform-server": "^2.1.0",
     "@types/chai": "^3.4.33",
     "@types/es6-shim": "^0.31.32",
     "@types/isomorphic-fetch": "0.0.30",

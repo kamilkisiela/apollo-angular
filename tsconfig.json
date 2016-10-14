@@ -18,4 +18,8 @@
     "tests/SelectPipe.spec.ts",
     "tests/ApolloModule.spec.ts"
    ]
+  ],
+  "angularCompilerOptions": {
+    "genDir": "compiled"
+  }
 }

@@ -8,12 +8,12 @@ import { ApolloQueryObservable } from './ApolloQueryObservable';
 import 'rxjs/add/observable/from';
 
 export const angularApolloClient = new OpaqueToken('AngularApolloClient');
-export const defaultApolloClient = (client: ApolloClient): any => {
+export function defaultApolloClient(client: ApolloClient): any {
   return {
     provide: angularApolloClient,
     useValue: client,
   };
-};
+}
 
 @Injectable()
 export class Angular2Apollo {
