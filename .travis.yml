@@ -28,7 +28,7 @@ script:
   # remove unused node modules from cache
   - yarn clean
   # karma tests
-  - yarn test
+  - npm test
 
 after_script:
   # send code-coverage report to coveralls
