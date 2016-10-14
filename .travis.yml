@@ -17,18 +17,18 @@ notifications:
   # disable email notification
   email: false
 
-install:
+install: npm i -g yarn && yarn global add coveralls && yarn
+
+before_script:
   # use firefox
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - npm i
-  - npm install -g coveralls
 
 script:
   # remove unused node modules from cache
-  - npm prune
+  - yarn clean
   # karma tests
-  - npm test
+  - yarn test
 
 after_script:
   # send code-coverage report to coveralls
