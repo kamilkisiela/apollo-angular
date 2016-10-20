@@ -139,7 +139,7 @@ describe('angular2Apollo', () => {
 
       it('should be able to refetch', (done) => {
         const variables = { foo: 'foo' };
-        const options = { query, variables };
+        const options = { query, variables, returnPartialData: true };
 
         const obs = angular2Apollo
           .watchQuery(options);
