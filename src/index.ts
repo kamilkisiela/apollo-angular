@@ -1,4 +1,3 @@
-import { ApolloQueryPipe } from './ApolloQueryPipe';
 import { SelectPipe } from './SelectPipe';
 import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
 import { ApolloQueryObservable } from './ApolloQueryObservable';
@@ -11,7 +10,6 @@ export const APOLLO_PROVIDERS: any[] = [
 export {
   ApolloModule,
   ApolloQueryObservable,
-  ApolloQueryPipe,
   SelectPipe,
   Angular2Apollo,
   defaultApolloClient

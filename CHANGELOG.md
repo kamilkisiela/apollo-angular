@@ -3,6 +3,7 @@
 ### vNEXT
 
 - **BREAKING CHANGE** Removed `Apollo` decorator (use `Angular2Apollo` service)
+- **BREAKING CHANGE** Removed `ApolloQueryPipe` (use `SelectPipe` instead)
 
 ### v0.5.0
 
