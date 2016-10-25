@@ -1,5 +1,9 @@
 # Change log
 
+### vNEXT
+
+- **BREAKING CHANGE** Removed `Apollo` decorator (use `Angular2Apollo` service)
+
 ### v0.5.0
 
 - Added `subscribe` method to `Angular2Apollo` service ([PR #113](https://github.com/apollostack/angular2-apollo/pull/113))
