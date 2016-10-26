@@ -68,7 +68,7 @@
     "reflect-metadata": "^0.1.8",
     "remap-istanbul": "^0.7.0",
     "rimraf": "^2.5.2",
-    "rxjs": "5.0.0-rc.1",
+    "rxjs": "5.0.0-beta.12",
     "tslint": "^3.7.4",
     "typed-graphql": "^1.0.1",
     "typescript": "^2.0.0",
