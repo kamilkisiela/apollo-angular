@@ -1,9 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ApolloClient } from 'apollo-client';
 
 import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
 import { SelectPipe } from './SelectPipe';
-
-import ApolloClient from 'apollo-client';
 
 const APOLLO_DIRECTIVES = [
   SelectPipe,
