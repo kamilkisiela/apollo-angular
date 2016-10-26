@@ -106,14 +106,13 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client-rxjs@~0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/apollo-client-rxjs/-/apollo-client-rxjs-0.2.1.tgz#ea536a7730b8e962118fb06caa25c77277c9a354"
+apollo-client-rxjs@~0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/apollo-client-rxjs/-/apollo-client-rxjs-0.2.2.tgz#764c170b0606cb726f60104b116ef09f792315cb"
   dependencies:
     lodash.assign "^4.2.0"
     lodash.isfunction "^3.0.8"
     lodash.omit "^4.5.0"
-    rxjs "^5.0.0-beta.12 || ^5.0.0-rc.1"
 
 apollo-client@^0.5.0:
   version "0.5.0"
@@ -2546,12 +2545,6 @@ rimraf@^2.3.3, rimraf@^2.5.2, rimraf@~2.5.1, rimraf@~2.5.4, rimraf@2:
 ripemd160@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-0.2.0.tgz#2bf198bde167cacfa51c0a928e84b68bbe171fce"
-
-"rxjs@^5.0.0-beta.12 || ^5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.0.0-rc.1.tgz#9e02b7044da81a2d5e138908d22af77e22d96973"
-  dependencies:
-    symbol-observable "^1.0.1"
 
 rxjs@5.0.0-beta.12:
   version "5.0.0-beta.12"
