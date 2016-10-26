@@ -9,8 +9,7 @@
     "outDir": "build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false,
-    "lib": ["es6", "dom"]
+    "noImplicitAny": false
   },
   "files": [
     "typings.d.ts",

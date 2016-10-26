@@ -1,11 +1,9 @@
 import { OpaqueToken, Injectable, Inject } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
-import { ApolloQueryResult } from 'apollo-client';
+import { ApolloClient, ApolloQueryResult } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
 
 import { ApolloQueryObservable } from './ApolloQueryObservable';
-
-import ApolloClient from 'apollo-client';
 
 import 'rxjs/add/observable/from';
 
