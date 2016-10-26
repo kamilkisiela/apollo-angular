@@ -1,13 +1,10 @@
-import { createNetworkInterface } from 'apollo-client';
-
-import ApolloClient from 'apollo-client';
+import { ApolloClient, createNetworkInterface } from 'apollo-client';
 
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface('/graphql', {
+  networkInterface: createNetworkInterface('/graphql'/*, {
     credentials: 'same-origin',
-  }),
+  }*/),
 });
-
 
 export function getClient(): ApolloClient {
   return client;

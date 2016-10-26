@@ -19,4 +19,8 @@ import { getClient } from './client';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+  public testing(): void {
+    getClient().watchQuery({} as any);
+  }
+}
