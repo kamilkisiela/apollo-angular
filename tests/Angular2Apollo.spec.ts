@@ -1,3 +1,5 @@
+import './_common';
+
 import { ReflectiveInjector } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { RxObservableQuery } from 'apollo-client-rxjs';

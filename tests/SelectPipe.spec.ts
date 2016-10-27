@@ -1,3 +1,5 @@
+import './_common';
+
 import { SelectPipe } from '../src';
 
 describe('SelectPipe', () => {
