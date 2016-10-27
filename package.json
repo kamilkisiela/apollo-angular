@@ -76,6 +76,11 @@
     "testPathDirs": ["<rootDir>/build/tests"],
     "browser": true,
     "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/src/*.js", 
+      "!**/src/index.js",
+      "!**/node_modules/**"
+    ],
     "coverageDirectory": "coverage",
     "coverageReporters": ["json"]
   }
