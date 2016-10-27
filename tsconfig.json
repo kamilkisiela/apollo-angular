@@ -15,6 +15,7 @@
     "typings.d.ts",
     "src/index.ts",
     "tests/Angular2Apollo.spec.ts",
-    "tests/SelectPipe.spec.ts"
+    "tests/SelectPipe.spec.ts",
+    "tests/ApolloModule.spec.ts"
    ]
 }

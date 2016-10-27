@@ -197,6 +197,36 @@ describe('angular2Apollo', () => {
         expect(result).toEqual('mutate');
       });
     });
+
+    describe('subscribe', () => {
+      it('should throw an error if method is missing', () => {
+        client.subscribe = undefined;
+
+        expect(() => {
+          angular2Apollo.subscribe({});
+        }).toThrowError('subscriptions');
+      });
+
+      it('should be called with the same options and return Observable', (done) => {
+        const options = {query: '', variables: {}};
+
+        spyOn(client, 'subscribe').and.returnValue(['subscription']);
+
+        const obs = angular2Apollo.subscribe(options);
+
+        expect(client.subscribe).toHaveBeenCalledWith(options);
+
+        obs.subscribe({
+          next(result) {
+            expect(result).toBe('subscription');
+            done();
+          },
+          error(error) {
+            done(new Error('should not be called'));
+          },
+        });
+      });
+    });
   });
 
   describe('defaultApolloClient', () => {
