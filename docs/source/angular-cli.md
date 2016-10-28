@@ -4,21 +4,11 @@ title: Angular CLI
 
 <h2 id="installation">Installation</h2>
 
-Take a look at [Installation](initialization.html#installation) section.
+To get started with Apollo and Angular install few needed packages. Take a look at [Installation](initialization.html#installation) section.
 
-You need to provide a package with polyfill for `window.fetch`:
+<h2 id="typescript">TypeScript</h2>
 
-```bash
-npm install isomorphic-fetch --save
-```
-
-<h2 id="declarations">Declarations</h2>
-
-```bash
-npm install @types/{chai,es6-shim,isomorphic-fetch,node} typed-graphql
-```
-
-`@types/es6-shim` will cause some issues with multiple declarations.
+As follows in [TypeScript](initialization.html#typescript) chapter, you need to do few changes in your project.
 
 We need to disable declarations for `es6` features in `src/tsconfig.json` by leaving only those for `DOM`:
 
@@ -32,16 +22,11 @@ We need to disable declarations for `es6` features in `src/tsconfig.json` by lea
 }
 ```
 
-Since `typed-graphql` is not a package under `@types` scope, TypeScript compiler doesn't see it.
-
-We need to make it visible somehow.
-`src/typings.d.ts` is the main file we can put our custom declarations in a newly created project using Angular CLI.
+About `typed-graphql`, we need to make it visible somehow. Put the refference inside `src/typings.d.ts`:
 
 ```ts
 /// <reference types="typed-graphql" />
 ```
-
-This way TypeScript now sees declarations from `typed-graphql`.
 
 
 <h2 id="initialization">Initialization</h2>
