@@ -2,6 +2,9 @@
 
 ### vNEXT
 
+- Added support for **Ahead of Time** compilation ([PR #124](https://github.com/apollostack/angular2-apollo/pull/124))
+
+
 ### v0.6.0
 
 - Added support for ApolloClient `v0.5.X` ([PR #])

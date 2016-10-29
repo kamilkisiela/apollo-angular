@@ -3,7 +3,6 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es5", "dom"],
     "mapRoot": "./",
     "module": "es6",
     "moduleResolution": "node",
@@ -17,5 +16,12 @@
       "node",
       "isomorphic-fetch"
     ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "aot",
+    "skipMetadataEmit" : true
   }
 }

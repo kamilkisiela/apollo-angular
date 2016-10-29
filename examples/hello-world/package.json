@@ -4,29 +4,33 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
+    "preclient": "npm run build",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "client": "ng serve --proxy-conf proxy.conf.json",
-    "server": "nodemon api/index.js --watch api --exec babel-node"
+    "server": "nodemon api/index.js --watch api --exec babel-node",
+    "build": "./node_modules/.bin/ngc -p src/tsconfig.aot.json"
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^2.0.0",
-    "@angular/compiler": "^2.0.0",
-    "@angular/core": "^2.0.0",
-    "@angular/forms": "^2.0.0",
-    "@angular/http": "^2.0.0",
-    "@angular/platform-browser": "^2.0.0",
-    "@angular/platform-browser-dynamic": "^2.0.0",
-    "@angular/router": "^3.0.0",
-    "angular2-apollo": "^0.5.0",
-    "apollo-client": "^0.4.16",
+    "@angular/common": "^2.1.0",
+    "@angular/compiler": "^2.1.0",
+    "@angular/compiler-cli": "^2.1.0",
+    "@angular/core": "^2.1.0",
+    "@angular/forms": "^2.1.0",
+    "@angular/http": "^2.1.0",
+    "@angular/platform-browser": "^2.1.0",
+    "@angular/platform-browser-dynamic": "^2.1.0",
+    "@angular/platform-server": "^2.1.0",
+    "@angular/router": "^3.1.0",
+    "angular2-apollo": "file:../../",
+    "apollo-client": "~0.5.0",
     "core-js": "^2.4.0",
-    "rxjs": "5.0.0-beta.12",
+    "rxjs": "^5.0.0-beta.12",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.6.17"
   },
   "devDependencies": {
-    "@angular/platform-server": "^2.0.0",
+    "@types/es6-shim": "^0.31.32",
     "@types/isomorphic-fetch": "0.0.30",
     "@types/node": "^6.0.38",
     "angular-cli": "1.0.0-beta.11-webpack.8",
@@ -47,6 +51,6 @@
     "nodemon": "^1.10.2",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
-    "typescript": "2.0.0"
+    "typescript": "^2.0.6"
   }
 }
