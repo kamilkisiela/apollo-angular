@@ -139,7 +139,7 @@ This is why we created `SelectPipe`. The only argument it receives is the name o
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
 import gql from 'graphql-tag'; 
 
 const FeedQuery = gql`
@@ -193,7 +193,7 @@ What's really interesting, because of this you can avoid using `SelectPipe`:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
 import gql from 'graphql-tag'; 
 
 import 'rxjs/add/operator/map';
