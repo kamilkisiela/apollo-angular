@@ -21,7 +21,7 @@
     "node_modules"
   ],
   "angularCompilerOptions": {
-    "genDir": "../dist/compiled",
+    "genDir": "aot",
     "skipMetadataEmit" : true
   }
 }

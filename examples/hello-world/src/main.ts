@@ -1,6 +1,6 @@
 import './polyfills.ts';
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
+import { platformBrowser } from '@angular/platform-browser';
+import { AppModuleNgFactory } from './aot/app/app.module.ngfactory';
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApolloModule } from 'angular2-apollo';
 
 import { AppComponent } from './app.component';
-import { getClient } from './client';
+import { client } from './client';
 
 @NgModule({
   declarations: [
@@ -15,12 +15,8 @@ import { getClient } from './client';
     FormsModule,
     ReactiveFormsModule,
     // Define the default ApolloClient
-    ApolloModule.withClient(getClient()),
+    ApolloModule.withClient(client),
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  public testing(): void {
-    getClient().watchQuery({} as any);
-  }
-}
+export class AppModule {}
