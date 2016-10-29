@@ -6,7 +6,7 @@ import { ApolloModule, SelectPipe, Angular2Apollo } from '../src';
 import { angularApolloClient } from '../src/Angular2Apollo';
 
 describe('ApolloModule', () => {
-  let metadata: any = Reflect.getMetadata('annotations', ApolloModule)[0];
+  let metadata: any = ApolloModule['decorators'][0]['args'][0];
 
   it('should contain SelectPipe in declarations', () => {
     expect(include(metadata.declarations, SelectPipe)).toBe(true);
