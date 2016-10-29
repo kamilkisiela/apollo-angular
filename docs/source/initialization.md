@@ -23,7 +23,7 @@ npm install @types/{chai,es6-shim,isomorphic-fetch,node} typed-graphql
 TypeScript 2.0 comes with a set of predefined type declarations.
 If you're using one of them that brings ES2015 (ES6) you should disable it, because `@types/es6-shim` will cause an issue with multiple types definitons.
 
-It's easy, just remove `es6`, `es2015` or similar options from `compilerOptions.lib`.
+It's easy, just replace `es6`, `es2015` or similar options from `compilerOptions.lib` for `es5`.
 
 <h3 id="typescript-graphql">GraphQL</h3>
 
