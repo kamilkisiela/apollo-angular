@@ -64,4 +64,8 @@ We'll see how to take your component tree and turn it into a string in the next 
 
 3. You need to ensure that you create a new client or store instance for each request, rather than re-using the same client for multiple requests. Otherwise the UI will be getting stale data and you'll have problems with [authentication](auth.html).
 
+<h2 id="example">An Example</h2>
+
 Here's [a complete working example](https://github.com/kamilkisiela/universal-starter-apollo) of how would it look like once you put that all together.
+
+It's a *starter kit*, so you can use it to start working with *Server-side Rendering* and *Apollo*.
