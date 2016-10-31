@@ -8,7 +8,9 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "client": "ng serve --proxy-conf proxy.conf.json",
     "server": "nodemon api/index.js --watch api --exec babel-node",
-    "build": "./node_modules/.bin/ngc -p src/tsconfig.aot.json"
+    "build": "./node_modules/.bin/ngc -p src/tsconfig.aot.json",
+    "postbuild": "npm run tree-shaking",
+    "tree-shaking": "node_modules/.bin/rollup -c rollup.config.js"
   },
   "private": true,
   "dependencies": {
@@ -49,6 +51,10 @@
     "graphql": "~0.7.0",
     "graphql-tools": "~0.8.0",
     "nodemon": "^1.10.2",
+    "rollup": "^0.36.3",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
     "ts-node": "1.2.1",
     "tslint": "~3.15.0",
     "typescript": "~2.0.6"
