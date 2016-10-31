@@ -7,6 +7,7 @@ import { FragmentDefinition } from 'graphql';
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/fromPromise';
 
 export interface MutateOptions {
   mutation: Document;
@@ -36,12 +37,12 @@ export class Angular2Apollo {
     return new ApolloQueryObservable(rxify(this.client.watchQuery)(options));
   }
 
-  public query(options: WatchQueryOptions): Promise<ApolloQueryResult> {
-    return this.client.query(options);
+  public query(options: WatchQueryOptions): Observable<ApolloQueryResult> {
+    return Observable.fromPromise(this.client.query(options));
   }
 
-  public mutate(options: MutateOptions): Promise<ApolloQueryResult> {
-    return this.client.mutate(options);
+  public mutate(options: MutateOptions): Observable<ApolloQueryResult> {
+    return Observable.fromPromise(this.client.mutate(options));
   }
 
   public subscribe(options: any): Observable<any> {
