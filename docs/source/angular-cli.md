@@ -10,13 +10,13 @@ To get started with Apollo and Angular install few needed packages. Take a look 
 
 As follows in [TypeScript](initialization.html#typescript) chapter, you need to do few changes in your project.
 
-We need to disable declarations for `es6` features in `src/tsconfig.json` by leaving only those for `DOM`:
+We need to disable declarations for `es6` features in `src/tsconfig.json` by replacing it for the ones from `es5`:
 
 ```ts
 {
   "compilerOptions": {
     // ...
-    "lib": ["dom"]
+    "lib": ["es5", "dom"]
     // ...
   }
 }
