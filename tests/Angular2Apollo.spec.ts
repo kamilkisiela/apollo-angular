@@ -81,7 +81,7 @@ describe('angular2Apollo', () => {
         expect(client.watchQuery).toHaveBeenCalledWith(options);
       });
 
-      it('should be able to use obserable variable', (done) => {
+      it('should be able to use obserable variable', (done: jest.DoneCallback) => {
         const variables = {
           foo: new Subject(),
         };
@@ -109,7 +109,7 @@ describe('angular2Apollo', () => {
         }, 200);
       });
 
-      it('should be able to use obserable variables', (done) => {
+      it('should be able to use obserable variables', (done: jest.DoneCallback) => {
         const variables = {
           foo: new Subject(),
           bar: new Subject(),
@@ -139,7 +139,7 @@ describe('angular2Apollo', () => {
         }, 200);
       });
 
-      it('should be able to refetch', (done) => {
+      it('should be able to refetch', (done: jest.DoneCallback) => {
         const variables = { foo: 'foo' };
         const options = { query, variables, returnPartialData: true };
 
@@ -173,28 +173,42 @@ describe('angular2Apollo', () => {
     });
 
     describe('query()', () => {
-      it('should be called with the same options', () => {
+      it('should be called with the same options', (done: jest.DoneCallback) => {
         const options = {query: '', variables: {}};
+        const promise = new Promise((resolve) => {
+          resolve('query');
+        });
 
-        spyOn(client, 'query').and.returnValue('query');
+        spyOn(client, 'query').and.returnValue(promise);
 
         const result = angular2Apollo.query(options);
 
         expect(client.query).toHaveBeenCalledWith(options);
-        expect(result).toEqual('query');
+
+        result.subscribe(r => {
+          expect(r).toEqual('query');
+          done();
+        });
       });
     });
 
     describe('mutate()', () => {
-      it('should be called with the same options', () => {
+      it('should be called with the same options', (done: jest.DoneCallback) => {
         const options = {mutation: '', variables: {}};
+        const promise = new Promise((resolve) => {
+          resolve('mutation');
+        });
 
-        spyOn(client, 'mutate').and.returnValue('mutate');
+        spyOn(client, 'mutate').and.returnValue(promise);
 
         const result = angular2Apollo.mutate(options);
 
         expect(client.mutate).toHaveBeenCalledWith(options);
-        expect(result).toEqual('mutate');
+
+        result.subscribe(r => {
+          expect(r).toEqual('mutation');
+          done();
+        });
       });
     });
 
@@ -207,7 +221,7 @@ describe('angular2Apollo', () => {
         }).toThrowError('subscriptions');
       });
 
-      it('should be called with the same options and return Observable', (done) => {
+      it('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
         const options = {query: '', variables: {}};
 
         spyOn(client, 'subscribe').and.returnValue(['subscription']);
@@ -222,7 +236,7 @@ describe('angular2Apollo', () => {
             done();
           },
           error(error) {
-            done(new Error('should not be called'));
+            done.fail('should not be called');
           },
         });
       });
