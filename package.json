@@ -35,7 +35,8 @@
     "apollo-client-rxjs": "~0.2.2",
     "lodash.assign": "^4.0.9",
     "lodash.forin": "^4.2.0",
-    "lodash.isequal": "^4.2.0"
+    "lodash.isequal": "^4.2.0",
+    "replace-constructor": "^1.0.0"
   },
   "devDependencies": {
     "@angular/common": "^2.1.0",
@@ -73,17 +74,23 @@
     }
   },
   "jest": {
-    "moduleFileExtensions": ["js"],
+    "moduleFileExtensions": [
+      "js"
+    ],
     "testRegex": "\\.spec\\.js$",
-    "testPathDirs": ["<rootDir>/build/tests"],
+    "testPathDirs": [
+      "<rootDir>/build/tests"
+    ],
     "browser": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/src/*.js", 
+      "**/src/*.js",
       "!**/src/index.js",
       "!**/node_modules/**"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": ["json"]
+    "coverageReporters": [
+      "json"
+    ]
   }
 }

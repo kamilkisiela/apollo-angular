@@ -19,3 +19,5 @@ declare module 'lodash.omit' {
   import main = require('lodash');
   export = main.omit;
 }
+
+declare module 'replace-constructor';
