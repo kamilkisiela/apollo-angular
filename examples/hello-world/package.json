@@ -4,11 +4,12 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "preclient": "npm run build",
+    "preclient": "npm run build:aot",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "client": "ng serve --proxy-conf proxy.conf.json",
     "server": "nodemon api/index.js --watch api --exec babel-node",
-    "build": "./node_modules/.bin/ngc -p src/tsconfig.aot.json"
+    "build:jit": "tsc -p src/tsconfig.json",
+    "build:aot": "./node_modules/.bin/ngc -p src/tsconfig.aot.json"
   },
   "private": true,
   "dependencies": {
@@ -47,7 +48,7 @@
     "cors": "^2.8.0",
     "express": "^4.14.0",
     "graphql": "^0.7.0",
-    "graphql-tools": "^0.6.5",
+    "graphql-tools": "^0.8.0",
     "nodemon": "^1.10.2",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",

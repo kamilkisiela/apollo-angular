@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
+import { Angular2Apollo, ApolloQueryObservable, graphql } from 'angular2-apollo';
 import { ApolloQueryResult } from 'apollo-client';
 import { Subject } from 'rxjs/Subject';
 
@@ -10,13 +10,44 @@ import gql from 'graphql-tag';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 
+export const getUsersQuery = gql`
+  query getUsers($name: String) {
+    users(name: $name) {
+      firstName
+      lastName
+      emails {
+        address
+        verified
+      }
+    }
+  }
+`;
+
+export const getUsersQueryEmpty = gql`
+  query getUsers {
+    users(name: "") {
+      firstName
+      lastName
+      emails {
+        address
+        verified
+      }
+    }
+  }
+`;
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
 })
+@graphql([{
+  name: 'emptyUsers',
+  query: getUsersQueryEmpty
+}])
 export class AppComponent implements OnInit, AfterViewInit {
   // Observable with GraphQL result
   public users: ApolloQueryObservable<any>;
+  public emptyUsers: ApolloQueryObservable<any>;
   public firstName: string;
   public lastName: string;
   public nameControl = new FormControl();
@@ -26,30 +57,24 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   // Inject Angular2Apollo service
   constructor(apollo: Angular2Apollo) {
+    console.log('apollo', apollo);
     this.apollo = apollo;
   }
 
   public ngOnInit() {
     // Query users data with observable variables
     this.users = this.apollo.watchQuery({
-      query: gql`
-        query getUsers($name: String) {
-          users(name: $name) {
-            firstName
-            lastName
-            emails {
-              address
-              verified
-            }
-          }
-        }
-      `,
+      query: getUsersQuery,
       variables: {
         name: this.nameFilter,
       },
     })
       // Return only users, not the whole ApolloQueryResult  
       .map(result => result.data.users) as ApolloQueryObservable<any>;
+
+    /*this.emptyUsers.subscribe(r => {
+      console.log('r', r);
+    });*/
 
     // Add debounce time to wait 300 ms for a new change instead of keep hitting the server
     this.nameControl.valueChanges.debounceTime(300).subscribe(name => {
