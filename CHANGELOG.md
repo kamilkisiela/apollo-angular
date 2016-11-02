@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Define types of options and results (of `watchQuery`, `query`, `mutate`) ([PR #145](https://github.com/apollostack/angular2-apollo/pull/145))
+
 ### v0.7.0
 
 - Added support for **Ahead of Time** compilation ([PR #124](https://github.com/apollostack/angular2-apollo/pull/124))
