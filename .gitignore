@@ -45,5 +45,4 @@ jspm_packages
 *.tgz
 
 # IDEs
-.vscode/
 .idea/
