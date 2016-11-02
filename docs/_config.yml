@@ -28,6 +28,7 @@ sidebar_categories:
     - prefetching
     - server-side-rendering
     - angular-cli
+    - ahead-of-time
 github_repo: apollostack/angular2-docs
 content_root: source
 
