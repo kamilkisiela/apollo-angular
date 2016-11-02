@@ -35,8 +35,11 @@ Another common way of adding credentials for authentication to a request is to u
 
 ```ts
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface('/graphql', {
-    credentials: 'same-origin',
+  networkInterface: createNetworkInterface({
+    uri: '/graphql',
+    opts: {
+      credentials: 'same-origin'
+    },
   })
 });
 ```
