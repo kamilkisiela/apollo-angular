@@ -2,6 +2,7 @@ import { OpaqueToken, Injectable, Inject } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
 import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationBehavior, MutationQueryReducersMap } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
+import { FragmentDefinition } from 'graphql';
 
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 
@@ -11,7 +12,7 @@ export interface MutateOptions {
   mutation: Document;
   variables?: Object;
   resultBehaviors?: MutationBehavior[];
-  fragments?: any[];
+  fragments?: FragmentDefinition[];
   optimisticResponse?: Object;
   updateQueries?: MutationQueryReducersMap;
   refetchQueries?: string[];
