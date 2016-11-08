@@ -9,6 +9,7 @@ import gql from 'graphql-tag';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         name: this.nameFilter,
       },
     })
-      // Return only users, not the whole ApolloQueryResult  
+      // Return only users, not the whole ApolloQueryResult
       .map(result => result.data.users) as ApolloQueryObservable<any>;
 
     // Add debounce time to wait 300 ms for a new change instead of keep hitting the server
@@ -88,6 +89,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         lastName: this.lastName,
       },
     })
+      .toPromise()
       .then(({ data }: ApolloQueryResult) => {
         console.log('got data', data);
 

@@ -12,22 +12,22 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^2.1.0",
-    "@angular/compiler": "^2.1.0",
-    "@angular/compiler-cli": "^2.1.0",
-    "@angular/core": "^2.1.0",
-    "@angular/forms": "^2.1.0",
-    "@angular/http": "^2.1.0",
-    "@angular/platform-browser": "^2.1.0",
-    "@angular/platform-browser-dynamic": "^2.1.0",
-    "@angular/platform-server": "^2.1.0",
-    "@angular/router": "^3.1.0",
+    "@angular/common": "~2.1.2",
+    "@angular/compiler": "~2.1.2",
+    "@angular/compiler-cli": "~2.1.2",
+    "@angular/core": "~2.1.2",
+    "@angular/forms": "~2.1.2",
+    "@angular/http": "~2.1.2",
+    "@angular/platform-browser": "~2.1.2",
+    "@angular/platform-browser-dynamic": "~2.1.2",
+    "@angular/platform-server": "~2.1.2",
+    "@angular/router": "~3.1.2",
     "angular2-apollo": "file:../../",
     "apollo-client": "~0.5.0",
-    "core-js": "^2.4.0",
-    "rxjs": "^5.0.0-beta.12",
-    "ts-helpers": "^1.1.1",
-    "zone.js": "^0.6.17"
+    "core-js": "~2.4.0",
+    "rxjs": "5.0.0-beta.12",
+    "ts-helpers": "~1.1.1",
+    "zone.js": "~0.6.26"
   },
   "devDependencies": {
     "@types/es6-shim": "^0.31.32",
@@ -46,11 +46,11 @@
     "concurrently": "^2.2.0",
     "cors": "^2.8.0",
     "express": "^4.14.0",
-    "graphql": "^0.7.0",
-    "graphql-tools": "^0.6.5",
+    "graphql": "~0.7.0",
+    "graphql-tools": "~0.8.0",
     "nodemon": "^1.10.2",
     "ts-node": "1.2.1",
-    "tslint": "3.13.0",
-    "typescript": "^2.0.6"
+    "tslint": "~3.15.0",
+    "typescript": "~2.0.6"
   }
 }
