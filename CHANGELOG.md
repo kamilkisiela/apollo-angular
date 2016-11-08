@@ -3,7 +3,7 @@
 ### vNEXT
 
 - Made `mutate()` and `query()` methods to return `Observable` instead of `Promise` ([PR #140](https://github.com/apollostack/angular2-apollo/pull/140))
-- Define types of options and results (of `watchQuery`, `query`, `mutate`) ([PR #145](https://github.com/apollostack/angular2-apollo/pull/145))
+- Define types of options and results (of `watchQuery`, `query`, `mutate`) ([PR #145](https://github.com/apollostack/angular2-apollo/pull/145) [PR #148](https://github.com/apollostack/angular2-apollo/pull/148))
 
 ### v0.7.0
 
