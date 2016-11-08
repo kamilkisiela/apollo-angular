@@ -56,7 +56,7 @@
     "ghooks": "^1.2.1",
     "graphql": "^0.7.0",
     "graphql-tag": "^0.1.9",
-    "jest": "^16.0.2",
+    "jest": "^17.0.0",
     "reflect-metadata": "^0.1.8",
     "remap-istanbul": "^0.7.0",
     "rimraf": "^2.5.2",
