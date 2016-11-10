@@ -4,7 +4,7 @@ export default {
   format: 'umd',
   moduleName: 'ng.apollo',
   globals: {
-    '@angular/core':'ng.core',
+    '@angular/core': 'ng.core',
     'rxjs/Observable': 'Rx'
   }
 };

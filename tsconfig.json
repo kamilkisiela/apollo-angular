@@ -10,8 +10,7 @@
     "lib": ["es6", "dom"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false,
-    "lib": ["es5", "dom"]
+    "noImplicitAny": false
   },
   "files": [
     "typings.d.ts",
