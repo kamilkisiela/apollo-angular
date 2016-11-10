@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Support `es6` modules and `tree-shaking` ([PR #151](https://github.com/apollostack/angular2-apollo/pull/151))
+
 ### v0.8.0
 
 - Made `mutate()` and `query()` methods to return `Observable` instead of `Promise` ([PR #140](https://github.com/apollostack/angular2-apollo/pull/140))
