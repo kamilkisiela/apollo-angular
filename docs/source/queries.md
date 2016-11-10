@@ -30,7 +30,7 @@ const CurrentUserForProfile = gql`
 class ProfileComponent implements OnInit {
   loading: boolean;
   currentUser: any;
-  
+
   constructor(private apollo: Angular2Apollo) {}
 
   ngOnInit() {
@@ -48,13 +48,13 @@ The service's `watchQuery` method returns and `Observable` of the query result (
 
 We can expect the `data.currentUser` to change as the logged-in-ness of the client and what it knows about the current user changes over time. That information is stored in Apollo Client's cache, and you can read more about techniques to bring the cache up to date with the server in the [article on the subject](cache-updates.html).
 
-It's also possible to fetch data only once. The `query` method of `Angular2Apollo` service returns a `Promise` that resolves also with [`ApolloQueryResult`][ApolloQueryResult].
+It's also possible to fetch data only once. The `query` method of `Angular2Apollo` service returns an `Observable` that resolves also with [`ApolloQueryResult`][ApolloQueryResult].
 
 To be more specific, `watchQuery` method returns an Observable called `ApolloQueryObservable`. It extends the actual `Observable` from `rxjs` package. The only difference is that our observable contains all the methods specific to Apollo, for example `refetch`.
 
 <h2 id="options">Providing `options`</h2>
 
-`watchQuery` and `query` methods expect one argument, an object with options. If you want to configure the query, you can provide any available option in the same object where the `query` key lives. 
+`watchQuery` and `query` methods expect one argument, an object with options. If you want to configure the query, you can provide any available option in the same object where the `query` key lives.
 
 Those options will be passed to [`ApolloClient.watchQuery`][ApolloClient.watchQuery]. If your query takes variables, this is the place to pass them in: 
 
@@ -100,7 +100,7 @@ const CurrentUserForProfile = gql`
 
 class ProfileComponent {
   avatarSize: Subject<number> = new Subject<number>();
-  
+
   ngOnInit() {
     this.data = this.apollo.watchQuery({
       query: CurrentUserForProfile,
@@ -108,7 +108,7 @@ class ProfileComponent {
         avatarSize: this.avatarSize
       }
     });
-    
+
     // nothing happens
     // watchQuery waits for the first emitted value
 
@@ -140,7 +140,7 @@ This is why we created `SelectPipe`. The only argument it receives is the name o
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
-import gql from 'graphql-tag'; 
+import gql from 'graphql-tag';
 
 const FeedQuery = gql`
   query Feed {
@@ -163,7 +163,7 @@ const FeedQuery = gql`
 })
 class FeedComponent implements OnInit {
   data: ApolloQueryObservable<any>;
-  
+
   constructor(private apollo: Angular2Apollo) {}
 
   ngOnInit() {
@@ -187,14 +187,14 @@ Without using `SelectPipe` you would get the whole object instead of only the `d
 
 <h2 id="rxjs">Using with RxJS</h2>
 
-`Angular2Apollo` is compatible with RxJS. It means that an observable called `ApolloQueryObservable`, returned by `watchQuery` method can be used with operators.   
+`Angular2Apollo` is compatible with RxJS. It means that an observable called `ApolloQueryObservable`, returned by `watchQuery` method can be used with operators.
 
 What's really interesting, because of this you can avoid using `SelectPipe`:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
-import gql from 'graphql-tag'; 
+import gql from 'graphql-tag';
 
 import 'rxjs/add/operator/map';
 
@@ -219,7 +219,7 @@ const FeedQuery = gql`
 })
 class FeedComponent implements OnInit {
   data: ApolloQueryObservable<any>;
-  
+
   constructor(private apollo: Angular2Apollo) {}
 
   ngOnInit() {

@@ -99,7 +99,7 @@ class NewEntryComponent {
 }
 ```
 
-As you can see, `mutate` method returns a `Promise` that resolves with `ApolloQueryResult`. It is the same result we get when we fetch queries.
+As you can see, `mutate` method returns an `Observable` that resolves with `ApolloQueryResult`. It is the same result we get when we fetch queries.
 
 However, typically you'd want to keep the concern of understanding the mutation's structure out of your presentational component. The best way to do this is to use the [`props`](queries.html#graphql-props) argument to bind your mutate function:
 
@@ -132,7 +132,7 @@ const submitComment = gql`
 @Component({ ... })
 class CommentPageComponent {
   currentUser: User;
-  
+
   constructor(private apollo: Angular2Apollo) {}
 
   submit({ repoFullName, commentContent }) {
@@ -148,7 +148,7 @@ class CommentPageComponent {
           content: commentContent,
         },
       },
-    });
+    }).subscribe();
   }
 }
 ```

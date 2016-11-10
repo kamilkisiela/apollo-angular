@@ -104,7 +104,7 @@ class CommentsPageComponent {
           };
         },
       },
-    }); 
+    }).subscribe();
   }
 }
 ```

@@ -140,7 +140,7 @@ class CommentsPageComponent {
           Comment: (prev, { mutationResult }) => {
             if (!mutationResult.data) { return prev; }
             const newComments = mutationResult.data.submitComment;
-            
+
             return Object.assign({}, prev, {
               entry: {
                 comments: {}
@@ -157,7 +157,7 @@ class CommentsPageComponent {
             });
           },
         },
-    })
+    }).subscribe();
   }
 }
 ```

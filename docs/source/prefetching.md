@@ -34,7 +34,7 @@ class RepoInfoComponent {
     this.apollo.query({
       query: commentQuery,
       variables: { repoName: repoFullName },
-    });
+    }).subscribe();
   }
 }
 ```
