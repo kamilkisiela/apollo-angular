@@ -2,6 +2,7 @@ import { OpaqueToken, Injectable, Inject } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
 import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
+import { FragmentDefinition } from 'graphql';
 
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 
@@ -34,7 +35,7 @@ export class Angular2Apollo {
     return Observable.fromPromise(this.client.query(options));
   }
 
-  public mutate(options: MutateOptions): Observable<ApolloQueryResult> {
+  public mutate(options: MutationOptions): Observable<ApolloQueryResult> {
     return Observable.fromPromise(this.client.mutate(options));
   }
 

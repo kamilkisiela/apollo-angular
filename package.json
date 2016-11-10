@@ -51,7 +51,7 @@
     "@types/jest": "^15.1.32",
     "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.38",
-    "apollo-client": "^0.5.0",
+    "apollo-client": "^0.5.1",
     "es6-shim": "^0.35.0",
     "ghooks": "^1.2.1",
     "graphql": "^0.7.0",
