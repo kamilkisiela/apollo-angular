@@ -25,6 +25,7 @@ sidebar_categories:
     - auth
     - pagination
     - optimistic-ui
+    - fragments
     - prefetching
     - server-side-rendering
     - angular-cli
