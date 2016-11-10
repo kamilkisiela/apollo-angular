@@ -27,12 +27,12 @@
     "prepublish": "npm run clean && npm run build"
   },
   "peerDependencies": {
-    "apollo-client": "^0.5.1",
     "@angular/core": "^2.0.0",
+    "apollo-client": "^0.5.1",
     "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1"
   },
   "dependencies": {
-    "apollo-client-rxjs": "~0.2.2",
+    "apollo-client-rxjs": "~0.2.3",
     "lodash.assign": "^4.0.9",
     "lodash.forin": "^4.2.0",
     "lodash.isequal": "^4.2.0"
@@ -45,14 +45,12 @@
     "@angular/platform-browser": "^2.1.0",
     "@angular/platform-browser-dynamic": "^2.1.0",
     "@angular/platform-server": "^2.1.0",
-    "@types/chai": "^3.4.33",
-    "@types/es6-shim": "^0.31.32",
+    "@types/chai": "^3.4.34",
     "@types/isomorphic-fetch": "^0.0.30",
     "@types/jest": "^15.1.32",
     "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.38",
     "apollo-client": "^0.5.1",
-    "es6-shim": "^0.35.0",
     "ghooks": "^1.2.1",
     "graphql": "^0.7.0",
     "graphql-tag": "^0.1.9",
@@ -73,9 +71,13 @@
     }
   },
   "jest": {
-    "moduleFileExtensions": ["js"],
+    "moduleFileExtensions": [
+      "js"
+    ],
     "testRegex": "\\.spec\\.js$",
-    "testPathDirs": ["<rootDir>/build/tests"],
+    "testPathDirs": [
+      "<rootDir>/build/tests"
+    ],
     "browser": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
@@ -84,6 +86,8 @@
       "!**/node_modules/**"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": ["json"]
+    "coverageReporters": [
+      "json"
+    ]
   }
 }
