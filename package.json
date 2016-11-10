@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/apollostack/angular2-apollo#readme",
   "scripts": {
-    "pretest": "npm run build",
+    "pretest": "npm run build-test",
     "test": "npm run test-only",
     "posttest": "npm run remap && npm run lint",
     "test-only": "jest",
@@ -24,6 +24,7 @@
     "remap": "remap-istanbul -i coverage/coverage-final.json -t lcovonly -o coverage/lcov.info",
     "lint": "tslint -e src/*.ts && tslint tests/*.ts ",
     "build": "./node_modules/.bin/ngc -p tsconfig.json",
+    "build-test": "./node_modules/.bin/ngc -p tsconfig.test.json",
     "postbuild": "npm run bundle",
     "bundle": "rollup -c",
     "clean": "rimraf build/* coverage/*",

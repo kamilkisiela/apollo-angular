@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "rootDir": ".",
+    "outDir": "build",
+    "lib": ["es6", "dom"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": false
+  },
+  "files": [
+    "typings.d.ts",
+    "src/index.ts",
+    "tests/Angular2Apollo.spec.ts",
+    "tests/SelectPipe.spec.ts",
+    "tests/ApolloModule.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "compiled"
+  }
+}
