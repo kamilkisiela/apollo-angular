@@ -9,6 +9,7 @@ import gql from 'graphql-tag';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 export const getUsersQuery = gql`
   query getUsers($name: String) {
@@ -69,7 +70,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         name: this.nameFilter,
       },
     })
-      // Return only users, not the whole ApolloQueryResult  
+      // Return only users, not the whole ApolloQueryResult
       .map(result => result.data.users) as ApolloQueryObservable<any>;
 
     /*this.emptyUsers.subscribe(r => {
@@ -113,6 +114,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         lastName: this.lastName,
       },
     })
+      .toPromise()
       .then(({ data }: ApolloQueryResult) => {
         console.log('got data', data);
 

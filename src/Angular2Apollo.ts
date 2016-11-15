@@ -1,11 +1,17 @@
 import { OpaqueToken, Injectable, Inject } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
-import { ApolloClient, ApolloQueryResult } from 'apollo-client';
+import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
+import { FragmentDefinition } from 'graphql';
 
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/fromPromise';
+
+export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
+  fragments?: FragmentDefinition[];
+}
 
 export const angularApolloClient = new OpaqueToken('AngularApolloClient');
 export function defaultApolloClient(client: ApolloClient): any {
@@ -21,19 +27,19 @@ export class Angular2Apollo {
     @Inject(angularApolloClient) private client: any
   ) {}
 
-  public watchQuery(options: any): ApolloQueryObservable<ApolloQueryResult> {
+  public watchQuery(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult> {
     return new ApolloQueryObservable(rxify(this.client.watchQuery)(options));
   }
 
-  public query(options: any) {
-    return this.client.query(options);
+  public query(options: DeprecatedWatchQueryOptions): Observable<ApolloQueryResult> {
+    return Observable.fromPromise(this.client.query(options));
   }
 
-  public mutate(options: any) {
-    return this.client.mutate(options);
+  public mutate(options: MutationOptions): Observable<ApolloQueryResult> {
+    return Observable.fromPromise(this.client.mutate(options));
   }
 
-  public subscribe(options: any): Observable<any> {
+  public subscribe(options: SubscriptionOptions): Observable<any> {
     if (typeof this.client.subscribe === 'undefined') {
       throw new Error(`Your version of ApolloClient doesn't support subscriptions`);
     }

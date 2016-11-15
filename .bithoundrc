@@ -1,6 +1,5 @@
 {
   "ignore": [
-    "**/typings/**",
     "**/node_modules/**"
   ]
 }

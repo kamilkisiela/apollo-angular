@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
@@ -17,8 +17,7 @@
     "src/index.ts",
     "tests/Angular2Apollo.spec.ts",
     "tests/SelectPipe.spec.ts",
-    "tests/ApolloModule.spec.ts",
-    "tests/graphql.spec.ts"
+    "tests/ApolloModule.spec.ts"
   ],
   "angularCompilerOptions": {
     "genDir": "compiled"
