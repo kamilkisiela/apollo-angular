@@ -18,6 +18,8 @@ Those libraries require few additional type declarations:
 npm install @types/{chai,es6-shim,isomorphic-fetch,node} typed-graphql
 ```
 
+> Since v0.8 you don't have to install `@types/es6-shim`. You can **skip [*ES2015* section](#typescript-es2015)**.
+
 <h3 id="typescript-es2015">ES2015</h3>
 
 TypeScript 2.0 comes with a set of predefined type declarations.

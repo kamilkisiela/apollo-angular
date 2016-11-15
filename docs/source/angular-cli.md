@@ -22,6 +22,8 @@ We need to disable declarations for `es6` features in `src/tsconfig.json` by rep
 }
 ```
 
+> Since v0.8 above changes **no longer apply**.
+
 About `typed-graphql`, we need to make it visible somehow. Put the refference inside `src/typings.d.ts`:
 
 ```ts
