@@ -56,7 +56,7 @@
     "@types/node": "^6.0.38",
     "apollo-client": "^0.5.1",
     "ghooks": "^1.2.1",
-    "graphql": "^0.7.0",
+    "graphql": "^0.8.1",
     "graphql-tag": "^0.1.9",
     "jest": "^17.0.0",
     "reflect-metadata": "^0.1.8",
