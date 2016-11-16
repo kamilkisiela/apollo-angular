@@ -84,14 +84,11 @@ export function assignInput(context: ContextWithApollo): (input: GraphqlInput) =
   return (input: GraphqlInput): void => {
     let value: any;
     let name: string = input.name;
+    let nameDocument: any;
 
-    // check if query
     if (isQueryInput(input)) {
       value = context.__apollo.watchQuery(inputToOptions(input, context));
-
-      if (!name) {
-        name = getNameOfDocument(input.query);
-      }
+      nameDocument = input.query;
     } else if (isMutationInput(input)) {
       value = ({ variables, optimisticResponse, updateQueries }) => {
         return context.__apollo.mutate({
@@ -102,12 +99,13 @@ export function assignInput(context: ContextWithApollo): (input: GraphqlInput) =
         });
       };
 
-      if (!name) {
-        name = getNameOfDocument(input.mutation);
-      }
+      nameDocument = input.mutation;
+    }  else if (isSubscriptionInput(input)) {
+      nameDocument = input.subscription;
     }
-    else if (isSubscriptionInput(input)) {
 
+    if (!name || name === '') {
+      name = getNameOfDocument(nameDocument);
     }
 
     Object.defineProperty(context, name, {

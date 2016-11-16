@@ -97,9 +97,40 @@ describe('graphql', () => {
 });
 
 describe(`graphql - query`, () => {
+  let spyWatchQuery;
+
+  const mock = {
+    watchQuery(options) {
+      spyWatchQuery(options);
+      return options;
+    },
+  };
+
+  beforeEach(() => {
+    spyWatchQuery = jest.fn();
+  });
+
+  const createInstance = (decoratorConfig) => {
+    @graphql(decoratorConfig)
+    class Foo {
+      public ngOnInit: Function;
+
+      /* tslint:disable:no-empty */
+      constructor(...args: any[]) {
+
+      }
+    }
+
+    return new Foo(mock);
+  };
+
   it('should execute watchQuery with the correct properties', () => {
-    const input: GraphqlInput = {
-      query
-    };
-  })
+    let input = [{
+      query,
+    }];
+    let foo = createInstance(input);
+    foo.ngOnInit();
+
+    expect(spyWatchQuery).toBeCalledWith({query});
+  });
 });
