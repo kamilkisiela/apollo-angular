@@ -138,7 +138,7 @@ describe(`graphql - query, mutation, subscribe`, () => {
     return new Foo(mock);
   };
 
-  it('query - should execute watchQuery with the correct properties', () => {
+  it('query - should execute watchQuery with the correct query object', () => {
     let input = [{
       query,
     }];
@@ -146,6 +146,85 @@ describe(`graphql - query, mutation, subscribe`, () => {
     foo.ngOnInit();
 
     expect(spyWatchQuery).toBeCalledWith({query});
+  });
+
+  it('query - should execute watchQuery with the correct query options', () => {
+    let options = {
+      variables: {
+        test: 1,
+      },
+    };
+
+    let input = [{
+      query,
+      options,
+    }];
+    let foo = createInstance(input);
+    foo.ngOnInit();
+
+    expect(spyWatchQuery).toBeCalledWith({query, variables: options.variables});
+  });
+
+  it('query - should execute watchQuery with the correct query options (options as function)', () => {
+    let optionsValue = {
+      variables: {
+        test: 1,
+      },
+    };
+
+    let options = () => {
+      return optionsValue;
+    };
+
+    let input = [{
+      query,
+      options,
+    }];
+    let foo = createInstance(input);
+    foo.ngOnInit();
+
+    expect(spyWatchQuery).toBeCalledWith({query, variables: optionsValue.variables});
+  });
+
+  it('query - should execute options function with the correct context', () => {
+    let context = null;
+
+    let options = (c) => {
+      context = c;
+    };
+
+    let input = [{
+      query,
+      options,
+    }];
+    let foo = createInstance(input);
+    foo.ngOnInit();
+
+    expect(context).toBe(foo);
+  });
+
+  it('query - should execute watchQuery with the correct query options (options as function with fragments)', () => {
+    let optionsValue = {
+      variables: {
+        test: 1,
+      },
+      fragments: [
+        {},
+      ],
+    };
+
+    let options = () => {
+      return optionsValue;
+    };
+
+    let input = [{
+      query,
+      options,
+    }];
+    let foo = createInstance(input);
+    foo.ngOnInit();
+
+    expect(spyWatchQuery).toBeCalledWith({query, variables: optionsValue.variables, fragments: optionsValue.fragments});
   });
 
   it('mutation - should create execution method on the instance', () => {
@@ -236,4 +315,37 @@ describe(`graphql - query, mutation, subscribe`, () => {
 
     },
   }).andExecuteWith();
+
+  // Need to use both updateQueries and variables
+  createMutationWithBase({
+    updateQueries: () => {
+
+    },
+  }).andExecuteWith({
+    variables: {
+      test: 2,
+    },
+  });
+
+  // Need to override variables
+  createMutationWithBase({
+    variables: {
+      test: 1,
+    },
+  }).andExecuteWith({
+    variables: {
+      test: 2,
+    },
+  });
+
+  // Need to merge variables
+  createMutationWithBase({
+    variables: {
+      test1: 1,
+    },
+  }).andExecuteWith({
+    variables: {
+      test2: 2,
+    },
+  });
 });
