@@ -40,6 +40,10 @@ export type SubscriptionInput = {
 
 export type GraphqlInput = (QueryInput | MutationInput | SubscriptionInput) & CommonInput;
 
+export type ContextWithApollo = {
+  __apollo: Angular2Apollo;
+}
+
 function isQueryInput(input: any): input is QueryInput {
   return (input as QueryInput).query !== undefined;
 }
@@ -51,7 +55,6 @@ function isMutationInput(input: any): input is MutationInput {
 function isSubscriptionInput(input: any): input is SubscriptionInput {
   return (input as SubscriptionInput).subscription !== undefined;
 }
-
 
 /**
  * ```ts
@@ -88,11 +91,6 @@ export function graphql(input: GraphqlInput[]): (target: any) => any {
 
     return wrapped;
   };
-}
-
-
-export type ContextWithApollo = {
-  __apollo: Angular2Apollo;
 }
 
 export function assignInput(context: ContextWithApollo): (input: GraphqlInput) => void {
@@ -158,7 +156,7 @@ const buildCommonOptions = (input: CommonInput, context: ContextWithApollo) => {
 
     if (_.isFunction(input.options)) {
       options = input.options(context);
-    } else if (_.isObject(input['options'])) {
+    } else if (_.isObject(input.options)) {
       options = input.options;
     }
 
@@ -171,7 +169,7 @@ const buildCommonOptions = (input: CommonInput, context: ContextWithApollo) => {
 export function inputToOptions(input: GraphqlInput, context: ContextWithApollo): any {
   let common = buildCommonOptions(input, context);
 
-  return Object.assign({}, common, _.omit(input, 'name'));
+  return Object.assign({}, common, _.omit(input, 'name', 'options'));
 }
 
 export function getNameOfDocument(doc: Document): string {
