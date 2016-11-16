@@ -1,7 +1,6 @@
+import 'reflect-metadata';
 import { Document } from 'graphql';
-
 import gql from 'graphql-tag';
-
 import { graphql, wrapPrototype, assignInput, GraphqlInput } from '../src/graphql';
 import { Angular2Apollo } from '../src';
 
@@ -92,13 +91,15 @@ describe('graphql', () => {
     foo.ngOnInit();
   });
 
-  it('should use proper options', () => {
-    expect(foo.getBar).toEqual({
-      query: input['query'],
-    });
-  });
-
   it('should not include Angular2Apollo in the constructor', () => {
     expect(spyConstructor).toHaveBeenCalledWith();
   });
+});
+
+describe(`graphql - query`, () => {
+  it('should execute watchQuery with the correct properties', () => {
+    const input: GraphqlInput = {
+      query
+    };
+  })
 });
