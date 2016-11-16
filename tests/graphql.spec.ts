@@ -173,7 +173,9 @@ describe(`graphql - query, mutation, subscribe`, () => {
   });
 
   const createMutationAndExecuteWith = (executionOptions?: any) => {
-    it('mutation - should trigger mutation when executed (with ' + Object.keys(executionOptions).join(', ') + ')', () => {
+    const executionOptionsString = Object.keys(executionOptions).join(', ');
+
+    it(`mutation - should trigger mutation when executed (with ${executionOptionsString})`, () => {
       let foo = createInstance([{
         name: 'mutation',
         mutation,
@@ -184,6 +186,27 @@ describe(`graphql - query, mutation, subscribe`, () => {
 
       expect(spyMutate).toBeCalledWith(Object.assign({mutation}, executionOptions));
     });
+  };
+
+  const createMutationWithBase = (creationOptions: any = {}) => {
+    const creationOptionsString = Object.keys(creationOptions).join(', ');
+    return {
+      andExecuteWith: (executionOptions: any = {}) => {
+        const executionOptionsString = Object.keys(executionOptions).join(', ');
+
+        it(`mutation - should create with (${creationOptionsString}) and trigger with ${executionOptionsString}`, () => {
+          let foo = createInstance([Object.assign({
+            name: 'mutation',
+            mutation,
+          }, creationOptions)]);
+
+          foo.ngOnInit();
+          foo['mutation'](executionOptions);
+
+          expect(spyMutate).toBeCalledWith(Object.assign({ mutation }, creationOptions, executionOptions));
+        });
+      },
+    };
   };
 
   createMutationAndExecuteWith({
@@ -204,7 +227,13 @@ describe(`graphql - query, mutation, subscribe`, () => {
   createMutationAndExecuteWith({
     optimisticResponse: {
       __typename: 'changeBar',
-      name: 'Test'
+      name: 'Test',
     },
   });
+
+  createMutationWithBase({
+    updateQueries: () => {
+
+    },
+  }).andExecuteWith();
 });

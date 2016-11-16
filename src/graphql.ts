@@ -168,53 +168,10 @@ const buildCommonOptions = (input: CommonInput, context: ContextWithApollo) => {
   return result;
 };
 
-const buildQueryOptions = (input: QueryInput, context: ContextWithApollo) => {
-  let result: any = {};
-
-  if (input.query) {
-    result.query = input.query;
-  }
-
-  return result;
-};
-
-const buildMutationOptions = (input: MutationInput, context: ContextWithApollo) => {
-  let result: any = {};
-
-  if (input.mutation) {
-    result.mutation = input.mutation;
-  }
-
-  return result;
-};
-
-const buildSubscriptionOptions = (input: SubscriptionInput, context: ContextWithApollo) => {
-  let result: any = {};
-
-  if (input.subscription) {
-    result.subscription = input.subscription;
-  }
-
-  return result;
-};
-
 export function inputToOptions(input: GraphqlInput, context: ContextWithApollo): any {
   let common = buildCommonOptions(input, context);
-  let extraProps;
 
-  if (isQueryInput(input)) {
-    extraProps = buildQueryOptions(input, context);
-  }
-
-  if (isMutationInput(input)) {
-    extraProps = buildMutationOptions(input, context);
-  }
-
-  if (isSubscriptionInput(input)) {
-    extraProps = buildSubscriptionOptions(input, context);
-  }
-
-  return Object.assign({}, common, extraProps);
+  return Object.assign({}, common, _.omit(input, 'name'));
 }
 
 export function getNameOfDocument(doc: Document): string {
