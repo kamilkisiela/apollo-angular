@@ -1,28 +1,57 @@
-import { Document } from 'graphql';
+import {Document, FragmentDefinition} from 'graphql';
+import {Angular2Apollo} from './Angular2Apollo';
+import {MutationOptions, MutationBehavior, MutationQueryReducersMap} from 'apollo-client';
 import * as replaceConstructor from 'replace-constructor';
-import { Angular2Apollo } from './Angular2Apollo';
 import * as _ from 'lodash';
-import {DeprecatedWatchQueryOptions} from 'apollo-client/core/watchQueryOptions';
 
 export type CommonInput = {
   name?: string;
-  fragments?: any;
+} & OptionsObject
+
+export type OptionsMethod = (options: any) => Object;
+
+export type WithVariables = {
+  variables?: any;
+}
+
+export type OptionsObject = WithVariables & {
+  fragments?: any[];
 }
 
 export type QueryInput = {
   query: Document;
-  options?: (options: any) => Object;
+  options?: OptionsMethod | (OptionsObject & WithVariables);
 }
 
-export type MutationInput = {
-  mutation: Document;
-}
+export type MutationInput = MutationOptions;
+
+export type MutationExecutionInput = {
+  variables?: Object;
+  resultBehaviors?: MutationBehavior[];
+  fragments?: FragmentDefinition[];
+  optimisticResponse?: Object;
+  updateQueries?: MutationQueryReducersMap;
+  refetchQueries?: string[];
+};
 
 export type SubscriptionInput = {
   subscription: Document;
 }
 
 export type GraphqlInput = (QueryInput | MutationInput | SubscriptionInput) & CommonInput;
+
+function isQueryInput(input: any): input is QueryInput {
+  return (input as QueryInput).query !== undefined;
+}
+
+function isMutationInput(input: any): input is MutationInput {
+  return (input as MutationInput).mutation !== undefined;
+}
+
+function isSubscriptionInput(input: any): input is SubscriptionInput {
+  return (input as SubscriptionInput).subscription !== undefined;
+}
+
 
 /**
  * ```ts
@@ -33,15 +62,13 @@ export type GraphqlInput = (QueryInput | MutationInput | SubscriptionInput) & Co
  * }
  * ```
  */
-export function graphql(
-  input: GraphqlInput[]
-): (target: any) => any {
+export function graphql(input: GraphqlInput[]): (target: any) => any {
   return (target: any) => {
     // get current parameters
     const injects = Reflect.getMetadata('design:paramtypes', target);
 
     // replace a constructor to get the access to Angular2Apollo service
-    const wrapped = replaceConstructor(target, function(apollo: Angular2Apollo, ...injs) {
+    const wrapped = replaceConstructor(target, function (apollo: Angular2Apollo, ...injs) {
       Object.defineProperty(this, '__apollo', {
         value: apollo,
         enumerable: true,
@@ -55,7 +82,7 @@ export function graphql(
     // define new parameters by prepending Angular2Apollo
     Reflect.defineMetadata('design:paramtypes', [Angular2Apollo, ...injects], wrapped);
 
-    wrapPrototype(wrapped)('ngOnInit', function() {
+    wrapPrototype(wrapped)('ngOnInit', function () {
       input.forEach(assignInput(this));
     });
 
@@ -68,39 +95,24 @@ export type ContextWithApollo = {
   __apollo: Angular2Apollo;
 }
 
-function isQueryInput(input: any): input is QueryInput {
-  return (<QueryInput>input).query !== undefined;
-}
-
-function isMutationInput(input: any): input is MutationInput {
-  return (<MutationInput>input).mutation !== undefined;
-}
-
-function isSubscriptionInput(input: any): input is SubscriptionInput {
-  return (<SubscriptionInput>input).subscription !== undefined;
-}
-
 export function assignInput(context: ContextWithApollo): (input: GraphqlInput) => void {
   return (input: GraphqlInput): void => {
     let value: any;
     let name: string = input.name;
     let nameDocument: any;
 
+    let inputOptions = inputToOptions(input, context);
+
     if (isQueryInput(input)) {
-      value = context.__apollo.watchQuery(inputToOptions(input, context));
+      value = context.__apollo.watchQuery(inputOptions);
       nameDocument = input.query;
     } else if (isMutationInput(input)) {
-      value = ({ variables, optimisticResponse, updateQueries }) => {
-        return context.__apollo.mutate({
-          mutation: input.mutation,
-          variables: variables,
-          optimisticResponse: optimisticResponse,
-          updateQueries: updateQueries,
-        });
+      value = (mutationArguments: MutationExecutionInput = {}) => {
+        return context.__apollo.mutate(Object.assign(mutationArguments, inputOptions));
       };
 
       nameDocument = input.mutation;
-    }  else if (isSubscriptionInput(input)) {
+    } else if (isSubscriptionInput(input)) {
       nameDocument = input.subscription;
     }
 
@@ -122,7 +134,7 @@ export function wrapPrototype(target: any) {
   return (name: string, func: Function) => {
     oldHooks[name] = target.prototype[name];
     // create a wrapper
-    target.prototype[name] = function(...args) {
+    target.prototype[name] = function (...args) {
       // to call a new prototype method
       func.apply(this, args);
 
@@ -134,16 +146,11 @@ export function wrapPrototype(target: any) {
   };
 }
 
-export function inputToOptions(input: GraphqlInput, context: ContextWithApollo): DeprecatedWatchQueryOptions {
+const buildCommonOptions = (input: CommonInput, context: ContextWithApollo) => {
   let result: any = {};
 
   if (input.fragments) {
     result.fragments = input.fragments;
-  }
-
-  if (isQueryInput(input) && input.query) {
-    // for now it's just a query without any options
-    result.query = input['query'];
   }
 
   if (isQueryInput(input) && input.options) {
@@ -159,6 +166,55 @@ export function inputToOptions(input: GraphqlInput, context: ContextWithApollo):
   }
 
   return result;
+};
+
+const buildQueryOptions = (input: QueryInput, context: ContextWithApollo) => {
+  let result: any = {};
+
+  if (input.query) {
+    result.query = input.query;
+  }
+
+  return result;
+};
+
+const buildMutationOptions = (input: MutationInput, context: ContextWithApollo) => {
+  let result: any = {};
+
+  if (input.mutation) {
+    result.mutation = input.mutation;
+  }
+
+  return result;
+};
+
+const buildSubscriptionOptions = (input: SubscriptionInput, context: ContextWithApollo) => {
+  let result: any = {};
+
+  if (input.subscription) {
+    result.subscription = input.subscription;
+  }
+
+  return result;
+};
+
+export function inputToOptions(input: GraphqlInput, context: ContextWithApollo): any {
+  let common = buildCommonOptions(input, context);
+  let extraProps;
+
+  if (isQueryInput(input)) {
+    extraProps = buildQueryOptions(input, context);
+  }
+
+  if (isMutationInput(input)) {
+    extraProps = buildMutationOptions(input, context);
+  }
+
+  if (isSubscriptionInput(input)) {
+    extraProps = buildSubscriptionOptions(input, context);
+  }
+
+  return Object.assign({}, common, extraProps);
 }
 
 export function getNameOfDocument(doc: Document): string {
