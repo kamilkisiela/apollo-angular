@@ -28,14 +28,6 @@ const subscription: Document = gql`
     }
 `;
 
-const subscription2: Document = gql`
-    subscription dataRemove {
-        dataRemove {
-            name
-        }
-    }
-`;
-
 describe('wrapPrototype', () => {
   it('should replace with a new method and keep the old one', () => {
     const spy1 = jest.fn();
@@ -125,6 +117,7 @@ describe(`graphql - query, mutation, subscribe`, () => {
   let spyWatchQuery;
   let spyMutate;
   let spySubscribeToMore;
+  let spySubscribe;
 
   const mock = {
     watchQuery(options) {
@@ -134,6 +127,9 @@ describe(`graphql - query, mutation, subscribe`, () => {
           spySubscribeToMore(opts);
         },
       };
+    },
+    subscribe: (opts) => {
+      spySubscribe(opts);
     },
     mutate(options) {
       spyMutate(options);
@@ -145,6 +141,7 @@ describe(`graphql - query, mutation, subscribe`, () => {
     spyWatchQuery = jest.fn();
     spyMutate = jest.fn();
     spySubscribeToMore = jest.fn();
+    spySubscribe = jest.fn();
   });
 
   const createInstance = (decoratorConfig: GraphqlInput[]) => {
@@ -228,94 +225,48 @@ describe(`graphql - query, mutation, subscribe`, () => {
     expect(context).toBe(foo);
   });
 
-  it('query with subscriptions - should support object', () => {
-    let input = [{
-      query,
-      subscriptions: {
-        subscription: subscription,
-        name: 'test',
-      },
-    }];
-    let foo = createInstance(input);
-    foo.ngOnInit();
-
-    expect(foo.test).toBeDefined();
-    expect(typeof foo.test).toBe('function');
-  });
-
-  it('query with subscriptions - should support array of objects', () => {
-    let input = [{
-      query,
-      subscriptions: [
-        {
-          subscription: subscription,
-          name: 'test',
-        },
-        {
-          subscription: subscription2,
-          name: 'test2',
-        },
-      ],
-    }];
-    let foo = createInstance(input);
-    foo.ngOnInit();
-
-    expect(foo.test).toBeDefined();
-    expect(typeof foo.test).toBe('function');
-    expect(foo.test2).toBeDefined();
-    expect(typeof foo.test2).toBe('function');
-  });
-
   it('query with subscriptions - should create subscription on call', () => {
     let input = [{
-      query,
-      subscriptions: {
-        subscription: subscription,
-        name: 'test',
-      },
+      subscription: subscription,
+      name: 'test',
     }];
     let foo = createInstance(input);
     foo.ngOnInit();
     foo.test();
 
-    expect(spySubscribeToMore).toBeCalled();
+    expect(spySubscribe).toBeCalled();
   });
 
-  it('query with subscriptions - should create subscription with variables and updateQueries', () => {
+  it('subscriptions - should create subscription with variables and updateQueries', () => {
     const updateQueries = () => {};
     const variables = {
       test: 1,
     };
 
     let input = [{
-      query,
-      subscriptions: {
-        subscription: subscription,
-        name: 'test',
-        variables,
-        updateQueries,
-      },
+      subscription: subscription,
+      name: 'test',
+      variables,
+      updateQueries,
     }];
     let foo = createInstance(input);
     foo.ngOnInit();
     foo.test();
 
-    expect(spySubscribeToMore).toBeCalledWith({ document: subscription, variables, updateQueries});
+    expect(spySubscribe).toBeCalledWith({ query: subscription, variables, updateQueries});
   });
 
-  it('query with subscriptions - should execute subscription with variables and updateQueries', () => {
+  it('subscriptions - should execute subscription with variables and updateQueries', () => {
     const updateQueries = () => {};
     const variables = {
       test: 1,
     };
 
     let input = [{
-      query,
-      subscriptions: {
-        subscription: subscription,
-        name: 'test',
-      },
+      subscription: subscription,
+      name: 'test',
     }];
+
     let foo = createInstance(input);
     foo.ngOnInit();
     foo.test({
@@ -323,7 +274,7 @@ describe(`graphql - query, mutation, subscribe`, () => {
       updateQueries,
     });
 
-    expect(spySubscribeToMore).toBeCalledWith({ document: subscription, variables, updateQueries});
+    expect(spySubscribe).toBeCalledWith({ query: subscription, variables, updateQueries});
   });
 
   it('query - should execute watchQuery with the correct query options (options as function with fragments)', () => {
