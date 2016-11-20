@@ -4,13 +4,13 @@ import { GraphQLResult, Document } from 'graphql';
 import { print } from 'graphql-tag/printer';
 
 export function mockNetworkInterface(
-  ...mockedResponses: MockedResponse[]
+  ...mockedResponses: MockedResponse[],
 ): NetworkInterface {
   return new MockNetworkInterface(...mockedResponses);
 }
 
 export function mockBatchedNetworkInterface(
-    ...mockedResponses: MockedResponse[]
+    ...mockedResponses: MockedResponse[],
 ): BatchedNetworkInterface {
   return new MockBatchedNetworkInterface(...mockedResponses);
 }

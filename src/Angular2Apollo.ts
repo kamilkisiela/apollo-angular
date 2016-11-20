@@ -24,7 +24,7 @@ export function defaultApolloClient(client: ApolloClient): any {
 @Injectable()
 export class Angular2Apollo {
   constructor(
-    @Inject(angularApolloClient) private client: any
+    @Inject(angularApolloClient) private client: any,
   ) {}
 
   public watchQuery(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult> {
