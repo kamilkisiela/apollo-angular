@@ -6,5 +6,8 @@ export default {
   globals: {
     '@angular/core': 'ng.core',
     'rxjs/Observable': 'Rx'
-  }
+  },
+  external: [
+    'replace-constructor'
+  ]
 };

@@ -1,8 +1,8 @@
 import {Document, FragmentDefinition} from 'graphql';
 import {Angular2Apollo} from './Angular2Apollo';
 import {MutationOptions, MutationBehavior, MutationQueryReducersMap} from 'apollo-client';
-import * as replaceConstructor from 'replace-constructor';
 import * as _ from 'lodash';
+const replaceConstructor = require('replace-constructor');
 
 export type CommonInput = {
   name?: string;
