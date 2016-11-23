@@ -67,7 +67,7 @@
     "typed-graphql": "^1.0.2",
     "typescript": "~2.0.6",
     "validate-commit-msg": "^2.8.2",
-    "zone.js": "^0.6.26"
+    "zone.js": "^0.7.1"
   },
   "config": {
     "ghooks": {
