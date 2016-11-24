@@ -235,7 +235,7 @@ describe('angular2Apollo', () => {
             expect(result).toBe('subscription');
             done();
           },
-          error(error) {
+          error() {
             done.fail('should not be called');
           },
         });
