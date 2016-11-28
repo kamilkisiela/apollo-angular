@@ -95,10 +95,10 @@ class CommentsPageComponent {
       updateQueries: {
         Comment: (previousResult, { mutationResult }) => {
           const newComment = mutationResult.data.submitComment;
-          const prevComments = prev.entry.comments;
+          const prevComments = previousResult.entry.comments;
 
           return {
-            entry: Object.assign(prev.entry, {
+            entry: Object.assign(previousResult.entry, {
               comments: [newComment, ...prevComments]
             })
           };
