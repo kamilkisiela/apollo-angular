@@ -1,14 +1,22 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ApolloClient } from 'apollo-client';
 
-import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
+import { Angular2Apollo } from './Angular2Apollo';
 import { SelectPipe } from './SelectPipe';
+
+export function getDefaultClient() {
+  return new ApolloClient();
+}
 
 const APOLLO_DIRECTIVES = [
   SelectPipe,
 ];
 const APOLLO_PROVIDERS = [
   Angular2Apollo,
+  {
+    provide: ApolloClient,
+    useFactory: getDefaultClient,
+  },
 ];
 
 @NgModule({
@@ -16,13 +24,4 @@ const APOLLO_PROVIDERS = [
   declarations: APOLLO_DIRECTIVES,
   exports: APOLLO_DIRECTIVES,
 })
-export class ApolloModule {
-  public static withClient(client: ApolloClient): ModuleWithProviders {
-    return {
-      ngModule: ApolloModule,
-      providers: [
-        defaultApolloClient(client),
-      ],
-    };
-  }
-}
+export class ApolloModule { }
