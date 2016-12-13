@@ -3,7 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Apollo Angular Guide
+title: Use GraphQL with Angular
+propertytitle: Apollo Angular Docs
 subtitle: A guide to using the Apollo GraphQL Client with Angular.
 description:
 author:
