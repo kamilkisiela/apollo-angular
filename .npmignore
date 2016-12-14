@@ -13,3 +13,5 @@ karma.conf.js
 tsconfig.json
 tslint.json
 typings.json
+.idea/
+.vscode/
