@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.9.0-rc.1
+
 - Support `es6` modules and `tree-shaking` ([PR #151](https://github.com/apollostack/angular2-apollo/pull/151))
 - Make our `Ahead-of-Time` compilation compatible with Angular 2.3.0 ([PR #189](https://github.com/apollostack/angular2-apollo/pull/189), [PR #195](https://github.com/apollostack/angular2-apollo/pull/195))
 - Added `getClient()` that exposes an instance of ApolloClient ([PR #203](https://github.com/apollostack/angular2-apollo/pull/203))
