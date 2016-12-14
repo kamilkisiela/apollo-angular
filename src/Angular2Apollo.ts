@@ -1,6 +1,6 @@
 import { OpaqueToken, Injectable, Inject } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
-import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions } from 'apollo-client';
+import { ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
 import { FragmentDefinition } from 'graphql';
 
@@ -13,18 +13,12 @@ export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
   fragments?: FragmentDefinition[];
 }
 
-export const angularApolloClient = new OpaqueToken('AngularApolloClient');
-export function defaultApolloClient(client: ApolloClient): any {
-  return {
-    provide: angularApolloClient,
-    useValue: client,
-  };
-}
+export const AngularApolloClient = new OpaqueToken('AngularApolloClient');
 
 @Injectable()
 export class Angular2Apollo {
   constructor(
-    @Inject(angularApolloClient) private client: any,
+    @Inject(AngularApolloClient) private client: any,
   ) {}
 
   public watchQuery(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult> {

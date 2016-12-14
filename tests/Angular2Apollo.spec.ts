@@ -5,8 +5,8 @@ import { Subject } from 'rxjs/Subject';
 import { RxObservableQuery } from 'apollo-client-rxjs';
 
 import { mockClient } from './_mocks';
-import { APOLLO_PROVIDERS } from '../src/index';
-import { Angular2Apollo, defaultApolloClient, angularApolloClient } from '../src/Angular2Apollo';
+import { APOLLO_PROVIDERS, defaultApolloClient } from '../src/index';
+import { Angular2Apollo, AngularApolloClient } from '../src/Angular2Apollo';
 
 import gql from 'graphql-tag';
 
@@ -247,7 +247,7 @@ describe('angular2Apollo', () => {
 
     it('should set a AngularApolloClient', () => {
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client)]);
-      expect(injector.get(angularApolloClient)).toBe(client);
+      expect(injector.get(AngularApolloClient)).toBe(client);
     });
   });
 });
