@@ -1,4 +1,4 @@
-sudo: true
+sudo: false
 
 language: node_js
 
@@ -20,10 +20,8 @@ notifications:
 
 before_install:
   # Repo for Yarn
-  - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
-  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-  - sudo apt-get update -qq
-  - sudo apt-get install -y -qq yarn
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
   - yarn global add coveralls
   # remove unused node modules from cache
   - npm prune
