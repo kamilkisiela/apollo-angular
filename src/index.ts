@@ -1,5 +1,5 @@
 import { SelectPipe } from './SelectPipe';
-import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
+import { Angular2Apollo } from './Angular2Apollo';
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 import { ApolloModule } from './ApolloModule';
 
@@ -12,5 +12,4 @@ export {
   ApolloQueryObservable,
   SelectPipe,
   Angular2Apollo,
-  defaultApolloClient
 };
