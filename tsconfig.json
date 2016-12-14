@@ -22,6 +22,8 @@
     "tests/ApolloModule.spec.ts"
   ],
   "angularCompilerOptions": {
-    "genDir": "compiled"
+    "genDir": "compiled",
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true
   }
 }

@@ -1,16 +1,4 @@
-import { SelectPipe } from './SelectPipe';
-import { Angular2Apollo, defaultApolloClient } from './Angular2Apollo';
-import { ApolloQueryObservable } from './ApolloQueryObservable';
-import { ApolloModule } from './ApolloModule';
-
-export const APOLLO_PROVIDERS: any[] = [
-  Angular2Apollo,
-];
-
-export {
-  ApolloModule,
-  ApolloQueryObservable,
-  SelectPipe,
-  Angular2Apollo,
-  defaultApolloClient
-};
+export { SelectPipe } from './SelectPipe';
+export { Angular2Apollo, AngularApolloClient } from './Angular2Apollo';
+export { ApolloQueryObservable } from './ApolloQueryObservable';
+export { ApolloModule, APOLLO_PROVIDERS, APOLLO_DIRECTIVES, defaultApolloClient } from './ApolloModule';
