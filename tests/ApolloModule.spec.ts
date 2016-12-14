@@ -3,7 +3,7 @@ import { ApolloClient } from 'apollo-client';
 import './_common';
 
 import { ApolloModule, SelectPipe, Angular2Apollo } from '../src';
-import { angularApolloClient } from '../src/Angular2Apollo';
+import { AngularApolloClient } from '../src/Angular2Apollo';
 
 describe('ApolloModule', () => {
   let metadata: any = ApolloModule['decorators'][0]['args'][0];
@@ -37,11 +37,11 @@ describe('ApolloModule', () => {
     });
 
     it('should contain provider with useValue', () => {
-      expect(result.providers[0]['useValue']).toBe(client);
+      expect(result.providers[1]['useValue']).toBe(client);
     });
 
-    it('should contain provider that provide angularApolloClient', () => {
-      expect(result.providers[0]['provide']).toBe(angularApolloClient);
+    it('should contain provider that provide AngularApolloClient', () => {
+      expect(result.providers[1]['provide']).toBe(AngularApolloClient);
     });
   });
 });
