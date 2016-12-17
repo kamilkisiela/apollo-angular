@@ -7,4 +7,4 @@ export default {
     '@angular/core': 'ng.core',
     'rxjs/Observable': 'Rx'
   }
-};
+}
