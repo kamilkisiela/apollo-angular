@@ -14,7 +14,7 @@ import { MyApolloClient } from './client';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [MyApolloClient]
+  providers: [MyApolloClient],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

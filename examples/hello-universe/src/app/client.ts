@@ -34,18 +34,6 @@ class GraphqlClient {
   }
 }
 
-// @NgModule({
-//   providers: [GraphqlClient, {
-//     provide: Angular2Apollo, {
-//       useFactory: (graphqlClient) => {
-//         return new Angular2Apollo (graphqlClient.client);
-//       },
-//       deps: [GraphqlClient]
-//     }
-//   }],
-//   imports: [ApolloModule],
-//   exports: [ApolloModule]
-// })
 @NgModule({
   providers: [GraphqlClient, {
     provide: Angular2Apollo,
