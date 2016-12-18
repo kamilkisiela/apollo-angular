@@ -1,23 +1,18 @@
-import {
-  ApolloClient,
-  createNetworkInterface
-} from 'apollo-client';
-
-import {
-  Injectable,
-  NgModule
-} from '@angular/core';
-
+import { ApolloClient, createNetworkInterface } from 'apollo-client';
+import { Injectable, NgModule } from '@angular/core';
 import { Angular2Apollo, ApolloModule } from 'angular2-apollo';
+import { ConfigService } from './config.service';
+
+import 'whatwg-fetch';
 
 @Injectable()
-class GraphqlClient {
+export class Client {
+  client: ApolloClient;
   private networkInterface: any;
-  private client: ApolloClient;
-  // you can inject other services here - e.g. url address, headers setup...
-  constructor() {
+
+  constructor(private config: ConfigService) {
     this.networkInterface = createNetworkInterface({
-      uri: '/graphql',
+      uri: this.config.getGraphQLUrl(),
       opts: {
         credentials: 'same-origin',
       },
@@ -34,16 +29,16 @@ class GraphqlClient {
   }
 }
 
+export function ApolloFactory (gqlClient: Client) {
+  return new Angular2Apollo(gqlClient.client);
+}
+
 @NgModule({
-  providers: [GraphqlClient, {
+  providers: [Client, {
     provide: Angular2Apollo,
-    useFactory: (gqlClient) => {
-      return new Angular2Apollo(gqlClient.client);
-    },
-    deps: [GraphqlClient]
- }],
-  imports: [ApolloModule],
-  exports: [ApolloModule]
+    useFactory: ApolloFactory,
+    deps: [Client]
+ }]
 })
 
-export class MyApolloClient {}
+export class MyApolloModule {}

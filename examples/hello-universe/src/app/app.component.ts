@@ -13,7 +13,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
+  templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit, AfterViewInit {
   // Observable with GraphQL result

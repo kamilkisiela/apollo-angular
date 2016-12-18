@@ -1,20 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { Angular2Apollo, APOLLO_DIRECTIVES, SelectPipe} from 'angular2-apollo';
 import { AppComponent } from './app.component';
-import { MyApolloClient } from './client';
+import { MyApolloModule } from './client';
+import { ConfigService } from './config.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MyApolloModule
   ],
-  providers: [MyApolloClient],
+  providers: [ConfigService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

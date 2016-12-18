@@ -25,11 +25,12 @@
     "@angular/platform-server": "~2.1.2",
     "@angular/router": "~3.1.2",
     "angular-cli": "^1.0.0-beta.19-3",
-    "angular2-apollo": "file:../../",
+    "angular2-apollo": "../../",
     "apollo-client": "~0.5.1",
     "core-js": "~2.4.0",
     "rxjs": "5.0.0-beta.12",
     "ts-helpers": "~1.1.1",
+    "whatwg-fetch": "^2.0.1",
     "zone.js": "~0.6.26"
   },
   "devDependencies": {
