@@ -13,12 +13,13 @@ export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
   fragments?: FragmentDefinition[];
 }
 
-export const AngularApolloClient = new OpaqueToken('AngularApolloClient');
+export const ApolloClientWrapper = new OpaqueToken('ApolloClientWrapper');
+export const ApolloClientInstance = new OpaqueToken('ApolloClientInstance');
 
 @Injectable()
 export class Angular2Apollo {
   constructor(
-    @Inject(AngularApolloClient) private client: any,
+    @Inject(ApolloClientInstance) private client: any,
   ) {}
 
   public watchQuery(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult> {
