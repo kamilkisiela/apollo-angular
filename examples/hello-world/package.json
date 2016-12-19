@@ -52,7 +52,7 @@
     "graphql": "~0.7.0",
     "graphql-tools": "~0.8.0",
     "nodemon": "^1.10.2",
-    "rollup": "^0.36.3",
+    "rollup": "^0.37.0",
     "rollup-plugin-commonjs": "^5.0.5",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
