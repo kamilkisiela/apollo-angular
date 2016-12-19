@@ -9,6 +9,7 @@
     "client": "ng serve --proxy-conf proxy.conf.json",
     "server": "nodemon api/index.js --watch api --exec babel-node",
     "build": "./node_modules/.bin/ngc -p src/tsconfig.aot.json",
+    "test": "npm run build",
     "postbuild": "npm run tree-shaking",
     "tree-shaking": "node_modules/.bin/rollup -c rollup.config.js"
   },
