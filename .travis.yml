@@ -28,11 +28,11 @@ before_install:
 
 install:
   - yarn
-  - (cd examples/hello-world && yarn)
+  - (cd examples/hello-world && npm i)
 
 script:
   - yarn test
-  - (cd examples/hello-world && yarn test)
+  - (cd examples/hello-world && npm test)
 
 after_script:
   # send code-coverage report to coveralls
