@@ -3,7 +3,7 @@
 ### vNEXT
 
 - Support `es6` modules and `tree-shaking` ([PR #151](https://github.com/apollostack/angular2-apollo/pull/151))
-- Make our `Ahead-of-Time` compilation compatible with Angular 2.3.0 ([PR #189](https://github.com/apollostack/angular2-apollo/pull/189))
+- Make our `Ahead-of-Time` compilation compatible with Angular 2.3.0 ([PR #189](https://github.com/apollostack/angular2-apollo/pull/189), [PR #195](https://github.com/apollostack/angular2-apollo/pull/195))
 
 ### v0.8.0
 

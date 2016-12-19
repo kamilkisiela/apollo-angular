@@ -3,7 +3,7 @@ import { ApolloClient } from 'apollo-client';
 import './_common';
 
 import { ApolloModule, SelectPipe, Angular2Apollo } from '../src';
-import { AngularApolloClient } from '../src/Angular2Apollo';
+import { ApolloClientWrapper, ApolloClientInstance } from '../src/Angular2Apollo';
 
 describe('ApolloModule', () => {
   let metadata: any = ApolloModule['decorators'][0]['args'][0];
@@ -30,18 +30,26 @@ describe('ApolloModule', () => {
 
   describe('withClient', () => {
     const client = {} as ApolloClient;
-    const result = ApolloModule.withClient(client);
+    const getClient = () => client;
+    const result = ApolloModule.withClient(getClient);
+    const providers = result.providers[1]; // skips APOLLO_PROVIDERS
 
     it('should contain ApolloModule as ngModule', () => {
       expect(result.ngModule).toBe(ApolloModule);
     });
 
-    it('should contain provider with useValue', () => {
-      expect(result.providers[1]['useValue']).toBe(client);
+    it('should provide a wrapper directly', () => {
+      expect(providers[0]['provide']).toBe(ApolloClientWrapper);
+      expect(providers[0]['useValue']).toBe(getClient);
     });
 
-    it('should contain provider that provide AngularApolloClient', () => {
-      expect(result.providers[1]['provide']).toBe(AngularApolloClient);
+    it('should provide a value using factory', () => {
+      const factoryResult = providers[1]['useFactory'](getClient);
+
+      expect(providers[1]['provide']).toBe(ApolloClientInstance);
+      expect(providers[1]['useFactory']).toBeDefined();
+      expect(providers[1]['deps'][0]).toBe(ApolloClientWrapper);
+      expect(factoryResult).toBe(client);
     });
   });
 });

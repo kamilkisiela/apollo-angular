@@ -17,5 +17,8 @@
       "node",
       "isomorphic-fetch"
     ]
-  }
+  },
+  "files": [
+    "main.ts"
+  ]
 }

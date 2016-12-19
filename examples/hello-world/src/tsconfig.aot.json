@@ -23,6 +23,7 @@
   ],
   "angularCompilerOptions": {
     "genDir": "aot",
-    "skipMetadataEmit" : true
+    "skipMetadataEmit" : true,
+    "entryModule": "app/app.module#AppModule"
   }
 }
