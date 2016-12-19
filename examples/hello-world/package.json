@@ -28,6 +28,7 @@
     "angular2-apollo": "file:../../",
     "apollo-client": "~0.5.1",
     "core-js": "~2.4.0",
+    "graphql-tag": "^1.1.2",
     "rxjs": "5.0.0-rc.4",
     "ts-helpers": "~1.1.1",
     "zone.js": "~0.7.2"
@@ -51,7 +52,7 @@
     "graphql": "~0.7.0",
     "graphql-tools": "~0.8.0",
     "nodemon": "^1.10.2",
-    "rollup": "^0.36.3",
+    "rollup": "^0.37.0",
     "rollup-plugin-commonjs": "^5.0.5",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
