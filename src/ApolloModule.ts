@@ -11,11 +11,13 @@ export const APOLLO_PROVIDERS = [
   Angular2Apollo,
 ];
 
-export function getApolloClient(clientFn: () => ApolloClient): ApolloClient {
+export type ClientWrapper = () => ApolloClient;
+
+export function getApolloClient(clientFn: ClientWrapper): ApolloClient {
   return clientFn();
 }
 
-export function defaultApolloClient(clientFn: () => ApolloClient): any {
+export function defaultApolloClient(clientFn: ClientWrapper): any {
   return [{
     provide: ApolloClientWrapper,
     useValue: clientFn,
@@ -31,7 +33,7 @@ export function defaultApolloClient(clientFn: () => ApolloClient): any {
   exports: APOLLO_DIRECTIVES,
 })
 export class ApolloModule {
-  public static withClient(clientFn: () => ApolloClient): ModuleWithProviders {
+  public static withClient(clientFn: ClientWrapper): ModuleWithProviders {
     return {
       ngModule: ApolloModule,
       providers: [
