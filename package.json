@@ -52,7 +52,7 @@
     "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.38",
     "apollo-client": "^0.5.1",
-    "ghooks": "^1.3.2",
+    "ghooks": "^2.0.0",
     "graphql-tag": "^1.0.0",
     "jest": "^17.0.0",
     "reflect-metadata": "^0.1.8",
