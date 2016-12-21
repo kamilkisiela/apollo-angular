@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.11-webpack.8",
-    "name": "hello-world"
+    "name": "hello-universe"
   },
   "apps": [
     {
@@ -15,6 +15,7 @@
       "mobile": false,
       "styles": [],
       "scripts": [],
+      "test": "test.ts",
       "environments": {
         "source": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
@@ -22,6 +23,11 @@
       }
     }
   ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
   "addons": [],
   "packages": [],
   "defaults": {
