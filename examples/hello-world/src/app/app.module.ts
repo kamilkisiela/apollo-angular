@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApolloModule } from 'angular2-apollo';
 
 import { AppComponent } from './app.component';
-import { client } from './client';
+import { getClient } from './client';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { client } from './client';
     FormsModule,
     ReactiveFormsModule,
     // Define the default ApolloClient
-    ApolloModule.withClient(client),
+    ApolloModule.withClient(getClient),
   ],
   bootstrap: [AppComponent],
 })

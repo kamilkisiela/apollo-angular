@@ -6,7 +6,7 @@ import { RxObservableQuery } from 'apollo-client-rxjs';
 
 import { mockClient } from './_mocks';
 import { APOLLO_PROVIDERS, defaultApolloClient } from '../src/index';
-import { Angular2Apollo, AngularApolloClient } from '../src/Angular2Apollo';
+import { Angular2Apollo, ApolloClientWrapper, ApolloClientInstance } from '../src/Angular2Apollo';
 
 import gql from 'graphql-tag';
 
@@ -66,7 +66,7 @@ describe('angular2Apollo', () => {
     let angular2Apollo;
 
     beforeEach(() => {
-      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client), APOLLO_PROVIDERS]);
+      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(() => client), APOLLO_PROVIDERS]);
       angular2Apollo = injector.get(Angular2Apollo);
     });
 
@@ -245,9 +245,18 @@ describe('angular2Apollo', () => {
 
   describe('defaultApolloClient', () => {
 
-    it('should set a AngularApolloClient', () => {
-      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(client)]);
-      expect(injector.get(AngularApolloClient)).toBe(client);
+    function getClient() {
+      return client;
+    }
+
+    it('should set a ApolloClientWrapper', () => {
+      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(getClient)]);
+      expect(injector.get(ApolloClientWrapper)).toBe(getClient);
+    });
+
+    it('should set a ApolloClientInstance', () => {
+      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(getClient)]);
+      expect(injector.get(ApolloClientInstance)).toBe(client);
     });
   });
 });
