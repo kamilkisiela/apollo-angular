@@ -1,6 +1,6 @@
 import { ApolloClient, createNetworkInterface } from 'apollo-client';
 
-const client = new ApolloClient({
+export default new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: '/graphql',
     opts: {
@@ -9,6 +9,3 @@ const client = new ApolloClient({
   }),
 });
 
-export function getClient(): ApolloClient {
-  return client;
-}

@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js --watch src"
+  },
+  "keywords": [],
+  "author": "Bernhard Rode <mail@bernhardrode.de>",
+  "license": "ISC",
+  "devDependencies": {
+    "apollo-server": "^0.3.3",
+    "body-parser": "^1.15.2",
+    "casual": "^1.5.8",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "graphql": "^0.8.2",
+    "graphql-tools": "^0.8.4",
+    "nodemon": "^1.11.0"
+  }
+}
