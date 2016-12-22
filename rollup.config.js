@@ -5,6 +5,10 @@ export default {
   moduleName: 'ng.apollo',
   globals: {
     '@angular/core': 'ng.core',
-    'rxjs/Observable': 'Rx'
+    'rxjs/Observable': 'Rx',
+    'rxjs/observable/from': 'Rx.Observable',
+    'rxjs/observable/fromPromise': 'Rx.Observable',
+    'apollo-client-rxjs': 'apollo.rxjs',
+    'apollo-client': 'apollo',
   }
 }
