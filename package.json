@@ -56,7 +56,7 @@
     "graphql-tag": "^1.0.0",
     "jest": "^17.0.0",
     "reflect-metadata": "^0.1.8",
-    "remap-istanbul": "^0.8.0",
+    "remap-istanbul": "^0.8.1",
     "rimraf": "^2.5.2",
     "rollup": "^0.38.0",
     "rxjs": "5.0.0-rc.4",
