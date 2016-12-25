@@ -1,6 +1,6 @@
 import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import { Injectable, NgModule } from '@angular/core';
-import { Angular2Apollo, ApolloModule } from 'angular2-apollo';
+import { Angular2Apollo, APOLLO_DIRECTIVES } from 'angular2-apollo';
 import { ConfigService } from './config.service';
 
 import 'whatwg-fetch';
@@ -29,16 +29,17 @@ export class Client {
   }
 }
 
-export function ApolloFactory (gqlClient: Client) {
+export function ApolloFactory(gqlClient: Client) {
   return new Angular2Apollo(gqlClient.client);
 }
 
 @NgModule({
+
   providers: [Client, {
     provide: Angular2Apollo,
     useFactory: ApolloFactory,
     deps: [Client]
- }]
+  }]
 })
 
-export class MyApolloModule {}
+export class MyApolloModule { }
