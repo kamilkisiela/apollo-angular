@@ -54,7 +54,7 @@
     "graphql": "^0.8.2",
     "graphql-tag": "^1.1.2",
     "husky": "^0.12.0",
-    "jest": "^17.0.0",
+    "jest": "^18.1.0",
     "reflect-metadata": "^0.1.8",
     "remap-istanbul": "^0.8.4",
     "rimraf": "^2.5.2",
