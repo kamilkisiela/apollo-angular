@@ -70,6 +70,12 @@ describe('angular2Apollo', () => {
       angular2Apollo = injector.get(Angular2Apollo);
     });
 
+    describe('getClient()', () => {
+      it('should return an instance of ApolloClient', () => {
+        expect(angular2Apollo.getClient()).toBe(client);
+      });
+    });
+
     describe('watchQuery()', () => {
       it('should be called with the same options', () => {
         const options = { query };
