@@ -35,10 +35,15 @@ export class Angular2Apollo {
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
+    // XXX Try to remove it soon
     if (typeof this.client.subscribe === 'undefined') {
       throw new Error(`Your version of ApolloClient doesn't support subscriptions`);
     }
 
     return Observable.from(this.client.subscribe(options));
+  }
+
+  public getClient(): ApolloClient {
+    return this.client;
   }
 }
