@@ -92,10 +92,14 @@ import { AppComponent } from './app.component';
 // Create the client as outlined above
 const client = new ApolloClient();
 
+export function provideClient(): ApolloClient {
+  return client;
+}
+
 @NgModule({
   imports: [
     BrowserModule,
-    ApolloModule.withClient(client)
+    ApolloModule.withClient(provideClient)
   ],
   declarations: [ AppComponent ],
   bootstrap: [ AppComponent ]
