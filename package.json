@@ -1,6 +1,6 @@
 {
   "name": "angular2-apollo",
-  "version": "0.8.0",
+  "version": "0.9.0-rc.1",
   "description": "Angular 2.0 client for Apollo",
   "main": "build/bundles/apollo.umd.js",
   "module": "build/src/index.js",
