@@ -1,17 +1,33 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-import { apolloExpress, graphiqlExpress } from 'apollo-server';
-import { makeExecutableSchema } from 'graphql-tools';
+const {
+  apolloExpress,
+  graphiqlExpress
+} = require('apollo-server');
 
-import { schema, resolvers } from './schema';
+const {
+  makeExecutableSchema
+} = require('graphql-tools');
+
+const {
+  schema,
+  resolvers
+} = require('./schema');
 
 const PORT = 4300;
 const app = express();
 
-//app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+const executableSchema = makeExecutableSchema({
+  typeDefs: schema,
+  resolvers,
+});
+
+app.use(cors());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
 app.use('/graphql', apolloExpress((req) => {
@@ -36,8 +52,3 @@ app.use('/graphiql', graphiqlExpress({
 app.listen(PORT, () => console.log(
   `API Server is now running on http://localhost:${PORT}`
 ));
-
-const executableSchema = makeExecutableSchema({
-  typeDefs: schema,
-  resolvers,
-});
