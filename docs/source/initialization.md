@@ -15,7 +15,7 @@ npm install apollo-client angular2-apollo graphql-tag --save
 Those libraries require few additional type declarations:
 
 ```bash
-npm install @types/{chai,es6-shim,isomorphic-fetch,node} typed-graphql
+npm install @types/{chai,es6-shim,isomorphic-fetch,node} typed-graphql --save-dev
 ```
 
 > Since v0.8 you don't have to install `@types/es6-shim`. You can **skip [*ES2015* section](#typescript-es2015)**.
