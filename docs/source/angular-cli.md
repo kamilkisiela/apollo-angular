@@ -6,31 +6,6 @@ title: Angular CLI
 
 To get started with Apollo and Angular install few needed packages. Take a look at [Installation](initialization.html#installation) section.
 
-<h2 id="typescript">TypeScript</h2>
-
-As follows in [TypeScript](initialization.html#typescript) chapter, you need to do few changes in your project.
-
-We need to disable declarations for `es6` features in `src/tsconfig.json` by replacing it for the ones from `es5`:
-
-```ts
-{
-  "compilerOptions": {
-    // ...
-    "lib": ["es5", "dom"]
-    // ...
-  }
-}
-```
-
-> Since v0.8 above changes **no longer apply**.
-
-About `typed-graphql`, we need to make it visible somehow. Put the refference inside `src/typings.d.ts`:
-
-```ts
-/// <reference types="typed-graphql" />
-```
-
-
 <h2 id="initialization">Initialization</h2>
 
 Take a look at [Initialization](initialization.html) section.
