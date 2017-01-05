@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.9.0-rc.2
+
 - Support `apollo-client@0.6.0` and `apollo-client-rxjs@0.3.0`
 
 ### v0.9.0-rc.1
