@@ -33,11 +33,11 @@
   },
   "peerDependencies": {
     "@angular/core": "^2.0.0",
-    "apollo-client": "^0.5.1",
-    "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1"
+    "apollo-client": "^0.6.0",
+    "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1 || 5.0.0"
   },
   "dependencies": {
-    "apollo-client-rxjs": "~0.2.3"
+    "apollo-client-rxjs": "~0.3.0"
   },
   "devDependencies": {
     "@angular/common": "^2.3.1",
@@ -52,7 +52,8 @@
     "@types/jest": "^15.1.32",
     "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.38",
-    "apollo-client": "^0.5.1",
+    "apollo-client": "^0.6.0",
+    "graphql": "^0.8.2",
     "graphql-tag": "^1.0.0",
     "husky": "^0.12.0",
     "jest": "^17.0.0",
@@ -60,9 +61,8 @@
     "remap-istanbul": "^0.8.4",
     "rimraf": "^2.5.2",
     "rollup": "^0.39.2",
-    "rxjs": "5.0.0-rc.4",
+    "rxjs": "^5.0.0",
     "tslint": "^4.2.0",
-    "typed-graphql": "^1.0.2",
     "typescript": "~2.0.6",
     "validate-commit-msg": "^2.8.2",
     "zone.js": "^0.7.1"

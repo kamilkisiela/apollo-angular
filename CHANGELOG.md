@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Support `apollo-client@0.6.0` and `apollo-client-rxjs@0.3.0`
+
 ### v0.9.0-rc.1
 
 - Support `es6` modules and `tree-shaking` ([PR #151](https://github.com/apollostack/angular2-apollo/pull/151))
