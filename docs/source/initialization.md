@@ -10,6 +10,8 @@ To get started with Apollo and Angular, install the `apollo-client` npm package,
 npm install apollo-client angular2-apollo graphql-tag --save
 ```
 
+If you are in an environment that does not have a global [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch/fetch) implementation, make sure to install a polyfill like [`whatwg-fetch`](https://www.npmjs.com/package/whatwg-fetch).
+
 <h2 id="typescript">TypeScript</h2>
 
 Those libraries require few additional type declarations:
