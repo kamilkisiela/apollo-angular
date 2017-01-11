@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       },
     })
       .toPromise()
-      .then(({ data }: ApolloQueryResult) => {
+      .then(({ data }: ApolloQueryResult<any>) => {
         console.log('got data', data);
 
         // get new data

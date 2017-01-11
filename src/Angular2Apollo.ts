@@ -21,15 +21,15 @@ export class Angular2Apollo {
     @Inject(ApolloClientInstance) private client: ApolloClient,
   ) {}
 
-  public watchQuery(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult> {
+  public watchQuery<T>(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult<T>> {
     return new ApolloQueryObservable(rxify(this.client.watchQuery)(options));
   }
 
-  public query(options: DeprecatedWatchQueryOptions): Observable<ApolloQueryResult> {
+  public query<T>(options: DeprecatedWatchQueryOptions): Observable<ApolloQueryResult<T>> {
     return fromPromise(this.client.query(options));
   }
 
-  public mutate(options: MutationOptions): Observable<ApolloQueryResult> {
+  public mutate<T>(options: MutationOptions): Observable<ApolloQueryResult<T>> {
     return fromPromise(this.client.mutate(options));
   }
 

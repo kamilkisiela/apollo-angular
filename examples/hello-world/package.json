@@ -24,7 +24,7 @@
     "@angular/platform-server": "^2.3.1",
     "@angular/router": "^3.3.1",
     "angular2-apollo": "file:../../",
-    "apollo-client": "~0.6.0",
+    "apollo-client": "~0.7.0",
     "core-js": "^2.4.1",
     "graphql-tag": "^1.1.2",
     "rxjs": "^5.0.1",
@@ -57,6 +57,6 @@
     "rollup-plugin-uglify": "^1.0.1",
     "ts-node": "1.2.1",
     "tslint": "^4.2.0",
-    "typescript": "~2.0.6"
+    "typescript": "~2.1.0"
   }
 }
