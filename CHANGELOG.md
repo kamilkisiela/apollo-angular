@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Support `tree-shaking` for `apollo-client` and `apollo-client-rxjs` ([PR #206](https://github.com/apollostack/angular2-apollo/pull/206))
+
 ### v0.9.0-rc.2
 
 - Support `apollo-client@0.6.0` and `apollo-client-rxjs@0.3.0`
