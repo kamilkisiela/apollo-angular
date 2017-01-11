@@ -2,12 +2,11 @@ import { OpaqueToken, Injectable, Inject } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
 import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
+import { from } from 'rxjs/observable/from';
+import { fromPromise } from 'rxjs/observable/fromPromise';
 import { FragmentDefinitionNode } from 'graphql';
 
 import { ApolloQueryObservable } from './ApolloQueryObservable';
-
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/fromPromise';
 
 export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
   fragments?: FragmentDefinitionNode[];
@@ -22,16 +21,16 @@ export class Angular2Apollo {
     @Inject(ApolloClientInstance) private client: ApolloClient,
   ) {}
 
-  public watchQuery(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult> {
+  public watchQuery<T>(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult<T>> {
     return new ApolloQueryObservable(rxify(this.client.watchQuery)(options));
   }
 
-  public query(options: DeprecatedWatchQueryOptions): Observable<ApolloQueryResult> {
-    return Observable.fromPromise(this.client.query(options));
+  public query<T>(options: DeprecatedWatchQueryOptions): Observable<ApolloQueryResult<T>> {
+    return fromPromise(this.client.query(options));
   }
 
-  public mutate(options: MutationOptions): Observable<ApolloQueryResult> {
-    return Observable.fromPromise(this.client.mutate(options));
+  public mutate<T>(options: MutationOptions): Observable<ApolloQueryResult<T>> {
+    return fromPromise(this.client.mutate(options));
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
@@ -40,7 +39,7 @@ export class Angular2Apollo {
       throw new Error(`Your version of ApolloClient doesn't support subscriptions`);
     }
 
-    return Observable.from(this.client.subscribe(options));
+    return from(this.client.subscribe(options));
   }
 
   public getClient(): ApolloClient {

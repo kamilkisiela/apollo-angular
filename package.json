@@ -22,22 +22,22 @@
     "test-only": "jest",
     "test-watch": "jest --watch",
     "remap": "remap-istanbul -i coverage/coverage-final.json -t lcovonly -o coverage/lcov.info",
-    "lint": "tslint src/*.ts && tslint tests/*.ts ",
+    "lint": "tslint src/*.ts && tslint tests/*.ts",
     "build": "./node_modules/.bin/ngc -p tsconfig.json",
     "build-test": "./node_modules/.bin/ngc -p tsconfig.test.json",
     "postbuild": "npm run bundle",
     "bundle": "rollup -c",
     "clean": "rimraf build/* coverage/*",
-    "prepublish": "npm run clean && npm run build",
+    "prepublishs": "npm run clean && npm run build",
     "commitmsg": "validate-commit-msg"
   },
   "peerDependencies": {
     "@angular/core": "^2.0.0",
-    "apollo-client": "^0.6.0",
+    "apollo-client": "^0.7.0",
     "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1 || ^5.0.0"
   },
   "dependencies": {
-    "apollo-client-rxjs": "~0.3.0"
+    "apollo-client-rxjs": "~0.4.0"
   },
   "devDependencies": {
     "@angular/common": "^2.3.1",
@@ -49,7 +49,8 @@
     "@angular/platform-server": "^2.3.1",
     "@types/jest": "^15.1.32",
     "@types/lodash": "^4.14.34",
-    "apollo-client": "^0.6.0",
+    "@types/node": "^6.0.59",
+    "apollo-client": "^0.7.1",
     "graphql": "^0.8.2",
     "graphql-tag": "^1.1.2",
     "husky": "^0.12.0",
@@ -60,7 +61,7 @@
     "rollup": "^0.39.2",
     "rxjs": "^5.0.0",
     "tslint": "^4.2.0",
-    "typescript": "~2.0.6",
+    "typescript": "~2.1.4",
     "validate-commit-msg": "^2.8.2",
     "zone.js": "^0.7.1"
   },
