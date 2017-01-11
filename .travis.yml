@@ -11,6 +11,7 @@ cache:
     - $HOME/.npm
     - $HOME/.yarn-cache
     - node_modules
+    - examples/hello-world/node_modules
 
 notifications:
   # disable email notification
@@ -23,12 +24,15 @@ before_install:
   - yarn global add coveralls
   # remove unused node modules from cache
   - npm prune
+  - (cd examples/hello-world && npm prune)
 
 install:
   - yarn
+  - (cd examples/hello-world && npm i)
 
 script:
   - yarn test
+  - (cd examples/hello-world && npm test)
 
 after_script:
   # send code-coverage report to coveralls

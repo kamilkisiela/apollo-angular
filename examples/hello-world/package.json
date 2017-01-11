@@ -8,7 +8,7 @@
     "client": "ng serve --aot --proxy-conf proxy.conf.json --port 4200",
     "server": "nodemon api/index.js --watch api --exec babel-node",
     "build": "./node_modules/.bin/ngc -p src/tsconfig.aot.json",
-    "test": "npm run build",
+    "test": "ng build --aot --prod",
     "postbuild": "npm run tree-shaking",
     "tree-shaking": "node_modules/.bin/rollup -c rollup.config.js"
   },
