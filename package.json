@@ -28,7 +28,7 @@
     "postbuild": "npm run bundle",
     "bundle": "rollup -c",
     "clean": "rimraf build/* coverage/*",
-    "prepublishs": "npm run clean && npm run build",
+    "prepublish": "npm run clean && npm run build",
     "commitmsg": "validate-commit-msg"
   },
   "peerDependencies": {
