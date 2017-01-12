@@ -33,3 +33,12 @@ script:
 after_script:
   # send code-coverage report to coveralls
   - coveralls < ./coverage/lcov.info || true
+
+deploy:
+  provider: npm
+  email: uri.goldshtein@gmail.com
+  api_key:
+    secure: tbt
+  on:
+    tags: true
+    repo: apollostack/angular2-apollo
