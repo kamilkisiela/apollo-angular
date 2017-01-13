@@ -33,7 +33,7 @@
   },
   "peerDependencies": {
     "@angular/core": "^2.0.0",
-    "apollo-client": "^0.7.0",
+    "apollo-client": "^0.7.2",
     "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1 || ^5.0.0"
   },
   "dependencies": {
@@ -50,7 +50,7 @@
     "@types/jest": "^15.1.32",
     "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.59",
-    "apollo-client": "^0.7.1",
+    "apollo-client": "^0.7.2",
     "graphql": "^0.8.2",
     "graphql-tag": "^1.1.2",
     "husky": "^0.12.0",
