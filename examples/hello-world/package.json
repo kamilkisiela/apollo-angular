@@ -7,10 +7,8 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "client": "ng serve --aot --proxy-conf proxy.conf.json --port 4200",
     "server": "nodemon api/index.js --watch api --exec babel-node",
-    "build": "./node_modules/.bin/ngc -p src/tsconfig.aot.json",
-    "test": "npm run build",
-    "postbuild": "npm run tree-shaking",
-    "tree-shaking": "node_modules/.bin/rollup -c rollup.config.js"
+    "build": "ng build --aot --prod",
+    "test": "npm run build"
   },
   "private": true,
   "dependencies": {
@@ -18,7 +16,6 @@
     "@angular/compiler": "^2.3.1",
     "@angular/core": "^2.3.1",
     "@angular/forms": "^2.3.1",
-    "@angular/http": "^2.3.1",
     "@angular/platform-browser": "^2.3.1",
     "@angular/platform-browser-dynamic": "^2.3.1",
     "@angular/platform-server": "^2.3.1",
@@ -44,18 +41,14 @@
     "body-parser": "^1.15.2",
     "casual": "^1.5.3",
     "codelyzer": "~2.0.0-beta.1",
-    "concurrently": "^2.2.0",
+    "concurrently": "^3.1.0",
     "cors": "^2.8.0",
     "express": "^4.14.0",
     "graphql": "~0.8.0",
     "graphql-server-express": "^0.5.0",
     "graphql-tools": "~0.9.0",
-    "nodemon": "^1.10.2",
-    "rollup": "^0.37.0",
-    "rollup-plugin-commonjs": "^5.0.5",
-    "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-plugin-uglify": "^1.0.1",
-    "ts-node": "1.2.1",
+    "nodemon": "^1.11.0",
+    "ts-node": "2.0.0",
     "tslint": "^4.2.0",
     "typescript": "~2.0.10"
   }
