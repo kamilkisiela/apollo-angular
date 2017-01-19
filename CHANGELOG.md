@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Require at least `0.7.3` of `apollo-client` to bring back compatibility with TypeScript 2.0 compiler ([PR #243](https://github.com/apollostack/angular2-apollo/pull/243), [apollo-client #1171](https://github.com/apollostack/apollo-client/pull/1171))
+
 ### v0.9.0-rc.3, v0.9.0-rc.4, v0.9.0-rc.5
 
 - Support `tree-shaking` for `apollo-client` and `apollo-client-rxjs` ([PR #206](https://github.com/apollostack/angular2-apollo/pull/206))
