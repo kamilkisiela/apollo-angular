@@ -28,6 +28,7 @@ sidebar_categories:
     - optimistic-ui
     - fragments
     - prefetching
+    - redux
     - server-side-rendering
     - angular-cli
     - ahead-of-time
