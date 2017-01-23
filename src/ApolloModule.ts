@@ -1,44 +1,21 @@
 import { NgModule, ModuleWithProviders, Provider } from '@angular/core';
-import { ApolloClient } from 'apollo-client';
 
-import { Apollo } from './Apollo';
+import { provideApollo } from './Angular2Apollo';
+import { provideApolloClientMap } from './ApolloClientMap';
 import { SelectPipe } from './SelectPipe';
-import { APOLLO_CLIENT_WRAPPER, APOLLO_CLIENT_INSTANCE } from './tokens';
+import { provideApolloConfig } from './config';
+import { ClientWrapper, ApolloConfigWrapper } from './types';
 
 export const APOLLO_DIRECTIVES = [
   SelectPipe,
 ];
 export const APOLLO_PROVIDERS: Provider[] = [
-  provideApollo(),
+  provideApollo,
+  provideApolloClientMap,
 ];
 
-export type ClientWrapper = () => ApolloClient;
-
-export function provideApollo(): Provider {
-  return {
-    provide: Apollo,
-    useFactory: createApollo,
-    deps: [APOLLO_CLIENT_INSTANCE],
-  };
-}
-
-export function createApollo(client: ApolloClient): Apollo {
-  return new Apollo(client);
-}
-
-export function getApolloClient(clientFn: ClientWrapper): ApolloClient {
-  return clientFn();
-}
-
-export function defaultApolloClient(clientFn: ClientWrapper): Provider[] {
-  return [{
-    provide: APOLLO_CLIENT_WRAPPER,
-    useValue: clientFn,
-  }, {
-    provide: APOLLO_CLIENT_INSTANCE,
-    useFactory: getApolloClient,
-    deps: [APOLLO_CLIENT_WRAPPER],
-  }];
+export function defaultApolloClient(clientFn: ClientWrapper): Provider {
+  return provideApolloConfig(clientFn);
 }
 
 @NgModule({
@@ -52,6 +29,16 @@ export class ApolloModule {
       providers: [
         APOLLO_PROVIDERS,
         defaultApolloClient(clientFn),
+      ],
+    };
+  }
+
+  public static withClients(apolloConfigFn: ApolloConfigWrapper): ModuleWithProviders {
+    return {
+      ngModule: ApolloModule,
+      providers: [
+        APOLLO_PROVIDERS,
+        provideApolloConfig(apolloConfigFn),
       ],
     };
   }

@@ -1,4 +1,4 @@
 import { OpaqueToken } from '@angular/core';
 
-export const APOLLO_CLIENT_WRAPPER = new OpaqueToken('apollo/client-wrapper');
-export const APOLLO_CLIENT_INSTANCE = new OpaqueToken('apollo/client-instance');
+export const APOLLO_CONFIG_WRAPPER = new OpaqueToken('apollo/config-wrapper');
+export const APOLLO_CONFIG = new OpaqueToken('apollo/config');
