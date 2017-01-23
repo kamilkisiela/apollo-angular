@@ -1,8 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ApolloClient } from 'apollo-client';
 
-import { Angular2Apollo, ApolloClientWrapper, ApolloClientInstance } from './Angular2Apollo';
+import { Angular2Apollo } from './Angular2Apollo';
 import { SelectPipe } from './SelectPipe';
+import { APOLLO_CLIENT_WRAPPER, APOLLO_CLIENT_INSTANCE } from './tokens';
 
 export const APOLLO_DIRECTIVES = [
   SelectPipe,
@@ -19,12 +20,12 @@ export function getApolloClient(clientFn: ClientWrapper): ApolloClient {
 
 export function defaultApolloClient(clientFn: ClientWrapper): any {
   return [{
-    provide: ApolloClientWrapper,
+    provide: APOLLO_CLIENT_WRAPPER,
     useValue: clientFn,
   }, {
-    provide: ApolloClientInstance,
+    provide: APOLLO_CLIENT_INSTANCE,
     useFactory: getApolloClient,
-    deps: [ApolloClientWrapper],
+    deps: [APOLLO_CLIENT_WRAPPER],
   }];
 }
 

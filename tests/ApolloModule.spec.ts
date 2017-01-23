@@ -3,7 +3,7 @@ import { ApolloClient } from 'apollo-client';
 import './_common';
 
 import { ApolloModule, SelectPipe, Angular2Apollo } from '../src';
-import { ApolloClientWrapper, ApolloClientInstance } from '../src/Angular2Apollo';
+import { APOLLO_CLIENT_WRAPPER, APOLLO_CLIENT_INSTANCE } from '../src/tokens';
 
 describe('ApolloModule', () => {
   const metadata: any = ApolloModule['decorators'][0]['args'][0];
@@ -39,16 +39,16 @@ describe('ApolloModule', () => {
     });
 
     it('should provide a wrapper directly', () => {
-      expect(providers[0]['provide']).toBe(ApolloClientWrapper);
+      expect(providers[0]['provide']).toBe(APOLLO_CLIENT_WRAPPER);
       expect(providers[0]['useValue']).toBe(getClient);
     });
 
     it('should provide a value using factory', () => {
       const factoryResult = providers[1]['useFactory'](getClient);
 
-      expect(providers[1]['provide']).toBe(ApolloClientInstance);
+      expect(providers[1]['provide']).toBe(APOLLO_CLIENT_INSTANCE);
       expect(providers[1]['useFactory']).toBeDefined();
-      expect(providers[1]['deps'][0]).toBe(ApolloClientWrapper);
+      expect(providers[1]['deps'][0]).toBe(APOLLO_CLIENT_WRAPPER);
       expect(factoryResult).toBe(client);
     });
   });
