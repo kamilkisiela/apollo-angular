@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
 import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
@@ -6,7 +6,6 @@ import { from } from 'rxjs/observable/from';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { FragmentDefinitionNode } from 'graphql';
 
-import { APOLLO_CLIENT_INSTANCE } from './tokens';
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 
 export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
@@ -16,7 +15,7 @@ export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
 @Injectable()
 export class Angular2Apollo {
   constructor(
-    @Inject(APOLLO_CLIENT_INSTANCE) private client: ApolloClient,
+    private client: ApolloClient,
   ) {}
 
   public watchQuery<T>(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult<T>> {
