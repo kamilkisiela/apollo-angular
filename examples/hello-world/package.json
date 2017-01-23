@@ -32,7 +32,7 @@
     "@angular/compiler-cli": "^2.3.1",
     "@types/isomorphic-fetch": "0.0.30",
     "@types/node": "^6.0.42",
-    "angular-cli": "1.0.0-beta.24",
+    "angular-cli": "1.0.0-beta.26",
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
