@@ -63,7 +63,7 @@
     "tslint": "^4.2.0",
     "typescript": "~2.0.10",
     "validate-commit-msg": "^2.8.2",
-    "zone.js": "^0.7.1"
+    "zone.js": "^0.7.2"
   },
   "jest": {
     "moduleFileExtensions": [
