@@ -30,7 +30,7 @@ export function getApolloClient(clientFn: ClientWrapper): ApolloClient {
   return clientFn();
 }
 
-export function defaultApolloClient(clientFn: ClientWrapper): any {
+export function defaultApolloClient(clientFn: ClientWrapper): Provider[] {
   return [{
     provide: APOLLO_CLIENT_WRAPPER,
     useValue: clientFn,
