@@ -124,9 +124,9 @@ apollo-client-rxjs@~0.4.0:
   dependencies:
     lodash "^4.17.2"
 
-apollo-client@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.7.3.tgz#f27702409ce4b90c3adbd78d8434c3e8d762c7dd"
+apollo-client@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-0.8.0.tgz#1bc0164bca0caf22d940e88984b20a82802c7323"
   dependencies:
     graphql-anywhere "^2.0.0"
     graphql-tag "^1.1.1"
