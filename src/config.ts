@@ -3,13 +3,12 @@ import { ApolloClient } from 'apollo-client';
 
 import { ApolloConfigWrapper, ApolloConfig, ClientWrapper } from './types';
 import { APOLLO_CONFIG_WRAPPER, APOLLO_CONFIG } from './tokens';
-import { ApolloClientMap } from './ApolloClientMap';
 
 export function getApolloConfig(configWrapper: ApolloConfigWrapper): ApolloConfig {
   const config = configWrapper();
 
   if (config instanceof ApolloClient) {
-    return {[ApolloClientMap.defaultName]: config};
+    return {default: config};
   }
 
   return config;

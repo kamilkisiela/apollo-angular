@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders, Provider } from '@angular/core';
 
-import { provideApollo } from './Angular2Apollo';
-import { provideApolloClientMap } from './ApolloClientMap';
+import { provideApollo } from './Apollo';
 import { SelectPipe } from './SelectPipe';
 import { provideApolloConfig } from './config';
 import { ClientWrapper, ApolloConfigWrapper } from './types';
@@ -11,7 +10,6 @@ export const APOLLO_DIRECTIVES = [
 ];
 export const APOLLO_PROVIDERS: Provider[] = [
   provideApollo,
-  provideApolloClientMap,
 ];
 
 export function defaultApolloClient(clientFn: ClientWrapper): Provider {
@@ -33,7 +31,7 @@ export class ApolloModule {
     };
   }
 
-  public static withClients(apolloConfigFn: ApolloConfigWrapper): ModuleWithProviders {
+  public static forRoot(apolloConfigFn: ApolloConfigWrapper): ModuleWithProviders {
     return {
       ngModule: ApolloModule,
       providers: [
