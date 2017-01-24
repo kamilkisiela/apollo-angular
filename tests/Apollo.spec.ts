@@ -255,7 +255,7 @@ describe('angular2Apollo', () => {
 
     it('should set a CLIENT_MAP', () => {
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(getClient)]);
-      expect(injector.get(CLIENT_MAP)).toBe(client);
+      expect(injector.get(CLIENT_MAP)).toEqual({default: client});
     });
   });
 });
