@@ -220,14 +220,6 @@ describe('angular2Apollo', () => {
     });
 
     describe('subscribe', () => {
-      it('should throw an error if method is missing', () => {
-        client.subscribe = undefined;
-
-        expect(() => {
-          angular2Apollo.subscribe({});
-        }).toThrowError('subscriptions');
-      });
-
       it('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
         const options = {query: '', variables: {}};
 
