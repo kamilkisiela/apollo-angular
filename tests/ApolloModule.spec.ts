@@ -48,6 +48,38 @@ describe('ApolloModule', () => {
       expect(factoryResult).toBe(client);
     });
   });
+
+  describe('forRoot', () => {
+    const defaultClient = {} as ApolloClient;
+    const extraClient = {} as ApolloClient;
+    const getClients = () => ({
+      default: defaultClient,
+      extra: extraClient,
+    });
+    const result = ApolloModule.forRoot(getClients);
+    const providers = result.providers[1]; // skips APOLLO_PROVIDERS
+
+    it('should contain ApolloModule as ngModule', () => {
+      expect(result.ngModule === ApolloModule).toBe(true);
+    });
+
+    it('should provide a wrapper directly', () => {
+      expect(providers[0]['provide']).toBe(CLIENT_MAP_WRAPPER);
+      expect(providers[0]['useValue']).toBe(getClients);
+    });
+
+    it('should provide a value using factory', () => {
+      const factoryResult = providers[1]['useFactory'](getClients);
+
+      expect(providers[1]['provide']).toBe(CLIENT_MAP);
+      expect(providers[1]['useFactory']).toBeDefined();
+      expect(providers[1]['deps'][0]).toBe(CLIENT_MAP_WRAPPER);
+      expect(factoryResult).toEqual({
+        default: defaultClient,
+        extra: extraClient,
+      });
+    });
+  });
 });
 
 function include(source: any[], find: any): boolean {
