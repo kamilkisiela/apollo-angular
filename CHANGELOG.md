@@ -2,7 +2,7 @@
 
 ### vNEXT
 
-- Change name of the service to `Apollo`, instead of `Angular2Apollo` ([PR #262](https://github.com/apollostack/apollo-angular/pull/262))
+- **BRAKING CHANGE** Change name of the service to `Apollo`, instead of `Angular2Apollo` ([PR #262](https://github.com/apollostack/apollo-angular/pull/262))
 
 ### v0.9.0
 
