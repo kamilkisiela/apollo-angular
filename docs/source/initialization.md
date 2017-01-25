@@ -4,10 +4,10 @@ order: 2
 ---
 <h2 id="installation">Installation</h2>
 
-To get started with Apollo and Angular, install the `apollo-client` npm package, the `angular2-apollo` integration package, and the `graphql-tag` library for constructing query documents:
+To get started with Apollo and Angular, install the `apollo-client` npm package, the `apollo-angular` integration package, and the `graphql-tag` library for constructing query documents:
 
 ```bash
-npm install apollo-client angular2-apollo graphql-tag --save
+npm install apollo-client apollo-angular graphql-tag --save
 ```
 
 If you are in an environment that does not have a global [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch/fetch) implementation, make sure to install a polyfill like [`whatwg-fetch`](https://www.npmjs.com/package/whatwg-fetch).
@@ -83,7 +83,7 @@ To connect your client instance to your app, use the `ApolloModule.withClient`.
 
 ```ts
 import ApolloClient from 'apollo-client';
-import { ApolloModule } from 'angular2-apollo';
+import { ApolloModule } from 'apollo-angular';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule  } from '@angular/platform-browser';

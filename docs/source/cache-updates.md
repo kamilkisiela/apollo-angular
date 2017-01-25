@@ -120,7 +120,7 @@ const submitCommentMutation = gql`
 `;
 
 class CommentsPageComponent {
-  apollo: Angular2Apollo;
+  apollo: Apollo;
   currentUser: any;
 
   submit({ repoFullName, commentContent }) {
