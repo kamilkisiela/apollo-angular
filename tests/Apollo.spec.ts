@@ -80,15 +80,15 @@ describe('angular2Apollo', () => {
 
     describe('default()', () => {
       it('should return the default client', () => {
-        expect(angular2Apollo.default() instanceof Angular2ApolloBase).toBe(true);
-        expect(angular2Apollo.default().getClient()).toBe(defaultClient);
+        expect(apollo.default() instanceof ApolloBase).toBe(true);
+        expect(apollo.default().getClient()).toBe(defaultClient);
       });
     });
 
     describe('use()', () => {
       it('should use a named client', () => {
-        expect(angular2Apollo.use('extra') instanceof Angular2ApolloBase).toBe(true);
-        expect(angular2Apollo.use('extra').getClient()).toBe(extraClient);
+        expect(apollo.use('extra') instanceof ApolloBase).toBe(true);
+        expect(apollo.use('extra').getClient()).toBe(extraClient);
       });
     });
 
