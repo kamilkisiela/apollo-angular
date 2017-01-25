@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^2.3.1",
     "@angular/platform-server": "^2.3.1",
     "@angular/router": "^3.3.1",
-    "angular2-apollo": "file:../../",
+    "apollo-angular": "file:../../",
     "apollo-client": "~0.8.0",
     "core-js": "^2.4.1",
     "graphql-tag": "^1.1.2",

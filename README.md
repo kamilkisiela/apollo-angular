@@ -1,10 +1,10 @@
-# angular2-apollo
+# apollo-angular
 
-[![npm version](https://badge.fury.io/js/angular2-apollo.svg)](https://badge.fury.io/js/angular2-apollo)
+[![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular)
 [![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollostack.com/#slack)
-[![Build status](https://travis-ci.org/apollostack/angular2-apollo.svg?branch=master)](https://travis-ci.org/apollostack/angular2-apollo)
-[![Coverage Status](https://coveralls.io/repos/github/apollostack/angular2-apollo/badge.svg?branch=master)](https://coveralls.io/github/apollostack/angular2-apollo?branch=master)
-[![bitHound Overall Score](https://www.bithound.io/github/apollostack/angular2-apollo/badges/score.svg)](https://www.bithound.io/github/apollostack/angular2-apollo)
+[![Build status](https://travis-ci.org/apollostack/apollo-angular.svg?branch=master)](https://travis-ci.org/apollostack/apollo-angular)
+[![Coverage Status](https://coveralls.io/repos/github/apollostack/apollo-angular/badge.svg?branch=master)](https://coveralls.io/github/apollostack/apollo-angular?branch=master)
+[![bitHound Overall Score](https://www.bithound.io/github/apollostack/apollo-angular/badges/score.svg)](https://www.bithound.io/github/apollostack/apollo-angular)
 
 Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
@@ -15,7 +15,7 @@ Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](h
 ## Install
 
 ```bash
-npm install angular2-apollo --save
+npm install apollo-angular --save
 ```
 
 ## Development
