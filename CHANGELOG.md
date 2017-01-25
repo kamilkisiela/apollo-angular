@@ -1,24 +1,9 @@
 # Change log
 
-### vNEXT
+### v0.9.0
 
-
-### v0.9.0-rc.6
-
-- Require at least `0.7.3` of `apollo-client` to bring back compatibility with TypeScript 2.0 compiler ([PR #243](https://github.com/apollostack/angular2-apollo/pull/243), [apollo-client #1171](https://github.com/apollostack/apollo-client/pull/1171))
-
-### v0.9.0-rc.3, v0.9.0-rc.4, v0.9.0-rc.5
-
-- Support `tree-shaking` for `apollo-client` and `apollo-client-rxjs` ([PR #206](https://github.com/apollostack/angular2-apollo/pull/206))
-- Support `apollo-client@0.7.0` ([PR #206](https://github.com/apollostack/angular2-apollo/pull/206))
-
-### v0.9.0-rc.2
-
-- Support `apollo-client@0.6.0` and `apollo-client-rxjs@0.3.0`
-
-### v0.9.0-rc.1
-
-- Support `es6` modules and `tree-shaking` ([PR #151](https://github.com/apollostack/angular2-apollo/pull/151))
+- Support `apollo-client@0.8.0` ([PR #206](https://github.com/apollostack/angular2-apollo/pull/206))
+- Support `es6` modules and `tree-shaking` ([PR #151](https://github.com/apollostack/angular2-apollo/pull/151), [PR #206](https://github.com/apollostack/angular2-apollo/pull/206))
 - Make our `Ahead-of-Time` compilation compatible with Angular 2.3+ ([PR #189](https://github.com/apollostack/angular2-apollo/pull/189), [PR #195](https://github.com/apollostack/angular2-apollo/pull/195))
 - Added `getClient()` that exposes an instance of ApolloClient ([PR #203](https://github.com/apollostack/angular2-apollo/pull/203))
 - **BREAKING CHANGE** The way to provide an instance of ApolloClient has changed, [see how](https://github.com/apollostack/angular2-docs/pull/23)
