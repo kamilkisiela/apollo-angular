@@ -111,5 +111,7 @@ class AppModule {}
 platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
+> There is still `ApolloModule.withClient` available but we recommend you to use `ApolloModule.forRoot` instead.
+
 <!--  Add content here once it exists -->
 <!-- ## Troubleshooting -->
