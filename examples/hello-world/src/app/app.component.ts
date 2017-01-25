@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Angular2Apollo, ApolloQueryObservable } from 'apollo-angular';
+import { Apollo, ApolloQueryObservable } from 'apollo-angular';
 import { ApolloQueryResult } from 'apollo-client';
 import { Subject } from 'rxjs/Subject';
 
@@ -23,10 +23,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   public nameControl = new FormControl();
   // Observable variable of the graphql query
   public nameFilter: Subject<string> = new Subject<string>();
-  private apollo: Angular2Apollo;
+  private apollo: Apollo;
 
   // Inject Angular2Apollo service
-  constructor(apollo: Angular2Apollo) {
+  constructor(apollo: Apollo) {
     this.apollo = apollo;
   }
 

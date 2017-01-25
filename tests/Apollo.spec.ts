@@ -6,7 +6,7 @@ import { RxObservableQuery } from 'apollo-client-rxjs';
 
 import { mockClient } from './_mocks';
 import { APOLLO_PROVIDERS, defaultApolloClient } from '../src/index';
-import { Angular2Apollo } from '../src/Angular2Apollo';
+import { Apollo } from '../src/Apollo';
 import { APOLLO_CLIENT_INSTANCE, APOLLO_CLIENT_WRAPPER } from '../src/tokens';
 
 import gql from 'graphql-tag';
@@ -64,16 +64,16 @@ describe('angular2Apollo', () => {
   });
 
   describe('Angular2Apollo', () => {
-    let angular2Apollo;
+    let apollo;
 
     beforeEach(() => {
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(() => client), APOLLO_PROVIDERS]);
-      angular2Apollo = injector.get(Angular2Apollo);
+      apollo = injector.get(Apollo);
     });
 
     describe('getClient()', () => {
       it('should return an instance of ApolloClient', () => {
-        expect(angular2Apollo.getClient()).toBe(client);
+        expect(apollo.getClient()).toBe(client);
       });
     });
 
@@ -83,7 +83,7 @@ describe('angular2Apollo', () => {
 
         spyOn(client, 'watchQuery').and.callThrough();
 
-        angular2Apollo.watchQuery(options);
+        apollo.watchQuery(options);
 
         expect(client.watchQuery).toHaveBeenCalledWith(options);
       });
@@ -96,7 +96,7 @@ describe('angular2Apollo', () => {
         const options = { query, variables, forceFetch: true };
         let calls = 0;
 
-        angular2Apollo
+        apollo
           .watchQuery(options)
           .map(result => result.data)
           .subscribe((result) => {
@@ -125,7 +125,7 @@ describe('angular2Apollo', () => {
         const options = { query, variables, forceFetch: true };
         let calls = 0;
 
-        angular2Apollo
+        apollo
           .watchQuery(options)
           .map(result => result.data)
           .subscribe((result) => {
@@ -150,7 +150,7 @@ describe('angular2Apollo', () => {
         const variables = { foo: 'foo' };
         const options = { query, variables, returnPartialData: true };
 
-        const obs = angular2Apollo
+        const obs = apollo
           .watchQuery(options);
 
         obs.subscribe(() => {
@@ -165,7 +165,7 @@ describe('angular2Apollo', () => {
 
       describe('result', () => {
         it('should return the ApolloQueryObserable when no variables', () => {
-          const obs = angular2Apollo.watchQuery({ query });
+          const obs = apollo.watchQuery({ query });
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
 
@@ -173,7 +173,7 @@ describe('angular2Apollo', () => {
           const variables = {
             foo: new Subject(),
           };
-          const obs = angular2Apollo.watchQuery({ query, variables });
+          const obs = apollo.watchQuery({ query, variables });
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
       });
@@ -188,7 +188,7 @@ describe('angular2Apollo', () => {
 
         spyOn(client, 'query').and.returnValue(promise);
 
-        const result = angular2Apollo.query(options);
+        const result = apollo.query(options);
 
         expect(client.query).toHaveBeenCalledWith(options);
 
@@ -208,7 +208,7 @@ describe('angular2Apollo', () => {
 
         spyOn(client, 'mutate').and.returnValue(promise);
 
-        const result = angular2Apollo.mutate(options);
+        const result = apollo.mutate(options);
 
         expect(client.mutate).toHaveBeenCalledWith(options);
 
@@ -225,7 +225,7 @@ describe('angular2Apollo', () => {
 
         spyOn(client, 'subscribe').and.returnValue(['subscription']);
 
-        const obs = angular2Apollo.subscribe(options);
+        const obs = apollo.subscribe(options);
 
         expect(client.subscribe).toHaveBeenCalledWith(options);
 
