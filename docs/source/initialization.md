@@ -52,7 +52,7 @@ To get started using Apollo, we need to create an `ApolloClient` and use `Apollo
 To get started, create an [`ApolloClient`](/core/apollo-client-api.html#constructor) instance and point it at your GraphQL server:
 
 ```ts
-import ApolloClient from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
 
 // by default, this client will send queries to `/graphql` (relative to the URL of your app)
 const client = new ApolloClient();
@@ -61,7 +61,7 @@ const client = new ApolloClient();
 The client takes a variety of [options](/core/apollo-client-api.html#constructor), but in particular, if you want to change the URL of the GraphQL server, you can pass in a custom [`NetworkInterface`](/core/apollo-client-api.html#NetworkInterface):
 
 ```ts
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloClient, createNetworkInterface } from 'apollo-client';
 
 // by default, this client will send queries to `/graphql` (relative to the URL of your app)
 const client = new ApolloClient({
@@ -79,10 +79,10 @@ The other options control the behavior of the client, and we'll see examples of 
 
 <h3 id="providing-apollomodule">Providing ApolloModule</h3>
 
-To connect your client instance to your app, use the `ApolloModule.withClient`.
+To connect your client instance to your app, use the `ApolloModule.forRoot`.
 
 ```ts
-import ApolloClient from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
 import { ApolloModule } from 'apollo-angular';
 
 import { NgModule } from '@angular/core';
@@ -101,7 +101,7 @@ export function provideClient(): ApolloClient {
 @NgModule({
   imports: [
     BrowserModule,
-    ApolloModule.withClient(provideClient)
+    ApolloModule.forRoot(provideClient)
   ],
   declarations: [ AppComponent ],
   bootstrap: [ AppComponent ]
