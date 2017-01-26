@@ -11,6 +11,7 @@
 - Make our `Ahead-of-Time` compilation compatible with Angular 2.3+ ([PR #189](https://github.com/apollostack/apollo-angular/pull/189), [PR #195](https://github.com/apollostack/apollo-angular/pull/195))
 - Added `getClient()` that exposes an instance of ApolloClient ([PR #203](https://github.com/apollostack/apollo-angular/pull/203))
 - **BREAKING CHANGE** The way to provide an instance of ApolloClient has changed, [see how](https://github.com/apollostack/angular2-docs/pull/23)
+- **BREAKING CHANGE** Change the name of the package. Use `apollo-angular` instead of `angular2-apollo`, which is now deprecated
 
 ### v0.8.0
 
