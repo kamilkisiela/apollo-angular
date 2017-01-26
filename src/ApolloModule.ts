@@ -1,30 +1,43 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Provider } from '@angular/core';
 import { ApolloClient } from 'apollo-client';
 
-import { Angular2Apollo, ApolloClientWrapper, ApolloClientInstance } from './Angular2Apollo';
+import { Apollo } from './Apollo';
 import { SelectPipe } from './SelectPipe';
+import { APOLLO_CLIENT_WRAPPER, APOLLO_CLIENT_INSTANCE } from './tokens';
 
 export const APOLLO_DIRECTIVES = [
   SelectPipe,
 ];
-export const APOLLO_PROVIDERS = [
-  Angular2Apollo,
+export const APOLLO_PROVIDERS: Provider[] = [
+  provideApollo(),
 ];
 
 export type ClientWrapper = () => ApolloClient;
+
+export function provideApollo(): Provider {
+  return {
+    provide: Apollo,
+    useFactory: createApollo,
+    deps: [APOLLO_CLIENT_INSTANCE],
+  };
+}
+
+export function createApollo(client: ApolloClient): Apollo {
+  return new Apollo(client);
+}
 
 export function getApolloClient(clientFn: ClientWrapper): ApolloClient {
   return clientFn();
 }
 
-export function defaultApolloClient(clientFn: ClientWrapper): any {
+export function defaultApolloClient(clientFn: ClientWrapper): Provider[] {
   return [{
-    provide: ApolloClientWrapper,
+    provide: APOLLO_CLIENT_WRAPPER,
     useValue: clientFn,
   }, {
-    provide: ApolloClientInstance,
+    provide: APOLLO_CLIENT_INSTANCE,
     useFactory: getApolloClient,
-    deps: [ApolloClientWrapper],
+    deps: [APOLLO_CLIENT_WRAPPER],
   }];
 }
 

@@ -1,6 +1,6 @@
 {
-  "name": "angular2-apollo",
-  "version": "0.9.0-rc.5",
+  "name": "apollo-angular",
+  "version": "0.9.1",
   "description": "Angular 2.0 client for Apollo",
   "main": "build/bundles/apollo.umd.js",
   "module": "build/src/index.js",
@@ -9,12 +9,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apollostack/angular2-apollo.git"
+    "url": "git+https://github.com/apollostack/apollo-angular.git"
   },
   "bugs": {
-    "url": "https://github.com/apollostack/angular2-apollo/issues"
+    "url": "https://github.com/apollostack/apollo-angular/issues"
   },
-  "homepage": "https://github.com/apollostack/angular2-apollo#readme",
+  "homepage": "https://github.com/apollostack/apollo-angular#readme",
   "scripts": {
     "pretest": "npm run build-test",
     "test": "npm run test-only",
@@ -23,7 +23,9 @@
     "test-watch": "jest --watch",
     "remap": "remap-istanbul -i coverage/coverage-final.json -t lcovonly -o coverage/lcov.info",
     "lint": "tslint src/*.ts && tslint tests/*.ts",
+    "prebuild": "npm run clean",
     "build": "./node_modules/.bin/ngc -p tsconfig.json",
+    "prebuild-test": "npm run clean",
     "build-test": "./node_modules/.bin/ngc -p tsconfig.test.json",
     "postbuild": "npm run bundle",
     "bundle": "rollup -c",
@@ -33,11 +35,11 @@
   },
   "peerDependencies": {
     "@angular/core": "^2.0.0",
-    "apollo-client": "^0.7.0",
+    "apollo-client": "^0.8.0",
     "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1 || ^5.0.0"
   },
   "dependencies": {
-    "apollo-client-rxjs": "~0.4.0"
+    "apollo-client-rxjs": "~0.4.1"
   },
   "devDependencies": {
     "@angular/common": "^2.3.1",
@@ -48,20 +50,19 @@
     "@angular/platform-browser-dynamic": "^2.3.1",
     "@angular/platform-server": "^2.3.1",
     "@types/jest": "^15.1.32",
-    "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.59",
-    "apollo-client": "^0.7.1",
+    "apollo-client": "^0.8.0",
     "graphql": "^0.8.2",
     "graphql-tag": "^1.1.2",
-    "husky": "^0.12.0",
+    "husky": "^0.13.0",
     "jest": "^18.1.0",
     "reflect-metadata": "^0.1.8",
     "remap-istanbul": "^0.8.4",
     "rimraf": "^2.5.2",
-    "rollup": "^0.39.2",
+    "rollup": "^0.41.4",
     "rxjs": "^5.0.0",
     "tslint": "^4.2.0",
-    "typescript": "~2.1.4",
+    "typescript": "~2.0.10",
     "validate-commit-msg": "^2.8.2",
     "zone.js": "^0.7.1"
   },
