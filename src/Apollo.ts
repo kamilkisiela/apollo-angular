@@ -13,7 +13,7 @@ export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
 }
 
 @Injectable()
-export class Angular2Apollo {
+export class Apollo {
   constructor(
     private client: ApolloClient,
   ) {}

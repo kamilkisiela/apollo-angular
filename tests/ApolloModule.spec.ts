@@ -2,7 +2,7 @@ import { ApolloClient } from 'apollo-client';
 
 import './_common';
 
-import { ApolloModule, SelectPipe, Angular2Apollo } from '../src';
+import { ApolloModule, SelectPipe, Apollo } from '../src';
 import { APOLLO_CLIENT_WRAPPER, APOLLO_CLIENT_INSTANCE } from '../src/tokens';
 
 describe('ApolloModule', () => {
@@ -16,12 +16,8 @@ describe('ApolloModule', () => {
     expect(include(metadata.exports, SelectPipe)).toBe(true);
   });
 
-  it('should not export Angular2Apollo', () => {
-    expect(include(metadata.exports, SelectPipe)).toBe(true);
-  });
-
-  it('should contain Angular2Apollo in providers', () => {
-    expect(include(metadata.exports, Angular2Apollo)).toBe(false);
+  it('should not export Apollo', () => {
+    expect(include(metadata.exports, Apollo)).toBe(false);
   });
 
   it('should has withClient method', () => {
