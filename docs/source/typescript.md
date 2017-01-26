@@ -6,7 +6,7 @@ You can take an advantage of using TypeScript with `apollo-angular`.
 
 <h2 id="generic-types">Generic types</h2>
 
-Every result of GraphQL query is a type of [`ApolloQueryResult`][ApolloQueryResult]. It means that the actual data lives under `data` property. The default type of that property is just a simple object, but you can easily change it.
+Every result of a GraphQL query is a type of [`ApolloQueryResult`][ApolloQueryResult]. It means that the actual data lives under `data` property. The default type of that property is just a simple object, but you can easily change it.
 
 To add an interface to the result, just specify a generic type when using methods like `watchQuery`, `mutate` and more.
 
@@ -43,7 +43,7 @@ class AppComponent {
 
 
 
-Now, the `data` property is a type of `QueryResponse`.
+Now, the `data` property has a type of `QueryResponse`.
 Thanks to this, you can prevent many bugs and keep the structure of your data predictable.
 
 [ApolloQueryResult]: /core/apollo-client-api.html#ApolloQueryResult
