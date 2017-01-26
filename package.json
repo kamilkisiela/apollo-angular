@@ -50,7 +50,6 @@
     "@angular/platform-browser-dynamic": "^2.3.1",
     "@angular/platform-server": "^2.3.1",
     "@types/jest": "^15.1.32",
-    "@types/lodash": "^4.14.34",
     "@types/node": "^6.0.59",
     "apollo-client": "^0.8.0",
     "graphql": "^0.8.2",
