@@ -2,13 +2,15 @@
 title: TypeScript
 ---
 
-You can take an advantage of using TypeScript.
+You can take an advantage of using TypeScript with `apollo-angular`.
 
 <h2 id="generic-types">Generic types</h2>
 
-Every `ApolloQueryResult` has a generic type that you can specify when using methods to manipulate the data.
+Every result of GraphQL query is a type of [`ApolloQueryResult`][ApolloQueryResult]. It means that the actual data lives under `data` property. The default type of that property is just a simple object, but you can easily change it.
 
-For example, let's take a look at `watchQuery` method:
+To add an interface to the result, just specify a generic type when using methods like `watchQuery`, `mutate` and more.
+
+For an example, let's take a look at one of them:
 
 ```ts
 interface User {
@@ -39,5 +41,9 @@ class AppComponent {
 }
 ```
 
-The `data` object is a type of `QueryResponse`. 
+
+
+Now, the `data` property is a type of `QueryResponse`.
 Thanks to this, you can prevent many bugs and keep the structure of your data predictable.
+
+[ApolloQueryResult]: /core/apollo-client-api.html#ApolloQueryResult
