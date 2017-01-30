@@ -21,11 +21,11 @@ The `apollo-client` npm module is a JavaScript client for GraphQL. The goal of t
 2. **Simple to get started with**, you can just read one guide and get going.
 3. **Inspectable and understandable**, so that you can have great developer tools to understand exactly what is happening in your app.
 4. **Built for interactive apps**, so your users can make changes and see them reflected in the UI straight away.
-5. **Community driven**, many of the components of Apollo (including the `angular2-apollo` integration) were driven by our community and serve real-world use cases from the outset, and all components are planned and developed in the open.
+5. **Community driven**, many of the components of Apollo (including the `apollo-angular` integration) were driven by our community and serve real-world use cases from the outset, and all components are planned and developed in the open.
 
 The Apollo client does more than simply run your queries against your GraphQL server. It analyzes your queries and their results to construct a client-side cache of your data, which is updated as further queries, mutations are run and data is pushed to you from the server. This means that your UI can remain fully up-to-date with the state on the server with the minimum number of queries required.
 
-The best way to use `apollo-client` in your Angular app is with `angular2-apollo`, a Angular-specific API that's designed to take full advantage of Apollo. The integration provides a natural API for queries and mutations, and will keep your rendered component tree up to date with the data in the cache seamlessly.
+The best way to use `apollo-client` in your Angular app is with `apollo-angular`, a Angular-specific API that's designed to take full advantage of Apollo. The integration provides a natural API for queries and mutations, and will keep your rendered component tree up to date with the data in the cache seamlessly.
 
 <h2 id="what-it-works-with">What it works with</h2>
 

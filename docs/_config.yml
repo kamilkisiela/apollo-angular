@@ -22,6 +22,7 @@ sidebar_categories:
     - mutations
     - receiving-updates
     - cache-updates
+    - multiple-clients
   Recipes:
     - auth
     - pagination
@@ -33,6 +34,7 @@ sidebar_categories:
     - angular-cli
     - ahead-of-time
     - webpack
+    - typescript
 github_repo: apollostack/angular2-docs
 content_root: source
 

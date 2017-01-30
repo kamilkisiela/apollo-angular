@@ -56,7 +56,7 @@ Here is a concrete example from GitHunt, which inserts a comment into an existin
 
 ```ts
 import { Component } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 
@@ -77,7 +77,7 @@ const submitCommentMutation = gql`
 class CommentsPageComponent {
   currentUser: any;
 
-  constructor(private apollo: Angular2Apollo) {}
+  constructor(private apollo: Apollo) {}
 
   submit({ repoFullName, commentContent }) {
     this.apollo.mutate({

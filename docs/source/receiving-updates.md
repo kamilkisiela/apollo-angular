@@ -14,7 +14,7 @@ For example, continuing with the GitHunt schema, we may have the following compo
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+import { Apollo } from 'apollo-angular';
 import gql from 'grapqhl-tag';
 
 const FeedEntries = gql`
@@ -34,7 +34,7 @@ const FeedEntries = gql`
 class FeedComponent implements OnInit {
   data: any;
   
-  constructor(private apollo: Angular2Apollo) {}
+  constructor(private apollo: Apollo) {}
 
   ngOnInit() {
     this.data = this.apollo.watchQuery({ ... }); 
@@ -60,7 +60,7 @@ Continuing with our refetch example, we can add a polling interval with an addit
 
 ```ts
 class FeedComponent {
-  apollo: Angular2Apollo;
+  apollo: Apollo;
 
   // ...
   ngOnInit() {

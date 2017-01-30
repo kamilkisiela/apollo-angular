@@ -34,14 +34,14 @@ As you can see, `.graphql` or `.gql` files will be parsed whenever imported:
 
 ```ts
 import { Component } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+import { Apollo } from 'apollo-angular';
 
 import currentUserQuery from './currentUser.graphql';
 
 @Component({ ... })
 class ProfileComponent {
   constructor(
-    apollo: Angular2Apollo
+    apollo: Apollo
   ) {
     apollo.query({ query: currentUserQuery })
       .subscribe(result => { ... });

@@ -9,7 +9,7 @@ Apollo Client has a pluggable [network interface](/core/network.html) that lets 
 That makes it easy to add a network interface middleware that adds the `authorization` header to every HTTP request:
 
 ```ts
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloClient, createNetworkInterface } from 'apollo-client';
 
 const networkInterface = createNetworkInterface('/graphql');
 

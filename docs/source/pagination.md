@@ -35,7 +35,7 @@ const feedQuery = gql`
 `;
 
 class FeedComponent, OnInit {
-  apollo: Angular2Apollo;
+  apollo: Apollo;
   feedObs: ApolloQueryObservable<any>;
   feed: any[];
   type: string;
