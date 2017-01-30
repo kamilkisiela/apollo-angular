@@ -44,7 +44,7 @@ class ProfileComponent implements OnInit {
 }
 ```
 
-The service's `watchQuery` method returns and `Observable` of the query result ([`ApolloQueryResult`][ApolloQueryResult]). We can see that result object contains `loading`, a Boolean indicating if the query is "in-flight", and (once the query has completed) `data` object with `currentUser`, the field we've picked out in `CurrentUserForProfile`.
+The service's `watchQuery` method returns an `Observable` of the query result ([`ApolloQueryResult`][ApolloQueryResult]). We can see that the result object contains `loading`, a Boolean indicating if the query is "in-flight". The observable will only emit once when the query is complete, and `loading` will be set to false, unless you set the `watchQuery` paramaters `notifyOnNetworkStatusChange` or `returnPartialData` to true. Once the query has completed it will also contain a `data` object with `currentUser`, the field we've picked out in `CurrentUserForProfile`. 
 
 We can expect the `data.currentUser` to change as the logged-in-ness of the client and what it knows about the current user changes over time. That information is stored in Apollo Client's cache, and you can read more about techniques to bring the cache up to date with the server in the [article on the subject](cache-updates.html).
 
