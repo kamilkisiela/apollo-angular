@@ -1,14 +1,16 @@
 import './_common';
 
+import { Pipe } from '@angular/core';
+
 import { SelectPipe } from '../src';
 
 describe('SelectPipe', () => {
   let pipe;
+  let metadata = SelectPipe['decorators'][0];
 
   beforeEach(() => {
     pipe = new SelectPipe();
   });
-
 
   it('should return nothing if name is empty', () => {
     expect(pipe.transform({ foo: 'bar' }, '')).toBe(undefined);
@@ -38,5 +40,13 @@ describe('SelectPipe', () => {
     };
 
     expect(pipe.transform(result, 'foo')).toEqual(result.data.foo);
+  });
+
+  it('should has a Pipe decorator', () => {
+    expect(metadata.type).toBe(Pipe);
+  });
+
+  it('should has a proper name', () => {
+    expect(metadata.args[0].name).toBe('select');
   });
 });
