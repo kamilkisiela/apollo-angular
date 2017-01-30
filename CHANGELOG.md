@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.10.0
+
 - **BRAKING CHANGE** Change name of the service to `Apollo`, instead of `Angular2Apollo` ([PR #262](https://github.com/apollostack/apollo-angular/pull/262))
 - Introduce multiple clients ([PR #263](https://github.com/apollostack/apollo-angular/pull/263))
 
