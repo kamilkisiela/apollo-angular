@@ -7,12 +7,12 @@ One of the easiest ways to make your application's UI feel a lot snappier with A
 
 In Apollo Client, prefetching is very simple and can be done by running a component's query before rendering.
 
-GitHunt uses `Angular2Apollo` and calls `query` method as soon as the user hovers over a link to the comments page. 
+GitHunt uses `Apollo` and calls `query` method as soon as the user hovers over a link to the comments page. 
 With the data prefetched, the comments page renders immediately, and the user often experiences no delay at all:
 
 ```ts
 import { Component } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 @Component({
@@ -28,7 +28,7 @@ class RepoInfoComponent {
   repoName: string;
   entry: any;
 
-  constructor(private apollo: Angular2Apollo) {}
+  constructor(private apollo: Apollo) {}
 
   prefetchComments(repoFullName: string) {
     this.apollo.query({

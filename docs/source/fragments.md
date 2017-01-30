@@ -63,7 +63,7 @@ const SUBMIT_COMMENT_MUTATION = gql`
   }
 `;
 
-this.angular2Apollo.mutate({
+this.apollo.mutate({
   mutation: SUBMIT_COMMENT_MUTATION,
   fragments: fragments.comment.fragments()
 });
@@ -81,7 +81,7 @@ export const COMMENT_QUERY = gql`
   }
 `;
 
-this.angular2Apollo.watchQuery({
+this.apollo.watchQuery({
   mutation: COMMENT_QUERY,
   fragments: fragments.comment.fragments()
 });
@@ -196,7 +196,7 @@ interface FilteredResult {
 
 // inside a Component
 
-this.angular2Apollo.watchQuery(({
+this.apollo.watchQuery(({
   query,
   variables: { id: 7 }
 })).subscribe(({data}) => {

@@ -36,11 +36,12 @@ When we use mutations in Apollo, the result is typically integrated into the cac
 
 <h2 id="basics">Basic Mutations</h2>
 
-Using `Angular2Apollo` it easy to call mutation. You can simply use `mutate` method.      
+Using `Apollo` it easy to call mutation. You can simply use `mutate` method.      
 
 ```ts
 import { Component } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 const submitRepository = gql`
@@ -53,7 +54,7 @@ const submitRepository = gql`
 
 @Component({ ... })
 class NewEntryComponent {
-  constructor(private apollo: Angular2Apollo) {}
+  constructor(private apollo: Apollo) {}
 
   newRepository() {
     this.apollo.mutate({
@@ -69,7 +70,8 @@ Most mutations will require arguments in the form of query variables, and you ma
 
 ```ts
 import { Component } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 const submitRepository = gql`
@@ -82,7 +84,7 @@ const submitRepository = gql`
 
 @Component({ ... })
 class NewEntryComponent {
-  constructor(private apollo: Angular2Apollo) {}
+  constructor(private apollo: Apollo) {}
   
   newRepository() {
     this.apollo.mutate({
@@ -113,7 +115,8 @@ Apollo Client gives you a way to specify the `optimisticResponse` option, that w
 
 ```ts
 import { Component } from '@angular/core';
-import { Angular2Apollo } from 'angular2-apollo';
+
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 const submitComment = gql`
@@ -133,7 +136,7 @@ const submitComment = gql`
 class CommentPageComponent {
   currentUser: User;
 
-  constructor(private apollo: Angular2Apollo) {}
+  constructor(private apollo: Apollo) {}
 
   submit({ repoFullName, commentContent }) {
     this.apollo.mutate({

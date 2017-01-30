@@ -14,7 +14,7 @@ Apollo's store is [constructed](http://dev.apollodata.com/core/how-it-works.html
 By default, Apollo cannot determine the IDs to use for object except through the position that they take in queries. However, if you specify a function to generate an ID from each object, and supply it as the `dataIdFromObject` in the [`ApolloClient` constructor](initialization.html#creating-client), you can create an unique ID for each "real" object.
 
 ```ts
-import ApolloClient from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
 
 // If your database has unique IDs across all types of objects, you can use
 // a very simple function!
@@ -120,7 +120,7 @@ const submitCommentMutation = gql`
 `;
 
 class CommentsPageComponent {
-  apollo: Angular2Apollo;
+  apollo: Apollo;
   currentUser: any;
 
   submit({ repoFullName, commentContent }) {

@@ -36,4 +36,4 @@ To learn more about Ahead-of-Time compilation, please take a look at [the chapte
 
 <h2 id="example">An Example</h2>
 
-We prepared [an example](https://github.com/apollostack/angular2-apollo/tree/master/examples/hello-world) that shows how to use *Ahead-of-Time* compilation with *Apollo*.
+We prepared [an example](https://github.com/apollostack/apollo-angular/tree/master/examples/hello-world) that shows how to use *Ahead-of-Time* compilation with *Apollo*.
