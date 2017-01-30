@@ -55,7 +55,7 @@ class FeedComponent implements OnInit {
   offset: number = 0;
   itemsPerPage: number = 10;
   feedObs: ApolloQueryObservable<any>;
-  
+
   ngOnInit() {
     this.feedObs = this.apollo.watchQuery({
       query: feedQuery,

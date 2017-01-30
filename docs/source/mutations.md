@@ -40,8 +40,9 @@ Using `Apollo` it easy to call mutation. You can simply use `mutate` method.
 
 ```ts
 import { Component } from '@angular/core';
+
 import { Apollo } from 'apollo-angular';
-import { gql } from 'graphql-tag';
+import gql from 'graphql-tag';
 
 const submitRepository = gql`
   mutation submitRepository {
@@ -69,8 +70,9 @@ Most mutations will require arguments in the form of query variables, and you ma
 
 ```ts
 import { Component } from '@angular/core';
+
 import { Apollo } from 'apollo-angular';
-import { gql } from 'graphql-tag';
+import gql from 'graphql-tag';
 
 const submitRepository = gql`
   mutation submitRepository($repoFullName: String!) {
@@ -113,8 +115,9 @@ Apollo Client gives you a way to specify the `optimisticResponse` option, that w
 
 ```ts
 import { Component } from '@angular/core';
+
 import { Apollo } from 'apollo-angular';
-import { gql } from 'graphql-tag';
+import gql from 'graphql-tag';
 
 const submitComment = gql`
   mutation submitComment($repoFullName: String!, $commentContent: String!) {
