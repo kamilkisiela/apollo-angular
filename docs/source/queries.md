@@ -132,7 +132,8 @@ class ProfileComponent {
 
 In Angular, the simplest way of displaying data that comes from Observable is to put `AsyncPipe` on top of the property inside the UI. 
 You can also achieve this with Apollo.
-Note: Using async pipe more than once in your template will trigger the query for each pipe. To avoid the situation - subscribe to the data in the component, and display the data from the component's property. 
+
+> Note: Using async pipe more than once in your template will trigger the query for each pipe. To avoid the situation subscribe to the data in the component, and display the data from the component's property. 
 
 An observable returned by `watchQuery` method holds the actual result under the `data` field, so you can't directly access one of the properties of that object.
 
