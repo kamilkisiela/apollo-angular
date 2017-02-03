@@ -5,8 +5,9 @@ import { Subject } from 'rxjs/Subject';
 import { RxObservableQuery } from 'apollo-client-rxjs';
 
 import { mockClient } from './_mocks';
-import { APOLLO_PROVIDERS, defaultApolloClient } from '../src/index';
-import { Angular2Apollo, ApolloClientWrapper, ApolloClientInstance } from '../src/Angular2Apollo';
+import { APOLLO_PROVIDERS, defaultApolloClient, provideClientMap } from '../src/index';
+import { Apollo, ApolloBase } from '../src/Apollo';
+import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from '../src/tokens';
 
 import gql from 'graphql-tag';
 
@@ -41,44 +42,71 @@ const data3 = {
 };
 
 describe('angular2Apollo', () => {
-  let client;
+  let defaultClient;
+  let extraClient;
+
+  const clientSettings = [{
+    request: { query },
+    result: { data },
+  }, {
+    request: { query, variables: { foo: 'Foo' } },
+    result: { data: data2 },
+  }, {
+    request: { query, variables: { foo: 'Bar' } },
+    result: { data: data3 },
+  }, {
+    request: { query, variables: { foo: 'Foo', bar: 'Bar' } },
+    result: { data: data2 },
+  }, {
+    request: { query, variables: { foo: 'Foo', bar: 'Baz' } },
+    result: { data: data3 },
+  }];
 
   beforeEach(() => {
-    client = mockClient({
-      request: { query },
-      result: { data },
-    }, {
-      request: { query, variables: { foo: 'Foo' } },
-      result: { data: data2 },
-    }, {
-      request: { query, variables: { foo: 'Bar' } },
-      result: { data: data3 },
-    }, {
-      request: { query, variables: { foo: 'Foo', bar: 'Bar' } },
-      result: { data: data2 },
-    }, {
-      request: { query, variables: { foo: 'Foo', bar: 'Baz' } },
-      result: { data: data3 },
-    });
+    defaultClient = mockClient(...clientSettings);
+    extraClient = mockClient(...clientSettings);
   });
 
   describe('Angular2Apollo', () => {
-    let angular2Apollo;
+    let apollo;
 
     beforeEach(() => {
-      const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(() => client), APOLLO_PROVIDERS]);
-      angular2Apollo = injector.get(Angular2Apollo);
+      const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(() => ({
+        default: defaultClient,
+        extra: extraClient,
+      })), APOLLO_PROVIDERS]);
+      apollo = injector.get(Apollo);
+    });
+
+    describe('default()', () => {
+      it('should return the default client', () => {
+        expect(apollo.default() instanceof ApolloBase).toBe(true);
+        expect(apollo.default().getClient()).toBe(defaultClient);
+      });
+    });
+
+    describe('use()', () => {
+      it('should use a named client', () => {
+        expect(apollo.use('extra') instanceof ApolloBase).toBe(true);
+        expect(apollo.use('extra').getClient()).toBe(extraClient);
+      });
+    });
+
+    describe('getClient()', () => {
+      it('should return an instance of ApolloClient', () => {
+        expect(apollo.getClient()).toBe(defaultClient);
+      });
     });
 
     describe('watchQuery()', () => {
       it('should be called with the same options', () => {
         const options = { query };
 
-        spyOn(client, 'watchQuery').and.callThrough();
+        spyOn(defaultClient, 'watchQuery').and.callThrough();
 
-        angular2Apollo.watchQuery(options);
+        apollo.watchQuery(options);
 
-        expect(client.watchQuery).toHaveBeenCalledWith(options);
+        expect(defaultClient.watchQuery).toHaveBeenCalledWith(options);
       });
 
       it('should be able to use obserable variable', (done: jest.DoneCallback) => {
@@ -89,7 +117,7 @@ describe('angular2Apollo', () => {
         const options = { query, variables, forceFetch: true };
         let calls = 0;
 
-        angular2Apollo
+        apollo
           .watchQuery(options)
           .map(result => result.data)
           .subscribe((result) => {
@@ -118,7 +146,7 @@ describe('angular2Apollo', () => {
         const options = { query, variables, forceFetch: true };
         let calls = 0;
 
-        angular2Apollo
+        apollo
           .watchQuery(options)
           .map(result => result.data)
           .subscribe((result) => {
@@ -143,7 +171,7 @@ describe('angular2Apollo', () => {
         const variables = { foo: 'foo' };
         const options = { query, variables, returnPartialData: true };
 
-        const obs = angular2Apollo
+        const obs = apollo
           .watchQuery(options);
 
         obs.subscribe(() => {
@@ -158,7 +186,7 @@ describe('angular2Apollo', () => {
 
       describe('result', () => {
         it('should return the ApolloQueryObserable when no variables', () => {
-          const obs = angular2Apollo.watchQuery({ query });
+          const obs = apollo.watchQuery({ query });
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
 
@@ -166,7 +194,7 @@ describe('angular2Apollo', () => {
           const variables = {
             foo: new Subject(),
           };
-          const obs = angular2Apollo.watchQuery({ query, variables });
+          const obs = apollo.watchQuery({ query, variables });
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
       });
@@ -179,11 +207,11 @@ describe('angular2Apollo', () => {
           resolve('query');
         });
 
-        spyOn(client, 'query').and.returnValue(promise);
+        spyOn(defaultClient, 'query').and.returnValue(promise);
 
-        const result = angular2Apollo.query(options);
+        const result = apollo.query(options);
 
-        expect(client.query).toHaveBeenCalledWith(options);
+        expect(defaultClient.query).toHaveBeenCalledWith(options);
 
         result.subscribe(r => {
           expect(r).toEqual('query');
@@ -199,11 +227,11 @@ describe('angular2Apollo', () => {
           resolve('mutation');
         });
 
-        spyOn(client, 'mutate').and.returnValue(promise);
+        spyOn(defaultClient, 'mutate').and.returnValue(promise);
 
-        const result = angular2Apollo.mutate(options);
+        const result = apollo.mutate(options);
 
-        expect(client.mutate).toHaveBeenCalledWith(options);
+        expect(defaultClient.mutate).toHaveBeenCalledWith(options);
 
         result.subscribe(r => {
           expect(r).toEqual('mutation');
@@ -213,22 +241,14 @@ describe('angular2Apollo', () => {
     });
 
     describe('subscribe', () => {
-      it('should throw an error if method is missing', () => {
-        client.subscribe = undefined;
-
-        expect(() => {
-          angular2Apollo.subscribe({});
-        }).toThrowError('subscriptions');
-      });
-
       it('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
         const options = {query: '', variables: {}};
 
-        spyOn(client, 'subscribe').and.returnValue(['subscription']);
+        spyOn(defaultClient, 'subscribe').and.returnValue(['subscription']);
 
-        const obs = angular2Apollo.subscribe(options);
+        const obs = apollo.subscribe(options);
 
-        expect(client.subscribe).toHaveBeenCalledWith(options);
+        expect(defaultClient.subscribe).toHaveBeenCalledWith(options);
 
         obs.subscribe({
           next(result) {
@@ -246,17 +266,39 @@ describe('angular2Apollo', () => {
   describe('defaultApolloClient', () => {
 
     function getClient() {
-      return client;
+      return defaultClient;
     }
 
-    it('should set a ApolloClientWrapper', () => {
+    it('should set a CLIENT_MAP_WRAPPER', () => {
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(getClient)]);
-      expect(injector.get(ApolloClientWrapper)).toBe(getClient);
+      expect(injector.get(CLIENT_MAP_WRAPPER)).toBe(getClient);
     });
 
-    it('should set a ApolloClientInstance', () => {
+    it('should set a CLIENT_MAP', () => {
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(getClient)]);
-      expect(injector.get(ApolloClientInstance)).toBe(client);
+      expect(injector.get(CLIENT_MAP)).toEqual({default: defaultClient});
+    });
+  });
+
+  describe('provideClientMap', () => {
+    function getClients() {
+      return {
+        default: defaultClient,
+        extra: extraClient,
+      };
+    }
+
+    it('should set a CLIENT_MAP_WRAPPER', () => {
+      const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(getClients)]);
+      expect(injector.get(CLIENT_MAP_WRAPPER)).toBe(getClients);
+    });
+
+    it('should set a CLIENT_MAP', () => {
+      const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(getClients)]);
+      expect(injector.get(CLIENT_MAP)).toEqual({
+        default: defaultClient,
+        extra: extraClient,
+      });
     });
   });
 });

@@ -1,6 +1,6 @@
 import { NetworkInterface, BatchedNetworkInterface, Request } from 'apollo-client/transport/networkInterface';
 import { ApolloClient } from 'apollo-client';
-import { GraphQLResult, Document } from 'graphql';
+import { ExecutionResult, DocumentNode } from 'graphql';
 import { print } from 'graphql-tag/printer';
 
 export function mockNetworkInterface(
@@ -17,13 +17,13 @@ export function mockBatchedNetworkInterface(
 
 export interface ParsedRequest {
   variables?: Object;
-  query?: Document;
+  query?: DocumentNode;
   debugName?: string;
 }
 
 export interface MockedResponse {
   request: ParsedRequest;
-  result?: GraphQLResult;
+  result?: ExecutionResult;
   error?: Error;
   delay?: number;
 }
@@ -79,8 +79,8 @@ export class MockNetworkInterface implements NetworkInterface {
 }
 export class MockBatchedNetworkInterface
 extends MockNetworkInterface implements BatchedNetworkInterface {
-  public batchQuery(requests: Request[]): Promise<GraphQLResult[]> {
-    const resultPromises: Promise<GraphQLResult>[] = [];
+  public batchQuery(requests: Request[]): Promise<ExecutionResult[]> {
+    const resultPromises: Promise<ExecutionResult>[] = [];
     requests.forEach((request) => {
       resultPromises.push(this.query(request));
     });
