@@ -43,16 +43,3 @@ export function ApolloFactory(client: Client) {
 })
 
 export class ConfiguredApolloModule { }
-
-// const client = new ApolloClient({
-//   networkInterface: createNetworkInterface({
-//     uri: '/graphql',
-//     opts: {
-//       credentials: 'same-origin',
-//     },
-//   }),
-// });
-
-// export function getClient(): ApolloClient {
-//   return client;
-// }
