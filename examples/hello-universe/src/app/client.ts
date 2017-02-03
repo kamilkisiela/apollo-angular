@@ -1,13 +1,13 @@
 import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import { Injectable, NgModule } from '@angular/core';
-import { Angular2Apollo, APOLLO_DIRECTIVES } from 'angular2-apollo';
+import { Apollo, ApolloModule, APOLLO_DIRECTIVES } from 'apollo-angular';
 import { ConfigService } from './config.service';
 
 import 'whatwg-fetch';
 
 @Injectable()
 export class Client {
-  client: ApolloClient;
+  public client: ApolloClient;
   private networkInterface: any;
 
   constructor(private config: ConfigService) {
@@ -27,19 +27,32 @@ export class Client {
       networkInterface: this.networkInterface
     });
   }
+
 }
 
-export function ApolloFactory(gqlClient: Client) {
-  return new Angular2Apollo(gqlClient.client);
+export function ApolloFactory(client: Client) {
+  return new Apollo({ 'default': client.client });
 }
 
 @NgModule({
-
   providers: [Client, {
-    provide: Angular2Apollo,
+    provide: ApolloModule,
     useFactory: ApolloFactory,
     deps: [Client]
   }]
 })
 
-export class MyApolloModule { }
+export class ConfiguredApolloModule { }
+
+// const client = new ApolloClient({
+//   networkInterface: createNetworkInterface({
+//     uri: '/graphql',
+//     opts: {
+//       credentials: 'same-origin',
+//     },
+//   }),
+// });
+
+// export function getClient(): ApolloClient {
+//   return client;
+// }
