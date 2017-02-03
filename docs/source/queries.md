@@ -7,7 +7,7 @@ To fetch data from the server in a GraphQL system, we use GraphQL queries (you c
 
 <h2 id="basics">Basic Queries</h2>
 
-When we are using a basic query we can use the `Apollo.watchQuery` method in a very simple way. We simply need to parse our query into a GraphQL document using the `graphql-tag` library.
+When we are using a basic query, we can use the `Apollo.watchQuery` method in a very simple way. We simply need to parse our query into a GraphQL document using the `graphql-tag` library.
 
 For instance, in GitHunt, we want to display the current user (if logged in) in the `Profile` component:
 
@@ -44,13 +44,13 @@ class ProfileComponent implements OnInit {
 }
 ```
 
-The service's `watchQuery` method returns an `Observable` of the query result ([`ApolloQueryResult`][ApolloQueryResult]). We can see that the result object contains `loading`, a Boolean indicating if the query is "in-flight". The observable will only emit once when the query is complete, and `loading` will be set to false, unless you set the `watchQuery` paramaters `notifyOnNetworkStatusChange` or `returnPartialData` to true. Once the query has completed it will also contain a `data` object with `currentUser`, the field we've picked out in `CurrentUserForProfile`. 
+The service's `watchQuery` method returns an `Observable` of the query result ([`ApolloQueryResult`][ApolloQueryResult]). We can see that the result object contains `loading`, a Boolean indicating if the query is "in-flight". The observable will only emit once when the query is complete, and `loading` will be set to false unless you set the `watchQuery` parameters `notifyOnNetworkStatusChange` or `returnPartialData` to true. Once the query has completed, it will also contain a `data` object with `currentUser`, the field we've picked out in `CurrentUserForProfile`. 
 
 We can expect the `data.currentUser` to change as the logged-in-ness of the client and what it knows about the current user changes over time. That information is stored in Apollo Client's cache, and you can read more about techniques to bring the cache up to date with the server in the [article on the subject](cache-updates.html).
 
-It's also possible to fetch data only once. The `query` method of `Apollo` service returns an `Observable` that resolves also with [`ApolloQueryResult`][ApolloQueryResult].
+It's also possible to fetch data only once. The `query` method of `Apollo` service returns an `Observable` that also resolves with [`ApolloQueryResult`][ApolloQueryResult].
 
-To be more specific, `watchQuery` method returns an Observable called `ApolloQueryObservable`. It extends the actual `Observable` from `rxjs` package. The only difference is that our observable contains all the methods specific to Apollo, for example `refetch`.
+To be more specific, `watchQuery` method returns an Observable called `ApolloQueryObservable`. It extends the actual `Observable` from `rxjs` package. The only difference is that our observable contains all the methods specific to Apollo, for example, `refetch`.
 
 <h2 id="options">Providing `options`</h2>
 
@@ -135,7 +135,7 @@ You can also achieve this with Apollo.
 
 An observable returned by `watchQuery` method holds the actual result under the `data` field, so you can't directly access one of the properties of that object.
 
-This is why we created `SelectPipe`. The only argument it receives is the name of property you want to get from `data`.
+This is why we created `SelectPipe`. The only argument it receives is the name of the property you want to get from `data`.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -183,7 +183,7 @@ The result of the query has this structure:
 }
 ```
 
-Without using `SelectPipe` you would get the whole object instead of only the `data.feed`.
+Without using `SelectPipe`, you would get the whole object instead of only the `data.feed`.
 
 <h2 id="rxjs">Using with RxJS</h2>
 
