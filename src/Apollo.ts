@@ -24,15 +24,15 @@ export class ApolloBase {
   ) {}
 
   public watchQuery<T>(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult<T>> {
-    return new ApolloQueryObservable(rxify(this.client.watchQuery)(options));
+    return new ApolloQueryObservable<ApolloQueryResult<T>>(rxify(this.client.watchQuery)(options));
   }
 
   public query<T>(options: DeprecatedWatchQueryOptions): Observable<ApolloQueryResult<T>> {
-    return fromPromise(this.client.query(options));
+    return fromPromise(this.client.query<T>(options));
   }
 
   public mutate<T>(options: MutationOptions): Observable<ApolloQueryResult<T>> {
-    return fromPromise(this.client.mutate(options));
+    return fromPromise(this.client.mutate<T>(options));
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
