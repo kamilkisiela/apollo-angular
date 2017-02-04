@@ -1,4 +1,4 @@
 import { OpaqueToken } from '@angular/core';
 
-export const APOLLO_CLIENT_WRAPPER = new OpaqueToken('apollo/client-wrapper');
-export const APOLLO_CLIENT_INSTANCE = new OpaqueToken('apollo/client-instance');
+export const CLIENT_MAP_WRAPPER = new OpaqueToken('apollo/client-map-wrapper');
+export const CLIENT_MAP = new OpaqueToken('apollo/client-map');

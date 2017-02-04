@@ -2,7 +2,37 @@
 
 ### vNEXT
 
+- Remove `DeprecatedWatchQueryOptions` and use `WatchQueryOptions` ([PR #274](https://github.com/apollostack/apollo-angular/pull/274))
+
+**After updating to**  ([`apollo-client-rxjs@0.5.0`](https://github.com/kamilkisiela/apollo-client-rxjs/blob/master/CHANGELOG.md#v050))
+
+- Add `result()`, `currentResult()`, `variables`, `setOptions`, `setVariables` to `ApolloQueryObservable`
+- **BREAKING CHANGE:** `ApolloQueryObservable` shares now a generic type with `ApolloQueryResult`
+
+**Before:**
+
+```ts
+class AppComponent {
+  users: ApolloQueryObservable<ApolloQueryResult<{}>>;
+}
+```
+
+**Now:**
+
+```ts
+class AppComponent {
+  users: ApolloQueryObservable<{}>;
+}
+```
+
+Behaves the same as the `ObservableQuery` of `apollo-client`.
+
+
+
+### v0.10.0
+
 - **BRAKING CHANGE** Change name of the service to `Apollo`, instead of `Angular2Apollo` ([PR #262](https://github.com/apollostack/apollo-angular/pull/262))
+- Introduce multiple clients ([PR #263](https://github.com/apollostack/apollo-angular/pull/263))
 
 ### v0.9.0
 
