@@ -13,6 +13,16 @@ import gql from 'graphql-tag';
 
 import 'rxjs/add/operator/map';
 
+interface Hero {
+  name: string;
+}
+
+interface AllHeroesQueryResult {
+  allHeroes: {
+    heroes: Hero[];
+  };
+}
+
 const query = gql`
   query heroes {
     allHeroes {
@@ -68,7 +78,7 @@ describe('angular2Apollo', () => {
   });
 
   describe('Angular2Apollo', () => {
-    let apollo;
+    let apollo: Apollo;
 
     beforeEach(() => {
       const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(() => ({
@@ -118,7 +128,7 @@ describe('angular2Apollo', () => {
         let calls = 0;
 
         apollo
-          .watchQuery(options)
+          .watchQuery<AllHeroesQueryResult>(options)
           .map(result => result.data)
           .subscribe((result) => {
             calls++;
@@ -147,7 +157,7 @@ describe('angular2Apollo', () => {
         let calls = 0;
 
         apollo
-          .watchQuery(options)
+          .watchQuery<AllHeroesQueryResult>(options)
           .map(result => result.data)
           .subscribe((result) => {
             calls++;
@@ -172,7 +182,7 @@ describe('angular2Apollo', () => {
         const options = { query, variables, returnPartialData: true };
 
         const obs = apollo
-          .watchQuery(options);
+          .watchQuery<AllHeroesQueryResult>(options);
 
         obs.subscribe(() => {
           //
@@ -186,7 +196,7 @@ describe('angular2Apollo', () => {
 
       describe('result', () => {
         it('should return the ApolloQueryObserable when no variables', () => {
-          const obs = apollo.watchQuery({ query });
+          const obs = apollo.watchQuery<AllHeroesQueryResult>({ query });
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
 
@@ -194,7 +204,7 @@ describe('angular2Apollo', () => {
           const variables = {
             foo: new Subject(),
           };
-          const obs = apollo.watchQuery({ query, variables });
+          const obs = apollo.watchQuery<AllHeroesQueryResult>({ query, variables });
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
       });
@@ -209,7 +219,7 @@ describe('angular2Apollo', () => {
 
         spyOn(defaultClient, 'query').and.returnValue(promise);
 
-        const result = apollo.query(options);
+        const result = apollo.query(options as any);
 
         expect(defaultClient.query).toHaveBeenCalledWith(options);
 
@@ -229,7 +239,7 @@ describe('angular2Apollo', () => {
 
         spyOn(defaultClient, 'mutate').and.returnValue(promise);
 
-        const result = apollo.mutate(options);
+        const result = apollo.mutate(options as any);
 
         expect(defaultClient.mutate).toHaveBeenCalledWith(options);
 
@@ -246,7 +256,7 @@ describe('angular2Apollo', () => {
 
         spyOn(defaultClient, 'subscribe').and.returnValue(['subscription']);
 
-        const obs = apollo.subscribe(options);
+        const obs = apollo.subscribe(options as any);
 
         expect(defaultClient.subscribe).toHaveBeenCalledWith(options);
 

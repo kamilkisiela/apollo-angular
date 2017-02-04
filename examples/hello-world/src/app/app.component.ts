@@ -34,7 +34,7 @@ interface AddUserMutationResult {
 })
 export class AppComponent implements OnInit, AfterViewInit {
   // Observable with GraphQL result
-  public users: ApolloQueryObservable<any>;
+  public users: ApolloQueryObservable<GetUsersQueryResult>;
   public firstName: string;
   public lastName: string;
   public nameControl = new FormControl();
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       },
     })
       // Return only users, not the whole ApolloQueryResult
-      .map(result => result.data.users) as ApolloQueryObservable<any>;
+      .map(result => result.data.users) as any;
 
     // Add debounce time to wait 300 ms for a new change instead of keep hitting the server
     this.nameControl.valueChanges.debounceTime(300).subscribe(name => {
