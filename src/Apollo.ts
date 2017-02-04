@@ -18,8 +18,8 @@ export class ApolloBase {
     private client: ApolloClient,
   ) {}
 
-  public watchQuery<T>(options: WatchQueryOptions): ApolloQueryObservable<ApolloQueryResult<T>> {
-    return new ApolloQueryObservable<ApolloQueryResult<T>>(rxify(this.client.watchQuery)(options));
+  public watchQuery<T>(options: WatchQueryOptions): ApolloQueryObservable<T> {
+    return new ApolloQueryObservable<T>(rxify(this.client.watchQuery)(options));
   }
 
   public query<T>(options: WatchQueryOptions): Observable<ApolloQueryResult<T>> {
