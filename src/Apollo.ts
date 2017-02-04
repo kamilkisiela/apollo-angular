@@ -4,15 +4,10 @@ import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, Su
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { FragmentDefinitionNode } from 'graphql';
 
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from './tokens';
 import { ClientMapWrapper, ClientWrapper, ClientMap } from './types';
-
-export interface DeprecatedWatchQueryOptions extends WatchQueryOptions {
-  fragments?: FragmentDefinitionNode[];
-}
 
 /**
  * Base class that handles ApolloClient
@@ -23,16 +18,16 @@ export class ApolloBase {
     private client: ApolloClient,
   ) {}
 
-  public watchQuery<T>(options: DeprecatedWatchQueryOptions): ApolloQueryObservable<ApolloQueryResult<T>> {
-    return new ApolloQueryObservable(rxify(this.client.watchQuery)(options));
+  public watchQuery<T>(options: WatchQueryOptions): ApolloQueryObservable<ApolloQueryResult<T>> {
+    return new ApolloQueryObservable<ApolloQueryResult<T>>(rxify(this.client.watchQuery)(options));
   }
 
-  public query<T>(options: DeprecatedWatchQueryOptions): Observable<ApolloQueryResult<T>> {
-    return fromPromise(this.client.query(options));
+  public query<T>(options: WatchQueryOptions): Observable<ApolloQueryResult<T>> {
+    return fromPromise(this.client.query<T>(options));
   }
 
   public mutate<T>(options: MutationOptions): Observable<ApolloQueryResult<T>> {
-    return fromPromise(this.client.mutate(options));
+    return fromPromise(this.client.mutate<T>(options));
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {

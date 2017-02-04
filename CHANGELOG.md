@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Remove `DeprecatedWatchQueryOptions` and use `WatchQueryOptions` ([PR #274](https://github.com/apollostack/apollo-angular/pull/274))
+
 ### v0.10.0
 
 - **BRAKING CHANGE** Change name of the service to `Apollo`, instead of `Angular2Apollo` ([PR #262](https://github.com/apollostack/apollo-angular/pull/262))
