@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.11.0
+
 - Remove `DeprecatedWatchQueryOptions` and use `WatchQueryOptions` ([PR #274](https://github.com/apollostack/apollo-angular/pull/274))
 
 **After updating to**  ([`apollo-client-rxjs@0.5.0`](https://github.com/kamilkisiela/apollo-client-rxjs/blob/master/CHANGELOG.md#v050))
