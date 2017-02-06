@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Support `jsnext:main` ([PR #277](https://github.com/apollostack/apollo-angular/pull/277))
+
 ### v0.11.0
 
 - Remove `DeprecatedWatchQueryOptions` and use `WatchQueryOptions` ([PR #274](https://github.com/apollostack/apollo-angular/pull/274))
