@@ -7,7 +7,7 @@ In addition to fetching data using queries, Apollo also handles GraphQL mutation
 
 ```ts
 mutation {
-  submitRepository(repoFullName: "apollostack/apollo-client") {
+  submitRepository(repoFullName: "apollographql/apollo-client") {
     id
     repoName
   }
@@ -26,7 +26,7 @@ The result of the above mutation might be be:
   "data": {
     "submitRepository": {
       "id": "123",
-      "repoName": "apollostack/apollo-client"
+      "repoName": "apollographql/apollo-client"
     }
   }
 }
@@ -46,7 +46,7 @@ import gql from 'graphql-tag';
 
 const submitRepository = gql`
   mutation submitRepository {
-    submitRepository(repoFullName: "apollostack/apollo-client") {
+    submitRepository(repoFullName: "apollographql/apollo-client") {
       createdAt
     }
   }
@@ -90,7 +90,7 @@ class NewEntryComponent {
     this.apollo.mutate({
       mutation: submitRepository,
       variables: {
-        repoFullName: 'apollostack/apollo-client' 
+        repoFullName: 'apollographql/apollo-client' 
       }
     }).then(({ data }) => {
       console.log('got data', data);

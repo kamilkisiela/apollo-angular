@@ -7,7 +7,7 @@ By default, Apollo Client creates its own internal Redux store to manage queries
 
 This will let you better track the different events that happen in your app, and how your client and server side data changes interleave. It will also make using tools like the [Redux Dev Tools](https://github.com/zalmoxisus/redux-devtools-extension) more natural.
 
-> Note: this guide focuses on the integration with [ng2-redux](https://github.com/angular-redux/ng2-redux). An integration with [ngrx/store](https://github.com/ngrx/store) is [theoretically possible](https://github.com/apollostack/apollo-client/issues/593#issuecomment-257047413) though too.
+> Note: this guide focuses on the integration with [ng2-redux](https://github.com/angular-redux/ng2-redux). An integration with [ngrx/store](https://github.com/ngrx/store) is [theoretically possible](https://github.com/apollographql/apollo-client/issues/593#issuecomment-257047413) though too.
 
 <h2 id="creating-a-store">Creating a store</h2>
 
