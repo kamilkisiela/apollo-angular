@@ -4,6 +4,7 @@
   "description": "Angular 2.0 client for Apollo",
   "main": "build/bundles/apollo.umd.js",
   "module": "build/src/index.js",
+  "jsnext:main": "build/src/index.js",
   "typings": "./build/src/index.d.ts",
   "author": "Uri Goldshtein <uri.goldshtein@gmail.com> (http://github.com/urigo/)",
   "license": "MIT",
