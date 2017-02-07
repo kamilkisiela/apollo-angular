@@ -3,7 +3,7 @@ title: Introduction
 order: 0
 ---
 
-This is the guide to using the [Apollo](http://apollodata.com) JavaScript GraphQL client with the [Angular](https://angular.io) rendering library.
+This is the guide to using the [Apollo](http://dev.apollodata.com) JavaScript GraphQL client with the [Angular](https://angular.io) rendering library.
 
 * In order to use Apollo with AngularJS 1.x apps, follow the instructions on the [Github repo](https://github.com/apollographql/angular1-apollo).
 
@@ -41,5 +41,5 @@ If you want to use Apollo with a different front-end environment (for instance a
 To learn more about Apollo, and how to use it in Angular, visit:
 
 - [GraphQL.org](http://graphql.org) for an introduction to GraphQL,
-- [Our website](http://www.apollodata.com/) to learn about the Apollo stack,
+- [Our website](http://www.apollodata.com/) to learn about the Apollo,
 - [Our Medium blog](https://medium.com/apollo-stack) for detailed insights about GraphQL.
