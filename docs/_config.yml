@@ -35,12 +35,12 @@ sidebar_categories:
     - ahead-of-time
     - webpack
     - typescript
-github_repo: apollostack/angular2-docs
+github_repo: apollographql/angular-docs
 content_root: source
 
 social_links:
-  github: 'https://github.com/apollostack'
-  twitter: '@apollostack'
+  github: 'https://github.com/apollographql'
+  twitter: '@apollographql'
 
 # API keys
 apis:
