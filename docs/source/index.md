@@ -3,7 +3,7 @@ title: Introduction
 order: 0
 ---
 
-This is the guide to using the [Apollo](http://apollostack.com) JavaScript GraphQL client with the [Angular](https://angular.io) rendering library.
+This is the guide to using the [Apollo](http://dev.apollodata.com) JavaScript GraphQL client with the [Angular](https://angular.io) rendering library.
 
 * In order to use Apollo with AngularJS 1.x apps, follow the instructions on the [Github repo](https://github.com/apollographql/angular1-apollo).
 
@@ -11,7 +11,7 @@ The Apollo team builds and maintains a collection of utilities designed to make 
 
 If you are looking to use Apollo with a native mobile client, there is a [iOS Client](https://github.com/apollographql/apollo-ios) in development and plans for an Android client too. On the other hand, the React integration works with [React Native](https://facebook.github.io/react-native/) on both platforms without changes. If you prefer to use [NativeScript](https://www.nativescript.org) as a native mobile client, this Angular guide works there out of the box.
 
-You can learn more about the Apollo project at the project's [home page](http://apollostack.com).
+You can learn more about the Apollo project at the project's [home page](http://dev.apollodata.com).
 
 <h2 id="apollo-client">Apollo Client and Angular</h2>
 
@@ -34,12 +34,12 @@ Angular Apollo provides a idiomatic Angular API, and is known to work in a strai
  - It can integrate naturally with routers, such as Angular Router;
  - Uses Redux internally and you can take advantage of this, but also can be used with any other client-side data library that integrates with Angular.
 
-If you want to use Apollo with a different front-end environment (for instance a different JavaScript framework, or a native mobile app), it is possible too! Please check out the links at the top of this document, or head to our [developer site](http://apollostack.com) to get started.
+If you want to use Apollo with a different front-end environment (for instance a different JavaScript framework, or a native mobile app), it is possible too! Please check out the links at the top of this document, or head to our [developer site](http://dev.apollodata.com) to get started.
 
 <h2 id="learn-more">Learn More</h2>
 
 To learn more about Apollo, and how to use it in Angular, visit:
 
 - [GraphQL.org](http://graphql.org) for an introduction to GraphQL,
-- [Our website](http://www.apollostack.com/) to learn about the Apollo stack,
+- [Our website](http://dev.apollodata.com/) to learn about the Apollo,
 - [Our Medium blog](https://medium.com/apollo-stack) for detailed insights about GraphQL.
