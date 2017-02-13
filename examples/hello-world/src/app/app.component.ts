@@ -3,30 +3,15 @@ import { FormControl } from '@angular/forms';
 import { Apollo, ApolloQueryObservable } from 'apollo-angular';
 import { ApolloQueryResult } from 'apollo-client';
 import { Subject } from 'rxjs/Subject';
-
-// We need this to parse graphql string
-import gql from 'graphql-tag';
+import { DocumentNode } from 'graphql';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-interface User {
-  firstName: string;
-  lastName: string;
-  emails: {
-    address: string,
-    verified: boolean
-  }[];
-}
-
-interface GetUsersQueryResult {
-  users: User[];
-}
-
-interface AddUserMutationResult {
-  addUser: User;
-}
+import { AddUserMutation, UsersQuery } from '../graphql/schema';
+const UsersQueryNode: DocumentNode = require('graphql-tag/loader!../graphql/Users.graphql');
+const AddUserMutationNode: DocumentNode = require('graphql-tag/loader!../graphql/AddUser.graphql');
 
 @Component({
   selector: 'app-root',
@@ -34,7 +19,7 @@ interface AddUserMutationResult {
 })
 export class AppComponent implements OnInit, AfterViewInit {
   // Observable with GraphQL result
-  public users: ApolloQueryObservable<GetUsersQueryResult>;
+  public users: ApolloQueryObservable<UsersQuery>;
   public firstName: string;
   public lastName: string;
   public nameControl = new FormControl();
@@ -49,19 +34,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public ngOnInit() {
     // Query users data with observable variables
-    this.users = this.apollo.watchQuery<GetUsersQueryResult>({
-      query: gql`
-        query getUsers($name: String) {
-          users(name: $name) {
-            firstName
-            lastName
-            emails {
-              address
-              verified
-            }
-          }
-        }
-      `,
+    this.users = this.apollo.watchQuery<UsersQuery>({
+      query: UsersQueryNode,
       variables: {
         name: this.nameFilter,
       },
@@ -82,25 +56,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public newUser(firstName: string) {
     // Call the mutation called addUser
-    this.apollo.mutate<AddUserMutationResult>({
-      mutation: gql`
-        mutation addUser(
-          $firstName: String!
-          $lastName: String!
-        ) {
-          addUser(
-            firstName: $firstName
-            lastName: $lastName
-          ) {
-            firstName
-            lastName,
-            emails {
-              address
-              verified
-            }
-          }
-        }
-      `,
+    this.apollo.mutate<AddUserMutation>({
+      mutation: AddUserMutationNode,
       variables: {
         firstName,
         lastName: this.lastName,

@@ -8,7 +8,9 @@
     "client": "ng serve --aot --proxy-conf proxy.conf.json --port 4200",
     "server": "nodemon api/index.js --watch api --exec babel-node",
     "build": "ng build --aot --prod",
-    "test": "npm run build"
+    "test": "npm run build",
+    "schema:download": "apollo-codegen download-schema http://localhost:4300/graphql --output schema.json",
+    "schema:generate": "apollo-codegen generate src/graphql/*.graphql --schema schema.json --target typescript --output src/graphql/schema.ts"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +35,7 @@
     "@types/isomorphic-fetch": "0.0.30",
     "@types/node": "^6.0.42",
     "angular-cli": "1.0.0-beta.26",
+    "apollo-codegen": "^0.10.6",
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
