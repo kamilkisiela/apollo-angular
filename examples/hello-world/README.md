@@ -1,31 +1,46 @@
-# HelloWorld
+# Hello World
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.24.
+## Latest apollo-angular
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This app uses the local copy of `apollo-angular`. To install the same version as in the current branch, you should force a new installation by removing the old copy.
 
-## Code scaffolding
+```
+rm -rf node_modules/apollo-angular
+npm install apollo-angular
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+## How to run
 
-## Build
+Put on your shoes, hit the road and keep your legs moving faster and faster.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+```
+npm start
+```
 
-## Running unit tests
+You can start both, server or client independently
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+npm run client
+npm run server
+```
 
-## Running end-to-end tests
+## Generate types
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+We use [`apollo-codegen`](https://github.com/apollographql/apollo-codegen) to generate types for TypeScript.
 
-## Deploying to Github Pages
+The whole idea is to hit the server to get the schema from a GraphQL endpoint for defined queries (thanks to introspection) and then turn it into TypeScript code.
 
-Run `ng github-pages:deploy` to deploy to Github Pages.
+You can achieve the first goal by running two commands:
 
-## Further help
+```
+npm run server
+npm run schema:download
+```
 
-To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+It saves informations to a file (`schema.json`) that will be used to generate types:
+
+```
+npm run schema:generate
+```
+
+So now on you have a file (`src/graphql/schema.ts`) with everything you need to combine the TypeScript's experience with GraphQL's.
