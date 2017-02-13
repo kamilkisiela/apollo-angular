@@ -11,13 +11,13 @@ npm install apollo-angular
 
 ## How to run
 
-Put on your shoes, hit the road and keep your legs moving faster and faster.
+Simply:
 
 ```
 npm start
 ```
 
-You can start both, server or client independently
+You can also start both, server or client independently
 
 ```
 npm run client
