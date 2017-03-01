@@ -52,7 +52,7 @@
     "@angular/platform-server": "^2.3.1",
     "@types/jest": "^15.1.32",
     "@types/node": "^6.0.59",
-    "apollo-client": "^0.8.0",
+    "apollo-client": "^0.10.0",
     "graphql": "^0.9.0",
     "graphql-tag": "^1.1.2",
     "husky": "^0.13.0",
