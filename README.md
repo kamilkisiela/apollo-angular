@@ -1,5 +1,7 @@
 # apollo-angular
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/apollographql/apollo-angular.svg)](https://greenkeeper.io/)
+
 [![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular)
 [![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollostack.com/#slack)
 [![Build status](https://travis-ci.org/apollostack/apollo-angular.svg?branch=master)](https://travis-ci.org/apollostack/apollo-angular)
