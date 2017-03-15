@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { RxObservableQuery } from 'apollo-client-rxjs';
 
 import { mockClient } from './_mocks';
+import { subscribeAndCount } from './_utils';
 import { APOLLO_PROVIDERS, defaultApolloClient, provideClientMap } from '../src/index';
 import { Apollo, ApolloBase } from '../src/Apollo';
 import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from '../src/tokens';
@@ -51,7 +52,7 @@ const data3 = {
   },
 };
 
-describe('angular2Apollo', () => {
+describe('Apollo', () => {
   let defaultClient;
   let extraClient;
 
@@ -77,7 +78,7 @@ describe('angular2Apollo', () => {
     extraClient = mockClient(...clientSettings);
   });
 
-  describe('Angular2Apollo', () => {
+  describe('service', () => {
     let apollo: Apollo;
 
     beforeEach(() => {
@@ -123,22 +124,19 @@ describe('angular2Apollo', () => {
         const variables = {
           foo: new Subject(),
         };
-        // XXX forceFetch? see https://github.com/apollostack/apollo-client/issues/535
-        const options = { query, variables, forceFetch: true };
-        let calls = 0;
+        const options = { query, variables, fetchPolicy: 'network-only' };
 
-        apollo
-          .watchQuery<AllHeroesQueryResult>(options)
-          .map(result => result.data)
-          .subscribe((result) => {
-            calls++;
-            if (calls === 1) {
-              expect(result).toEqual(data2);
-            } else if (calls === 2) {
-              expect(result).toEqual(data3);
-              done();
-            }
-          });
+        const obs = apollo
+          .watchQuery<AllHeroesQueryResult>(options as any);
+
+        subscribeAndCount<AllHeroesQueryResult>(done, obs, (handleCount, result) => {
+          if (handleCount === 1) {
+            expect(result.data.allHeroes.heroes).toEqual(data2.allHeroes.heroes);
+          } else if (handleCount === 2) {
+            expect(result.data.allHeroes.heroes).toEqual(data3.allHeroes.heroes);
+            done();
+          }
+        });
 
         variables.foo.next('Foo');
 
@@ -152,22 +150,19 @@ describe('angular2Apollo', () => {
           foo: new Subject(),
           bar: new Subject(),
         };
-        // XXX forceFetch? see https://github.com/apollostack/apollo-client/issues/535
-        const options = { query, variables, forceFetch: true };
-        let calls = 0;
+        const options = { query, variables, fetchPolicy: 'network-only' };
 
-        apollo
-          .watchQuery<AllHeroesQueryResult>(options)
-          .map(result => result.data)
-          .subscribe((result) => {
-            calls++;
-            if (calls === 1) {
-              expect(result).toEqual(data2);
-            } else if (calls === 2) {
-              expect(result).toEqual(data3);
-              done();
-            }
-          });
+        const obs = apollo
+          .watchQuery<AllHeroesQueryResult>(options as any);
+
+        subscribeAndCount<AllHeroesQueryResult>(done, obs, (handleCount, result) => {
+          if (handleCount === 1) {
+            expect(result.data.allHeroes.heroes).toEqual(data2.allHeroes.heroes);
+          } else if (handleCount === 2) {
+            expect(result.data.allHeroes.heroes).toEqual(data3.allHeroes.heroes);
+            done();
+          }
+        });
 
         variables.foo.next('Foo');
         variables.bar.next('Bar');
@@ -179,7 +174,7 @@ describe('angular2Apollo', () => {
 
       it('should be able to refetch', (done: jest.DoneCallback) => {
         const variables = { foo: 'foo' };
-        const options = { query, variables, returnPartialData: true };
+        const options = { query, variables };
 
         const obs = apollo
           .watchQuery<AllHeroesQueryResult>(options);
