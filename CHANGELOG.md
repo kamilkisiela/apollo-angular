@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.12.0
+
 - Support `apollo-client@1.0.0-rc.2` ([PR #290](https://github.com/apollographql/apollo-angular/pull/290))
 - Support `jsnext:main` ([PR #277](https://github.com/apollographql/apollo-angular/pull/277))
 
