@@ -12,7 +12,7 @@ export default {
     'apollo-client-rxjs': 'apollo.rxjs',
     'apollo-client': 'apollo',
   }
-}
+};
 
 function onwarn(message) {
   const suppressed = [
