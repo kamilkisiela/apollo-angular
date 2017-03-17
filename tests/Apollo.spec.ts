@@ -3,6 +3,7 @@ import './_common';
 import { ReflectiveInjector } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { RxObservableQuery } from 'apollo-client-rxjs';
+import { ApolloClient } from 'apollo-client';
 
 import { mockClient } from './_mocks';
 import { subscribeAndCount } from './_utils';
@@ -52,9 +53,67 @@ const data3 = {
   },
 };
 
+// Mutation
+
+const dataMutation = {
+  addHero: { name: 'Mr Baz' },
+};
+
+const dataAfterMutation = {
+  allHeroes: {
+    heroes: [...data.allHeroes.heroes, dataMutation.addHero],
+  },
+};
+
+const mutation = gql`
+  mutation addHero($name: String!) {
+    addHero(name: $name) {
+      name
+    }
+  }
+`;
+
+// Optimistic
+
+const mutationOptimistic = gql`
+  mutation addHeroOptimistic($name: String!) {
+    addHero(name: $name) {
+      id
+      name
+    }
+  }
+`;
+
+const queryOptimistic = gql`
+  query heroesOptimistic {
+    allHeroes {
+      heroes {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const dataOptimistic = {
+  allHeroes: {
+    heroes: [{ id: 1, name: 'Mr Foo' }, { id: 2, name: 'Mr Bar' }],
+  },
+};
+
+const dataMutationOptimistic = {
+  addHero: { id: 3, name: 'Mr Baz' },
+};
+
+const dataAfterMutationOptimistic = {
+  allHeroes: {
+    heroes: [ ...dataOptimistic.allHeroes.heroes, dataMutationOptimistic.addHero ],
+  },
+};
+
 describe('Apollo', () => {
-  let defaultClient;
-  let extraClient;
+  let defaultClient: ApolloClient;
+  let extraClient: ApolloClient;
 
   const clientSettings = [{
     request: { query },
@@ -71,6 +130,15 @@ describe('Apollo', () => {
   }, {
     request: { query, variables: { foo: 'Foo', bar: 'Baz' } },
     result: { data: data3 },
+  }, {
+    request: { query: mutation, variables: { name: 'Mr Baz' } },
+    result: { data: dataMutation },
+  }, {
+    request: { query: queryOptimistic },
+    result: { data: dataOptimistic },
+  }, {
+    request: { query: mutationOptimistic, variables: { name: 'Mr Baz' }, delay: 200 },
+    result: { data: dataMutationOptimistic },
   }];
 
   beforeEach(() => {
@@ -264,6 +332,86 @@ describe('Apollo', () => {
             done.fail('should not be called');
           },
         });
+      });
+    });
+
+    describe('query updates', () => {
+      it('should update a query after mutation', (done: jest.DoneCallback) => {
+        const obs = apollo.watchQuery({ query, fetchPolicy: 'network-only' });
+
+        subscribeAndCount(done, obs, (handleCount, result) => {
+          if (handleCount === 1) {
+            expect(result.data).toEqual(data);
+          } else if (handleCount === 2) {
+            expect(result.data).toEqual(dataAfterMutation);
+            done();
+          }
+        });
+
+        setTimeout(() => {
+          apollo.mutate<{addHero: Hero}>({
+            mutation,
+            variables: { name: 'Mr Baz' },
+            updateQueries: {
+              heroes: (prev: any, { mutationResult }: any) => {
+                return {
+                  allHeroes: {
+                    heroes: [...prev.allHeroes.heroes, mutationResult.data.addHero],
+                  },
+                };
+              },
+            },
+          }).subscribe({
+            error(error) {
+              done.fail(error);
+            },
+          });
+        }, 200);
+      });
+
+      it('should update a query with Optimistic Response after mutation', (done: jest.DoneCallback) => {
+        const obs = apollo.watchQuery({ query: queryOptimistic, fetchPolicy: 'network-only' });
+
+        subscribeAndCount(done, obs, (handleCount, result) => {
+          if (handleCount === 1) {
+            expect(result.data).toEqual(dataOptimistic);
+          } else if (handleCount === 2) {
+            expect(result.data).toEqual({
+              allHeroes: {
+                heroes: [...dataOptimistic.allHeroes.heroes, { id: 3, name: 'Mr Temporary' }],
+              },
+            });
+          } else if (handleCount === 3) {
+            expect(result.data).toEqual(dataAfterMutationOptimistic);
+            done();
+          }
+        });
+
+        setTimeout(() => {
+          apollo.mutate<{addHero: Hero}>({
+            mutation: mutationOptimistic,
+            variables: { name: 'Mr Baz' },
+            optimisticResponse: {
+              addHero: {
+                id: 3,
+                name: 'Mr Temporary',
+              },
+            },
+            updateQueries: {
+              heroesOptimistic: (prev: any, { mutationResult }: any) => {
+                return {
+                  allHeroes: {
+                    heroes: [...prev.allHeroes.heroes, mutationResult.data.addHero],
+                  },
+                };
+              },
+            },
+          }).subscribe({
+            error(error) {
+              done.fail(error);
+            },
+          });
+        }, 200);
       });
     });
   });
