@@ -7,5 +7,6 @@ export function mockClient(...args): ApolloClient {
   return new ApolloClient({
     networkInterface,
     addTypename: false,
+    dataIdFromObject: o => o['id'],
   });
 }
