@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/apollostack/apollo-angular/badge.svg?branch=master)](https://coveralls.io/github/apollostack/apollo-angular?branch=master)
 [![bitHound Overall Score](https://www.bithound.io/github/apollostack/apollo-angular/badges/score.svg)](https://www.bithound.io/github/apollostack/apollo-angular)
 
-Use your GraphQL server data in your Angular 2.0 app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
+Use your GraphQL server data in your Angular app, with the [Apollo Client](https://github.com/apollostack/apollo-client).
 
 - [Install](#install)
 - [Docs](http://docs.apollostack.com/apollo-client/angular2.html)
