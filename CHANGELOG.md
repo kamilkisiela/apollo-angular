@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Run `subscribe`, `mutate` and `query` within a Zone ([PR #297](https://github.com/apollographql/apollo-angular/pull/297))
+
 ### v0.12.0
 
 - Support `apollo-client@1.0.0-rc.2` ([PR #290](https://github.com/apollographql/apollo-angular/pull/290))
