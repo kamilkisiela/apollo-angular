@@ -9,6 +9,8 @@ export default {
     'rxjs/Observable': 'Rx',
     'rxjs/observable/from': 'Rx.Observable',
     'rxjs/observable/fromPromise': 'Rx.Observable',
+    'rxjs/scheduler/queue': 'Rx.Scheduler',
+    'rxjs/operator/observeOn': 'Rx.Observable.prototype',
     'apollo-client-rxjs': 'apollo.rxjs',
     'apollo-client': 'apollo',
   }

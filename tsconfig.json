@@ -18,7 +18,8 @@
     "src/index.ts",
     "tests/Apollo.spec.ts",
     "tests/SelectPipe.spec.ts",
-    "tests/ApolloModule.spec.ts"
+    "tests/ApolloModule.spec.ts",
+    "node_modules/zone.js/dist/zone.js.d.ts"
   ],
   "angularCompilerOptions": {
     "genDir": "compiled",
