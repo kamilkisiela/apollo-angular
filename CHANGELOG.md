@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v0.13.0
+
 - Run `subscribe`, `mutate` and `query` within a Zone ([PR #297](https://github.com/apollographql/apollo-angular/pull/297))
 
 ### v0.12.0
