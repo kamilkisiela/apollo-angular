@@ -26,6 +26,11 @@ const CurrentUserForProfile = gql`
   }
 `;
 
+interface QueryResponse{
+  currentUser
+  loading
+}
+
 @Component({ ... })
 class ProfileComponent implements OnInit {
   loading: boolean;
@@ -34,7 +39,7 @@ class ProfileComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.apollo.watchQuery({
+    this.apollo.watchQuery<QueryResponse>({
       query: CurrentUserForProfile
     }).subscribe(({data}) => {
       this.loading = data.loading;
