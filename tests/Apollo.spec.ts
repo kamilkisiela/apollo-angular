@@ -291,25 +291,35 @@ describe('Apollo', () => {
           done();
         });
       });
+
+      it('should not be called without subscribing to it', () => {
+        spyOn(defaultClient, 'query');
+
+        apollo.query({} as any);
+
+        expect(defaultClient.query).not.toHaveBeenCalled();
+      });
     });
 
     describe('mutate()', () => {
-      it('should be called with the same options', (done: jest.DoneCallback) => {
-        const options = {mutation: '', variables: {}};
+      it('should be called with the same options', () => {
         const promise = new Promise((resolve) => {
           resolve('mutation');
         });
 
         spyOn(defaultClient, 'mutate').and.returnValue(promise);
 
-        const result = apollo.mutate(options as any);
+        apollo.mutate({} as any);
 
-        expect(defaultClient.mutate).toHaveBeenCalledWith(options);
+        expect(defaultClient.mutate).toHaveBeenCalled();
+      });
 
-        result.subscribe(r => {
-          expect(r).toEqual('mutation');
-          done();
-        });
+      it('should not be called without subscribing to it', () => {
+        spyOn(defaultClient, 'mutate');
+
+        apollo.mutate({} as any);
+
+        expect(defaultClient.mutate).not.toHaveBeenCalled();
       });
     });
 
