@@ -276,50 +276,72 @@ describe('Apollo', () => {
     describe('query()', () => {
       it('should be called with the same options', (done: jest.DoneCallback) => {
         const options = {query: '', variables: {}};
-        const promise = new Promise((resolve) => {
-          resolve('query');
-        });
 
-        spyOn(defaultClient, 'query').and.returnValue(promise);
+        spyOn(defaultClient, 'query').and.returnValue(Promise.resolve('query'));
 
         const result = apollo.query(options as any);
 
-        expect(defaultClient.query).toHaveBeenCalledWith(options);
-
-        result.subscribe(r => {
-          expect(r).toEqual('query');
-          done();
+        result.subscribe({
+          next(r) {
+            expect(r).toEqual('query');
+            expect(defaultClient.query).toHaveBeenCalledWith(options);
+            done();
+          },
+          error() {
+            done.fail('should not be called');
+          },
         });
       });
 
-      it('should not be called without subscribing to it', () => {
-        spyOn(defaultClient, 'query');
+      it('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+        spyOn(defaultClient, 'query').and.returnValue(Promise.resolve('query'));
 
-        apollo.query({} as any);
+        const result = apollo.query({} as any);
 
         expect(defaultClient.query).not.toHaveBeenCalled();
+
+        result.subscribe({
+          complete: () => {
+            expect(defaultClient.query).toHaveBeenCalled();
+            done();
+          },
+        });
       });
     });
 
     describe('mutate()', () => {
-      it('should be called with the same options', () => {
-        const promise = new Promise((resolve) => {
-          resolve('mutation');
+      it('should be called with the same options', (done: jest.DoneCallback) => {
+        const options = {mutation: '', variables: {}};
+
+        spyOn(defaultClient, 'mutate').and.returnValue(Promise.resolve('mutation'));
+
+        const result = apollo.mutate(options as any);
+
+        result.subscribe({
+          next(r) {
+            expect(r).toEqual('mutation');
+            expect(defaultClient.mutate).toHaveBeenCalledWith(options);
+            done();
+          },
+          error() {
+            done.fail('should not be called');
+          },
         });
-
-        spyOn(defaultClient, 'mutate').and.returnValue(promise);
-
-        apollo.mutate({} as any);
-
-        expect(defaultClient.mutate).toHaveBeenCalled();
       });
 
-      it('should not be called without subscribing to it', () => {
-        spyOn(defaultClient, 'mutate');
+      it('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+        spyOn(defaultClient, 'mutate').and.returnValue(Promise.resolve('mutation'));
 
-        apollo.mutate({} as any);
+        const result = apollo.mutate({} as any);
 
         expect(defaultClient.mutate).not.toHaveBeenCalled();
+
+        result.subscribe({
+          complete: () => {
+            expect(defaultClient.mutate).toHaveBeenCalled();
+            done();
+          },
+        });
       });
     });
 

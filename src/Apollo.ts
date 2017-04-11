@@ -3,12 +3,11 @@ import { rxify } from 'apollo-client-rxjs';
 import { ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
-import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import { ApolloQueryObservable } from './ApolloQueryObservable';
 import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from './tokens';
 import { ClientMapWrapper, ClientWrapper, ClientMap } from './types';
-import { wrapWithZone } from './utils';
+import { wrapWithZone, fromPromise } from './utils';
 
 /**
  * Base class that handles ApolloClient
@@ -24,11 +23,15 @@ export class ApolloBase {
   }
 
   public query<T>(options: WatchQueryOptions): Observable<ApolloQueryResult<T>> {
-    return wrapWithZone<ApolloQueryResult<T>>(fromPromise(this.client.query<T>(options)));
+    return wrapWithZone<ApolloQueryResult<T>>(
+      fromPromise<ApolloQueryResult<T>>(() => this.client.query<T>(options)),
+    );
   }
 
   public mutate<T>(options: MutationOptions): Observable<ApolloQueryResult<T>> {
-    return wrapWithZone<ApolloQueryResult<T>>((fromPromise(this.client.mutate<T>(options))));
+    return wrapWithZone<ApolloQueryResult<T>>(
+      fromPromise<ApolloQueryResult<T>>(() => this.client.mutate<T>(options)),
+    );
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
