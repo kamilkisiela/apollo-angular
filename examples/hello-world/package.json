@@ -31,8 +31,9 @@
     "zone.js": "~0.7.2"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^2.4.9",
     "@angular/cli": "1.0.0-rc.2",
+    "@angular/compiler-cli": "^2.4.9",
+    "@types/graphql": "^0.9.0",
     "apollo-codegen": "^0.10.6",
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
