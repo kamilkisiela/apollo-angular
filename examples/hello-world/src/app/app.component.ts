@@ -7,7 +7,7 @@ import { DocumentNode } from 'graphql';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/take';
 
 import { AddUserMutation, UsersQuery } from '../graphql/schema';
 const UsersQueryNode: DocumentNode = require('graphql-tag/loader!../graphql/Users.graphql');
@@ -63,15 +63,17 @@ export class AppComponent implements OnInit, AfterViewInit {
         lastName: this.lastName,
       },
     })
-      .toPromise()
-      .then(({ data }) => {
-        console.log('got a new user', data.addUser);
+      .take(1)
+      .subscribe({
+        next: ({data}) => {
+          console.log('got a new user', data.addUser);
 
-        // get new data
-        this.users.refetch();
-      })
-      .catch((errors: any) => {
-        console.log('there was an error sending the query', errors);
+          // get new data
+          this.users.refetch();
+        },
+        error: (errors) => {
+          console.log('there was an error sending the query', errors);
+        }
       });
   }
 }

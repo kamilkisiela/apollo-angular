@@ -1,28 +1,10 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "declaration": true,
-    "rootDir": ".",
-    "outDir": "build",
-    "lib": ["es6", "dom"],
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noImplicitAny": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "module": "commonjs"
   },
-  "files": [
-    "src/index.ts",
-    "tests/Apollo.spec.ts",
-    "tests/SelectPipe.spec.ts",
-    "tests/ApolloModule.spec.ts",
-    "node_modules/zone.js/dist/zone.js.d.ts"
-  ],
   "angularCompilerOptions": {
-    "genDir": "compiled",
+    "skipTemplateCodegen": true,
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true
   }
