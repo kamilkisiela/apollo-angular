@@ -19,7 +19,7 @@ GraphQL mutations consist of two parts:
 1. The mutation name with arguments (`submitRepository`), which represents the actual operation to be done on the server
 2. The fields you want back from the result of the mutation to update the client (`id` and `repoName`)
 
-The result of the above mutation might be be:
+The result of the above mutation might be:
 
 ```json
 {
