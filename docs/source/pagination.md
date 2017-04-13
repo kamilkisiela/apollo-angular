@@ -63,9 +63,9 @@ class FeedComponent, OnInit {
       // the feed length, but we could also use state, or the previous
       // variables to calculate this (see the cursor example below)
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult.data) { return prev; }
+        if (!fetchMoreResult) { return prev; }
         return Object.assign({}, prev, {
-          feed: [...prev.feed, ...fetchMoreResult.data.feed],
+          feed: [...prev.feed, ...fetchMoreResult.feed],
         });
       },
     });
@@ -135,10 +135,10 @@ class FeedComponent {
       // variables to calculate this (see the cursor example below)
       updateQuery: (prev, { fetchMoreResult }) => {
         const previousEntry = previousResult.entry;
-        const newComments = fetchMoreResult.data.comments.nextComments;
+        const newComments = fetchMoreResult.comments.nextComments;
 
         // update internal reference to cursor
-        FeedComponent.cursor = fetchMoreResult.data.cursor;
+        FeedComponent.cursor = fetchMoreResult.cursor;
 
         return {
           title: previousEntry.title,

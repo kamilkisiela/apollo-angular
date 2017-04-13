@@ -74,9 +74,9 @@ class FeedComponent implements OnInit {
         offset: this.offset + this.itemsPerPage,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult.data) { return prev; }
+        if (!fetchMoreResult) { return prev; }
         return Object.assign({}, prev, {
-          feed: [...prev.feed, ...fetchMoreResult.data.feed],
+          feed: [...prev.feed, ...fetchMoreResult.feed],
         });
       },
     });
