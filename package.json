@@ -85,6 +85,11 @@
     ],
     "browser": true,
     "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/index.ts",
+      "!**/node_modules/**"
+    ],
     "coverageReporters": [
       "json"
     ]
