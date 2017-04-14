@@ -1,12 +1,13 @@
-import { ApolloClient } from 'apollo-client';
-
 import './_common';
+
+import { NgModule } from '@angular/core';
+import { ApolloClient } from 'apollo-client';
 
 import { ApolloModule, SelectPipe, Apollo } from '../src';
 import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from '../src/tokens';
 
 describe('ApolloModule', () => {
-  const metadata: any = ApolloModule['decorators'][0]['args'][0];
+  const metadata: NgModule = Reflect.getMetadata('annotations', ApolloModule)[0];
 
   it('should contain SelectPipe in declarations', () => {
     expect(include(metadata.declarations, SelectPipe)).toBe(true);

@@ -17,17 +17,13 @@
   },
   "homepage": "https://github.com/apollostack/apollo-angular#readme",
   "scripts": {
-    "pretest": "npm run build-test",
     "test": "npm run test-only",
-    "posttest": "npm run remap && npm run lint",
+    "posttest": "npm run lint",
     "test-only": "jest",
     "test-watch": "jest --watch",
-    "remap": "remap-istanbul -i coverage/coverage-final.json -t lcovonly -o coverage/lcov.info",
     "lint": "tslint src/*.ts && tslint tests/*.ts",
     "prebuild": "npm run clean",
-    "build": "./node_modules/.bin/ngc -p tsconfig.json",
-    "prebuild-test": "npm run clean",
-    "build-test": "./node_modules/.bin/ngc -p tsconfig.test.json",
+    "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
     "postbuild": "npm run bundle",
     "bundle": "rollup -c",
     "clean": "rimraf build/* coverage/*",
@@ -48,6 +44,7 @@
     "@angular/compiler": "^4.0.0",
     "@angular/compiler-cli": "^4.0.0",
     "@angular/core": "^4.0.0",
+    "@angular/http": "^4.0.0",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/platform-server": "^4.0.0",
@@ -64,27 +61,35 @@
     "rimraf": "^2.6.1",
     "rollup": "^0.41.4",
     "rxjs": "^5.0.0",
+    "ts-jest": "^19.0.9",
     "tslint": "^4.5.1",
     "typescript": "~2.2.1",
     "validate-commit-msg": "^2.11.2",
     "zone.js": "^0.8.4"
   },
   "jest": {
+    "globals": {
+      "__TS_CONFIG__": "tsconfig.test.json"
+    },
     "moduleFileExtensions": [
-      "js"
+      "js",
+      "ts"
     ],
-    "testRegex": "\\.spec\\.js$",
+    "transform": {
+      ".ts": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
+    "testRegex": "\\.spec\\.ts$",
     "roots": [
-      "<rootDir>/build/tests"
+      "<rootDir>/tests"
     ],
     "browser": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/src/*.js",
-      "!**/src/index.js",
+      "src/**/*.ts",
+      "!src/index.ts",
       "!**/node_modules/**"
     ],
-    "coverageDirectory": "coverage",
     "coverageReporters": [
       "json"
     ]

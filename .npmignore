@@ -6,13 +6,13 @@ compiled/
 examples/
 src/
 tests/
-typings/
 .bithoundrc
 .travis.yml
 .typingsrc
 CHANGELOG.md
-global.d.ts
-rollup.conf.js
+CONTRIBUTING.md
+rollup.config.js
 tsconfig.json
+tsconfig.build.json
 tsconfig.test.json
 tslint.json
