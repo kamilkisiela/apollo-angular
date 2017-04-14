@@ -2,10 +2,5 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs"
-  },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true
   }
 }

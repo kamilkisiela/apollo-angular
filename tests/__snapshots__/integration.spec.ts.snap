@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`integration render using renderModule should work 1`] = `"<html><head></head><body><app >Website: online</app></body></html>"`;

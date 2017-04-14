@@ -6,7 +6,7 @@ import { SelectPipe } from '../src';
 
 describe('SelectPipe', () => {
   let pipe;
-  let metadata = SelectPipe['decorators'][0];
+  const pipeMetadata: Pipe = Reflect.getMetadata('annotations', SelectPipe)[0];
 
   beforeEach(() => {
     pipe = new SelectPipe();
@@ -42,11 +42,11 @@ describe('SelectPipe', () => {
     expect(pipe.transform(result, 'foo')).toEqual(result.data.foo);
   });
 
-  it('should has a Pipe decorator', () => {
-    expect(metadata.type).toBe(Pipe);
+  it('should be named select', () => {
+    expect(pipeMetadata.name).toBe('select');
   });
 
-  it('should has a proper name', () => {
-    expect(metadata.args[0].name).toBe('select');
+  it('should be pure', () => {
+    expect(pipeMetadata.pure).toBe(true);
   });
 });
