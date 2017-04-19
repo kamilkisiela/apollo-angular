@@ -36,7 +36,7 @@ When we use mutations in Apollo, the result is typically integrated into the cac
 
 <h2 id="basics">Basic Mutations</h2>
 
-Using `Apollo` it easy to call mutation. You can simply use `mutate` method.      
+Using `Apollo` it easy to call mutation. You can simply use `mutate` method.
 
 ```ts
 import { Component } from '@angular/core';
@@ -60,7 +60,7 @@ class NewEntryComponent {
     this.apollo.mutate({
       mutation: submitRepository
     });
-  } 
+  }
 }
 ```
 
@@ -85,18 +85,18 @@ const submitRepository = gql`
 @Component({ ... })
 class NewEntryComponent {
   constructor(private apollo: Apollo) {}
-  
+
   newRepository() {
     this.apollo.mutate({
       mutation: submitRepository,
       variables: {
-        repoFullName: 'apollographql/apollo-client' 
+        repoFullName: 'apollographql/apollo-client'
       }
-    }).then(({ data }) => {
+    }).subscribe(({ data }) => {
       console.log('got data', data);
-    }).catch((error) => {
+    },(error) => {
       console.log('there was an error sending the query', error);
-    }); 
+    });
   }
 }
 ```
