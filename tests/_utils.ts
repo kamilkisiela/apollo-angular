@@ -16,11 +16,11 @@ export function subscribeAndCount<T>(done: jest.DoneCallback, observable: Observ
         // to be defined.
         setImmediate(() => {
           subscription.unsubscribe();
-          done.fail(e);
+          done.fail(e.message);
         });
       }
     },
-    error: done.fail,
+    error: (e) => done.fail(e.message),
   });
   return subscription;
 };
