@@ -6,10 +6,12 @@ import {
   destroyPlatform,
   getPlatform,
   ApplicationRef,
+  CompilerFactory,
 } from '@angular/core';
 import {
   ServerModule,
   renderModule,
+  renderModuleFactory,
   INITIAL_CONFIG,
   PlatformState,
   platformDynamicServer,
@@ -119,6 +121,20 @@ describe('integration', () => {
 
     test('using renderModule should work', async(() => {
       renderModule(AsyncServerModule, { document: doc }).then(output => {
+        expect(clearNgVersion(output)).toMatchSnapshot();
+        called = true;
+      });
+    }));
+
+    test('using renderModuleFactory should work', async(() => {
+      const platform =
+        platformDynamicServer([{provide: INITIAL_CONFIG, useValue: {document: doc}}]);
+      const compilerFactory: CompilerFactory = platform.injector.get(CompilerFactory, null);
+      const moduleFactory = compilerFactory
+        .createCompiler()
+        .compileModuleSync(AsyncServerModule);
+
+      renderModuleFactory(moduleFactory, {document: doc}).then(output => {
         expect(clearNgVersion(output)).toMatchSnapshot();
         called = true;
       });
