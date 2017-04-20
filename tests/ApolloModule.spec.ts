@@ -9,19 +9,19 @@ import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from '../src/tokens';
 describe('ApolloModule', () => {
   const metadata: NgModule = Reflect.getMetadata('annotations', ApolloModule)[0];
 
-  it('should contain SelectPipe in declarations', () => {
+  test('should contain SelectPipe in declarations', () => {
     expect(include(metadata.declarations, SelectPipe)).toBe(true);
   });
 
-  it('should export SelectPipe', () => {
+  test('should export SelectPipe', () => {
     expect(include(metadata.exports, SelectPipe)).toBe(true);
   });
 
-  it('should not export Apollo', () => {
+  test('should not export Apollo', () => {
     expect(include(metadata.exports, Apollo)).toBe(false);
   });
 
-  it('should has withClient method', () => {
+  test('should has withClient method', () => {
     expect(ApolloModule.withClient).toBeDefined();
   });
 
@@ -31,16 +31,16 @@ describe('ApolloModule', () => {
     const result = ApolloModule.withClient(getClient);
     const providers = result.providers[1]; // skips APOLLO_PROVIDERS
 
-    it('should contain ApolloModule as ngModule', () => {
+    test('should contain ApolloModule as ngModule', () => {
       expect(result.ngModule === ApolloModule).toBe(true);
     });
 
-    it('should provide a wrapper directly', () => {
+    test('should provide a wrapper directly', () => {
       expect(providers[0]['provide']).toBe(CLIENT_MAP_WRAPPER);
       expect(providers[0]['useValue']).toBe(getClient);
     });
 
-    it('should provide a value using factory', () => {
+    test('should provide a value using factory', () => {
       const factoryResult = providers[1]['useFactory'](getClient);
 
       expect(providers[1]['provide']).toBe(CLIENT_MAP);
@@ -60,16 +60,16 @@ describe('ApolloModule', () => {
     const result = ApolloModule.forRoot(getClients);
     const providers = result.providers[1]; // skips APOLLO_PROVIDERS
 
-    it('should contain ApolloModule as ngModule', () => {
+    test('should contain ApolloModule as ngModule', () => {
       expect(result.ngModule === ApolloModule).toBe(true);
     });
 
-    it('should provide a wrapper directly', () => {
+    test('should provide a wrapper directly', () => {
       expect(providers[0]['provide']).toBe(CLIENT_MAP_WRAPPER);
       expect(providers[0]['useValue']).toBe(getClients);
     });
 
-    it('should provide a value using factory', () => {
+    test('should provide a value using factory', () => {
       const factoryResult = providers[1]['useFactory'](getClients);
 
       expect(providers[1]['provide']).toBe(CLIENT_MAP);

@@ -1,7 +1,7 @@
 import { fromPromise } from '../src/utils';
 
 describe('fromPromise', () => {
-  it('should emit a value when resolved', (done: jest.DoneCallback) => {
+  test('should emit a value when resolved', (done: jest.DoneCallback) => {
     fromPromise(() => Promise.resolve('resolved'))
       .subscribe({
         next(r) {
@@ -14,7 +14,7 @@ describe('fromPromise', () => {
       });
   });
 
-  it('should complete when resolved', (done: jest.DoneCallback) => {
+  test('should complete when resolved', (done: jest.DoneCallback) => {
     fromPromise(() => Promise.resolve('resolved'))
       .subscribe({
         error() {
@@ -26,7 +26,7 @@ describe('fromPromise', () => {
       });
   });
 
-  it('should emit an error when rejected', (done: jest.DoneCallback) => {
+  test('should emit an error when rejected', (done: jest.DoneCallback) => {
     fromPromise(() => Promise.reject('rejected'))
       .subscribe({
         next() {
