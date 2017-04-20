@@ -6,8 +6,8 @@ import { RxObservableQuery } from 'apollo-client-rxjs';
 import { ApolloClient } from 'apollo-client';
 
 import { mockClient, mockApollo } from './_mocks';
-import { subscribeAndCount } from './_utils';
-import { APOLLO_PROVIDERS, defaultApolloClient, provideClientMap } from '../src/index';
+import { subscribeAndCount, createApollo } from './_utils';
+import { defaultApolloClient, provideClientMap } from '../src/index';
 import { Apollo, ApolloBase } from '../src/Apollo';
 import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from '../src/tokens';
 
@@ -150,15 +150,14 @@ describe('Apollo', () => {
     let apollo: Apollo;
 
     beforeEach(() => {
-      const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(() => ({
+      apollo = createApollo({
         default: defaultClient,
         extra: extraClient,
-      })), APOLLO_PROVIDERS]);
-      apollo = injector.get(Apollo);
+      });
     });
 
     describe('default()', () => {
-      it('should return the default client', () => {
+      test('should return the default client', () => {
         expect(apollo.default() instanceof ApolloBase).toBe(true);
         expect(apollo.default().getClient()).toBe(defaultClient);
       });

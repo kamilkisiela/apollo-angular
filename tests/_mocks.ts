@@ -1,9 +1,8 @@
 import { ApolloClient } from 'apollo-client';
 import { mockNetworkInterface } from 'apollo-test-utils';
-import { ReflectiveInjector } from '@angular/core';
 
-import { Apollo, provideClientMap } from '../src/Apollo';
-import { APOLLO_PROVIDERS } from '../src/ApolloModule';
+import { Apollo } from '../src/Apollo';
+import { createApollo } from './_utils';
 
 export function mockClient(...args): ApolloClient {
   const networkInterface = mockNetworkInterface(...args);
@@ -18,9 +17,5 @@ export function mockClient(...args): ApolloClient {
 export function mockApollo(...args): Apollo {
   const client = mockClient(...args);
 
-  const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(() => ({
-    default: client,
-  })), APOLLO_PROVIDERS]);
-
-  return injector.get(Apollo);
+  return createApollo({default: client});
 }
