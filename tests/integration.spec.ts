@@ -86,7 +86,7 @@ describe('integration', () => {
 
     afterEach(() => { expect(called).toBe(true); });
 
-    it('using renderModule should work', async(() => {
+    test('using renderModule should work', async(() => {
       renderModule(AsyncServerModule, { document: doc }).then(output => {
         expect(clearNgVersion(output)).toMatchSnapshot();
         called = true;
