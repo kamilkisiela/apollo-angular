@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { RxObservableQuery } from 'apollo-client-rxjs';
 import { ApolloClient } from 'apollo-client';
 
-import { mockClient } from './_mocks';
+import { mockClient, mockApollo } from './_mocks';
 import { subscribeAndCount } from './_utils';
 import { APOLLO_PROVIDERS, defaultApolloClient, provideClientMap } from '../src/index';
 import { Apollo, ApolloBase } from '../src/Apollo';
@@ -241,7 +241,7 @@ describe('Apollo', () => {
       });
 
       it('should be able to refetch', (done: jest.DoneCallback) => {
-        const variables = { foo: 'foo' };
+        const variables = { foo: 'Foo' };
         const options = { query, variables };
 
         const obs = apollo
@@ -254,6 +254,38 @@ describe('Apollo', () => {
         obs.refetch({ foo: 'Bar' }).then(result => {
           expect(result.data).toEqual(data3);
           done();
+        });
+      });
+
+      it('should receive a new result on refetch', (done: jest.DoneCallback) => {
+        const queryWithVars = gql`query heroes($first: Int) {
+          allHeroes(first: $first) { name }
+        }`;
+
+        const data1 = { allHeroes: [ { name: 'Foo' } ] };
+        const variables1 = { first: 0 };
+
+        // tslint:disable-next-line:no-shadowed-variable
+        const data2 = { allHeroes: [ { name: 'Bar' } ] };
+        const variables2 = { first: 1 };
+
+
+        const observable = mockApollo({
+          request: { query: queryWithVars, variables: variables1 },
+          result: { data: data1 },
+        }, {
+          request: { query: queryWithVars, variables: variables2 },
+          result: { data: data2 },
+        }).watchQuery<any>({ query: queryWithVars, variables: variables1 });
+
+        subscribeAndCount(done, observable, (handleCount, result) => {
+          if (handleCount === 1) {
+            expect(result.data).toEqual(data1);
+            observable.refetch(variables2);
+          } else if (handleCount === 3) { // 3 because there is an intermediate loading state
+            expect(result.data).toEqual(data2);
+            done();
+          }
         });
       });
 
