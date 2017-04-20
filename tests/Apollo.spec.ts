@@ -8,279 +8,198 @@ import { ApolloClient } from 'apollo-client';
 import { mockClient, mockApollo } from './_mocks';
 import { subscribeAndCount, createApollo } from './_utils';
 import { defaultApolloClient, provideClientMap } from '../src/index';
-import { Apollo, ApolloBase } from '../src/Apollo';
+import { ApolloBase } from '../src/Apollo';
 import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from '../src/tokens';
 
 import gql from 'graphql-tag';
 
 import 'rxjs/add/operator/map';
 
-interface Hero {
-  name: string;
-}
-
-interface AllHeroesQueryResult {
-  allHeroes: {
-    heroes: Hero[];
-  };
-}
-
-const query = gql`
-  query heroes {
-    allHeroes {
-      heroes {
-        name
-      }
-    }
-  }
-`;
-
-const data = {
-  allHeroes: {
-    heroes: [{ name: 'Mr Foo' }, { name: 'Mr Bar' }],
-  },
-};
-
-const data2 = {
-  allHeroes: {
-    heroes: [{ name: 'Mrs Foo' }, { name: 'Mrs Bar' }],
-  },
-};
-
-const data3 = {
-  allHeroes: {
-    heroes: [{ name: 'Mr Bar' }],
-  },
-};
-
-// Mutation
-
-const dataMutation = {
-  addHero: { name: 'Mr Baz' },
-};
-
-const dataAfterMutation = {
-  allHeroes: {
-    heroes: [...data.allHeroes.heroes, dataMutation.addHero],
-  },
-};
-
-const mutation = gql`
-  mutation addHero($name: String!) {
-    addHero(name: $name) {
-      name
-    }
-  }
-`;
-
-// Optimistic
-
-const mutationOptimistic = gql`
-  mutation addHeroOptimistic($name: String!) {
-    addHero(name: $name) {
-      id
-      name
-    }
-  }
-`;
-
-const queryOptimistic = gql`
-  query heroesOptimistic {
-    allHeroes {
-      heroes {
-        id
-        name
-      }
-    }
-  }
-`;
-
-const dataOptimistic = {
-  allHeroes: {
-    heroes: [{ id: 1, name: 'Mr Foo' }, { id: 2, name: 'Mr Bar' }],
-  },
-};
-
-const dataMutationOptimistic = {
-  addHero: { id: 3, name: 'Mr Baz' },
-};
-
-const dataAfterMutationOptimistic = {
-  allHeroes: {
-    heroes: [ ...dataOptimistic.allHeroes.heroes, dataMutationOptimistic.addHero ],
-  },
-};
-
 describe('Apollo', () => {
-  let defaultClient: ApolloClient;
-  let extraClient: ApolloClient;
-
-  const clientSettings = [{
-    request: { query },
-    result: { data },
-  }, {
-    request: { query, variables: { foo: 'Foo' } },
-    result: { data: data2 },
-  }, {
-    request: { query, variables: { foo: 'Bar' } },
-    result: { data: data3 },
-  }, {
-    request: { query, variables: { foo: 'Foo', bar: 'Bar' } },
-    result: { data: data2 },
-  }, {
-    request: { query, variables: { foo: 'Foo', bar: 'Baz' } },
-    result: { data: data3 },
-  }, {
-    request: { query: mutation, variables: { name: 'Mr Baz' } },
-    result: { data: dataMutation },
-  }, {
-    request: { query: queryOptimistic },
-    result: { data: dataOptimistic },
-  }, {
-    request: { query: mutationOptimistic, variables: { name: 'Mr Baz' }, delay: 200 },
-    result: { data: dataMutationOptimistic },
-  }];
-
-  beforeEach(() => {
-    defaultClient = mockClient(...clientSettings);
-    extraClient = mockClient(...clientSettings);
-  });
-
   describe('service', () => {
-    let apollo: Apollo;
-
-    beforeEach(() => {
-      apollo = createApollo({
-        default: defaultClient,
-        extra: extraClient,
-      });
-    });
-
     describe('default()', () => {
       test('should return the default client', () => {
+        const client = new ApolloClient();
+        const apollo = createApollo({default: client});
+
         expect(apollo.default() instanceof ApolloBase).toBe(true);
-        expect(apollo.default().getClient()).toBe(defaultClient);
+        expect(apollo.default().getClient()).toBe(client);
       });
     });
 
     describe('use()', () => {
-      it('should use a named client', () => {
+      test('should use a named client', () => {
+        const defaultClient = new ApolloClient();
+        const extraClient = new ApolloClient();
+        const apollo = createApollo({default: defaultClient, extra: extraClient});
+
         expect(apollo.use('extra') instanceof ApolloBase).toBe(true);
         expect(apollo.use('extra').getClient()).toBe(extraClient);
       });
     });
 
     describe('getClient()', () => {
-      it('should return an instance of ApolloClient', () => {
-        expect(apollo.getClient()).toBe(defaultClient);
+      test('should return an instance of ApolloClient', () => {
+        const client = new ApolloClient();
+        const apollo = createApollo({default: client});
+        expect(apollo.getClient()).toBe(client);
       });
     });
 
     describe('watchQuery()', () => {
-      it('should be called with the same options', () => {
-        const options = { query };
+      test('should be called with the same options', () => {
+        const client = new ApolloClient();
+        const apollo = createApollo({default: client});
 
-        spyOn(defaultClient, 'watchQuery').and.callThrough();
-
+        const options = { query: 'gql' } as any;
+        client.watchQuery = jest.fn();
         apollo.watchQuery(options);
 
-        expect(defaultClient.watchQuery).toHaveBeenCalledWith(options);
+        expect(client.watchQuery).toBeCalledWith(options);
       });
 
-      it('should be able to use obserable variable', (done: jest.DoneCallback) => {
-        const variables = {
-          foo: new Subject(),
-        };
-        const options = { query, variables, fetchPolicy: 'network-only' };
-
-        const obs = apollo
-          .watchQuery<AllHeroesQueryResult>(options as any);
-
-        subscribeAndCount<AllHeroesQueryResult>(done, obs, (handleCount, result) => {
-          if (handleCount === 1) {
-            expect(result.data.allHeroes.heroes).toEqual(data2.allHeroes.heroes);
-          } else if (handleCount === 2) {
-            expect(result.data.allHeroes.heroes).toEqual(data3.allHeroes.heroes);
-            done();
-          }
-        });
-
-        variables.foo.next('Foo');
-
-        setTimeout(() => {
-          variables.foo.next('Bar');
-        }, 200);
-      });
-
-      it('should be able to use obserable variables', (done: jest.DoneCallback) => {
-        const variables = {
-          foo: new Subject(),
-          bar: new Subject(),
-        };
-        const options = { query, variables, fetchPolicy: 'network-only' };
-
-        const obs = apollo
-          .watchQuery<AllHeroesQueryResult>(options as any);
-
-        subscribeAndCount<AllHeroesQueryResult>(done, obs, (handleCount, result) => {
-          if (handleCount === 1) {
-            expect(result.data.allHeroes.heroes).toEqual(data2.allHeroes.heroes);
-          } else if (handleCount === 2) {
-            expect(result.data.allHeroes.heroes).toEqual(data3.allHeroes.heroes);
-            done();
-          }
-        });
-
-        variables.foo.next('Foo');
-        variables.bar.next('Bar');
-
-        setTimeout(() => {
-          variables.bar.next('Baz');
-        }, 200);
-      });
-
-      it('should be able to refetch', (done: jest.DoneCallback) => {
-        const variables = { foo: 'Foo' };
-        const options = { query, variables };
-
-        const obs = apollo
-          .watchQuery<AllHeroesQueryResult>(options);
-
-        obs.subscribe(() => {
-          //
-        });
-
-        obs.refetch({ foo: 'Bar' }).then(result => {
-          expect(result.data).toEqual(data3);
-          done();
-        });
-      });
-
-      it('should receive a new result on refetch', (done: jest.DoneCallback) => {
-        const queryWithVars = gql`query heroes($first: Int) {
+      test('should be able to use obserable variable', (done: jest.DoneCallback) => {
+        const query = gql`query heroes($first: Int) {
           allHeroes(first: $first) { name }
         }`;
 
         const data1 = { allHeroes: [ { name: 'Foo' } ] };
         const variables1 = { first: 0 };
 
-        // tslint:disable-next-line:no-shadowed-variable
         const data2 = { allHeroes: [ { name: 'Bar' } ] };
         const variables2 = { first: 1 };
 
 
-        const observable = mockApollo({
-          request: { query: queryWithVars, variables: variables1 },
+        const apollo = mockApollo({
+          request: { query, variables: variables1 },
           result: { data: data1 },
         }, {
-          request: { query: queryWithVars, variables: variables2 },
+          request: { query, variables: variables2 },
           result: { data: data2 },
-        }).watchQuery<any>({ query: queryWithVars, variables: variables1 });
+        });
 
-        subscribeAndCount(done, observable, (handleCount, result) => {
+        const first = new Subject();
+        const options = { query, variables: { first } };
+
+        const obs = apollo.watchQuery(options as any);
+
+        subscribeAndCount(done, obs, (handleCount, result) => {
           if (handleCount === 1) {
             expect(result.data).toEqual(data1);
-            observable.refetch(variables2);
+          } else if (handleCount === 2) {
+            expect(result.data).toEqual(data2);
+            done();
+          }
+        });
+
+        first.next(0);
+
+        setTimeout(() => {
+          first.next(1);
+        }, 200);
+      });
+
+      test('should be able to use obserable variables', (done: jest.DoneCallback) => {
+        const query = gql`query heroes($first: Int, $order: String) {
+          allHeroes(first: $first, order: $order) { name }
+        }`;
+
+        const data1 = { allHeroes: [ { name: 'Foo' } ] };
+        const variables1 = { first: 0, order: 'ASC' };
+
+        const data2 = { allHeroes: [ { name: 'Bar' } ] };
+        const variables2 = { first: 1, order: 'ASC' };
+
+
+        const apollo = mockApollo({
+          request: { query, variables: variables1 },
+          result: { data: data1 },
+        }, {
+          request: { query, variables: variables2 },
+          result: { data: data2 },
+        });
+
+        const first = new Subject();
+        const order = new Subject();
+        const options = { query, variables: { first, order } };
+
+        const obs = apollo.watchQuery<any>(options as any);
+
+        subscribeAndCount<any>(done, obs, (handleCount, result) => {
+          if (handleCount === 1) {
+            expect(result.data).toEqual(data1);
+          } else if (handleCount === 2) {
+            expect(result.data).toEqual(data2);
+            done();
+          }
+        });
+
+        first.next(0);
+        order.next('ASC');
+
+        setTimeout(() => {
+          first.next(1);
+        }, 200);
+      });
+
+      test('should be able to refetch', (done: jest.DoneCallback) => {
+        const query = gql`query heroes($first: Int) {
+          allHeroes(first: $first) { name }
+        }`;
+
+        const data1 = { allHeroes: [ { name: 'Foo' } ] };
+        const variables1 = { first: 0 };
+
+        const data2 = { allHeroes: [ { name: 'Bar' } ] };
+        const variables2 = { first: 1 };
+
+
+        const apollo = mockApollo({
+          request: { query, variables: variables1 },
+          result: { data: data1 },
+        }, {
+          request: { query, variables: variables2 },
+          result: { data: data2 },
+        });
+
+        const options = { query, variables: variables1 };
+        const obs = apollo.watchQuery(options);
+
+        obs.subscribe(({data}) => {
+          expect(data).toEqual(data1);
+        });
+
+        obs.refetch(variables2).then(({data}) => {
+          expect(data).toEqual(data2);
+          done();
+        });
+      });
+
+      test('should receive a new result on refetch', (done: jest.DoneCallback) => {
+        const query = gql`query heroes($first: Int) {
+          allHeroes(first: $first) { name }
+        }`;
+
+        const data1 = { allHeroes: [ { name: 'Foo' } ] };
+        const variables1 = { first: 0 };
+
+        const data2 = { allHeroes: [ { name: 'Bar' } ] };
+        const variables2 = { first: 1 };
+
+
+        const apollo = mockApollo({
+          request: { query, variables: variables1 },
+          result: { data: data1 },
+        }, {
+          request: { query, variables: variables2 },
+          result: { data: data2 },
+        });
+        const obs = apollo.watchQuery<any>({ query, variables: variables1 });
+
+        subscribeAndCount(done, obs, (handleCount, result) => {
+          if (handleCount === 1) {
+            expect(result.data).toEqual(data1);
+            obs.refetch(variables2);
           } else if (handleCount === 3) { // 3 because there is an intermediate loading state
             expect(result.data).toEqual(data2);
             done();
@@ -289,33 +208,45 @@ describe('Apollo', () => {
       });
 
       describe('result', () => {
-        it('should return the ApolloQueryObserable when no variables', () => {
-          const obs = apollo.watchQuery<AllHeroesQueryResult>({ query });
+        test('should return the ApolloQueryObserable when no variables', () => {
+          const apollo = mockApollo();
+          const query = gql`query heroes {
+            allHeroes { name }
+          }`;
+          const obs = apollo.watchQuery({ query });
+
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
 
-        it('should return the ApolloQueryObserable when variables', () => {
+        test('should return the ApolloQueryObserable when variables', () => {
+          const apollo = mockApollo();
+          const query = gql`query heroes {
+            allHeroes { name }
+          }`;
           const variables = {
             foo: new Subject(),
           };
-          const obs = apollo.watchQuery<AllHeroesQueryResult>({ query, variables });
+          const obs = apollo.watchQuery({ query, variables });
+
           expect(obs instanceof RxObservableQuery).toEqual(true);
         });
       });
     });
 
     describe('query()', () => {
-      it('should be called with the same options', (done: jest.DoneCallback) => {
-        const options = {query: '', variables: {}};
+      test('should be called with the same options', (done: jest.DoneCallback) => {
+        const client = {} as ApolloClient;
+        const apollo = createApollo({default: client});
 
-        spyOn(defaultClient, 'query').and.returnValue(Promise.resolve('query'));
+        const options = { query: 'gql' } as any;
+        client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
 
-        const result = apollo.query(options as any);
+        const obs = apollo.query(options);
 
-        result.subscribe({
+        obs.subscribe({
           next(r) {
             expect(r).toEqual('query');
-            expect(defaultClient.query).toHaveBeenCalledWith(options);
+            expect(client.query).toBeCalledWith(options);
             done();
           },
           error() {
@@ -324,16 +255,19 @@ describe('Apollo', () => {
         });
       });
 
-      it('should not be called without subscribing to it', (done: jest.DoneCallback) => {
-        spyOn(defaultClient, 'query').and.returnValue(Promise.resolve('query'));
+      test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+        const client = {} as ApolloClient;
+        const apollo = createApollo({default: client});
 
-        const result = apollo.query({} as any);
+        client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
 
-        expect(defaultClient.query).not.toHaveBeenCalled();
+        const obs = apollo.query({} as any);
 
-        result.subscribe({
+        expect(client.query).not.toBeCalled();
+
+        obs.subscribe({
           complete: () => {
-            expect(defaultClient.query).toHaveBeenCalled();
+            expect(client.query).toBeCalled();
             done();
           },
         });
@@ -341,17 +275,19 @@ describe('Apollo', () => {
     });
 
     describe('mutate()', () => {
-      it('should be called with the same options', (done: jest.DoneCallback) => {
-        const options = {mutation: '', variables: {}};
+      test('should be called with the same options', (done: jest.DoneCallback) => {
+        const client = {} as ApolloClient;
+        const apollo = createApollo({default: client});
 
-        spyOn(defaultClient, 'mutate').and.returnValue(Promise.resolve('mutation'));
+        const options = { mutation: 'gql' } as any;
+        client.mutate = jest.fn().mockReturnValue(Promise.resolve('mutation'));
 
-        const result = apollo.mutate(options as any);
+        const obs = apollo.mutate(options);
 
-        result.subscribe({
+        obs.subscribe({
           next(r) {
             expect(r).toEqual('mutation');
-            expect(defaultClient.mutate).toHaveBeenCalledWith(options);
+            expect(client.mutate).toBeCalledWith(options);
             done();
           },
           error() {
@@ -360,16 +296,19 @@ describe('Apollo', () => {
         });
       });
 
-      it('should not be called without subscribing to it', (done: jest.DoneCallback) => {
-        spyOn(defaultClient, 'mutate').and.returnValue(Promise.resolve('mutation'));
+      test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+        const client = {} as ApolloClient;
+        const apollo = createApollo({default: client});
 
-        const result = apollo.mutate({} as any);
+        client.mutate = jest.fn().mockReturnValue(Promise.resolve('mutation'));
 
-        expect(defaultClient.mutate).not.toHaveBeenCalled();
+        const obs = apollo.mutate({} as any);
 
-        result.subscribe({
+        expect(client.mutate).not.toBeCalled();
+
+        obs.subscribe({
           complete: () => {
-            expect(defaultClient.mutate).toHaveBeenCalled();
+            expect(client.mutate).toBeCalled();
             done();
           },
         });
@@ -377,14 +316,16 @@ describe('Apollo', () => {
     });
 
     describe('subscribe', () => {
-      it('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
-        const options = {query: '', variables: {}};
+      test('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
+        const client = {} as ApolloClient;
+        const apollo = createApollo({default: client});
 
-        spyOn(defaultClient, 'subscribe').and.returnValue(['subscription']);
+        client.subscribe = jest.fn().mockReturnValue(['subscription']);
 
-        const obs = apollo.subscribe(options as any);
+        const options = { query: 'gql' } as any;
+        const obs = apollo.subscribe(options);
 
-        expect(defaultClient.subscribe).toHaveBeenCalledWith(options);
+        expect(client.subscribe).toBeCalledWith(options);
 
         obs.subscribe({
           next(result) {
@@ -399,122 +340,186 @@ describe('Apollo', () => {
     });
 
     describe('query updates', () => {
-      it('should update a query after mutation', (done: jest.DoneCallback) => {
-        const obs = apollo.watchQuery({ query, fetchPolicy: 'network-only' });
-
-        subscribeAndCount(done, obs, (handleCount, result) => {
-          if (handleCount === 1) {
-            expect(result.data).toEqual(data);
-          } else if (handleCount === 2) {
-            expect(result.data).toEqual(dataAfterMutation);
-            done();
+      test('should update a query after mutation', (done: jest.DoneCallback) => {
+        const query = gql`query heroes {
+          allHeroes { name }
+        }`;
+        const mutation = gql`mutation addHero($name: String!) {
+          addHero(name: $name) {
+            name
           }
+        }`;
+        const variables = { name: 'Bar' };
+
+        const data1 = { allHeroes: [ { name: 'Foo' } ] };
+        const dataMutation = { addHero: { name: 'Bar' } };
+        const data2 = { allHeroes: [ { name: 'Foo' }, { name: 'Bar' } ] };
+
+
+        const apollo = mockApollo({
+          request: { query },
+          result: { data: data1 },
+        }, {
+          request: { query: mutation, variables },
+          result: { data: dataMutation },
         });
 
-        setTimeout(() => {
-          apollo.mutate<{addHero: Hero}>({
-            mutation,
-            variables: { name: 'Mr Baz' },
-            updateQueries: {
-              heroes: (prev: any, { mutationResult }: any) => {
-                return {
-                  allHeroes: {
-                    heroes: [...prev.allHeroes.heroes, mutationResult.data.addHero],
-                  },
-                };
-              },
-            },
-          }).subscribe({
-            error(error) {
-              done.fail(error);
-            },
-          });
-        }, 200);
-      });
+        const obs = apollo.watchQuery({ query });
 
-      it('should update a query with Optimistic Response after mutation', (done: jest.DoneCallback) => {
-        const obs = apollo.watchQuery({ query: queryOptimistic, fetchPolicy: 'network-only' });
-
-        subscribeAndCount(done, obs, (handleCount, result) => {
+        subscribeAndCount(done, obs, (handleCount, {data}) => {
           if (handleCount === 1) {
-            expect(result.data).toEqual(dataOptimistic);
-          } else if (handleCount === 2) {
-            expect(result.data).toEqual({
-              allHeroes: {
-                heroes: [...dataOptimistic.allHeroes.heroes, { id: 3, name: 'Mr Temporary' }],
+            expect(data).toEqual(data1);
+
+            apollo.mutate<any>({
+              mutation,
+              variables,
+              updateQueries: {
+                heroes: (prev: any, { mutationResult }: any) => {
+                  return {
+                    allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
+                  };
+                },
+              },
+            }).subscribe({
+              error(error) {
+                done.fail(error.message);
               },
             });
-          } else if (handleCount === 3) {
-            expect(result.data).toEqual(dataAfterMutationOptimistic);
+          } else if (handleCount === 2) {
+            expect(data).toEqual(data2);
             done();
           }
         });
+      });
 
-        setTimeout(() => {
-          apollo.mutate<{addHero: Hero}>({
-            mutation: mutationOptimistic,
-            variables: { name: 'Mr Baz' },
-            optimisticResponse: {
-              addHero: {
-                id: 3,
-                name: 'Mr Temporary',
+      test('should update a query with Optimistic Response after mutation', (done: jest.DoneCallback) => {
+        const query = gql`query heroes {
+          allHeroes {
+            id
+            name
+          }
+        }`;
+        const mutation = gql`mutation addHero($name: String!) {
+          addHero(name: $name) {
+            id
+            name
+          }
+        }`;
+        const variables = { name: 'Bar' };
+
+        const data1 = { allHeroes: [ { id: 1, name: 'Foo' } ] };
+        const dataMutation = { addHero: { id: 2, name: 'Bar' } };
+        const data2 = { allHeroes: [ { id: 1, name: 'Foo' }, { id: null, name: 'Temp' } ] };
+        const data3 = { allHeroes: [ { id: 1, name: 'Foo' }, { id: 2, name: 'Bar' } ] };
+
+
+        const apollo = mockApollo({
+          request: { query },
+          result: { data: data1 },
+        }, {
+          request: { query: mutation, variables },
+          result: { data: dataMutation },
+        });
+
+        const obs = apollo.watchQuery({ query });
+
+        subscribeAndCount(done, obs, (handleCount, {data}) => {
+          if (handleCount === 1) {
+            expect(data).toEqual(data1);
+
+            apollo.mutate<any>({
+              mutation,
+              variables,
+              optimisticResponse: {
+                addHero: {
+                  id: null,
+                  name: 'Temp',
+                },
               },
-            },
-            updateQueries: {
-              heroesOptimistic: (prev: any, { mutationResult }: any) => {
-                return {
-                  allHeroes: {
-                    heroes: [...prev.allHeroes.heroes, mutationResult.data.addHero],
-                  },
-                };
+              updateQueries: {
+                heroes: (prev: any, { mutationResult }: any) => {
+                  return {
+                    allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
+                  };
+                },
               },
-            },
-          }).subscribe({
-            error(error) {
-              done.fail(error);
-            },
-          });
-        }, 200);
+            }).subscribe({
+              error(error) {
+                done.fail(error.message);
+              },
+            });
+          } else if (handleCount === 2) {
+            expect(data).toEqual(data2);
+          } else if (handleCount === 3) {
+            expect(data).toEqual(data3);
+            done();
+          }
+        });
       });
     });
   });
 
   describe('defaultApolloClient', () => {
 
-    function getClient() {
-      return defaultClient;
-    }
-
-    it('should set a CLIENT_MAP_WRAPPER', () => {
+    test('should set a CLIENT_MAP_WRAPPER', () => {
+      const client = mockClient();
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(getClient)]);
+
       expect(injector.get(CLIENT_MAP_WRAPPER)).toBe(getClient);
+
+      function getClient() {
+        return client;
+      }
     });
 
-    it('should set a CLIENT_MAP', () => {
+    test('should set a CLIENT_MAP', () => {
+      const client = mockClient();
       const injector = ReflectiveInjector.resolveAndCreate([defaultApolloClient(getClient)]);
-      expect(injector.get(CLIENT_MAP)).toEqual({default: defaultClient});
+
+      expect(injector.get(CLIENT_MAP)).toEqual({default: client});
+
+      function getClient() {
+        return client;
+      }
     });
   });
 
   describe('provideClientMap', () => {
-    function getClients() {
-      return {
-        default: defaultClient,
-        extra: extraClient,
-      };
-    }
+    test('should set a CLIENT_MAP_WRAPPER', () => {
+      const defaultClient = mockClient();
+      const extraClient = mockClient();
 
-    it('should set a CLIENT_MAP_WRAPPER', () => {
       const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(getClients)]);
-      expect(injector.get(CLIENT_MAP_WRAPPER)).toBe(getClients);
+      const clientMapWrapper = injector.get(CLIENT_MAP_WRAPPER);
+
+      expect(clientMapWrapper).toBe(getClients);
+
+      function getClients() {
+        return {
+          default: defaultClient,
+          extra: extraClient,
+        };
+      }
     });
 
-    it('should set a CLIENT_MAP', () => {
+    test('should set a CLIENT_MAP', () => {
+      const defaultClient = mockClient();
+      const extraClient = mockClient();
+
       const injector = ReflectiveInjector.resolveAndCreate([provideClientMap(getClients)]);
-      expect(injector.get(CLIENT_MAP)).toEqual({
+      const clientMap = injector.get(CLIENT_MAP);
+
+      expect(clientMap).toEqual({
         default: defaultClient,
         extra: extraClient,
       });
+
+      function getClients() {
+        return {
+          default: defaultClient,
+          extra: extraClient,
+        };
+      }
     });
   });
 });
