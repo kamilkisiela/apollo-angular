@@ -48,4 +48,4 @@ const client = new ApolloClient({
 
 In order for the examples in the previous section to work properly, your application has to obtain authentication credentials (for example a JWT) when the user logs in, store it somehow (for example in LocalStorage) and reload the parts of the UI that are different for logged-in users. It is also equally important to clear the token from local storage when the user logs out and clear ApolloClient's store if it contains sensitive information.
 
-The easiest way to ensure that the UI and store state reflects the current user's permissions is to call `ApolloClient.resetStore()` after the login or logout actions have completed. This will cause the store to be cleared and all queries to be refetched. Another option is to reload the page, which will have a similar effect.
+The easiest way to ensure that the UI and store state reflects the current user's permissions is to call `Apollo.getClient().resetStore();` after the login or logout actions have completed. This will cause the store to be cleared and all queries to be refetched. Another option is to reload the page, which will have a similar effect.
