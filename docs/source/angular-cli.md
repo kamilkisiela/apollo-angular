@@ -36,6 +36,6 @@ ng serve --proxy-config <path to file>
 An example:
 
 ```bash
-ng server --proxy-config proxy.config.json
+ng serve --proxy-config proxy.config.json
 ```
 
