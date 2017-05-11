@@ -103,8 +103,52 @@ class NewEntryComponent {
 
 As you can see, `mutate` method returns an `Observable` that resolves with `ApolloQueryResult`. It is the same result we get when we fetch queries.
 
-However, typically you'd want to keep the concern of understanding the mutation's structure out of your presentational component. The best way to do this is to use the [`props`](queries.html#graphql-props) argument to bind your mutate function:
+However, typically you'd want to keep the concern of understanding the mutation's structure out of your presentational component. The best way to do this is to use a service to bind your mutate function:
 
+```ts
+import {Component, Injectable} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
+
+@Injectable()
+class SubmitRepositoryService {
+  mutation = gql`
+      mutation submitRepository($repoFullName: String!) {
+        submitRepository(repoFullName: $repoFullName) {
+          createdAt
+        }
+  }`;
+
+  constructor(private apollo: Apollo) {
+  }
+
+  submitRepository(repoFullName: string) {
+    return this.apollo.mutate({
+      mutation: this.mutation,
+      variables: {
+        repoFullName: repoFullName
+      }
+    });
+  }
+}
+
+
+@Component({ ... })
+class NewEntryComponent {
+  constructor(private submitRepoService: SubmitRepositoryService) {
+  }
+
+  newRepository() {
+    this.submitRepoService.submitRepository('apollographql/apollo-client')
+      .subscribe(({ data }) => {
+        console.log('got data', data);
+      }, (error) => {
+        console.log('there was an error sending the query', error);
+      });
+  }
+}
+
+```
 > Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing a [`updateQueries`](cache-updates.html#updateQueries) callback to update the result of relevant queries with your mutation results.
 
 <h2 id="optimistic-ui">Optimistic UI</h2>
