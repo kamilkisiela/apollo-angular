@@ -1,6 +1,6 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0-beta.24",
     "name": "hello-world"
   },
   "apps": [
@@ -12,36 +12,26 @@
       ],
       "index": "index.html",
       "main": "main.ts",
+      "polyfills": "polyfills.ts",
       "test": "test.ts",
-      "tsconfig": "tsconfig.json",
+      "tsconfig": "tsconfig.app.json",
       "prefix": "app",
-      "mobile": false,
       "styles": [],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
         "dev": "environments/environment.ts"
       }
     }
   ],
-  "addons": [],
-  "packages": [],
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    }
+  ],
   "defaults": {
     "styleExt": "css",
-    "prefixInterfaces": false,
-    "inline": {
-      "style": false,
-      "template": false
-    },
-    "spec": {
-      "class": false,
-      "component": true,
-      "directive": true,
-      "module": false,
-      "pipe": true,
-      "service": true
-    }
+    "component": {}
   }
 }
