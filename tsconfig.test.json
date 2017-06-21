@@ -2,5 +2,14 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs"
-  }
+  },
+  "files": [
+    "src/index.ts",
+    "tests/utils.spec.ts",
+    "tests/Apollo.spec.ts",
+    "tests/SelectPipe.spec.ts",
+    "tests/ApolloModule.spec.ts",
+    "tests/integration.spec.ts",
+    "node_modules/zone.js/dist/zone.js.d.ts"
+  ]
 }

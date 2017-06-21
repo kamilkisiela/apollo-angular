@@ -29,7 +29,8 @@ export class ZoneScheduler {
   constructor(private zone: Zone) {}
 
   public schedule(...args): Subscription {
-    return <Subscription> this.zone.run(() => queue.schedule.apply(queue, args));
+    return <Subscription> this.zone.run(() => {
+      return queue.schedule.apply(queue, args);
+    });
   }
 }
-

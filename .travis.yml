@@ -28,7 +28,7 @@ before_install:
 
 install:
   - yarn
-  - (cd examples/hello-world && rm -rf node_modules/apollo-angular && npm i)
+  - (cd examples/hello-world && rm -rf node_modules/apollo-angular && yarn)
 
 script:
   - yarn test
