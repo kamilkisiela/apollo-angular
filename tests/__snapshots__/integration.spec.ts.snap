@@ -5,3 +5,5 @@ exports[`integration render using long form should work 1`] = `"<html><head></he
 exports[`integration render using renderModule should work 1`] = `"<html><head></head><body><app >Website: online</app></body></html>"`;
 
 exports[`integration render using renderModuleFactory should work 1`] = `"<html><head></head><body><app >Website: online</app></body></html>"`;
+
+exports[`integration subscriptions should update the UI 1`] = `"<ul><li>Foo</li><li>Bar</li></ul>"`;
