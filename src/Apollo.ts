@@ -8,6 +8,7 @@ import { ApolloQueryObservable } from './ApolloQueryObservable';
 import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from './tokens';
 import { ClientMapWrapper, ClientWrapper, ClientMap } from './types';
 import { wrapWithZone, fromPromise } from './utils';
+import { turnIntoMacrotask, isServer } from './server';
 
 /**
  * Base class that handles ApolloClient
@@ -19,12 +20,15 @@ export class ApolloBase {
   ) {}
 
   public watchQuery<T>(options: WatchQueryOptions): ApolloQueryObservable<T> {
-    return new ApolloQueryObservable<T>(rxify(this.client.watchQuery)(options));
+    const obs = new ApolloQueryObservable<T>(rxify(this.client.watchQuery)(options));
+    return wrapWithZone<ApolloQueryResult<T>>(obs) as ApolloQueryObservable<T>;
   }
 
   public query<T>(options: WatchQueryOptions): Observable<ApolloQueryResult<T>> {
+    const obs = fromPromise<ApolloQueryResult<T>>(() => this.client.query<T>(options));
+
     return wrapWithZone<ApolloQueryResult<T>>(
-      fromPromise<ApolloQueryResult<T>>(() => this.client.query<T>(options)),
+      isServer() ? turnIntoMacrotask(obs, 'apollo.query') : obs,
     );
   }
 

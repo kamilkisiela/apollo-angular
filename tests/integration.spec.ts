@@ -33,6 +33,7 @@ import gql from 'graphql-tag';
 import 'rxjs/add/operator/take';
 
 import { ApolloModule, Apollo, APOLLO_PROVIDERS, provideClientMap } from '../src';
+import { lockAsServer, unlockAll } from '../src/server';
 import { mockClient, mockClientWithSub } from './_mocks';
 import { subscribeAndCount } from './_utils';
 
@@ -103,9 +104,13 @@ describe('integration', () => {
     beforeEach(() => {
       doc = '<html><head></head><body><app></app></body></html>';
       called = false;
+      lockAsServer();
     });
 
-    afterEach(() => { expect(called).toBe(true); });
+    afterEach(() => {
+      expect(called).toBe(true);
+      unlockAll();
+    });
 
     test('using long form should work', async(() => {
       const platform =

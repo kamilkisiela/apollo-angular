@@ -13,6 +13,12 @@
     "target": "es5",
     "typeRoots": [
       "../node_modules/@types"
-    ]
+    ],
+    "paths": {
+      "@angular/*": ["../node_modules/@angular/*"],
+      "apollo-client": ["../node_modules/apollo-client"],
+      "apollo-client-rxjs": ["../node_modules/apollo-angular/node_modules/apollo-client-rxjs"],
+      "tslib": ["../node_modules/apollo-angular/node_modules/tslib"]
+    }
   }
 }

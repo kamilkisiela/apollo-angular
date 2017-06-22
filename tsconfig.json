@@ -8,19 +8,16 @@
     "rootDir": ".",
     "outDir": "build",
     "lib": ["es6", "dom"],
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "importHelpers": true
   },
   "files": [
     "src/index.ts",
-    "tests/utils.spec.ts",
-    "tests/Apollo.spec.ts",
-    "tests/SelectPipe.spec.ts",
-    "tests/ApolloModule.spec.ts",
-    "tests/integration.spec.ts",
     "node_modules/zone.js/dist/zone.js.d.ts"
   ]
 }

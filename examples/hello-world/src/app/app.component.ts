@@ -34,12 +34,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public ngOnInit() {
     // Query users data with observable variables
-    this.users = this.apollo.watchQuery<UsersQuery>({
+    this.users = (this.apollo.watchQuery<UsersQuery>({
       query: UsersQueryNode,
       variables: {
         name: this.nameFilter,
       },
-    })
+    }) as any)
       // Return only users, not the whole ApolloQueryResult
       .map(result => result.data.users) as any;
 
@@ -56,13 +56,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public newUser(firstName: string) {
     // Call the mutation called addUser
-    this.apollo.mutate<AddUserMutation>({
+    (this.apollo.mutate<AddUserMutation>({
       mutation: AddUserMutationNode,
       variables: {
         firstName,
         lastName: this.lastName,
       },
-    })
+    }) as any)
       .take(1)
       .subscribe({
         next: ({data}) => {
