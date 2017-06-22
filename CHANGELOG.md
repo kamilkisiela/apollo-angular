@@ -3,6 +3,7 @@
 ### vNEXT
 
 - **Potential breaking change:** Run a GraphQL Operation on subscribe, applies to `mutate()` and `query()` ([PR #304](https://github.com/apollographql/apollo-angular/pull/304))
+- Use `InjectionToken`, instead of deprecated `OpaqueToken` ([PR #316](https://github.com/apollographql/apollo-angular/pull/316))
 
 ### v0.13.0
 
