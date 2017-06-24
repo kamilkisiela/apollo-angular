@@ -85,7 +85,7 @@ class FeedComponent implements OnInit {
 }
 ```
 
-The `fetchMore` method takes a map of `variables` to be sent with the new query. Here, we're setting the new offsetso that we fetch items that aren't already displayed on the feed. This variable map is merged with the one that's been specified for the query associated with the component. This means that other variables, e.g. the `limit` variable, will have the same value as they do within the component query.
+The `fetchMore` method takes a map of `variables` to be sent with the new query. Here, we're setting the new offset so that we fetch items that aren't already displayed on the feed. This variable map is merged with the one that's been specified for the query associated with the component. This means that other variables, e.g. the `limit` variable, will have the same value as they do within the component query.
 
 It can also take a `query` named argument, which can be a GraphQL document containing a query that will be fetched in order to fetch more information; we refer to this as the `fetchMore` query. By default, the `fetchMore` query is the query associated with the component, i.e. the `feedQuery` in this case.
 
