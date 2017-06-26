@@ -235,6 +235,11 @@ class FeedComponent implements OnInit {
   }
 }
 ```
+The `map` operator we are using here is provided by the RxJS `Observable` which serves as the basis for the `ApolloQueryObservable`. 
+By default Angular however only includes a minimal subset of RxJS `Observable` operators in order to keep the [footprint small](https://github.com/angular/angular/issues/5632#issuecomment-167026172).
+
+To be able to use the `map` operator (and most others like `switchMap`, `filter`, `merge`, ...) these have to be explicitly imported as done in the example: `import 'rxjs/add/operator/map'`.
+
 
 [ApolloQueryResult]: /core/apollo-client-api.html#ApolloQueryResult
 [ApolloClient.watchQuery]: /core/apollo-client-api.html#ApolloClient.watchQuery
