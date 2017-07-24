@@ -40,7 +40,7 @@ For example, if you want to add something to a list of objects without refetchin
 
 <h2 id="fetchMore">Using `fetchMore`</h2>
 
-`fetchMore` can be used to manually update the result of one query based on the data returned by another query. Most often, it is used to handle pagination. In our GitHunt example, we have a paginated feed that displays a list of GitHub respositories. When we hit the "Load More" button, we don't Apollo Client to throw away the repository information it has already loaded. Instead, it should just append the newly loaded repositories to the list of repositories that Apollo Client already has in the store. With this update, our UI component should re-render and show us all of the available repositories.
+`fetchMore` can be used to manually update the result of one query based on the data returned by another query. Most often, it is used to handle pagination. In our GitHunt example, we have a paginated feed that displays a list of GitHub respositories. When we hit the "Load More" button, we don't want Apollo Client to throw away the repository information it has already loaded. Instead, it should just append the newly loaded repositories to the list of repositories that Apollo Client already has in the store. With this update, our UI component should re-render and show us all of the available repositories.
 
 This is possible with `fetchMore`. The `fetchMore` method allows us to fetch another query and incorporate that query's result into the result that our component query previously received. We can see it in action within the [GitHunt](https://github.com/apollographql/githunt-angular) code:
 
