@@ -6,7 +6,6 @@ import {
   WatchQueryOptions,
   MutationOptions,
   SubscriptionOptions,
-  ApolloExecutionResult,
 } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
@@ -35,10 +34,8 @@ export class ApolloBase {
     );
   }
 
-  public mutate<T>(options: MutationOptions): Observable<ApolloExecutionResult<T>> {
-    return wrapWithZone<ApolloExecutionResult<T>>(
-      fromPromise<ApolloExecutionResult<T>>(() => this.client.mutate<T>(options)),
-    );
+  public mutate<T>(options: MutationOptions<T>) {
+    return wrapWithZone(fromPromise(() => this.client.mutate(options)));
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
