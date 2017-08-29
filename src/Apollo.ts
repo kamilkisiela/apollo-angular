@@ -1,8 +1,12 @@
 import { Injectable, Provider } from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
 import {
-  ApolloClient, ApolloQueryResult, WatchQueryOptions, MutationOptions, SubscriptionOptions,
-  ApolloExecutionResult
+  ApolloClient,
+  ApolloQueryResult,
+  WatchQueryOptions,
+  MutationOptions,
+  SubscriptionOptions,
+  ApolloExecutionResult,
 } from 'apollo-client';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';

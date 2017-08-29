@@ -76,7 +76,7 @@ describe('integration', () => {
     class AsyncServerApp {
       public text = '';
 
-      constructor(private apollo: Apollo,) {
+      constructor(private apollo: Apollo) {
       }
 
       public ngOnInit() {
@@ -169,7 +169,7 @@ describe('integration', () => {
 
       const client = mockClientWithSub([{
         request: { query: querySub },
-        results: [{ result: { data: dataSub } }],
+        results: [{ result: dataSub as any }],
         id: 1,
       }], [{
         request: { query },
@@ -183,7 +183,7 @@ describe('integration', () => {
       class HeroesComponent implements OnInit {
         public heroes: any[] = [];
 
-        constructor(private apollo: Apollo,) {
+        constructor(private apollo: Apollo) {
         }
 
         public ngOnInit() {
