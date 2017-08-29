@@ -76,9 +76,8 @@ describe('integration', () => {
     class AsyncServerApp {
       public text = '';
 
-      constructor(
-        private apollo: Apollo,
-      ) {}
+      constructor(private apollo: Apollo,) {
+      }
 
       public ngOnInit() {
         this.apollo.query<any>({ query })
@@ -92,37 +91,40 @@ describe('integration', () => {
     @NgModule({
       declarations: [AsyncServerApp],
       imports: [
-        BrowserModule.withServerTransition({appId: 'async-server'}),
+        BrowserModule.withServerTransition({ appId: 'async-server' }),
         ServerModule,
         ApolloModule.withClient(provideClient),
       ],
       bootstrap: [AsyncServerApp],
     })
-    class AsyncServerModule {}
+    class AsyncServerModule {
+    }
 
     beforeEach(() => {
       doc = '<html><head></head><body><app></app></body></html>';
       called = false;
     });
 
-    afterEach(() => { expect(called).toBe(true); });
+    afterEach(() => {
+      expect(called).toBe(true);
+    });
 
     test('using long form should work', async(() => {
       const platform =
-        platformDynamicServer([{provide: INITIAL_CONFIG, useValue: {document: doc}}]);
+        platformDynamicServer([{ provide: INITIAL_CONFIG, useValue: { document: doc } }]);
 
       platform.bootstrapModule(AsyncServerModule)
         .then((moduleRef) => {
           const applicationRef: ApplicationRef = moduleRef.injector.get(ApplicationRef);
           return toPromise.call(first.call(
             filter.call(applicationRef.isStable, (isStable: boolean) => isStable)));
-          })
-          .then(() => {
-            const str = platform.injector.get(PlatformState).renderToString();
-            expect(clearNgVersion(str)).toMatchSnapshot();
-            platform.destroy();
-            called = true;
-          });
+        })
+        .then(() => {
+          const str = platform.injector.get(PlatformState).renderToString();
+          expect(clearNgVersion(str)).toMatchSnapshot();
+          platform.destroy();
+          called = true;
+        });
     }));
 
     test('using renderModule should work', async(() => {
@@ -134,13 +136,13 @@ describe('integration', () => {
 
     test('using renderModuleFactory should work', async(() => {
       const platform =
-        platformDynamicServer([{provide: INITIAL_CONFIG, useValue: {document: doc}}]);
+        platformDynamicServer([{ provide: INITIAL_CONFIG, useValue: { document: doc } }]);
       const compilerFactory: CompilerFactory = platform.injector.get(CompilerFactory, null);
       const moduleFactory = compilerFactory
         .createCompiler()
         .compileModuleSync(AsyncServerModule);
 
-      renderModuleFactory(moduleFactory, {document: doc}).then(output => {
+      renderModuleFactory(moduleFactory, { document: doc }).then(output => {
         expect(clearNgVersion(output)).toMatchSnapshot();
         called = true;
       });
@@ -162,12 +164,12 @@ describe('integration', () => {
         }
       }`;
 
-      const data = { allHeroes: [ { id: 1, name: 'Foo' } ] };
-      const dataSub = { addedHero: { id: 2, name: 'Bar' }};
+      const data = { allHeroes: [{ id: 1, name: 'Foo' }] };
+      const dataSub = { addedHero: { id: 2, name: 'Bar' } };
 
       const client = mockClientWithSub([{
         request: { query: querySub },
-        results: [{ result: dataSub }],
+        results: [{ result: { data: dataSub } }],
         id: 1,
       }], [{
         request: { query },
@@ -181,9 +183,8 @@ describe('integration', () => {
       class HeroesComponent implements OnInit {
         public heroes: any[] = [];
 
-        constructor(
-          private apollo: Apollo,
-        ) {}
+        constructor(private apollo: Apollo,) {
+        }
 
         public ngOnInit() {
           const obs = this.apollo.watchQuery<any>({ query });
@@ -221,7 +222,7 @@ describe('integration', () => {
       );
 
       getTestBed().configureTestingModule({
-        declarations: [ HeroesComponent ],
+        declarations: [HeroesComponent],
         providers: [
           { provide: ComponentFixtureAutoDetect, useValue: true },
           APOLLO_PROVIDERS,
