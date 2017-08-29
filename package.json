@@ -66,7 +66,7 @@
     "ts-jest": "^19.0.9",
     "tslint": "^4.5.1",
     "typescript": "~2.4.2",
-    "validate-commit-msg": "^2.11.2",
+    "validate-commit-msg": "^2.14.0",
     "zone.js": "^0.8.4"
   },
   "jest": {
