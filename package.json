@@ -33,7 +33,7 @@
   "peerDependencies": {
     "@angular/core": "^2.0.0 || >=4.0.0-beta <5.0.0",
     "apollo-client": ">=0.8.0 <=0.10.1 || >=1.0.0-rc <2.0.0",
-    "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1 || ^5.0.0"
+    "rxjs": "^5.0.0-beta.12 || ^5.0.0-rc.1 || ^5.0.0 || ^5.4.2"
   },
   "dependencies": {
     "apollo-client-rxjs": "^0.6.0-rc.1"
@@ -61,7 +61,7 @@
     "remap-istanbul": "^0.9.1",
     "rimraf": "^2.6.1",
     "rollup": "^0.41.4",
-    "rxjs": "^5.0.0",
+    "rxjs": "^5.4.2",
     "ts-jest": "^19.0.9",
     "tslint": "^4.5.1",
     "typescript": "~2.4.2",
