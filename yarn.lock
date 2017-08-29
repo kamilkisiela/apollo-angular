@@ -2,19 +2,19 @@
 # yarn lockfile v1
 
 
-"@angular/animations@^4.0.3":
+"@angular/animations@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-4.3.6.tgz#bf9283ec7c8c98b32f569d84dcda10890fdc0262"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/common@^4.0.3":
+"@angular/common@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-4.3.6.tgz#ed37e9307c7506dd834797c1a6cf675e52b5b6ee"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler-cli@^4.0.3":
+"@angular/compiler-cli@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-4.3.6.tgz#6afa6aef68dd681e61b398be4d6270e5c8680b12"
   dependencies:
@@ -22,37 +22,37 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@^4.0.3":
+"@angular/compiler@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-4.3.6.tgz#be170df098b71e835ccedf168d5fb7b23e5045b8"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@^4.0.3":
+"@angular/core@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-4.3.6.tgz#bbac63d68d0f7bcb389d12b34208652be3287e96"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/http@^4.0.3":
+"@angular/http@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-4.3.6.tgz#563827d1a7d5e89e3b7d86b77fbbd367b2c08591"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser-dynamic@^4.0.3":
+"@angular/platform-browser-dynamic@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-4.3.6.tgz#9eabf826f119c98f85c2a96edcb18ab00b4efb1c"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser@^4.0.3":
+"@angular/platform-browser@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-4.3.6.tgz#6152b1f3b78d0246fc5e150e2f7b9ed4337e3ba6"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-server@^4.0.3":
+"@angular/platform-server@^4.3.6":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-4.3.6.tgz#369d49844f1c0a9a10c7cba9b0cb78c2520741a5"
   dependencies:
@@ -1029,10 +1029,6 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
 graphql-anywhere@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-3.0.1.tgz#73531db861174c8f212eafb9f8e84944b38b4e5a"
-
-graphql-tag@^1.3.1:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-1.3.2.tgz#7abb3a8fd9f3415d07163314ed237061c785b759"
 
 graphql-tag@^2.0.0:
   version "2.0.0"
