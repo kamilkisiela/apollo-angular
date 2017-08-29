@@ -7,7 +7,7 @@
     "declaration": true,
     "rootDir": ".",
     "outDir": "build",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom", "esnext"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
