@@ -28,7 +28,7 @@
     "bundle": "rollup -c",
     "clean": "rimraf build/* coverage/*",
     "prepublish": "npm run clean && npm run build",
-    "commitmsg": "validate-commit-msg"
+    "commitmsg": "commitlint -e"
   },
   "peerDependencies": {
     "@angular/core": "^2.0.0 || >=4.0.0-beta <5.0.0",
@@ -48,6 +48,7 @@
     "@angular/platform-browser": "^4.3.6",
     "@angular/platform-browser-dynamic": "^4.3.6",
     "@angular/platform-server": "^4.3.6",
+    "@commitlint/cli": "^3.1.3",
     "@types/graphql": "^0.10.2",
     "@types/jest": "^19.2.2",
     "@types/node": "^6.0.59",
@@ -66,7 +67,6 @@
     "ts-jest": "^19.0.9",
     "tslint": "^4.5.1",
     "typescript": "~2.4.2",
-    "validate-commit-msg": "^2.14.0",
     "zone.js": "^0.8.4"
   },
   "jest": {
