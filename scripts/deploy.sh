@@ -38,4 +38,4 @@ cp README.md npm/
 cp LICENSE npm/
 
 echo 'deploying to npm...'
-# cd npm && npm publish --tag next && git push --tags
+cd npm && npm publish --tag next && git push --tags
