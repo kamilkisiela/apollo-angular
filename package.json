@@ -28,7 +28,8 @@
     "bundle": "rollup -c",
     "clean": "rimraf build/* coverage/*",
     "prepublish": "npm run clean && npm run build",
-    "commitmsg": "commitlint -e"
+    "commitmsg": "commitlint -e",
+    "deploy": "./scripts/deploy.sh"
   },
   "peerDependencies": {
     "@angular/core": "^2.0.0 || >=4.0.0-beta <5.0.0",

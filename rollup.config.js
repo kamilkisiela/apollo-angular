@@ -3,6 +3,7 @@ export default {
   dest: 'build/bundles/apollo.umd.js',
   format: 'umd',
   moduleName: 'ng.apollo',
+  sourceMap: true,
   onwarn,
   globals: {
     '@angular/core': 'ng.core',
