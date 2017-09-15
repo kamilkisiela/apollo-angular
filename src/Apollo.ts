@@ -31,13 +31,13 @@ export class ApolloBase {
 
   public query<T>(options: WatchQueryOptions): Observable<ApolloQueryResult<T>> {
     return wrapWithZone<ApolloQueryResult<T>>(
-      fromPromise<ApolloQueryResult<T>>(() => this.client.query<T>(options)),
+      fromPromise<ApolloQueryResult<T>>(() => this.client.query<T>({ ...options })),
     );
   }
 
   public mutate<T>(options: MutationOptions): Observable<ApolloExecutionResult<T>> {
     return wrapWithZone<ApolloExecutionResult<T>>(
-      fromPromise<ApolloExecutionResult<T>>(() => this.client.mutate<T>(options)),
+      fromPromise<ApolloExecutionResult<T>>(() => this.client.mutate<T>({ ...options })),
     );
   }
 
