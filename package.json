@@ -32,8 +32,8 @@
     "deploy": "./scripts/deploy.sh"
   },
   "peerDependencies": {
-    "@angular/core": ">=4.0.0 <5.0.0",
-    "apollo-client": ">=1.0.0 <2.0.0",
+    "@angular/core": "^4.0.0 || ^5.0.0",
+    "apollo-client": "^1.0.0",
     "rxjs": "^5.0.1"
   },
   "dependencies": {
