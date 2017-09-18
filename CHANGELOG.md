@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Use `InjectionToken`, instead of deprecated `OpaqueToken` ([PR #358](https://github.com/apollographql/apollo-angular/pull/358))
+
 ### v0.13.1
 
 - Update dependencies ([PR #347](https://github.com/apollographql/apollo-angular/pull/304))
