@@ -3,6 +3,8 @@
 ### vNEXT
 
 - Use `InjectionToken`, instead of deprecated `OpaqueToken` ([PR #358](https://github.com/apollographql/apollo-angular/pull/358))
+- Expose `ClientMap`, `ClientMapWrapper`, `ClientWrapper`
+- No longer expose `APOLLO_PROVIDERS`, `APOLLO_DIRECTIVES`
 
 ### v0.13.1
 
