@@ -27,7 +27,7 @@
     "postbuild": "npm run bundle",
     "bundle": "rollup -c",
     "clean": "rimraf build/* coverage/*",
-    "prepublish": "npm run clean && npm run build",
+    "prepare": "npm run build",
     "commitmsg": "commitlint -e",
     "deploy": "./scripts/deploy.sh"
   },
