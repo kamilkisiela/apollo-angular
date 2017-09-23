@@ -4,6 +4,7 @@
 
 - Use `InjectionToken`, instead of deprecated `OpaqueToken` ([PR #358](https://github.com/apollographql/apollo-angular/pull/358))
 - Expose `ClientMap`, `ClientMapWrapper`, `ClientWrapper` ([PR #360](https://github.com/apollographql/apollo-angular/pull/360))
+- Don't reuse options object for mutate and query ([PR #356](https://github.com/apollographql/apollo-angular/pull/356))
 
 ### v0.13.1
 
