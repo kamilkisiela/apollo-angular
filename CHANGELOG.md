@@ -4,6 +4,8 @@
 
 - Use `InjectionToken`, instead of deprecated `OpaqueToken` ([PR #358](https://github.com/apollographql/apollo-angular/pull/358))
 - Expose `ClientMap`, `ClientMapWrapper`, `ClientWrapper` ([PR #360](https://github.com/apollographql/apollo-angular/pull/360))
+- Allow to install the library directly from git (NPM v5+ required) ([PR #362](https://github.com/apollographql/apollo-angular/pull/362))
+- Fix AoT issue in Angular 5 **(added InjectDecorator on ClientMap in Apollo)** ([PR #365](https://github.com/apollographql/apollo-angular/pull/365))
 
 ### v0.13.1
 
