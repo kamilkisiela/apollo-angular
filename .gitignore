@@ -46,3 +46,7 @@ jspm_packages
 
 # IDEs
 .idea/
+
+# Packages lock
+package-lock.json
+yarn.lock
