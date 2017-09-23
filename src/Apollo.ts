@@ -1,4 +1,4 @@
-import { Injectable, Provider } from '@angular/core';
+import {Inject, Injectable, Provider} from '@angular/core';
 import { rxify } from 'apollo-client-rxjs';
 import {
   ApolloClient,
@@ -58,7 +58,7 @@ export class Apollo extends ApolloBase {
   // XXX: We assume user has a polyfill for Map (just like Angular does)
   private map: Map<string, ApolloBase> = new Map<string, ApolloBase>();
 
-  constructor(clientMap: ClientMap) {
+  constructor(@Inject(CLIENT_MAP) clientMap: ClientMap) {
     super(clientMap['default']);
 
     for (const name in clientMap) {
