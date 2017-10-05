@@ -77,6 +77,10 @@
     lodash "^4.17.4"
     meow "^3.7.0"
 
+"@commitlint/config-angular@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-angular/-/config-angular-3.1.1.tgz#55f2283803c6a4e01e755d0912eff9d757353366"
+
 "@commitlint/core@^3.1.3":
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/@commitlint/core/-/core-3.1.3.tgz#7dfa2615f64b62775d6dfbd35eb01c0a444c911d"
