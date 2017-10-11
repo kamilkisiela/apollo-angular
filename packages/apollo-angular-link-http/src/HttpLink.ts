@@ -1,5 +1,5 @@
 import { Injectable, Inject, Optional } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApolloLink, Observable, RequestHandler, Operation } from 'apollo-link';
 import { print } from 'graphql/language/printer';
 import { ExecutionResult } from 'graphql';
@@ -22,53 +22,51 @@ export class HttpLink extends ApolloLink {
     // set options that has been defined at NgModule level
     this.options = options;
 
-    this.requester = (op: any, forward?: any) => {
-      return new ApolloLink(
-        (operation: Operation) => {
-            return new Observable((observer: any) => {
-              const { operationName, variables, query } = operation;
-              const body = {
-                operationName,
-                variables,
-                query: print(query),
-              };
+    this.requester = new ApolloLink(
+      (operation: Operation) =>
+        new Observable((observer: any) => {
+          const { operationName, variables, query } = operation;
+          const body = {
+            operationName,
+            variables,
+            query: print(query),
+          };
 
-              let serializedBody;
-              try {
-                serializedBody = JSON.stringify(body);
-              } catch (e) {
-                throw new Error(
-                  `Network request failed. Payload is not serializable: ${e.message}`,
-                );
-              }
-
-              const obs = httpClient.post<Object>(this.options.uri, serializedBody, {
-                observe: 'response',
-                responseType: 'json',
-                reportProgress: false,
-              });
-
-              const sub = obs.subscribe({
-                next: (result: HttpResponse<any>) => {
-                  observer.next(result.body);
-                },
-                error: (err: Error) => {
-                  observer.error(err);
-                },
-                complete: () => {
-                  observer.complete();
-                }
-              });
-
-              return () => {
-                if (!sub.closed) {
-                  sub.unsubscribe();
-                }
-              };
-            })
+          let serializedBody;
+          try {
+            serializedBody = JSON.stringify(body);
+          } catch (e) {
+            throw new Error(
+              `Network request failed. Payload is not serializable: ${e.message}`,
+            );
           }
-        ).request(op, forward);
-    };
+
+          const obs = httpClient.post<Object>(this.options.uri, serializedBody, {
+            observe: 'response',
+            responseType: 'json',
+            reportProgress: false,
+          });
+
+          const sub = obs.subscribe({
+            next: (result: HttpResponse<any>) => {
+              observer.next(result.body);
+            },
+            error: (err: Error) => {
+              observer.error(err);
+
+            },
+            complete: () => {
+              observer.complete();
+            }
+          });
+
+            return () => {
+              if (!sub.closed) {
+                sub.unsubscribe();
+              }
+            };
+          })
+      ).request;
   }
 
   public create(opts: Options): HttpLink {
