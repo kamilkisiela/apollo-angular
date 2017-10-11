@@ -8,12 +8,11 @@
     "**/.git": true,
     "**/.DS_Store": true,
     "**/node_modules/**": true,
-    "build": true,
-    "coverage": true,
+    "**/build/**": true,
+    "**/coverage/**": true,
     "compiled": true,
     "examples/hello-world/dist": true,
-    "npm": true,
-    "yarn.lock": true
+    "npm": true
   },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

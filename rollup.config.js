@@ -1,21 +1,32 @@
-export default {
-  entry: 'build/src/index.js',
-  dest: 'build/bundles/apollo.umd.js',
-  format: 'umd',
-  moduleName: 'ng.apollo',
-  sourceMap: true,
-  onwarn,
-  globals: {
-    '@angular/core': 'ng.core',
-    'rxjs/Observable': 'Rx',
-    'rxjs/observable/from': 'Rx.Observable',
-    'rxjs/observable/fromPromise': 'Rx.Observable',
-    'rxjs/scheduler/queue': 'Rx.Scheduler',
-    'rxjs/operator/observeOn': 'Rx.Observable.prototype',
-    'apollo-client-rxjs': 'apollo.rxjs',
-    'apollo-client': 'apollo',
-  }
+export const globals = {
+  // Angular
+  '@angular/core': 'ng.core',
+  '@angular/common/http': 'ng.common.http',
+  // Apollo
+  'apollo-link': 'httpLink',
+  'apollo-client-rxjs': 'apollo.rxjs',
+  'apollo-client': 'apollo',
+  // RxJS
+  'rxjs/Observable': 'Rx',
+  'rxjs/observable/from': 'Rx.Observable',
+  'rxjs/observable/fromPromise': 'Rx.Observable',
+  'rxjs/scheduler/queue': 'Rx.Scheduler',
+  'rxjs/operator/observeOn': 'Rx.Observable.prototype'
 };
+
+export default name => ({
+  input: 'build/src/index.js',
+  output: {
+    file: 'build/bundle.umd.js',
+    format: 'umd'
+  },
+  name: `apollo.${name}`,
+  exports: 'named',
+  sourcemap: true,
+  external: Object.keys(globals),
+  onwarn,
+  globals,
+});
 
 function onwarn(message) {
   const suppressed = [

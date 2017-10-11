@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+lerna-debug.log
 
 # Runtime data
 pids
@@ -13,7 +14,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+packages/*/coverage
 
 # nyc test coverage
 .nyc_output
@@ -25,10 +26,10 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/
-compiled
+packages/*/build/
 
 # Dependency directories
+packages/*/node_modules
 node_modules
 jspm_packages
 
@@ -50,3 +51,5 @@ jspm_packages
 # Packages lock
 package-lock.json
 yarn.lock
+packages/**/package-lock.json
+packages/**/yarn.lock

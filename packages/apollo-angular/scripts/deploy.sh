@@ -13,8 +13,8 @@ mkdir ./npm
 # Copy all files from ./build/src to /npm
 cd ./build/src && cp -r ./ ../../npm/
 # Copy also the umd bundle with the source map file
-cd ../bundles/
-cp apollo.umd.js ../../npm/ && cp apollo.umd.js.map ../../npm/
+cd ../
+cp bundle.umd.js ../../npm/ && cp bundle.umd.js.map ../../npm/
 
 # Back to the root directory
 cd ../../
@@ -24,7 +24,7 @@ cd ../../
 node -e "var package = require('./package.json'); \
   delete package.jest; \
   delete package.scripts; \
-  package.main = 'apollo.umd.js'; \
+  package.main = 'bundle.umd.js'; \
   package.module = 'index.js'; \
   package['jsnext:main'] = 'index.js'; \
   package.typings = 'index.d.ts'; \
