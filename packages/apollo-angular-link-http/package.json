@@ -1,0 +1,62 @@
+{
+  "name": "apollo-angular-link-http",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "license": "MIT",
+  "main": "./build/bundle.umd.js",
+  "module": "./build/src/index.js",
+  "jsnext:main": "./build/src/index.js",
+  "typings": "./build/src/index.d.ts",
+  "scripts": {
+    "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
+    "bundle": "rollup -c rollup.config.js",
+    "test": "npm run test-only",
+    "test-only": "jest",
+    "postbuild": "npm run bundle"
+  },
+  "dependencies": {
+    "graphql": "^0.11.2",
+    "jest": "^21.2.1"
+  },
+  "peerDependencies": {
+    "apollo-link": "^0.7.0"
+  },
+  "devDependencies": {
+    "@angular/common": "^4.4.4",
+    "@angular/compiler": "^4.4.4",
+    "@angular/compiler-cli": "^4.4.4",
+    "@angular/core": "^4.4.4",
+    "@angular/http": "^4.4.4",
+    "@angular/platform-browser": "^4.4.4",
+    "@angular/platform-browser-dynamic": "^4.4.4",
+    "@types/graphql": "^0.10.2",
+    "@types/jest": "^21.1.2",
+    "apollo-cache-inmemory": "^0.2.0-rc.0",
+    "apollo-client": "^2.0.0-rc.0",
+    "apollo-link": "^0.7.0",
+    "graphql-tag": "^2.4.2",
+    "jest-zone-patch": "0.0.8",
+    "rxjs": "^5.4.2",
+    "ts-jest": "^21.1.2",
+    "typescript": "^2.5.3",
+    "zone.js": "^0.8.4"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.test.json"
+      }
+    },
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "transform": {
+      ".ts": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.spec\\.ts$",
+    "roots": [
+      "<rootDir>/tests"
+    ],
+    "browser": true
+  }
+}
