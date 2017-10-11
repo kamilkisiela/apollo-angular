@@ -3,37 +3,17 @@ sudo: false
 language: node_js
 
 node_js:
-  - "6"
-
-cache:
-  directories:
-    # cache node modules
-    - $HOME/.npm
-    - $HOME/.yarn-cache
-    - node_modules
-    - examples/hello-world/node_modules
+  - "8"
 
 notifications:
-  # disable email notification
   email: false
 
-before_install:
-  # Repo for Yarn
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add coveralls
-  # remove unused node modules from cache
-  - npm prune
-  - (cd examples/hello-world && npm prune)
-
 install:
-  - yarn
-  - (cd examples/hello-world && rm -rf node_modules/apollo-angular && npm i)
+  - npm run bootstrap
+  - npm prune
 
 script:
-  - yarn test
-  - (cd examples/hello-world && npm test)
+  - npm run test
 
-after_script:
-  # send code-coverage report to coveralls
-  - coveralls < ./coverage/remapped/lcov.info || true
+#after_script:
+#  - coveralls < ./coverage/remapped/lcov.info || true

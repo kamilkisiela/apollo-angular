@@ -32,10 +32,5 @@ node -e "var package = require('./package.json'); \
   fs.writeFileSync('./npm/package.json', JSON.stringify(package, null, 2)); \
   "
 
-
-# Copy few more files to ./npm
-cp README.md npm/
-cp LICENSE npm/
-
 echo 'deploying to npm...'
 cd npm && npm publish --tag next && git push --tags
