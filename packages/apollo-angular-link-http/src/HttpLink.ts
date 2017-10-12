@@ -32,16 +32,7 @@ export class HttpLink extends ApolloLink {
             query: print(query),
           };
 
-          let serializedBody;
-          try {
-            serializedBody = JSON.stringify(body);
-          } catch (e) {
-            throw new Error(
-              `Network request failed. Payload is not serializable: ${e.message}`,
-            );
-          }
-
-          const obs = httpClient.post<Object>(this.options.uri, serializedBody, {
+          const obs = httpClient.post<Object>(this.options.uri, body, {
             observe: 'response',
             responseType: 'json',
             reportProgress: false,
@@ -70,6 +61,7 @@ export class HttpLink extends ApolloLink {
   }
 
   public create(opts: Options): HttpLink {
+    // XXX we have to allow for creating multiple HttpLinks
     if (this.options) {
       throw new Error('HttpLink has been alread created');
     }
