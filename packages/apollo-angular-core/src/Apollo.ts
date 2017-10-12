@@ -14,17 +14,8 @@ import {Watcher} from './Watcher';
 import {ApolloOptions} from './types';
 import {fromPromise} from './utils';
 
-@Injectable()
-export class Apollo {
-  private client: ApolloClient<any>;
-
-  public create<TCacheShape>(options: ApolloOptions): void {
-    if (this.client) {
-      throw new Error('Apollo has been already created');
-    }
-
-    this.client = new ApolloClient<TCacheShape>({...options} as any);
-  }
+export class ApolloBase<TCacheShape> {
+  constructor(public client?: ApolloClient<TCacheShape>) {}
 
   public watchQuery<T>(
     options: WatchQueryOptions
@@ -57,9 +48,15 @@ export class Apollo {
   }
 
   public getClient() {
-    this.beforeEach();
-
     return this.client;
+  }
+
+  public setClient(client: ApolloClient<TCacheShape>) {
+    if (this.client) {
+      throw new Error('Client has been already defined');
+    }
+
+    this.client = client;
   }
 
   private beforeEach(): void {
@@ -68,7 +65,50 @@ export class Apollo {
 
   private checkInstance(): void {
     if (!this.client) {
-      throw new Error('Apollo has not been created yet');
+      throw new Error('Client has not been defined yet');
     }
+  }
+}
+
+@Injectable()
+export class Apollo extends ApolloBase<any> {
+  private map: Map<string, ApolloBase<any>> = new Map<string, ApolloBase<any>>();
+
+  constructor() {
+    super();
+  }
+
+  public create<TCacheShape>(options: ApolloOptions, name?: string): void {
+    if (name && name !== 'default') {
+      this.createNamed<TCacheShape>(name, options);
+    } else {
+      this.createDefault<TCacheShape>(options);
+    }
+  }
+
+  public default(): ApolloBase<any> {
+    return this;
+  }
+
+  public use(name: string): ApolloBase<any> {
+    if (name === 'default') {
+      return this.default();
+    }
+    return this.map.get(name);
+  }
+
+  private createDefault<TCacheShape>(options: ApolloOptions): void {
+    if (this.getClient()) {
+      throw new Error('Apollo has been already created.');
+    }
+
+    return this.setClient(new ApolloClient<TCacheShape>(options as any));
+  }
+
+  private createNamed<TCacheShape>(name: string, options: ApolloOptions): void {
+    if (this.map.has(name)) {
+      throw new Error(`Client ${name} has been already created`);
+    }
+    this.map.set(name, new ApolloBase(new ApolloClient<TCacheShape>(options as any)));
   }
 }
