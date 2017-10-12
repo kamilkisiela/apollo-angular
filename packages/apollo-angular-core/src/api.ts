@@ -1,3 +1,3 @@
-export { Apollo } from './Apollo';
-export { ApolloModule } from './ApolloModule';
-export { ApolloOptions } from './types';
+export {Apollo} from './Apollo';
+export {ApolloModule} from './ApolloModule';
+export {ApolloOptions} from './types';

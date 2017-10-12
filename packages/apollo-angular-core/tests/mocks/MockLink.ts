@@ -1,5 +1,11 @@
-import { ApolloLink, Operation, Observable, RequestHandler, NextLink } from 'apollo-link';
-import { ExecutionResult, DocumentNode, print } from 'graphql';
+import {
+  ApolloLink,
+  Operation,
+  Observable,
+  RequestHandler,
+  NextLink,
+} from 'apollo-link';
+import {ExecutionResult, DocumentNode, print} from 'graphql';
 
 export interface ParsedRequest {
   variables?: Object;
@@ -22,14 +28,14 @@ export class MockLink extends ApolloLink {
   constructor(mockedResponses: MockedResponse[]) {
     super();
 
-    mockedResponses.forEach((mockedResponse) => {
+    mockedResponses.forEach(mockedResponse => {
       this.addMockedResponse(mockedResponse);
     });
 
     this.requester = new ApolloLink(
       operation =>
         new Observable(observer => {
-          const { result, error, delay } = this.getResponse(operation);
+          const {result, error, delay} = this.getResponse(operation);
 
           setTimeout(() => {
             if (error) {
@@ -69,13 +75,19 @@ export class MockLink extends ApolloLink {
     const key = requestToKey(parsedRequest);
     const responses = this.mockedResponsesByKey[key];
     if (!responses || responses.length === 0) {
-      throw new Error(`No more mocked responses for the query: ${print(request.query)}, variables: ${JSON.stringify(request.variables)}`);
+      throw new Error(
+        `No more mocked responses for the query: ${print(
+          request.query
+        )}, variables: ${JSON.stringify(request.variables)}`
+      );
     }
 
-    const { result, error, delay } = responses.shift()!;
+    const {result, error, delay} = responses.shift()!;
 
     if (!result && !error) {
-      throw new Error(`Mocked response should contain either result or error: ${key}`);
+      throw new Error(
+        `Mocked response should contain either result or error: ${key}`
+      );
     }
 
     return {
@@ -92,7 +104,7 @@ function requestToKey(request: ParsedRequest): string {
 
   return JSON.stringify({
     variables: request.variables || {},
-    debugName: request.debugName,
+    operationName: request.operationName,
     query: queryString,
   });
 }
