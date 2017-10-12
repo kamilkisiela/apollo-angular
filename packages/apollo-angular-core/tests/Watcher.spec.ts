@@ -60,7 +60,7 @@ describe('Watcher', () => {
     watcher = new Watcher<any>(obsQuery);
   });
 
-  it('should listen to changes', (done) => {
+  test('should listen to changes', (done) => {
     watcher.valueChanges().subscribe({
       next: result => {
         expect(result.data).toBeDefined();
@@ -73,7 +73,7 @@ describe('Watcher', () => {
     });
   });
 
-  it('should be able to call refetch', () => {
+  test('should be able to call refetch', () => {
     const mockCallback = jest.fn();
     obsQuery.refetch = mockCallback;
 
@@ -82,7 +82,7 @@ describe('Watcher', () => {
     expect(mockCallback.mock.calls.length).toBe(1);
   });
 
-  it('should be able refetch and receive new results', (done) => {
+  test('should be able refetch and receive new results', (done) => {
     let calls = 0;
 
     watcher.valueChanges().subscribe({
@@ -109,7 +109,7 @@ describe('Watcher', () => {
     }, 200);
   });
 
-  it('should be able refetch and receive new results after using rxjs operator', (done) => {
+  test('should be able refetch and receive new results after using rxjs operator', (done) => {
     let calls = 0;
     const obs = watcher.valueChanges();
 
@@ -139,7 +139,7 @@ describe('Watcher', () => {
     }, 200);
   });
 
-  it('should be able to update a query', () => {
+  test('should be able to update a query', () => {
     const mockCallback = jest.fn();
     const mapFn: any = () => {};
     obsQuery.updateQuery = mockCallback;

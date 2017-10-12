@@ -38,7 +38,7 @@ describe('HttpLink', () => {
     })
   );
 
-  it(
+  test(
     'should use HttpClient',
     async(
       inject(
@@ -73,7 +73,7 @@ describe('HttpLink', () => {
     )
   );
 
-  it(
+  test(
     'should send it as JSON with right body and headers',
     async(
       inject(
