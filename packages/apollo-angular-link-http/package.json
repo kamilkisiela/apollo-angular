@@ -12,6 +12,7 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest",
+    "prepare": "npm run build",
     "postbuild": "npm run bundle"
   },
   "dependencies": {

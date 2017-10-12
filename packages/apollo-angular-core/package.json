@@ -12,14 +12,17 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest",
-    "postbuild": "npm run bundle"
+    "postbuild": "npm run bundle",
+    "prepare": "npm run build"
   },
   "dependencies": {
-    "graphql": "^0.11.2",
-    "jest": "^21.2.1"
+    "graphql": "^0.11.2"
   },
   "peerDependencies": {
-    "apollo-link": "^0.7.0"
+    "@angular/core": "^4.0.0 && ^5.0.0-rc.0",
+    "apollo-link": "^0.7.0",
+    "apollo-client": "^2.0.0-rc.0",
+    "rxjs": "^5.0.1"
   },
   "devDependencies": {
     "@angular/common": "^4.4.4",
@@ -34,6 +37,7 @@
     "apollo-client": "^2.0.0-rc.0",
     "apollo-link": "^0.7.0",
     "graphql-tag": "^2.4.2",
+    "jest": "^21.2.1",
     "jest-zone-patch": "0.0.8",
     "rxjs": "^5.4.2",
     "ts-jest": "^21.1.2",
