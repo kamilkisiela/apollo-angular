@@ -26,6 +26,8 @@
     "@angular/compiler": "^4.4.4",
     "@angular/compiler-cli": "^4.4.4",
     "@angular/core": "^4.4.4",
+    "@angular/platform-browser": "^4.4.4",
+    "@angular/platform-browser-dynamic": "^4.4.4",
     "@types/graphql": "^0.10.2",
     "@types/jest": "^21.1.2",
     "apollo-cache-inmemory": "^0.2.0-rc.0",
