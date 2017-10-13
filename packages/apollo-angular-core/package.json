@@ -1,5 +1,5 @@
 {
-  "name": "apollo-angular-core",
+  "name": "apollo-angular",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
@@ -13,15 +13,14 @@
     "test": "npm run test-only",
     "test-only": "jest",
     "postbuild": "npm run bundle",
-    "prepare": "npm run build"
-  },
-  "dependencies": {
-    "graphql": "^0.11.2"
+    "prepare": "npm run build",
+    "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
-    "@angular/core": "^4.0.0 && ^5.0.0-rc.0",
+    "@angular/core": "^4.0.0 || ^5.0.0-rc.0",
     "apollo-link": "^0.7.0",
     "apollo-client": "^2.0.0-rc.2",
+    "graphql": "^0.11.2",
     "rxjs": "^5.0.1"
   },
   "devDependencies": {
@@ -39,6 +38,7 @@
     "graphql-tag": "^2.4.2",
     "jest": "^21.2.1",
     "jest-zone-patch": "0.0.8",
+    "rollup": "^0.50.0",
     "rxjs": "^5.4.2",
     "ts-jest": "^21.1.2",
     "typescript": "^2.5.3",

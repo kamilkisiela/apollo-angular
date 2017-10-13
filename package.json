@@ -8,6 +8,8 @@
 		"build": "lerna run -- build",
 		"test": "lerna run -- test",
 		"lint": "lerna run -- lint",
+		"deploy": "lerna run -- deploy",
+		"postdeploy": "rimraf packages/*/npm/",
 		"commitmsg": "commitlint -e",
 		"prettier": "prettier --config .prettierrc --write \"packages/*/{src,tests}/**/*.ts\""
 	},

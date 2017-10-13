@@ -53,3 +53,6 @@ package-lock.json
 yarn.lock
 packages/**/package-lock.json
 packages/**/yarn.lock
+
+# npm directories (for deploying)
+packages/*/npm/

@@ -12,15 +12,13 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest",
+    "postbuild": "npm run bundle",
     "prepare": "npm run build",
-    "postbuild": "npm run bundle"
-  },
-  "dependencies": {
-    "graphql": "^0.11.2",
-    "jest": "^21.2.1"
+    "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
-    "apollo-link": "^0.7.0"
+    "apollo-link": "^0.7.0",
+    "graphql": "^0.11.2"
   },
   "devDependencies": {
     "@angular/animations": "^4.4.4",
@@ -38,7 +36,9 @@
     "apollo-client": "^2.0.0-rc.0",
     "apollo-link": "^0.7.0",
     "graphql-tag": "^2.4.2",
+    "jest": "^21.2.1",
     "jest-zone-patch": "0.0.8",
+    "rollup": "^0.50.0",
     "rxjs": "^5.4.2",
     "ts-jest": "^21.1.2",
     "typescript": "^2.5.3",
