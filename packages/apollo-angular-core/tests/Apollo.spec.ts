@@ -12,7 +12,6 @@ import InMemoryCache, {NormalizedCache} from 'apollo-cache-inmemory';
 import ApollClient from 'apollo-client';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
-import {MockLink} from './mocks/MockLink';
 import {mockSingleLink} from './mocks/mockLinks';
 
 function mockApollo(link: ApolloLink, options?: any) {

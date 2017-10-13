@@ -1,14 +1,15 @@
 import { ObservableQuery } from 'apollo-client';
 import { map } from 'rxjs/operator/map';
+import {ApolloLink} from 'apollo-link';
 
 import ApolloClient from 'apollo-client';
 import InMemoryCache from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
 import {Watcher} from '../src/Watcher';
-import {MockLink} from './mocks/MockLink';
+import {mockSingleLink} from './mocks/mockLinks';
 
-const createClient = (link: MockLink) => new ApolloClient({
+const createClient = (link: ApolloLink) => new ApolloClient({
   link,
   cache: new InMemoryCache()
 });
@@ -47,13 +48,13 @@ describe('Watcher', () => {
   let watcher: Watcher<any>;
 
   beforeEach(() => {
-    const mockedLink = new MockLink([{
+    const mockedLink = mockSingleLink({
       request: heroesOperation,
       result: { data: { heroes: [Superman] } }
     }, {
       request: heroesOperation,
       result: { data: { heroes: [Superman, Batman] } }
-    }]);
+    });
 
     client = createClient(mockedLink);
     obsQuery = client.watchQuery(heroesOperation);
