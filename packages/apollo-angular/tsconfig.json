@@ -3,8 +3,5 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build"
-  },
-  "files": [
-    "src/index.ts"
-  ]
+  }
 }
