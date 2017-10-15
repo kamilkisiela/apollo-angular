@@ -64,7 +64,7 @@ export class QueryRef<T> {
   }
 
   public startPolling(pollInterval: number): void {
-    return this.startPolling(pollInterval);
+    return this.obsQuery.startPolling(pollInterval);
   }
 
   public setOptions(opts: any): Promise<ApolloQueryResult<T>> {
