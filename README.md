@@ -36,7 +36,7 @@ npm run bootstrap
 Running tests locally:
 
 ```bash
-npm run test
+npm test
 ```
 
 Formatting code with prettier:
@@ -44,7 +44,5 @@ Formatting code with prettier:
 ```bash
 npm run prettier
 ```
-
-
 
 This project uses TypeScript for static typing. You can get it built into your editor with no configuration by opening this project in [Visual Studio Code](https://code.visualstudio.com/), an open source IDE which is available for free on all platforms.
