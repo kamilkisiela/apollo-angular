@@ -7,7 +7,10 @@ import {Apollo} from '../src/Apollo';
 import {SelectPipe} from '../src/SelectPipe';
 
 describe('ApolloModule', () => {
-  const metadata: NgModule = Reflect.getMetadata('annotations', ApolloModule)[0];
+  const metadata: NgModule = Reflect.getMetadata(
+    'annotations',
+    ApolloModule
+  )[0];
 
   test('should be defined', () => {
     expect(ApolloModule).toBeDefined();

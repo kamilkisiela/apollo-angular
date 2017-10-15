@@ -18,24 +18,29 @@ import {
   PlatformState,
   platformDynamicServer,
 } from '@angular/platform-server';
-import { async, TestBed, getTestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
+import {
+  async,
+  TestBed,
+  getTestBed,
+  ComponentFixtureAutoDetect,
+} from '@angular/core/testing';
 import {
   ServerTestingModule,
   platformServerTesting,
 } from '@angular/platform-server/testing';
-import { BrowserModule, ɵgetDOM } from '@angular/platform-browser';
-import { ApolloClient } from 'apollo-client';
-import { filter } from 'rxjs/operator/filter';
-import { first } from 'rxjs/operator/first';
-import { toPromise } from 'rxjs/operator/toPromise';
+import {BrowserModule, ɵgetDOM} from '@angular/platform-browser';
+import {ApolloClient} from 'apollo-client';
+import {filter} from 'rxjs/operator/filter';
+import {first} from 'rxjs/operator/first';
+import {toPromise} from 'rxjs/operator/toPromise';
 
 import gql from 'graphql-tag';
 
 import 'rxjs/add/operator/take';
 
-import { ApolloModule, Apollo, APOLLO_PROVIDERS, provideClientMap } from '../src';
-import { mockClient, mockClientWithSub } from './_mocks';
-import { subscribeAndCount } from './_utils';
+import {ApolloModule, Apollo, APOLLO_PROVIDERS, provideClientMap} from '../src';
+import {mockClient, mockClientWithSub} from './_mocks';
+import {subscribeAndCount} from './_utils';
 
 describe('integration', () => {
   beforeEach(() => {
@@ -62,8 +67,8 @@ describe('integration', () => {
       },
     };
     const client = mockClient({
-      request: { query },
-      result: { data },
+      request: {query},
+      result: {data},
       delay: 500,
     });
     function provideClient(): ApolloClient {
@@ -80,7 +85,8 @@ describe('integration', () => {
       constructor(@Inject(Apollo) private apollo: Apollo) {}
 
       public ngOnInit() {
-        this.apollo.query<any>({ query })
+        this.apollo
+          .query<any>({query})
           .take(1)
           .subscribe(result => {
             this.text = result.data.website.status;
@@ -91,14 +97,13 @@ describe('integration', () => {
     @NgModule({
       declarations: [AsyncServerApp],
       imports: [
-        BrowserModule.withServerTransition({ appId: 'async-server' }),
+        BrowserModule.withServerTransition({appId: 'async-server'}),
         ServerModule,
         ApolloModule.withClient(provideClient),
       ],
       bootstrap: [AsyncServerApp],
     })
-    class AsyncServerModule {
-    }
+    class AsyncServerModule {}
 
     beforeEach(() => {
       doc = '<html><head></head><body><app></app></body></html>';
@@ -110,56 +115,79 @@ describe('integration', () => {
     });
 
     // XXX: Skip till we fix SSR
-    test.skip('using long form should work', async(() => {
-      const platform =
-        platformDynamicServer([{
-          provide: INITIAL_CONFIG,
-          useValue: {
-            document: doc,
+    test.skip(
+      'using long form should work',
+      async(() => {
+        const platform = platformDynamicServer([
+          {
+            provide: INITIAL_CONFIG,
+            useValue: {
+              document: doc,
+            },
           },
-        }]);
+        ]);
 
-      platform.bootstrapModule(AsyncServerModule)
-        .then((moduleRef) => {
-          const applicationRef: ApplicationRef = moduleRef.injector.get(ApplicationRef);
-          return toPromise.call(first.call(
-            filter.call(applicationRef.isStable, (isStable: boolean) => isStable)));
-        })
-        .then(() => {
-          const str = platform.injector.get(PlatformState).renderToString();
-          expect(clearNgVersion(str)).toMatchSnapshot();
-          platform.destroy();
+        platform
+          .bootstrapModule(AsyncServerModule)
+          .then(moduleRef => {
+            const applicationRef: ApplicationRef = moduleRef.injector.get(
+              ApplicationRef
+            );
+            return toPromise.call(
+              first.call(
+                filter.call(
+                  applicationRef.isStable,
+                  (isStable: boolean) => isStable
+                )
+              )
+            );
+          })
+          .then(() => {
+            const str = platform.injector.get(PlatformState).renderToString();
+            expect(clearNgVersion(str)).toMatchSnapshot();
+            platform.destroy();
+            called = true;
+          });
+      })
+    );
+
+    // XXX: Skip till we fix SSR
+    test.skip(
+      'using renderModule should work',
+      async(() => {
+        renderModule(AsyncServerModule, {document: doc}).then(output => {
+          expect(clearNgVersion(output)).toMatchSnapshot();
           called = true;
         });
-    }));
+      })
+    );
 
     // XXX: Skip till we fix SSR
-    test.skip('using renderModule should work', async(() => {
-      renderModule(AsyncServerModule, { document: doc }).then(output => {
-        expect(clearNgVersion(output)).toMatchSnapshot();
-        called = true;
-      });
-    }));
+    test.skip(
+      'using renderModuleFactory should work',
+      async(() => {
+        const platform = platformDynamicServer([
+          {
+            provide: INITIAL_CONFIG,
+            useValue: {
+              document: doc,
+            },
+          },
+        ]);
+        const compilerFactory: CompilerFactory = platform.injector.get(
+          CompilerFactory,
+          null
+        );
+        const moduleFactory = compilerFactory
+          .createCompiler()
+          .compileModuleSync(AsyncServerModule);
 
-    // XXX: Skip till we fix SSR
-    test.skip('using renderModuleFactory should work', async(() => {
-      const platform =
-      platformDynamicServer([{
-        provide: INITIAL_CONFIG,
-        useValue: {
-          document: doc,
-        },
-      }]);
-      const compilerFactory: CompilerFactory = platform.injector.get(CompilerFactory, null);
-      const moduleFactory = compilerFactory
-        .createCompiler()
-        .compileModuleSync(AsyncServerModule);
-
-      renderModuleFactory(moduleFactory, { document: doc }).then(output => {
-        expect(clearNgVersion(output)).toMatchSnapshot();
-        called = true;
-      });
-    }));
+        renderModuleFactory(moduleFactory, {document: doc}).then(output => {
+          expect(clearNgVersion(output)).toMatchSnapshot();
+          called = true;
+        });
+      })
+    );
   });
 
   describe('subscriptions', () => {
@@ -181,17 +209,24 @@ describe('integration', () => {
         }
       `;
 
-      const data = { allHeroes: [{ id: 1, name: 'Foo' }] };
-      const dataSub = { addedHero: { id: 2, name: 'Bar' } };
+      const data = {allHeroes: [{id: 1, name: 'Foo'}]};
+      const dataSub = {addedHero: {id: 2, name: 'Bar'}};
 
-      const client = mockClientWithSub([{
-        request: { query: querySub },
-        results: [{ result: dataSub as any }],
-        id: 1,
-      }], [{
-        request: { query },
-        result: { data },
-      }]);
+      const client = mockClientWithSub(
+        [
+          {
+            request: {query: querySub},
+            results: [{result: dataSub as any}],
+            id: 1,
+          },
+        ],
+        [
+          {
+            request: {query},
+            result: {data},
+          },
+        ]
+      );
 
       @Component({
         selector: 'app-heroes',
@@ -203,7 +238,7 @@ describe('integration', () => {
         constructor(@Inject(Apollo) private apollo: Apollo) {}
 
         public ngOnInit() {
-          const obs = this.apollo.watchQuery<any>({ query });
+          const obs = this.apollo.watchQuery<any>({query});
 
           subscribeAndCount<any>(done, obs, (handleCount, result) => {
             this.heroes = result.data.allHeroes;
@@ -218,11 +253,11 @@ describe('integration', () => {
             }
           });
 
-          this.apollo.subscribe({ query: querySub }).subscribe(result => {
-            obs.updateQuery((prev) => {
+          this.apollo.subscribe({query: querySub}).subscribe(result => {
+            obs.updateQuery(prev => {
               const allHeroes = [...prev.allHeroes, result.addedHero];
 
-              return { ...prev, allHeroes: allHeroes };
+              return {...prev, allHeroes: allHeroes};
             });
           });
         }
@@ -234,13 +269,13 @@ describe('integration', () => {
 
       getTestBed().initTestEnvironment(
         ServerTestingModule,
-        platformServerTesting(),
+        platformServerTesting()
       );
 
       getTestBed().configureTestingModule({
         declarations: [HeroesComponent],
         providers: [
-          { provide: ComponentFixtureAutoDetect, useValue: true },
+          {provide: ComponentFixtureAutoDetect, useValue: true},
           APOLLO_PROVIDERS,
           provideClientMap(() => client),
         ],
@@ -249,7 +284,11 @@ describe('integration', () => {
       const fixture = TestBed.createComponent(HeroesComponent);
 
       function getHTML(): string {
-        return clearHTML(ɵgetDOM().getInnerHTML(fixture.nativeElement).trim());
+        return clearHTML(
+          ɵgetDOM()
+            .getInnerHTML(fixture.nativeElement)
+            .trim()
+        );
       }
     });
   });
@@ -262,5 +301,3 @@ function clearNgVersion(html: string): string {
 function clearHTML(html: string): string {
   return html.replace(/\<\!--[^>]+--\>/, '');
 }
-
-

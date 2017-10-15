@@ -1,5 +1,5 @@
 import {Inject, Injectable, Provider} from '@angular/core';
-import { rxify } from 'apollo-client-rxjs';
+import {rxify} from 'apollo-client-rxjs';
 import {
   ApolloClient,
   ApolloQueryResult,
@@ -8,36 +8,40 @@ import {
   SubscriptionOptions,
   ApolloExecutionResult,
 } from 'apollo-client';
-import { Observable } from 'rxjs/Observable';
-import { from } from 'rxjs/observable/from';
+import {Observable} from 'rxjs/Observable';
+import {from} from 'rxjs/observable/from';
 
-import { ApolloQueryObservable } from './ApolloQueryObservable';
-import { CLIENT_MAP, CLIENT_MAP_WRAPPER } from './tokens';
-import { ClientMapWrapper, ClientWrapper, ClientMap } from './types';
-import { wrapWithZone, fromPromise } from './utils';
+import {ApolloQueryObservable} from './ApolloQueryObservable';
+import {CLIENT_MAP, CLIENT_MAP_WRAPPER} from './tokens';
+import {ClientMapWrapper, ClientWrapper, ClientMap} from './types';
+import {wrapWithZone, fromPromise} from './utils';
 
 /**
  * Base class that handles ApolloClient
  */
 @Injectable()
 export class ApolloBase {
-  constructor(
-    private client: ApolloClient,
-  ) {}
+  constructor(private client: ApolloClient) {}
 
   public watchQuery<T>(options: WatchQueryOptions): ApolloQueryObservable<T> {
     return new ApolloQueryObservable<T>(rxify(this.client.watchQuery)(options));
   }
 
-  public query<T>(options: WatchQueryOptions): Observable<ApolloQueryResult<T>> {
+  public query<T>(
+    options: WatchQueryOptions
+  ): Observable<ApolloQueryResult<T>> {
     return wrapWithZone<ApolloQueryResult<T>>(
-      fromPromise<ApolloQueryResult<T>>(() => this.client.query<T>(options)),
+      fromPromise<ApolloQueryResult<T>>(() => this.client.query<T>(options))
     );
   }
 
-  public mutate<T>(options: MutationOptions): Observable<ApolloExecutionResult<T>> {
+  public mutate<T>(
+    options: MutationOptions
+  ): Observable<ApolloExecutionResult<T>> {
     return wrapWithZone<ApolloExecutionResult<T>>(
-      fromPromise<ApolloExecutionResult<T>>(() => this.client.mutate<T>(options)),
+      fromPromise<ApolloExecutionResult<T>>(() =>
+        this.client.mutate<T>(options)
+      )
     );
   }
 
@@ -96,15 +100,20 @@ export function getClientMap(configWrapper: ClientMapWrapper): ClientMap {
 /**
  * Provides a value for a map and a wrapper
  */
-export function provideClientMap(configWrapper: ClientMapWrapper | ClientWrapper): Provider[] {
-  return [{
-    provide: CLIENT_MAP_WRAPPER,
-    useValue: configWrapper,
-  }, {
-    provide: CLIENT_MAP,
-    useFactory: getClientMap,
-    deps: [CLIENT_MAP_WRAPPER],
-  }];
+export function provideClientMap(
+  configWrapper: ClientMapWrapper | ClientWrapper
+): Provider[] {
+  return [
+    {
+      provide: CLIENT_MAP_WRAPPER,
+      useValue: configWrapper,
+    },
+    {
+      provide: CLIENT_MAP,
+      useFactory: getClientMap,
+      deps: [CLIENT_MAP_WRAPPER],
+    },
+  ];
 }
 
 /**
@@ -119,5 +128,3 @@ export const provideApollo: Provider = {
 export function createApollo(clientMap: ClientMap): Apollo {
   return new Apollo(clientMap);
 }
-
-

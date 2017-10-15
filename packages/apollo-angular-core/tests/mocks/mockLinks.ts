@@ -6,7 +6,7 @@ import {
   // Observer,
 } from 'apollo-link';
 
-import { print } from 'graphql/language/printer';
+import {print} from 'graphql/language/printer';
 
 // Pass in multiple mocked responses, so that you can test flows that end up
 // making multiple queries to the server
@@ -24,7 +24,7 @@ export interface MockedResponse {
 }
 
 export class MockLink extends ApolloLink {
-  private mockedResponsesByKey: { [key: string]: MockedResponse[] } = {};
+  private mockedResponsesByKey: {[key: string]: MockedResponse[]} = {};
 
   constructor(mockedResponses: MockedResponse[]) {
     super();
@@ -49,15 +49,15 @@ export class MockLink extends ApolloLink {
     if (!responses || responses.length === 0) {
       throw new Error(
         `No more mocked responses for the query: ${print(
-          operation.query,
-        )}, variables: ${JSON.stringify(operation.variables)}`,
+          operation.query
+        )}, variables: ${JSON.stringify(operation.variables)}`
       );
     }
 
-    const { result, error, delay } = responses.shift()!;
+    const {result, error, delay} = responses.shift()!;
     if (!result && !error) {
       throw new Error(
-        `Mocked response should contain either result or error: ${key}`,
+        `Mocked response should contain either result or error: ${key}`
       );
     }
 

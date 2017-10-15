@@ -18,7 +18,12 @@ import {
   PlatformState,
   platformDynamicServer,
 } from '@angular/platform-server';
-import { async, TestBed, getTestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
+import {
+  async,
+  TestBed,
+  getTestBed,
+  ComponentFixtureAutoDetect,
+} from '@angular/core/testing';
 import {
   ServerTestingModule,
   platformServerTesting,
@@ -27,16 +32,16 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { BrowserModule, ɵgetDOM } from '@angular/platform-browser';
-import { ApolloClient } from 'apollo-client';
-import { execute } from 'apollo-link';
-import { filter } from 'rxjs/operator/filter';
-import { first } from 'rxjs/operator/first';
-import { toPromise } from 'rxjs/operator/toPromise';
+import {BrowserModule, ɵgetDOM} from '@angular/platform-browser';
+import {ApolloClient} from 'apollo-client';
+import {execute} from 'apollo-link';
+import {filter} from 'rxjs/operator/filter';
+import {first} from 'rxjs/operator/first';
+import {toPromise} from 'rxjs/operator/toPromise';
 
 import gql from 'graphql-tag';
 
-import { HttpLink } from '../src/HttpLink';
+import {HttpLink} from '../src/HttpLink';
 
 describe('integration', () => {
   beforeEach(() => {
@@ -76,29 +81,27 @@ describe('integration', () => {
       ) {}
 
       public ngOnInit() {
-          execute(
-            this.httpLink.create({uri: 'graphql'}),
-            { query }
-          ).subscribe(result => {
-            this.text = result.data.website.status;
-          });
+        execute(this.httpLink.create({uri: 'graphql'}), {
+          query,
+        }).subscribe(result => {
+          this.text = result.data.website.status;
+        });
 
-          this.httpBackend.expectOne('graphql').flush({data});
+        this.httpBackend.expectOne('graphql').flush({data});
       }
     }
 
     @NgModule({
       declarations: [AsyncServerApp],
       imports: [
-        BrowserModule.withServerTransition({ appId: 'async-server' }),
+        BrowserModule.withServerTransition({appId: 'async-server'}),
         ServerModule,
         HttpClientTestingModule,
       ],
       providers: [HttpLink],
       bootstrap: [AsyncServerApp],
     })
-    class AsyncServerModule {
-    }
+    class AsyncServerModule {}
 
     beforeEach(() => {
       doc = '<html><head></head><body><app></app></body></html>';
@@ -110,56 +113,79 @@ describe('integration', () => {
     });
 
     // XXX: Skip till we fix SSR
-    test('using long form should work', async(() => {
-      const platform =
-        platformDynamicServer([{
-          provide: INITIAL_CONFIG,
-          useValue: {
-            document: doc,
+    test(
+      'using long form should work',
+      async(() => {
+        const platform = platformDynamicServer([
+          {
+            provide: INITIAL_CONFIG,
+            useValue: {
+              document: doc,
+            },
           },
-        }]);
+        ]);
 
-      platform.bootstrapModule(AsyncServerModule)
-        .then((moduleRef) => {
-          const applicationRef: ApplicationRef = moduleRef.injector.get(ApplicationRef);
-          return toPromise.call(first.call(
-            filter.call(applicationRef.isStable, (isStable: boolean) => isStable)));
-        })
-        .then(() => {
-          const str = platform.injector.get(PlatformState).renderToString();
-          expect(clearNgVersion(str)).toMatchSnapshot();
-          platform.destroy();
+        platform
+          .bootstrapModule(AsyncServerModule)
+          .then(moduleRef => {
+            const applicationRef: ApplicationRef = moduleRef.injector.get(
+              ApplicationRef
+            );
+            return toPromise.call(
+              first.call(
+                filter.call(
+                  applicationRef.isStable,
+                  (isStable: boolean) => isStable
+                )
+              )
+            );
+          })
+          .then(() => {
+            const str = platform.injector.get(PlatformState).renderToString();
+            expect(clearNgVersion(str)).toMatchSnapshot();
+            platform.destroy();
+            called = true;
+          });
+      })
+    );
+
+    // XXX: Skip till we fix SSR
+    test(
+      'using renderModule should work',
+      async(() => {
+        renderModule(AsyncServerModule, {document: doc}).then(output => {
+          expect(clearNgVersion(output)).toMatchSnapshot();
           called = true;
         });
-    }));
+      })
+    );
 
     // XXX: Skip till we fix SSR
-    test('using renderModule should work', async(() => {
-      renderModule(AsyncServerModule, { document: doc }).then(output => {
-        expect(clearNgVersion(output)).toMatchSnapshot();
-        called = true;
-      });
-    }));
+    test(
+      'using renderModuleFactory should work',
+      async(() => {
+        const platform = platformDynamicServer([
+          {
+            provide: INITIAL_CONFIG,
+            useValue: {
+              document: doc,
+            },
+          },
+        ]);
+        const compilerFactory: CompilerFactory = platform.injector.get(
+          CompilerFactory,
+          null
+        );
+        const moduleFactory = compilerFactory
+          .createCompiler()
+          .compileModuleSync(AsyncServerModule);
 
-    // XXX: Skip till we fix SSR
-    test('using renderModuleFactory should work', async(() => {
-      const platform =
-      platformDynamicServer([{
-        provide: INITIAL_CONFIG,
-        useValue: {
-          document: doc,
-        },
-      }]);
-      const compilerFactory: CompilerFactory = platform.injector.get(CompilerFactory, null);
-      const moduleFactory = compilerFactory
-        .createCompiler()
-        .compileModuleSync(AsyncServerModule);
-
-      renderModuleFactory(moduleFactory, { document: doc }).then(output => {
-        expect(clearNgVersion(output)).toMatchSnapshot();
-        called = true;
-      });
-    }));
+        renderModuleFactory(moduleFactory, {document: doc}).then(output => {
+          expect(clearNgVersion(output)).toMatchSnapshot();
+          called = true;
+        });
+      })
+    );
   });
 });
 
@@ -170,5 +196,3 @@ function clearNgVersion(html: string): string {
 function clearHTML(html: string): string {
   return html.replace(/\<\!--[^>]+--\>/, '');
 }
-
-

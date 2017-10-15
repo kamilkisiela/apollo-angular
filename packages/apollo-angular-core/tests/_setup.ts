@@ -6,7 +6,7 @@ import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 import 'jest-zone-patch';
 
-import { getTestBed } from '@angular/core/testing';
+import {getTestBed} from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting,

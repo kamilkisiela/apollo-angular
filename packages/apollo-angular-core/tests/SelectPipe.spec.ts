@@ -1,8 +1,8 @@
 import './_setup';
 
-import { Pipe } from '@angular/core';
+import {Pipe} from '@angular/core';
 
-import { SelectPipe } from '../src/SelectPipe';
+import {SelectPipe} from '../src/SelectPipe';
 
 describe('SelectPipe', () => {
   let pipe;
@@ -13,7 +13,7 @@ describe('SelectPipe', () => {
   });
 
   test('should return nothing if name is empty', () => {
-    expect(pipe.transform({ foo: 'bar' }, '')).toBe(undefined);
+    expect(pipe.transform({foo: 'bar'}, '')).toBe(undefined);
   });
 
   test('should return nothing if object is empty', () => {
@@ -25,12 +25,12 @@ describe('SelectPipe', () => {
   });
 
   test('should return nothing if nothing has been found', () => {
-    expect(pipe.transform({ foo: 'bar' }, 'baz')).toBe(undefined);
+    expect(pipe.transform({foo: 'bar'}, 'baz')).toBe(undefined);
   });
 
   test('should be looking inside data property', () => {
     const result = {
-      data: { foo: 'bar' },
+      data: {foo: 'bar'},
     };
 
     expect(pipe.transform(result, 'foo')).toEqual(result.data.foo);

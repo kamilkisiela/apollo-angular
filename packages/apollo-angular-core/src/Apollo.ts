@@ -17,9 +17,7 @@ import {fromPromise} from './utils';
 export class ApolloBase<TCacheShape> {
   constructor(private _client?: ApolloClient<TCacheShape>) {}
 
-  public watchQuery<T>(
-    options: WatchQueryOptions
-  ): QueryRef<T> {
+  public watchQuery<T>(options: WatchQueryOptions): QueryRef<T> {
     return new QueryRef<T>(this.client.watchQuery<T>({...options}));
   }
 
@@ -32,7 +30,9 @@ export class ApolloBase<TCacheShape> {
   }
 
   public mutate<T>(options: MutationOptions): Observable<FetchResult<T>> {
-    return fromPromise<FetchResult<T>>(() => this.client.mutate<T>({...options}));
+    return fromPromise<FetchResult<T>>(() =>
+      this.client.mutate<T>({...options})
+    );
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
@@ -70,7 +70,10 @@ export class ApolloBase<TCacheShape> {
 
 @Injectable()
 export class Apollo extends ApolloBase<any> {
-  private map: Map<string, ApolloBase<any>> = new Map<string, ApolloBase<any>>();
+  private map: Map<string, ApolloBase<any>> = new Map<
+    string,
+    ApolloBase<any>
+  >();
 
   constructor() {
     super();
@@ -107,6 +110,9 @@ export class Apollo extends ApolloBase<any> {
     if (this.map.has(name)) {
       throw new Error(`Client ${name} has been already created`);
     }
-    this.map.set(name, new ApolloBase(new ApolloClient<TCacheShape>(options as any)));
+    this.map.set(
+      name,
+      new ApolloBase(new ApolloClient<TCacheShape>(options as any))
+    );
   }
 }
