@@ -1,27 +1,25 @@
 #!/bin/sh -e
 
-echo 'Start deploying'
+echo '[Deploy] Start deploying'
 
-echo $PWD
-
-echo 'Clearing the built output'
+echo '[Deploy] Clearing the built output'
 rm -rf ./build
 
-echo 'Compiling new files'
+echo '[Deploy] Compiling new files'
 npm run build
 
-echo 'Creating empty npm directory'
+echo '[Deploy] Creating empty npm directory'
 rm -rf ./npm
 mkdir ./npm
 
-echo 'Copying all files from ./build/src to /npm'
+echo '[Deploy] Copying the built output'
 cd ./build/src && cp -r ./ ../../npm/
 
-echo 'Copying umd bundle with source map file';
+echo '[Deploy] Copying umd bundle with source map file';
 cd ../
 cp bundle.umd.js ../npm/ && cp bundle.umd.js.map ../npm/
 
-echo 'Copying LICENSE'
+echo '[Deploy] Copying LICENSE'
 cp ./../LICENSE ../npm/
 
 # Back to the root directory
@@ -29,7 +27,7 @@ cd ../
 
 # Ensure a vanilla package.json before deploying so other tools do not interpret
 # The built output as requiring any further transformation.
-echo 'Preparing a clean package.json'
+echo '[Deploy] Preparing a clean package.json'
 node -e "var package = require('./package.json'); \
   delete package.jest; \
   delete package.scripts; \
@@ -42,6 +40,7 @@ node -e "var package = require('./package.json'); \
   fs.writeFileSync('./npm/package.json', JSON.stringify(package, null, 2)); \
   "
 
-echo 'deploying to npm...'
+echo '[Deploy] Deploying to npm...'
 cd npm # && npm publish --tag next && git push --tags
+echo '[Deploy] Completed'
 echo $PWD
