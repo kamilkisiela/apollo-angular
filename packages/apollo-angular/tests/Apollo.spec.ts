@@ -452,9 +452,8 @@ describe('Apollo', () => {
           next: result => {
             expect(result.data).toMatchObject(data);
           },
-          error: error => {
-            console.error(error);
-            throw new Error('Should not be here');
+          error: e => {
+            throw new Error(e);
           },
         });
       }),
