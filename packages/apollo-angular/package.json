@@ -1,12 +1,16 @@
 {
   "name": "apollo-angular",
+  "version": "1.0.0",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "apollostack/react-apollo"
+  },
   "scripts": {
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
@@ -18,9 +22,8 @@
   },
   "peerDependencies": {
     "@angular/core": "^4.0.0 || ^5.0.0-rc.0",
-    "apollo-link": "^0.7.0",
     "apollo-client": "^2.0.0-rc.2",
-    "graphql": "^0.11.2",
+    "apollo-link": "^0.7.0",
     "rxjs": "^5.0.1"
   },
   "devDependencies": {
