@@ -2,6 +2,23 @@
 
 ### vNEXT
 
+- Supports **ApolloClient 2.0**
+- Supports ApolloLinks and ApolloCache
+- Supports **Angular v5**
+- Possible to combine Apollo with anything from Angular's Dependency Injection
+- Supports **NativeScript**
+- Simpler and less error prone API for watching queries thanks to `QueryRef`
+- More AoT friendly
+- Brings back Server-Side Rendering
+
+**BREAKING CHANGES:** - [see Migation](../../Migration.md)
+
+- Drops `apollo-client-rxjs` (thanks to `QueryRef`)
+- Replaces`ApolloQueryObservable` with `QueryRef`
+- Introduces new API for defining multiple clients (`Apollo.create`, `Apollo.createDefault`, `Apollo.createNamed`)
+- No longer exposes `ClientMap`, `ClientMapWrapper`, `ClientWrapper`
+- Removes 'variables as Observables' feature
+
 ### v0.13.2
 
 - Use `InjectionToken`, instead of deprecated `OpaqueToken` ([PR #358](https://github.com/apollographql/apollo-angular/pull/358))
