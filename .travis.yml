@@ -11,3 +11,5 @@ notifications:
 install:
   - npm run bootstrap
   - npm prune
+
+after_success: npm run coverage
