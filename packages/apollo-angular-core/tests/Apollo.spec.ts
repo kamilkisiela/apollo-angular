@@ -12,18 +12,17 @@ import {mockSingleLink} from './mocks/mockLinks';
 function mockApollo(link: ApolloLink, options?: any) {
   const apollo = new Apollo();
 
-    apollo.create({
-      link,
-      cache: new InMemoryCache(),
-      ...options
-    });
+  apollo.create({
+    link,
+    cache: new InMemoryCache(),
+    ...options,
+  });
 
-    return apollo;
+  return apollo;
 }
 
 describe('Apollo', () => {
-
-  beforeAll(() => setupAngular())
+  beforeAll(() => setupAngular());
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -60,7 +59,7 @@ describe('Apollo', () => {
       apollo.create({} as any);
 
       const client = apollo.getClient();
-      const options = { query: 'gql' } as any;
+      const options = {query: 'gql'} as any;
 
       client.watchQuery = jest.fn();
       apollo.watchQuery(options);
@@ -78,22 +77,25 @@ describe('Apollo', () => {
         }
       `;
 
-      const data1 = { heroes: [ { name: 'Foo', __typename: 'Hero' } ] };
-      const variables1 = { first: 0 };
+      const data1 = {heroes: [{name: 'Foo', __typename: 'Hero'}]};
+      const variables1 = {first: 0};
 
-      const data2 = { heroes: [ { name: 'Bar', __typename: 'Hero' } ] };
-      const variables2 = { first: 1 };
+      const data2 = {heroes: [{name: 'Bar', __typename: 'Hero'}]};
+      const variables2 = {first: 1};
 
-      const link = mockSingleLink({
-        request: { query, variables: variables1 },
-        result: { data: data1 },
-      }, {
-        request: { query, variables: variables2 },
-        result: { data: data2 },
-      });
+      const link = mockSingleLink(
+        {
+          request: {query, variables: variables1},
+          result: {data: data1},
+        },
+        {
+          request: {query, variables: variables2},
+          result: {data: data2},
+        }
+      );
 
       const apollo = mockApollo(link);
-      const options = { query, variables: variables1 };
+      const options = {query, variables: variables1};
       const obs = apollo.watchQuery(options);
 
       let calls = 0;
@@ -105,19 +107,19 @@ describe('Apollo', () => {
           try {
             if (calls === 1) {
               expect(data).toMatchObject(data1);
-            } else if (calls === 3) { // 3 because there is an intermediate loading state
+            } else if (calls === 3) {
+              // 3 because there is an intermediate loading state
               expect(data).toMatchObject(data2);
             } else if (calls > 3) {
               throw new Error('Called third time');
             }
-
           } catch (e) {
             done.fail(e);
           }
         },
         error: err => {
           done.fail(err);
-        }
+        },
       });
 
       setTimeout(() => {
@@ -134,12 +136,14 @@ describe('Apollo', () => {
   });
 
   describe('query()', () => {
-    test('should be called with the same options', (done: jest.DoneCallback) => {
+    test('should be called with the same options', (
+      done: jest.DoneCallback
+    ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
       const client = apollo.getClient();
 
-      const options = { query: 'gql' } as any;
+      const options = {query: 'gql'} as any;
       client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
 
       const obs = apollo.query(options);
@@ -156,7 +160,9 @@ describe('Apollo', () => {
       });
     });
 
-    test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+    test('should not be called without subscribing to it', (
+      done: jest.DoneCallback
+    ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
       const client = apollo.getClient();
@@ -177,12 +183,14 @@ describe('Apollo', () => {
   });
 
   describe('mutate()', () => {
-    test('should be called with the same options', (done: jest.DoneCallback) => {
+    test('should be called with the same options', (
+      done: jest.DoneCallback
+    ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
       const client = apollo.getClient();
 
-      const options = { mutation: 'gql' } as any;
+      const options = {mutation: 'gql'} as any;
       client.mutate = jest.fn().mockReturnValue(Promise.resolve('mutation'));
 
       const obs = apollo.mutate(options);
@@ -199,7 +207,9 @@ describe('Apollo', () => {
       });
     });
 
-    test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+    test('should not be called without subscribing to it', (
+      done: jest.DoneCallback
+    ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
       const client = apollo.getClient();
@@ -220,14 +230,16 @@ describe('Apollo', () => {
   });
 
   describe('subscribe', () => {
-    test('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
+    test('should be called with the same options and return Observable', (
+      done: jest.DoneCallback
+    ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
       const client = apollo.getClient();
 
       client.subscribe = jest.fn().mockReturnValue(['subscription']);
 
-      const options = { query: 'gql' } as any;
+      const options = {query: 'gql'} as any;
       const obs = apollo.subscribe(options);
 
       expect(client.subscribe).toBeCalledWith(options);
@@ -246,38 +258,45 @@ describe('Apollo', () => {
 
   describe('query updates', () => {
     test('should update a query after mutation', (done: jest.DoneCallback) => {
-      const query = gql`query heroes {
-        allHeroes {
-          name
-          __typename
+      const query = gql`
+        query heroes {
+          allHeroes {
+            name
+            __typename
+          }
         }
-      }`;
-      const mutation = gql`mutation addHero($name: String!) {
-        addHero(name: $name) {
-          name
-          __typename
+      `;
+      const mutation = gql`
+        mutation addHero($name: String!) {
+          addHero(name: $name) {
+            name
+            __typename
+          }
         }
-      }`;
-      const variables = { name: 'Bar' };
+      `;
+      const variables = {name: 'Bar'};
       const __typename = 'Hero';
 
-      const FooHero = { name: 'Foo', __typename };
-      const BarHero = { name: 'Bar', __typename };
+      const FooHero = {name: 'Foo', __typename};
+      const BarHero = {name: 'Bar', __typename};
 
-      const data1 = { allHeroes: [ FooHero ] };
-      const dataMutation = { addHero: BarHero };
-      const data2 = { allHeroes: [ FooHero, BarHero ] };
+      const data1 = {allHeroes: [FooHero]};
+      const dataMutation = {addHero: BarHero};
+      const data2 = {allHeroes: [FooHero, BarHero]};
 
-      const link = mockSingleLink({
-        request: { query },
-        result: { data: data1 },
-      }, {
-        request: { query: mutation, variables },
-        result: { data: dataMutation },
-      });
+      const link = mockSingleLink(
+        {
+          request: {query},
+          result: {data: data1},
+        },
+        {
+          request: {query: mutation, variables},
+          result: {data: dataMutation},
+        }
+      );
       const apollo = mockApollo(link);
 
-      const obs = apollo.watchQuery({ query });
+      const obs = apollo.watchQuery({query});
 
       let calls = 0;
       obs.valueChanges().subscribe(({data}) => {
@@ -286,24 +305,26 @@ describe('Apollo', () => {
         if (calls === 1) {
           expect(data).toMatchObject(data1);
 
-          apollo.mutate<any>({
-            mutation,
-            variables,
-            updateQueries: {
-              heroes: (prev: any, { mutationResult }: any) => {
-                return {
-                  allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
-                };
+          apollo
+            .mutate<any>({
+              mutation,
+              variables,
+              updateQueries: {
+                heroes: (prev: any, {mutationResult}: any) => {
+                  return {
+                    allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
+                  };
+                },
               },
-            },
-          }).subscribe({
-            next: (result) => {
-              expect(result.data.addHero).toMatchObject(BarHero);
-            },
-            error(error) {
-              done.fail(error.message);
-            },
-          });
+            })
+            .subscribe({
+              next: result => {
+                expect(result.data.addHero).toMatchObject(BarHero);
+              },
+              error(error) {
+                done.fail(error.message);
+              },
+            });
         } else if (calls === 2) {
           expect(data).toMatchObject(data2);
           done();
@@ -311,43 +332,52 @@ describe('Apollo', () => {
       });
     });
 
-    test('should update a query with Optimistic Response after mutation', (done: jest.DoneCallback) => {
-      const query = gql`query heroes {
-        allHeroes {
-          id
-          name
-          __typename
+    test('should update a query with Optimistic Response after mutation', (
+      done: jest.DoneCallback
+    ) => {
+      const query = gql`
+        query heroes {
+          allHeroes {
+            id
+            name
+            __typename
+          }
         }
-      }`;
-      const mutation = gql`mutation addHero($name: String!) {
-        addHero(name: $name) {
-          id
-          name
-          __typename
+      `;
+      const mutation = gql`
+        mutation addHero($name: String!) {
+          addHero(name: $name) {
+            id
+            name
+            __typename
+          }
         }
-      }`;
-      const variables = { name: 'Bar' };
+      `;
+      const variables = {name: 'Bar'};
       const __typename = 'Hero';
 
-      const FooHero = { id: 1, name: 'Foo', __typename };
-      const BarHero = { id: 2, name: 'Bar', __typename };
-      const OptimisticHero = { id: null, name: 'Temp', __typename };
+      const FooHero = {id: 1, name: 'Foo', __typename};
+      const BarHero = {id: 2, name: 'Bar', __typename};
+      const OptimisticHero = {id: null, name: 'Temp', __typename};
 
-      const data1 = { allHeroes: [ FooHero ] };
-      const dataMutation = { addHero: BarHero };
-      const data2 = { allHeroes: [ FooHero, OptimisticHero ] };
-      const data3 = { allHeroes: [ FooHero, BarHero ] };
+      const data1 = {allHeroes: [FooHero]};
+      const dataMutation = {addHero: BarHero};
+      const data2 = {allHeroes: [FooHero, OptimisticHero]};
+      const data3 = {allHeroes: [FooHero, BarHero]};
 
-      const link = mockSingleLink({
-        request: { query },
-        result: { data: data1 },
-      }, {
-        request: { query: mutation, variables },
-        result: { data: dataMutation },
-      });
+      const link = mockSingleLink(
+        {
+          request: {query},
+          result: {data: data1},
+        },
+        {
+          request: {query: mutation, variables},
+          result: {data: dataMutation},
+        }
+      );
       const apollo = mockApollo(link);
 
-      const obs = apollo.watchQuery({ query });
+      const obs = apollo.watchQuery({query});
 
       let calls = 0;
       obs.valueChanges().subscribe(({data}) => {
@@ -356,24 +386,26 @@ describe('Apollo', () => {
         if (calls === 1) {
           expect(data).toMatchObject(data1);
 
-          apollo.mutate<any>({
-            mutation,
-            variables,
-            optimisticResponse: {
-              addHero: OptimisticHero,
-            },
-            updateQueries: {
-              heroes: (prev: any, { mutationResult }: any) => {
-                return {
-                  allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
-                };
+          apollo
+            .mutate<any>({
+              mutation,
+              variables,
+              optimisticResponse: {
+                addHero: OptimisticHero,
               },
-            },
-          }).subscribe({
-            error(error) {
-              done.fail(error.message);
-            },
-          });
+              updateQueries: {
+                heroes: (prev: any, {mutationResult}: any) => {
+                  return {
+                    allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
+                  };
+                },
+              },
+            })
+            .subscribe({
+              error(error) {
+                done.fail(error.message);
+              },
+            });
         } else if (calls === 2) {
           expect(data).toMatchObject(data2);
         } else if (calls === 3) {
