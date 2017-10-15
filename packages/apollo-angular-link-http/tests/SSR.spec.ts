@@ -5,10 +5,8 @@ import {
   Component,
   destroyPlatform,
   getPlatform,
-  Inject,
   ApplicationRef,
   CompilerFactory,
-  OnInit,
 } from '@angular/core';
 import {
   ServerModule,
@@ -18,22 +16,12 @@ import {
   PlatformState,
   platformDynamicServer,
 } from '@angular/platform-server';
-import {
-  async,
-  TestBed,
-  getTestBed,
-  ComponentFixtureAutoDetect,
-} from '@angular/core/testing';
-import {
-  ServerTestingModule,
-  platformServerTesting,
-} from '@angular/platform-server/testing';
+import {async} from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import {BrowserModule, ɵgetDOM} from '@angular/platform-browser';
-import {ApolloClient} from 'apollo-client';
+import {BrowserModule} from '@angular/platform-browser';
 import {execute} from 'apollo-link';
 import {filter} from 'rxjs/operator/filter';
 import {first} from 'rxjs/operator/first';
@@ -77,7 +65,7 @@ describe('integration', () => {
 
       constructor(
         private httpLink: HttpLink,
-        private httpBackend: HttpTestingController
+        private httpBackend: HttpTestingController,
       ) {}
 
       public ngOnInit() {
@@ -112,7 +100,6 @@ describe('integration', () => {
       expect(called).toBe(true);
     });
 
-    // XXX: Skip till we fix SSR
     test(
       'using long form should work',
       async(() => {
@@ -129,15 +116,15 @@ describe('integration', () => {
           .bootstrapModule(AsyncServerModule)
           .then(moduleRef => {
             const applicationRef: ApplicationRef = moduleRef.injector.get(
-              ApplicationRef
+              ApplicationRef,
             );
             return toPromise.call(
               first.call(
                 filter.call(
                   applicationRef.isStable,
-                  (isStable: boolean) => isStable
-                )
-              )
+                  (isStable: boolean) => isStable,
+                ),
+              ),
             );
           })
           .then(() => {
@@ -146,10 +133,9 @@ describe('integration', () => {
             platform.destroy();
             called = true;
           });
-      })
+      }),
     );
 
-    // XXX: Skip till we fix SSR
     test(
       'using renderModule should work',
       async(() => {
@@ -157,10 +143,9 @@ describe('integration', () => {
           expect(clearNgVersion(output)).toMatchSnapshot();
           called = true;
         });
-      })
+      }),
     );
 
-    // XXX: Skip till we fix SSR
     test(
       'using renderModuleFactory should work',
       async(() => {
@@ -174,7 +159,7 @@ describe('integration', () => {
         ]);
         const compilerFactory: CompilerFactory = platform.injector.get(
           CompilerFactory,
-          null
+          null,
         );
         const moduleFactory = compilerFactory
           .createCompiler()
@@ -184,15 +169,11 @@ describe('integration', () => {
           expect(clearNgVersion(output)).toMatchSnapshot();
           called = true;
         });
-      })
+      }),
     );
   });
 });
 
 function clearNgVersion(html: string): string {
   return html.replace(/ng-version=\"[^"]+\"/, '');
-}
-
-function clearHTML(html: string): string {
-  return html.replace(/\<\!--[^>]+--\>/, '');
 }

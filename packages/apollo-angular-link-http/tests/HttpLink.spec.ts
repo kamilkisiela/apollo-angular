@@ -25,7 +25,7 @@ describe('HttpLink', () => {
   afterEach(
     inject([HttpTestingController], (backend: HttpTestingController) => {
       backend.verify();
-    })
+    }),
   );
 
   test(
@@ -52,15 +52,15 @@ describe('HttpLink', () => {
 
           execute(link, op).subscribe({
             next: result => expect(result).toEqual({data}),
-            error: error => {
+            error: () => {
               throw new Error('Should not be here');
             },
           });
 
           httpBackend.expectOne('graphql').flush({data});
-        }
-      )
-    )
+        },
+      ),
+    ),
   );
 
   test(
@@ -81,11 +81,10 @@ describe('HttpLink', () => {
             operationName: 'heroes',
             variables: {},
           };
-          const data = {
-            heroes: [{name: 'Superman'}],
-          };
 
-          execute(link, op).subscribe(() => {});
+          execute(link, op).subscribe(() => {
+            //
+          });
 
           httpBackend.match(req => {
             expect(req.body.operationName).toBe(op.operationName);
@@ -94,8 +93,8 @@ describe('HttpLink', () => {
             expect(req.detectContentTypeHeader()).toBe('application/json');
             return true;
           });
-        }
-      )
-    )
+        },
+      ),
+    ),
   );
 });

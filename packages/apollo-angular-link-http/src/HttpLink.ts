@@ -52,7 +52,7 @@ export class HttpLinkHandler extends ApolloLink {
               sub.unsubscribe();
             }
           };
-        })
+        }),
     ).request;
   }
 

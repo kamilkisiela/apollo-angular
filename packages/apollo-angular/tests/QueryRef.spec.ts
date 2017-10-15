@@ -28,6 +28,7 @@ const heroesOperation = {
   operationName: 'allHeroes',
 };
 
+// tslint:disable:variable-name
 const __typename = 'Hero';
 
 const Superman = {
@@ -37,10 +38,6 @@ const Superman = {
 const Batman = {
   name: 'Batman',
   __typename,
-};
-
-const heroesResult = {
-  heroes: [Superman],
 };
 
 describe('QueryRef', () => {
@@ -57,7 +54,7 @@ describe('QueryRef', () => {
       {
         request: heroesOperation,
         result: {data: {heroes: [Superman, Batman]}},
-      }
+      },
     );
 
     client = createClient(mockedLink);
@@ -146,7 +143,7 @@ describe('QueryRef', () => {
 
   test('should be able to call updateQuery()', () => {
     const mockCallback = jest.fn();
-    const mapFn: any = () => {};
+    const mapFn: any = () => ({});
     obsQuery.updateQuery = mockCallback;
 
     queryRef.updateQuery(mapFn);
@@ -271,7 +268,7 @@ describe('QueryRef', () => {
     expect(mockCallback.mock.calls[0][0]).toBe(opts);
   });
 
-  test('should handle multiple subscribers', () => {
+  test('should handle multiple subscribers', done => {
     const obsFirst = queryRef.valueChanges();
     const obsSecond = queryRef.valueChanges();
 
@@ -303,6 +300,7 @@ describe('QueryRef', () => {
 
         if (calls.second === 2) {
           setTimeout(() => {
+            // tslint:disable:no-use-before-declare
             check();
           });
         }

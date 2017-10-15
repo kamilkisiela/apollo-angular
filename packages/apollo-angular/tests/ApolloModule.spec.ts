@@ -9,7 +9,7 @@ import {SelectPipe} from '../src/SelectPipe';
 describe('ApolloModule', () => {
   const metadata: NgModule = Reflect.getMetadata(
     'annotations',
-    ApolloModule
+    ApolloModule,
   )[0];
 
   test('should be defined', () => {

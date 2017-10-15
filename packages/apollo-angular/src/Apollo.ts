@@ -22,16 +22,16 @@ export class ApolloBase<TCacheShape> {
   }
 
   public query<T>(
-    options: WatchQueryOptions
+    options: WatchQueryOptions,
   ): Observable<ApolloQueryResult<T>> {
     return fromPromise<ApolloQueryResult<T>>(() =>
-      this.client.query<T>({...options})
+      this.client.query<T>({...options}),
     );
   }
 
   public mutate<T>(options: MutationOptions): Observable<FetchResult<T>> {
     return fromPromise<FetchResult<T>>(() =>
-      this.client.mutate<T>({...options})
+      this.client.mutate<T>({...options}),
     );
   }
 
@@ -112,7 +112,7 @@ export class Apollo extends ApolloBase<any> {
     }
     this.map.set(
       name,
-      new ApolloBase(new ApolloClient<TCacheShape>(options as any))
+      new ApolloBase(new ApolloClient<TCacheShape>(options as any)),
     );
   }
 }

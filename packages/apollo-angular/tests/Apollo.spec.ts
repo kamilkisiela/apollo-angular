@@ -91,7 +91,7 @@ describe('Apollo', () => {
         {
           request: {query, variables: variables2},
           result: {data: data2},
-        }
+        },
       );
 
       const apollo = mockApollo(link);
@@ -137,7 +137,7 @@ describe('Apollo', () => {
 
   describe('query()', () => {
     test('should be called with the same options', (
-      done: jest.DoneCallback
+      done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
@@ -161,7 +161,7 @@ describe('Apollo', () => {
     });
 
     test('should not be called without subscribing to it', (
-      done: jest.DoneCallback
+      done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
@@ -184,7 +184,7 @@ describe('Apollo', () => {
 
   describe('mutate()', () => {
     test('should be called with the same options', (
-      done: jest.DoneCallback
+      done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
@@ -208,7 +208,7 @@ describe('Apollo', () => {
     });
 
     test('should not be called without subscribing to it', (
-      done: jest.DoneCallback
+      done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
@@ -231,7 +231,7 @@ describe('Apollo', () => {
 
   describe('subscribe', () => {
     test('should be called with the same options and return Observable', (
-      done: jest.DoneCallback
+      done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
       apollo.create({} as any);
@@ -275,6 +275,7 @@ describe('Apollo', () => {
         }
       `;
       const variables = {name: 'Bar'};
+      // tslint:disable:variable-name
       const __typename = 'Hero';
 
       const FooHero = {name: 'Foo', __typename};
@@ -292,7 +293,7 @@ describe('Apollo', () => {
         {
           request: {query: mutation, variables},
           result: {data: dataMutation},
-        }
+        },
       );
       const apollo = mockApollo(link);
 
@@ -333,7 +334,7 @@ describe('Apollo', () => {
     });
 
     test('should update a query with Optimistic Response after mutation', (
-      done: jest.DoneCallback
+      done: jest.DoneCallback,
     ) => {
       const query = gql`
         query heroes {
@@ -358,7 +359,7 @@ describe('Apollo', () => {
 
       const FooHero = {id: 1, name: 'Foo', __typename};
       const BarHero = {id: 2, name: 'Bar', __typename};
-      const OptimisticHero = {id: null, name: 'Temp', __typename};
+      const OptimisticHero: any = {id: null, name: 'Temp', __typename};
 
       const data1 = {allHeroes: [FooHero]};
       const dataMutation = {addHero: BarHero};
@@ -373,7 +374,7 @@ describe('Apollo', () => {
         {
           request: {query: mutation, variables},
           result: {data: dataMutation},
-        }
+        },
       );
       const apollo = mockApollo(link);
 
@@ -456,7 +457,7 @@ describe('Apollo', () => {
             throw new Error('Should not be here');
           },
         });
-      })
-    )
+      }),
+    ),
   );
 });

@@ -13,7 +13,7 @@ export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
         if (!subscriber.closed) {
           subscriber.error(error);
         }
-      }
+      },
     );
 
     return () => subscriber.unsubscribe();

@@ -15,6 +15,6 @@ import {
 export const setupAngular = () => {
   getTestBed().initTestEnvironment(
     BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting()
+    platformBrowserDynamicTesting(),
   );
 };

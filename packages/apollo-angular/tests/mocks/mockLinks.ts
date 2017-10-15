@@ -49,15 +49,15 @@ export class MockLink extends ApolloLink {
     if (!responses || responses.length === 0) {
       throw new Error(
         `No more mocked responses for the query: ${print(
-          operation.query
-        )}, variables: ${JSON.stringify(operation.variables)}`
+          operation.query,
+        )}, variables: ${JSON.stringify(operation.variables)}`,
       );
     }
 
     const {result, error, delay} = responses.shift()!;
     if (!result && !error) {
       throw new Error(
-        `Mocked response should contain either result or error: ${key}`
+        `Mocked response should contain either result or error: ${key}`,
       );
     }
 
@@ -66,7 +66,9 @@ export class MockLink extends ApolloLink {
         if (error) {
           observer.error(error);
         } else {
-          if (result) observer.next(result);
+          if (result) {
+            observer.next(result);
+          }
           observer.complete();
         }
       }, delay ? delay : 0);

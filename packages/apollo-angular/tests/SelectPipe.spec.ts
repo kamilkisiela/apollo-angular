@@ -5,7 +5,7 @@ import {Pipe} from '@angular/core';
 import {SelectPipe} from '../src/SelectPipe';
 
 describe('SelectPipe', () => {
-  let pipe;
+  let pipe: SelectPipe;
   const pipeMetadata: Pipe = Reflect.getMetadata('annotations', SelectPipe)[0];
 
   beforeEach(() => {
