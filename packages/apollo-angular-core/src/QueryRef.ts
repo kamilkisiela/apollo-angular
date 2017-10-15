@@ -11,7 +11,7 @@ import {ApolloCurrentResult} from 'apollo-client/core/ObservableQuery';
 import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
-export class Watcher<T> {
+export class QueryRef<T> {
   constructor(private obsQuery: ObservableQuery<T>) {}
 
   public valueChanges(): Observable<ApolloQueryResult<T>> {

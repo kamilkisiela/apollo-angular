@@ -6,7 +6,7 @@ import ApolloClient from 'apollo-client';
 import InMemoryCache from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
-import {Watcher} from '../src/Watcher';
+import {QueryRef} from '../src/QueryRef';
 import {mockSingleLink} from './mocks/mockLinks';
 
 const createClient = (link: ApolloLink) => new ApolloClient({
@@ -42,10 +42,10 @@ const heroesResult = {
   heroes: [Superman]
 };
 
-describe('Watcher', () => {
+describe('QueryRef', () => {
   let client: ApolloClient<any>;
   let obsQuery: ObservableQuery<any>;
-  let watcher: Watcher<any>;
+  let queryRef: QueryRef<any>;
 
   beforeEach(() => {
     const mockedLink = mockSingleLink({
@@ -58,11 +58,11 @@ describe('Watcher', () => {
 
     client = createClient(mockedLink);
     obsQuery = client.watchQuery(heroesOperation);
-    watcher = new Watcher<any>(obsQuery);
+    queryRef = new QueryRef<any>(obsQuery);
   });
 
   test('should listen to changes', (done) => {
-    watcher.valueChanges().subscribe({
+    queryRef.valueChanges().subscribe({
       next: result => {
         expect(result.data).toBeDefined();
         done();
@@ -78,7 +78,7 @@ describe('Watcher', () => {
     const mockCallback = jest.fn();
     obsQuery.refetch = mockCallback;
 
-    watcher.refetch();
+    queryRef.refetch();
 
     expect(mockCallback.mock.calls.length).toBe(1);
   });
@@ -86,7 +86,7 @@ describe('Watcher', () => {
   test('should be able refetch and receive new results', (done) => {
     let calls = 0;
 
-    watcher.valueChanges().subscribe({
+    queryRef.valueChanges().subscribe({
       next: result => {
         calls++;
 
@@ -106,13 +106,13 @@ describe('Watcher', () => {
     });
 
     setTimeout(() => {
-      watcher.refetch();
+      queryRef.refetch();
     }, 200);
   });
 
   test('should be able refetch and receive new results after using rxjs operator', (done) => {
     let calls = 0;
-    const obs = watcher.valueChanges();
+    const obs = queryRef.valueChanges();
 
     map.call(obs, (result) => result.data).subscribe({
       next: result => {
@@ -136,7 +136,7 @@ describe('Watcher', () => {
     });
 
     setTimeout(() => {
-      watcher.refetch();
+      queryRef.refetch();
     }, 200);
   });
 
@@ -145,9 +145,67 @@ describe('Watcher', () => {
     const mapFn: any = () => {};
     obsQuery.updateQuery = mockCallback;
 
-    watcher.updateQuery(mapFn);
+    queryRef.updateQuery(mapFn);
 
     expect(mockCallback.mock.calls.length).toBe(1);
     expect(mockCallback.mock.calls[0][0]).toBe(mapFn);
+  });
+
+  test('should handle multiple subscribers', () => {
+    const obsFirst = queryRef.valueChanges();
+    const obsSecond = queryRef.valueChanges();
+
+    let calls = {
+      first: 0,
+      second: 0
+    };
+
+    const subFirst = queryRef.valueChanges().subscribe({
+      next: result => {
+        calls.first++;
+
+        expect(result.data).toBeDefined();
+      },
+      error: err => {
+        console.error(err);
+        done.fail('Should not be here');
+      },
+      complete: () => {
+        done.fail('Should not be here');
+      }
+    });
+
+    const subSecond = queryRef.valueChanges().subscribe({
+      next: result => {
+        calls.second++;
+
+        expect(result.data).toBeDefined();
+
+        if (calls.second === 2) {
+          setTimeout(() => {
+            check();
+          });
+        }
+      },
+      error: err => {
+        console.error(err);
+        done.fail('Should not be here');
+      },
+      complete: () => {
+        if (calls.second !== 2) {
+          done.fail('Should be called only after second call');
+        }
+      }
+    });
+
+    const check = () => {
+      expect(calls.first).toBe(2);
+      expect(calls.second).toBe(2);
+
+      expect(subFirst.closed).toBe(false);
+      expect(subSecond.closed).toBe(true);
+
+      done();
+    };
   });
 });

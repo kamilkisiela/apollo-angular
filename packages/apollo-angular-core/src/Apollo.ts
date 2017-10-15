@@ -10,53 +10,51 @@ import {FetchResult} from 'apollo-link';
 import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
-import {Watcher} from './Watcher';
+import {QueryRef} from './QueryRef';
 import {ApolloOptions} from './types';
 import {fromPromise} from './utils';
 
 export class ApolloBase<TCacheShape> {
-  constructor(public client?: ApolloClient<TCacheShape>) {}
+  constructor(private _client?: ApolloClient<TCacheShape>) {}
 
   public watchQuery<T>(
     options: WatchQueryOptions
-  ): Watcher<T> {
-    this.beforeEach();
-
-    return new Watcher<T>(this.client.watchQuery<T>({...options}));
+  ): QueryRef<T> {
+    return new QueryRef<T>(this.client.watchQuery<T>({...options}));
   }
 
   public query<T>(
     options: WatchQueryOptions
   ): Observable<ApolloQueryResult<T>> {
-    this.beforeEach();
-
     return fromPromise<ApolloQueryResult<T>>(() =>
       this.client.query<T>({...options})
     );
   }
 
   public mutate<T>(options: MutationOptions): Observable<FetchResult<T>> {
-    this.beforeEach();
-
     return fromPromise<FetchResult<T>>(() => this.client.mutate<T>({...options}));
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
-    this.beforeEach();
-
     return from(this.client.subscribe({...options}));
   }
 
   public getClient() {
-    return this.client;
+    return this._client;
   }
 
   public setClient(client: ApolloClient<TCacheShape>) {
-    if (this.client) {
+    if (this._client) {
       throw new Error('Client has been already defined');
     }
 
-    this.client = client;
+    this._client = client;
+  }
+
+  private get client(): ApolloClient<TCacheShape> {
+    this.beforeEach();
+
+    return this._client;
   }
 
   private beforeEach(): void {
@@ -64,7 +62,7 @@ export class ApolloBase<TCacheShape> {
   }
 
   private checkInstance(): void {
-    if (!this.client) {
+    if (!this._client) {
       throw new Error('Client has not been defined yet');
     }
   }
