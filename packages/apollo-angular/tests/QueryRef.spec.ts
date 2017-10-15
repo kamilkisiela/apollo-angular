@@ -68,9 +68,8 @@ describe('QueryRef', () => {
         expect(result.data).toBeDefined();
         done();
       },
-      error: err => {
-        console.error(err);
-        done.fail('Should not be here');
+      error: e => {
+        done.fail(e);
       },
     });
   });
@@ -97,9 +96,8 @@ describe('QueryRef', () => {
           done();
         }
       },
-      error: err => {
-        console.error(err);
-        done.fail('Should not be here');
+      error: e => {
+        done.fail(e);
       },
       complete: () => {
         done.fail('Should not be here');
@@ -127,9 +125,8 @@ describe('QueryRef', () => {
           done();
         }
       },
-      error: (err: any) => {
-        console.error(err);
-        done.fail('Should not be here');
+      error: (e: any) => {
+        done.fail(e);
       },
       complete: () => {
         done.fail('Should not be here');
@@ -283,9 +280,8 @@ describe('QueryRef', () => {
 
         expect(result.data).toBeDefined();
       },
-      error: err => {
-        console.error(err);
-        done.fail('Should not be here');
+      error: e => {
+        done.fail(e);
       },
       complete: () => {
         done.fail('Should not be here');
@@ -298,27 +294,25 @@ describe('QueryRef', () => {
 
         expect(result.data).toBeDefined();
 
-        if (calls.second === 2) {
-          setTimeout(() => {
-            // tslint:disable:no-use-before-declare
-            check();
-          });
-        }
+        setTimeout(() => {
+          subSecond.unsubscribe();
+          // tslint:disable:no-use-before-declare
+          check();
+        });
       },
-      error: err => {
-        console.error(err);
-        done.fail('Should not be here');
+      error: e => {
+        done.fail(e);
       },
       complete: () => {
-        if (calls.second !== 2) {
-          done.fail('Should be called only after second call');
+        if (calls.second !== 1) {
+          done.fail('Should be called only after first call');
         }
       },
     });
 
     const check = () => {
-      expect(calls.first).toBe(2);
-      expect(calls.second).toBe(2);
+      expect(calls.first).toBe(1);
+      expect(calls.second).toBe(1);
 
       expect(subFirst.closed).toBe(false);
       expect(subSecond.closed).toBe(true);
