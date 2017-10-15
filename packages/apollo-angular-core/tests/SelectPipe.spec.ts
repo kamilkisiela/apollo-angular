@@ -1,4 +1,4 @@
-import './_common';
+import './_setup';
 
 import { Pipe } from '@angular/core';
 

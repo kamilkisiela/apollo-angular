@@ -1,15 +1,10 @@
-import './_common';
+import {setupAngular} from './_setup';
 
 import gql from 'graphql-tag';
 
 import {ApolloLink} from 'apollo-link';
 import {TestBed, inject, async} from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
 import InMemoryCache, {NormalizedCache} from 'apollo-cache-inmemory';
-import ApollClient from 'apollo-client';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
 import {mockSingleLink} from './mocks/mockLinks';
@@ -27,12 +22,8 @@ function mockApollo(link: ApolloLink, options?: any) {
 }
 
 describe('Apollo', () => {
-  beforeAll(() => {
-    TestBed.initTestEnvironment(
-      BrowserDynamicTestingModule,
-      platformBrowserDynamicTesting()
-    );
-  });
+
+  beforeAll(() => setupAngular())
 
   beforeEach(() => {
     TestBed.configureTestingModule({

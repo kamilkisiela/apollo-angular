@@ -1,29 +1,19 @@
-import './_common';
+import {setupAngular} from './_setup';
 
 import gql from 'graphql-tag';
 
 import {TestBed, inject, async} from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-import {HttpClientModule, HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import {execute} from 'apollo-link';
-import {of} from 'rxjs/observable/of';
 
 import {HttpLink} from '../src/HttpLink';
 
 describe('HttpLink', () => {
-  beforeAll(() => {
-    TestBed.initTestEnvironment(
-      BrowserDynamicTestingModule,
-      platformBrowserDynamicTesting()
-    );
-  });
+  beforeAll(() => setupAngular());
 
   beforeEach(() => {
     TestBed.configureTestingModule({
