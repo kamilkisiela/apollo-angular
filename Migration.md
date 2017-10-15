@@ -30,7 +30,7 @@ class AppModule {}
 **After**
 
 ```ts
-import InMemoryCache from 'apollo-cache-inmemory';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 
 @NgModule({
