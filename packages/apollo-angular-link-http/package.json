@@ -11,7 +11,7 @@
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
-    "test-only": "jest",
+    "test-only": "jest --config jest.config.js",
     "postbuild": "npm run bundle",
     "prepare": "npm run build",
     "deploy": "../../scripts/deploy.sh"
@@ -43,24 +43,5 @@
     "ts-jest": "^21.1.2",
     "typescript": "^2.5.3",
     "zone.js": "^0.8.4"
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.test.json"
-      }
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "transform": {
-      ".ts": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "\\.spec\\.ts$",
-    "roots": [
-      "<rootDir>/tests"
-    ],
-    "browser": true
   }
 }
