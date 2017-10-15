@@ -63,7 +63,7 @@ describe('QueryRef', () => {
   });
 
   test('should listen to changes', done => {
-    queryRef.valueChanges().subscribe({
+    queryRef.valueChanges.subscribe({
       next: result => {
         expect(result.data).toBeDefined();
         done();
@@ -86,7 +86,7 @@ describe('QueryRef', () => {
   test('should be able refetch and receive new results', done => {
     let calls = 0;
 
-    queryRef.valueChanges().subscribe({
+    queryRef.valueChanges.subscribe({
       next: result => {
         calls++;
 
@@ -111,7 +111,7 @@ describe('QueryRef', () => {
 
   test('should be able refetch and receive new results after using rxjs operator', done => {
     let calls = 0;
-    const obs = queryRef.valueChanges();
+    const obs = queryRef.valueChanges;
 
     map.call(obs, (result: any) => result.data).subscribe({
       next: (result: any) => {
@@ -266,8 +266,8 @@ describe('QueryRef', () => {
   });
 
   test('should handle multiple subscribers', done => {
-    const obsFirst = queryRef.valueChanges();
-    const obsSecond = queryRef.valueChanges();
+    const obsFirst = queryRef.valueChanges;
+    const obsSecond = queryRef.valueChanges;
 
     let calls = {
       first: 0,

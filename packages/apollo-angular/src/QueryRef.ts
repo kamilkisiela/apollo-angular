@@ -12,10 +12,10 @@ import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
 export class QueryRef<T> {
-  constructor(private obsQuery: ObservableQuery<T>) {}
+  public valueChanges: Observable<ApolloQueryResult<T>>;
 
-  public valueChanges(): Observable<ApolloQueryResult<T>> {
-    return from(this.obsQuery);
+  constructor(private obsQuery: ObservableQuery<T>) {
+    this.valueChanges = from(this.obsQuery);
   }
 
   // ObservableQuery's methods

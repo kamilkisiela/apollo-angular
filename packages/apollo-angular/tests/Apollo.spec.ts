@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import {ApolloLink} from 'apollo-link';
 import {TestBed, inject, async} from '@angular/core/testing';
+import {Observable} from 'rxjs/Observable';
 import InMemoryCache, {NormalizedCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
@@ -61,7 +62,7 @@ describe('Apollo', () => {
       const client = apollo.getClient();
       const options = {query: 'gql'} as any;
 
-      client.watchQuery = jest.fn();
+      client.watchQuery = jest.fn().mockReturnValue(new Observable());
       apollo.watchQuery(options);
 
       expect(client.watchQuery).toBeCalledWith(options);
@@ -100,7 +101,7 @@ describe('Apollo', () => {
 
       let calls = 0;
 
-      obs.valueChanges().subscribe({
+      obs.valueChanges.subscribe({
         next: ({data}: any) => {
           calls++;
 
@@ -300,7 +301,7 @@ describe('Apollo', () => {
       const obs = apollo.watchQuery({query});
 
       let calls = 0;
-      obs.valueChanges().subscribe(({data}) => {
+      obs.valueChanges.subscribe(({data}) => {
         calls++;
 
         if (calls === 1) {
@@ -381,7 +382,7 @@ describe('Apollo', () => {
       const obs = apollo.watchQuery({query});
 
       let calls = 0;
-      obs.valueChanges().subscribe(({data}) => {
+      obs.valueChanges.subscribe(({data}) => {
         calls++;
 
         if (calls === 1) {
