@@ -11,9 +11,3 @@ notifications:
 install:
   - npm run bootstrap
   - npm prune
-
-script:
-  - npm run test
-
-#after_script:
-#  - coveralls < ./coverage/remapped/lcov.info || true
