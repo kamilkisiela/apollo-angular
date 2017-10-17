@@ -7,6 +7,10 @@
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "apollographql/angular-apollo"
+  },
   "scripts": {
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
