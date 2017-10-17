@@ -12,7 +12,7 @@ import {from} from 'rxjs/observable/from';
 
 import {QueryRef} from './QueryRef';
 import {ApolloOptions} from './types';
-import {fromPromise} from './utils';
+import {fromPromise, wrapWithZone} from './utils';
 
 export class ApolloBase<TCacheShape> {
   constructor(private _client?: ApolloClient<TCacheShape>) {}
@@ -36,7 +36,7 @@ export class ApolloBase<TCacheShape> {
   }
 
   public subscribe(options: SubscriptionOptions): Observable<any> {
-    return from(this.client.subscribe({...options}));
+    return wrapWithZone(from(this.client.subscribe({...options})));
   }
 
   public getClient() {
@@ -98,7 +98,7 @@ export class Apollo extends ApolloBase<any> {
     return this.map.get(name);
   }
 
-  private createDefault<TCacheShape>(options: ApolloOptions): void {
+  public createDefault<TCacheShape>(options: ApolloOptions): void {
     if (this.getClient()) {
       throw new Error('Apollo has been already created.');
     }
@@ -106,7 +106,7 @@ export class Apollo extends ApolloBase<any> {
     return this.setClient(new ApolloClient<TCacheShape>(options as any));
   }
 
-  private createNamed<TCacheShape>(name: string, options: ApolloOptions): void {
+  public createNamed<TCacheShape>(name: string, options: ApolloOptions): void {
     if (this.map.has(name)) {
       throw new Error(`Client ${name} has been already created`);
     }

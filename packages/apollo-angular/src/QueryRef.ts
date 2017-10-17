@@ -11,11 +11,13 @@ import {ApolloCurrentResult} from 'apollo-client/core/ObservableQuery';
 import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
+import {wrapWithZone} from './utils';
+
 export class QueryRef<T> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
 
   constructor(private obsQuery: ObservableQuery<T>) {
-    this.valueChanges = from(this.obsQuery);
+    this.valueChanges = wrapWithZone(from(this.obsQuery));
   }
 
   // ObservableQuery's methods

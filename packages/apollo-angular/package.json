@@ -9,7 +9,7 @@
   "typings": "./build/src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "apollostack/react-apollo"
+    "url": "apollographql/angular-apollo"
   },
   "scripts": {
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
@@ -25,7 +25,8 @@
     "@angular/core": "^4.0.0 || ^5.0.0-rc.0",
     "apollo-client": "^2.0.0-rc.2",
     "apollo-link": "^0.7.0",
-    "rxjs": "^5.0.1"
+    "rxjs": "^5.0.1",
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/common": "^4.4.4",
