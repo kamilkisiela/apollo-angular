@@ -50,3 +50,13 @@ jspm_packages
 # Packages lock
 package-lock.json
 yarn.lock
+
+.DS_Store
+Thumbs.db
+db.json
+*.log
+
+docs/public/*
+!docs/public/_redirects
+
+.idea/
