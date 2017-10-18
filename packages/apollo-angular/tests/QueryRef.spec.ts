@@ -1,3 +1,5 @@
+import './_setup';
+
 import {ObservableQuery} from 'apollo-client';
 import {map} from 'rxjs/operator/map';
 import {ApolloLink} from 'apollo-link';
