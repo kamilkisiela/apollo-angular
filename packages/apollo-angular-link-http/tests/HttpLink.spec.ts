@@ -3,7 +3,7 @@ import {setupAngular} from './_setup';
 import gql from 'graphql-tag';
 
 import {TestBed, inject, async} from '@angular/core/testing';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -99,7 +99,7 @@ describe('HttpLink', () => {
   );
 
   test(
-    'should include extensions on demand',
+    'should include extensions if allowed',
     async(
       inject(
         [HttpLink, HttpTestingController],
@@ -135,6 +135,42 @@ describe('HttpLink', () => {
   );
 
   test(
+    'should not include extensions if not allowed',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+            includeExtensions: false,
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            extensions: {
+              fooExt: true,
+            },
+          };
+
+          execute(link, op).subscribe(() => {
+            //
+          });
+
+          httpBackend.match(req => {
+            expect(req.body.extensions).toBeUndefined();
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
     'should support withCredentials',
     async(
       inject(
@@ -160,6 +196,150 @@ describe('HttpLink', () => {
 
           httpBackend.match(req => {
             expect(req.withCredentials).toBe(true);
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
+    'should support headers from contructor options',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+            headers: new HttpHeaders().set('X-Custom-Header', 'foo'),
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+          };
+
+          execute(link, op).subscribe(() => {
+            //
+          });
+
+          httpBackend.match(req => {
+            expect(req.headers.get('X-Custom-Header')).toBe('foo');
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
+    'should support headers from context',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            context: {
+              headers: new HttpHeaders().set('X-Custom-Header', 'foo'),
+            },
+          };
+
+          execute(link, op).subscribe(() => {
+            //
+          });
+
+          httpBackend.match(req => {
+            expect(req.headers.get('X-Custom-Header')).toBe('foo');
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
+    'should merge headers from context and contructor options',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+            headers: new HttpHeaders().set('X-Custom-Foo', 'foo'),
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            context: {
+              headers: new HttpHeaders().set('X-Custom-Bar', 'bar'),
+            },
+          };
+
+          execute(link, op).subscribe(() => {
+            //
+          });
+
+          httpBackend.match(req => {
+            expect(req.headers.get('X-Custom-Foo')).toBe('foo');
+            expect(req.headers.get('X-Custom-Bar')).toBe('bar');
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
+    'should prioritize context',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+            withCredentials: true,
+            headers: new HttpHeaders().set('X-Custom-Header', 'foo'),
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            context: {
+              withCredentials: false,
+              headers: new HttpHeaders().set('X-Custom-Header', 'bar'),
+            },
+          };
+
+          execute(link, op).subscribe(() => {
+            //
+          });
+
+          httpBackend.match(req => {
+            expect(req.withCredentials).toBe(false);
+            expect(req.headers.get('X-Custom-Header')).toBe('bar');
             return true;
           });
         },

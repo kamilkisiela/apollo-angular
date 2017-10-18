@@ -1,7 +1,10 @@
+import {HttpHeaders} from '@angular/common/http';
+
 export type Options = {
   uri?: string;
   includeExtensions?: boolean;
   withCredentials?: boolean;
+  headers?: HttpHeaders;
 };
 
 export type Body = {

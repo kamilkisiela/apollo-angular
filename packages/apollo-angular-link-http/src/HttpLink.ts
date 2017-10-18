@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http';
 import {ApolloLink, Observable, RequestHandler, Operation} from 'apollo-link';
 import {print} from 'graphql/language/printer';
 import {ExecutionResult} from 'graphql';
 
 import {Options, Body} from './types';
-import {normalizeUrl} from './utils';
+import {normalizeUrl, mergeHeaders} from './utils';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
@@ -20,15 +20,38 @@ export class HttpLinkHandler extends ApolloLink {
     this.requester = new ApolloLink(
       (operation: Operation) =>
         new Observable((observer: any) => {
+          const {
+            headers,
+            withCredentials,
+          }: {
+            headers?: HttpHeaders;
+            withCredentials?: boolean;
+          } = operation.getContext();
+
           const {operationName, variables, query, extensions} = operation;
+
           const body: Body = {
             operationName,
             variables,
             query: print(query),
           };
 
+          const postOptions = {
+            withCredentials: this.options.withCredentials,
+            headers: this.options.headers,
+          };
+
           if (this.options.includeExtensions) {
             body.extensions = extensions;
+          }
+
+          if (typeof withCredentials !== 'undefined') {
+            postOptions.withCredentials = withCredentials;
+          }
+
+          // merge headers
+          if (headers) {
+            postOptions.headers = mergeHeaders(postOptions.headers, headers);
           }
 
           const endpointURI = normalizeUrl(this.options.uri);
@@ -38,7 +61,7 @@ export class HttpLinkHandler extends ApolloLink {
             observe: 'response',
             responseType: 'json',
             reportProgress: false,
-            withCredentials: this.options.withCredentials,
+            ...postOptions,
           });
 
           const sub = obs.subscribe({
