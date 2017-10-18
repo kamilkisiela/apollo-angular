@@ -11,7 +11,6 @@
 		"lint": "lerna run -- lint",
 		"prettier": "prettier --config .prettierrc --write \"packages/*/{src,tests}/**/*.ts\"",
 		"deploy": "lerna run -- deploy",
-		"postdeploy": "rimraf packages/*/npm/",
 		"coverage": "codecov",
 		"precommit": "lint-staged",
 		"commitmsg": "commitlint -e"
