@@ -3,9 +3,9 @@ import './_setup';
 import {ObservableQuery} from 'apollo-client';
 import {map} from 'rxjs/operator/map';
 import {ApolloLink} from 'apollo-link';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import ApolloClient from 'apollo-client';
-import InMemoryCache from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
 import {QueryRef} from '../src/QueryRef';

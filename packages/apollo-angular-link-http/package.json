@@ -18,13 +18,12 @@
     "test-only": "jest --config jest.config.js",
     "lint": "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
     "postbuild": "npm run bundle",
-    "prepare": "npm run build",
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
     "@angular/core": "^4.3.0 || ^5.0.0-rc.0",
     "@angular/common": "^4.3.0 || ^5.0.0-rc.0",
-    "apollo-link": "^0.7.0",
+    "apollo-link": "^0.8.0",
     "graphql": "^0.11.2"
   },
   "devDependencies": {
@@ -39,9 +38,11 @@
     "@angular/platform-server": "^4.4.4",
     "@types/graphql": "^0.10.2",
     "@types/jest": "^21.1.2",
+    "@types/zen-observable": "^0.5.3",
     "apollo-cache-inmemory": "^0.2.0-rc.0",
-    "apollo-client": "^2.0.0-rc.0",
-    "apollo-link": "^0.7.0",
+    "apollo-client": "^2.0.0-rc.3",
+    "apollo-link": "^0.8.0",
+    "graphql": "^0.11.7",
     "graphql-tag": "^2.4.2",
     "jest": "^21.2.1",
     "jest-zone-patch": "0.0.8",

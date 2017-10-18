@@ -51,7 +51,7 @@ describe('HttpLink', () => {
           };
 
           execute(link, op).subscribe({
-            next: result => expect(result).toEqual({data}),
+            next: (result: any) => expect(result).toEqual({data}),
             error: () => {
               throw new Error('Should not be here');
             },
