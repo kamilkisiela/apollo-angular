@@ -38,6 +38,7 @@ export class HttpLinkHandler extends ApolloLink {
             observe: 'response',
             responseType: 'json',
             reportProgress: false,
+            withCredentials: this.options.withCredentials,
           });
 
           const sub = obs.subscribe({

@@ -133,4 +133,37 @@ describe('HttpLink', () => {
       ),
     ),
   );
+
+  test(
+    'should support withCredentials',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+            withCredentials: true,
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+          };
+
+          execute(link, op).subscribe(() => {
+            //
+          });
+
+          httpBackend.match(req => {
+            expect(req.withCredentials).toBe(true);
+            return true;
+          });
+        },
+      ),
+    ),
+  );
 });

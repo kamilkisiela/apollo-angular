@@ -1,6 +1,7 @@
 export type Options = {
   uri?: string;
   includeExtensions?: boolean;
+  withCredentials?: boolean;
 };
 
 export type Body = {
