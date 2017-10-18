@@ -4,7 +4,7 @@ import {ApolloLink, Observable, RequestHandler, Operation} from 'apollo-link';
 import {print} from 'graphql/language/printer';
 import {ExecutionResult} from 'graphql';
 
-import {Options} from './types';
+import {Options, Body} from './types';
 import {normalizeUrl} from './utils';
 
 // XXX find a better name for it
@@ -20,16 +20,21 @@ export class HttpLinkHandler extends ApolloLink {
     this.requester = new ApolloLink(
       (operation: Operation) =>
         new Observable((observer: any) => {
-          const {operationName, variables, query} = operation;
-          const body = {
+          const {operationName, variables, query, extensions} = operation;
+          const body: Body = {
             operationName,
             variables,
             query: print(query),
           };
 
-          const endpointURI = normalizeUrl(this.options.uri);
+          if (this.options.includeExtensions) {
+            body.extensions = extensions;
+          }
 
-          const obs = httpClient.post<Object>(endpointURI || 'graphql', body, {
+          const endpointURI = normalizeUrl(this.options.uri);
+          const defaultURI = 'graphql';
+
+          const obs = httpClient.post<Object>(endpointURI || defaultURI, body, {
             observe: 'response',
             responseType: 'json',
             reportProgress: false,

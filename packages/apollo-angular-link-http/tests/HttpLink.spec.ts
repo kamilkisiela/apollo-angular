@@ -97,4 +97,40 @@ describe('HttpLink', () => {
       ),
     ),
   );
+
+  test(
+    'should include extensions on demand',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+            includeExtensions: true,
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            extensions: {
+              fooExt: true,
+            },
+          };
+
+          execute(link, op).subscribe(() => {
+            //
+          });
+
+          httpBackend.match(req => {
+            expect(req.body.extensions.fooExt).toBe(true);
+            return true;
+          });
+        },
+      ),
+    ),
+  );
 });
