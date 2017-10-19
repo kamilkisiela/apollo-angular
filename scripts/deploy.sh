@@ -22,6 +22,9 @@ cp bundle.umd.js ../npm/ && cp bundle.umd.js.map ../npm/
 echo '[Deploy] Copying LICENSE'
 cp ./../LICENSE ../npm/
 
+echo '[Deploy] Copying README'
+cp ./../README.md ../npm/
+
 # Back to the root directory
 cd ../
 
@@ -41,5 +44,5 @@ node -e "var package = require('./package.json'); \
   "
 
 echo '[Deploy] Deploying to npm...'
-cd npm && npm publish --tag latest && git push --tags
+cd npm && npm publish --tag beta && git push --tags
 echo '[Deploy] Completed'
