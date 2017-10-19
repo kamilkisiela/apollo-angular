@@ -12,4 +12,8 @@ install:
   - npm run bootstrap
   - npm prune
 
+script:
+  - npm test
+  - npm lint
+
 after_success: npm run coverage
