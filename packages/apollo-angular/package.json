@@ -1,6 +1,6 @@
 {
   "name": "apollo-angular",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.0",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
@@ -9,7 +9,7 @@
   "typings": "./build/src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "apollographql/angular-apollo"
+    "url": "apollographql/apollo-angular"
   },
   "scripts": {
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
