@@ -23,10 +23,6 @@ export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
   });
 }
 
-export function wrapWithZone<T>(obs: Observable<T>): Observable<T> {
-  return observeOn.call(obs, new ZoneScheduler(Zone.current));
-}
-
 export class ZoneScheduler {
   constructor(private zone: Zone) {}
 
@@ -35,4 +31,8 @@ export class ZoneScheduler {
       return queue.schedule.apply(queue, args);
     });
   }
+}
+
+export function wrapWithZone<T>(obs: Observable<T>): Observable<T> {
+  return observeOn.call(obs, new ZoneScheduler(Zone.current));
 }
