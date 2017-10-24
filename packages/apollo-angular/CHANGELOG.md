@@ -19,6 +19,10 @@
 - No longer exposes `ClientMap`, `ClientMapWrapper`, `ClientWrapper`
 - Removes 'variables as Observables' feature
 
+### v0.13.3
+
+- Don't reuse options object for mutate and query ([PR #356](https://github.com/apollographql/apollo-angular/pull/356))
+
 ### v0.13.2
 
 - Use `InjectionToken`, instead of deprecated `OpaqueToken` ([PR #358](https://github.com/apollographql/apollo-angular/pull/358))
