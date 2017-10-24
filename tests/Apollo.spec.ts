@@ -272,6 +272,38 @@ describe('Apollo', () => {
           },
         });
       });
+
+      test('should not reuse options map', (done: jest.DoneCallback) => {
+        const client = {} as ApolloClient;
+        const apollo = createApollo({default: client});
+
+        client.query = jest.fn(options => {
+          if (options.used) {
+            throw new Error('options was reused');
+          }
+
+          options.used = true;
+
+          return Promise.resolve('query');
+        });
+
+        const obs = apollo.query({} as any);
+        const error = jest.fn(done.fail);
+
+        obs.subscribe({
+          complete: () => {
+            expect(client.query).toBeCalled();
+
+            obs.subscribe({
+              error,
+              complete: () => {
+                expect(error).not.toBeCalled();
+                done();
+              },
+            });
+          },
+        });
+      });
     });
 
     describe('mutate()', () => {
@@ -310,6 +342,38 @@ describe('Apollo', () => {
           complete: () => {
             expect(client.mutate).toBeCalled();
             done();
+          },
+        });
+      });
+
+      test('should not reuse options map', (done: jest.DoneCallback) => {
+        const client = {} as ApolloClient;
+        const apollo = createApollo({default: client});
+
+        client.mutate = jest.fn(options => {
+          if (options.used) {
+            throw new Error('options was reused');
+          }
+
+          options.used = true;
+
+          return Promise.resolve('mutation');
+        });
+
+        const obs = apollo.mutate({} as any);
+        const error = jest.fn(done.fail);
+
+        obs.subscribe({
+          complete: () => {
+            expect(client.mutate).toBeCalled();
+
+            obs.subscribe({
+              error,
+              complete: () => {
+                expect(error).not.toBeCalled();
+                done();
+              },
+            });
           },
         });
       });
