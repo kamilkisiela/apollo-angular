@@ -178,6 +178,44 @@ describe('Apollo', () => {
       });
     });
 
+    test('should not reuse options map', (done: jest.DoneCallback) => {
+      const apollo = new Apollo();
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
+      const client = apollo.getClient();
+
+      client.query = jest.fn(options => {
+        if (options.used) {
+          throw new Error('options was reused');
+        }
+
+        options.used = true;
+
+        return Promise.resolve('query');
+      });
+
+      const obs = apollo.query({} as any);
+      const error = jest.fn(done.fail);
+
+      obs.subscribe({
+        complete: () => {
+          expect(client.query).toBeCalled();
+
+          obs.subscribe({
+            error,
+            complete: () => {
+              expect(error).not.toBeCalled();
+              done();
+            },
+          });
+        },
+      });
+    });
+
     test('should not be called without subscribing to it', (
       done: jest.DoneCallback,
     ) => {
@@ -231,6 +269,44 @@ describe('Apollo', () => {
         },
         error() {
           done.fail('should not be called');
+        },
+      });
+    });
+
+    test('should not reuse options map', (done: jest.DoneCallback) => {
+      const apollo = new Apollo();
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
+      const client = apollo.getClient();
+
+      client.mutate = jest.fn(options => {
+        if (options.used) {
+          throw new Error('options was reused');
+        }
+
+        options.used = true;
+
+        return Promise.resolve('mutation');
+      });
+
+      const obs = apollo.mutate({} as any);
+      const error = jest.fn(done.fail);
+
+      obs.subscribe({
+        complete: () => {
+          expect(client.mutate).toBeCalled();
+
+          obs.subscribe({
+            error,
+            complete: () => {
+              expect(error).not.toBeCalled();
+              done();
+            },
+          });
         },
       });
     });
