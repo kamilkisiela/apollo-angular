@@ -6,7 +6,7 @@
 Use your GraphQL server data in your Angular app, with the [Apollo Client](https://github.com/apollographql/apollo-client).
 
 - [Install](#install)
-- [Docs](https://www.apollographql.com/docs/angular)
+- [Docs](https://www.apollographql.com/docs/angular/)
 - [Development](#development)
 
 ## Installation
