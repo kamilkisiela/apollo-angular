@@ -35,7 +35,10 @@ describe('Apollo', () => {
     test('should return the default client', () => {
       const apollo = new Apollo();
 
-      apollo.create({} as any);
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
 
       expect(apollo.default() instanceof ApolloBase).toBe(true);
       expect(apollo.default().getClient()).toBeDefined();
@@ -46,7 +49,13 @@ describe('Apollo', () => {
     test('should use a named client', () => {
       const apollo = new Apollo();
 
-      apollo.create({} as any, 'extra');
+      apollo.create(
+        {
+          link: mockSingleLink(),
+          cache: new InMemoryCache(),
+        },
+        'extra',
+      );
 
       expect(apollo.use('extra') instanceof ApolloBase).toBe(true);
       expect(apollo.use('extra').getClient()).toBeDefined();
@@ -57,7 +66,10 @@ describe('Apollo', () => {
     test('should be called with the same options', () => {
       const apollo = new Apollo();
 
-      apollo.create({} as any);
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
 
       const client = apollo.getClient();
       const options = {query: 'gql'} as any;
@@ -141,7 +153,12 @@ describe('Apollo', () => {
       done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
-      apollo.create({} as any);
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
       const client = apollo.getClient();
 
       const options = {query: 'gql'} as any;
@@ -165,7 +182,12 @@ describe('Apollo', () => {
       done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
-      apollo.create({} as any);
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
       const client = apollo.getClient();
 
       client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
@@ -188,7 +210,12 @@ describe('Apollo', () => {
       done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
-      apollo.create({} as any);
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
       const client = apollo.getClient();
 
       const options = {mutation: 'gql'} as any;
@@ -212,7 +239,12 @@ describe('Apollo', () => {
       done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
-      apollo.create({} as any);
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
       const client = apollo.getClient();
 
       client.mutate = jest.fn().mockReturnValue(Promise.resolve('mutation'));
@@ -235,7 +267,12 @@ describe('Apollo', () => {
       done: jest.DoneCallback,
     ) => {
       const apollo = new Apollo();
-      apollo.create({} as any);
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
       const client = apollo.getClient();
 
       client.subscribe = jest.fn().mockReturnValue(['subscription']);
