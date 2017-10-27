@@ -43,6 +43,7 @@ HTTP Link takes an object with some options on it to customize the behavior of t
 |includeExtensions|boolean|false|false|
 |headers|HttpHeaders|none|false|
 |withCredentials|boolean|none|false|
+|method|string|POST|false|
 
 
 ## Context
@@ -53,6 +54,7 @@ The HTTP Link uses the `headers` field on the context to allow passing headers t
 |---|---|---|---|
 |headers|HttpHeaders|none|false|
 |withCredentials|boolean|false|false|
+|method|string|POST|false|
 
 ```js
 import { HttpLinkModule, HttpLink } from 'apollo-link-http';
