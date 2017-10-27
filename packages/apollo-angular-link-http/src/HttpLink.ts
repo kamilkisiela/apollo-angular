@@ -1,10 +1,16 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http';
-import {ApolloLink, Observable, RequestHandler, Operation} from 'apollo-link';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {
+  ApolloLink,
+  Observable as LinkObservable,
+  RequestHandler,
+  Operation,
+} from 'apollo-link';
 import {print} from 'graphql/language/printer';
 import {ExecutionResult} from 'graphql';
+import {Observable} from 'rxjs/Observable';
 
-import {Options, Body} from './types';
+import {Options, Request, Context} from './types';
 import {normalizeUrl, mergeHeaders} from './utils';
 
 // XXX find a better name for it
@@ -19,61 +25,64 @@ export class HttpLinkHandler extends ApolloLink {
 
     this.requester = new ApolloLink(
       (operation: Operation) =>
-        new Observable((observer: any) => {
+        new LinkObservable((observer: any) => {
           const {
             headers,
             withCredentials,
-          }: {
-            headers?: HttpHeaders;
-            withCredentials?: boolean;
-          } = operation.getContext();
+            method,
+          }: Context = operation.getContext();
 
           const {operationName, variables, query, extensions} = operation;
 
-          const body: Body = {
-            operationName,
-            variables,
-            query: print(query),
+          const req: Request = {
+            method: this.options.method || 'POST',
+            url: normalizeUrl(this.options.uri) || 'graphql',
+            body: {
+              operationName,
+              variables,
+              query: print(query),
+            },
+            options: {
+              withCredentials: this.options.withCredentials,
+              headers: this.options.headers,
+            },
           };
 
-          const postOptions = {
-            withCredentials: this.options.withCredentials,
-            headers: this.options.headers,
-          };
-
+          // allow for sending extensions
           if (this.options.includeExtensions) {
-            body.extensions = extensions;
+            req.body.extensions = extensions;
           }
 
+          // Apply settings from request's context
+
+          // overwrite withCredentials
           if (typeof withCredentials !== 'undefined') {
-            postOptions.withCredentials = withCredentials;
+            req.options.withCredentials = withCredentials;
           }
-
           // merge headers
           if (headers) {
-            postOptions.headers = mergeHeaders(postOptions.headers, headers);
+            req.options.headers = mergeHeaders(req.options.headers, headers);
+          }
+          // overwrite method
+          if (method) {
+            req.method = method;
           }
 
-          const endpointURI = normalizeUrl(this.options.uri);
-          const defaultURI = 'graphql';
-
-          const obs = httpClient.post<Object>(endpointURI || defaultURI, body, {
+          // create a request
+          const obs: Observable<HttpResponse<Object>> = httpClient.request<
+            Object
+          >(req.method, req.url, {
+            body: req.body,
             observe: 'response',
             responseType: 'json',
             reportProgress: false,
-            ...postOptions,
+            ...req.options,
           });
 
           const sub = obs.subscribe({
-            next: (result: HttpResponse<any>) => {
-              observer.next(result.body);
-            },
-            error: (err: Error) => {
-              observer.error(err);
-            },
-            complete: () => {
-              observer.complete();
-            },
+            next: result => observer.next(result.body),
+            error: err => observer.error(err),
+            complete: () => observer.complete(),
           });
 
           return () => {
@@ -85,7 +94,7 @@ export class HttpLinkHandler extends ApolloLink {
     ).request;
   }
 
-  public request(op: Operation): Observable<ExecutionResult> | null {
+  public request(op: Operation): LinkObservable<ExecutionResult> | null {
     return this.requester(op);
   }
 }

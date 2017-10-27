@@ -12,6 +12,10 @@ import {execute} from 'apollo-link';
 
 import {HttpLink} from '../src/HttpLink';
 
+const noop = () => {
+  //
+};
+
 describe('HttpLink', () => {
   beforeAll(() => setupAngular());
 
@@ -82,14 +86,79 @@ describe('HttpLink', () => {
             variables: {},
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.body.operationName).toBe(op.operationName);
             expect(req.reportProgress).toBe(false);
             expect(req.responseType).toBe('json');
+            expect(req.detectContentTypeHeader()).toBe('application/json');
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
+    'should use POST by default',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({uri: 'graphql'});
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            operationName: 'heroes',
+            variables: {},
+          };
+
+          execute(link, op).subscribe(noop);
+
+          httpBackend.match(req => {
+            expect(req.method).toBe('POST');
+            expect(req.body.operationName).toBe(op.operationName);
+            expect(req.detectContentTypeHeader()).toBe('application/json');
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
+    'should be able to specify any method',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+            method: 'GET',
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            operationName: 'heroes',
+            variables: {},
+          };
+
+          execute(link, op).subscribe(noop);
+
+          httpBackend.match(req => {
+            expect(req.method).toBe('GET');
+            expect(req.body.operationName).toBe(op.operationName);
             expect(req.detectContentTypeHeader()).toBe('application/json');
             return true;
           });
@@ -121,9 +190,7 @@ describe('HttpLink', () => {
             },
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.body.extensions.fooExt).toBe(true);
@@ -157,9 +224,7 @@ describe('HttpLink', () => {
             },
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.body.extensions).toBeUndefined();
@@ -190,9 +255,7 @@ describe('HttpLink', () => {
             `,
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.withCredentials).toBe(true);
@@ -223,9 +286,7 @@ describe('HttpLink', () => {
             `,
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.headers.get('X-Custom-Header')).toBe('foo');
@@ -258,9 +319,7 @@ describe('HttpLink', () => {
             },
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.headers.get('X-Custom-Header')).toBe('foo');
@@ -294,9 +353,7 @@ describe('HttpLink', () => {
             },
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.headers.get('X-Custom-Foo')).toBe('foo');
@@ -333,9 +390,7 @@ describe('HttpLink', () => {
             },
           };
 
-          execute(link, op).subscribe(() => {
-            //
-          });
+          execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.withCredentials).toBe(false);
