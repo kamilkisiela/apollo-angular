@@ -33,7 +33,3 @@ Other benefits:
 <h2 id="compile-aot">Compile with AoT</h2>
 
 To learn more about Ahead-of-Time compilation, please take a look at [the chapter "Ahead-of-Time Compilation"](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html) on *angular.io* that explain all about AoT.
-
-<h2 id="example">An Example</h2>
-
-We prepared [an example](https://github.com/apollographql/apollo-angular/tree/master/examples/hello-world) that shows how to use *Ahead-of-Time* compilation with *Apollo*.

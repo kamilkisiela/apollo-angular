@@ -3,38 +3,47 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Use GraphQL with Angular
-propertytitle: Apollo Angular Docs
-subtitle: A guide to using the Apollo GraphQL Client with Angular.
-description:
+title: Apollo Angular
+propertytitle: Using GraphQL in Angular
+subtitle: Angular Guide
+description: A guide to using the Apollo GraphQL Client with Angular.
 author:
 language:
 timezone:
 versions:
   - '1'
+
 sidebar_categories:
   null:
     - index
-    - initialization
-    - example-schema
-  Usage:
-    - queries
-    - mutations
-    - receiving-updates
-    - cache-updates
-    - multiple-clients
+    - migration
+  Basics:
+    - basics/setup
+    - basics/queries
+    - basics/mutations
+    - basics/network-layer
+    - basics/caching
+  Features:
+    - features/error-handling
+    - features/caching
+    - features/optimistic-ui
+    - features/cache-updates
+    - features/fragments
+    - features/developer-tooling
+    - features/subscriptions
+    - features/nativescript
+    - features/multiple-clients
+    - features/static-typing
   Recipes:
-    - auth
-    - pagination
-    - optimistic-ui
-    - fragments
-    - prefetching
-    - redux
-    - server-side-rendering
-    - angular-cli
-    - ahead-of-time
-    - webpack
-    - typescript
+    - recipes/simple-example
+    - recipes/query-splitting
+    - recipes/pagination
+    - recipes/authentication
+    - recipes/prefetching
+    - recipes/server-side-rendering
+    - recipes/webpack
+    - recipes/meteor
+
 github_repo: apollographql/apollo-angular
 content_root: docs/source
 

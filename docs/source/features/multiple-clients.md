@@ -1,6 +1,5 @@
 ---
 title: Multiple clients
-order: 14
 ---
 
 With `apollo-angular` it's possible to use multiple instances of ApolloClient in your application.
@@ -30,7 +29,7 @@ Important thing to know is if you want to define a default client, simply use `d
 
 Since we have our clients available in an app, now is the time to see how to use them.
 
-If a client is defined as the default, you can directly use all methods of the `Apollo` service. 
+If a client is defined as the default, you can directly use all methods of the `Apollo` service.
 
 About named clients, simply use the method called `use(name: string)`.
 

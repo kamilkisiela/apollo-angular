@@ -2,7 +2,6 @@
 title: Server Side Rendering
 ---
 
-
 Apollo provides two techniques to allow your applications to load quickly, avoiding unnecessary delays to users:
 
  - Store rehydration, which allows your initial set of queries to return data immediately without a server roundtrip.

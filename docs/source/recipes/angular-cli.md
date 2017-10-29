@@ -2,13 +2,9 @@
 title: Angular CLI
 ---
 
-<h2 id="installation">Installation</h2>
+<h2 id="Setup">Setup</h2>
 
-To get started with Apollo and Angular install few needed packages. Take a look at [Installation](initialization.html#installation) section.
-
-<h2 id="initialization">Initialization</h2>
-
-Take a look at [Initialization](initialization.html) section.
+To get started with Apollo and Angular install few needed packages. Take a look at [Setup](../basics/setup.html#installation) section.
 
 
 <h2 id="proxy">Proxy</h2>

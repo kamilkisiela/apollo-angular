@@ -56,3 +56,6 @@ packages/**/yarn.lock
 
 # npm directories (for deploying)
 packages/*/npm/
+
+# docs
+docs/public/docs

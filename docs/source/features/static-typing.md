@@ -1,5 +1,5 @@
 ---
-title: TypeScript
+title: Static Typing
 ---
 
 You can take an advantage of using TypeScript with `apollo-angular`.

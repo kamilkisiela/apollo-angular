@@ -1,6 +1,5 @@
 ---
-title: Controlling the Store
-order: 13
+title: Updating the Store
 ---
 
 Apollo performs two important core tasks: executing queries and mutations, and caching the results.

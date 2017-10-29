@@ -1,6 +1,5 @@
 ---
 title: Mutations
-order: 11
 ---
 
 In addition to fetching data using queries, Apollo also handles GraphQL mutations. Mutations are identical to queries in syntax, the only difference being that you use the keyword `mutation` instead of `query` to indicate that the operation is used to change the dataset behind the schema.
@@ -17,7 +16,7 @@ mutation {
 GraphQL mutations consist of two parts:
 
 1. The mutation name with arguments (`submitRepository`), which represents the actual operation to be done on the server
-2. The fields you want back from the result of the mutation to update the client (`id` and `repoName`)
+1. The fields you want back from the result of the mutation to update the client (`id` and `repoName`)
 
 The result of the above mutation might be:
 
@@ -59,7 +58,7 @@ class NewEntryComponent {
   newRepository() {
     this.apollo.mutate({
       mutation: submitRepository
-    });
+    }).subscribe();
   }
 }
 ```
@@ -119,8 +118,7 @@ class SubmitRepositoryService {
         }
   }`;
 
-  constructor(private apollo: Apollo) {
-  }
+  constructor(private apollo: Apollo) {}
 
   submitRepository(repoFullName: string) {
     return this.apollo.mutate({
@@ -128,15 +126,14 @@ class SubmitRepositoryService {
       variables: {
         repoFullName: repoFullName
       }
-    });
+    }).subscribe();
   }
 }
 
 
 @Component({ ... })
 class NewEntryComponent {
-  constructor(private submitRepoService: SubmitRepositoryService) {
-  }
+  constructor(private submitRepoService: SubmitRepositoryService) {}
 
   newRepository() {
     this.submitRepoService.submitRepository('apollographql/apollo-client')
@@ -149,6 +146,7 @@ class NewEntryComponent {
 }
 
 ```
+
 > Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing a [`updateQueries`](cache-updates.html#updateQueries) callback to update the result of relevant queries with your mutation results.
 
 <h2 id="optimistic-ui">Optimistic UI</h2>
