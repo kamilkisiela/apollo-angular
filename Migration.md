@@ -266,7 +266,7 @@ Observable
     return apollo.watchQuery({
       query: someQuery,
       variables
-    });
+    }).valueChanges;
   })
   .subscribe(() => {
     console.log('New result');
