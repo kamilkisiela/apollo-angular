@@ -153,7 +153,9 @@ class FeedComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.data = this.apollo.watchQuery({ query: FeedQuery });
+    this.data = this.apollo
+      .watchQuery({ query: FeedQuery })
+      .valueChanges;
   }
 }
 ```
@@ -211,6 +213,7 @@ class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.apollo.watchQuery({ query: FeedQuery })
+      .valueChanges
       .map(({data}) => data.feed);
   }
 }
