@@ -18,7 +18,7 @@ interface User {
   email: string;
 }
 
-interface QueryResponse {
+interface Query {
   currentUser: User;
 }
 
@@ -35,15 +35,14 @@ class AppComponent {
   user: User;
 
   ngOnInit() {
-    this.apollo.watchQuery<QueryResponse>({ query: UserQuery })
+    this.apollo.watchQuery<Query>({ query: UserQuery })
+      .valueChanges
       .map(({data}) => data.currentUser);
   }
 }
 ```
 
-
-
-Now, the `data` property has a type of `QueryResponse`.
+Now, the `data` property has a type of `Query`.
 Thanks to this, you can prevent many bugs and keep the structure of your data predictable.
 
 [ApolloQueryResult]: /core/apollo-client-api.html#ApolloQueryResult
