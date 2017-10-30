@@ -256,10 +256,21 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      const options = {mutation: 'gql'} as any;
+      const options = {
+        mutation: gql`
+          mutation setFoo($foo: String!) {
+            setFoo(foo: $foo) {
+              foo
+            }
+          }
+        `,
+        variables: {
+          foo: 'test',
+        },
+      };
       client.mutate = jest.fn().mockReturnValue(Promise.resolve('mutation'));
 
-      const obs = apollo.mutate(options);
+      const obs = apollo.mutate<any, {foo: string}>(options);
 
       obs.subscribe({
         next(r) {

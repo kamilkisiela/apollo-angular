@@ -11,25 +11,31 @@ import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
 import {QueryRef} from './QueryRef';
-import {ApolloOptions} from './types';
+import {ApolloOptions, TypedVariables} from './types';
 import {fromPromise, wrapWithZone} from './utils';
+
+export type R = Record<string, any>;
 
 export class ApolloBase<TCacheShape> {
   constructor(private _client?: ApolloClient<TCacheShape>) {}
 
-  public watchQuery<T>(options: WatchQueryOptions): QueryRef<T> {
+  public watchQuery<T, V = R>(
+    options: WatchQueryOptions & TypedVariables<V>,
+  ): QueryRef<T> {
     return new QueryRef<T>(this.client.watchQuery<T>({...options}));
   }
 
-  public query<T>(
-    options: WatchQueryOptions,
+  public query<T, V = R>(
+    options: WatchQueryOptions & TypedVariables<V>,
   ): Observable<ApolloQueryResult<T>> {
     return fromPromise<ApolloQueryResult<T>>(() =>
       this.client.query<T>({...options}),
     );
   }
 
-  public mutate<T>(options: MutationOptions): Observable<FetchResult<T>> {
+  public mutate<T, V = R>(
+    options: MutationOptions & TypedVariables<V>,
+  ): Observable<FetchResult<T>> {
     return fromPromise<FetchResult<T>>(() =>
       this.client.mutate<T>({...options}),
     );

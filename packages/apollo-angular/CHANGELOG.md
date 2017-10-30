@@ -10,6 +10,7 @@
 - Simpler and less error prone API for watching queries thanks to `QueryRef`
 - More AoT friendly
 - Brings back Server-Side Rendering
+- Allows to type the operation variables
 
 **BREAKING CHANGES:** - [see Migation](../../Migration.md)
 
