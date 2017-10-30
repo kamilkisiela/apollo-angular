@@ -2,47 +2,112 @@
 title: Static Typing
 ---
 
-You can take an advantage of using TypeScript with `apollo-angular`.
+As your application grows, you may find it helpful to include a type system to assist in development. Apollo supports type definitions for TypeScript system. Both `apollo-client` and `apollo-angular` ship with definitions in their npm packages, so installation should be done for you after the libraries are included in your project.
 
-<h2 id="generic-types">Generic types</h2>
+<h2 id="operation-result">Operation result</h2>
 
-Every result of a GraphQL query is a type of [`ApolloQueryResult`][ApolloQueryResult]. It means that the actual data lives under `data` property. The default type of that property is just a simple object, but you can easily change it.
+The most common need when using type systems with GraphQL is to type the results of an operation. Given that a GraphQL server's schema is strongly typed, we can even generate TypeScript definitions automaticaly using a tool like [apollo-codegen](https://github.com/apollographql/apollo-codegen). In these docs however, we will be writing result types manually.
 
-To add an interface to the result, just specify a generic type when using methods like `watchQuery`, `mutate` and more.
-
-For an example, let's take a look at one of them:
+Since the result of a query will be sent to the component or service, we want to be able to tell our type system the shape of it. Here is an example setting types for an operation using TypeScript:
 
 ```ts
-interface User {
-  username: string;
-  email: string;
-}
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
-interface Query {
-  currentUser: User;
-}
-
-const UserQuery = gql`
-  query currentUser {
-    currentUser {
-      username
-      email
+const HERO_QUERY = gql`
+  query GetCharacter($episode: Episode!) {
+    hero(episode: $episode) {
+      name
+      id
+      friends {
+        name
+        id
+        appearsIn
+      }
     }
   }
 `;
 
-class AppComponent {
-  user: User;
+type Hero = {
+  name: string;
+  id: string;
+  appearsIn: string[];
+  friends: Hero[];
+};
 
-  ngOnInit() {
-    this.apollo.watchQuery<Query>({ query: UserQuery })
+type Response = {
+  hero: Hero;
+};
+
+@Component({ ... })
+class AppComponent {
+  response
+  constructor(apollo: Apollo) {
+    apollo.watchQuery<Response>({
+      query: HERO_QUERY,
+      variables: { episode: 'JEDI' }
+    })
       .valueChanges
-      .map(({data}) => data.currentUser);
+      .subscribe(result => {
+        console.log(result.data.hero); // no TypeScript errors
+      });
   }
 }
 ```
 
-Now, the `data` property has a type of `Query`.
-Thanks to this, you can prevent many bugs and keep the structure of your data predictable.
+Without specyfing a Generic Type for `Apollo.watchQuery`, TypeScript would throw an error saying that `hero` property does not exist in `result.data` object (it is an `Object` by default).
 
-[ApolloQueryResult]: /core/apollo-client-api.html#ApolloQueryResult
+<h2 id="options">Options</h2>
+
+To make integration between Apollo and Angular even more statically typed you can define the shape of variables (in query, watchQuery and mutate methods).
+Here is an example setting the type of variables:
+
+```javascript
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+const HERO_QUERY = gql`
+  query GetCharacter($episode: Episode!) {
+    hero(episode: $episode) {
+      name
+      id
+      friends {
+        name
+        id
+        appearsIn
+      }
+    }
+  }
+`;
+
+type Hero = {
+  name: string;
+  id: string;
+  appearsIn: string[];
+  friends: Hero[];
+};
+
+type Response = {
+  hero: Hero;
+};
+
+type Variables = {
+  episode: string
+};
+
+@Component({ ... })
+class AppComponent {
+  constructor(apollo: Apollo) {
+    apollo.watchQuery<Response, Variables>({
+      query: HERO_QUERY,
+      variables: { episode: 'JEDI' } // controlled by TypeScript
+    })
+      .valueChanges
+      .subscribe(result => {
+        console.log(result.data.hero);
+      });
+  }
+}
+```
+
+With this addition, the entirety of the integration between Apollo and Amgular can be statically typed. When combined with the strong tooling each system provides, it can make for a much improved application and developer experience.
