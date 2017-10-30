@@ -2,78 +2,254 @@
 title: Subscriptions
 ---
 
-Apollo Client caches the results of queries and then uses this cache in order to resolve parts of queries. However, what happens if the information in our cache goes out of date, i.e. the cache becomes stale? How do we make sure that we can update the cache if information changes on the server? How will our UI update to reflect this new information? These are questions that this section should answer.
+In addition to fetching data using queries and modifying data using mutations, the GraphQL spec supports a third operation type, called `subscription`.
 
-A momentarily stale cache is an unavoidable problem. There's no feasible way to have a client-side cache and make sure that the cache will *always* reflect exactly the information that is available on the server. For pretty much any application, this isn't too much of an issue: your UI may be slightly out-of-date temporarily, but, it'll sync soon enough. There are a few strategies to make sure that Apollo Client is eventually consistent with the information available to your server. These are: refetches, polling queries and GraphQL subscriptions.
+GraphQL subscriptions are a way to push data from the server to the clients that choose to listen to real time messages from the server. Subscriptions are similar to queries in that they specify a set of fields to be delivered to the client, but instead of immediately returning a single answer, a result is sent every time a particular event happens on the server.
 
-## Refetches
-Refetches are the simplest way to force a portion of your cache to reflect the information available to your server. Essentially, a refetch forces a query to hit the server, bypassing the cache entirely. The result of this query, just like all other query results, will update the information available in the cache.
+A common use case for subscriptions is notifying the client side about particular events, for example the creation of a new object, updated fields and so on.
 
-For example, continuing with the GitHunt schema, we may have the following component implementation:
+<h2 id="overview">Overview</h2>
+
+GraphQL subscriptions have to be defined in the schema, just like queries and mutations:
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'grapqhl-tag';
-
-const FeedEntries = gql`
-  query FeedEntries($type: FeedType!, $offset: Int, $limit: Int) {
-    feed($type: NEW, offset: $offset, limit: $limit) {
-      createdAt
-      commentCount
-      score
-      id
-      respository {
-        // etc.
-      }
-    }
-  }`;
-
-@Component({ ... })
-class FeedComponent implements OnInit {
-  data: any;
-
-  constructor(private apollo: Apollo) {}
-
-  ngOnInit() {
-    this.data = this.apollo.watchQuery({ ... });
-  }
-  // ...
-  onRefreshClicked() {
-    this.data.refetch();
-  }
-  // ...
+type Subscription {
+  commentAdded(repoFullName: String!): Comment
 }
 ```
 
-In particular, suppose we have a "refresh" button somewhere on the page and when that button is clicked, the `onRefreshClicked` method is called on our component. We have the method `this.data.refetch`, which allows us to refetch the query associated with the `FeedCompoment`. This means that instead of resolving information about the `feed` field from the cache (even if we have it!), the query will hit the server and will update the cache with new results from the server.
+On the client, subscription queries look just like any other kind of operation:
 
-So, if there's been some kind of update in the information that the query requests (e.g. a new repository added to the feed), the Apollo Client store will have the update and the UI will re-render as necessary.
+```graphql
+subscription onCommentAdded($repoFullName: String!){
+  commentAdded(repoFullName: $repoFullName){
+    id
+    content
+  }
+}
+```
 
-In order for refetches to be a viable strategy, you must have some idea as to when you should refetch a query (i.e. when information in the cache has gone stale). This is possible in many circumstances. For example, you could imagine refetching the whole feed when the user adds a new repository to it. But, there are cases in which this does not work, e.g. some *other* user decides to insert a repository into the GitHunt feed. Then, our client has no idea that this has happened and won't see the new feed item until the page is refreshed. One solution to that problem is polling.
+The response sent to the client looks as follows:
 
-## Polling
-If you have a query whose result can change pretty frequently, it probably makes sense to consider making a polling query. A polling query is a GraphQL query which is fired on a particular interval and every time it is fired, it is fired as a refetch, i.e. no part of it is resolved from the cache. By doing this, the portion of the cache that the query touches will be updated on the polling interval and will be consistent with the information that is on the server.
+```json
+{
+  "data": {
+    "commentAdded": {
+      "id": "123",
+      "content": "Hello!"
+    }
+  }
+}
+```
 
-Continuing with our refetch example, we can add a polling interval with an additional option:
+In the above example, the server is written to send a new result every time a comment is added on GitHunt for a specific repository. Note that the code above only defines the GraphQL subscription in the schema. Read [setting up subscriptions on the client](#subscriptions-client) and [setting up GraphQL subscriptions for the server](https://www.apollographql.com/docs/graphql-subscriptions/index.html) to learn how to add subscriptions to your app.
+
+<h3 id="when-to-use">When to use subscriptions</h3>
+
+In most cases, intermittent polling or manual refetching are actually the best way to keep your client up to date. So when is a subscription the best option? Subscriptions are especially useful if:
+
+1. The initial state is large, but the incremental change sets are small. The starting state can be fetched with a query and subsequently updated through a subscription.
+1. You care about low-latency updates in the case of specific events, for example in the case of a chat application where users expect to receive new messages in a matter of seconds.
+
+A future version of Apollo or GraphQL might include support for live queries, which would be a low-latency way to replace polling, but at this point general live queries in GraphQL are not yet possible outside of some relatively experimental setups.
+
+<h2 id="subscriptions-client">Client setup</h2>
+
+The most popular transport for GraphQL subscriptions today is [`subscriptions-transport-ws`](https://github.com/apollographql/subscriptions-transport-ws). This package is maintained by the Apollo community, but can be used with any client or server GraphQL implementation. In this article, we'll explain how to set it up on the client, but you'll also need a server implementation. You can [read about how to use subscriptions with a JavaScript server](/docs/graphql-subscriptions/setup.html), or enjoy subscriptions set up out of the box if you are using a GraphQL backend as a service like [Graphcool](https://www.graph.cool/docs/tutorials/worldchat-subscriptions-example-ui0eizishe/) or [Scaphold](https://scaphold.io/blog/2016/11/09/build-realtime-apps-with-subs.html).
+
+Let's look at how to add support for this transport to Apollo Client.
+
+First, install the WebSocket Apollo Link (`apollo-link-ws`) from npm:
+
+```shell
+npm install --save apollo-link-ws
+```
+
+Then, initialize a GraphQL subscriptions transport link:
 
 ```ts
-class FeedComponent {
-  apollo: Apollo;
+import { WebSocketLink } from 'apollo-link-ws';
 
-  // ...
-  ngOnInit() {
-    this.apollo.watchQuery({
-      query: FeedEntries,
-      pollInterval: 20000
+const wsClient = new WebSocketLink({
+  uri: `ws://localhost:5000/`,
+  options: {
+    reconnect: true
+  }
+});
+```
+
+```ts
+import { Apollo } from 'apollo-angular';
+import { split } from 'apollo-link';
+import { HttpLink } from 'apollo-angular-link-http';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
+
+@NgModule({ ... })
+class AppModule {
+  constructor(
+    apollo: Apollo,
+    httpLink: HttpLink
+  ) {
+    // Create an http link:
+    const http = httpLink.create({
+      uri: 'http://localhost:3000/graphql'
+    });
+
+    // Create a WebSocket link:
+    const ws = new WebSocketLink({
+      uri: `ws://localhost:5000/`,
+      options: {
+        reconnect: true
+      }
+    });
+
+    // using the ability to split links, you can send data to each link
+    // depending on what kind of operation is being sent
+    const link = split(
+      // split based on operation type
+      ({ query }) => {
+        const { kind, operation } = getMainDefinition(query);
+        return kind === 'OperationDefinition' && operation === 'subscription';
+      },
+      ws,
+      http,
+    );
+
+    apollo.create({
+      link,
+      // ... options
     });
   }
-  // ...
 }
 ```
 
-By using `pollInterval` key within the options, we can set the polling interval in milliseconds. Apollo will then take care of refetching this query every twenty seconds and your UI will be updated with the newest information from the server every twenty seconds.
+Now, queries and mutations will go over HTTP as normal, but subscriptions will be done over the websocket transport.
 
-Generally, you shouldn't have polling intervals that are very small, say, less than 10 seconds. If you have data that changes this frequently and need those updates on your client that quickly, you should use GraphQL subscriptions.
+<h2 id="subscribe-to-more">subscribeToMore</h2>
 
-<!-- ## Subscriptions -->
+With GraphQL subscriptions your client will be alerted on push from the server and you should choose the pattern that fits your application the most:
+
+* Use it as a notification and run any logic you want when it fires, for example alerting the user or refetching data
+* Use the data sent along with the notification and merge it directly into the store (existing queries are automatically notified)
+
+With `subscribeToMore`, you can easily do the latter.
+
+`subscribeToMore` is a method available on every query in `apollo-angular`. It works just like [`fetchMore`](cache-updates.html#fetchMore), except that the update function gets called every time the subscription returns, instead of only once.
+
+Here is a regular query:
+
+```ts
+import { Apollo, QueryRef } from 'apollo-angular';
+import { Observable } from 'rxjs/Observable';
+import gql from 'graphql-tag';
+
+const COMMENT_QUERY = gql`
+  query Comment($repoName: String!) {
+    entry(repoFullName: $repoName) {
+      comments {
+        id
+        content
+      }
+    }
+  }
+`;
+
+@Component({ ... })
+class CommentsComponent {
+  commentsQuery: QueryRef<any>;
+  comments: Observable<any>;
+  params: any;
+
+  constructor(apollo: Apollo) {
+    this.commentsQuery = apollo.watchQuery({
+      query: COMMENT_QUERY,
+      variables: {
+        repoName: `${params.org}/${params.repoName}`
+      }
+    });
+
+    this.comments = this.commentsQuery.valueChanges; // async results
+  }
+}
+```
+
+Now, let's add the subscription.
+
+Add a function called `subscribeToNewComments` that will subscribe using `subscribeToMore` and update the query's store with the new data using `updateQuery`.
+
+Note that the `updateQuery` callback must return an object of the same shape as the initial query data, otherwise the new data won't be merged. Here the new comment is pushed in the `comments` list of the `entry`:
+
+```ts
+const COMMENTS_SUBSCRIPTION = gql`
+    subscription onCommentAdded($repoFullName: String!){
+      commentAdded(repoFullName: $repoFullName){
+        id
+        content
+      }
+    }
+`;
+
+@Component({ ... })
+class CommentsComponent {
+  commentsQuery: QueryRef<any>;
+
+  // ... it is the same component as one above
+
+  subscribeToNewComments(params) {
+    this.commentsQuery.subscribeToMore({
+      document: COMMENTS_SUBSCRIPTION,
+      variables: {
+        repoName: params.repoFullName,
+      },
+      updateQuery: (prev, {subscriptionData}) => {
+        if (!subscriptionData.data) {
+          return prev;
+        }
+
+        const newFeedItem = subscriptionData.data.commentAdded;
+
+        return Object.assign({}, prev, {
+          entry: {
+            comments: [newFeedItem, ...prev.entry.comments]
+          }
+        });
+      }
+    });
+  }
+}
+```
+
+and start the actual subscription by calling the `subscribeToNewComments` function with the subscription variables:
+
+```ts
+@Component({ ... })
+class CommentsComponent {
+  // ... same component as one above
+
+  ngOnInit() {
+    this.subscribeToNewComments({
+      repoFullName: params.repoFullName,
+    });
+  }
+}
+```
+
+<h2 id="authentication">Authentication over WebSocket</h2>
+
+In many cases it is necessary to authenticate clients before allowing them to receive subscription results. To do this, the `SubscriptionClient` constructor accepts a `connectionParams` field, which passes a custom object that the server can use to validate the connection before setting up any subscriptions.
+
+```js
+import { WebSocketLink } from 'apollo-link-ws';
+
+const wsLink = new WebSocketLink({
+  uri: `ws://localhost:5000/`,
+  options: {
+    reconnect: true,
+    connectionParams: {
+        authToken: user.authToken,
+    },
+});
+```
+
+> You can use `connectionParams` for anything else you might need, not only authentication, and check its payload on the server side with [SubscriptionsServer](/docs/graphql-subscriptions/authentication.html).
