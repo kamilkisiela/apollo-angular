@@ -2,27 +2,44 @@
 title: Multiple clients
 ---
 
-With `apollo-angular` it's possible to use multiple instances of ApolloClient in your application.
+With `apollo-angular` it is possible to use multiple Apollo Clients in your application.
 
-<h2 id="providing-clients">Providing clients</h2>
+<h2 id="creating-clients">Creating clients</h2>
 
-You're already familiar with the way provide an instance of ApolloClient to the `ApolloModule`.
-Instead of using a function that returns just one client, change it to return a key-value object, where a key is a unique name of a client and put that client as a value.
+You are already familiar with how to create a single client so it should be easy to understand it.
+
+There are few ways of creating named clients.
+
+One way is to use `Apollo.create`. Normally, you would use it like this:
 
 ```ts
-export function provideClients() {
-  return {
-    default: client,
-    extra: extraClient,
-  };
-}
-
-ApolloModule.forRoot(provideClients);
+apollo.create(options)
 ```
 
-As you can see, we defined two clients that are now available to your application.
+This will define a default client but there is one optional argument.
 
-Important thing to know is if you want to define a default client, simply use `default` as a name.
+```ts
+apollo.create(options, name?)
+```
+
+An example:
+
+```ts
+apollo.create(defaultOptions)
+apollo.create(extraOptions, 'extra')
+```
+
+Now you have the default client and one called `extra`.
+
+> Important thing to know is if you want to define a default client, simply use do not use any `name` argument or set it to `default`.
+
+The other way is to use helper methods.
+
+```ts
+apollo.createDefault(options)
+// and
+apollo.createNamed(name, options);
+```
 
 
 <h2 id="using-apollo">Using Apollo</h2>
@@ -35,22 +52,18 @@ About named clients, simply use the method called `use(name: string)`.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 
 @Component({...})
-export class AppComponent implements OnInit {
-  feed: any;
+export class AppComponent {
+  feedQuery: QueryRef<any>;
 
-  constructor(
-    private apollo: Apollo
-  ) {}
-
-  ngOnInit() {
+  constructor(apollo: Apollo) {
     // use default
-    this.feed = this.apollo.watchQuery({...});
+    this.feedQuery = apollo.watchQuery({...});
 
     // use extra client
-    this.feed = this.apollo.use('extra').watchQuery({...});
+    this.feedQuery = apollo.use('extra').watchQuery({...});
   }
 }
 ```
