@@ -5,13 +5,14 @@ import {
   MutationOptions,
   ApolloQueryResult,
   SubscriptionOptions,
+  ApolloClientOptions,
 } from 'apollo-client';
 import {FetchResult} from 'apollo-link';
 import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
 import {QueryRef} from './QueryRef';
-import {ApolloOptions, TypedVariables} from './types';
+import {TypedVariables} from './types';
 import {fromPromise, wrapWithZone} from './utils';
 
 export type R = Record<string, any>;
@@ -85,7 +86,10 @@ export class Apollo extends ApolloBase<any> {
     super();
   }
 
-  public create<TCacheShape>(options: ApolloOptions, name?: string): void {
+  public create<TCacheShape>(
+    options: ApolloClientOptions<TCacheShape>,
+    name?: string,
+  ): void {
     if (name && name !== 'default') {
       this.createNamed<TCacheShape>(name, options);
     } else {
@@ -104,7 +108,9 @@ export class Apollo extends ApolloBase<any> {
     return this.map.get(name);
   }
 
-  public createDefault<TCacheShape>(options: ApolloOptions): void {
+  public createDefault<TCacheShape>(
+    options: ApolloClientOptions<TCacheShape>,
+  ): void {
     if (this.getClient()) {
       throw new Error('Apollo has been already created.');
     }
@@ -112,7 +118,10 @@ export class Apollo extends ApolloBase<any> {
     return this.setClient(new ApolloClient<TCacheShape>(options as any));
   }
 
-  public createNamed<TCacheShape>(name: string, options: ApolloOptions): void {
+  public createNamed<TCacheShape>(
+    name: string,
+    options: ApolloClientOptions<TCacheShape>,
+  ): void {
     if (this.map.has(name)) {
       throw new Error(`Client ${name} has been already created`);
     }
