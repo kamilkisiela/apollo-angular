@@ -43,6 +43,7 @@ sidebar_categories:
     - recipes/server-side-rendering
     - recipes/webpack
     - recipes/meteor
+    - recipes/angular-cli
 
 github_repo: apollographql/apollo-angular
 content_root: docs/source
