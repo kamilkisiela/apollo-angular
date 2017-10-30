@@ -11,7 +11,7 @@ In this article, we'll cover the technical details of using Apollo to implement 
 
 <h2 id="fetch-more">Using `fetchMore`</h2>
 
-Apollo lets you do pagination with a function called [`fetchMore`](cache-updates.html#fetchMore), which provided on the `data` prop by the `graphql` HOC. You need to specify what query and variables to use for the update, and how to merge the new query result with the existing data on the client. How exactly you do that will determine what kind of pagination you are implementing.
+Apollo lets you do pagination with a method called [`fetchMore`](../features/cache-updates.html#fetchMore. You need to specify what query and variables to use for the update, and how to merge the new query result with the existing data on the client. How exactly you do that will determine what kind of pagination you are implementing.
 
 <h2 id="numbered-pages">Offset-based</h2>
 
@@ -20,6 +20,8 @@ Offset based pagination - also called numbered pages - is a very common pattern,
 Here is an example with numbered pages taken from [GitHunt](https://github.com/apollographql/githunt-angular):
 
 ```ts
+import { Apollo, QueryRef } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 const feedQuery = gql`
   query Feed($type: FeedType!, $offset: Int, $limit: Int) {
@@ -33,15 +35,16 @@ const feedQuery = gql`
   }
 `;
 
-class FeedComponent, OnInit {
+@Component({ ... })
+class FeedComponent implements OnInit {
   apollo: Apollo;
-  feedObs: ApolloQueryObservable<any>;
+  feedQuery: QueryRef<any>;
   feed: any[];
   type: string;
   itemsPerPage: number = 10;
 
   ngOnInit() {
-    this.feedObs = this.apollo.watchQuery({
+    this.feedQuery = this.apollo.watchQuery<any>({
       query: feedQuery,
       variables: {
         type: this.type,
@@ -50,6 +53,12 @@ class FeedComponent, OnInit {
       },
       forceFetch: true,
     });
+
+    this.feed = this.feedQuery
+      .valueChanges
+      .subscribe(({data}) => {
+        this.feed = data.feed;
+      });
   }
 
   fetchMore() {
@@ -71,9 +80,9 @@ class FeedComponent, OnInit {
   }
 }
 ```
-[source code](https://github.com/apollographql/githunt-angular/blob/ed90c45ff9d55a2d29093859ebcb397fcf42f958/src/app/feed/feed.component.ts#L11)
+[source code](LINK)
 
-As you can see, `fetchMore` is accessible through the `ApolloQueryObservable` instance.
+As you can see, `fetchMore` is accessible through the `QueryRef` object.
 
 In the example above, `fetchMore` is a function which calls `fetchMore` with the length of the current feed as a variable. Whenever you don't pass a query argument to `fetchMore`, fetch more will use the original `query` again with new variables. Once the new data is returned from the server, the `updateQuery` function is used to merge it with the existing data, which will cause a re-render of your UI component.
 
@@ -116,13 +125,13 @@ const moreComments = gql`
 `;
 
 class FeedComponent {
-  feedObs: ApolloQueryObservable<any>;
+  feedQuery: QueryRef<any>;
 
   static cursor: any;
 
   // ...
   fetchMore() {
-    this.feedObs.fetchMore({
+    this.feedQuery.fetchMore({
       query: moreComments,
       variables: {
         // cursor is the initial cursor returned by the original query
