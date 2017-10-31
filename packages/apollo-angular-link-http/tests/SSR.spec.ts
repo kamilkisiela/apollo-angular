@@ -69,13 +69,19 @@ describe('integration', () => {
       ) {}
 
       public ngOnInit() {
-        execute(this.httpLink.create({uri: 'graphql'}), {
+        execute(this.httpLink.create({uri: 'graphql', method: 'GET'}), {
           query,
         }).subscribe(result => {
           this.text = result.data.website.status;
         });
 
-        this.httpBackend.expectOne('graphql').flush({data});
+        this.httpBackend
+          .match(
+            req =>
+              req.url === 'graphql' &&
+              req.params.get('operationName') === 'websiteInfo',
+          )[0]
+          .flush({data});
       }
     }
 

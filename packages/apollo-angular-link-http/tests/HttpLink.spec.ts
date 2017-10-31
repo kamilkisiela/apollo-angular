@@ -158,8 +158,7 @@ describe('HttpLink', () => {
 
           httpBackend.match(req => {
             expect(req.method).toBe('GET');
-            expect(req.body.operationName).toBe(op.operationName);
-            expect(req.detectContentTypeHeader()).toBe('application/json');
+            expect(req.params.get('operationName')).toBe(op.operationName);
             return true;
           });
         },

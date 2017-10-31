@@ -18,7 +18,6 @@ export type Body = {
   query: string;
   variables?: Record<string, any>;
   operationName?: string;
-  context?: Record<string, any> | Context;
   extensions?: Record<string, any>;
 };
 

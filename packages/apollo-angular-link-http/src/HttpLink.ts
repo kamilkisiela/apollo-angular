@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpResponse, HttpParams} from '@angular/common/http';
 import {
   ApolloLink,
   Observable as LinkObservable,
@@ -68,14 +68,34 @@ export class HttpLinkHandler extends ApolloLink {
             req.method = method;
           }
 
+          // `body` for some, `params` for others
+          const useBody = ['POST', 'PUT', 'PATCH'].includes(
+            req.method.toUpperCase(),
+          );
+          let bodyOrParams = {};
+
+          if (useBody) {
+            bodyOrParams = {
+              body: req.body,
+            };
+          } else {
+            const params = Object.keys(req.body).reduce(
+              (httpParams, param) =>
+                httpParams.set(param, (req.body as any)[param]),
+              new HttpParams(),
+            );
+
+            bodyOrParams = {params};
+          }
+
           // create a request
           const obs: Observable<HttpResponse<Object>> = httpClient.request<
             Object
           >(req.method, req.url, {
-            body: req.body,
             observe: 'response',
             responseType: 'json',
             reportProgress: false,
+            ...bodyOrParams,
             ...req.options,
           });
 
