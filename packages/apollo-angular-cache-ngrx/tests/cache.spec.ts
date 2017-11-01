@@ -1181,4 +1181,28 @@ describe('Cache', () => {
       expect(numBroadcasts).toEqual(1);
     });
   });
+
+  describe('reset', () => {
+    makeTest('make sure it clears cache', cache => {
+      const proxy = cache.create(defaultOptions).restore({
+        ROOT_QUERY: {
+          a: 1,
+          b: 2,
+          c: 3,
+        },
+      });
+
+      expect(proxy.extract()).toMatchObject({
+        ROOT_QUERY: {
+          a: 1,
+          b: 2,
+          c: 3,
+        },
+      });
+
+      proxy.reset();
+
+      expect(proxy.extract()).toEqual({});
+    });
+  });
 });
