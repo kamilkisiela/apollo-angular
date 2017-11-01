@@ -36,6 +36,7 @@
     "@angular/platform-browser-dynamic": "^4.4.6",
     "@ngrx/entity": "^4.1.0",
     "@ngrx/store": "^4.1.0",
+    "@types/graphql": "^0.11.5",
     "@types/jest": "^21.1.2",
     "@types/zen-observable": "^0.5.3",
     "graphql": "^0.11.7",
@@ -50,6 +51,6 @@
   },
   "dependencies": {
     "apollo-cache": "^1.0.0",
-    "apollo-cache-inmemory": "^1.0.0"
+    "apollo-cache-inmemory": "^1.1.0-beta.1"
   }
 }

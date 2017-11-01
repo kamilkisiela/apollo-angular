@@ -1,20 +1,27 @@
-import {Store, createFeatureSelector} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {
   NormalizedCache,
   StoreObject,
   NormalizedCacheObject,
 } from 'apollo-cache-inmemory';
+import {take} from 'rxjs/operator/take';
 
-import {featureName} from './const';
 import {adapter} from './reducer';
-import {State} from './types';
+import {
+  State,
+  Dictionary,
+  StoreRecord,
+  NgrxCacheOptions,
+  CacheSelector,
+} from './types';
 import {Set, Delete, Clear, Replace} from './actions';
 
-const selectCache = (state: State) =>
-  createFeatureSelector<State>(featureName)(state).cache;
-
 export class NgrxNormalizedCache implements NormalizedCache {
-  constructor(private store: Store<State>) {}
+  private cacheSelector: CacheSelector;
+
+  constructor(private store: Store<State>, private options: NgrxCacheOptions) {
+    this.cacheSelector = this.options.selector;
+  }
 
   public get(dataId: string): StoreObject {
     return this.select(dataId);
@@ -47,10 +54,17 @@ export class NgrxNormalizedCache implements NormalizedCache {
   private selectAll(): NormalizedCacheObject {
     let selected: NormalizedCacheObject = {};
 
-    this.store
-      .select(adapter.getSelectors<State>(selectCache).selectEntities)
-      .subscribe(result => {
-        Object.keys(result).forEach(id => (selected[id] = result[id].value));
+    take
+      .call(
+        this.store.select(
+          adapter.getSelectors<State>(this.cacheSelector).selectEntities,
+        ),
+        1,
+      )
+      .subscribe((result: Dictionary<StoreRecord>) => {
+        Object.keys(result).forEach(
+          id => (selected[id] = result[id] && result[id].value),
+        );
       });
 
     return selected;
@@ -59,10 +73,15 @@ export class NgrxNormalizedCache implements NormalizedCache {
   private select(dataId?: string): StoreObject {
     let selected: StoreObject;
 
-    this.store
-      .select(adapter.getSelectors<State>(selectCache).selectEntities)
-      .subscribe(result => {
-        selected = result[dataId].value;
+    take
+      .call(
+        this.store.select(
+          adapter.getSelectors<State>(this.cacheSelector).selectEntities,
+        ),
+        1,
+      )
+      .subscribe((result: Dictionary<StoreRecord>) => {
+        selected = result[dataId] && result[dataId].value;
       });
 
     return selected;
