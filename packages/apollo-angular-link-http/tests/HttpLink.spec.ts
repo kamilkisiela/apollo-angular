@@ -365,6 +365,36 @@ describe('HttpLink', () => {
   );
 
   test(
+    'should support dynamic uri based on context.uri',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            context: {
+              uri: 'gql',
+            },
+          };
+
+          execute(link, op).subscribe(noop);
+
+          httpBackend.expectOne('gql');
+        },
+      ),
+    ),
+  );
+
+  test(
     'should prioritize context',
     async(
       inject(
