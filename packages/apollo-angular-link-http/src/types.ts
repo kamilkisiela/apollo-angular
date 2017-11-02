@@ -7,6 +7,7 @@ export type HttpRequestOptions = {
 
 export type FetchOptions = {
   method?: string;
+  uri?: string;
 } & HttpRequestOptions;
 
 export type Options = {

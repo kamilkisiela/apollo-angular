@@ -30,13 +30,14 @@ export class HttpLinkHandler extends ApolloLink {
             headers,
             withCredentials,
             method,
+            uri,
           }: Context = operation.getContext();
 
           const {operationName, variables, query, extensions} = operation;
 
           const req: Request = {
-            method: this.options.method || 'POST',
-            url: normalizeUrl(this.options.uri) || 'graphql',
+            method: method || this.options.method || 'POST',
+            url: normalizeUrl(uri || this.options.uri) || 'graphql',
             body: {
               operationName,
               variables,
@@ -62,10 +63,6 @@ export class HttpLinkHandler extends ApolloLink {
           // merge headers
           if (headers) {
             req.options.headers = mergeHeaders(req.options.headers, headers);
-          }
-          // overwrite method
-          if (method) {
-            req.method = method;
           }
 
           // `body` for some, `params` for others
