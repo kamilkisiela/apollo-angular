@@ -1,6 +1,4 @@
-export {NgrxCacheModule, PROVIDERS} from './NgrxCacheModule';
-export {NgrxCacheRootModule} from './NgrxCacheRootModule';
-export {NgrxCacheFeatureModule} from './NgrxCacheFeatureModule';
-export {NgrxCache} from './NgrxCache';
+export {NgrxCacheModule, PROVIDERS} from './module';
+export {NgrxCache} from './cache';
 export {cacheReducer} from './reducer';
 export {CacheState} from './types';

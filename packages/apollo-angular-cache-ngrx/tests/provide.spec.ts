@@ -4,14 +4,7 @@ import {TestBed, inject, async} from '@angular/core/testing';
 import {StoreModule, createFeatureSelector} from '@ngrx/store';
 import gql, {disableFragmentWarnings} from 'graphql-tag';
 
-import {
-  NgrxCache,
-  NgrxCacheRootModule,
-  NgrxCacheFeatureModule,
-  NgrxCacheModule,
-  cacheReducer,
-  CacheState,
-} from '../src';
+import {NgrxCache, NgrxCacheModule, cacheReducer, CacheState} from '../src';
 
 disableFragmentWarnings();
 
@@ -19,12 +12,6 @@ const defaultOptions = {addTypename: false};
 
 describe('Provide', () => {
   beforeAll(() => setupAngular());
-
-  /*beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [NgrxCacheRootModule],
-    });
-  });*/
 
   const makeTest = (text: string, testFn: (cache: NgrxCache) => void) => {
     test(text, async(inject([NgrxCache], testFn)));
@@ -80,7 +67,7 @@ describe('Provide', () => {
     describe('by RootModule', () => {
       beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [NgrxCacheRootModule],
+          imports: [NgrxCacheModule.forRoot()],
         });
       });
 
@@ -90,7 +77,7 @@ describe('Provide', () => {
     describe('by FeatureModule', () => {
       beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [StoreModule.forRoot({}), NgrxCacheFeatureModule],
+          imports: [StoreModule.forRoot({}), NgrxCacheModule.forFeature()],
         });
       });
 

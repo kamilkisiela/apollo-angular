@@ -4,7 +4,7 @@ import {TestBed, inject, async} from '@angular/core/testing';
 import gql, {disableFragmentWarnings} from 'graphql-tag';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
-import {NgrxCache, NgrxCacheRootModule} from '../src';
+import {NgrxCache, NgrxCacheModule} from '../src';
 
 disableFragmentWarnings();
 
@@ -15,7 +15,7 @@ describe('Cache', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NgrxCacheRootModule],
+      imports: [NgrxCacheModule.forRoot()],
     });
   });
 
