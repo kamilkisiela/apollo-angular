@@ -28,7 +28,7 @@ const client = new ApolloClient({
 // This is a GraphQL field that's automatically available, but you do need
 // to query for it also.
 const client = new ApolloClient({
-  dataIdFromObject: o => `${o.__typename}-${o.id},`
+  dataIdFromObject: o => `${o.__typename}-${o.id}`,
 });
 ```
 
