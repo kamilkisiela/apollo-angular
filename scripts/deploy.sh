@@ -44,5 +44,5 @@ node -e "var package = require('./package.json'); \
   "
 
 echo '[Deploy] Deploying to npm...'
-cd npm && npm publish --tag beta && git push --tags
+cd npm && npm publish && git push --tags
 echo '[Deploy] Completed'
