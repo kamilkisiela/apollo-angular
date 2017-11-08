@@ -1,6 +1,6 @@
 {
   "name": "apollo-angular",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
