@@ -7,7 +7,7 @@ title: Setup and options
 To get started with Apollo and Angular, you will need to install a few packages from npm.
 
 ```bash
-npm install apollo-angular@beta apollo-angular-link-http@beta apollo-client apollo-cache-inmemory graphql-tag graphql --save
+npm install apollo-angular apollo-angular-link-http apollo-client apollo-cache-inmemory graphql-tag graphql --save
 ```
 
 To get started using Apollo with Angular, we need to import two NgModules, `ApolloModule` and `HttpLinkModule`.
