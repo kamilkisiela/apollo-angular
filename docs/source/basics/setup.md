@@ -36,7 +36,7 @@ class AppModule {}
 
 <h3 id="creating-client">Creating a client</h3>
 
-To get started, inject `Apollo` and `HttpLink` serivces (if you decided to use it) and then create a client:
+To get started, inject `Apollo` and `HttpLink` services (if you decided to use it) and then create a client:
 
 ```ts
 import { ApolloModule, Apollo } from 'apollo-angular';
