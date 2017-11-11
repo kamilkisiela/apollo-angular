@@ -76,11 +76,13 @@ export class HttpLinkHandler extends ApolloLink {
               body: req.body,
             };
           } else {
-            const params = Object.keys(req.body).reduce(
-              (httpParams, param) =>
-                httpParams.set(param, (req.body as any)[param]),
-              new HttpParams(),
-            );
+            const params = Object.keys(req.body).reduce((httpParams, param) => {
+              let val = (req.body as any)[param];
+              if (['variables', 'extensions'].includes(param)) {
+                val = JSON.stringify(val);
+              }
+              return httpParams.set(param, val);
+            }, new HttpParams());
 
             bodyOrParams = {params};
           }

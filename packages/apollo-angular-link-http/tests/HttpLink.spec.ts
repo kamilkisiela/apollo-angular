@@ -141,6 +141,7 @@ describe('HttpLink', () => {
           const link = httpLink.create({
             uri: 'graphql',
             method: 'GET',
+            includeExtensions: true,
           });
           const op = {
             query: gql`
@@ -151,13 +152,20 @@ describe('HttpLink', () => {
               }
             `,
             operationName: 'heroes',
-            variables: {},
+            variables: {up: 'dog'},
+            extensions: {what: 'what'},
           };
 
           execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.method).toBe('GET');
+            expect(req.params.get('variables')).toBe(
+              JSON.stringify(op.variables),
+            );
+            expect(req.params.get('extensions')).toBe(
+              JSON.stringify(op.extensions),
+            );
             expect(req.params.get('operationName')).toBe(op.operationName);
             return true;
           });
