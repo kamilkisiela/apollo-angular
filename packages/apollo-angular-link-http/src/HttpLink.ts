@@ -11,7 +11,7 @@ import {ExecutionResult} from 'graphql';
 import {Observable} from 'rxjs/Observable';
 
 import {Options, Request, Context} from './types';
-import {normalizeUrl, mergeHeaders} from './utils';
+import {mergeHeaders} from './utils';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
@@ -37,7 +37,7 @@ export class HttpLinkHandler extends ApolloLink {
 
           const req: Request = {
             method: method || this.options.method || 'POST',
-            url: normalizeUrl(uri || this.options.uri) || 'graphql',
+            url: uri || this.options.uri || 'graphql',
             body: {
               operationName,
               variables,

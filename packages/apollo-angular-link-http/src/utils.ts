@@ -1,8 +1,5 @@
 import {HttpHeaders} from '@angular/common/http';
 
-export const normalizeUrl = (url: string): string =>
-  url.replace(/^\/|\/$/g, '');
-
 export const mergeHeaders = (
   source: HttpHeaders,
   destination: HttpHeaders,
