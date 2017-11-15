@@ -1,7 +1,8 @@
 # Change log
 
 ### vNEXT
-Fix variables and extensions sending [object Object] when using GET (PR #402)
+- Serialize variables and extensions when using params ([PR #402](https://github.com/apollographql/apollo-angular/pull/402))
+- Replace `Array.includes` with `Array.indexOf`. Many browsers does not support it. ([PR #410](https://github.com/apollographql/apollo-angular/pull/410))
 
 ### v1.0.0
 

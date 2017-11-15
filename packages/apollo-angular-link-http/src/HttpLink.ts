@@ -66,9 +66,8 @@ export class HttpLinkHandler extends ApolloLink {
           }
 
           // `body` for some, `params` for others
-          const useBody = ['POST', 'PUT', 'PATCH'].includes(
-            req.method.toUpperCase(),
-          );
+          const useBody =
+            ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
           let bodyOrParams = {};
 
           if (useBody) {
@@ -78,7 +77,9 @@ export class HttpLinkHandler extends ApolloLink {
           } else {
             const params = Object.keys(req.body).reduce((httpParams, param) => {
               let val = (req.body as any)[param];
-              if (['variables', 'extensions'].includes(param)) {
+              if (
+                ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1
+              ) {
                 val = JSON.stringify(val);
               }
               return httpParams.set(param, val);
