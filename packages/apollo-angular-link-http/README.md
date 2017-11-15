@@ -9,7 +9,7 @@ An Apollo Link to allow sending a single http request per operation.
 
 ## Installation
 
-`npm install apollo-angular-link-http@beta --save`
+`npm install apollo-angular-link-http --save`
 
 ## Usage
 

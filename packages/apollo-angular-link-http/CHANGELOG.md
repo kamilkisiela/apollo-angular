@@ -1,6 +1,9 @@
 # Change log
 
 ### vNEXT
+
+### v1.0.1
+
 - Serialize variables and extensions when using params ([PR #402](https://github.com/apollographql/apollo-angular/pull/402))
 - Replace `Array.includes` with `Array.indexOf`. Many browsers does not support it. ([PR #410](https://github.com/apollographql/apollo-angular/pull/410))
 
