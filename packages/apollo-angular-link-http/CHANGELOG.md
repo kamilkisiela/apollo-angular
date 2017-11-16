@@ -2,8 +2,8 @@
 
 ### vNEXT
 
-- Allow to not sending queries
-- Use same options in both, context and global
+- Allow not to send query ([PR #416](https://github.com/apollographql/apollo-angular/pull/416))
+- Use same options in both, context and global ([PR #416](https://github.com/apollographql/apollo-angular/pull/416))
 
 ### v1.0.1
 
