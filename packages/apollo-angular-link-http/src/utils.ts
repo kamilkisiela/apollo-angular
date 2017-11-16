@@ -17,3 +17,13 @@ export const mergeHeaders = (
 
   return destination || source;
 };
+
+export function prioritize<T>(first: T, second: T, init: T): T {
+  if (typeof first !== 'undefined') {
+    init = first;
+  } else if (typeof second !== 'undefined') {
+    init = second;
+  }
+
+  return init;
+}
