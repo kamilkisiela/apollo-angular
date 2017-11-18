@@ -404,4 +404,4 @@ const logger = new ApolloLink((operation, forward) => {
 Ultimately we think the move off Redux will open the door for more powerful cache implementations and further performance gains. If you were using the Redux integration for other uses, please reach out or open an issue so we can help find a solution with the 2.0!
 
 <h2 id="reducers" title="Query Reducers">Query Reducers</h2>
-Query reducers have been finally removed in the 2.0, instead we recommend using the more flexible [`update`](LINK) API instead of reducer.
+Query reducers have been finally removed in the 2.0, instead we recommend using the more flexible [`update`](https://www.apollographql.com/docs/angular/features/cache-updates.html#directAccess) API instead of reducer.
