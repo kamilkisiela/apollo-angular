@@ -14,7 +14,7 @@ For instance, in GitHunt, we want to display the current user (if logged in) in 
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { Apollo } from '  -angular';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 // We use the gql tag to parse our query string into a query document
