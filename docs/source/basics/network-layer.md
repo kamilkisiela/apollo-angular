@@ -207,14 +207,14 @@ class AppModule {
     httpLink: HttpLink,
     auth: Auth
   ) {
-    const http = httpLink.create({ uri: '/graphql' });
+    const http = this.httpLink.create({ uri: '/graphql' });
 
     const logoutLink = onError(({ networkError }) => {
       if (networkError.statusCode === 401) auth.logout();
     });
 
-    apollo.creat({
-      link: logoutLink.concat(httpLink),
+    apollo.create({
+      link: logoutLink.concat(http),
     });
   }
 }
