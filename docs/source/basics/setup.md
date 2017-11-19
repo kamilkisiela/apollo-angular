@@ -58,7 +58,7 @@ class AppModule {
 }
 ```
 
-The client takes a variety of [options](#constructor), but in particular, if you want to change the URL of the GraphQL server, you can customize your [`Apollo Link`](/docs/link):
+The client takes a variety of [options](#Apollo), but in particular, if you want to change the URL of the GraphQL server, you can customize your [`Apollo Link`](/docs/link):
 
 ```ts
 import { Apollo } from 'apollo-angular';
@@ -152,10 +152,10 @@ At this point you are ready to start building something with Apollo! Checkout th
 The Apollo.create method takes a small number of options, of which two are required. These arguments make it easy to customize how Apollo works based on your environment or application needs.
 
 - `link`: Apollo requires an Apollo Link to serve as the network layer. For more infomation about creating links, read the [docs](/docs/link).
-- `cache`: The second required argument for using Apollo is an instance of an Apollo Cache. The default cache is the `apollo-cache-inmemory` which exports an `{ InMemoryCache }`. For more infomation read the [cache docs](./basics/caching.html).
-- `ssrMode`: When using the client for [server side rendering](./recipes/server-side-rendernig.html), pass `ssrMode` as `true`
+- `cache`: The second required argument for using Apollo is an instance of an Apollo Cache. The default cache is the `apollo-cache-inmemory` which exports an `{ InMemoryCache }`. For more infomation read the [cache docs](./caching.html).
+- `ssrMode`: When using the client for [server side rendering](../recipes/server-side-rendernig.html), pass `ssrMode` as `true`
 - `ssrForceFetchDelay`: determines the time interval before Apollo force fetchs queries after a server side render.
-- `connectToDevTools`: This argument allows the [Apollo Client Devtools](./features/devtools.html) to connect to your application's Apollo Client. You can set this to be `true` to use the tools in production (they are on by default in dev mode).
+- `connectToDevTools`: This argument allows the [Apollo Client Devtools](../features/devtools.html) to connect to your application's Apollo Client. You can set this to be `true` to use the tools in production (they are on by default in dev mode).
 - `queryDeduplication`: If set to false, this argument will force a query to still be sent to the server even if a query with identical parameters (query, variables, operationName) is already in flight.
 - `defaultOptions`: If you want to set application wide defaults for the options supplied to `watchQuery`, `query`, or `mutate`, you can pass them as a `defaultOptions` object. An example object looks like this:
 
