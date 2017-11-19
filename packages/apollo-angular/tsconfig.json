@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "build"
+  },
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "node_modules/zone.js/dist/zone.js.d.ts"
+  ]
+}

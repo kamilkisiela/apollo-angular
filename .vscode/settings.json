@@ -3,17 +3,13 @@
   "editor.rulers": [100],
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
-  "editor.wrappingColumn": 100,
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
     "**/node_modules/**": true,
-    "build": true,
-    "coverage": true,
-    "compiled": true,
-    "examples/hello-world/dist": true,
-    "npm": true,
-    "yarn.lock": true
+    "**/build/**": true,
+    "**/coverage/**": true,
+    "**/npm/**": true
   },
   "typescript.tsdk": "node_modules/typescript/lib"
 }
