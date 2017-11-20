@@ -65,7 +65,7 @@ class NewEntryComponent {
 
 <h3 id="calling-mutations">Calling mutations</h3>
 
-Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](https://www.apollographql.com/docs/react/reference/index.html#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
+Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](/docs/react/reference/index.html#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
 
 ```ts
 import { Component } from '@angular/core';
