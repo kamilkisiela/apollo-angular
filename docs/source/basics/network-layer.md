@@ -176,7 +176,7 @@ class AppModule {
     })
 
     apollo.create({
-      link: from(authMiddleware, otherMiddleware, http),
+      link: from([authMiddleware, otherMiddleware, http]),
     });
   }
 }
