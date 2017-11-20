@@ -72,7 +72,7 @@ class AppComponent {
 }
 ```
 
-The first `proxy` argument is an instance of [`DataProxy`][http://dev.apollodata.com/core/apollo-client-api.html#DataProxy] has the same for methods that we just learned exist on the Apollo Client: `readQuery`, `readFragment`, `writeQuery`, and `writeFragment`. The reason we call them on a `proxy` object here instead of on our `client` instance is that we can easily apply optimistic updates (which we will demonstrate in a bit). The `proxy` object also provides an isolated transaction which shields you from any other mutations going on at the same time, and the `proxy` object also batches writes together until the very end.
+The first `proxy` argument is an instance of [`DataProxy`][/docs/react/reference/index.html#DataProxy] has the same for methods that we just learned exist on the Apollo Client: `readQuery`, `readFragment`, `writeQuery`, and `writeFragment`. The reason we call them on a `proxy` object here instead of on our `client` instance is that we can easily apply optimistic updates (which we will demonstrate in a bit). The `proxy` object also provides an isolated transaction which shields you from any other mutations going on at the same time, and the `proxy` object also batches writes together until the very end.
 
 If you provide an `optimisticResponse` option to the mutation then the `update` function will be run twice. Once immediately after you call `apollo.mutate` with the data from `optimisticResponse`. After the mutation successfully executes against the server the changes made in the first call to `update` will be rolled back and `update` will be called with the *actual* data returned by the mutation and not just the optimistic response.
 
@@ -110,5 +110,5 @@ The `update` function is not a good place for side-effects as it may be called m
 
 **Resources:**
 
-- [`ApolloClient#mutate` API documentation](http://dev.apollodata.com/core/apollo-client-api.html#ApolloClient.mutate)
-- [`DataProxy` API documentation](http://dev.apollodata.com/core/apollo-client-api.html#DataProxy)
+- [`ApolloClient#mutate` API documentation](/docs/react/reference/index.html#ApolloClient.mutate)
+- [`DataProxy` API documentation](/docs/react/reference/index.html#DataProxy)
