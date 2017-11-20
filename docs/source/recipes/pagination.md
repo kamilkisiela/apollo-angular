@@ -80,7 +80,7 @@ class FeedComponent implements OnInit {
   }
 }
 ```
-[source code](LINK)
+[source code](https://github.com/apollographql/githunt-angular)
 
 As you can see, `fetchMore` is accessible through the `QueryRef` object.
 
