@@ -113,7 +113,7 @@ class AppModule {
 
   onServer() {
     this.transferState.onSerialize(STATE_KEY, () =>
-      reurn this.cache.extract()
+      return this.cache.extract()
     );
   }
 
