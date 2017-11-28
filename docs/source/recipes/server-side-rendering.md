@@ -112,9 +112,9 @@ class AppModule {
   }
 
   onServer() {
-    this.transferState.onSerialize(STATE_KEY, () =>
-      return this.cache.extract()
-    );
+    this.transferState.onSerialize(STATE_KEY, () => {
+      return this.cache.extract();
+    });
   }
 
   onBrowser() {
