@@ -213,7 +213,7 @@ class AppModule {
       if (networkError.statusCode === 401) auth.logout();
     });
 
-    apollo.creat({
+    apollo.create({
       link: logoutLink.concat(httpLink),
     });
   }
