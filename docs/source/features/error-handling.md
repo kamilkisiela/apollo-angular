@@ -35,6 +35,20 @@ class AppComponent {
 }
 ```
 
+You can also set `errorPolicy` globally for the created Apollo Client. Here's an example that uses the `all` policy on all `watchQuery` requests for a created client:
+
+```ts
+apollo.create({
+  link: httpLink.create(),
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      errorPolicy: 'all'
+    }
+  }
+});
+```
+
 Any errors reported will come under an `errors` property of the query result along side the data returned from the cache or server.
 
 <h3 id="network" title="Network errors">Network Errors</h3>
