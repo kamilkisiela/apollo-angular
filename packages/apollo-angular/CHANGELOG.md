@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v1.0.0
+
 - Supports **ApolloClient 2.0**
 - Supports ApolloLinks and ApolloCache
 - Supports **Angular v5**

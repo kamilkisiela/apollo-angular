@@ -9,7 +9,7 @@ An Apollo Link to allow sending a single http request per operation.
 
 ## Installation
 
-`npm install apollo-angular-link-http@beta --save`
+`npm install apollo-angular-link-http --save`
 
 ## Usage
 
@@ -35,26 +35,30 @@ The HTTP Link relies on having `HttpClient` (from `@angular/common/http`) presen
 
 ## Options
 
-HTTP Link takes an object with some options on it to customize the behavior of the link. If your server supports it, the HTTP link can also send over metadata about the request in the extensions field. To enable this, pass `includeExtensions` as true.
+HTTP Link takes an object with some options on it to customize the behavior of the link. If your server supports it, the HTTP link can also send over metadata about the request in the extensions field. To enable this, pass `includeExtensions` as true. If you would like to use persisted queries or just not to send a query, disable `includeQuery`.
 
 |name|value|default|required|
 |---|---|---|---|
-|uri|string|"/graphql"|false|
-|includeExtensions|boolean|false|false|
-|headers|HttpHeaders|none|false|
-|withCredentials|boolean|none|false|
-|method|string|POST|false|
+|uri|string|`/graphql`|false|
+|includeExtensions|boolean|`false`|false|
+|includeQuery|boolean|`true`|false|
+|headers|HttpHeaders|`none`|false|
+|withCredentials|boolean|`none`|false|
+|method|string|`POST`|false|
 
 
 ## Context
 
-The HTTP Link uses the `headers` field on the context to allow passing headers to the HTTP request. It also supports the `withCredentials` field for defining credentials policy for request. These options will override the same key if passed when creating the the link.
+The HTTP Link uses the `headers` field on the context to allow passing headers to the HTTP request. It also supports the `withCredentials` field for defining credentials policy for request. These options will override the same key if passed when creating the the link. If some setting is different than the one in Options, this one will be used.
 
 |name|value|default|required|
 |---|---|---|---|
+|uri|string|`as in options`|false|
+|includeExtensions|boolean|`as in options`|false|
+|includeQuery|boolean|`as in options`|false|
 |headers|HttpHeaders|none|false|
-|withCredentials|boolean|false|false|
-|method|string|POST|false|
+|withCredentials|boolean|`as in options`|false|
+|method|string|`as in options`|false|
 
 ```js
 import { HttpLinkModule, HttpLink } from 'apollo-link-http';

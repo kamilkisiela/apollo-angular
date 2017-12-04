@@ -8,7 +8,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import {execute} from 'apollo-link';
+import {execute, ApolloLink} from 'apollo-link';
 
 import {HttpLink} from '../src/HttpLink';
 
@@ -141,6 +141,7 @@ describe('HttpLink', () => {
           const link = httpLink.create({
             uri: 'graphql',
             method: 'GET',
+            includeExtensions: true,
           });
           const op = {
             query: gql`
@@ -151,13 +152,20 @@ describe('HttpLink', () => {
               }
             `,
             operationName: 'heroes',
-            variables: {},
+            variables: {up: 'dog'},
+            extensions: {what: 'what'},
           };
 
           execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
             expect(req.method).toBe('GET');
+            expect(req.params.get('variables')).toBe(
+              JSON.stringify(op.variables),
+            );
+            expect(req.params.get('extensions')).toBe(
+              JSON.stringify(op.extensions),
+            );
             expect(req.params.get('operationName')).toBe(op.operationName);
             return true;
           });
@@ -365,6 +373,36 @@ describe('HttpLink', () => {
   );
 
   test(
+    'should support dynamic uri based on context.uri',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const link = httpLink.create({
+            uri: 'graphql',
+          });
+          const op = {
+            query: gql`
+              query heroes {
+                heroes {
+                  name
+                }
+              }
+            `,
+            context: {
+              uri: 'gql',
+            },
+          };
+
+          execute(link, op).subscribe(noop);
+
+          httpBackend.expectOne('gql');
+        },
+      ),
+    ),
+  );
+
+  test(
     'should prioritize context',
     async(
       inject(
@@ -372,6 +410,9 @@ describe('HttpLink', () => {
         (httpLink: HttpLink, httpBackend: HttpTestingController) => {
           const link = httpLink.create({
             uri: 'graphql',
+            method: 'GET',
+            includeExtensions: false,
+            includeQuery: true,
             withCredentials: true,
             headers: new HttpHeaders().set('X-Custom-Header', 'foo'),
           });
@@ -383,7 +424,14 @@ describe('HttpLink', () => {
                 }
               }
             `,
+            extensions: {
+              foo: 'bar',
+            },
             context: {
+              uri: 'external-graphql',
+              method: 'POST',
+              includeExtensions: true,
+              includeQuery: false,
               withCredentials: false,
               headers: new HttpHeaders().set('X-Custom-Header', 'bar'),
             },
@@ -392,8 +440,60 @@ describe('HttpLink', () => {
           execute(link, op).subscribe(noop);
 
           httpBackend.match(req => {
+            expect(req.url).toBe('external-graphql');
+            expect(req.method).toBe('POST');
             expect(req.withCredentials).toBe(false);
+            expect(req.body.extensions).toBeDefined();
+            expect(req.body.query).not.toBeDefined();
             expect(req.headers.get('X-Custom-Header')).toBe('bar');
+            return true;
+          });
+        },
+      ),
+    ),
+  );
+
+  test(
+    'allows for not sending the query with the request',
+    async(
+      inject(
+        [HttpLink, HttpTestingController],
+        (httpLink: HttpLink, httpBackend: HttpTestingController) => {
+          const middleware = new ApolloLink((op, forward) => {
+            op.setContext({
+              includeQuery: false,
+              includeExtensions: true,
+            });
+
+            op.extensions.persistedQuery = {hash: '1234'};
+
+            return forward(op);
+          });
+
+          const link = middleware.concat(
+            httpLink.create({
+              uri: 'graphql',
+            }),
+          );
+
+          execute(link, {
+            query: gql`
+              query heroes($first: Int!) {
+                heroes(first: $first) {
+                  name
+                }
+              }
+            `,
+            variables: {
+              first: 5,
+            },
+          }).subscribe(noop);
+
+          httpBackend.match(req => {
+            expect(req.body.query).not.toBeDefined();
+            expect(req.body.extensions).toEqual({
+              persistedQuery: {hash: '1234'},
+            });
             return true;
           });
         },

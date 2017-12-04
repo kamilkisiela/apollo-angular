@@ -113,7 +113,7 @@ class AppModule {
 
   onServer() {
     this.transferState.onSerialize(STATE_KEY, () =>
-      this.cache.extract()
+      reurn this.cache.extract()
     );
   }
 
@@ -199,7 +199,7 @@ Super easy and clean!
 
 With all this when the client runs the first set of queries, the data will be returned instantly because it is already in the store!
 
-If you are using [`forceFetch`](cache-updates.html#forceFetch) on some of the initial queries, you can pass the `ssrForceFetchDelay` option to skip force fetching during initialization, so that even those queries run using the cache:
+If you are using [`forceFetch`](../features/cache-updates.html#forceFetch) on some of the initial queries, you can pass the `ssrForceFetchDelay` option to skip force fetching during initialization, so that even those queries run using the cache:
 
 ```ts
 // to use it create two Apollo Clients
@@ -269,7 +269,7 @@ You saw how to use Server-Side Rendering and Store Rehydration in your applicati
 
 1. Since you only want to fetch each query result once, pass the `ssrMode: true` option to the `Apollo.create` to avoid repeated force-fetching.
 
-1. You need to ensure that you create a new client or store instance for each request, rather than re-using the same client for multiple requests. Otherwise the UI will be getting stale data and you'll have problems with [authentication](auth.html).
+1. You need to ensure that you create a new client or store instance for each request, rather than re-using the same client for multiple requests. Otherwise the UI will be getting stale data and you'll have problems with [authentication](authentication.html).
 
 <h2 id="example">Example</h2>
 

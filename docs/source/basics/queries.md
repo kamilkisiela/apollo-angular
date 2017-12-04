@@ -14,7 +14,7 @@ For instance, in GitHunt, we want to display the current user (if logged in) in 
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { Apollo } from '  -angular';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 // We use the gql tag to parse our query string into a query document
@@ -65,7 +65,7 @@ Apollo service and ApolloClient share pretty much the same API. It makes things 
 
 In `ApolloClient.watchQuery` returns an Observable, but not a standard one, it contains many useful methods (like `refetch()`) to manipulate the watched query. A normal Observable, has only one method, `subscribe()`.
 
-To use that Apollo's Observable in RxJS we woudl have to drop those method and Since they are necessary to use Apollo with its full potential we had to came up with a solution.
+To use that Apollo's Observable in RxJS we would have to drop those method and Since they are necessary to use Apollo with its full potential we had to came up with a solution.
 
 This is why we created the `QueryRef`.
 

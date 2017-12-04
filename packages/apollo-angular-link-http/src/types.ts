@@ -7,21 +7,21 @@ export type HttpRequestOptions = {
 
 export type FetchOptions = {
   method?: string;
-} & HttpRequestOptions;
-
-export type Options = {
   uri?: string;
   includeExtensions?: boolean;
-} & FetchOptions;
+  includeQuery?: boolean;
+};
+
+export type Options = {} & FetchOptions & HttpRequestOptions;
 
 export type Body = {
-  query: string;
+  query?: string;
   variables?: Record<string, any>;
   operationName?: string;
   extensions?: Record<string, any>;
 };
 
-export type Context = {} & FetchOptions;
+export type Context = {} & FetchOptions & HttpRequestOptions;
 
 export type Request = {
   method: string;

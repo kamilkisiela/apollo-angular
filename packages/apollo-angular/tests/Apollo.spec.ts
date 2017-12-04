@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import {ApolloLink} from 'apollo-link';
 import {TestBed, inject, async} from '@angular/core/testing';
 import {Observable} from 'rxjs/Observable';
-import {InMemoryCache, NormalizedCache} from 'apollo-cache-inmemory';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
 import {mockSingleLink} from './mocks/mockLinks';
@@ -567,7 +567,7 @@ describe('Apollo', () => {
         };
 
         // create
-        apollo.create<NormalizedCache>({
+        apollo.create<any>({
           link: mockSingleLink({request: op, result: {data}}),
           cache: new InMemoryCache(),
         });
