@@ -110,4 +110,4 @@ class AppComponent {
 }
 ```
 
-With this addition, the entirety of the integration between Apollo and Amgular can be statically typed. When combined with the strong tooling each system provides, it can make for a much improved application and developer experience.
+With this addition, the entirety of the integration between Apollo and Angular can be statically typed. When combined with the strong tooling each system provides, it can make for a much improved application and developer experience.
