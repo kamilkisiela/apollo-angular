@@ -31,7 +31,7 @@ apollo.create(extraOptions, 'extra')
 
 Now you have the default client and one called `extra`.
 
-> Important thing to know is if you want to define a default client, simply use do not use any `name` argument or set it to `default`.
+> Important thing to know is if you want to define a default client, simply do not use any `name` argument or set it to `default`.
 
 The other way is to use helper methods.
 
