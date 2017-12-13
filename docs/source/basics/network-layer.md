@@ -125,7 +125,7 @@ class AppModule {
       // add the authorization to the headers
       operation.setContext({
         headers: new HttpHeaders().set('Authorization', localStorage.getItem('token') || null)
-      }));
+      });
 
       return forward(operation);
     });
