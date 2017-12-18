@@ -153,7 +153,7 @@ The Apollo.create method takes a small number of options, of which two are requi
 
 - `link`: Apollo requires an Apollo Link to serve as the network layer. For more infomation about creating links, read the [docs](/docs/link).
 - `cache`: The second required argument for using Apollo is an instance of an Apollo Cache. The default cache is the `apollo-cache-inmemory` which exports an `{ InMemoryCache }`. For more infomation read the [cache docs](./caching.html).
-- `ssrMode`: When using the client for [server side rendering](../recipes/server-side-rendernig.html), pass `ssrMode` as `true`
+- `ssrMode`: When using the client for [server side rendering](../recipes/server-side-rendering.html), pass `ssrMode` as `true`
 - `ssrForceFetchDelay`: determines the time interval before Apollo force fetchs queries after a server side render.
 - `connectToDevTools`: This argument allows the [Apollo Client Devtools](../features/devtools.html) to connect to your application's Apollo Client. You can set this to be `true` to use the tools in production (they are on by default in dev mode).
 - `queryDeduplication`: If set to false, this argument will force a query to still be sent to the server even if a query with identical parameters (query, variables, operationName) is already in flight.
