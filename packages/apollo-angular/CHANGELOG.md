@@ -14,7 +14,7 @@
 - Brings back Server-Side Rendering
 - Allows to type the operation variables
 
-**BREAKING CHANGES:** - [see Migation](../../Migration.md)
+**BREAKING CHANGES:** - [see Migration](../../Migration.md)
 
 - Drops `apollo-client-rxjs` (thanks to `QueryRef`)
 - Replaces`ApolloQueryObservable` with `QueryRef`
