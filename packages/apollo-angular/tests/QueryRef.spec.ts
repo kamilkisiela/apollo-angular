@@ -257,14 +257,14 @@ describe('QueryRef', () => {
 
   test('should be able to call setVariables()', () => {
     const mockCallback = jest.fn();
-    const opts = {};
-    obsQuery.setOptions = mockCallback.mockReturnValue('expected');
+    const variables = {};
+    obsQuery.setVariables = mockCallback.mockReturnValue('expected');
 
-    const result = queryRef.setOptions(opts);
+    const result = queryRef.setVariables(variables);
 
     expect(result).toBe('expected');
     expect(mockCallback.mock.calls.length).toBe(1);
-    expect(mockCallback.mock.calls[0][0]).toBe(opts);
+    expect(mockCallback.mock.calls[0][0]).toBe(variables);
   });
 
   test('should handle multiple subscribers', done => {
