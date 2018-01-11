@@ -12,8 +12,9 @@ import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
 import {wrapWithZone} from './utils';
+import {R} from './types';
 
-export class QueryRef<T> {
+export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
 
   constructor(private obsQuery: ObservableQuery<T>) {
@@ -42,7 +43,7 @@ export class QueryRef<T> {
     return this.obsQuery.resetLastResults();
   }
 
-  public refetch(variables?: any): Promise<ApolloQueryResult<T>> {
+  public refetch(variables?: V): Promise<ApolloQueryResult<T>> {
     return this.obsQuery.refetch(variables);
   }
 
@@ -74,7 +75,7 @@ export class QueryRef<T> {
   }
 
   public setVariables(
-    variables: any,
+    variables: V,
     tryFetch: boolean = false,
     fetchResults = true,
   ): Promise<ApolloQueryResult<T>> {

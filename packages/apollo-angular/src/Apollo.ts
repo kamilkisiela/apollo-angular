@@ -12,10 +12,8 @@ import {Observable} from 'rxjs/Observable';
 import {from} from 'rxjs/observable/from';
 
 import {QueryRef} from './QueryRef';
-import {TypedVariables} from './types';
+import {TypedVariables, R} from './types';
 import {fromPromise, wrapWithZone} from './utils';
-
-export type R = Record<string, any>;
 
 export class ApolloBase<TCacheShape> {
   constructor(private _client?: ApolloClient<TCacheShape>) {}
