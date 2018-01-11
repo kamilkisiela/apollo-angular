@@ -127,7 +127,7 @@ With this addition, the entirety of the integration between Apollo and Angular
 can be statically typed. When combined with the strong tooling each system
 provides, it can make for a much improved application and developer experience.
 
-### QueryRef
+<h2 id="other-usage">Other usage</h2>
 
 It is not only `Apollo` service where you can use generic types for Options and
 Variables. Same logic applies to `QueryRef` object.
