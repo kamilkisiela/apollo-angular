@@ -1,7 +1,8 @@
 {
   "name": "apollo-angular",
-  "version": "1.0.0",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "version": "1.0.1",
+  "author":
+    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
@@ -16,7 +17,8 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
-    "lint": "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "lint":
+      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
     "postbuild": "npm run bundle",
     "deploy": "../../scripts/deploy.sh"
   },
