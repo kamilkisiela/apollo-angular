@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v1.0.1
+
 * Brings typed variables to `QueryRef`
 
 ### v1.0.0
