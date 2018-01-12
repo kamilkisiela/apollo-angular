@@ -9,7 +9,7 @@ can read about GraphQL queries themselves in detail at
 
 One of our core values is "it's just GraphQL". When using Apollo Client, you
 don't have to learn anything special about the query syntax, since everything is
-just standard GraphQL. Anything you can type into the GraphiQL query IDE, you
+just standard GraphQL. Anything you can type into the GraphQL query IDE, you
 can also put into your Apollo Client code.
 
 <h2 id="basics">Basic Queries</h2>
