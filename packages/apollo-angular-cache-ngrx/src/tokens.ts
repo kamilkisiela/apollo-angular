@@ -1,7 +1,11 @@
 import {InjectionToken} from '@angular/core';
 
-import {CacheSelector} from './types';
+import {NgrxNormalizedCache} from './normalized-cache';
 
-export const DEFAULT_SELECTOR = new InjectionToken<CacheSelector>(
-  'apollo-angular Default Selector',
+export const APOLLO_STATE_KEY = new InjectionToken<string>(
+  '[apollo] State Key',
+);
+
+export const _APOLLO_NORMALIZED_CACHE = new InjectionToken<NgrxNormalizedCache>(
+  '[apollo] Cache',
 );

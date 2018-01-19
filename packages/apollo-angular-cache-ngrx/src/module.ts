@@ -1,72 +1,47 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
-import {
-  StoreModule,
-  StoreRootModule,
-  StoreFeatureModule,
-  createFeatureSelector,
-} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 
 import {NgrxCache} from './cache';
-import {cacheReducer} from './reducer';
-import {State, CacheState} from './types';
-import {DEFAULT_SELECTOR} from './tokens';
+import {APOLLO_STATE_KEY, _APOLLO_NORMALIZED_CACHE} from './tokens';
+import {NgrxNormalizedCache} from './normalized-cache';
 
-export function _cacheSelectorFactory(name: string) {
-  return function _featureCacheSelector(state: State) {
-    return createFeatureSelector<State>(name)(state).cache;
-  };
+export const defaultStateKey = 'apollo';
+
+export function _createNormalizedCache(
+  store: Store<any>,
+  stateKey: string,
+): NgrxNormalizedCache {
+  return new NgrxNormalizedCache(store, stateKey);
 }
 
-export function _rootCacheSelector(state: State): CacheState {
-  return state.cache;
-}
-
-export const PROVIDERS = [NgrxCache];
-
 @NgModule({
-  imports: [StoreFeatureModule],
-})
-export class NgrxCacheFeatureModule {}
-
-@NgModule({
-  imports: [StoreRootModule],
-})
-export class NgrxCacheRootModule {}
-
-@NgModule({
-  providers: PROVIDERS,
+  providers: [
+    NgrxCache,
+    {
+      provide: APOLLO_STATE_KEY,
+      useValue: defaultStateKey,
+    },
+    {
+      provide: _APOLLO_NORMALIZED_CACHE,
+      useFactory: _createNormalizedCache,
+      deps: [Store, APOLLO_STATE_KEY],
+    },
+  ],
 })
 export class NgrxCacheModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(stateKey?: string): ModuleWithProviders {
     return {
-      ngModule: NgrxCacheRootModule,
+      ngModule: NgrxCacheModule,
       providers: [
-        StoreModule.forRoot<State>({
-          cache: cacheReducer,
-        }).providers,
         {
-          provide: DEFAULT_SELECTOR,
-          useValue: _rootCacheSelector,
+          provide: APOLLO_STATE_KEY,
+          useValue: stateKey || defaultStateKey,
         },
-        PROVIDERS,
-      ],
-    };
-  }
-
-  public static forFeature(name?: string): ModuleWithProviders {
-    const featureName = name || 'apollo';
-
-    return {
-      ngModule: NgrxCacheFeatureModule,
-      providers: [
-        StoreModule.forFeature<State>(featureName, {
-          cache: cacheReducer,
-        }).providers,
         {
-          provide: DEFAULT_SELECTOR,
-          useValue: _cacheSelectorFactory(featureName),
+          provide: _APOLLO_NORMALIZED_CACHE,
+          useFactory: _createNormalizedCache,
+          deps: [Store, APOLLO_STATE_KEY],
         },
-        PROVIDERS,
       ],
     };
   }

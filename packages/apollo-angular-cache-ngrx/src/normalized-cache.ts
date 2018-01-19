@@ -7,21 +7,11 @@ import {
 import {take} from 'rxjs/operator/take';
 
 import {adapter} from './reducer';
-import {
-  State,
-  Dictionary,
-  StoreRecord,
-  NgrxCacheOptions,
-  CacheSelector,
-} from './types';
+import {State, Dictionary, StoreRecord} from './types';
 import {Set, Delete, Clear, Replace} from './actions';
 
 export class NgrxNormalizedCache implements NormalizedCache {
-  private cacheSelector: CacheSelector;
-
-  constructor(private store: Store<State>, private options: NgrxCacheOptions) {
-    this.cacheSelector = this.options.selector;
-  }
+  constructor(private store: Store<State>, private stateKey: string) {}
 
   public get(dataId: string): StoreObject {
     return this.select(dataId);
@@ -55,12 +45,7 @@ export class NgrxNormalizedCache implements NormalizedCache {
     let selected: NormalizedCacheObject = {};
 
     take
-      .call(
-        this.store.select(
-          adapter.getSelectors<State>(this.cacheSelector).selectEntities,
-        ),
-        1,
-      )
+      .call(this.store.select(this.cacheSelector()), 1)
       .subscribe((result: Dictionary<StoreRecord>) => {
         Object.keys(result).forEach(
           id => (selected[id] = result[id] && result[id].value),
@@ -74,17 +59,18 @@ export class NgrxNormalizedCache implements NormalizedCache {
     let selected: StoreObject;
 
     take
-      .call(
-        this.store.select(
-          adapter.getSelectors<State>(this.cacheSelector).selectEntities,
-        ),
-        1,
-      )
+      .call(this.store.select(this.cacheSelector()), 1)
       .subscribe((result: Dictionary<StoreRecord>) => {
         selected = result[dataId] && result[dataId].value;
       });
 
     return selected;
+  }
+
+  private cacheSelector() {
+    const stateKey = this.stateKey;
+    return adapter.getSelectors<State>((state: any) => state[stateKey])
+      .selectEntities;
   }
 
   public toObject(): NormalizedCacheObject {

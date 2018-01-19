@@ -1,39 +1,20 @@
-import {Injectable, Optional, Inject} from '@angular/core';
-import {Store} from '@ngrx/store';
+import {Injectable, Inject} from '@angular/core';
 import {InMemoryCache, ApolloReducerConfig} from 'apollo-cache-inmemory';
 
-import {NgrxNormalizedCache} from './normalizedCache';
-import {State, NgrxCacheOptions, CacheSelector} from './types';
-import {DEFAULT_SELECTOR} from './tokens';
+import {NgrxNormalizedCache} from './normalized-cache';
+import {_APOLLO_NORMALIZED_CACHE} from './tokens';
 
 @Injectable()
 export class NgrxCache {
   constructor(
-    private store: Store<State>,
-    @Optional()
-    @Inject(DEFAULT_SELECTOR)
-    private defaultCacheSelector: CacheSelector,
+    @Inject(_APOLLO_NORMALIZED_CACHE)
+    private normalizedCache: NgrxNormalizedCache,
   ) {}
-  public create(options?: NgrxCacheOptions): InMemoryCache {
-    // clear NgrxCache specific options
-    const cacheOptions = {
-      ...options,
-      selector: undefined,
-    } as ApolloReducerConfig;
-
-    // define options for NgrxNormalizedCache
-    const ngrxCacheOptions: NgrxCacheOptions = {
-      ...options,
-      selector: this.defaultCacheSelector
-        ? this.defaultCacheSelector
-        : options.selector,
-    };
-
-    const storeFactory = () =>
-      new NgrxNormalizedCache(this.store, ngrxCacheOptions);
+  public create(options?: ApolloReducerConfig): InMemoryCache {
+    const storeFactory = () => this.normalizedCache;
 
     return new InMemoryCache({
-      ...cacheOptions,
+      ...options,
       storeFactory,
     });
   }

@@ -1,4 +1,4 @@
-export {NgrxCacheModule, PROVIDERS} from './module';
+export {NgrxCacheModule} from './module';
 export {NgrxCache} from './cache';
-export {cacheReducer} from './reducer';
+export {apolloReducer} from './reducer';
 export {CacheState} from './types';

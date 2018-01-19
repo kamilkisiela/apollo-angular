@@ -1,10 +1,10 @@
 import {setupAngular} from './_setup';
 
 import {TestBed, inject, async} from '@angular/core/testing';
-import {StoreModule, createFeatureSelector} from '@ngrx/store';
+import {StoreModule} from '@ngrx/store';
 import gql, {disableFragmentWarnings} from 'graphql-tag';
 
-import {NgrxCache, NgrxCacheModule, cacheReducer, CacheState} from '../src';
+import {NgrxCache, NgrxCacheModule, apolloReducer, CacheState} from '../src';
 
 disableFragmentWarnings();
 
@@ -17,12 +17,11 @@ describe('Provide', () => {
     test(text, async(inject([NgrxCache], testFn)));
   };
 
-  const simpleRead = (options?: any) =>
+  const simpleRead = () =>
     makeTest('will read some data from the store', cache => {
       const proxy = cache
         .create({
           ...defaultOptions,
-          ...options,
         })
         .restore({
           ROOT_QUERY: {
@@ -63,66 +62,38 @@ describe('Provide', () => {
       ).toMatchObject({a: 1, b: 2, c: 3});
     });
 
-  describe('three ways of providing Cache', () => {
-    describe('by RootModule', () => {
+  describe('two ways of providing Cache', () => {
+    describe('with default stateKey', () => {
+      type State = {apollo: CacheState};
+
       beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [NgrxCacheModule.forRoot()],
+          imports: [
+            StoreModule.forRoot<State>({
+              apollo: apolloReducer,
+            }),
+            NgrxCacheModule,
+          ],
         });
       });
 
       simpleRead();
     });
+    describe('with custom stateKey', () => {
+      type State = {myApollo: CacheState};
 
-    describe('by FeatureModule', () => {
       beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [StoreModule.forRoot({}), NgrxCacheModule.forFeature()],
+          imports: [
+            StoreModule.forRoot<State>({
+              myApollo: apolloReducer,
+            }),
+            NgrxCacheModule.forRoot('myApollo'),
+          ],
         });
       });
 
       simpleRead();
-    });
-
-    describe('by reducer', () => {
-      describe('with root', () => {
-        type State = {apollo: CacheState};
-
-        beforeEach(() => {
-          TestBed.configureTestingModule({
-            imports: [
-              StoreModule.forRoot<State>({
-                apollo: cacheReducer,
-              }),
-              NgrxCacheModule,
-            ],
-          });
-        });
-
-        simpleRead({
-          selector: (state: State) => state.apollo,
-        });
-      });
-      describe('with feature', () => {
-        type State = {apollo: CacheState};
-
-        beforeEach(() => {
-          TestBed.configureTestingModule({
-            imports: [
-              StoreModule.forRoot({}),
-              StoreModule.forFeature<State>('graphql', {
-                apollo: cacheReducer,
-              }),
-              NgrxCacheModule,
-            ],
-          });
-        });
-
-        simpleRead({
-          selector: (state: any) =>
-            createFeatureSelector<State>('graphql')(state).apollo,
-        });
-      });
     });
   });
 });

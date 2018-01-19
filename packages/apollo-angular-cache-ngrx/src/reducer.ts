@@ -14,7 +14,7 @@ export const adapter: EntityAdapter<StoreRecord> = createEntityAdapter<
 
 export const initialState: CacheState = adapter.getInitialState({});
 
-export function cacheReducer(
+export function apolloReducer(
   state = initialState,
   action: Actions,
 ): CacheState {
