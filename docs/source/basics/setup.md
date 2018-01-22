@@ -138,7 +138,7 @@ import { Apollo } from 'apollo-angular';
 @Component({ /*...*/ })
 class AppComponent {
   constructor(apollo: Apollo) {
-    apollo.query({query: gql`{ hello }`}).then(console.log);
+    apollo.query({query: gql`{ hello }`}).subscribe(console.log);
   }
 }
 ```
