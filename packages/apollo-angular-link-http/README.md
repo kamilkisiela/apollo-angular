@@ -137,7 +137,7 @@ class AppModule {
       }
     })
 
-    const link = error.concat(httpLink);
+    const link = error.concat(http);
   }
 }
 ```
