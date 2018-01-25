@@ -1,10 +1,10 @@
-import {Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {
   NormalizedCache,
   StoreObject,
   NormalizedCacheObject,
 } from 'apollo-cache-inmemory';
-import {take} from 'rxjs/operator/take';
+import {take} from 'rxjs/operators/take';
 
 import {State} from './types';
 import {Set, Delete, Clear, Replace} from './actions';
@@ -39,8 +39,8 @@ export class NgrxNormalizedCache implements NormalizedCache {
   private selectAll(): NormalizedCacheObject {
     let selected: NormalizedCacheObject = {};
 
-    take
-      .call(this.store.select(this.cacheSelector()), 1)
+    this.store
+      .pipe(select(this.cacheSelector()), take(1))
       .subscribe((cacheObject: NormalizedCacheObject) => {
         selected = cacheObject;
       });
@@ -51,8 +51,8 @@ export class NgrxNormalizedCache implements NormalizedCache {
   private select(dataId?: string): StoreObject {
     let selected: StoreObject;
 
-    take
-      .call(this.store.select(this.cacheSelector()), 1)
+    this.store
+      .pipe(select(this.cacheSelector()), take(1))
       .subscribe((result: NormalizedCacheObject) => {
         selected = result[dataId] && result[dataId];
       });

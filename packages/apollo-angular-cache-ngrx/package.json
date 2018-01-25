@@ -24,8 +24,8 @@
   },
   "peerDependencies": {
     "@angular/core": "^4.3.0 || ^5.0.0",
-    "@ngrx/store": "^4.0.0",
-    "rxjs": "^5.0.1"
+    "@ngrx/store": "^5.0.0",
+    "rxjs": "^5.5.0"
   },
   "devDependencies": {
     "@angular/animations": "^4.4.4",
@@ -36,7 +36,7 @@
     "@angular/http": "^4.4.4",
     "@angular/platform-browser": "^4.4.4",
     "@angular/platform-browser-dynamic": "^4.4.6",
-    "@ngrx/store": "^4.1.0",
+    "@ngrx/store": "^5.0.0",
     "@types/graphql": "^0.11.5",
     "@types/jest": "^21.1.2",
     "@types/zen-observable": "^0.5.3",
@@ -45,7 +45,7 @@
     "jest": "^21.2.1",
     "jest-zone-patch": "0.0.8",
     "rollup": "^0.50.0",
-    "rxjs": "^5.4.2",
+    "rxjs": "^5.5.0",
     "ts-jest": "^21.1.2",
     "typescript": "^2.5.3",
     "zone.js": "^0.8.4"
