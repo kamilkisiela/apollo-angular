@@ -15,7 +15,7 @@ import {QueryRef} from './QueryRef';
 import {TypedVariables, R} from './types';
 import {fromPromise, wrapWithZone} from './utils';
 
-export class ApolloBase<TCacheShape> {
+export class ApolloBase<TCacheShape = any> {
   constructor(private _client?: ApolloClient<TCacheShape>) {}
 
   public watchQuery<T, V = R>(
