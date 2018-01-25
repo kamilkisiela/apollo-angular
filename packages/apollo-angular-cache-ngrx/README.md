@@ -13,6 +13,9 @@ Allows to use @ngrx/store as Apollo Cache
 
 ## Usage
 
+Put `apolloReducer` under `apollo` in your State and simply import
+`NgrxCacheModule`.
+
 ```ts
 import {StoreModule} from '@ngrx/store';
 import {
@@ -36,6 +39,33 @@ class AppModule {
 }
 ```
 
+Second method is about putting `apolloReducer` under any key you want to in your
+State and because of that, use `NgrxCacheModule.forRoot(key: string)` in
+imports, where `key` points to that key.
+
+```ts
+import {StoreModule} from '@ngrx/store';
+import {
+  NgrxCacheModule,
+  NgrxCache,
+  apolloReducer,
+} from 'apollo-angular-cache-ngrx';
+
+@NgModule({
+  imports: [
+    StoreModule.forRoot({
+      myCustomApollo: apolloReducer,
+    }),
+    NgrxCacheModule.forRoot('myCustomApollo'),
+  ],
+})
+class AppModule {
+  constructor(ngrxCache: NgrxCache) {
+    const cache = ngrxCache.create({});
+  }
+}
+```
+
 ## Options
 
-Same options as `apollo-cache-inmemory`.
+Same options as in `apollo-cache-inmemory`.

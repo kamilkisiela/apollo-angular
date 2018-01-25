@@ -1,6 +1,5 @@
 import {Action} from '@ngrx/store';
-
-import {StoreRecord} from './types';
+import {NormalizedCacheObject, StoreObject} from 'apollo-cache-inmemory';
 
 export const SET = '[Apollo] Set';
 export const DELETE = '[Apollo] Delete';
@@ -9,7 +8,12 @@ export const REPLACE = '[Apollo] Replace';
 
 export class Set implements Action {
   public readonly type = SET;
-  constructor(public payload: StoreRecord) {}
+  constructor(
+    public payload: {
+      id: string;
+      value: StoreObject;
+    },
+  ) {}
 }
 
 export class Delete implements Action {
@@ -23,7 +27,7 @@ export class Clear implements Action {
 
 export class Replace implements Action {
   public readonly type = REPLACE;
-  constructor(public payload: StoreRecord[]) {}
+  constructor(public payload: NormalizedCacheObject) {}
 }
 
 export type Actions = Set | Delete | Clear | Replace;
