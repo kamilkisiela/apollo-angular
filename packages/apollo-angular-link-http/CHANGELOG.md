@@ -2,6 +2,7 @@
 
 ### vNEXT
 
+* Expose `response: HttpResponse` object in context
 * Update `graphql` dependency to `^0.12.3`
 * Allow not to send query
   ([PR #416](https://github.com/apollographql/apollo-angular/pull/416))
