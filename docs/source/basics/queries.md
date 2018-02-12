@@ -48,8 +48,8 @@ class ProfileComponent implements OnInit {
       query: CurrentUserForProfile
     })
       .valueChanges
-      .subscribe(({data}) => {
-        this.loading = data.loading;
+      .subscribe(({ data, loading }) => {
+        this.loading = loading;
         this.currentUser = data.currentUser;
       });
   }
