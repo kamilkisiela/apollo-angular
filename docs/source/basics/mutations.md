@@ -35,7 +35,7 @@ When we use mutations in Apollo, the result is typically integrated into the cac
 
 <h2 id="basics">Basic Mutations</h2>
 
-Using `Apollo` it easy to call mutation. You can simply use `mutate` method.
+Using `Apollo` it's easy to call mutation. You can simply use `mutate` method.
 
 ```ts
 import { Component } from '@angular/core';
@@ -147,7 +147,7 @@ class NewEntryComponent {
 
 ```
 
-> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing a [`updateQueries`](../features/cache-updates.html#updateQueries) callback to update the result of relevant queries with your mutation results.
+> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`](../features/cache-updates.html#updateQueries) callback to update the result of relevant queries with your mutation results.
 
 <h2 id="optimistic-ui">Optimistic UI</h2>
 
