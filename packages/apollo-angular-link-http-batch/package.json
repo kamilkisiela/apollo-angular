@@ -1,5 +1,5 @@
 {
-  "name": "apollo-angular-link-http",
+  "name": "apollo-angular-link-http-batch",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.2-beta.0",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -25,10 +25,11 @@
   "peerDependencies": {
     "@angular/core": "^4.3.0 || ^5.0.0-rc.0",
     "@angular/common": "^4.3.0 || ^5.0.0-rc.0",
-    "apollo-link": "^1.0.0",
     "graphql": "^0.11.3 || ^0.12.3"
   },
   "dependencies": {
+    "apollo-link": "^1.0.0",
+    "apollo-link-batch": "^1.1.1",
     "apollo-angular-link-http-common": "^1.0.0"
   },
   "devDependencies": {
@@ -46,7 +47,6 @@
     "@types/zen-observable": "^0.5.3",
     "apollo-cache-inmemory": "^1.0.0",
     "apollo-client": "^2.0.1",
-    "apollo-link": "^1.0.0",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
     "jest": "^21.2.1",

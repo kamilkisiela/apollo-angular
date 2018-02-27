@@ -1,5 +1,5 @@
 {
-  "name": "apollo-angular-link-http",
+  "name": "apollo-angular-link-http-common",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.2-beta.0",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -27,9 +27,6 @@
     "@angular/common": "^4.3.0 || ^5.0.0-rc.0",
     "apollo-link": "^1.0.0",
     "graphql": "^0.11.3 || ^0.12.3"
-  },
-  "dependencies": {
-    "apollo-angular-link-http-common": "^1.0.0"
   },
   "devDependencies": {
     "@angular/animations": "^4.4.4",

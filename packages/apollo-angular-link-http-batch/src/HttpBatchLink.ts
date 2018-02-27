@@ -17,8 +17,7 @@ import {
   prioritize,
 } from 'apollo-angular-link-http-common';
 
-// XXX find a better name for it
-export class HttpLinkHandler extends ApolloLink {
+export class HttpBatchLinkHandler extends ApolloLink {
   public requester: RequestHandler;
 
   constructor(private httpClient: HttpClient, private options: Options) {
@@ -90,10 +89,10 @@ export class HttpLinkHandler extends ApolloLink {
 }
 
 @Injectable()
-export class HttpLink {
+export class HttpBatchLink {
   constructor(private httpClient: HttpClient) {}
 
-  public create(options: Options): HttpLinkHandler {
-    return new HttpLinkHandler(this.httpClient, options);
+  public create(options: Options): HttpBatchLinkHandler {
+    return new HttpBatchLinkHandler(this.httpClient, options);
   }
 }
