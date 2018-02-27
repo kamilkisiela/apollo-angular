@@ -27,7 +27,6 @@ describe('Apollo', () => {
   beforeAll(() => setupAngular());
 
   beforeEach(() => {
-    jest.resetModules();
     TestBed.configureTestingModule({
       providers: [Apollo],
     });
