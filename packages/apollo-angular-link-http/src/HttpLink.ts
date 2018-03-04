@@ -11,6 +11,7 @@ import {ExecutionResult} from 'graphql';
 import {
   fetch,
   Options,
+  Body,
   Request,
   Context,
   mergeHeaders,
@@ -56,11 +57,11 @@ export class HttpLinkHandler extends ApolloLink {
         };
 
         if (includeExtensions) {
-          req.body.extensions = operation.extensions;
+          (req.body as Body).extensions = operation.extensions;
         }
 
         if (includeQuery) {
-          req.body.query = print(operation.query);
+          (req.body as Body).query = print(operation.query);
         }
 
         if (context.headers) {
