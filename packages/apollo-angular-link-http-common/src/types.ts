@@ -26,6 +26,6 @@ export type Context = {} & FetchOptions & HttpRequestOptions;
 export type Request = {
   method: string;
   url: string;
-  body: Body;
+  body: Body | Body[];
   options: HttpRequestOptions;
 };

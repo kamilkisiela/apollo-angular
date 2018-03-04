@@ -20,20 +20,32 @@ export const fetch = (
   // `body` for some, `params` for others
   let bodyOrParams = {};
 
-  if (shouldUseBody) {
+  if ((req.body as Body[]).length) {
+    if (!shouldUseBody) {
+      return new Observable(observer =>
+        observer.error(new Error('Batching is not available for GET requests')),
+      );
+    }
+
     bodyOrParams = {
       body: req.body,
     };
   } else {
-    const params = Object.keys(req.body).reduce((httpParams, param) => {
-      let val: string = (req.body as any)[param];
-      if (shouldStringify(param.toLowerCase())) {
-        val = JSON.stringify(val);
-      }
-      return httpParams.set(param, val);
-    }, new HttpParams());
+    if (shouldUseBody) {
+      bodyOrParams = {
+        body: req.body,
+      };
+    } else {
+      const params = Object.keys(req.body).reduce((httpParams, param) => {
+        let val: string = (req.body as any)[param];
+        if (shouldStringify(param.toLowerCase())) {
+          val = JSON.stringify(val);
+        }
+        return httpParams.set(param, val);
+      }, new HttpParams());
 
-    bodyOrParams = {params};
+      bodyOrParams = {params};
+    }
   }
 
   // create a request
@@ -64,12 +76,12 @@ export const mergeHeaders = (
   return destination || source;
 };
 
-export function prioritize<T>(first: T, second: T, init: T): T {
-  if (typeof first !== 'undefined') {
-    init = first;
-  } else if (typeof second !== 'undefined') {
-    init = second;
+export function prioritize<T>(...values: T[]): T {
+  const picked = values.find(val => typeof val !== 'undefined');
+
+  if (typeof picked === 'undefined') {
+    return values[values.length - 1];
   }
 
-  return init;
+  return picked;
 }
