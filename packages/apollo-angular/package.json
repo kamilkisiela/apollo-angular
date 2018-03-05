@@ -1,5 +1,6 @@
 {
   "name": "apollo-angular",
+  "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
   "version": "1.0.1",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
@@ -41,7 +42,7 @@
     "@types/zen-observable": "^0.5.3",
     "apollo-cache-inmemory": "^1.0.0",
     "apollo-client": "^2.0.1",
-    "apollo-link": "^0.8.0",
+    "apollo-link": "^1.0.0",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
     "jest": "^21.2.1",

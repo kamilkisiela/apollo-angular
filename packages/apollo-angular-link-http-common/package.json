@@ -1,6 +1,6 @@
 {
-  "name": "apollo-angular-cache-ngrx",
-  "description": "Allows to use @ngrx/store as Apollo Cache",
+  "name": "apollo-angular-link-http-common",
+  "description": "",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
@@ -24,9 +24,10 @@
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
-    "@angular/core": "^4.3.0 || ^5.0.0",
-    "@ngrx/store": "^5.0.0",
-    "rxjs": "^5.5.0"
+    "@angular/core": "^4.3.0 || ^5.0.0-rc.0",
+    "@angular/common": "^4.3.0 || ^5.0.0-rc.0",
+    "apollo-link": "^1.0.0",
+    "graphql": "^0.11.3 || ^0.12.3"
   },
   "devDependencies": {
     "@angular/animations": "^4.4.4",
@@ -36,23 +37,22 @@
     "@angular/core": "^4.4.4",
     "@angular/http": "^4.4.4",
     "@angular/platform-browser": "^4.4.4",
-    "@angular/platform-browser-dynamic": "^4.4.6",
-    "@ngrx/store": "^5.0.0",
-    "@types/graphql": "^0.11.5",
+    "@angular/platform-browser-dynamic": "^4.4.4",
+    "@angular/platform-server": "^4.4.4",
+    "@types/graphql": "^0.10.2",
     "@types/jest": "^21.1.2",
     "@types/zen-observable": "^0.5.3",
+    "apollo-cache-inmemory": "^1.0.0",
+    "apollo-client": "^2.0.1",
+    "apollo-link": "^1.0.0",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
     "jest": "^21.2.1",
     "jest-zone-patch": "0.0.8",
     "rollup": "^0.50.0",
-    "rxjs": "^5.5.0",
+    "rxjs": "^5.4.2",
     "ts-jest": "^21.1.2",
     "typescript": "^2.5.3",
     "zone.js": "^0.8.4"
-  },
-  "dependencies": {
-    "apollo-cache": "^1.1.0",
-    "apollo-cache-inmemory": "^1.1.5"
   }
 }
