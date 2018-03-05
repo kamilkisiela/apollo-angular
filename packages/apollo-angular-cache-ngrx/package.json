@@ -1,5 +1,6 @@
 {
   "name": "apollo-angular-cache-ngrx",
+  "description": "Allows to use @ngrx/store as Apollo Cache",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",

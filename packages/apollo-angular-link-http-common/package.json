@@ -1,5 +1,6 @@
 {
   "name": "apollo-angular-link-http-common",
+  "description": "",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",

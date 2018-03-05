@@ -1,5 +1,6 @@
 {
   "name": "apollo-angular-link-http",
+  "description": "An Apollo Link to allow sending a single http request per operation.",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
