@@ -128,7 +128,13 @@ export class HttpBatchLinkHandler extends ApolloLink {
   }
 
   private createBatchKey(operation: Operation): string {
-    const context: Context = operation.getContext();
+    const context: Context & {skipBatching?: boolean} = operation.getContext();
+
+    if (context.skipBatching) {
+      return Math.random()
+        .toString(36)
+        .substr(2, 9);
+    }
 
     const headers =
       context.headers &&

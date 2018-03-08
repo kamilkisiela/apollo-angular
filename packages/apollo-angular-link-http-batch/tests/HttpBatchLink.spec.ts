@@ -628,4 +628,60 @@ describe('HttpBatchLink', () => {
       });
     }, 50);
   });
+
+  test('should skip batching if requested', (done: jest.DoneCallback) => {
+    const link = httpLink.create({
+      uri: 'graphql',
+    });
+
+    execute(link, {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'op1',
+    }).subscribe(noop);
+
+    execute(link, {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'op2',
+      context: {
+        skipBatching: true,
+      },
+    }).subscribe(noop);
+
+    let calls = 0;
+
+    setTimeout(() => {
+      httpBackend.match(req => {
+        if (req.body[0].operationName === 'op1') {
+          // is operation #1
+          // has no operation #2
+          expect(req.body[1]).not.toBeDefined();
+          calls++;
+        } else {
+          // is operation #2
+          expect(req.body[0].operationName).toEqual('op2');
+          // has no operation #1
+          expect(req.body[1]).not.toBeDefined();
+          calls++;
+        }
+
+        if (calls === 2) {
+          done();
+        }
+
+        return true;
+      });
+    }, 50);
+  });
 });

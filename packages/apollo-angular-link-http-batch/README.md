@@ -57,3 +57,7 @@ The batching options indicate how operations are batched together.
 ## Context
 
 Works in the same way as in `apollo-angular-link-http`.
+
+To skip batching you can set `skipBatching: true` in operation's context.
+
+> NOTICE: `skipBatching` works only with the default `batchKey`. To create custom one you should check if `skipBatching` is set in context and generate a random `batchKey` for that operation.
