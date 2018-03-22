@@ -8,7 +8,7 @@
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -31,7 +31,7 @@
   "dependencies": {
     "apollo-link": "^1.0.0",
     "apollo-link-batch": "^1.1.2",
-    "apollo-angular-link-http-common": "^1.0.0-beta.0"
+    "apollo-angular-link-http-common": "~1.0.0"
   },
   "devDependencies": {
     "@angular/animations": "^4.4.4",

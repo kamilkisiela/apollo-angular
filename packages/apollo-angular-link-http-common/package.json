@@ -1,6 +1,6 @@
 {
   "name": "apollo-angular-link-http-common",
-  "description": "",
+  "description": "Common logic for http links. For internal use only.",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
