@@ -4,6 +4,16 @@ import gql from 'graphql-tag';
 
 import {createPersistedQueryLink} from '../src';
 
+const query = gql`
+  query heroes {
+    heroes {
+      name
+      __typename
+    }
+  }
+`;
+const data = {heroes: [{name: 'Foo', __typename: 'Hero'}]};
+
 class MockLink extends ApolloLink {
   public showNotFound: boolean = true;
 
@@ -32,16 +42,6 @@ class MockLink extends ApolloLink {
     });
   }
 }
-
-const query = gql`
-  query heroes {
-    heroes {
-      name
-      __typename
-    }
-  }
-`;
-const data = {heroes: [{name: 'Foo', __typename: 'Hero'}]};
 
 describe('createPersistedQueryLink', () => {
   test('transform includeQuery and includeExtensions and has persistedQuery', (done: jest.DoneCallback) => {
