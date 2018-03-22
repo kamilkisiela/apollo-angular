@@ -1,6 +1,6 @@
 {
   "name": "apollo-angular-link-http-common",
-  "description": "",
+  "description": "Common logic for http links. For internal use only.",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
