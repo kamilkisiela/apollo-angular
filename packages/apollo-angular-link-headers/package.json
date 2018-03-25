@@ -28,11 +28,11 @@
   "devDependencies": {
     "@angular/common": "4.4.6",
     "@angular/core": "4.4.6",
-    "@types/graphql": "0.11.8",
+    "@types/graphql": "0.12.6",
     "@types/jest": "21.1.10",
     "@types/zen-observable": "0.5.3",
     "apollo-link": "1.2.1",
-    "graphql": "0.11.7",
+    "graphql": "0.13.2",
     "graphql-tag": "2.8.0",
     "jest": "21.2.1",
     "rollup": "0.50.1",
