@@ -47,7 +47,7 @@
     "jest-zone-patch": "0.0.8",
     "rollup": "0.57.1",
     "rxjs": "5.5.7",
-    "ts-jest": "21.2.4",
+    "ts-jest": "22.4.2",
     "typescript": "2.7.2",
     "zone.js": "0.8.20"
   },
