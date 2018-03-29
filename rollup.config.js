@@ -10,6 +10,8 @@ export const globals = {
   'apollo-client-rxjs': 'apollo.rxjs',
   'apollo-client': 'apollo',
   'apollo-angular-link-http-common': genName('link.httpCommon'),
+  'apollo-link-context': 'apolloLink.context',
+  'apollo-link-persisted-queries': 'persistedQueryLink',
   // RxJS
   'rxjs/Observable': 'Rx',
   'rxjs/observable/from': 'Rx.Observable',
