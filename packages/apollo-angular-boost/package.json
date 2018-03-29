@@ -1,0 +1,60 @@
+{
+  "name": "apollo-angular-boost",
+  "description": "The easiest way to get started with Apollo Client",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "license": "MIT",
+  "main": "./build/bundle.umd.js",
+  "module": "./build/src/index.js",
+  "jsnext:main": "./build/src/index.js",
+  "typings": "./build/src/index.d.ts",
+  "version": "1.0.0-beta.0",
+  "repository": {
+    "type": "git",
+    "url": "apollographql/apollo-angular"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
+    "bundle": "rollup -c rollup.config.js",
+    "test": "npm run test-only",
+    "test-only": "jest --config jest.config.js",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "postbuild": "npm run bundle",
+    "deploy": "../../scripts/deploy.sh"
+  },
+  "peerDependencies": {
+    "@angular/core": "^4.3.0 || ^5.0.0-rc.0",
+    "@angular/common": "^4.3.0 || ^5.0.0-rc.0"
+  },
+  "dependencies": {
+    "apollo-cache-inmemory": "^1.1.12",
+    "apollo-angular": "^1.0.0",
+    "apollo-client": "^2.2.8",
+    "apollo-angular-link-http": "^1.0.2",
+    "apollo-link": "^1.0.6",
+    "apollo-link-error": "^1.0.3",
+    "apollo-link-state": "^0.4.0",
+    "graphql-tag": "^2.4.2"
+  },
+  "devDependencies": {
+    "@angular/animations": "4.4.6",
+    "@angular/common": "4.4.6",
+    "@angular/compiler": "4.4.6",
+    "@angular/compiler-cli": "4.4.6",
+    "@angular/core": "4.4.6",
+    "@angular/http": "4.4.6",
+    "@angular/platform-browser": "4.4.6",
+    "@angular/platform-browser-dynamic": "4.4.6",
+    "@angular/platform-server": "4.4.6",
+    "@types/graphql": "0.12.6",
+    "@types/jest": "22.2.2",
+    "@types/zen-observable": "0.5.3",
+    "graphql": "0.13.2",
+    "jest": "21.2.1",
+    "jest-zone-patch": "0.0.8",
+    "rollup": "0.57.1",
+    "rxjs": "5.5.7",
+    "ts-jest": "22.4.2",
+    "typescript": "2.7.2",
+    "zone.js": "0.8.20"
+  }
+}
