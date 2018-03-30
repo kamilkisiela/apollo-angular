@@ -37,12 +37,14 @@ export class ApolloBoost {
         : onError(({graphQLErrors, networkError}) => {
             if (graphQLErrors) {
               graphQLErrors.map(({message, locations, path}) =>
+                // tslint:disable-next-line
                 console.log(
                   `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
                 ),
               );
             }
             if (networkError) {
+              // tslint:disable-next-line
               console.log(`[Network error]: ${networkError}`);
             }
           });
