@@ -126,7 +126,7 @@ class SubmitRepositoryService {
       variables: {
         repoFullName: repoFullName
       }
-    }).subscribe();
+    });
   }
 }
 
