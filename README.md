@@ -12,11 +12,11 @@ Use your GraphQL server data in your Angular app, with the [Apollo Client](https
 ## Installation
 
 ```bash
-npm install apollo-angular apollo-angular-link-http apollo-client apollo-cache-inmemory graphql-tag graphql --save
+npm install apollo-angular apollo-angular-link-http apollo-link apollo-client apollo-cache-inmemory graphql-tag graphql --save
 ```
 or
 ```bash
-yarn add apollo-angular apollo-angular-link-http apollo-client apollo-cache-inmemory graphql-tag graphql
+yarn add apollo-angular apollo-angular-link-http apollo-link apollo-client apollo-cache-inmemory graphql-tag graphql
 ```
 
 ---
