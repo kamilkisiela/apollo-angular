@@ -29,7 +29,7 @@
     "@angular/common": "4.4.6",
     "@angular/core": "4.4.6",
     "@types/graphql": "0.13.0",
-    "@types/jest": "22.2.2",
+    "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
     "apollo-link": "1.2.1",
     "graphql": "0.13.2",
