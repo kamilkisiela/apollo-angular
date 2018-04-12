@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/graphql": "0.13.0",
-    "@types/jest": "22.2.2",
+    "@types/jest": "22.2.3",
     "apollo-link": "1.2.1",
     "graphql": "0.13.2",
     "graphql-tag": "2.8.0",
