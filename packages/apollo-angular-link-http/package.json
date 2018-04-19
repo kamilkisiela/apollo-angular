@@ -47,7 +47,7 @@
     "@types/zen-observable": "0.5.3",
     "apollo-cache-inmemory": "1.1.12",
     "apollo-client": "2.2.8",
-    "apollo-link": "1.2.1",
+    "apollo-link": "1.2.2",
     "graphql": "0.13.2",
     "graphql-tag": "2.8.0",
     "jest": "21.2.1",
