@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 import {ApolloLink} from 'apollo-link';
 import {TestBed, inject, async} from '@angular/core/testing';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';

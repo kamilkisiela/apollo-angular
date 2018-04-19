@@ -8,8 +8,7 @@ import {
   ApolloClientOptions,
 } from 'apollo-client';
 import {FetchResult} from 'apollo-link';
-import {Observable} from 'rxjs/Observable';
-import {from} from 'rxjs/observable/from';
+import {Observable, from} from 'rxjs';
 
 import {QueryRef} from './QueryRef';
 import {TypedVariables, R} from './types';

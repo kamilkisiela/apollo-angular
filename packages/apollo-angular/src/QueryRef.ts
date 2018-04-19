@@ -8,8 +8,7 @@ import {
   UpdateQueryOptions,
 } from 'apollo-client';
 import {ApolloCurrentResult} from 'apollo-client/core/ObservableQuery';
-import {Observable} from 'rxjs/Observable';
-import {from} from 'rxjs/observable/from';
+import {Observable, from} from 'rxjs';
 
 import {wrapWithZone} from './utils';
 import {R} from './types';

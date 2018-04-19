@@ -1,7 +1,5 @@
-import {observeOn} from 'rxjs/operator/observeOn';
-import {queue} from 'rxjs/scheduler/queue';
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
+import {observeOn} from 'rxjs/operators';
+import {Observable, Subscription, queueScheduler, Scheduler} from 'rxjs';
 
 export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
   return new Observable<T>(subscriber => {
@@ -23,16 +21,14 @@ export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
   });
 }
 
-export class ZoneScheduler {
-  constructor(private zone: Zone) {}
-
+export class ZoneScheduler extends Scheduler {
   public schedule(...args: any[]): Subscription {
-    return <Subscription>this.zone.run(() => {
-      return queue.schedule.apply(queue, args);
+    return <Subscription>Zone.current.run(() => {
+      return queueScheduler.schedule.apply(queueScheduler, args);
     });
   }
 }
 
 export function wrapWithZone<T>(obs: Observable<T>): Observable<T> {
-  return observeOn.call(obs, new ZoneScheduler(Zone.current));
+  return obs.pipe(observeOn(new ZoneScheduler()));
 }

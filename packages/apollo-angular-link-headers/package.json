@@ -26,8 +26,8 @@
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "4.4.6",
-    "@angular/core": "4.4.6",
+    "@angular/common": "6.0.0-rc.3",
+    "@angular/core": "6.0.0-rc.3",
     "@types/graphql": "0.13.0",
     "@types/jest": "22.2.2",
     "@types/zen-observable": "0.5.3",
@@ -37,6 +37,6 @@
     "jest": "21.2.1",
     "rollup": "0.57.1",
     "ts-jest": "22.4.2",
-    "typescript": "2.8.1"
+    "typescript": "2.7.2"
   }
 }

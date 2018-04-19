@@ -1,7 +1,7 @@
 import './_setup';
 
 import {ObservableQuery} from 'apollo-client';
-import {map} from 'rxjs/operator/map';
+import {map} from 'rxjs/operators';
 import {ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
