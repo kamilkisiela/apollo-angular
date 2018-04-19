@@ -5,9 +5,9 @@ import {
   Observable as LinkObservable,
   Operation,
   RequestHandler,
+  FetchResult,
 } from 'apollo-link';
 import {print} from 'graphql/language/printer';
-import {ExecutionResult} from 'graphql';
 import {
   fetch,
   Options,
@@ -85,7 +85,7 @@ export class HttpLinkHandler extends ApolloLink {
       });
   }
 
-  public request(op: Operation): LinkObservable<ExecutionResult> | null {
+  public request(op: Operation): LinkObservable<FetchResult> | null {
     return this.requester(op);
   }
 }
