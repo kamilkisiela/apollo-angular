@@ -2,8 +2,7 @@
   "name": "apollo-angular",
   "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
   "version": "1.0.1",
-  "author":
-    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
@@ -18,8 +17,7 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
-    "lint":
-      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
     "postbuild": "npm run bundle",
     "deploy": "../../scripts/deploy.sh"
   },
@@ -38,11 +36,11 @@
     "@angular/platform-browser": "6.0.0-rc.3",
     "@angular/platform-browser-dynamic": "6.0.0-rc.3",
     "@types/graphql": "0.13.0",
-    "@types/jest": "22.2.2",
+    "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
     "apollo-cache-inmemory": "1.1.12",
     "apollo-client": "2.2.8",
-    "apollo-link": "1.2.1",
+    "apollo-link": "1.2.2",
     "graphql": "0.13.2",
     "graphql-tag": "2.8.0",
     "jest": "21.2.1",

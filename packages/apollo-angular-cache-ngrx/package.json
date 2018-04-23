@@ -1,8 +1,7 @@
 {
   "name": "apollo-angular-cache-ngrx",
   "description": "Allows to use @ngrx/store as Apollo Cache",
-  "author":
-    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
@@ -18,8 +17,7 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
-    "lint":
-      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
     "postbuild": "npm run bundle",
     "deploy": "../../scripts/deploy.sh"
   },
@@ -39,7 +37,7 @@
     "@angular/platform-browser-dynamic": "6.0.0-rc.3",
     "@ngrx/store": "6.0.0-beta.1",
     "@types/graphql": "0.13.0",
-    "@types/jest": "22.2.2",
+    "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
     "graphql": "0.13.2",
     "graphql-tag": "2.8.0",
