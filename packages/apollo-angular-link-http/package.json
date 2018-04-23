@@ -1,6 +1,7 @@
 {
   "name": "apollo-angular-link-http",
-  "description": "An Apollo Link to allow sending a single http request per operation.",
+  "description":
+    "An Apollo Link to allow sending a single http request per operation.",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
@@ -8,7 +9,7 @@
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
