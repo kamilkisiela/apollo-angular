@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.0.3
+
+* Fix return type of `request` method ([PR #570](https://github.com/apollographql/apollo-angular/pull/570))
+
 ### v1.0.2
 
 * Update `graphql` dependency to `^0.12.3`
