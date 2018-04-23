@@ -1,10 +1,5 @@
-import {
-  HttpHeaders,
-  HttpResponse,
-  HttpParams,
-  HttpClient,
-} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {HttpHeaders, HttpResponse, HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 import {Request} from './types';
 
@@ -36,15 +31,13 @@ export const fetch = (
         body: req.body,
       };
     } else {
-      const params = Object.keys(req.body).reduce((httpParams, param) => {
-        let val: string = (req.body as any)[param];
+      Object.keys(req.body).forEach(param => {
         if (shouldStringify(param.toLowerCase())) {
-          val = JSON.stringify(val);
+          (req.body as any)[param] = JSON.stringify((req.body as any)[param]);
         }
-        return httpParams.set(param, val);
-      }, new HttpParams());
+      });
 
-      bodyOrParams = {params};
+      bodyOrParams = {params: req.body};
     }
   }
 

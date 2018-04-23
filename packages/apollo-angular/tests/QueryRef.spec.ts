@@ -115,7 +115,7 @@ describe('QueryRef', () => {
     let calls = 0;
     const obs = queryRef.valueChanges;
 
-    map.call(obs, (result: any) => result.data).subscribe({
+    obs.pipe(map((result: any) => result.data)).subscribe({
       next: (result: any) => {
         calls++;
 

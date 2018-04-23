@@ -1,7 +1,9 @@
 {
   "name": "apollo-angular-link-headers",
-  "description": "An Apollo Link to easily transform headers from being a key-value object to an instance of HttpHeaders. Great combination with apollo-angular-link-http.",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "description":
+    "An Apollo Link to easily transform headers from being a key-value object to an instance of HttpHeaders. Great combination with apollo-angular-link-http.",
+  "author":
+    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
@@ -17,12 +19,13 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
-    "lint": "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "lint":
+      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
     "postbuild": "npm run bundle",
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
-    "@angular/common": "^4.3.0 || ^5.0.0-rc.0",
+    "@angular/common": "^6.0.0-rc.0",
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
