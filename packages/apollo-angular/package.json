@@ -1,6 +1,7 @@
 {
   "name": "apollo-angular",
-  "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
+  "description":
+    "Use your GraphQL data in your Angular app, with the Apollo Client",
   "version": "1.0.1",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
@@ -15,13 +16,17 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
+    "build:testing": "./node_modules/.bin/ngc -p testing/tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
     "lint":
-      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
-    "postbuild": "npm run bundle",
-    "deploy": "../../scripts/deploy.sh"
+      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests, testing}/**/*.ts",
+    "lint:testing":
+      "tslint -c ../../tslint.json -p testings/tsconfig.json --type-check {src,tests}/**/*.ts",
+    "postlint": "npm run lint:testing",
+    "postbuild": "npm run bundle && npm run build:testing",
+    "deploy": "../../scripts/deploy.sh ./scripts/testing.sh"
   },
   "peerDependencies": {
     "@angular/core": "^4.0.0 || ^5.0.0-rc.0",

@@ -11,6 +11,7 @@ npm run build
 echo '[Deploy] Creating empty npm directory'
 rm -rf ./npm
 mkdir ./npm
+(cd npm && mkdir ./testing)
 
 echo '[Deploy] Copying the built output'
 cd ./build/src && cp -r ./ ../../npm/
@@ -18,15 +19,18 @@ cd ./build/src && cp -r ./ ../../npm/
 echo '[Deploy] Copying umd bundle with source map file';
 cd ../
 cp bundle.umd.js ../npm/ && cp bundle.umd.js.map ../npm/
+cd ../
+
+if [ $# -eq 1 ] ; then
+  echo "[Deploy] Running an extra script: $1"
+  $1
+fi
 
 echo '[Deploy] Copying LICENSE'
-cp ./../LICENSE ../npm/
+cp ./LICENSE ./npm
 
 echo '[Deploy] Copying README'
-cp ./../README.md ../npm/
-
-# Back to the root directory
-cd ../
+cp ./README.md ./npm
 
 # Ensure a vanilla package.json before deploying so other tools do not interpret
 # The built output as requiring any further transformation.
