@@ -19,7 +19,7 @@
 		"@commitlint/cli": "6.1.3",
 		"@commitlint/config-angular": "6.1.3",
 		"@types/jest": "22.2.3",
-		"codecov": "3.0.0",
+		"codecov": "3.0.2",
 		"husky": "0.14.3",
 		"jest": "21.2.1",
 		"lerna": "2.10.1",
