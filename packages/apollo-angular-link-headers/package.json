@@ -26,12 +26,12 @@
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0",
+    "@angular/common": "^6.0.0",
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "6.0.0-rc.3",
-    "@angular/core": "6.0.0-rc.3",
+    "@angular/common": "6.0.0",
+    "@angular/core": "6.0.0",
     "@types/graphql": "0.13.0",
     "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
