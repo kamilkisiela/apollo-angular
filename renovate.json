@@ -16,5 +16,11 @@
   ],
   "reviewers": [
     "@kamilkisiela"
-  ]
+  ],
+  "pathRules": [{
+    "paths": ["docs/package.json"],
+    "extends": [
+      "apollo-docs"
+    ]
+  }]
 }

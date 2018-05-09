@@ -1,9 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ApolloLink, Observable as LinkObservable, Operation} from 'apollo-link';
+import {
+  ApolloLink,
+  Observable as LinkObservable,
+  Operation,
+  FetchResult,
+} from 'apollo-link';
 import {BatchLink, BatchHandler} from 'apollo-link-batch';
 import {print} from 'graphql/language/printer';
-import {ExecutionResult} from 'graphql';
 import {
   fetch,
   Body,
@@ -149,7 +153,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
     return prioritize(context.uri, this.options.uri) + opts;
   }
 
-  public request(op: Operation): LinkObservable<ExecutionResult> | null {
+  public request(op: Operation): LinkObservable<FetchResult> | null {
     return this.batcher.request(op);
   }
 }

@@ -1,9 +1,11 @@
 {
   "name": "apollo-angular-link-http-batch",
-  "description": "An Apollo Link to combine multiple GraphQL operations into single HTTP request.",
+  "description":
+    "An Apollo Link to combine multiple GraphQL operations into single HTTP request.",
   "author":
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
+  "sideEffects": false,
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
@@ -24,8 +26,8 @@
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
-    "@angular/core": "^4.3.0 || ^5.0.0-rc.0",
-    "@angular/common": "^4.3.0 || ^5.0.0-rc.0",
+    "@angular/core": "^6.0.0",
+    "@angular/common": "^6.0.0",
     "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0"
   },
   "dependencies": {
@@ -34,17 +36,17 @@
     "apollo-angular-link-http-common": "~1.0.0"
   },
   "devDependencies": {
-    "@angular/animations": "4.4.6",
-    "@angular/common": "4.4.6",
-    "@angular/compiler": "4.4.6",
-    "@angular/compiler-cli": "4.4.6",
-    "@angular/core": "4.4.6",
-    "@angular/http": "4.4.6",
-    "@angular/platform-browser": "4.4.6",
-    "@angular/platform-browser-dynamic": "4.4.6",
-    "@angular/platform-server": "4.4.6",
-    "@types/graphql": "0.12.6",
-    "@types/jest": "22.2.2",
+    "@angular/animations": "6.0.0",
+    "@angular/common": "6.0.0",
+    "@angular/compiler": "6.0.0",
+    "@angular/compiler-cli": "6.0.0",
+    "@angular/core": "6.0.0",
+    "@angular/http": "6.0.0",
+    "@angular/platform-browser": "6.0.0",
+    "@angular/platform-browser-dynamic": "6.0.0",
+    "@angular/platform-server": "6.0.0",
+    "@types/graphql": "0.13.0",
+    "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
     "apollo-cache-inmemory": "1.1.12",
     "apollo-client": "2.2.8",
@@ -53,9 +55,9 @@
     "jest": "21.2.1",
     "jest-zone-patch": "0.0.8",
     "rollup": "0.57.1",
-    "rxjs": "5.5.7",
+    "rxjs": "6.1.0",
     "ts-jest": "22.4.2",
     "typescript": "2.7.2",
-    "zone.js": "0.8.20"
+    "zone.js": "0.8.26"
   }
 }
