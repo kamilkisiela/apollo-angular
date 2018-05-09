@@ -1,12 +1,13 @@
 {
   "name": "apollo-angular-link-headers",
+  "description": "An Apollo Link to easily transform headers from being a key-value object to an instance of HttpHeaders. Great combination with apollo-angular-link-http.",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -25,17 +26,17 @@
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "^4.4.4",
-    "@angular/core": "^4.4.4",
-    "@types/graphql": "^0.11.5",
-    "@types/jest": "^21.1.2",
-    "@types/zen-observable": "^0.5.3",
-    "apollo-link": "^1.0.0",
-    "graphql": "^0.11.7",
-    "graphql-tag": "^2.5.0",
-    "jest": "^21.2.1",
-    "rollup": "^0.50.0",
-    "ts-jest": "^21.1.2",
-    "typescript": "^2.5.3"
+    "@angular/common": "4.4.6",
+    "@angular/core": "4.4.6",
+    "@types/graphql": "0.13.0",
+    "@types/jest": "22.2.3",
+    "@types/zen-observable": "0.5.3",
+    "apollo-link": "1.2.2",
+    "graphql": "0.13.2",
+    "graphql-tag": "2.8.0",
+    "jest": "21.2.1",
+    "rollup": "0.57.1",
+    "ts-jest": "22.4.2",
+    "typescript": "2.8.1"
   }
 }
