@@ -5,13 +5,12 @@
     "bootstrap": "npm i && lerna bootstrap",
     "postbootstrap": "npm run build",
     "prebuild": "rimraf packages/*/build/ packages/*/coverage/",
-    "build": "lerna run build",
-    "test": "lerna run test",
+    "build": "lerna run -- build",
+    "test": "lerna run -- test",
     "prelint": "npm run prettier",
-    "lint": "lerna run lint",
-    "prettier":
-      "prettier --config .prettierrc --write \"packages/*/{src,tests}/**/*.ts\"",
-    "deploy": "lerna run deploy",
+    "lint": "lerna run -- lint",
+    "prettier": "prettier --config .prettierrc --write \"packages/*/{src,tests}/**/*.ts\"",
+    "deploy": "lerna run -- deploy",
     "coverage": "codecov",
     "precommit": "lint-staged",
     "commitmsg": "commitlint -e"
@@ -29,6 +28,6 @@
     "rimraf": "2.6.2",
     "rollup": "0.57.1",
     "tslint": "5.9.1",
-    "typescript": "2.8.1"
+    "typescript": "2.7.2"
   }
 }
