@@ -35,10 +35,10 @@ node -e "var package = require('./package.json'); \
   delete package.jest; \
   delete package.scripts; \
   delete package.devDependencies; \
-  package.main = 'bundle.umd.js'; \
-  package.module = 'index.js'; \
-  package['jsnext:main'] = 'index.js'; \
-  package.typings = 'index.d.ts'; \
+  package.main = './bundle.umd.js'; \
+  package.module = './index.js'; \
+  package['jsnext:main'] = './index.js'; \
+  package.typings = './index.d.ts'; \
   var fs = require('fs'); \
   fs.writeFileSync('./npm/package.json', JSON.stringify(package, null, 2)); \
   "

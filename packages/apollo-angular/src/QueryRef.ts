@@ -6,19 +6,18 @@ import {
   FetchMoreOptions,
   SubscribeToMoreOptions,
   UpdateQueryOptions,
+  ApolloCurrentResult,
 } from 'apollo-client';
-import {ApolloCurrentResult} from 'apollo-client/core/ObservableQuery';
-import {Observable} from 'rxjs/Observable';
-import {from} from 'rxjs/observable/from';
+import {Observable, from} from 'rxjs';
 
-import {wrapWithZone} from './utils';
+import {wrapWithZone, fixObservable} from './utils';
 import {R} from './types';
 
 export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
 
   constructor(private obsQuery: ObservableQuery<T>) {
-    this.valueChanges = wrapWithZone(from(this.obsQuery));
+    this.valueChanges = wrapWithZone(from(fixObservable(this.obsQuery)));
   }
 
   // ObservableQuery's methods
