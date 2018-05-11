@@ -46,7 +46,7 @@
     "graphql-tag": "2.9.2",
     "jest": "21.2.1",
     "jest-zone-patch": "0.0.8",
-    "rollup": "0.57.1",
+    "rollup": "0.58.2",
     "rxjs": "6.1.0",
     "ts-jest": "22.4.6",
     "typescript": "2.7.2",
