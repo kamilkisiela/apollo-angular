@@ -23,10 +23,10 @@
 		"husky": "0.14.3",
 		"jest": "21.2.1",
 		"lerna": "2.11.0",
-		"lint-staged": "7.0.4",
+		"lint-staged": "7.1.0",
 		"prettier": "1.11.1",
 		"rimraf": "2.6.2",
-		"rollup": "0.57.1",
+		"rollup": "0.58.2",
 		"tslint": "5.10.0",
 		"typescript": "2.7.2"
 	}
