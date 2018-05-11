@@ -1,7 +1,7 @@
 import './_setup';
 
 import {ObservableQuery} from 'apollo-client';
-import {map} from 'rxjs/operator/map';
+import {map} from 'rxjs/operators';
 import {ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
@@ -115,7 +115,7 @@ describe('QueryRef', () => {
     let calls = 0;
     const obs = queryRef.valueChanges;
 
-    map.call(obs, (result: any) => result.data).subscribe({
+    obs.pipe(map((result: any) => result.data)).subscribe({
       next: (result: any) => {
         calls++;
 

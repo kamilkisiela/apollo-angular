@@ -4,7 +4,7 @@ import {
   StoreObject,
   NormalizedCacheObject,
 } from 'apollo-cache-inmemory';
-import {take} from 'rxjs/operators/take';
+import {take} from 'rxjs/operators';
 
 import {State} from './types';
 import {Set, Delete, Clear, Replace} from './actions';

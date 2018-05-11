@@ -21,4 +21,5 @@ const transformLink = setContext((_, context) => {
 });
 
 export const createPersistedQueryLink = (options?: Options) =>
-  ApolloLink.from([_createPersistedQueryLink(options), transformLink]);
+  // XXX: `as any` because the original package has different version of ApolloLink
+  ApolloLink.from([_createPersistedQueryLink(options), transformLink as any]);
