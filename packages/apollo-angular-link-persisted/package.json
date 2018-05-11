@@ -39,7 +39,7 @@
     "graphql-tag": "2.9.2",
     "jest": "22.4.3",
     "rollup": "0.57.1",
-    "ts-jest": "22.4.2",
+    "ts-jest": "22.4.6",
     "typescript": "2.7.2"
   }
 }
