@@ -38,7 +38,7 @@
     "@angular/http": "6.0.1",
     "@angular/platform-browser": "6.0.1",
     "@angular/platform-browser-dynamic": "6.0.1",
-    "@ngrx/store": "6.0.0-beta.1",
+    "@ngrx/store": "6.0.0-beta.3",
     "@types/graphql": "0.13.0",
     "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
