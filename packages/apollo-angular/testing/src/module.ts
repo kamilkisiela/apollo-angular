@@ -16,7 +16,9 @@ import {ApolloTestingBackend} from './backend';
 export class ApolloTestingModule {
   constructor(apollo: Apollo, backend: ApolloTestingBackend) {
     const link = new ApolloLink(operation => backend.handle(operation));
-    const cache = new InMemoryCache();
+    const cache = new InMemoryCache({
+      addTypename: false,
+    });
 
     apollo.create({link, cache});
   }

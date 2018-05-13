@@ -4,7 +4,7 @@ import {GraphQLError, ExecutionResult} from 'graphql';
 import {Observer} from 'rxjs';
 
 const isApolloError = (err: any): err is ApolloError =>
-  err.hasOwnProperty('graphQLErrors');
+  err && err.hasOwnProperty('graphQLErrors');
 
 export class TestOperation {
   constructor(

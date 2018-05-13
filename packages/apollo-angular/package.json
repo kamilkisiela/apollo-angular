@@ -19,14 +19,18 @@
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
     "build:testing": "./node_modules/.bin/ngc -p testing/tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
+    "bundle:testing": "rollup -c testing/rollup.config.js",
     "test": "npm run test-only",
+    "posttest": "npm run test:testing",
     "test-only": "jest --config jest.config.js",
+    "test:testing": "jest --config testing/jest.config.js",
     "lint":
       "tslint -c ../../tslint.json -p tsconfig.json {src,tests, testing}/**/*.ts",
     "lint:testing":
       "tslint -c ../../tslint.json -p testing/tsconfig.json {src,tests}/**/*.ts",
     "postlint": "npm run lint:testing",
     "postbuild": "npm run bundle && npm run build:testing",
+    "postbuild:testing": "npm run bundle:testing",
     "deploy": "../../scripts/deploy.sh ./scripts/testing.sh"
   },
   "peerDependencies": {

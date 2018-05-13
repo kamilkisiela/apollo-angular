@@ -20,8 +20,7 @@ describe('TestOperation', () => {
     let response: any;
     execute(link, operation as any).subscribe(result => (response = result));
 
-    const handle = mock.expectOne(query);
-    handle.flush(null);
+    mock.expectOne(query).flush(null);
 
     expect(response).toBeNull();
   });

@@ -79,7 +79,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
 
   private compare(expected?: string, value?: Object | string): boolean {
     const prepare = (val: any) =>
-      val === 'string' ? val : JSON.stringify(val);
+      typeof val === 'string' ? val : JSON.stringify(val);
     const received = prepare(value);
 
     return !expected || received === expected;
@@ -91,6 +91,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
    */
   public match(match: MatchOperation): TestOperation[] {
     const results = this._match(match);
+
     results.forEach(result => {
       const index = this.open.indexOf(result);
       if (index !== -1) {
