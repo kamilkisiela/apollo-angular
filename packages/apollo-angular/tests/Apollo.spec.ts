@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
+import {ZoneScheduler} from '../src/utils';
 import {mockSingleLink} from './mocks/mockLinks';
 
 function mockApollo(link: ApolloLink, options?: any) {
@@ -368,6 +369,44 @@ describe('Apollo', () => {
           done.fail('should not be called');
         },
       });
+    });
+
+    test('should run inside Zone', () => {
+      const apollo = new Apollo();
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
+      const client = apollo.getClient();
+      const options = {query: 'gql'} as any;
+
+      client.subscribe = jest.fn().mockReturnValue(['subscription']);
+
+      const obs = apollo.subscribe(options);
+      const scheduler = (obs as any).operator.scheduler;
+
+      expect(scheduler instanceof ZoneScheduler).toEqual(true);
+    });
+
+    test('should run outside Zone if useZone equals false', () => {
+      const apollo = new Apollo();
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
+      const client = apollo.getClient();
+      const options = {query: 'gql'} as any;
+
+      client.subscribe = jest.fn().mockReturnValue(['subscription']);
+
+      const obs = apollo.subscribe(options, {useZone: false});
+      const operator = (obs as any).operator;
+
+      expect(operator).toBeUndefined();
     });
   });
 

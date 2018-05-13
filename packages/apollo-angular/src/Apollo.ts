@@ -11,7 +11,7 @@ import {FetchResult} from 'apollo-link';
 import {Observable, from} from 'rxjs';
 
 import {QueryRef} from './QueryRef';
-import {TypedVariables, R} from './types';
+import {TypedVariables, ExtraSubscriptionOptions, R} from './types';
 import {APOLLO_OPTIONS} from './tokens';
 import {fromPromise, wrapWithZone, fixObservable} from './utils';
 
@@ -40,10 +40,13 @@ export class ApolloBase<TCacheShape = any> {
     );
   }
 
-  public subscribe(options: SubscriptionOptions): Observable<any> {
-    return wrapWithZone(
-      from(fixObservable(this.client.subscribe({...options}))),
-    );
+  public subscribe(
+    options: SubscriptionOptions,
+    extra?: ExtraSubscriptionOptions,
+  ): Observable<any> {
+    const obs = from(fixObservable(this.client.subscribe({...options})));
+
+    return extra && extra.useZone !== true ? obs : wrapWithZone(obs);
   }
 
   public getClient() {
