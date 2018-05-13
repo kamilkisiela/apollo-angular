@@ -31,14 +31,14 @@
     "apollo-link-persisted-queries": "~0.2.0"
   },
   "devDependencies": {
-    "@types/graphql": "0.13.0",
+    "@types/graphql": "0.13.1",
     "@types/jest": "22.2.3",
     "apollo-link": "1.2.2",
     "graphql": "0.13.2",
-    "graphql-tag": "2.8.0",
+    "graphql-tag": "2.9.2",
     "jest": "22.4.3",
-    "rollup": "0.57.1",
-    "ts-jest": "22.4.2",
+    "rollup": "0.58.2",
+    "ts-jest": "22.4.6",
     "typescript": "2.7.2"
   }
 }
