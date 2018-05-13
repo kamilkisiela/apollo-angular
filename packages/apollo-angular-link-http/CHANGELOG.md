@@ -3,6 +3,8 @@
 ### vNEXT
 
 * Expose `response: HttpResponse` object in context ([PR #476](https://github.com/apollographql/apollo-angular/pull/476))
+* Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
+* Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
 
 ### v1.0.3
 

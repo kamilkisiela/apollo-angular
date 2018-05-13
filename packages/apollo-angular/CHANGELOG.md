@@ -2,8 +2,12 @@
 
 ### vNEXT
 
-* Introduces `ExtraSubscriptionOptions`. Allow to run `Apollo.subscribe` outside
+* Introduces `ExtraSubscriptionOptions`. Allows to run `Apollo.subscribe` outside
   the Zone ([PR #488](https://github.com/apollographql/apollo-angular/pull/488))
+* Introduces `apollo-angular/testing` tools ([PR #592](https://github.com/apollographql/apollo-angular/pull/592))
+* Introduces `APOLLO_OPTIONS` token. Allows to create Apollo using Dependency Injection ([PR #607](https://github.com/apollographql/apollo-angular/pull/607))
+* Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
+* Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
 
 ### v1.0.1
 
