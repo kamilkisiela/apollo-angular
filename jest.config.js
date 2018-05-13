@@ -12,7 +12,6 @@ module.exports = () => ({
   roots: ['<rootDir>/tests'],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.ts'],
-  mapCoverage: true,
   browser: true,
   verbose: false,
   notify: true,
