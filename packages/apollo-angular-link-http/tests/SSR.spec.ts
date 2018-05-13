@@ -23,9 +23,7 @@ import {
 } from '@angular/common/http/testing';
 import {BrowserModule} from '@angular/platform-browser';
 import {execute} from 'apollo-link';
-import {filter} from 'rxjs/operator/filter';
-import {first} from 'rxjs/operator/first';
-import {toPromise} from 'rxjs/operator/toPromise';
+import {filter, first} from 'rxjs/operators';
 
 import gql from 'graphql-tag';
 
@@ -124,14 +122,10 @@ describe('integration', () => {
             const applicationRef: ApplicationRef = moduleRef.injector.get(
               ApplicationRef,
             );
-            return toPromise.call(
-              first.call(
-                filter.call(
-                  applicationRef.isStable,
-                  (isStable: boolean) => isStable,
-                ),
-              ),
-            );
+
+            return applicationRef.isStable
+              .pipe(filter((isStable: boolean) => isStable), first())
+              .toPromise();
           })
           .then(() => {
             const str = platform.injector.get(PlatformState).renderToString();

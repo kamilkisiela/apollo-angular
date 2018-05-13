@@ -1,19 +1,19 @@
+const genName = name => `apollo.${name}`;
+
 export const globals = {
   // Angular
   '@angular/core': 'ng.core',
   '@angular/common/http': 'ng.common.http',
   '@ngrx/store': 'ngrx.store',
   // Apollo
-  'apollo-link': 'httpLink',
-  'apollo-client-rxjs': 'apollo.rxjs',
+  'apollo-link': 'apolloLink.core',
   'apollo-client': 'apollo',
+  'apollo-angular-link-http-common': genName('link.httpCommon'),
+  'apollo-link-context': 'apolloLink.context',
+  'apollo-link-persisted-queries': 'persistedQueryLink',
   // RxJS
-  'rxjs/Observable': 'Rx',
-  'rxjs/observable/from': 'Rx.Observable',
-  'rxjs/observable/fromPromise': 'Rx.Observable',
-  'rxjs/scheduler/queue': 'Rx.Scheduler',
-  'rxjs/operator/observeOn': 'Rx.Observable.prototype',
-  'rxjs/operator/take': 'Rx.Observable.prototype',
+  rxjs: 'rxjs',
+  'rxjs/operators': 'rxjs.operators',
 };
 
 export default name => ({
@@ -22,7 +22,7 @@ export default name => ({
     file: 'build/bundle.umd.js',
     format: 'umd',
   },
-  name: `apollo.${name}`,
+  name: genName(name),
   exports: 'named',
   sourcemap: true,
   external: Object.keys(globals),

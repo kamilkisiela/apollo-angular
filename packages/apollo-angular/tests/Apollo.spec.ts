@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 import {ApolloLink} from 'apollo-link';
 import {TestBed, inject, async} from '@angular/core/testing';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
@@ -150,9 +150,7 @@ describe('Apollo', () => {
   });
 
   describe('query()', () => {
-    test('should be called with the same options', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should be called with the same options', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -217,9 +215,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should not be called without subscribing to it', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -245,9 +241,7 @@ describe('Apollo', () => {
   });
 
   describe('mutate()', () => {
-    test('should be called with the same options', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should be called with the same options', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -323,9 +317,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should not be called without subscribing to it', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -351,9 +343,7 @@ describe('Apollo', () => {
   });
 
   describe('subscribe', () => {
-    test('should be called with the same options and return Observable', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -497,9 +487,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should update a query with Optimistic Response after mutation', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should update a query with Optimistic Response after mutation', (done: jest.DoneCallback) => {
       const query = gql`
         query heroes {
           allHeroes {

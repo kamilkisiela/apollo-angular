@@ -1,0 +1,44 @@
+{
+  "name": "apollo-angular-link-persisted",
+  "description": "Use persisted queries with Apollo Link",
+  "author":
+    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "./build/bundle.umd.js",
+  "module": "./build/src/index.js",
+  "jsnext:main": "./build/src/index.js",
+  "typings": "./build/src/index.d.ts",
+  "version": "1.0.0-beta.0",
+  "repository": {
+    "type": "git",
+    "url": "apollographql/apollo-angular"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/tsc -p tsconfig.build.json",
+    "bundle": "rollup -c rollup.config.js",
+    "test": "npm run test-only",
+    "test-only": "jest --config jest.config.js",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
+    "postbuild": "npm run bundle",
+    "deploy": "../../scripts/deploy.sh"
+  },
+  "peerDependencies": {
+    "apollo-link": "^1.0.0"
+  },
+  "dependencies": {
+    "apollo-link-context": "^1.0.7",
+    "apollo-link-persisted-queries": "~0.2.0"
+  },
+  "devDependencies": {
+    "@types/graphql": "0.13.1",
+    "@types/jest": "22.2.3",
+    "apollo-link": "1.2.2",
+    "graphql": "0.13.2",
+    "graphql-tag": "2.9.2",
+    "jest": "22.4.3",
+    "rollup": "0.58.2",
+    "ts-jest": "22.4.6",
+    "typescript": "2.7.2"
+  }
+}
