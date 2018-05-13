@@ -4,8 +4,6 @@
 
 * Introduces `ExtraSubscriptionOptions`. Allow to run `Apollo.subscribe` outside
   the Zone ([PR #488](https://github.com/apollographql/apollo-angular/pull/488))
-* Exposes `wrapWithZone`, in case someone wants to run `Observable` inside the
-  Zone ([PR #488](https://github.com/apollographql/apollo-angular/pull/488))
 
 ### v1.0.1
 
