@@ -9,7 +9,7 @@ notifications:
   email: false
 
 install:
-  - npm run bootstrap
+  - npm i
   - npm prune
 
 script:
