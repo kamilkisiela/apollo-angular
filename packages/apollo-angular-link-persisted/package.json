@@ -19,8 +19,7 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
-    "lint":
-      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
     "postbuild": "npm run bundle",
     "deploy": "../../scripts/deploy.sh"
   },
