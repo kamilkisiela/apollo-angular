@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+### v1.1.0
+
 * Introduces `ExtraSubscriptionOptions`. Allows to run `Apollo.subscribe` outside
   the Zone ([PR #488](https://github.com/apollographql/apollo-angular/pull/488))
 * Introduces `apollo-angular/testing` tools ([PR #592](https://github.com/apollographql/apollo-angular/pull/592))

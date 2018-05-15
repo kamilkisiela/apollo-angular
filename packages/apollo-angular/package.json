@@ -1,10 +1,8 @@
 {
   "name": "apollo-angular",
-  "description":
-    "Use your GraphQL data in your Angular app, with the Apollo Client",
-  "version": "1.0.1",
-  "author":
-    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
+  "version": "1.1.0",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
   "main": "./build/bundle.umd.js",
@@ -24,10 +22,8 @@
     "posttest": "npm run test:testing",
     "test-only": "jest --config jest.config.js",
     "test:testing": "jest --config testing/jest.config.js",
-    "lint":
-      "tslint -c ../../tslint.json -p tsconfig.json {src,tests, testing}/**/*.ts",
-    "lint:testing":
-      "tslint -c ../../tslint.json -p testing/tsconfig.json {src,tests}/**/*.ts",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests, testing}/**/*.ts",
+    "lint:testing": "tslint -c ../../tslint.json -p testing/tsconfig.json {src,tests}/**/*.ts",
     "postlint": "npm run lint:testing",
     "postbuild": "npm run bundle && npm run build:testing",
     "postbuild:testing": "npm run bundle:testing",
