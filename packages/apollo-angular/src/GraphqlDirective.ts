@@ -9,23 +9,31 @@ import {
 } from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil, debounceTime} from 'rxjs/operators';
+import {ApolloQueryResult} from 'apollo-client';
 
 import {Query} from './Query';
 import {QueryRef} from './QueryRef';
 
+export interface GraphqlContext<T> {
+  query: QueryRef<T>;
+  result: ApolloQueryResult<T>;
+  loading: boolean;
+  data: T;
+}
+
 @Directive({
   selector: '[graphql]',
 })
-export class GraphqlDirective implements OnInit, OnDestroy, OnChanges {
-  @Input() public graphql: Query;
+export class GraphqlDirective<T> implements OnInit, OnDestroy, OnChanges {
+  @Input() public graphql: Query<T>;
   @Input() public variables: Record<any, string>;
   @Input() public debounce: number = 0;
 
   private ngDestroy: Subject<void>;
-  private ref: QueryRef<any>;
+  private ref: QueryRef<T>;
 
   constructor(
-    private tRef: TemplateRef<any>,
+    private tRef: TemplateRef<GraphqlContext<T>>,
     private vcRef: ViewContainerRef,
   ) {}
 
