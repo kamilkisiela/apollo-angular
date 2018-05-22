@@ -44,17 +44,9 @@
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
     "jest-zone-patch": "0.0.8",
-    <<
-    << << < HEAD "rollup": "0.57.1",
-    "rxjs": "^6.0.0-rc.0",
-    "ts-jest": "22.4.2",
-    ===
-    === =
     "rollup": "0.59.2",
     "rxjs": "6.1.0",
     "ts-jest": "22.4.6",
-    >>>
-    >>> > 44688806 da8dee931d1f200316665b3c1556ab42 "typescript": "2.7.2",
     "zone.js": "0.8.26"
   },
   "dependencies": {
