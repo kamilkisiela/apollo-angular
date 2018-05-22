@@ -1,24 +1,27 @@
-import {Injectable} from '@angular/core';
-import {ApolloLink, Operation, Observable} from 'apollo-link';
+import {Injectable, Inject, Optional} from '@angular/core';
+import {ApolloLink, Observable} from 'apollo-link';
 import {Apollo} from 'apollo-angular';
-import {HttpLink, Options as HttpOptions} from 'apollo-angular-link-http';
-import {withClientState, ClientStateConfig} from 'apollo-link-state';
-import {onError, ErrorLink} from 'apollo-link-error';
+import {HttpLink} from 'apollo-angular-link-http';
+import {withClientState} from 'apollo-link-state';
+import {onError} from 'apollo-link-error';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 
-import {InMemoryCache, CacheResolverMap} from 'apollo-cache-inmemory';
-
-export interface PresetConfig {
-  request?: (operation: Operation) => Promise<void>;
-  uri?: string;
-  httpOptions?: HttpOptions;
-  clientState?: ClientStateConfig;
-  onError?: ErrorLink.ErrorHandler;
-  cacheRedirects?: CacheResolverMap;
-}
+import {PresetConfig} from './types';
+import {APOLLO_BOOST_CONFIG} from './tokens';
 
 @Injectable()
 export class ApolloBoost {
-  constructor(private apollo: Apollo, private httpLink: HttpLink) {}
+  constructor(
+    private apollo: Apollo,
+    private httpLink: HttpLink,
+    @Optional()
+    @Inject(APOLLO_BOOST_CONFIG)
+    config?: PresetConfig,
+  ) {
+    if (config) {
+      this.create(config);
+    }
+  }
 
   public create(config: PresetConfig) {
     const cache =
