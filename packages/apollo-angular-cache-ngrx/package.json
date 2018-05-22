@@ -1,15 +1,14 @@
 {
   "name": "apollo-angular-cache-ngrx",
   "description": "Allows to use @ngrx/store as Apollo Cache",
-  "author":
-    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -19,8 +18,7 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
-    "lint":
-      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
     "postbuild": "npm run bundle",
     "deploy": "../../scripts/deploy.sh"
   },
@@ -30,26 +28,33 @@
     "rxjs": "^6.0.0-rc.0"
   },
   "devDependencies": {
-    "@angular/animations": "6.0.0-rc.3",
-    "@angular/common": "6.0.0-rc.3",
-    "@angular/compiler": "6.0.0-rc.3",
-    "@angular/compiler-cli": "6.0.0-rc.3",
-    "@angular/core": "6.0.0-rc.3",
-    "@angular/http": "6.0.0-rc.3",
-    "@angular/platform-browser": "6.0.0-rc.3",
-    "@angular/platform-browser-dynamic": "6.0.0-rc.3",
-    "@ngrx/store": "6.0.0-beta.1",
-    "@types/graphql": "0.13.0",
+    "@angular/animations": "6.0.2",
+    "@angular/common": "6.0.2",
+    "@angular/compiler": "6.0.2",
+    "@angular/compiler-cli": "6.0.2",
+    "@angular/core": "6.0.2",
+    "@angular/http": "6.0.2",
+    "@angular/platform-browser": "6.0.2",
+    "@angular/platform-browser-dynamic": "6.0.2",
+    "@ngrx/store": "6.0.0-beta.3",
+    "@types/graphql": "0.13.1",
     "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
     "graphql": "0.13.2",
-    "graphql-tag": "2.8.0",
-    "jest": "21.2.1",
+    "graphql-tag": "2.9.2",
+    "jest": "22.4.4",
     "jest-zone-patch": "0.0.8",
-    "rollup": "0.57.1",
+    <<
+    << << < HEAD "rollup": "0.57.1",
     "rxjs": "^6.0.0-rc.0",
     "ts-jest": "22.4.2",
-    "typescript": "2.7.2",
+    ===
+    === =
+    "rollup": "0.59.2",
+    "rxjs": "6.1.0",
+    "ts-jest": "22.4.6",
+    >>>
+    >>> > 44688806 da8dee931d1f200316665b3c1556ab42 "typescript": "2.7.2",
     "zone.js": "0.8.26"
   },
   "dependencies": {

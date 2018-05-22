@@ -15,6 +15,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 packages/*/coverage
+packages/**/coverage
 
 # nyc test coverage
 .nyc_output

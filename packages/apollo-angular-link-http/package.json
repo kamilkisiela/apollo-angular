@@ -1,16 +1,14 @@
 {
   "name": "apollo-angular-link-http",
-  "description":
-    "An Apollo Link to allow sending a single http request per operation.",
-  "author":
-    "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "description": "An Apollo Link to allow sending a single http request per operation.",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -20,8 +18,7 @@
     "bundle": "rollup -c rollup.config.js",
     "test": "npm run test-only",
     "test-only": "jest --config jest.config.js",
-    "lint":
-      "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
     "postbuild": "npm run bundle",
     "deploy": "../../scripts/deploy.sh"
   },
@@ -32,31 +29,31 @@
     "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0"
   },
   "dependencies": {
-    "apollo-angular-link-http-common": "~1.0.0"
+    "apollo-angular-link-http-common": "~1.1.0"
   },
   "devDependencies": {
-    "@angular/animations": "6.0.0",
-    "@angular/common": "6.0.0",
-    "@angular/compiler": "6.0.0",
-    "@angular/compiler-cli": "6.0.0",
-    "@angular/core": "6.0.0",
-    "@angular/http": "6.0.0",
-    "@angular/platform-browser": "6.0.0",
-    "@angular/platform-browser-dynamic": "6.0.0",
-    "@angular/platform-server": "6.0.0",
-    "@types/graphql": "0.13.0",
+    "@angular/animations": "6.0.2",
+    "@angular/common": "6.0.2",
+    "@angular/compiler": "6.0.2",
+    "@angular/compiler-cli": "6.0.2",
+    "@angular/core": "6.0.2",
+    "@angular/http": "6.0.2",
+    "@angular/platform-browser": "6.0.2",
+    "@angular/platform-browser-dynamic": "6.0.2",
+    "@angular/platform-server": "6.0.2",
+    "@types/graphql": "0.13.1",
     "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
-    "apollo-cache-inmemory": "1.1.12",
-    "apollo-client": "2.2.8",
+    "apollo-cache-inmemory": "1.2.1",
+    "apollo-client": "2.3.1",
     "apollo-link": "1.2.2",
     "graphql": "0.13.2",
-    "graphql-tag": "2.8.0",
-    "jest": "21.2.1",
+    "graphql-tag": "2.9.2",
+    "jest": "22.4.4",
     "jest-zone-patch": "0.0.8",
-    "rollup": "0.57.1",
+    "rollup": "0.59.2",
     "rxjs": "6.1.0",
-    "ts-jest": "22.4.2",
+    "ts-jest": "22.4.6",
     "typescript": "2.7.2",
     "zone.js": "0.8.26"
   }
