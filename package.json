@@ -27,7 +27,7 @@
     "lint-staged": "7.1.2",
     "prettier": "1.11.1",
     "rimraf": "2.6.2",
-    "rollup": "0.59.1",
+    "rollup": "0.59.2",
     "tslint": "5.10.0",
     "typescript": "2.7.2"
   }
