@@ -8,7 +8,12 @@ export const globals = {
   // Apollo
   'apollo-link': 'apolloLink.core',
   'apollo-client': 'apollo',
+  'apollo-angular': genName('core'),
+  'apollo-angular-link-http': genName('link.http'),
   'apollo-angular-link-http-common': genName('link.httpCommon'),
+  'apollo-cache-inmemory': 'apollo.cache.inmemory',
+  'apollo-link-state': 'apolloLink.state',
+  'apollo-link-error': 'apolloLink.error',
   'apollo-link-context': 'apolloLink.context',
   'apollo-link-persisted-queries': 'persistedQueryLink',
   // RxJS
