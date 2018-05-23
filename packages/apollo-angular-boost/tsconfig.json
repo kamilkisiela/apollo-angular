@@ -3,5 +3,6 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build"
-  }
+  },
+  "include": ["src/**/*.ts"]
 }
