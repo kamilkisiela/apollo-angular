@@ -36,12 +36,12 @@
     "zone.js": "~0.8.20"
   },
   "devDependencies": {
-    "@angular/common": "6.0.2",
-    "@angular/compiler": "6.0.2",
-    "@angular/compiler-cli": "6.0.2",
-    "@angular/core": "6.0.2",
-    "@angular/platform-browser": "6.0.2",
-    "@angular/platform-browser-dynamic": "6.0.2",
+    "@angular/common": "6.0.3",
+    "@angular/compiler": "6.0.3",
+    "@angular/compiler-cli": "6.0.3",
+    "@angular/core": "6.0.3",
+    "@angular/platform-browser": "6.0.3",
+    "@angular/platform-browser-dynamic": "6.0.3",
     "@types/graphql": "0.13.1",
     "@types/jest": "22.2.3",
     "@types/zen-observable": "0.5.3",
@@ -53,7 +53,7 @@
     "jest": "22.4.4",
     "jest-zone-patch": "0.0.8",
     "rollup": "0.59.2",
-    "rxjs": "6.1.0",
+    "rxjs": "6.2.0",
     "ts-jest": "22.4.6",
     "typescript": "2.7.2",
     "zone.js": "0.8.26"
