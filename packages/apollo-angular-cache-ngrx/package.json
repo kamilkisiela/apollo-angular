@@ -42,7 +42,7 @@
     "@types/zen-observable": "0.5.3",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
-    "jest": "23.0.0",
+    "jest": "23.0.1",
     "jest-zone-patch": "0.0.8",
     "rollup": "0.59.3",
     "rxjs": "6.2.0",
