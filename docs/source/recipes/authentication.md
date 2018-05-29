@@ -56,7 +56,7 @@ class AppModule {
   ) {
     const http = httpLink.create({uri: '/graphql'});
 
-    const auth = setContext((_, { headers }) => {
+    const auth = setContext((request, previousContext) => {
       // get the authentication token from local storage if it exists
       const token = localStorage.getItem('token');
       // return the headers to the context so httpLink can read them
@@ -66,7 +66,9 @@ class AppModule {
         return {};
       } else {
         return {
-          headers: headers.append('Authorization', `Bearer ${token}`)
+          headers: {
+            Authorization: `JWT ${token}`
+          }
         };
       }
     });
