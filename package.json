@@ -17,8 +17,8 @@
     "commitmsg": "commitlint -e"
   },
   "devDependencies": {
-    "@commitlint/cli": "6.2.0",
-    "@commitlint/config-angular": "6.1.3",
+    "@commitlint/cli": "7.0.0",
+    "@commitlint/config-angular": "7.0.1",
     "@types/jest": "22.2.3",
     "codecov": "3.0.2",
     "husky": "0.14.3",
