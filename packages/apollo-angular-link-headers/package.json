@@ -27,8 +27,8 @@
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "6.0.3",
-    "@angular/core": "6.0.3",
+    "@angular/common": "6.0.4",
+    "@angular/core": "6.0.4",
     "@types/graphql": "0.13.1",
     "@types/jest": "23.0.0",
     "@types/zen-observable": "0.5.3",
