@@ -209,11 +209,12 @@ class CommentsComponent {
 
         const newFeedItem = subscriptionData.data.commentAdded;
 
-        return Object.assign({}, prev, {
+        return {
+          ...prev,
           entry: {
             comments: [newFeedItem, ...prev.entry.comments]
           }
-        });
+        };
       }
     });
   }
