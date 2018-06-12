@@ -211,9 +211,8 @@ class CommentsComponent {
 
         return {
           ...prev,
-          ...{ entry: {
-              comments: [newFeedItem, ...prev.entry.comments]
-            }
+          entry: {
+            comments: [newFeedItem, ...prev.entry.comments]
           }
         };
       }
