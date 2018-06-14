@@ -1,5 +1,7 @@
 # Change log
 
+### vNext
+
 ### v1.1.1
 
 * Fix typescript compilation errors caused by recent Apollo Client
