@@ -1,6 +1,11 @@
 # Change log
 
-### vNEXT
+### v1.1.1
+
+* Fix typescript compilation errors caused by recent Apollo Client
+  interface changes.
+  [Issue #659](https://github.com/apollographql/apollo-angular/issues/659)
+  [PR #660](https://github.com/apollographql/apollo-angular/pull/660)
 
 ### v1.1.0
 
