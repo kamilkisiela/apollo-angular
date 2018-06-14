@@ -1,6 +1,8 @@
 # Change log
 
-### vNEXT
+### v1.0.0-beta.2
+
+- No changes
 
 ### v1.0.0-beta.1
 
