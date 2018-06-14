@@ -2,13 +2,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "postinstall": "npm run bootstrap",
-    "bootstrap": "lerna bootstrap",
-    "postbootstrap": "npm run build",
+    "postinstall": "yarn build",
     "prebuild": "rimraf packages/*/build/ packages/*/coverage/",
     "build": "lerna run -- build",
     "test": "lerna run -- test",
-    "prelint": "npm run prettier",
+    "prelint": "yarn prettier",
     "lint": "lerna run -- lint",
     "prettier": "prettier --config .prettierrc --write \"packages/*/{src,tests}/**/*.ts\"",
     "deploy": "lerna run -- deploy",
@@ -16,10 +14,13 @@
     "precommit": "lint-staged",
     "commitmsg": "commitlint -e"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@commitlint/cli": "7.0.0",
     "@commitlint/config-angular": "7.0.1",
-    "@types/jest": "23.0.2",
+    "@types/jest": "23.1.0",
     "codecov": "3.0.2",
     "husky": "0.14.3",
     "jest": "23.1.0",
@@ -27,7 +28,7 @@
     "lint-staged": "7.2.0",
     "prettier": "1.13.5",
     "rimraf": "2.6.2",
-    "rollup": "0.60.2",
+    "rollup": "0.60.7",
     "tslint": "5.10.0",
     "typescript": "2.7.2"
   }

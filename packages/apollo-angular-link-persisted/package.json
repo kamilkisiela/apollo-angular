@@ -16,10 +16,10 @@
   "scripts": {
     "build": "./node_modules/.bin/tsc -p tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
-    "test": "npm run test-only",
+    "test": "yarn test-only",
     "test-only": "jest --config jest.config.js",
     "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
-    "postbuild": "npm run bundle",
+    "postbuild": "yarn bundle",
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
@@ -31,12 +31,12 @@
   },
   "devDependencies": {
     "@types/graphql": "0.13.1",
-    "@types/jest": "23.0.2",
+    "@types/jest": "23.1.0",
     "apollo-link": "1.2.2",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "jest": "23.1.0",
-    "rollup": "0.60.2",
+    "rollup": "0.60.7",
     "ts-jest": "22.4.6",
     "typescript": "2.7.2"
   }
