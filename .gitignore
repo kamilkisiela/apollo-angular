@@ -51,7 +51,7 @@ jspm_packages
 
 # Packages lock
 package-lock.json
-yarn.lock
+/yarn.lock
 packages/**/package-lock.json
 packages/**/yarn.lock
 
