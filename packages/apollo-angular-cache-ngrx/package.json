@@ -8,7 +8,7 @@
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
