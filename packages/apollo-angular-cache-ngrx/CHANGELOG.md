@@ -2,9 +2,11 @@
 
 ### vNEXT
 
+### v1.0.0-beta.2
+
 ### v1.0.0-beta.1
 
-* Supports `sideEffects: false` (webpack)
+- Supports `sideEffects: false` (webpack)
 
 ### v1.0.0-beta.0
 
