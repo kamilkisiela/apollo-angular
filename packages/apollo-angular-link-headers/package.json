@@ -29,7 +29,7 @@
   "devDependencies": {
     "@angular/common": "6.0.7",
     "@angular/core": "6.0.7",
-    "@types/graphql": "0.13.1",
+    "@types/graphql": "0.13.3",
     "@types/jest": "23.1.4",
     "@types/zen-observable": "0.5.3",
     "apollo-link": "1.2.2",
