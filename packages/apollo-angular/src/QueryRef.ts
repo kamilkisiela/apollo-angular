@@ -46,8 +46,8 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.refetch(variables);
   }
 
-  public fetchMore(
-    fetchMoreOptions: FetchMoreQueryOptions & FetchMoreOptions,
+  public fetchMore<K extends keyof V>(
+    fetchMoreOptions: FetchMoreQueryOptions<V, K> & FetchMoreOptions<T, V>,
   ): Promise<ApolloQueryResult<T>> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
@@ -56,7 +56,7 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.subscribeToMore(options);
   }
   public updateQuery(
-    mapFn: (previousQueryResult: any, options: UpdateQueryOptions) => any,
+    mapFn: (previousQueryResult: T, options: UpdateQueryOptions<V>) => T,
   ): void {
     return this.obsQuery.updateQuery(mapFn);
   }
