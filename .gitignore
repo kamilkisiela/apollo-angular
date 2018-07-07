@@ -60,4 +60,3 @@ packages/*/npm/
 
 # docs
 docs/public/docs
-!docs/yarn.lock
