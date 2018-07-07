@@ -17,9 +17,9 @@
     "meteor-theme-hexo": "1.0.16"
   },
   "scripts": {
-    "start": "npm run build && chexo apollo-hexo-config -- server",
+    "start": "yarn && chexo apollo-hexo-config -- server",
     "build": "chexo apollo-hexo-config -- generate",
     "clean": "hexo clean",
-    "test": "npm run clean; npm run build"
+    "test": "yarn clean; yarn build"
   }
 }
