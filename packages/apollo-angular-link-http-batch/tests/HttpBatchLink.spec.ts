@@ -29,21 +29,20 @@ describe('HttpBatchLink', () => {
     });
   });
 
-  beforeEach(
-    inject(
-      [HttpBatchLink, HttpTestingController],
-      (_httpLink: HttpBatchLink, _httpBackend: HttpTestingController) => {
-        httpLink = _httpLink;
-        httpBackend = _httpBackend;
-      },
-    ),
-  );
+  beforeEach(inject(
+    [HttpBatchLink, HttpTestingController],
+    (_httpLink: HttpBatchLink, _httpBackend: HttpTestingController) => {
+      httpLink = _httpLink;
+      httpBackend = _httpBackend;
+    },
+  ));
 
-  afterEach(
-    inject([HttpTestingController], (backend: HttpTestingController) => {
+  afterEach(inject(
+    [HttpTestingController],
+    (backend: HttpTestingController) => {
       backend.verify();
-    }),
-  );
+    },
+  ));
 
   test('should use HttpClient', (done: jest.DoneCallback) => {
     const link = httpLink.create({uri: 'graphql'});

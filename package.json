@@ -2,11 +2,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "postinstall": "npm run build",
+    "postinstall": "yarn build",
     "prebuild": "rimraf packages/*/build/ packages/*/coverage/",
     "build": "lerna run -- build",
     "test": "lerna run -- test",
-    "prelint": "npm run prettier",
+    "prelint": "yarn prettier",
     "lint": "lerna run -- lint",
     "prettier": "prettier --config .prettierrc --write \"packages/*/{src,tests}/**/*.ts\"",
     "deploy": "lerna run -- deploy",

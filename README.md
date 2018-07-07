@@ -14,7 +14,9 @@ Use your GraphQL server data in your Angular app, with the [Apollo Client](https
 ```bash
 npm install apollo-angular apollo-angular-link-http apollo-link apollo-client apollo-cache-inmemory graphql-tag graphql --save
 ```
+
 or
+
 ```bash
 yarn add apollo-angular apollo-angular-link-http apollo-link apollo-client apollo-cache-inmemory graphql-tag graphql
 ```
@@ -32,19 +34,19 @@ This project uses Lerna.
 Bootstraping:
 
 ```bash
-npm run bootstrap
+yarn install
 ```
 
 Running tests locally:
 
 ```bash
-npm test
+yarn test
 ```
 
 Formatting code with prettier:
 
 ```bash
-npm run prettier
+yarn prettier
 ```
 
 This project uses TypeScript for static typing. You can get it built into your editor with no configuration by opening this project in [Visual Studio Code](https://code.visualstudio.com/), an open source IDE which is available for free on all platforms.
