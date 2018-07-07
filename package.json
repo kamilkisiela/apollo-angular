@@ -2,7 +2,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn build",
+    "postinstall": "node ./scripts/netlify-check.js 'yarn build'",
     "prebuild": "rimraf packages/*/build/ packages/*/coverage/",
     "build": "lerna run -- build",
     "test": "lerna run -- test",
@@ -29,6 +29,7 @@
     "prettier": "1.13.7",
     "rimraf": "2.6.2",
     "rollup": "0.62.0",
+    "shelljs": "0.8.2",
     "tslint": "5.10.0",
     "typescript": "2.7.2"
   }
