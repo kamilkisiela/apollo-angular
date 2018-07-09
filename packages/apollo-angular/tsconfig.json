@@ -8,6 +8,6 @@
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts",
-    "node_modules/zone.js/dist/zone.js.d.ts"
+    "../../node_modules/zone.js/dist/zone.js.d.ts"
   ]
 }

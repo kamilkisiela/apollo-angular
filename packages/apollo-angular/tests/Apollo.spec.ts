@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 import {ApolloLink} from 'apollo-link';
 import {TestBed, inject, async} from '@angular/core/testing';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
@@ -353,7 +353,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.subscribe = jest.fn().mockReturnValue(['subscription']);
+      client.subscribe = jest.fn().mockReturnValue(of('subscription'));
 
       const options = {query: 'gql'} as any;
       const obs = apollo.subscribe(options);
@@ -569,46 +569,43 @@ describe('Apollo', () => {
     });
   });
 
-  test(
-    'should use HttpClient',
-    async(
-      inject([Apollo], (apollo: Apollo) => {
-        const op = {
-          query: gql`
-            query heroes {
-              heroes {
-                name
-                __typename
-              }
+  test('should use HttpClient', async(
+    inject([Apollo], (apollo: Apollo) => {
+      const op = {
+        query: gql`
+          query heroes {
+            heroes {
+              name
+              __typename
             }
-          `,
-          variables: {},
-        };
-        const data = {
-          heroes: [
-            {
-              name: 'Superman',
-              __typename: 'Hero',
-            },
-          ],
-        };
-
-        // create
-        apollo.create<any>({
-          link: mockSingleLink({request: op, result: {data}}),
-          cache: new InMemoryCache(),
-        });
-
-        // query
-        apollo.query<any>(op).subscribe({
-          next: result => {
-            expect(result.data).toMatchObject(data);
+          }
+        `,
+        variables: {},
+      };
+      const data = {
+        heroes: [
+          {
+            name: 'Superman',
+            __typename: 'Hero',
           },
-          error: e => {
-            throw new Error(e);
-          },
-        });
-      }),
-    ),
-  );
+        ],
+      };
+
+      // create
+      apollo.create<any>({
+        link: mockSingleLink({request: op, result: {data}}),
+        cache: new InMemoryCache(),
+      });
+
+      // query
+      apollo.query<any>(op).subscribe({
+        next: result => {
+          expect(result.data).toMatchObject(data);
+        },
+        error: e => {
+          throw new Error(e);
+        },
+      });
+    }),
+  ));
 });

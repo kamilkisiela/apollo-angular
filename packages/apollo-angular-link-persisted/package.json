@@ -16,10 +16,10 @@
   "scripts": {
     "build": "./node_modules/.bin/tsc -p tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
-    "test": "npm run test-only",
+    "test": "yarn test-only",
     "test-only": "jest --config jest.config.js",
     "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
-    "postbuild": "npm run bundle",
+    "postbuild": "yarn bundle",
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
