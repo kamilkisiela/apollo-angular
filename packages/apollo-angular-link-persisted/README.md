@@ -7,7 +7,7 @@
 
 An Apollo Link that allows to use Automatic Persisted Queries with `apollo-angular-link-http`.
 
-Read more about [Automatic Persisted Queries](https://dev-blog.apollodata.com/improve-graphql-performance-with-automatic-persisted-queries-c31d27b8e6ea).
+Read more about [Automatic Persisted Queries](https://blog.apollographql.com/improve-graphql-performance-with-automatic-persisted-queries-c31d27b8e6ea).
 
 ## How it works
 
