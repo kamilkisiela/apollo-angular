@@ -20,7 +20,7 @@
   "devDependencies": {
     "@commitlint/cli": "7.0.0",
     "@commitlint/config-angular": "7.0.1",
-    "@types/jest": "23.1.5",
+    "@types/jest": "23.3.0",
     "codecov": "3.0.4",
     "husky": "0.14.3",
     "jest": "23.3.0",
