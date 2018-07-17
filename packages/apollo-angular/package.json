@@ -51,7 +51,7 @@
     "apollo-link": "1.2.2",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
-    "jest": "23.3.0",
+    "jest": "23.4.1",
     "jest-zone-patch": "0.0.8",
     "rollup": "0.62.0",
     "rxjs": "6.2.0",
