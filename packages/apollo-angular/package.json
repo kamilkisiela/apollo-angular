@@ -44,7 +44,7 @@
     "@angular/platform-browser": "6.0.9",
     "@angular/platform-browser-dynamic": "6.0.9",
     "@types/graphql": "0.13.3",
-    "@types/jest": "23.1.5",
+    "@types/jest": "23.3.0",
     "@types/zen-observable": "0.5.3",
     "apollo-cache-inmemory": "1.2.5",
     "apollo-client": "2.3.5",
