@@ -7,15 +7,12 @@ jobs:
 
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-
       - run:
-        name: Install
-        command: yarn install
-
+          name: Install
+          command: yarn install
       - save_cache:
           paths:
             - ./node_modules
@@ -23,23 +20,35 @@ jobs:
 
   Core:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
-        name: Test
-        command: yarn workspace apollo-angular test
+          name: Test
+          command: yarn workspace apollo-angular test
       - run:
           name: Lint
           command: yarn workspace apollo-angular lint
   Boost:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
-        name: Test
-        command: yarn workspace apollo-angular-boost test
+          name: Test
+          command: yarn workspace apollo-angular-boost test
       - run:
           name: Lint
           command: yarn workspace apollo-angular-boost lint
 
   Cache NgRx:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Test
           command: yarn workspace apollo-angular-cache-ngrx test
@@ -49,6 +58,10 @@ jobs:
 
   Link Headers:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-headers test
@@ -58,6 +71,10 @@ jobs:
 
   Link Http:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Test
           command: yarn yarn workspace apollo-angular-link-http test
@@ -67,6 +84,10 @@ jobs:
 
   Link Http Batch:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-http-batch test
@@ -76,6 +97,10 @@ jobs:
 
   Link Http Common:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-http-common test
@@ -85,6 +110,10 @@ jobs:
 
   Link Persisted:
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
       - run:
         name: Test
         command: yarn workspace apollo-angular-link-persisted test
