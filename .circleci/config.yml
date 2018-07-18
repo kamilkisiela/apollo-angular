@@ -49,6 +49,15 @@ jobs:
           name: Install
           command: yarn install
       - run:
+          name: Build Core
+          command: yarn workspace apollo-angular build
+      - run:
+          name: Build Common
+          command: yarn workspace apollo-angular-link-http-common build
+      - run:
+          name: Build Http
+          command: yarn workspace apollo-angular-link-http build
+      - run:
           name: Test
           command: yarn workspace apollo-angular-boost test
       - run:
@@ -186,6 +195,8 @@ workflows:
       - Boost:
           requires:
             - install
+            - Core
+            - Link Http
       - Cache NgRx:
           requires:
             - install
