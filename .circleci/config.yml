@@ -29,6 +29,9 @@ jobs:
           name: Install
           command: yarn install
       - run:
+          name: Build
+          command: yarn workspace apollo-angular build
+      - run:
           name: Test
           command: yarn workspace apollo-angular test
       - run:
