@@ -19,6 +19,9 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
   Core:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -31,6 +34,9 @@ jobs:
           name: Lint
           command: yarn workspace apollo-angular lint
   Boost:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -44,6 +50,9 @@ jobs:
           command: yarn workspace apollo-angular-boost lint
 
   Cache NgRx:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -57,6 +66,9 @@ jobs:
           command: yarn workspace apollo-angular-cache-ngrx lint
 
   Link Headers:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -70,6 +82,9 @@ jobs:
           command: yarn workspace apollo-angular-link-headers lint
 
   Link Http:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -83,6 +98,9 @@ jobs:
           command: yarn yarn workspace apollo-angular-link-http lint
 
   Link Http Batch:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -96,6 +114,9 @@ jobs:
           command: yarn workspace apollo-angular-link-http-batch lint
 
   Link Http Common:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
@@ -109,6 +130,9 @@ jobs:
           command: yarn workspace apollo-angular-link-http-common lint
 
   Link Persisted:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
