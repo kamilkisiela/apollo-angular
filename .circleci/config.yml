@@ -126,27 +126,27 @@ workflows:
   Build & Test:
     jobs:
       - install
-      - Core
+      - Core:
           requires:
             - install
-      - Boost
+      - Boost:
           requires:
             - install
-      - Cache NgRx
+      - Cache NgRx:
           requires:
             - install
-      - Link Headers
+      - Link Headers:
           requires:
             - install
-      - Link Http
+      - Link Http:
           requires:
             - install
-      - Link Http Batch
+      - Link Http Batch:
           requires:
             - install
-      - Link Http Common
+      - Link Http Common:
           requires:
             - install
-      - Link Persisted
+      - Link Persisted:
           requires:
             - install
