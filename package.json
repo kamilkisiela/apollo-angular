@@ -2,9 +2,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "postinstall": "node ./scripts/netlify-check.js 'yarn build'",
     "prebuild": "rimraf packages/*/build/ packages/*/coverage/",
     "build": "lerna run -- build",
+    "pretest": "yarn build",
     "test": "lerna run -- test",
     "prelint": "yarn prettier",
     "lint": "lerna run -- lint",

@@ -106,11 +106,14 @@ jobs:
           name: Install
           command: yarn install
       - run:
+          name: Build Common
+          command: yarn workspace apollo-angular-link-http-common build
+      - run:
           name: Test
-          command: yarn yarn workspace apollo-angular-link-http test
+          command: yarn workspace apollo-angular-link-http test
       - run:
           name: Lint
-          command: yarn yarn workspace apollo-angular-link-http lint
+          command: yarn workspace apollo-angular-link-http lint
 
   Link Http Batch:
     docker:
@@ -124,6 +127,9 @@ jobs:
       - run:
           name: Install
           command: yarn install
+      - run:
+          name: Build Common
+          command: yarn workspace apollo-angular-link-http-common build
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-http-batch test
