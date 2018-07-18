@@ -98,10 +98,26 @@ workflows:
     jobs:
       - install
       - Core
+          requires:
+            - install
       - Boost
+          requires:
+            - install
       - Cache NgRx
+          requires:
+            - install
       - Link Headers
+          requires:
+            - install
       - Link Http
+          requires:
+            - install
       - Link Http Batch
+          requires:
+            - install
       - Link Http Common
+          requires:
+            - install
       - Link Persisted
+          requires:
+            - install
