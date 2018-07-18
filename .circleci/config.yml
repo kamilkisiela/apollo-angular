@@ -28,8 +28,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn workspace apollo-angular test
@@ -46,8 +46,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn workspace apollo-angular-boost test
@@ -65,8 +65,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn workspace apollo-angular-cache-ngrx test
@@ -84,8 +84,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-headers test
@@ -103,8 +103,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn yarn workspace apollo-angular-link-http test
@@ -122,8 +122,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-http-batch test
@@ -141,8 +141,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-http-common test
@@ -160,8 +160,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Build
-          command: yarn build
+          name: Install
+          command: yarn install
       - run:
           name: Test
           command: yarn workspace apollo-angular-link-persisted test
@@ -186,15 +186,15 @@ workflows:
       - Link Headers:
           requires:
             - install
-      - Link Http:
-          requires:
-            - install
-      - Link Http Batch:
-          requires:
-            - install
       - Link Http Common:
           requires:
             - install
+      - Link Http:
+          requires:
+            - Link Http Common
+      - Link Http Batch:
+          requires:
+            - Link Http Common
       - Link Persisted:
           requires:
             - install
