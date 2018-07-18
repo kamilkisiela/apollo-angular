@@ -1,0 +1,107 @@
+version: 2
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8
+      - image: circleci/node:10
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+        name: Install
+        command: yarn install
+
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  Core:
+    steps:
+      - run:
+        name: Test
+        command: yarn workspace apollo-angular test
+      - run:
+          name: Lint
+          command: yarn workspace apollo-angular lint
+  Boost:
+    steps:
+      - run:
+        name: Test
+        command: yarn workspace apollo-angular-boost test
+      - run:
+          name: Lint
+          command: yarn workspace apollo-angular-boost lint
+
+  Cache NgRx:
+    steps:
+      - run:
+          name: Test
+          command: yarn workspace apollo-angular-cache-ngrx test
+      - run:
+          name: Lint
+          command: yarn workspace apollo-angular-cache-ngrx lint
+
+  Link Headers:
+    steps:
+      - run:
+          name: Test
+          command: yarn workspace apollo-angular-link-headers test
+      - run:
+          name: Lint
+          command: yarn workspace apollo-angular-link-headers lint
+
+  Link Http:
+    steps:
+      - run:
+          name: Test
+          command: yarn yarn workspace apollo-angular-link-http test
+      - run:
+          name: Lint
+          command: yarn yarn workspace apollo-angular-link-http lint
+
+  Link Http Batch:
+    steps:
+      - run:
+          name: Test
+          command: yarn workspace apollo-angular-link-http-batch test
+      - run:
+          name: Lint
+          command: yarn workspace apollo-angular-link-http-batch lint
+
+  Link Http Common:
+    steps:
+      - run:
+          name: Test
+          command: yarn workspace apollo-angular-link-http-common test
+      - run:
+          name: Lint
+          command: yarn workspace apollo-angular-link-http-common lint
+
+  Link Persisted:
+    steps:
+      - run:
+        name: Test
+        command: yarn workspace apollo-angular-link-persisted test
+      - run:
+          name: Lint
+          command: yarn workspace apollo-angular-link-persisted lint
+
+workflows:
+  version: 2
+  Build & Test:
+    jobs:
+      - install
+      - Core
+      - Boost
+      - Cache NgRx
+      - Link Headers
+      - Link Http
+      - Link Http Batch
+      - Link Http Common
+      - Link Persisted
