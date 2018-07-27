@@ -46,7 +46,7 @@
     "@angular/platform-browser-dynamic": "6.1.0",
     "@angular/platform-server": "6.1.0",
     "@types/graphql": "0.13.3",
-    "@types/jest": "23.3.0",
+    "@types/jest": "23.3.1",
     "graphql": "0.13.2",
     "jest": "23.4.1",
     "jest-zone-patch": "0.0.8",
