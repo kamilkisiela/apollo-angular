@@ -1,6 +1,7 @@
 import {Injectable, Optional, Inject} from '@angular/core';
 import {
   ApolloClient,
+  QueryOptions,
   WatchQueryOptions,
   MutationOptions,
   ApolloQueryResult,
@@ -25,7 +26,7 @@ export class ApolloBase<TCacheShape = any> {
   }
 
   public query<T, V = R>(
-    options: WatchQueryOptions & TypedVariables<V>,
+    options: QueryOptions & TypedVariables<V>,
   ): Observable<ApolloQueryResult<T>> {
     return fromPromise<ApolloQueryResult<T>>(() =>
       this.client.query<T>({...options}),

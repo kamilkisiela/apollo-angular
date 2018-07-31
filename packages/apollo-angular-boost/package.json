@@ -1,14 +1,13 @@
 {
-  "name": "apollo-angular-link-http-batch",
-  "description": "An Apollo Link to combine multiple GraphQL operations into single HTTP request.",
+  "name": "apollo-angular-boost",
+  "description": "The easiest way to get started with Apollo Client in Angular",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
-  "sideEffects": false,
   "main": "./build/bundle.umd.js",
   "module": "./build/src/index.js",
   "jsnext:main": "./build/src/index.js",
   "typings": "./build/src/index.d.ts",
-  "version": "1.1.2",
+  "version": "1.0.0-beta.1",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -17,20 +16,24 @@
     "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
     "bundle": "rollup -c rollup.config.js",
     "test": "yarn test-only",
-    "test-only": "jest --config jest.config.js",
-    "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
+    "test-only": "yarn lint && yarn build",
+    "lint": "tslint -c ../../tslint.json -p tsconfig.json --type-check {src,tests}/*.ts",
     "postbuild": "yarn bundle",
     "deploy": "../../scripts/deploy.sh"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0",
-    "@angular/common": "^6.0.0",
-    "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0"
+    "@angular/common": "^6.0.0"
   },
   "dependencies": {
-    "apollo-link": "^1.0.0",
-    "apollo-link-batch": "^1.1.2",
-    "apollo-angular-link-http-common": "~1.1.0"
+    "apollo-cache-inmemory": "~1.2.5",
+    "apollo-angular": "~1.1.2",
+    "apollo-client": "^2.3.1",
+    "apollo-angular-link-http": "~1.1.1",
+    "apollo-link": "~1.2.2",
+    "apollo-link-error": "~1.1.0",
+    "apollo-link-state": "~0.4.1",
+    "graphql-tag": "~2.9.2"
   },
   "devDependencies": {
     "@angular/animations": "6.1.0",
@@ -44,10 +47,7 @@
     "@angular/platform-server": "6.1.0",
     "@types/graphql": "0.13.3",
     "@types/jest": "23.3.0",
-    "apollo-cache-inmemory": "1.2.6",
-    "apollo-client": "2.3.7",
     "graphql": "0.13.2",
-    "graphql-tag": "2.9.2",
     "jest": "23.4.1",
     "jest-zone-patch": "0.0.8",
     "rollup": "0.63.4",

@@ -81,6 +81,30 @@ class AppModule {
 
 The server can use that header to authenticate the user and attach it to the GraphQL execution context, so resolvers can modify their behavior based on a user's role and permissions.
 
+### Waiting for a refreshed token
+
+In the case that you need to a refresh a token, for example when using the [adal.js](https://github.com/AzureAD/azure-activedirectory-library-for-js) library, you can use an observable wrapped in a promise to wait for a new token:
+
+```ts
+const auth = setContext(async(_, { headers }) => {
+  // Grab token if there is one in storage or hasn't expired
+  let token = this.auth.getCachedAccessToken();
+  
+  if (!token) {
+    // An observable to fetch a new token
+    // Converted .toPromise()
+    await this.auth.acquireToken().toPromise();
+    
+    // Set new token to the response (adal puts the new token in storage when fetched)
+    token = this.auth.getCachedAccessToken();
+  }
+  // Return the headers as usual
+  return {
+    headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+  };
+});
+```
+
 <h2 id="login-logout">Reset store on logout</h2>
 
 Since Apollo caches all of your query results, it's important to get rid of them when the login state changes.

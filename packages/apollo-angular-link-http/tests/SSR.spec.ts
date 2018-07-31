@@ -104,73 +104,67 @@ describe('integration', () => {
       expect(called).toBe(true);
     });
 
-    test(
-      'using long form should work',
-      async(() => {
-        const platform = platformDynamicServer([
-          {
-            provide: INITIAL_CONFIG,
-            useValue: {
-              document: doc,
-            },
+    test('using long form should work', async(() => {
+      const platform = platformDynamicServer([
+        {
+          provide: INITIAL_CONFIG,
+          useValue: {
+            document: doc,
           },
-        ]);
+        },
+      ]);
 
-        platform
-          .bootstrapModule(AsyncServerModule)
-          .then(moduleRef => {
-            const applicationRef: ApplicationRef = moduleRef.injector.get(
-              ApplicationRef,
-            );
+      platform
+        .bootstrapModule(AsyncServerModule)
+        .then(moduleRef => {
+          const applicationRef: ApplicationRef = moduleRef.injector.get(
+            ApplicationRef,
+          );
 
-            return applicationRef.isStable
-              .pipe(filter((isStable: boolean) => isStable), first())
-              .toPromise();
-          })
-          .then(() => {
-            const str = platform.injector.get(PlatformState).renderToString();
-            expect(clearNgVersion(str)).toMatchSnapshot();
-            platform.destroy();
-            called = true;
-          });
-      }),
-    );
-
-    test(
-      'using renderModule should work',
-      async(() => {
-        renderModule(AsyncServerModule, {document: doc}).then(output => {
-          expect(clearNgVersion(output)).toMatchSnapshot();
+          return applicationRef.isStable
+            .pipe(
+              filter((isStable: boolean) => isStable),
+              first(),
+            )
+            .toPromise();
+        })
+        .then(() => {
+          const str = platform.injector.get(PlatformState).renderToString();
+          expect(clearNgVersion(str)).toMatchSnapshot();
+          platform.destroy();
           called = true;
         });
-      }),
-    );
+    }));
 
-    test(
-      'using renderModuleFactory should work',
-      async(() => {
-        const platform = platformDynamicServer([
-          {
-            provide: INITIAL_CONFIG,
-            useValue: {
-              document: doc,
-            },
+    test('using renderModule should work', async(() => {
+      renderModule(AsyncServerModule, {document: doc}).then(output => {
+        expect(clearNgVersion(output)).toMatchSnapshot();
+        called = true;
+      });
+    }));
+
+    test('using renderModuleFactory should work', async(() => {
+      const platform = platformDynamicServer([
+        {
+          provide: INITIAL_CONFIG,
+          useValue: {
+            document: doc,
           },
-        ]);
-        const compilerFactory: CompilerFactory = platform.injector.get(
-          CompilerFactory,
-          null,
-        );
-        const moduleFactory = compilerFactory
-          .createCompiler()
-          .compileModuleSync(AsyncServerModule);
+        },
+      ]);
+      const compilerFactory: CompilerFactory = platform.injector.get(
+        CompilerFactory,
+        null,
+      );
+      const moduleFactory = compilerFactory
+        .createCompiler()
+        .compileModuleSync(AsyncServerModule);
 
-        renderModuleFactory(moduleFactory, {document: doc}).then(output => {
-          expect(clearNgVersion(output)).toMatchSnapshot();
-          called = true;
-        });
-      }),
-    );
+      renderModuleFactory(moduleFactory, {document: doc}).then(output => {
+        expect(clearNgVersion(output)).toMatchSnapshot();
+        called = true;
+      });
+    }));
   });
 });
 
