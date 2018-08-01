@@ -35,7 +35,7 @@
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "jest": "23.4.1",
-    "rollup": "0.63.4",
+    "rollup": "0.63.5",
     "ts-jest": "23.0.1",
     "typescript": "2.7.2"
   }
