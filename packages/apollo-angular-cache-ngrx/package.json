@@ -36,7 +36,7 @@
     "@angular/http": "6.1.0",
     "@angular/platform-browser": "6.1.0",
     "@angular/platform-browser-dynamic": "6.1.0",
-    "@ngrx/store": "6.0.1",
+    "@ngrx/store": "6.1.0",
     "@types/graphql": "0.13.3",
     "@types/jest": "23.3.0",
     "graphql": "0.13.2",
