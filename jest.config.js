@@ -15,4 +15,5 @@ module.exports = () => ({
   browser: true,
   verbose: false,
   notify: true,
+  testURL: 'http://localhost/',
 });
