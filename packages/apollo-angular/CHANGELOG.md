@@ -3,6 +3,7 @@
 ### vNEXT
 
 - Expose `queryId` in `QueryRef` [PR #733](https://github.com/apollographql/apollo-angular/pull/733)
+- Introduce `Query`, `Mutation`, `Subscription` services [PR #622](https://github.com/apollographql/apollo-angular/pull/622)
 
 ### v1.1.2
 

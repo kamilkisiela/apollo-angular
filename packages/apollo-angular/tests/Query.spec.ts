@@ -20,12 +20,13 @@ export class HeroesQuery extends Query {
 }
 
 describe('Query', () => {
-  let apolloMock: Apollo & {watchQuery: jest.Mock};
+  let apolloMock: Apollo & {watchQuery: jest.Mock; query: jest.Mock};
   let heroesQuery: HeroesQuery;
 
   function createApollo() {
     apolloMock = {
       watchQuery: jest.fn(),
+      query: jest.fn(),
     } as any;
 
     return apolloMock;
@@ -45,50 +46,89 @@ describe('Query', () => {
     });
   });
 
-  beforeEach(
-    inject([HeroesQuery], (_heroesQuery: HeroesQuery) => {
-      heroesQuery = _heroesQuery;
-    }),
-  );
+  beforeEach(inject([HeroesQuery], (_heroesQuery: HeroesQuery) => {
+    heroesQuery = _heroesQuery;
+  }));
 
   test('should have document defined', () => {
     expect(heroesQuery.document).toEqual(query);
   });
 
-  test('should use watchQuery under the hood', () => {
-    apolloMock.watchQuery.mockReturnValue('QueryRef');
+  describe('watch()', () => {
+    test('should use watchQuery under the hood', () => {
+      apolloMock.watchQuery.mockReturnValue('QueryRef');
 
-    const result = heroesQuery.query();
+      const result = heroesQuery.watch();
 
-    expect(apolloMock.watchQuery).toBeCalled();
-    expect(result).toEqual('QueryRef');
-  });
+      expect(apolloMock.watchQuery).toBeCalled();
+      expect(result).toEqual('QueryRef');
+    });
 
-  test('should pass variables to Apollo.watchQuery', () => {
-    heroesQuery.query({foo: 1});
+    test('should pass variables to Apollo.watchQuery', () => {
+      heroesQuery.watch({foo: 1});
 
-    expect(apolloMock.watchQuery).toBeCalled();
-    expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
-      variables: {foo: 1},
+      expect(apolloMock.watchQuery).toBeCalled();
+      expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
+        variables: {foo: 1},
+      });
+    });
+
+    test('should pass options to Apollo.watchQuery', () => {
+      heroesQuery.watch({}, {fetchPolicy: 'network-only'});
+
+      expect(apolloMock.watchQuery).toBeCalled();
+      expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
+        fetchPolicy: 'network-only',
+      });
+    });
+
+    test('should not overwrite query when options object is provided', () => {
+      heroesQuery.watch({}, {query: 'asd', fetchPolicy: 'cache-first'} as any);
+
+      expect(apolloMock.watchQuery).toBeCalled();
+      expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
+        query,
+        fetchPolicy: 'cache-first',
+      });
     });
   });
 
-  test('should pass options to Apollo.watchQuery', () => {
-    heroesQuery.query({}, {fetchPolicy: 'network-only'});
+  describe('fetch()', () => {
+    test('should use query under the hood', () => {
+      apolloMock.query.mockReturnValue('Result');
 
-    expect(apolloMock.watchQuery).toBeCalled();
-    expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
-      fetchPolicy: 'network-only',
+      const result = heroesQuery.fetch();
+
+      expect(apolloMock.query).toBeCalled();
+      expect(result).toEqual('Result');
     });
-  });
 
-  test('should not overwrite query when options object is provided', () => {
-    heroesQuery.query({}, {query: 'asd', fetchPolicy: 'cache-first'} as any);
+    test('should pass variables to Apollo.query', () => {
+      heroesQuery.fetch({foo: 1});
 
-    expect(apolloMock.watchQuery).toBeCalled();
-    expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
-      query,
-      fetchPolicy: 'cache-first',
+      expect(apolloMock.query).toBeCalled();
+      expect(apolloMock.query.mock.calls[0][0]).toMatchObject({
+        variables: {foo: 1},
+      });
+    });
+
+    test('should pass options to Apollo.query', () => {
+      heroesQuery.fetch({}, {fetchPolicy: 'network-only'});
+
+      expect(apolloMock.query).toBeCalled();
+      expect(apolloMock.query.mock.calls[0][0]).toMatchObject({
+        fetchPolicy: 'network-only',
+      });
+    });
+
+    test('should not overwrite query when options object is provided', () => {
+      heroesQuery.fetch({}, {query: 'asd', fetchPolicy: 'cache-first'} as any);
+
+      expect(apolloMock.query).toBeCalled();
+      expect(apolloMock.query.mock.calls[0][0]).toMatchObject({
+        query,
+        fetchPolicy: 'cache-first',
+      });
     });
   });
 });

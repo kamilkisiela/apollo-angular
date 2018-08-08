@@ -1,4 +1,9 @@
-import {WatchQueryOptions} from 'apollo-client';
+import {
+  WatchQueryOptions as CoreWatchQueryOptions,
+  QueryOptions as CoreQueryOptions,
+  MutationOptions as CoreMutationOptions,
+  SubscriptionOptions as CoreSubscriptionOptions,
+} from 'apollo-client';
 
 export type R = Record<string, any>;
 
@@ -10,11 +15,16 @@ export interface ExtraSubscriptionOptions {
   useZone?: boolean;
 }
 
-export type StringLiteralDiff<T extends string, U extends string> = ({
-  [P in T]: P
-} &
-  {[P in U]: never} & {[x: string]: never})[T];
-export type Omit<T, K extends keyof T> = Pick<T, StringLiteralDiff<keyof T, K>>;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export interface WatchQueryOptions
+  extends Omit<CoreWatchQueryOptions, 'query' | 'variables'> {}
 
 export interface QueryOptions
-  extends Omit<WatchQueryOptions, 'query' | 'variables'> {}
+  extends Omit<CoreQueryOptions, 'query' | 'variables'> {}
+
+export interface MutationOptions
+  extends Omit<CoreMutationOptions, 'mutation' | 'variables'> {}
+
+export interface SubscriptionOptions
+  extends Omit<CoreSubscriptionOptions, 'query' | 'variables'> {}

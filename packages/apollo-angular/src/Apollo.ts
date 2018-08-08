@@ -21,8 +21,8 @@ export class ApolloBase<TCacheShape = any> {
 
   public watchQuery<T, V = R>(
     options: WatchQueryOptions & TypedVariables<V>,
-  ): QueryRef<T> {
-    return new QueryRef<T>(this.client.watchQuery<T>({...options}));
+  ): QueryRef<T, V> {
+    return new QueryRef<T, V>(this.client.watchQuery<T>({...options}));
   }
 
   public query<T, V = R>(
