@@ -2,11 +2,10 @@
 
 ### vNEXT
 
-### v1.0.0-beta.2
-
 ### v1.0.0-beta.1
 
-- Supports `sideEffects: false` (webpack)
+- Updates dependencies
+- Exports `QueryRef`
 
 ### v1.0.0-beta.0
 

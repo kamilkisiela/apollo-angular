@@ -29,23 +29,22 @@ describe('HttpLink', () => {
     });
   });
 
-  beforeEach(
-    async(
-      inject(
-        [HttpLink, HttpTestingController],
-        (_httpLink: HttpLink, _httpBackend: HttpTestingController) => {
-          httpLink = _httpLink;
-          httpBackend = _httpBackend;
-        },
-      ),
+  beforeEach(async(
+    inject(
+      [HttpLink, HttpTestingController],
+      (_httpLink: HttpLink, _httpBackend: HttpTestingController) => {
+        httpLink = _httpLink;
+        httpBackend = _httpBackend;
+      },
     ),
-  );
+  ));
 
-  afterEach(
-    inject([HttpTestingController], (backend: HttpTestingController) => {
+  afterEach(inject(
+    [HttpTestingController],
+    (backend: HttpTestingController) => {
       backend.verify();
-    }),
-  );
+    },
+  ));
 
   test('should use HttpClient', () => {
     const link = httpLink.create({uri: 'graphql'});

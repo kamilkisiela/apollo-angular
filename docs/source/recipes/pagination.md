@@ -62,7 +62,7 @@ class FeedComponent implements OnInit {
   }
 
   fetchMore() {
-    this.feedObs.fetchMore({
+    this.feedQuery.fetchMore({
       // query: ... (you can specify a different query. feedQuery is used by default)
       variables: {
         offset: this.feed.length,

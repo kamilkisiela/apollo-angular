@@ -6,7 +6,7 @@ module.exports = () => ({
   },
   moduleFileExtensions: ['js', 'ts'],
   transform: {
-    '.ts': '<rootDir>/node_modules/ts-jest/preprocessor.js',
+    '.ts': 'ts-jest',
   },
   testRegex: '\\.spec\\.ts$',
   roots: ['<rootDir>/tests'],
@@ -15,4 +15,5 @@ module.exports = () => ({
   browser: true,
   verbose: false,
   notify: true,
+  testURL: 'http://localhost/',
 });

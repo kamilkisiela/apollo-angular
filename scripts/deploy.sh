@@ -6,7 +6,7 @@ echo '[Deploy] Clearing the built output'
 rm -rf ./build
 
 echo '[Deploy] Compiling new files'
-npm run build
+yarn build
 
 echo '[Deploy] Creating empty npm directory'
 rm -rf ./npm

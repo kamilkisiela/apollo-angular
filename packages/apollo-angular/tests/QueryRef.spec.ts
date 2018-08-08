@@ -1,7 +1,8 @@
 import './_setup';
 
 import {ObservableQuery} from 'apollo-client';
-import {map} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
 import {ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
@@ -321,5 +322,39 @@ describe('QueryRef', () => {
 
       done();
     };
+  });
+
+  test('should unsubscribe', done => {
+    const obs = queryRef.valueChanges;
+    const id = queryRef.queryId;
+
+    const sub = obs.subscribe(() => {
+      //
+    });
+
+    expect(client.queryManager.queryStore.get(id)).toBeDefined();
+
+    setTimeout(() => {
+      sub.unsubscribe();
+      expect(client.queryManager.queryStore.get(id)).toBeUndefined();
+      done();
+    });
+  });
+
+  test('should unsubscribe based on rxjs operators', done => {
+    const gate = new Subject<void>();
+    const obs = queryRef.valueChanges.pipe(takeUntil(gate));
+    const id = queryRef.queryId;
+
+    obs.subscribe(() => {
+      //
+    });
+
+    expect(client.queryManager.queryStore.get(id)).toBeDefined();
+
+    gate.next();
+
+    expect(client.queryManager.queryStore.get(id)).toBeUndefined();
+    done();
   });
 });
