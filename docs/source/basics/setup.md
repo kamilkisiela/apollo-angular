@@ -48,8 +48,8 @@ class AppModule {
     apollo.create({
       // By default, this client will send queries to the
       // `/graphql` endpoint on the same host
-      link: httpLink.create(),
-      cache: new InMemoryCache(),
+      link: httpLink.create({}),
+      cache: new InMemoryCache()
     });
   }
 }
@@ -227,7 +227,7 @@ These options will be merged with options supplied with each request.
 ApolloModule is a NgModule for providing an Apollo service to an Angular Dependency Injection.
 
 ```js
-import {ApolloAngular} from 'apollo-angular';
+import { ApolloModule } from 'apollo-angular';
 ```
 
 **Example:**
