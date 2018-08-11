@@ -6,11 +6,12 @@ echo '[Deploy] Clearing the built output'
 rm -rf ./build
 
 echo '[Deploy] Compiling new files'
-npm run build
+yarn build
 
 echo '[Deploy] Creating empty npm directory'
 rm -rf ./npm
 mkdir ./npm
+(cd npm && mkdir ./testing)
 
 echo '[Deploy] Copying the built output'
 cd ./build/src && cp -r ./ ../../npm/
@@ -18,15 +19,18 @@ cd ./build/src && cp -r ./ ../../npm/
 echo '[Deploy] Copying umd bundle with source map file';
 cd ../
 cp bundle.umd.js ../npm/ && cp bundle.umd.js.map ../npm/
+cd ../
+
+if [ $# -eq 1 ] ; then
+  echo "[Deploy] Running an extra script: $1"
+  $1
+fi
 
 echo '[Deploy] Copying LICENSE'
-cp ./../LICENSE ../npm/
+cp ./LICENSE ./npm
 
 echo '[Deploy] Copying README'
-cp ./../README.md ../npm/
-
-# Back to the root directory
-cd ../
+cp ./README.md ./npm
 
 # Ensure a vanilla package.json before deploying so other tools do not interpret
 # The built output as requiring any further transformation.
@@ -35,10 +39,10 @@ node -e "var package = require('./package.json'); \
   delete package.jest; \
   delete package.scripts; \
   delete package.devDependencies; \
-  package.main = 'bundle.umd.js'; \
-  package.module = 'index.js'; \
-  package['jsnext:main'] = 'index.js'; \
-  package.typings = 'index.d.ts'; \
+  package.main = './bundle.umd.js'; \
+  package.module = './index.js'; \
+  package['jsnext:main'] = './index.js'; \
+  package.typings = './index.d.ts'; \
   var fs = require('fs'); \
   fs.writeFileSync('./npm/package.json', JSON.stringify(package, null, 2)); \
   "

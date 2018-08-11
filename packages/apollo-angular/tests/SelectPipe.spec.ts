@@ -1,12 +1,9 @@
 import './_setup';
 
-import {Pipe} from '@angular/core';
-
 import {SelectPipe} from '../src/SelectPipe';
 
 describe('SelectPipe', () => {
   let pipe: SelectPipe;
-  const pipeMetadata: Pipe = Reflect.getMetadata('annotations', SelectPipe)[0];
 
   beforeEach(() => {
     pipe = new SelectPipe();
@@ -34,13 +31,5 @@ describe('SelectPipe', () => {
     };
 
     expect(pipe.transform(result, 'foo')).toEqual(result.data.foo);
-  });
-
-  test('should be named select', () => {
-    expect(pipeMetadata.name).toBe('select');
-  });
-
-  test('should be pure', () => {
-    expect(pipeMetadata.pure).toBe(true);
   });
 });

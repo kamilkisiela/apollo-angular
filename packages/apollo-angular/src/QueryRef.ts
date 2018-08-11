@@ -6,19 +6,20 @@ import {
   FetchMoreOptions,
   SubscribeToMoreOptions,
   UpdateQueryOptions,
+  ApolloCurrentResult,
 } from 'apollo-client';
-import {ApolloCurrentResult} from 'apollo-client/core/ObservableQuery';
-import {Observable} from 'rxjs/Observable';
-import {from} from 'rxjs/observable/from';
+import {Observable, from} from 'rxjs';
 
-import {wrapWithZone} from './utils';
+import {wrapWithZone, fixObservable} from './utils';
 import {R} from './types';
 
 export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
+  public queryId: string;
 
   constructor(private obsQuery: ObservableQuery<T>) {
-    this.valueChanges = wrapWithZone(from(this.obsQuery));
+    this.valueChanges = wrapWithZone(from(fixObservable(this.obsQuery)));
+    this.queryId = this.obsQuery.queryId;
   }
 
   // ObservableQuery's methods
@@ -47,8 +48,8 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.refetch(variables);
   }
 
-  public fetchMore(
-    fetchMoreOptions: FetchMoreQueryOptions & FetchMoreOptions,
+  public fetchMore<K extends keyof V>(
+    fetchMoreOptions: FetchMoreQueryOptions<V, K> & FetchMoreOptions<T, V>,
   ): Promise<ApolloQueryResult<T>> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
@@ -57,7 +58,7 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.subscribeToMore(options);
   }
   public updateQuery(
-    mapFn: (previousQueryResult: any, options: UpdateQueryOptions) => any,
+    mapFn: (previousQueryResult: T, options: UpdateQueryOptions<V>) => T,
   ): void {
     return this.obsQuery.updateQuery(mapFn);
   }
