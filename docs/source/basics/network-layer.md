@@ -125,7 +125,7 @@ class AppModule {
       // add the authorization to the headers
       operation.setContext({
         headers: new HttpHeaders().set('Authorization', localStorage.getItem('token') || null)
-      }));
+      });
 
       return forward(operation);
     });
@@ -176,7 +176,7 @@ class AppModule {
     })
 
     apollo.create({
-      link: from(authMiddleware, otherMiddleware, http),
+      link: from([authMiddleware, otherMiddleware, http]),
     });
   }
 }
@@ -207,7 +207,7 @@ class AppModule {
     httpLink: HttpLink,
     auth: Auth
   ) {
-    const http = this.httpLink.create({ uri: '/graphql' });
+    const http = httpLink.create({ uri: '/graphql' });
 
     const logoutLink = onError(({ networkError }) => {
       if (networkError.statusCode === 401) auth.logout();

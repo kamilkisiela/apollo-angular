@@ -7,7 +7,7 @@
     "sourceMap": true,
     "declaration": true,
     "outDir": "build",
-    "lib": ["es6", "dom", "esnext"],
+    "lib": ["es6", "dom", "esnext.asynciterable"],
     "types": ["jest"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

@@ -1,17 +1,22 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {
   ApolloLink,
   Observable as LinkObservable,
   Operation,
   RequestHandler,
+  FetchResult,
 } from 'apollo-link';
 import {print} from 'graphql/language/printer';
-import {ExecutionResult} from 'graphql';
-import {Observable} from 'rxjs/Observable';
-
-import {Options, Request, Context} from './types';
-import {mergeHeaders, prioritize} from './utils';
+import {
+  fetch,
+  Options,
+  Body,
+  Request,
+  Context,
+  mergeHeaders,
+  prioritize,
+} from 'apollo-angular-link-http-common';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
@@ -52,11 +57,11 @@ export class HttpLinkHandler extends ApolloLink {
         };
 
         if (includeExtensions) {
-          req.body.extensions = operation.extensions;
+          (req.body as Body).extensions = operation.extensions;
         }
 
         if (includeQuery) {
-          req.body.query = print(operation.query);
+          (req.body as Body).query = print(operation.query);
         }
 
         if (context.headers) {
@@ -66,8 +71,11 @@ export class HttpLinkHandler extends ApolloLink {
           );
         }
 
-        const sub = this.fetch(req).subscribe({
-          next: result => observer.next(result.body),
+        const sub = fetch(req, this.httpClient).subscribe({
+          next: response => {
+            operation.setContext({response});
+            observer.next(response.body);
+          },
           error: err => observer.error(err),
           complete: () => observer.complete(),
         });
@@ -80,44 +88,8 @@ export class HttpLinkHandler extends ApolloLink {
       });
   }
 
-  public request(op: Operation): LinkObservable<ExecutionResult> | null {
+  public request(op: Operation): LinkObservable<FetchResult> | null {
     return this.requester(op);
-  }
-
-  // XXX make it as a separate package so it can be used in BatchLink
-  private fetch(req: Request): Observable<HttpResponse<Object>> {
-    const shouldUseBody =
-      ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
-    const shouldStringify = (param: string) =>
-      ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
-
-    // `body` for some, `params` for others
-    let bodyOrParams = {};
-
-    if (shouldUseBody) {
-      bodyOrParams = {
-        body: req.body,
-      };
-    } else {
-      const params = Object.keys(req.body).reduce((httpParams, param) => {
-        let val: string = (req.body as any)[param];
-        if (shouldStringify(param.toLowerCase())) {
-          val = JSON.stringify(val);
-        }
-        return httpParams.set(param, val);
-      }, new HttpParams());
-
-      bodyOrParams = {params};
-    }
-
-    // create a request
-    return this.httpClient.request<Object>(req.method, req.url, {
-      observe: 'response',
-      responseType: 'json',
-      reportProgress: false,
-      ...bodyOrParams,
-      ...req.options,
-    });
   }
 }
 

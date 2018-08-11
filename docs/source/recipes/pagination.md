@@ -11,7 +11,7 @@ In this article, we'll cover the technical details of using Apollo to implement 
 
 <h2 id="fetch-more">Using `fetchMore`</h2>
 
-Apollo lets you do pagination with a method called [`fetchMore`](../features/cache-updates.html#fetchMore. You need to specify what query and variables to use for the update, and how to merge the new query result with the existing data on the client. How exactly you do that will determine what kind of pagination you are implementing.
+Apollo lets you do pagination with a method called [`fetchMore`](../features/cache-updates.html#fetchMore). You need to specify what query and variables to use for the update, and how to merge the new query result with the existing data on the client. How exactly you do that will determine what kind of pagination you are implementing.
 
 <h2 id="numbered-pages">Offset-based</h2>
 
@@ -62,7 +62,7 @@ class FeedComponent implements OnInit {
   }
 
   fetchMore() {
-    this.feedObs.fetchMore({
+    this.feedQuery.fetchMore({
       // query: ... (you can specify a different query. feedQuery is used by default)
       variables: {
         offset: this.feed.length,
@@ -80,7 +80,7 @@ class FeedComponent implements OnInit {
   }
 }
 ```
-[source code](LINK)
+[source code](https://github.com/apollographql/githunt-angular)
 
 As you can see, `fetchMore` is accessible through the `QueryRef` object.
 

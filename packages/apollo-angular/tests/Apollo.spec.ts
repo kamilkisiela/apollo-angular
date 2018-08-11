@@ -4,10 +4,11 @@ import gql from 'graphql-tag';
 
 import {ApolloLink} from 'apollo-link';
 import {TestBed, inject, async} from '@angular/core/testing';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
+import {ZoneScheduler} from '../src/utils';
 import {mockSingleLink} from './mocks/mockLinks';
 
 function mockApollo(link: ApolloLink, options?: any) {
@@ -149,9 +150,7 @@ describe('Apollo', () => {
   });
 
   describe('query()', () => {
-    test('should be called with the same options', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should be called with the same options', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -216,9 +215,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should not be called without subscribing to it', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -244,9 +241,7 @@ describe('Apollo', () => {
   });
 
   describe('mutate()', () => {
-    test('should be called with the same options', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should be called with the same options', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -322,9 +317,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should not be called without subscribing to it', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -350,9 +343,7 @@ describe('Apollo', () => {
   });
 
   describe('subscribe', () => {
-    test('should be called with the same options and return Observable', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
       const apollo = new Apollo();
 
       apollo.create({
@@ -362,7 +353,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.subscribe = jest.fn().mockReturnValue(['subscription']);
+      client.subscribe = jest.fn().mockReturnValue(of('subscription'));
 
       const options = {query: 'gql'} as any;
       const obs = apollo.subscribe(options);
@@ -378,6 +369,44 @@ describe('Apollo', () => {
           done.fail('should not be called');
         },
       });
+    });
+
+    test('should run inside Zone', () => {
+      const apollo = new Apollo();
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
+      const client = apollo.getClient();
+      const options = {query: 'gql'} as any;
+
+      client.subscribe = jest.fn().mockReturnValue(['subscription']);
+
+      const obs = apollo.subscribe(options);
+      const scheduler = (obs as any).operator.scheduler;
+
+      expect(scheduler instanceof ZoneScheduler).toEqual(true);
+    });
+
+    test('should run outside Zone if useZone equals false', () => {
+      const apollo = new Apollo();
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
+      const client = apollo.getClient();
+      const options = {query: 'gql'} as any;
+
+      client.subscribe = jest.fn().mockReturnValue(['subscription']);
+
+      const obs = apollo.subscribe(options, {useZone: false});
+      const operator = (obs as any).operator;
+
+      expect(operator).toBeUndefined();
     });
   });
 
@@ -458,9 +487,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should update a query with Optimistic Response after mutation', (
-      done: jest.DoneCallback,
-    ) => {
+    test('should update a query with Optimistic Response after mutation', (done: jest.DoneCallback) => {
       const query = gql`
         query heroes {
           allHeroes {
@@ -542,46 +569,43 @@ describe('Apollo', () => {
     });
   });
 
-  test(
-    'should use HttpClient',
-    async(
-      inject([Apollo], (apollo: Apollo) => {
-        const op = {
-          query: gql`
-            query heroes {
-              heroes {
-                name
-                __typename
-              }
+  test('should use HttpClient', async(
+    inject([Apollo], (apollo: Apollo) => {
+      const op = {
+        query: gql`
+          query heroes {
+            heroes {
+              name
+              __typename
             }
-          `,
-          variables: {},
-        };
-        const data = {
-          heroes: [
-            {
-              name: 'Superman',
-              __typename: 'Hero',
-            },
-          ],
-        };
-
-        // create
-        apollo.create<any>({
-          link: mockSingleLink({request: op, result: {data}}),
-          cache: new InMemoryCache(),
-        });
-
-        // query
-        apollo.query<any>(op).subscribe({
-          next: result => {
-            expect(result.data).toMatchObject(data);
+          }
+        `,
+        variables: {},
+      };
+      const data = {
+        heroes: [
+          {
+            name: 'Superman',
+            __typename: 'Hero',
           },
-          error: e => {
-            throw new Error(e);
-          },
-        });
-      }),
-    ),
-  );
+        ],
+      };
+
+      // create
+      apollo.create<any>({
+        link: mockSingleLink({request: op, result: {data}}),
+        cache: new InMemoryCache(),
+      });
+
+      // query
+      apollo.query<any>(op).subscribe({
+        next: result => {
+          expect(result.data).toMatchObject(data);
+        },
+        error: e => {
+          throw new Error(e);
+        },
+      });
+    }),
+  ));
 });

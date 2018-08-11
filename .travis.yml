@@ -8,12 +8,10 @@ node_js:
 notifications:
   email: false
 
-install:
-  - npm run bootstrap
-  - npm prune
+install: yarn install
 
 script:
-  - npm test
-  - npm run lint
+  - yarn test
+  - yarn lint
 
-after_success: npm run coverage
+after_success: yarn coverage
