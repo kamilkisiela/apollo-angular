@@ -40,10 +40,7 @@ export class NgrxNormalizedCache implements NormalizedCache {
     let selected: NormalizedCacheObject = {};
 
     this.store
-      .pipe(
-        select(this.cacheSelector()),
-        take(1),
-      )
+      .pipe(select(this.cacheSelector()), take(1))
       .subscribe((cacheObject: NormalizedCacheObject) => {
         selected = cacheObject;
       });
@@ -55,10 +52,7 @@ export class NgrxNormalizedCache implements NormalizedCache {
     let selected: StoreObject;
 
     this.store
-      .pipe(
-        select(this.cacheSelector()),
-        take(1),
-      )
+      .pipe(select(this.cacheSelector()), take(1))
       .subscribe((result: NormalizedCacheObject) => {
         selected = result[dataId] && result[dataId];
       });
