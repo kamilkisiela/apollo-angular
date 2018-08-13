@@ -15,9 +15,11 @@ import {R} from './types';
 
 export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
+  public queryId: string;
 
   constructor(private obsQuery: ObservableQuery<T>) {
     this.valueChanges = wrapWithZone(from(fixObservable(this.obsQuery)));
+    this.queryId = this.obsQuery.queryId;
   }
 
   // ObservableQuery's methods
