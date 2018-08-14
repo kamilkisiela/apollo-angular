@@ -14,7 +14,7 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.js",
     "test": "yarn test-only",
-    "test-only": "yarn lint && yarn build"
+    "test-only": "yarn build"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0",

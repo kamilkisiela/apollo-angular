@@ -18,7 +18,6 @@
     "posttest": "yarn test:testing",
     "test-only": "jest --config jest.config.js",
     "test:testing": "jest --config testing/jest.config.js",
-    "postlint": "yarn lint:testing",
     "prebuild": "rm -rf build/"
   },
   "peerDependencies": {
