@@ -3,6 +3,7 @@ import {setupAngular} from './_setup';
 import gql from 'graphql-tag';
 
 import {ApolloLink} from 'apollo-link';
+import {NgZone} from '@angular/core';
 import {TestBed, inject, async} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
 import {InMemoryCache} from 'apollo-cache-inmemory';
@@ -11,30 +12,34 @@ import {Apollo, ApolloBase} from '../src/Apollo';
 import {ZoneScheduler} from '../src/utils';
 import {mockSingleLink} from './mocks/mockLinks';
 
-function mockApollo(link: ApolloLink, options?: any) {
-  const apollo = new Apollo();
+function mockApollo(link: ApolloLink, _ngZone: NgZone) {
+  const apollo = new Apollo(_ngZone);
 
   apollo.create({
     link,
     cache: new InMemoryCache(),
-    ...options,
   });
 
   return apollo;
 }
 
 describe('Apollo', () => {
+  let ngZone: NgZone;
   beforeAll(() => setupAngular());
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [Apollo],
     });
+
+    ngZone = {
+      run: jest.fn(cb => cb()),
+    } as any;
   });
 
   describe('default()', () => {
     test('should return the default client', () => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -48,7 +53,7 @@ describe('Apollo', () => {
 
   describe('use()', () => {
     test('should use a named client', () => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create(
         {
@@ -65,7 +70,7 @@ describe('Apollo', () => {
 
   describe('watchQuery()', () => {
     test('should be called with the same options', () => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -108,7 +113,7 @@ describe('Apollo', () => {
         },
       );
 
-      const apollo = mockApollo(link);
+      const apollo = mockApollo(link, ngZone);
       const options = {query, variables: variables1};
       const obs = apollo.watchQuery(options);
 
@@ -151,7 +156,7 @@ describe('Apollo', () => {
 
   describe('query()', () => {
     test('should be called with the same options', (done: jest.DoneCallback) => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -178,7 +183,7 @@ describe('Apollo', () => {
     });
 
     test('should not reuse options map', (done: jest.DoneCallback) => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -216,7 +221,7 @@ describe('Apollo', () => {
     });
 
     test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -242,7 +247,7 @@ describe('Apollo', () => {
 
   describe('mutate()', () => {
     test('should be called with the same options', (done: jest.DoneCallback) => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -280,7 +285,7 @@ describe('Apollo', () => {
     });
 
     test('should not reuse options map', (done: jest.DoneCallback) => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -318,7 +323,7 @@ describe('Apollo', () => {
     });
 
     test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -344,7 +349,7 @@ describe('Apollo', () => {
 
   describe('subscribe', () => {
     test('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -372,7 +377,7 @@ describe('Apollo', () => {
     });
 
     test('should run inside Zone', () => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -391,7 +396,7 @@ describe('Apollo', () => {
     });
 
     test('should run outside Zone if useZone equals false', () => {
-      const apollo = new Apollo();
+      const apollo = new Apollo(ngZone);
 
       apollo.create({
         link: mockSingleLink(),
@@ -449,7 +454,7 @@ describe('Apollo', () => {
           result: {data: dataMutation},
         },
       );
-      const apollo = mockApollo(link);
+      const apollo = mockApollo(link, ngZone);
 
       const obs = apollo.watchQuery({query});
 
@@ -528,7 +533,7 @@ describe('Apollo', () => {
           result: {data: dataMutation},
         },
       );
-      const apollo = mockApollo(link);
+      const apollo = mockApollo(link, ngZone);
 
       const obs = apollo.watchQuery({query});
 

@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {
   ApolloQueryResult,
   ObservableQuery,
@@ -17,8 +18,11 @@ export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
   public queryId: string;
 
-  constructor(private obsQuery: ObservableQuery<T>) {
-    this.valueChanges = wrapWithZone(from(fixObservable(this.obsQuery)));
+  constructor(private obsQuery: ObservableQuery<T>, ngZone: NgZone) {
+    this.valueChanges = wrapWithZone(
+      from(fixObservable(this.obsQuery)),
+      ngZone,
+    );
     this.queryId = this.obsQuery.queryId;
   }
 

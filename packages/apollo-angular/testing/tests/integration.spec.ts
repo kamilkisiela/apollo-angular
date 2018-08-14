@@ -18,15 +18,13 @@ describe('Integration', () => {
     });
   });
 
-  beforeEach(
-    inject(
-      [Apollo, ApolloTestingController],
-      (_apollo: Apollo, _backend: ApolloTestingController) => {
-        apollo = _apollo;
-        backend = _backend;
-      },
-    ),
-  );
+  beforeEach(inject(
+    [Apollo, ApolloTestingController],
+    (_apollo: Apollo, _backend: ApolloTestingController) => {
+      apollo = _apollo;
+      backend = _backend;
+    },
+  ));
 
   afterEach(() => {
     backend.verify();
