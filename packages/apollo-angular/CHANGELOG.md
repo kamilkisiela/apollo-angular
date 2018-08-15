@@ -4,6 +4,9 @@
 
 - Expose `queryId` in `QueryRef` [PR #733](https://github.com/apollographql/apollo-angular/pull/733)
 - Introduce `Query`, `Mutation`, `Subscription` services [PR #622](https://github.com/apollographql/apollo-angular/pull/622)
+- Angular 6.1 is now required (because of TypeScript 2.8)
+- TypeScript 2.8 is now required (because of Omit type)
+- Apollo Client ^2.3.4 is now required (versions before are not compatible because of the change in apollo-client)
 
 ### v1.1.2
 
