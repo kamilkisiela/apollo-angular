@@ -30,8 +30,8 @@
     "deploy": "../../scripts/deploy.sh ./scripts/testing.sh"
   },
   "peerDependencies": {
-    "@angular/core": "^6.0.0",
-    "apollo-client": "^2.0.0",
+    "@angular/core": "^6.1.0",
+    "apollo-client": "^2.3.4",
     "apollo-link": "^1.0.0",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.20"
