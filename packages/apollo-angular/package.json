@@ -18,7 +18,8 @@
     "posttest": "yarn test:testing",
     "test-only": "jest --config jest.config.js",
     "test:testing": "jest --config testing/jest.config.js",
-    "prebuild": "rm -rf build/"
+    "prebuild": "rm -rf build/",
+    "deploy": "yarn build && npm publish build --tag canary"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0",
