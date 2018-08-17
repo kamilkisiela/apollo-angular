@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.0.0-beta.2
+
+- Fixes an issue with initialization via `APOLLO_BOOST_CONFIG`
+
 ### v1.0.0-beta.1
 
 - Updates dependencies
