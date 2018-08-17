@@ -14,7 +14,7 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.js",
     "test": "yarn test-only",
-    "test-only": "yarn build",
+    "test-only": "jest --config jest.config.js",
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
