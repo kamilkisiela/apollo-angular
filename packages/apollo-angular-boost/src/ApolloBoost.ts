@@ -1,4 +1,4 @@
-import {Injectable, Inject, Optional} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ApolloLink, Observable} from 'apollo-link';
 import {Apollo} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular-link-http';
@@ -7,21 +7,10 @@ import {onError} from 'apollo-link-error';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {PresetConfig} from './types';
-import {APOLLO_BOOST_CONFIG} from './tokens';
 
 @Injectable()
 export class ApolloBoost {
-  constructor(
-    private apollo: Apollo,
-    private httpLink: HttpLink,
-    @Optional()
-    @Inject(APOLLO_BOOST_CONFIG)
-    config?: PresetConfig,
-  ) {
-    if (config) {
-      this.create(config);
-    }
-  }
+  constructor(private apollo: Apollo, private httpLink: HttpLink) {}
 
   public create(config: PresetConfig) {
     const cache =
