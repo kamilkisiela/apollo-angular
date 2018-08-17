@@ -3,7 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - "8"
+  - '8'
 
 notifications:
   email: false
@@ -12,6 +12,5 @@ install: yarn install
 
 script:
   - yarn test
-  - yarn lint
 
 after_success: yarn coverage

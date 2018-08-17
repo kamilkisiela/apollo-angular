@@ -4,23 +4,19 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "./build/bundle.umd.js",
-  "module": "./build/src/index.js",
-  "jsnext:main": "./build/src/index.js",
-  "typings": "./build/src/index.d.ts",
+  "main": "build/bundles/ng.apolloCache.ngrx.umd.js",
+  "module": "build/fesm5/ng.apolloCache.ngrx.js",
+  "typings": "build/ng.apolloCache.ngrx.d.ts",
   "version": "1.0.0-beta.2",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
   },
   "scripts": {
-    "build": "./node_modules/.bin/ngc -p tsconfig.build.json",
-    "bundle": "rollup -c rollup.config.js",
+    "build": "ng-packagr -p ng-package.js",
     "test": "yarn test-only",
     "test-only": "jest --config jest.config.js",
-    "lint": "tslint -c ../../tslint.json -p tsconfig.json {src,tests}/*.ts",
-    "postbuild": "yarn bundle",
-    "deploy": "../../scripts/deploy.sh"
+    "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0-rc.0",
@@ -43,7 +39,7 @@
     "graphql-tag": "2.9.2",
     "jest": "23.5.0",
     "jest-zone-patch": "0.0.8",
-    "rollup": "0.64.1",
+    "ng-packagr": "4.1.0",
     "rxjs": "6.2.2",
     "ts-jest": "23.1.3",
     "typescript": "2.9.2",

@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig",
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "annotateForClosureCompiler": false,
-    "strictMetadataEmit": true
-  }
-}

@@ -1,4 +1,4 @@
-import {Injectable, Optional, Inject} from '@angular/core';
+import {Injectable, Optional, Inject, NgZone} from '@angular/core';
 import {
   ApolloClient,
   QueryOptions,
@@ -17,12 +17,18 @@ import {APOLLO_OPTIONS} from './tokens';
 import {fromPromise, wrapWithZone, fixObservable} from './utils';
 
 export class ApolloBase<TCacheShape = any> {
-  constructor(private _client?: ApolloClient<TCacheShape>) {}
+  constructor(
+    private ngZone: NgZone,
+    private _client?: ApolloClient<TCacheShape>,
+  ) {}
 
   public watchQuery<T, V = R>(
     options: WatchQueryOptions & TypedVariables<V>,
   ): QueryRef<T, V> {
-    return new QueryRef<T, V>(this.client.watchQuery<T>({...options}));
+    return new QueryRef<T, V>(
+      this.client.watchQuery<T>({...options}),
+      this.ngZone,
+    );
   }
 
   public query<T, V = R>(
@@ -47,7 +53,9 @@ export class ApolloBase<TCacheShape = any> {
   ): Observable<any> {
     const obs = from(fixObservable(this.client.subscribe({...options})));
 
-    return extra && extra.useZone !== true ? obs : wrapWithZone(obs);
+    return extra && extra.useZone !== true
+      ? obs
+      : wrapWithZone(obs, this.ngZone);
   }
 
   public getClient() {
@@ -87,11 +95,12 @@ export class Apollo extends ApolloBase<any> {
   >();
 
   constructor(
+    private _ngZone: NgZone,
     @Optional()
     @Inject(APOLLO_OPTIONS)
     apolloOptions?: ApolloClientOptions<any>,
   ) {
-    super();
+    super(_ngZone);
 
     if (apolloOptions) {
       this.createDefault(apolloOptions);
@@ -127,7 +136,7 @@ export class Apollo extends ApolloBase<any> {
       throw new Error('Apollo has been already created.');
     }
 
-    return this.setClient(new ApolloClient<TCacheShape>(options as any));
+    return this.setClient(new ApolloClient<TCacheShape>(options));
   }
 
   public createNamed<TCacheShape>(
@@ -139,7 +148,7 @@ export class Apollo extends ApolloBase<any> {
     }
     this.map.set(
       name,
-      new ApolloBase(new ApolloClient<TCacheShape>(options as any)),
+      new ApolloBase(this._ngZone, new ApolloClient<TCacheShape>(options)),
     );
   }
 }
