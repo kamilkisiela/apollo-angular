@@ -1,5 +1,6 @@
 import './_setup';
 
+import {NgZone} from '@angular/core';
 import {ObservableQuery} from 'apollo-client';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
@@ -44,11 +45,13 @@ const Batman = {
 };
 
 describe('QueryRef', () => {
+  let ngZone: NgZone;
   let client: ApolloClient<any>;
   let obsQuery: ObservableQuery<any>;
   let queryRef: QueryRef<any>;
 
   beforeEach(() => {
+    ngZone = {run: jest.fn(cb => cb())} as any;
     const mockedLink = mockSingleLink(
       {
         request: heroesOperation,
@@ -62,7 +65,7 @@ describe('QueryRef', () => {
 
     client = createClient(mockedLink);
     obsQuery = client.watchQuery(heroesOperation);
-    queryRef = new QueryRef<any>(obsQuery);
+    queryRef = new QueryRef<any>(obsQuery, ngZone);
   });
 
   test('should listen to changes', done => {
