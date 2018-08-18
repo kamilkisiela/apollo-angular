@@ -170,6 +170,7 @@ If you want to see how easy it is to fetch data from a GraphQL server with Apoll
 
 ```js
 import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Component({
   /*...*/
