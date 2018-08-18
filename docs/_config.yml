@@ -27,6 +27,9 @@ sidebar_categories:
     - features/nativescript
     - features/multiple-clients
     - features/static-typing
+  Guides:
+    - guides/state-management
+    - guides/testing
   Recipes:
     - recipes/simple-example
     - recipes/query-splitting

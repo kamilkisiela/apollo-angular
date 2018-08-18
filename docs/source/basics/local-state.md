@@ -49,7 +49,7 @@ None of these options are required. If you don't specify anything, you will stil
 
 If you'd like a deep dive into the `clientState` config properties, we recommend checking out the [`apollo-link-state` docs](/docs/link/links/state.html). Otherwise, get ready to learn about these properties gradually as we build queries and mutations for local data.
 
-> If you'd like to see full example, please open our [example app](https://stackblitz.com/edit/apollo-angular-state) on StackBlitz.
+> If you’d like to follow along, please open our [example app](https://stackblitz.com/edit/apollo-angular-local-state) on StackBlitz. Since this example lives in the apollo-link-state repository.
 
 <h2 id="mutations">Updating local data</h2>
 
@@ -59,39 +59,44 @@ There are two ways to perform mutations in `apollo-link-state`. The first way is
 
 Direct writes to the cache do not require a GraphQL mutation or a resolver function. They access your Apollo Client instance directly by using the `Apollo.getClient()` method. We recommend using this strategy for simple writes, such as writing a string, or one-off writes. It's important to note that direct writes are not implemented as GraphQL mutations under the hood, so you shouldn't include them in your schema. They also do not validate that the data you're writing to the cache is in the shape of valid GraphQL data. If either of these features are important to you, you should opt for a resolver instead.
 
-// TODO: same but for angular
-
 Here's what a direct write looks like in our Blog app:
 
-```jsx
-import React from 'react';
-import {ApolloConsumer} from 'react-apollo';
+```ts
+import {Component, OnInit, Input} from '@angular/core';
+import {Apollo} from 'apollo-angular-boost';
 
-import Link from './Link';
+@Component({
+  selector: 'filter-link',
+  template: `
+    <button (click)="setFilter()" [disabled]="visibilityFilter === filter">
+      <ng-content></ng-content>
+    </button>
+  `,
+})
+export class FilterLinkComponent implements OnInit {
+  @Input()
+  filter: string;
 
-const FilterLink = ({filter, children}) => (
-  <ApolloConsumer>
-    {client => (
-      <Link
-        onClick={() => client.writeData({data: {visibilityFilter: filter}})}
-      >
-        {children}
-      </Link>
-    )}
-  </ApolloConsumer>
-);
+  constructor(private apollo: Apollo) {}
+
+  setFilter() {
+    this.apollo.getClient().writeData({
+      data: {visibilityFilter: this.filter},
+    });
+  }
+}
 ```
 
-The `ApolloConsumer` render prop function is called with a single value, the Apollo Client instance. You can think of the `ApolloConsumer` component as similar to the `Consumer` component from the [new React context API](https://github.com/reactjs/rfcs/blob/master/text/0002-new-version-of-context.md). From the client instance, you can directly call `client.writeData` and pass in the data you'd like to write to the cache.
+We got Apollo Client instance through `Apollo.getClient()` method.
+From the client instance, you can directly call `client.writeData` and pass in the data you'd like to write to the cache.
 
-What if we want to immediately subscribe to the data we just wrote to the cache? Let's create an `active` property on the link that marks the link's filter as active if it's the same as the current `visibilityFilter` in the cache. To immediately subscribe to a client-side mutation, wrap it in a `Query` component instead of an `ApolloConsumer` component. The `Query` component also has the client instance exposed on its render prop function.
+What if we want to immediately subscribe to the data we just wrote to the cache? Let's create an `active` property on the link that marks the link's filter as active if it's the same as the current `visibilityFilter` in the cache. To immediately subscribe to a client-side mutation, use `Apollo.watchQuery` in a component.
 
-```jsx
-import React from 'react';
-import {Query} from 'react-apollo';
-import gql from 'graphql-tag';
-
-import Link from './Link';
+```ts
+import {Component, OnInit, Input} from '@angular/core';
+import {gql, Apollo} from 'apollo-angular-boost';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 const GET_VISIBILITY_FILTER = gql`
   {
@@ -99,22 +104,36 @@ const GET_VISIBILITY_FILTER = gql`
   }
 `;
 
-// Remember to set a initial value for visibilityFilter with defaults
-const FilterLink = ({filter, children}) => (
-  <Query query={GET_VISIBILITY_FILTER}>
-    {({data, client}) => (
-      <Link
-        onClick={() => client.writeData({data: {visibilityFilter: filter}})}
-        active={data.visibilityFilter === filter}
-      >
-        {children}
-      </Link>
-    )}
-  </Query>
-);
+@Component({
+  selector: 'filter-link',
+  template: `
+    <button (click)="setFilter()" [disabled]="visibilityFilter === filter">
+      <ng-content></ng-content>
+    </button>
+  `,
+})
+export class FilterLinkComponent implements OnInit {
+  @Input()
+  filter: string;
+  visibilityFilter: Observable<string>;
+
+  constructor(private apollo: Apollo) {}
+
+  ngOnInit() {
+    this.visibilityFilter = this.apollo
+      .watchQuery({
+        query: GET_VISIBILITY_FILTER,
+      })
+      .valueChanges.pipe(
+        map(result => result.data && result.data.visibilityFilter),
+      );
+  }
+
+  // ...
+}
 ```
 
-You'll notice in our query that we have an `@client` directive next to our `visibilityFilter` field. This tells Apollo Client's network stack to fetch the query from the cache instead of sending it to our GraphQL server. Once you call `client.writeData`, the query result on the render prop function will automatically update. All cache writes and reads are synchronous, so you don't have to worry about loading state.
+You'll notice in our query that we have an `@client` directive next to our `visibilityFilter` field. This tells Apollo Client's network stack to fetch the query from the cache instead of sending it to our GraphQL server. Once you call `client.writeData`, the query result will automatically update. All cache writes and reads are synchronous, so you don't have to worry about loading state.
 
 <h3 id="resolvers">Resolvers</h3>
 
@@ -133,7 +152,7 @@ fieldName: (obj, args, context, info) => result;
 
 Let's take a look at an example of a resolver where we toggle a todo's completed status:
 
-```js
+```ts
 export const resolvers = {
   Mutation: {
     toggleTodo: (_, variables, {cache, getCacheKey}) => {
@@ -158,10 +177,9 @@ Once we read the fragment, we toggle the todo's completed status and write the u
 
 Let's learn how to trigger our `toggleTodo` mutation from our component:
 
-```jsx
-import React from 'react';
-import {Mutation} from 'react-apollo';
-import gql from 'graphql-tag';
+```ts
+import {Component, Input} from '@angular/core';
+import {gql, Apollo} from 'apollo-angular-boost';
 
 const TOGGLE_TODO = gql`
   mutation ToggleTodo($id: Int!) {
@@ -169,36 +187,50 @@ const TOGGLE_TODO = gql`
   }
 `;
 
-const Todo = ({id, completed, text}) => (
-  <Mutation mutation={TOGGLE_TODO} variables={{id}}>
-    {toggleTodo => (
-      <li
-        onClick={toggleTodo}
-        style={{
-          textDecoration: completed ? 'line-through' : 'none',
-        }}
-      >
-        {text}
-      </li>
-    )}
-  </Mutation>
-);
+@Component({
+  selector: 'todo',
+  template: `
+    <li
+      *ngIf="task"
+      (click)="toggle()"
+      [ngStyle]="{'textDecoration': task.completed ? 'line-through' : 'none' }"
+    >
+      {{task.text}}
+    </li>
+  `,
+})
+export class TodoComponent {
+  @Input()
+  task: any;
+
+  constructor(private apollo: Apollo) {}
+
+  toggle() {
+    this.apollo
+      .mutate({
+        mutation: TOGGLE_TODO,
+        variables: {
+          id: this.task.id,
+        },
+      })
+      .subscribe();
+  }
+}
 ```
 
-First, we create a GraphQL mutation that takes the todo's id we want to toggle as its only argument. We indicate that this is a local mutation by marking the field with a `@client` directive. This will tell `apollo-link-state` to call our `toggleTodo` mutation resolver in order to resolve the field. Then, we create a `Mutation` component just as we would for a remote mutation. Finally, pass in your GraphQL mutation to your component and trigger it from within the UI in your render prop function.
+First, we create a GraphQL mutation that takes the todo's id we want to toggle as its only argument. We indicate that this is a local mutation by marking the field with a `@client` directive. This will tell `apollo-link-state` to call our `toggleTodo` mutation resolver in order to resolve the field. Then, we define `Apollo.mutate` in the component just as we would for a remote mutation. Finally, call in your GraphQL mutation in your component and trigger it from within the UI.
 
-If you'd like to see an example of a local mutation adding a todo to a list, check out the `TodoList` component in the [CodeSandbox](https://codesandbox.io/s/github/apollographql/apollo-link-state/tree/master/examples/todo).
+If you'd like to see an example of a local mutation adding a todo to a list, check out the `TodoList` component in the [StackBlitz](https://stackblitz.com/edit/apollo-angular-local-state?file=src%2Fapp%2Ftodo-list.component.ts).
 
 <h2 id="queries">Querying local data</h2>
 
 Querying the Apollo cache is similar to querying your GraphQL server. The only difference is that you add a `@client` directive on your local fields to indicate they should be resolved from the cache. Let's look at an example:
 
-```jsx
-import React from 'react';
-import {Query} from 'react-apollo';
-import gql from 'graphql-tag';
-
-import Todo from './Todo';
+```ts
+import {Component, OnInit} from '@angular/core';
+import {gql, Apollo} from 'apollo-angular-boost';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 const GET_TODOS = gql`
   {
@@ -211,20 +243,47 @@ const GET_TODOS = gql`
   }
 `;
 
-const TodoList = () => (
-  <Query query={GET_TODOS}>
-    {({data: {todos, visibilityFilter}}) => (
-      <ul>
-        {getVisibleTodos(todos, visibilityFilter).map(todo => (
-          <Todo key={todo.id} {...todo} />
-        ))}
-      </ul>
-    )}
-  </Query>
-);
+@Component({
+  selector: 'todo-list',
+  template: `
+    <ul>
+      <todo *ngFor="let task of todos | async" [task]="task"></todo>
+    </ul>
+  `,
+})
+export class TodoListComponent implements OnInit {
+  todos: Observable<any[]>;
+
+  constructor(private apollo: Apollo) {}
+
+  ngOnInit() {
+    this.todos = this.apollo
+      .watchQuery({
+        query: GET_TODOS,
+      })
+      .valueChanges.pipe(
+        map(({data}) =>
+          this.getVisibleTodos(data.todos, data.visibilityFilter),
+        ),
+      );
+  }
+
+  private getVisibleTodos(todos, filter) {
+    switch (filter) {
+      case 'SHOW_ALL':
+        return todos;
+      case 'SHOW_COMPLETED':
+        return todos.filter(t => t.completed);
+      case 'SHOW_ACTIVE':
+        return todos.filter(t => !t.completed);
+      default:
+        throw new Error('Unknown filter: ' + filter);
+    }
+  }
+}
 ```
 
-First, we create our GraphQL query and add `@client` directives to `todos` and `visibilityFilter`. Then, we pass the query to our `Query` component. Reading from the Apollo cache is synchronous, so you won't have to worry about tracking loading state.
+First, we create our GraphQL query and add `@client` directives to `todos` and `visibilityFilter`. Then, we pass the query to `Apollo.watchQuery` and assign it to a component's property. Reading from the Apollo cache is synchronous, so you won't have to worry about tracking loading state.
 
 Since the query runs as soon as the component is mounted, what do we do if there are no todos in the cache? We need to write an initial state to the cache before the query is run to prevent it from erroring out. That's where defaults come in!
 
@@ -273,66 +332,7 @@ If you open up Apollo DevTools and click on the `GraphiQL` tab, you'll be able t
 
 <h2 id="combine-data">Combining local and remote data</h2>
 
-What’s really cool about using a `@client` directive to specify client-side only fields is that you can actually combine local and remote data in one query. Since we don't have a remote server, let's look at an example from [Pupstagram](https://codesandbox.io/s/r5qp83z0yq) where we add a client-only field to our remote data.
-
-First, let's look at an example of a mixed query. The `images` field comes from the server. When the array of images comes back, we add a local field `isLiked` to each image.
-
-```js
-const GET_DOG = gql`
-  query GetDogByBreed($breed: String!) {
-    dog(breed: $breed) {
-      images {
-        url
-        id
-        isLiked @client
-      }
-    }
-  }
-`;
-```
-
-We need to provide an initial state for `isLiked`, our client-only field, but where do we put it? We can specify a resolver for `Image` that will only be called the first time the image comes back from the server.
-
-```js
-const resolvers = {
-  Image: {
-    isLiked: () => false,
-  },
-};
-```
-
-Now that we've specified an initial state in the form of a resolver, we can query the data as we normally would. If you would like to toggle the `isLiked` field, you can create a mutation similar to the `toggleTodo` mutation we created in a previous example.
-
-```jsx
-const Detail = ({
-  match: {
-    params: {breed, id},
-  },
-}) => (
-  <View style={styles.container}>
-    <Query query={GET_DOG} variables={{breed}}>
-      {({loading, error, data}) => {
-        if (loading) return <Fetching />;
-        if (error) return <Error />;
-
-        return (
-          <DogList
-            data={data.dog.images}
-            renderRow={(type, data) => (
-              <DogWithLikes
-                id={id}
-                isLiked={data.isLiked}
-                imageId={data.id}
-                url={data.url}
-              />
-            )}
-          />
-        );
-      }}
-    </Query>
-  </View>
-);
-```
+What’s really cool about using a `@client` directive to specify client-side only fields is that you can actually combine local and remote data in one query.
 
 <h2 id="next-steps">Next steps</h2>
 
@@ -340,4 +340,3 @@ Managing your local data with Apollo Client can simplify your state management c
 
 - [`apollo-link-state` docs](/docs/link/links/state.html): Dive deeper into the concepts we just learned, such as resolvers and mixed queries, by taking a look at the `apollo-link-state` docs.
 - [The future of state management](https://blog.apollographql.com/the-future-of-state-management-dd410864cae2): Read about our vision for the future of state management with GraphQL in the `apollo-link-state` announcement post.
-- [Tutorial video by Sara Vieira](https://youtu.be/2RvRcnD8wHY): Check out this tutorial video by Sara Vieira if you'd like a step-by-step walkthrough on building an app with `apollo-link-state`.
