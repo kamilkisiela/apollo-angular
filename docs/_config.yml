@@ -13,6 +13,7 @@ sidebar_categories:
     - basics/setup
     - basics/queries
     - basics/mutations
+    - basics/services
     - basics/network-layer
     - basics/caching
     - basics/local-state
