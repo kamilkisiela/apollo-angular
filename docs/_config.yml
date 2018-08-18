@@ -15,6 +15,7 @@ sidebar_categories:
     - basics/mutations
     - basics/network-layer
     - basics/caching
+    - basics/local-state
   Features:
     - features/error-handling
     - features/caching
@@ -36,6 +37,7 @@ sidebar_categories:
     - recipes/webpack
     - recipes/meteor
     - recipes/angular-cli
+    - recipies/boost-migration
 
 github_repo: apollographql/apollo-angular
 content_root: docs/source
