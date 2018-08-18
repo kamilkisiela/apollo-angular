@@ -177,7 +177,7 @@ of the property you want to get from `data`.
 ```ts
 import {Component, OnInit} from '@angular/core';
 import {Apollo} from 'apollo-angular';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import gql from 'graphql-tag';
 
 const FeedQuery = gql`
@@ -234,10 +234,9 @@ What's really interesting is that, because of this, you can avoid using `SelectP
 ```ts
 import {Component, OnInit} from '@angular/core';
 import {Apollo} from 'apollo-angular';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import gql from 'graphql-tag';
-
-import 'rxjs/add/operator/map';
 
 const FeedQuery = gql`
   query Feed {
@@ -266,7 +265,7 @@ class FeedComponent implements OnInit {
   ngOnInit() {
     this.data = this.apollo
       .watchQuery({query: FeedQuery})
-      .valueChanges.map(({data}) => data.feed);
+      .valueChanges.pipe(map(({data}) => data.feed));
   }
 }
 ```
