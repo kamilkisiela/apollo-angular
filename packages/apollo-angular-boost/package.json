@@ -11,6 +11,11 @@
     "type": "git",
     "url": "apollographql/apollo-angular"
   },
+  "keywords": [
+    "apollo",
+    "graphql",
+    "angular"
+  ],
   "scripts": {
     "build": "ng-packagr -p ng-package.js",
     "test": "yarn test-only",
