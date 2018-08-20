@@ -64,6 +64,9 @@ An object passed through an Observable contains `loading`, `error`, and `data` p
 
 Let's create an `ExchangeRates` component to see the `Apollo` service in action!
 
+<h3 id="basic-operations">Basic Operations</h3>
+If you want to see how easy it is to fetch data from a GraphQL server with Apollo, you can use the `query` method. It is as easy as this:
+
 ```ts
 import {Component, OnInit} from '@angular/core';
 import {Apollo, gql} from 'apollo-angular-boost';
