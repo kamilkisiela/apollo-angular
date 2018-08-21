@@ -7,7 +7,7 @@
   "main": "build/bundles/ng.apolloLink.headers.umd.js",
   "module": "build/fesm5/ng.apolloLink.headers.js",
   "typings": "build/ng.apolloLink.headers.d.ts",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
