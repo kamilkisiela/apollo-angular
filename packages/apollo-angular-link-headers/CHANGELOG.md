@@ -1,6 +1,8 @@
 # Change log
 
-### vNEXT
+### v1.2.0
+
+* Uses `ng-packagr`
 
 ### v1.1.0
 

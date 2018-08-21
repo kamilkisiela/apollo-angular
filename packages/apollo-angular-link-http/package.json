@@ -7,11 +7,16 @@
   "main": "build/bundles/ng.apolloLink.http.umd.js",
   "module": "build/fesm5/ng.apolloLink.http.js",
   "typings": "build/ng.apolloLink.http.d.ts",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
   },
+  "keywords": [
+    "apollo",
+    "graphql",
+    "angular"
+  ],
   "scripts": {
     "build": "ng-packagr -p ng-package.js",
     "test": "yarn test-only",
@@ -25,7 +30,7 @@
     "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0"
   },
   "dependencies": {
-    "apollo-angular-link-http-common": "~1.1.0"
+    "apollo-angular-link-http-common": "~1.2.0"
   },
   "devDependencies": {
     "@angular/animations": "6.1.3",
