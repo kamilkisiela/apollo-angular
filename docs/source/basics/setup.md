@@ -16,7 +16,7 @@ First, let's install some packages!
 npm install apollo-angular-boost graphql --save
 ```
 
-- `apollo-boost`: Package containing everything you need to set up Apollo Client
+- `apollo-angular-boost`: Package containing everything you need to set up Apollo Client
 - `graphql`: Also parses your GraphQL queries
 
 <h2 id="creating-client">Create a client</h2>
