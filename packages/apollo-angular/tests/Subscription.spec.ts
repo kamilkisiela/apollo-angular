@@ -53,7 +53,7 @@ describe('Subscription', () => {
     expect(heroes.document).toEqual(query);
   });
 
-  test('should use watchQuery under the hood', () => {
+  test('should use subscribe under the hood', () => {
     apolloMock.subscribe.mockReturnValue('FetchResult');
 
     const result = heroes.subscribe();
