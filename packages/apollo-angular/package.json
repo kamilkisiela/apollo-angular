@@ -15,7 +15,9 @@
   "keywords": [
     "apollo",
     "graphql",
-    "angular"
+    "angular",
+    "schematics",
+    "angular-schematics"
   ],
   "scripts": {
     "build": "ng-packagr -p ng-package.js && yarn build:schematics",
