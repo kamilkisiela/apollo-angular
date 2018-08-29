@@ -1,0 +1,11 @@
+{
+  "spec_dir": ".",
+  "spec_files": [
+    "schematics/**/*_spec.js"
+  ],
+  "helpers": [
+    "jasmine-config/**/*.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}
