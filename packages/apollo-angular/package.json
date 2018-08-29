@@ -37,6 +37,9 @@
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.20"
   },
+  "dependencies": {
+    "semver": "^5.5.1"
+  },
   "devDependencies": {
     "@angular-devkit/core": "0.7.5",
     "@angular-devkit/schematics": "0.7.5",
@@ -50,6 +53,7 @@
     "@types/graphql": "0.13.4",
     "@types/jest": "23.3.1",
     "@types/node": "10.9.3",
+    "@types/semver": "5.5.0",
     "apollo-cache-inmemory": "1.2.9",
     "apollo-client": "2.4.1",
     "apollo-link": "1.2.2",

@@ -6,7 +6,8 @@
     "rootDir": ".",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "target": "es6"
+    "target": "es6",
+    "module": "commonjs"
   },
   "files": [
     "install/index.ts"

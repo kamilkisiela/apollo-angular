@@ -4,6 +4,7 @@ import {SchematicTestRunner} from '@angular-devkit/schematics/testing';
 import {getFileContent} from '@schematics/angular/utility/test';
 
 import {createTestApp} from '../utils';
+import {dependenciesMap} from '../install';
 
 const collectionPath = resolve(__dirname, '../collection.json');
 
@@ -24,13 +25,13 @@ describe('ng-add', () => {
     const packageJson = JSON.parse(getFileContent(tree, packageJsonPath));
     const {dependencies} = packageJson;
 
-    expect(dependencies['apollo-angular']).toBeDefined();
-    expect(dependencies['apollo-angular-link-http']).toBeDefined();
-    expect(dependencies['apollo-link']).toBeDefined();
-    expect(dependencies['apollo-client']).toBeDefined();
-    expect(dependencies['apollo-cache-inmemory']).toBeDefined();
-    expect(dependencies['graphql-tag']).toBeDefined();
-    expect(dependencies['graphql']).toBeDefined();
+    for (const dependency in dependenciesMap) {
+      if (dependenciesMap.hasOwnProperty(dependency)) {
+        const version = dependenciesMap[dependency];
+
+        expect(dependencies[dependency]).toBe(version);
+      }
+    }
   });
 
   test('should add NgModule with GraphQL setup', () => {
