@@ -7,4 +7,7 @@ module.exports = {
     flatModuleFile: 'ng.apollo',
     umdModuleIds,
   },
+  whitelistedNonPeerDependencies: [
+    "semver"
+  ]
 };

@@ -19,6 +19,24 @@ npm install apollo-angular-boost graphql --save
 - `apollo-angular-boost`: Package containing everything you need to set up Apollo Client
 - `graphql`: Also parses your GraphQL queries
 
+<h2 id="schematics">Installation with Angular Schematics</h2>
+
+We support `ng-add` and `ng-update` commands now.
+
+To start using Apollo Angular simply run:
+
+```bash
+ng add apollo-angular
+```
+
+With that you can skip the next step.
+
+To update apollo-angular and related packages run:
+
+```bash
+ng update apollo-angular
+```
+
 <h2 id="creating-client">Create a client</h2>
 
 Great, now that you have all the dependencies you need, let's create your Apollo Client. The only thing you need to get started is the endpoint for your [GraphQL server](https://launchpad.graphql.com/w5xlvm3vzz). If you don't pass in `uri` directly, it defaults to the `/graphql` endpoint on the same host your app is served from.
@@ -117,6 +135,16 @@ export class ExchangeRates implements OnInit {
 
 Congrats, you just made your first query! 🎉 If you render your `ExchangeRates` component within your `App` component from the previous example, you'll first see a loading indicator and then data on the page once it's ready. Apollo Client automatically caches this data when it comes back from the server, so you won't see a loading indicator if you run the same query twice.
 
+If you don't use Apollo Angular Boost, just regular Apollo Angular or you installed Apollo with Angular Schematics here's how it looks like:
+
+```ts
+import {Component, OnInit} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
+
+// everything else is the same
+```
+
 If you'd like to play around with the app we just built, you can view it on [StackBlitz](https://stackblitz.com/edit/basic-apollo-angular-app). Don't stop there! Try building more components with `Apollo` service and experimenting with the concepts you just learned.
 
 <h2 id="apollo-boost">Apollo Boost</h2>
@@ -143,8 +171,6 @@ Here are the options you can pass to the `ApolloBoost` exported from `apollo-ang
 <dl>
   <dt>`uri`: string</dt>
   <dd>A string representing your GraphQL server endpoint. Defaults to `/graphql`</dd>
-  <dt>`fetchOptions`: Object</dt>
-  <dd>Any options you would like to pass to fetch (credentials, headers, etc). These options are static, so they don't change on each request.</dd>
   <dt>`request`: (operation: Operation) => Promise<void></dt>
   <dd>This function is called on each request. It takes a GraphQL operation and can return a promise. To dynamically set `fetchOptions`, you can add them to the context of the operation with `operation.setContext({ headers })`. Any options set here will take precedence over `fetchOptions`. Useful for authentication.</dd>
   <dt>`onError`: (errorObj: { graphQLErrors: GraphQLError[], networkError: Error, response?: ExecutionResult, operation: Operation }) => void</dt>
@@ -153,12 +179,11 @@ Here are the options you can pass to the `ApolloBoost` exported from `apollo-ang
   <dd>An object representing your configuration for `apollo-link-state`. This is useful if you would like to use the Apollo cache for local state management. Learn more in our [quick start](/docs/link/links/state.html#start).</dd>
   <dt>`cacheRedirects`: Object</dt>
   <dd>A map of functions to redirect a query to another entry in the cache before a request takes place. This is useful if you have a list of items and want to use the data from the list query on a detail page where you're querying an individual item. More on that [here](../features/performance.html#cache-redirects).</dd>
-  <dt>`credentials`: string</dt>
-  <dd>Is set to `same-origin` by default. This option can be used to indicate whether the user agent should send cookies with requests. See [Request.credentials](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials) for more details.</dd>
+  <dt>`withCredentials`: boolean</dt>
+  <dd></dd>
   <dt>`headers`: Object</dt>
   <dd>Header key/value pairs to pass along with the request.</dd>
   <dt>`fetch`: GlobalFetch['fetch']</dt>
-  <dd>A [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) compatible API for making a request.</dd>
   <dt>`cache`: ApolloCache</dt>
   <dd>A custom instance of `ApolloCache` to be used. The default value is `InMemoryCache` from `apollo-cache-inmemory`. This option is quite useful for using a custom cache with `apollo-cache-persist`.</dd>
 </dl>
