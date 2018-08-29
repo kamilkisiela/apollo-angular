@@ -6,7 +6,7 @@ import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 import { getMainPath, getTypeScriptSourceFile } from ".";
 
 /**
- * Import and add module to the root module. 
+ * Import and add module to the root module.
  * @param host {Tree} The source tree.
  * @param importedModuleName {String} The name of the imported module.
  * @param importedModulePath {String} The location of the imported module.

@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { Tree, SchematicsException, source } from "@angular-devkit/schematics";
+import { Tree, SchematicsException } from "@angular-devkit/schematics";
 
 /**
  * Returns the parsed content of a json file.
