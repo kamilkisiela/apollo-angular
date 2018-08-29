@@ -3,19 +3,24 @@ import {DocumentNode} from 'graphql';
 import {Observable} from 'rxjs';
 
 import {Apollo} from './Apollo';
-import {SubscriptionOptions, ExtraSubscriptionOptions, R} from './types';
+import {
+  SubscriptionOptions,
+  ExtraSubscriptionOptions,
+  SubscriptionResult,
+  R,
+} from './types';
 
 @Injectable()
-export class Subscription {
+export class Subscription<T = any, V = R> {
   public readonly document: DocumentNode;
 
   constructor(protected apollo: Apollo) {}
 
   public subscribe(
-    variables?: R,
+    variables?: V,
     options?: SubscriptionOptions,
     extra?: ExtraSubscriptionOptions,
-  ): Observable<any> {
+  ): Observable<SubscriptionResult<T>> {
     return this.apollo.subscribe(
       {
         ...options,

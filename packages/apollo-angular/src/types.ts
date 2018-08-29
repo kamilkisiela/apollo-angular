@@ -4,6 +4,7 @@ import {
   MutationOptions as CoreMutationOptions,
   SubscriptionOptions as CoreSubscriptionOptions,
 } from 'apollo-client';
+import {ExecutionResult} from 'graphql';
 
 export type R = Record<string, any>;
 
@@ -28,3 +29,7 @@ export interface MutationOptions
 
 export interface SubscriptionOptions
   extends Omit<CoreSubscriptionOptions, 'query' | 'variables'> {}
+
+export interface SubscriptionResult<T> extends ExecutionResult {
+  data?: T;
+}

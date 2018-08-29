@@ -1,5 +1,9 @@
 # Change log
 
+### vNEXT
+
+- Make `Subscription` generic
+
 ### v1.2.0
 
 - Expose `queryId` in `QueryRef` [PR #733](https://github.com/apollographql/apollo-angular/pull/733)
