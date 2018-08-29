@@ -21,7 +21,7 @@ npm install apollo-angular-boost graphql --save
 
 <h2 id="schematics">Installation with Angular Schematics</h2>
 
-We supports `ng-add` and `ng-update` commands now.
+We support `ng-add` and `ng-update` commands now.
 
 To start using Apollo Angular simply run:
 
@@ -30,6 +30,12 @@ ng add apollo-angular
 ```
 
 With that you can skip the next step.
+
+To update apollo-angular and related packages run:
+
+```bash
+ng update apollo-angular
+```
 
 <h2 id="creating-client">Create a client</h2>
 
