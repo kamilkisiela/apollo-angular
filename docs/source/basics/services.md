@@ -15,6 +15,9 @@ The only thing you need to do is to set the document property. That’s it, you 
 
 In this approach GraphQL Documents are first-class citizens, you think about the query, for example, as a main subject.
 
+> The best part about the new API is that you don't have to create those services, there's a tool that does it for you.
+> To read more about it, go to ["Code Generation"](#code-generation) section
+
 ## Query
 
 To get started with the new API, let's see how you define queries with it.
@@ -221,3 +224,54 @@ export class AcitivityComponent {
 `Subscription` class has only one method:
 
 - `subscribe(variables?, options?, extraOptions?)` - it's the same as `Apollo.subscribe` except its first argument expect variables.
+
+## Code Generation
+
+There's a tool to generate a ready to use in your component, strongly typed Angular services, for every defined query, mutation or subscription.
+
+In short, you define a query in `.graphql` file so your IDE gives you autocompletion and validation.
+
+```graphql
+query allPosts {
+  posts {
+    id
+    title
+    votes
+    author {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+```
+
+Code generation tool outputs to a file, a fully featured service called `AllPostsGQL` with every interface you will need.
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+// import a service and a type from the generated output
+import { Post, AllPostsGQL } from './generated';
+
+@Component({...})
+export class ListComponent implements OnInit {
+  posts: Observable<Post[]>;
+
+  // inject it
+  constructor(private allPostsGQL: AllPostsGQL) {}
+
+  ngOnInit() {
+    // use it!
+    this.posts = this.allPostsGQL.watch()
+      .valueChanges
+      .pipe(
+        map(result => result.data.posts)
+      );
+  }
+}
+```
+
+To learn more about the tool, please read the ["Apollo-Angular 1.2  —  using GraphQL in your apps just got a whole lot easier!"](https://medium.com/the-guild/apollo-angular-code-generation-7903da1f8559) article or go straight to [documentation](https://www.npmjs.com/package/graphql-codegen-apollo-angular-template).
