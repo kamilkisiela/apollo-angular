@@ -33,6 +33,21 @@ npm install apollo-angular-boost graphql --save
 - `apollo-angular-boost`: Package containing everything you need to set up Apollo Client
 - `graphql`: Also parses your GraphQL queries
 
+The `apollo-client` package requires `AsyncIterable` so make sure your tsconfig.json includes `esnext.asynciterable`:
+
+```json
+{
+  "compilerOptions": {
+    // ...
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext.asynciterable"
+    ]
+  }
+}
+```
+
 <h2 id="creating-client">Create a client</h2>
 
 Great, now that you have all the dependencies you need, let's create your Apollo Client. The only thing you need to get started is the endpoint for your [GraphQL server](https://launchpad.graphql.com/w5xlvm3vzz). If you don't pass in `uri` directly, it defaults to the `/graphql` endpoint on the same host your app is served from.
