@@ -4,7 +4,7 @@
 
 - Make `Subscription` generic [PR #778](https://github.com/apollographql/apollo-angular/pull/778)
 - Schematics (`ng add apollo-angular`) [PR #779](https://github.com/apollographql/apollo-angular/pull/779), [PR #780](https://github.com/apollographql/apollo-angular/pull/780)
-- Allow to use a custom ApolloCache while testing
+- Allow to use a custom ApolloCache while testing [PR #786](https://github.com/apollographql/apollo-angular/pull/786)
 
 ### v1.2.0
 
