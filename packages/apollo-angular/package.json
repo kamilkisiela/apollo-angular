@@ -68,16 +68,5 @@
     "typescript": "2.9.2",
     "zone.js": "0.8.26"
   },
-  "schematics": "./schematics/collection.json",
-  "ng-update": {
-    "packageGroup": [
-      "apollo-angular",
-      "apollo-angular-link-http",
-      "apollo-link",
-      "apollo-client",
-      "apollo-cache-inmemory",
-      "graphql-tag",
-      "graphql"
-    ]
-  }
+  "schematics": "./schematics/collection.json"
 }
