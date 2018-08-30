@@ -31,6 +31,7 @@ sidebar_categories:
   Guides:
     - guides/state-management
     - guides/testing
+    - guides/tools-and-packages
   Recipes:
     - recipes/simple-example
     - recipes/query-splitting
