@@ -1,8 +1,8 @@
-# [Apollo Angular](http://dev.apollodata.com/angular/) [![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular) [![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollostack.com/#slack)
+# [Apollo Angular](http://dev.apollodata.com/angular/) [![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular) [![Build status](https://travis-ci.org/apollographql/apollo-angular.svg?branch=master)](https://travis-ci.org/apollographql/apollo-angular) [![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollostack.com/#slack)
 
 Apollo Angular allows you to fetch data from your GraphQL server and use it in building complex and reactive UIs using the Angular framework. Apollo Angular may be used in any context that Angular may be used. In the browser, in NativeScript, or in Node.js when you want to do server-side rendering.
 
-Apollo Angular requires _no_ complex build setup to get up and running. As long as you have a GraphQL server you can get started building out your application with Angular immediately. Apollo Angular works out of the box with both Angular CLI (`ng add apollo-angular`) and NativeScript with a single install.
+Apollo Angular requires _no_ complex build setup to get up and running. As long as you have a GraphQL server you can get started building out your application with Angular immediately. Apollo Angular works out of the box with both [Angular CLI](https://cli.angular.io/) (`ng add apollo-angular`) and [NativeScript](https://www.nativescript.org/) with a single install.
 
 Apollo Angular is:
 
@@ -41,48 +41,38 @@ Finally, to demonstrate the power of Apollo Angular in building interactive UIs 
 ```ts
 import {Component, OnInit} from '@angular/core';
 import gql from 'graphql-tag';
-import { Apollo } from 'apollo-angular';
+import {Apollo} from 'apollo-angular';
+
+const GET_DOGS = gql`
+  {
+    dogs {
+      id
+      breed
+    }
+  }
+`;
 
 @Component({
-  selector: 'exchange-rates',
+  selector: 'dogs',
   template: `
-    <div *ngIf="loading">
-      Loading...
-    </div>
-    <div *ngIf="error">
-      Error :(
-    </div>
-    <div *ngIf="rates">
-      <div *ngFor="let rate of rates">
-        <p>{{rate.currency}}: {{rate.rate}}</p>
-      </div>
-    </div>
+    <ul>
+      <li *ngFor="let dog of dogs | async">
+        {{dog.breed}}
+      </li>
+    </ul>
   `,
 })
-export class ExchangeRates implements OnInit {
-  rates: any[];
-  loading: boolean;
-  error: any;
+export class DogsComponent implements OnInit {
+  dogs: Observable<any>;
 
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.apollo
+    this.dogs = this.apollo
       .watchQuery({
-        query: gql`
-          {
-            rates(currency: "USD") {
-              currency
-              rate
-            }
-          }
-        `,
+        query: GET_DOGS,
       })
-      .valueChanges.subscribe(result => {
-        this.rates = result.data && result.data.rates;
-        this.loading = result.loading;
-        this.error = result.error;
-      });
+      .valueChanges.pipe(map(result => result.data && result.data.dogs));
   }
 }
 ```
@@ -101,8 +91,6 @@ All of the documentation for Apollo Angular including usage articles and helpful
 - [Server Side Rendering](https://www.apollographql.com/docs/angular/recipes/server-side-rendering.html)
 
 ## Contributing
-
-[![Build status](https://travis-ci.org/apollographql/apollo-angular.svg?branch=master)](https://travis-ci.org/apollographql/apollo-angular)
 
 [Read the Apollo Contributor Guidelines.](CONTRIBUTING.md)
 
