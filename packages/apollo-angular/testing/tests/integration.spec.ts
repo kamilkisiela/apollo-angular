@@ -1,10 +1,16 @@
 import {setupAngular} from './_setup';
 import {Apollo} from 'apollo-angular';
 import {TestBed, inject} from '@angular/core/testing';
+import {addTypenameToDocument} from 'apollo-utilities';
 
 import gql from 'graphql-tag';
 
-import {ApolloTestingModule, ApolloTestingController} from '../src';
+import {
+  ApolloTestingModule,
+  ApolloTestingController,
+  APOLLO_TESTING_CACHE,
+} from '../src';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 
 describe('Integration', () => {
   let apollo: Apollo;
@@ -171,5 +177,56 @@ describe('Integration', () => {
         return true;
       })
       .flush({data});
+  });
+
+  test('it should be able to test with fragments', done => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [ApolloTestingModule],
+      providers: [
+        {
+          provide: APOLLO_TESTING_CACHE,
+          useValue: new InMemoryCache({addTypename: true}),
+        },
+      ],
+    });
+
+    const apollo: Apollo = TestBed.get(Apollo);
+    const backend: ApolloTestingController = TestBed.get(
+      ApolloTestingController,
+    );
+
+    const query = gql`
+      {
+        heroes {
+          ...fields
+        }
+      }
+      fragment fields on Character {
+        name
+      }
+    `;
+
+    const op = {
+      query,
+    };
+
+    const data = {
+      heroes: [
+        {
+          name: 'Superman',
+          __typename: 'Character',
+        },
+      ],
+    };
+
+    apollo.query<any>(op).subscribe({
+      next: result => {
+        expect(result.data).toMatchObject(data);
+        done();
+      },
+    });
+
+    backend.expectOne(addTypenameToDocument(query)).flush({data});
   });
 });
