@@ -4,20 +4,11 @@ title: Setup and options
 
 <h2 id="installation">Installation</h2>
 
-The simplest way to get started with Apollo Client is by using Apollo Angular Boost, our starter kit that configures your client for you with our recommended settings. Apollo Angular Boost includes packages that we think are essential for building an Apollo app, like our in memory cache, local state management, and error handling. It's also flexible enough to handle features like authentication.
+The simplest way to get started with Apollo Angular is by running `ng add apollo-angular` command. With that, you can skip chapters: "Installation" and "Create a client".
+
+The other simple way is to use Apollo Angular Boost, our starter kit that configures your client for you with our recommended settings. Apollo Angular Boost includes packages that we think are essential for building an Apollo app, like our in memory cache, local state management, and error handling. It's also flexible enough to handle features like authentication.
 
 If you're an advanced user who would like to configure Apollo Client from scratch, head on over to our [Apollo Angular Boost migration guide](../advanced/boost-migration.html). For the majority of users, Apollo Angular Boost should meet your needs, so we don't recommend switching unless you absolutely need more customization.
-
-<h2 id="installation">Installation</h2>
-
-First, let's install some packages!
-
-```bash
-npm install apollo-angular-boost graphql --save
-```
-
-- `apollo-angular-boost`: Package containing everything you need to set up Apollo Client
-- `graphql`: Also parses your GraphQL queries
 
 <h2 id="schematics">Installation with Angular Schematics</h2>
 
@@ -29,7 +20,18 @@ To start using Apollo Angular simply run:
 ng add apollo-angular
 ```
 
-With that you can skip the next step.
+> By using `ng add` command you can skip the next step!
+
+<h2 id="installation">Installation</h2>
+
+First, let's install some packages!
+
+```bash
+npm install apollo-angular-boost graphql --save
+```
+
+- `apollo-angular-boost`: Package containing everything you need to set up Apollo Client
+- `graphql`: Also parses your GraphQL queries
 
 <h2 id="creating-client">Create a client</h2>
 

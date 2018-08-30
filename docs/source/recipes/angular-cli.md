@@ -4,8 +4,11 @@ title: Angular CLI
 
 <h2 id="Setup">Setup</h2>
 
-To get started with Apollo and Angular install few needed packages. Take a look at [Setup](../basics/setup.html#installation) section.
+To get started with Apollo and Angular run:
 
+```bash
+ng add apollo-angular
+```
 
 <h2 id="proxy">Proxy</h2>
 
