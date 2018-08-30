@@ -1,5 +1,11 @@
 # Change log
 
+### vNEXR
+
+### v1.1.0
+
+- Bump `apollo-angular` to v1.3.0
+
 ### v1.0.0
 
 - Uses `ng-packagr`
