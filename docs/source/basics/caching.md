@@ -79,8 +79,7 @@ const cache = new InMemoryCache({
 ```
 
 <h2 id="direct">Direct Cache Access</h2>
-
-To interact directly with your cache, you can use the Apollo Client class methods readQuery, readFragment, writeQuery, and writeFragment. These methods are available to us via the [`DataProxy` interface](http://dev.apollodata.com/core/apollo-client-api.html#DataProxy). An instance of ApolloClient can be accessed by `getClient()` method of `Apollo` Service.
+To interact directly with your cache, you can use the Apollo Client class methods readQuery, readFragment, writeQuery, and writeFragment. These methods are available to us via the [`DataProxy` interface](https://www.apollographql.com/docs/react/api/apollo-client.html#DataProxy). An instance of ApolloClient can be accessed by `getClient()` method of `Apollo` Service.
 
 Any code demonstration in the following sections will assume that we have already initialized an instance of `ApolloClient` and that we have imported the `gql` tag from `graphql-tag`.
 

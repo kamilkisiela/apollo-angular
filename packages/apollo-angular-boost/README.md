@@ -1,7 +1,7 @@
 # Apollo Angular Boost
 
 [![npm version](https://badge.fury.io/js/apollo-angular-boost.svg)](https://badge.fury.io/js/apollo-angular-boost)
-[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollodata.com/#slack)
+[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://www.apollographql.com/slack)
 
 ## Purpose
 

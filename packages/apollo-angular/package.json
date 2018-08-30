@@ -8,6 +8,7 @@
   "main": "build/bundles/ng.apollo.umd.js",
   "module": "build/fesm5/ng.apollo.js",
   "typings": "build/ng.apollo.d.ts",
+  "homepage": "https://www.apollographql.com/docs/angular/",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
