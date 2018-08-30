@@ -162,25 +162,15 @@ The awesome thing about Apollo Angular Boost is that you don't have to set any o
 
 Here are the options you can pass to the `ApolloBoost` exported from `apollo-angular-boost`. All of them are optional.
 
-<dl>
-  <dt>`uri`: string</dt>
-  <dd>A string representing your GraphQL server endpoint. Defaults to `/graphql`</dd>
-  <dt>`request`: (operation: Operation) => Promise<void></dt>
-  <dd>This function is called on each request. It takes a GraphQL operation and can return a promise. To dynamically set `fetchOptions`, you can add them to the context of the operation with `operation.setContext({ headers })`. Any options set here will take precedence over `fetchOptions`. Useful for authentication.</dd>
-  <dt>`onError`: (errorObj: { graphQLErrors: GraphQLError[], networkError: Error, response?: ExecutionResult, operation: Operation }) => void</dt>
-  <dd>We include a default error handler to log out your errors to the console. If you would like to handle your errors differently, specify this function.</dd>
-  <dt>`clientState`: { resolvers?: Object, defaults?: Object, typeDefs?: string | Array<string> }</dt>
-  <dd>An object representing your configuration for `apollo-link-state`. This is useful if you would like to use the Apollo cache for local state management. Learn more in our [quick start](/docs/link/links/state.html#start).</dd>
-  <dt>`cacheRedirects`: Object</dt>
-  <dd>A map of functions to redirect a query to another entry in the cache before a request takes place. This is useful if you have a list of items and want to use the data from the list query on a detail page where you're querying an individual item. More on that [here](../features/performance.html#cache-redirects).</dd>
-  <dt>`withCredentials`: boolean</dt>
-  <dd></dd>
-  <dt>`headers`: Object</dt>
-  <dd>Header key/value pairs to pass along with the request.</dd>
-  <dt>`fetch`: GlobalFetch['fetch']</dt>
-  <dt>`cache`: ApolloCache</dt>
-  <dd>A custom instance of `ApolloCache` to be used. The default value is `InMemoryCache` from `apollo-cache-inmemory`. This option is quite useful for using a custom cache with `apollo-cache-persist`.</dd>
-</dl>
+- uri: A string representing your GraphQL server endpoint. Defaults to `/graphql`
+- httpOptions: An object representing any options you would like to pass to HttpLink (withCredentials, headers, etc). These options are static, so they don't change on each request.
+- request?: (operation: Operation) => Promise<void>;
+  - This function is called on each request. It takes an operation and can return a promise. To dynamically set `httpOptions`, you can add them to the context of the operation with `operation.setContext({ headers })`. Any options set here will take precedence over `httpOptions`.
+  - Use this function for authentication
+- onError: (errorObj: { graphQLErrors: GraphQLError[], networkError: Error, response?: ExecutionResult, operation: Operation }) => void
+  - We include a default error handler to log out your errors for you. If you would like to handle your errors differently, specify this function
+- clientState: An object representing your configuration for `apollo-link-state`. This is useful if you would like to use the Apollo cache for local state management. Learn more in our [quick start](https://www.apollographql.com/docs/link/links/state.html#start).
+- cacheRedirects: An map of functions to redirect a query to another entry in the cache before a request takes place. This is useful if you have a list of items and want to use the data from the list query on a detail page where you're querying an individual item. More on that [here](../features/cache-updates.html#cacheRedirect).
 
 <h2 id="next-steps">Next steps</h2>
 
