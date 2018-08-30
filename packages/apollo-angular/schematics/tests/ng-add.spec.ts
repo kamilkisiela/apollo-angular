@@ -2,6 +2,7 @@ import {resolve} from 'path';
 import {Tree} from '@angular-devkit/schematics';
 import {SchematicTestRunner} from '@angular-devkit/schematics/testing';
 import {getFileContent} from '@schematics/angular/utility/test';
+import {CompilerOptions} from 'typescript';
 
 import {createTestApp} from '../utils';
 import {dependenciesMap} from '../install';
@@ -61,5 +62,15 @@ describe('ng-add', () => {
     expect(content).toMatch(
       /import { HttpClientModule } from '@angular\/common\/http'/,
     );
+  });
+
+  test('should add esnext.asynciterable to tsconfig.json', () => {
+    const tree = runner.runSchematic('ng-add', {}, appTree);
+    const rootModulePath = '/tsconfig.json';
+    const compilerOptions: CompilerOptions = JSON.parse(
+      getFileContent(tree, rootModulePath),
+    ).compilerOptions;
+
+    expect(compilerOptions.lib).toContain('esnext.asynciterable');
   });
 });

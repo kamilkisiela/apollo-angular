@@ -1,5 +1,5 @@
-import { dirname } from 'path';
-import { satisfies } from 'semver';
+import {dirname} from 'path';
+import {satisfies} from 'semver';
 import {
   apply,
   chain,
@@ -11,19 +11,21 @@ import {
   mergeWith,
   move,
 } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
-import { resolve } from '@angular-devkit/core/node';
-import { tags, terminal } from '@angular-devkit/core';
+import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
+import {getAppModulePath} from '@schematics/angular/utility/ng-ast-utils';
+import {resolve} from '@angular-devkit/core/node';
+import {tags, terminal} from '@angular-devkit/core';
+import {CompilerOptions} from 'typescript';
 
-import { getJsonFile, getMainPath } from '../utils';
-import { Schema } from './schema';
-import { addModuleImportToRootModule } from '../utils/ast';
+import {getJsonFile, getMainPath} from '../utils';
+import {Schema} from './schema';
+import {addModuleImportToRootModule} from '../utils/ast';
 
 export default function install(options: Schema): Rule {
   return chain([
     assertTypescriptVersion(),
     addDependencies(),
+    inludeAsyncIterableLib,
     addSetupFiles(options),
     importSetupModule(options),
     importHttpClientModule(options),
@@ -37,7 +39,7 @@ export const dependenciesMap: Record<string, string> = {
   'apollo-client': '^2.4.0',
   'apollo-cache-inmemory': '^1.2.0',
   'graphql-tag': '^2.9.2',
-  'graphql': '^0.13.2'
+  graphql: '^0.13.2',
 };
 
 function assertTypescriptVersion() {
@@ -53,13 +55,17 @@ function assertTypescriptVersion() {
       };
       tsVersion = require(resolve('typescript', resolveOptions)).version;
     } catch {
-      console.error(terminal.bold(terminal.red(tags.stripIndents`
+      console.error(
+        terminal.bold(
+          terminal.red(tags.stripIndents`
         Versions of typescript could not be determined.
         The most common reason for this is a broken npm install.
         Please make sure your package.json contains typescript in
         devDependencies, then delete node_modules and package-lock.json (if you have one) and
         run npm install again.
-      `)));
+      `),
+        ),
+      );
       process.exit(2);
 
       return;
@@ -67,16 +73,22 @@ function assertTypescriptVersion() {
 
     if (!satisfies(tsVersion, allowed)) {
       // First line of warning looks weird being split in two, disable tslint for it.
-      console.error((terminal.yellow('\n' + tags.stripIndent`
+      console.error(
+        terminal.yellow(
+          '\n' +
+            tags.stripIndent`
         typescript@'${allowed}' is required but ${tsVersion} was found instead.
         Using this version can result in undefined behaviour and difficult to debug problems.
         Please run the following command to install a compatible version of TypeScript.
             npm install typescript@'${allowed}'
-      ` + '\n')));
+      ` +
+            '\n',
+        ),
+      );
     }
 
     return host;
-  }
+  };
 }
 
 /**
@@ -88,8 +100,6 @@ function addDependencies() {
   return (host: Tree, context: SchematicContext) => {
     const packageJsonPath = 'package.json';
     const packageJson = getJsonFile(host, packageJsonPath);
-
-    // TODO: check if TypeScript >= 2.8.0
 
     packageJson.dependencies = packageJson.dependencies || {};
 
@@ -109,7 +119,38 @@ function addDependencies() {
     context.addTask(new NodePackageInstallTask());
 
     return host;
-  }
+  };
+}
+
+function inludeAsyncIterableLib() {
+  return (host: Tree) => {
+    const requiredLib = 'esnext.asynciterable';
+    const tsconfigPath = 'tsconfig.json';
+    const tsconfig = getJsonFile(host, tsconfigPath);
+    const compilerOptions: CompilerOptions = tsconfig.compilerOptions;
+
+    if (
+      compilerOptions &&
+      compilerOptions.lib &&
+      !compilerOptions.lib.find(lib => lib.toLowerCase() === requiredLib)
+    ) {
+      compilerOptions.lib.push(requiredLib);
+      host.overwrite(tsconfigPath, JSON.stringify(tsconfig, null, 2));
+    } else {
+      console.error(
+        terminal.yellow(
+          '\n' +
+            tags.stripIndent`
+              We couln't find '${requiredLib}' in the list of library files to be included in the compilation.
+              It's required by 'apollo-client' package so please add it to your tsconfig.
+            ` +
+            '\n',
+        ),
+      );
+    }
+
+    return host;
+  };
 }
 
 function addSetupFiles(options: Schema) {
@@ -147,6 +188,6 @@ function importHttpClientModule(options: Schema) {
       'HttpClientModule',
       '@angular/common/http',
       options.project,
-    )
+    );
   };
 }
