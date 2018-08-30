@@ -7,7 +7,7 @@
     "prebuild": "rimraf packages/*/build/ packages/*/coverage/",
     "build": "lerna run build",
     "test": "lerna run test",
-    "format": "prettier --config .prettierrc --write \"packages/**/{src,tests}/**/*.ts\"",
+    "format": "prettier --config .prettierrc --write \"packages/**/*.ts\"",
     "deploy": "lerna run deploy",
     "coverage": "codecov",
     "precommit": "lint-staged",
