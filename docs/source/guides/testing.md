@@ -51,7 +51,15 @@ export class DogComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    const source$ = this.apollo.watchQuery({
+    const source$ = this.getDog();
+
+    this.loading$ = source$.pipe(pluck('loading'));
+    this.error$ = source$.pipe(pluck('errors'));
+    this.dog$ = source$.pipe(pluck('data', 'dog'));
+  }
+
+  getDog() {
+    return this.apollo.watchQuery({
       query: GET_DOG_QUERY,
       variables: {
         name: this.name
@@ -59,10 +67,6 @@ export class DogComponent implements OnInit {
     })
     .valueChanges
     .pipe(shareReplay(1));
-
-    this.loading$ = source$.pipe(pluck('loading'));
-    this.error$ = source$.pipe(pluck('errors'));
-    this.dog$ = source$.pipe(pluck('data', 'dog'));
   }
 }
 ```
@@ -114,7 +118,16 @@ With all that we can write a test that expects an operation to occur and provide
 
 ```ts
 test('expect and answer', () => {
-  // ... our component should call an operation here
+  //Scaffold the component
+  TestBed.createComponent(DogComponent);
+  component = fixture.componentInstance;
+
+  //Call the relevant method
+  component.getDog().subscribe((dog) => {
+    //Make some assertion about the result;
+    expect(dog.id).toEqual(0);
+    expect(dog.name).toEqual('Mr Apollo');
+  });
 
   // The following `expectOne()` will match the operation's document.
   // If no requests or multiple requests matched that document
@@ -125,17 +138,18 @@ test('expect and answer', () => {
   expect(op.operation.variables.name).toEqual('Mr Apollo');
 
   // Respond with mock data, causing Observable to resolve.
-  // Subscribe callback asserts that correct data was returned.
   op.flush({
-    dog {
-      id: 0,
-      name: 'Mr Apollo',
-      breed: 'foo'
-    },
+    data : {
+      dog: {
+        id: 0,
+        name: 'Mr Apollo',
+        breed: 'foo'
+      },
+    }
   });
 
   // Finally, assert that there are no outstanding operations.
-  httpTestingController.verify();
+  controller.verify();
 });
 ```
 
