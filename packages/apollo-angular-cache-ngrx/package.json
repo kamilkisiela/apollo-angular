@@ -40,7 +40,7 @@
     "@ngrx/store": "6.1.0",
     "@types/graphql": "0.13.4",
     "@types/jest": "23.3.1",
-    "graphql": "0.13.2",
+    "graphql": "14.0.0",
     "graphql-tag": "2.9.2",
     "jest": "23.5.0",
     "jest-zone-patch": "0.0.8",

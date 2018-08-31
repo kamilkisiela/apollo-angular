@@ -2,6 +2,7 @@ import {setupAngular} from './_setup';
 import {Apollo} from 'apollo-angular';
 import {TestBed, inject} from '@angular/core/testing';
 import {addTypenameToDocument} from 'apollo-utilities';
+import {print} from 'graphql';
 
 import gql from 'graphql-tag';
 
@@ -170,9 +171,9 @@ describe('Integration', () => {
 
     backend
       .expectOne(operation => {
-        expect(operation.operationName).toEqual(op.operationName);
+        expect(operation.operationName).toBe(op.operationName);
         expect(operation.variables).toEqual(op.variables);
-        expect(operation.query).toEqual(op.query);
+        expect(print(operation.query)).toBe(print(op.query));
 
         return true;
       })
