@@ -26,6 +26,11 @@ describe('Subscription', () => {
   function createApollo() {
     apolloMock = {
       subscribe: jest.fn(),
+      use(name: string) {
+        if (name === 'default') {
+          return apolloMock;
+        }
+      },
     } as any;
 
     return apolloMock;

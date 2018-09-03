@@ -9,6 +9,7 @@ import {MutationOptions, R} from './types';
 @Injectable()
 export class Mutation<T = {}, V = R> {
   public readonly document: DocumentNode;
+  public client = 'default';
 
   constructor(protected apollo: Apollo) {}
 
@@ -16,7 +17,7 @@ export class Mutation<T = {}, V = R> {
     variables?: V,
     options?: MutationOptions,
   ): Observable<FetchResult<T>> {
-    return this.apollo.mutate<T, V>({
+    return this.apollo.use(this.client).mutate<T, V>({
       ...options,
       variables,
       mutation: this.document,

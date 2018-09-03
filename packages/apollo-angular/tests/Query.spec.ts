@@ -19,14 +19,38 @@ export class HeroesQuery extends Query {
   public document = query;
 }
 
+@Injectable()
+export class HeroesNamedQuery extends Query {
+  public document = query;
+  client = 'custom';
+}
+
 describe('Query', () => {
-  let apolloMock: Apollo & {watchQuery: jest.Mock; query: jest.Mock};
+  let apolloMock: Apollo & {
+    watchQuery: jest.Mock;
+    query: jest.Mock;
+    use: (name: string) => Apollo;
+  };
+  let apolloCustomMock: Apollo & {watchQuery: jest.Mock; query: jest.Mock};
   let heroesQuery: HeroesQuery;
+  let heroesNamedQuery: HeroesNamedQuery;
 
   function createApollo() {
+    apolloCustomMock = {
+      watchQuery: jest.fn(),
+      query: jest.fn(),
+    } as any;
+
     apolloMock = {
       watchQuery: jest.fn(),
       query: jest.fn(),
+      use: jest.fn((name: string) => {
+        if (name === 'default') {
+          return apolloMock;
+        }
+
+        return apolloCustomMock;
+      }),
     } as any;
 
     return apolloMock;
@@ -42,13 +66,18 @@ describe('Query', () => {
           useFactory: createApollo,
         },
         HeroesQuery,
+        HeroesNamedQuery,
       ],
     });
   });
 
-  beforeEach(inject([HeroesQuery], (_heroesQuery: HeroesQuery) => {
-    heroesQuery = _heroesQuery;
-  }));
+  beforeEach(inject(
+    [HeroesQuery, HeroesNamedQuery],
+    (_heroesQuery: HeroesQuery, _heroesNamedQuery: HeroesNamedQuery) => {
+      heroesQuery = _heroesQuery;
+      heroesNamedQuery = _heroesNamedQuery;
+    },
+  ));
 
   test('should have document defined', () => {
     expect(heroesQuery.document).toEqual(query);
@@ -91,6 +120,16 @@ describe('Query', () => {
         fetchPolicy: 'cache-first',
       });
     });
+
+    test('should handle named clients', () => {
+      apolloCustomMock.watchQuery.mockReturnValue('QueryRef');
+
+      const result = heroesNamedQuery.watch();
+
+      expect(apolloMock.use).toBeCalledWith(heroesNamedQuery.client);
+      expect(apolloCustomMock.watchQuery).toBeCalled();
+      expect(result).toEqual('QueryRef');
+    });
   });
 
   describe('fetch()', () => {
@@ -129,6 +168,16 @@ describe('Query', () => {
         query,
         fetchPolicy: 'cache-first',
       });
+    });
+
+    test('should handle named clients', () => {
+      apolloCustomMock.query.mockReturnValue('Observable');
+
+      const result = heroesNamedQuery.fetch();
+
+      expect(apolloMock.use).toBeCalledWith(heroesNamedQuery.client);
+      expect(apolloCustomMock.query).toBeCalled();
+      expect(result).toEqual('Observable');
     });
   });
 });
