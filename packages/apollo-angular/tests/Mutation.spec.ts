@@ -26,6 +26,11 @@ describe('Mutation', () => {
   function createApollo() {
     apolloMock = {
       mutate: jest.fn(),
+      use(name: string) {
+        if (name === 'default') {
+          return apolloMock;
+        }
+      },
     } as any;
 
     return apolloMock;

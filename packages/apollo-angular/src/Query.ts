@@ -10,11 +10,12 @@ import {WatchQueryOptions, QueryOptions, R} from './types';
 @Injectable()
 export class Query<T = {}, V = R> {
   public readonly document: DocumentNode;
+  public client = 'default';
 
   constructor(protected apollo: Apollo) {}
 
   public watch(variables?: V, options?: WatchQueryOptions): QueryRef<T, V> {
-    return this.apollo.watchQuery<T, V>({
+    return this.apollo.use(this.client).watchQuery<T, V>({
       ...options,
       variables,
       query: this.document,
@@ -25,7 +26,7 @@ export class Query<T = {}, V = R> {
     variables?: V,
     options?: QueryOptions,
   ): Observable<ApolloQueryResult<T>> {
-    return this.apollo.query<T, V>({
+    return this.apollo.use(this.client).query<T, V>({
       ...options,
       variables,
       query: this.document,

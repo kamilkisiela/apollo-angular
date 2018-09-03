@@ -13,6 +13,7 @@ import {
 @Injectable()
 export class Subscription<T = any, V = R> {
   public readonly document: DocumentNode;
+  public client = 'default';
 
   constructor(protected apollo: Apollo) {}
 
@@ -21,7 +22,7 @@ export class Subscription<T = any, V = R> {
     options?: SubscriptionOptions,
     extra?: ExtraSubscriptionOptions,
   ): Observable<SubscriptionResult<T>> {
-    return this.apollo.subscribe(
+    return this.apollo.use(this.client).subscribe(
       {
         ...options,
         variables,
