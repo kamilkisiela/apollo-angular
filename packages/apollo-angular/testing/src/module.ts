@@ -1,10 +1,15 @@
 import {ApolloModule, Apollo} from 'apollo-angular';
 import {ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
-import {NgModule} from '@angular/core';
+import {ApolloCache} from 'apollo-cache';
+import {NgModule, InjectionToken, Inject, Optional} from '@angular/core';
 
 import {ApolloTestingController} from './controller';
 import {ApolloTestingBackend} from './backend';
+
+export const APOLLO_TESTING_CACHE = new InjectionToken<ApolloCache<any>>(
+  'apollo-angular/testing cache',
+);
 
 @NgModule({
   imports: [ApolloModule],
@@ -14,12 +19,20 @@ import {ApolloTestingBackend} from './backend';
   ],
 })
 export class ApolloTestingModule {
-  constructor(apollo: Apollo, backend: ApolloTestingBackend) {
-    const link = new ApolloLink(operation => backend.handle(operation));
-    const cache = new InMemoryCache({
-      addTypename: false,
+  constructor(
+    apollo: Apollo,
+    backend: ApolloTestingBackend,
+    @Optional()
+    @Inject(APOLLO_TESTING_CACHE)
+    cache?: ApolloCache<any>,
+  ) {
+    apollo.create({
+      link: new ApolloLink(operation => backend.handle(operation)),
+      cache:
+        cache ||
+        new InMemoryCache({
+          addTypename: false,
+        }),
     });
-
-    apollo.create({link, cache});
   }
 }

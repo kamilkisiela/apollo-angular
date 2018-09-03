@@ -4,239 +4,194 @@ title: Setup and options
 
 <h2 id="installation">Installation</h2>
 
-To get started with Apollo and Angular, you will need to install a few packages from npm.
+The simplest way to get started with Apollo Angular is by running `ng add apollo-angular` command. With that, you can skip chapters: "Installation" and "Create a client".
+
+The other simple way is to use Apollo Angular Boost, our starter kit that configures your client for you with our recommended settings. Apollo Angular Boost includes packages that we think are essential for building an Apollo app, like our in memory cache, local state management, and error handling. It's also flexible enough to handle features like authentication.
+
+If you're an advanced user who would like to configure Apollo Client from scratch, head on over to our [Apollo Angular Boost migration guide](../advanced/boost-migration.html). For the majority of users, Apollo Angular Boost should meet your needs, so we don't recommend switching unless you absolutely need more customization.
+
+<h2 id="schematics">Installation with Angular Schematics</h2>
+
+We support `ng-add` command now.
+
+To start using Apollo Angular simply run:
 
 ```bash
-npm install apollo-angular apollo-angular-link-http apollo-client apollo-cache-inmemory graphql-tag graphql --save
+ng add apollo-angular
 ```
 
-To get started using Apollo with Angular, we need to import two NgModules, `ApolloModule` and `HttpLinkModule`.
+> By using `ng add` command you can skip the next step!
 
-* `ApolloModule` is the center of using GraphQL in your app! It includes all needed services that allows to use ApolloClient's features.
-* `HttpLinkModule` makes it easy to fetch data in Angular.
+<h2 id="installation">Installation</h2>
 
-**Note** `HttpLinkModule` It's optional, you can replace it with any other Link.
-Its biggest advantage of all is that it uses `HttpClient` internally so it's possible to use it in `NativeScript` or in combination with any other HttpClient provider. By using `HttpLinkModule` you get Server-Side Rendering for free, without any additional work.
+First, let's install some packages!
+
+```bash
+npm install apollo-angular-boost graphql --save
+```
+
+- `apollo-angular-boost`: Package containing everything you need to set up Apollo Client
+- `graphql`: Also parses your GraphQL queries
+
+The `apollo-client` package requires `AsyncIterable` so make sure your tsconfig.json includes `esnext.asynciterable`:
+
+```json
+{
+  "compilerOptions": {
+    // ...
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext.asynciterable"
+    ]
+  }
+}
+```
+
+<h2 id="creating-client">Create a client</h2>
+
+Great, now that you have all the dependencies you need, let's create your Apollo Client. The only thing you need to get started is the endpoint for your [GraphQL server](https://launchpad.graphql.com/w5xlvm3vzz). If you don't pass in `uri` directly, it defaults to the `/graphql` endpoint on the same host your app is served from.
+
+In our `app.module.ts` file, let's import `ApolloBoostModule` from `apollo-angular-boost`, then use `ApolloBoost` service to create Apollo Client and add the endpoint for our GraphQL server to the `uri` property of the client config object.
 
 ```ts
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {ApolloModule} from 'apollo-angular';
-import {HttpLinkModule} from 'apollo-angular-link-http';
+import { HttpClientModule } from "@angular/common/http";
+import { ApolloBoostModule, ApolloBoost } from "apollo-angular-boost";
 
 @NgModule({
   imports: [
-    HttpClientModule, // provides HttpClient for HttpLink
-    ApolloModule,
-    HttpLinkModule,
-  ],
+    BrowserModule,
+    HttpClientModule,
+    ApolloBoostModule],
+  ...
 })
-class AppModule {}
-```
-
-<h3 id="creating-client">Creating a client</h3>
-
-To get started, inject `Apollo` and `HttpLink` services (if you decided to use it) and then create a client:
-
-```ts
-import {ApolloModule, Apollo} from 'apollo-angular';
-import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-
-class AppModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    apollo.create({
-      // By default, this client will send queries to the
-      // `/graphql` endpoint on the same host
-      link: httpLink.create(),
-      cache: new InMemoryCache(),
-    });
+export class AppModule {
+  constructor(boost: ApolloBoost) {
+    boost.create({
+      uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+    })
   }
 }
 ```
 
-The client takes a variety of [options](#Apollo), but in particular, if you want to change the URL of the GraphQL server, you can customize your [`Apollo Link`](/docs/link):
+Apollo Boost requires `HttpClient` so that's why we also used `HttpClientModule` from `@angular/common/http`.
 
-```ts
-import {Apollo} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
+<h2 id="request">Request data</h2>
 
-class AppModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    apollo.create({
-      link: httpLink.create({uri: 'https://api.example.com/graphql'}),
-      cache: new InMemoryCache(),
-    });
-  }
-}
-```
+Once all is hooked up, you're ready to start requesting data with `Apollo` serivce! `Apollo` is an Angular service exported from `apollo-angular` (`apollo-angular-boost` reexports it) to share GraphQL data with your UI.
 
-`ApolloClient` has some other options which control the behavior of the client, and we'll see examples of their use throughout this guide.
+First, pass your GraphQL query wrapped in the `gql` function to the `query` property in the `Apollo.watchQuery` method, in your component.
+The `Apollo` service is a regular angular service that you familiar with, data are being streamed through Observables. Same here.
 
-<h3 id="using-dependency-injection">Using Dependency Injection</h3>
+The `watchQuery` method returns a `QueryRef` object which has the `valueChanges`
+property that is an `Observable`.
 
-There is another way to get started if you prefer to create a client on
-a Dependency Injection level.
+An object passed through an Observable contains `loading`, `error`, and `data` properties. Apollo Client tracks error and loading state for you, which will be reflected in the `loading` and `error` properties. Once the result of your query comes back, it will be attached to the `data` property.
 
-```ts
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
+> It's also possible to fetch data only once. The `query` method of `Apollo` service returns an `Observable` that also resolves with the same result as
+> above.
 
-export function createApollo(httpLink: HttpLink) {
-  return {
-    link: httpLink.create({uri: 'https://api.example.com/graphql'}),
-    cache: new InMemoryCache(),
-  };
-}
-
-@NgModule({
-  imports: [HttpClientModule, ApolloModule, HttpLinkModule],
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: createApollo,
-      deps: [HttpLink],
-    },
-  ],
-})
-class AppModule {}
-```
-
-It might be a bit confusing if you're not familiar how Dependency Injection
-works in Angular, so we recommend to
-[read docs](https://angular.io/guide/dependency-injection-in-action) first.
-
-As you can see we provide the same options to `APOLLO_OPTIONS` as we did in
-previous _Creating a client_ section. The `APOLLO_OPTIONS` is being used by
-`Apollo` service internally to create a default client. Worth mentioning, it is
-optional. To make it easier to understand, the service does same thing as
-`Apollo.create({...})` does but it happens when Angular creates instances of
-all services.
-
-<h3 id="gql">Creating Operations using `graphql-tag`</h3>
-
-```js
-import gql from 'graphql-tag';
-```
-
-The `gql` template tag is what you use to define GraphQL queries in your Apollo apps. It parses your GraphQL query into the [GraphQL.js AST format][] which may then be consumed by Apollo methods. Whenever Apollo is asking for a GraphQL query you will always want to wrap it in a `gql` template tag.
-
-You can embed a GraphQL document containing only fragments inside of another GraphQL document using template string interpolation. This allows you to use fragments defined in one part of your codebase inside of a query define in a completely different file. See the example below for a demonstration of how this works.
-
-[graphql.js ast format]: https://github.com/graphql/graphql-js/blob/d92dd9883b76e54babf2b0ffccdab838f04fc46c/src/language/ast.js
-[`graphql-tag`]: https://www.npmjs.com/package/graphql-tag
-
-**Example:**
-
-Notice how in the `query` variable we not only include the `fragments` variable through template string interpolation (`${fragments}`), but we also include a spread for the `foo` fragment in our query.
-
-```js
-const fragments = gql`
-  fragment foo on Foo {
-    a
-    b
-    c
-    ...bar
-  }
-
-  fragment bar on Bar {
-    d
-    e
-    f
-  }
-`;
-
-const query = gql`
-  query {
-    ...foo
-  }
-
-  ${fragments}
-`;
-```
-
-For more information about using fragments, checkout the [guide](../features/fragments.html) and even some of the different ways to write GraphQL operations in your app using [webpack](../recipes/webpack.html).
-
-<h2 id="connecting-data">Requesting data</h2>
-
-Apollo makes it super easy to request data using GraphQL. You can [read](./queries.html), [update](./mutations.html), and even [subscribe](../features/subscriptions.html) to whatever information your app needs using the client directly, or integrating it with your components.
+Let's create an `ExchangeRates` component to see the `Apollo` service in action!
 
 <h3 id="basic-operations">Basic Operations</h3>
 If you want to see how easy it is to fetch data from a GraphQL server with Apollo, you can use the `query` method. It is as easy as this:
 
-```js
-import {Apollo} from 'apollo-angular';
+```ts
+import {Component, OnInit} from '@angular/core';
+import {Apollo, gql} from 'apollo-angular-boost';
 
 @Component({
-  /*...*/
+  selector: 'exchange-rates',
+  template: `
+    <div *ngIf="loading">
+      Loading...
+    </div>
+    <div *ngIf="error">
+      Error :(
+    </div>
+    <div *ngIf="rates">
+      <div *ngFor="let rate of rates">
+        <p>{{rate.currency}}: {{rate.rate}}</p>
+      </div>
+    </div>
+  `,
 })
-class AppComponent {
-  constructor(apollo: Apollo) {
-    apollo
-      .query({
+export class ExchangeRates implements OnInit {
+  rates: any[];
+  loading: boolean;
+  error: any;
+
+  constructor(private apollo: Apollo) {}
+
+  ngOnInit() {
+    this.apollo
+      .watchQuery({
         query: gql`
           {
-            hello
+            rates(currency: "USD") {
+              currency
+              rate
+            }
           }
         `,
       })
-      .subscribe(console.log);
+      .valueChanges.subscribe(result => {
+        this.rates = result.data && result.data.rates;
+        this.loading = result.loading;
+        this.error = result.error;
+      });
   }
 }
 ```
 
-<h3 id="ready">Ready for more?</h3>
-At this point you are ready to start building something with Apollo! Checkout the [queries](./queries.html) guide to start writing queries instead of a lot of code to get your data!
+Congrats, you just made your first query! 🎉 If you render your `ExchangeRates` component within your `App` component from the previous example, you'll first see a loading indicator and then data on the page once it's ready. Apollo Client automatically caches this data when it comes back from the server, so you won't see a loading indicator if you run the same query twice.
 
-<h2 id="API" title="API Reference">API Reference</h2>
-
-<h3 id="Apollo">`Apollo`</h3>
-The Apollo.create method takes a small number of options, of which two are required. These arguments make it easy to customize how Apollo works based on your environment or application needs.
-
-* `link`: Apollo requires an Apollo Link to serve as the network layer. For more infomation about creating links, read the [docs](/docs/link).
-* `cache`: The second required argument for using Apollo is an instance of an Apollo Cache. The default cache is the `apollo-cache-inmemory` which exports an `{ InMemoryCache }`. For more infomation read the [cache docs](./caching.html).
-* `ssrMode`: When using the client for [server side rendering](../recipes/server-side-rendering.html), pass `ssrMode` as `true`
-* `ssrForceFetchDelay`: determines the time interval before Apollo force fetchs queries after a server side render.
-* `connectToDevTools`: This argument allows the [Apollo Client Devtools](../features/devtools.html) to connect to your application's Apollo Client. You can set this to be `true` to use the tools in production (they are on by default in dev mode).
-* `queryDeduplication`: If set to false, this argument will force a query to still be sent to the server even if a query with identical parameters (query, variables, operationName) is already in flight.
-* `defaultOptions`: If you want to set application wide defaults for the options supplied to `watchQuery`, `query`, or `mutate`, you can pass them as a `defaultOptions` object. An example object looks like this:
-
-```js
-const defaultOptions = {
-  watchQuery: {
-    fetchPolicy: 'cache-and-network',
-    errorPolicy: 'ignore',
-  },
-  query: {
-    fetchPolicy: 'network-only',
-    errorPolicy: 'all',
-  },
-  mutate: {
-    errorPolicy: 'all',
-  },
-};
-```
-
-These options will be merged with options supplied with each request.
-
-<h3 id="ApolloModule" title="ApolloModule">`ApolloModule`</h3>
-ApolloModule is a NgModule for providing an Apollo service to an Angular Dependency Injection.
-
-```js
-import {ApolloAngular} from 'apollo-angular';
-```
-
-**Example:**
+If you don't use Apollo Angular Boost, just regular Apollo Angular or you installed Apollo with Angular Schematics here's how it looks like:
 
 ```ts
-import {ApolloModule} from 'apollo-angular';
+import {Component, OnInit} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 
-@NgModule({
-  imports: [ApolloModule],
-})
-class AppModule {}
+// everything else is the same
 ```
+
+If you'd like to play around with the app we just built, you can view it on [StackBlitz](https://stackblitz.com/edit/basic-apollo-angular-app). Don't stop there! Try building more components with `Apollo` service and experimenting with the concepts you just learned.
+
+<h2 id="apollo-boost">Apollo Boost</h2>
+
+In our example app, we used Apollo Boost in order to quickly set up Apollo Angular. While your GraphQL server endpoint is the only configuration option you need to get started, there are some other options we've included so you can quickly implement features like local state management, authentication, and error handling.
+
+<h3 id="packages">What's included</h3>
+
+Apollo Angular Boost includes some packages that we think are essential to developing with Apollo Angular. Here's what's included:
+
+- `apollo-client`: Where all the magic happens
+- `apollo-angular`: Bridge between Angular and Apollo Client
+- `apollo-cache-inmemory`: Our recommended cache
+- `apollo-angular-link-http`: An Apollo Link for remote data fetching
+- `apollo-link-error`: An Apollo Link for error handling
+- `apollo-link-state`: An Apollo Link for local state management
+
+The awesome thing about Apollo Angular Boost is that you don't have to set any of this up yourself! Just specify a few options if you'd like to use these features and we'll take care of the rest.
+
+<h3 id="configuration">Configuration options</h3>
+
+Here are the options you can pass to the `ApolloBoost` exported from `apollo-angular-boost`. All of them are optional.
+
+- uri: A string representing your GraphQL server endpoint. Defaults to `/graphql`
+- httpOptions: An object representing any options you would like to pass to HttpLink (withCredentials, headers, etc). These options are static, so they don't change on each request.
+- request?: (operation: Operation) => Promise<void>;
+  - This function is called on each request. It takes an operation and can return a promise. To dynamically set `httpOptions`, you can add them to the context of the operation with `operation.setContext({ headers })`. Any options set here will take precedence over `httpOptions`.
+  - Use this function for authentication
+- onError: (errorObj: { graphQLErrors: GraphQLError[], networkError: Error, response?: ExecutionResult, operation: Operation }) => void
+  - We include a default error handler to log out your errors for you. If you would like to handle your errors differently, specify this function
+- clientState: An object representing your configuration for `apollo-link-state`. This is useful if you would like to use the Apollo cache for local state management. Learn more in our [quick start](https://www.apollographql.com/docs/link/links/state.html#start).
+- cacheRedirects: An map of functions to redirect a query to another entry in the cache before a request takes place. This is useful if you have a list of items and want to use the data from the list query on a detail page where you're querying an individual item. More on that [here](../features/cache-updates.html#cacheRedirect).
+
+<h2 id="next-steps">Next steps</h2>
+
+Now that you've learned how to fetch data with Apollo Angular, you're ready to dive deeper into creating more complex queries and mutations. After this section, we recommend moving onto:
+
+- [Queries](./queries.html): Learn how to fetch queries with arguments and dive deeper into configuration options..
+- [Mutations](./mutations.html): Learn how to update data with mutations and when you'll need to update the Apollo cache.

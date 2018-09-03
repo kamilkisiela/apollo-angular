@@ -1,7 +1,7 @@
 # HTTP Link
 
 [![npm version](https://badge.fury.io/js/apollo-angular-link-http.svg)](https://badge.fury.io/js/apollo-angular-link-http)
-[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollodata.com/#slack)
+[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://www.apollographql.com/slack)
 
 ## Purpose
 

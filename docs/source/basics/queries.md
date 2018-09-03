@@ -55,7 +55,7 @@ class ProfileComponent implements OnInit, OnDestroy {
         this.currentUser = data.currentUser;
       });
   }
-  
+
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
@@ -99,7 +99,7 @@ In `ApolloClient.watchQuery` returns an Observable, but not a standard one, it
 contains many useful methods (like `refetch()`) to manipulate the watched query.
 A normal Observable, has only one method, `subscribe()`.
 
-To use that Apollo's Observable in RxJS, we would have to drop those method.
+To use that Apollo's Observable in RxJS, we would have to drop those methods.
 Since they are necessary to use Apollo to its full potential, we had to come up
 with a solution.
 
@@ -177,7 +177,7 @@ of the property you want to get from `data`.
 ```ts
 import {Component, OnInit} from '@angular/core';
 import {Apollo} from 'apollo-angular';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import gql from 'graphql-tag';
 
 const FeedQuery = gql`
@@ -234,10 +234,9 @@ What's really interesting is that, because of this, you can avoid using `SelectP
 ```ts
 import {Component, OnInit} from '@angular/core';
 import {Apollo} from 'apollo-angular';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import gql from 'graphql-tag';
-
-import 'rxjs/add/operator/map';
 
 const FeedQuery = gql`
   query Feed {
@@ -266,16 +265,14 @@ class FeedComponent implements OnInit {
   ngOnInit() {
     this.data = this.apollo
       .watchQuery({query: FeedQuery})
-      .valueChanges.map(({data}) => data.feed);
+      .valueChanges.pipe(map(({data}) => data.feed));
   }
 }
 ```
 
 The `map` operator we are using here is provided by the RxJS `Observable` which
-serves as the basis for the `Observable`. By default Angular however only
-includes a minimal subset of RxJS `Observable` operators in order to keep the
-[footprint small](https://github.com/angular/angular/issues/5632#issuecomment-167026172).
+serves as the basis for the `Observable`.
 
 To be able to use the `map` operator (and most others like `switchMap`,
 `filter`, `merge`, ...) these have to be explicitly imported as done in the
-example: `import 'rxjs/add/operator/map'`.
+example: `import {map} from 'rxjs/operators'`.

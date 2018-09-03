@@ -1,7 +1,9 @@
 import './_setup';
 
+import {NgZone} from '@angular/core';
 import {ObservableQuery} from 'apollo-client';
-import {map} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
 import {ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
@@ -43,11 +45,13 @@ const Batman = {
 };
 
 describe('QueryRef', () => {
+  let ngZone: NgZone;
   let client: ApolloClient<any>;
   let obsQuery: ObservableQuery<any>;
   let queryRef: QueryRef<any>;
 
   beforeEach(() => {
+    ngZone = {run: jest.fn(cb => cb())} as any;
     const mockedLink = mockSingleLink(
       {
         request: heroesOperation,
@@ -61,7 +65,7 @@ describe('QueryRef', () => {
 
     client = createClient(mockedLink);
     obsQuery = client.watchQuery(heroesOperation);
-    queryRef = new QueryRef<any>(obsQuery);
+    queryRef = new QueryRef<any>(obsQuery, ngZone);
   });
 
   test('should listen to changes', done => {
@@ -321,5 +325,39 @@ describe('QueryRef', () => {
 
       done();
     };
+  });
+
+  test('should unsubscribe', done => {
+    const obs = queryRef.valueChanges;
+    const id = queryRef.queryId;
+
+    const sub = obs.subscribe(() => {
+      //
+    });
+
+    expect(client.queryManager.queryStore.get(id)).toBeDefined();
+
+    setTimeout(() => {
+      sub.unsubscribe();
+      expect(client.queryManager.queryStore.get(id)).toBeUndefined();
+      done();
+    });
+  });
+
+  test('should unsubscribe based on rxjs operators', done => {
+    const gate = new Subject<void>();
+    const obs = queryRef.valueChanges.pipe(takeUntil(gate));
+    const id = queryRef.queryId;
+
+    obs.subscribe(() => {
+      //
+    });
+
+    expect(client.queryManager.queryStore.get(id)).toBeDefined();
+
+    gate.next();
+
+    expect(client.queryManager.queryStore.get(id)).toBeUndefined();
+    done();
   });
 });

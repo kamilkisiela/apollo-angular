@@ -1,7 +1,7 @@
 # Apollo Angular Boost
 
 [![npm version](https://badge.fury.io/js/apollo-angular-boost.svg)](https://badge.fury.io/js/apollo-angular-boost)
-[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollodata.com/#slack)
+[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://www.apollographql.com/slack)
 
 ## Purpose
 
@@ -51,6 +51,26 @@ export class AppModule {
 }
 ```
 
+or via `APOLLO_BOOST_CONFIG` token:
+
+```ts
+import {HttpClientModule} from '@angular/common/http';
+import {ApolloBoostModule, APOLLO_BOOST_CONFIG} from 'apollo-angular-boost';
+
+@NgModule({
+  imports: [HttpClientModule, ApolloBoostModule],
+  providers: [{
+    provide: APOLLO_BOOST_CONFIG,
+    useFactory() {
+      return {
+        uri
+      };
+    }
+  }]
+})
+export class AppModule {}
+```
+
 How to use it in a component or a service?
 
 ```ts
@@ -84,14 +104,14 @@ Because `Apollo` service of `apollo-angular-boost` is the same service that `apo
 Here are the options you can pass to the `ApolloBoost` exported from `apollo-angular-boost`. None of them are required.
 
 - uri: A string representing your GraphQL server endpoint. Defaults to `/graphql`
-- fetchOptions: An object representing any options you would like to pass to fetch (credentials, headers, etc). These options are static, so they don't change on each request.
+- httpOptions: An object representing any options you would like to pass to HttpLink (withCredentials, headers, etc). These options are static, so they don't change on each request.
 - request?: (operation: Operation) => Promise<void>;
-  - This function is called on each request. It takes an operation and can return a promise. To dynamically set `fetchOptions`, you can add them to the context of the operation with `operation.setContext({ headers })`. Any options set here will take precedence over `fetchOptions`.
+  - This function is called on each request. It takes an operation and can return a promise. To dynamically set `httpOptions`, you can add them to the context of the operation with `operation.setContext({ headers })`. Any options set here will take precedence over `httpOptions`.
   - Use this function for authentication
 - onError: (errorObj: { graphQLErrors: GraphQLError[], networkError: Error, response?: ExecutionResult, operation: Operation }) => void
   - We include a default error handler to log out your errors for you. If you would like to handle your errors differently, specify this function
 - clientState: An object representing your configuration for `apollo-link-state`. This is useful if you would like to use the Apollo cache for local state management. Learn more in our [quick start](https://www.apollographql.com/docs/link/links/state.html#start).
-- cacheRedirects: An map of functions to redirect a query to another entry in the cache before a request takes place. This is useful if you have a list of items and want to use the data from the list query on a detail page where you're querying an individual item. More on that [here](https://www.apollographql.com/docs/react/advanced/caching.html#cacheRedirect).
+- cacheRedirects: An map of functions to redirect a query to another entry in the cache before a request takes place. This is useful if you have a list of items and want to use the data from the list query on a detail page where you're querying an individual item. More on that [here](https://www.apollographql.com/docs/angular/features/cache-updates.html#cacheRedirect).
 
 That's it! Here's an example of all those options in action:
 
@@ -103,8 +123,8 @@ export class GraphQLModule {
   constructor(apollo: ApolloBoost) {
     apollo.create({
       uri: 'https://nx9zvp49q7.lp.gql.zone/graphql',
-      fetchOptions: {
-        credentials: 'include'
+      httpOptions: {
+        withCredentials: true
       },
       request: async (operation) => {
         const token = await AsyncStorage.getItem('token');

@@ -1,7 +1,7 @@
 # NGRX Cache
 
 [![npm version](https://badge.fury.io/js/apollo-angular-cache-ngrx.svg)](https://badge.fury.io/js/apollo-angular-cache-ngrx)
-[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](http://www.apollodata.com/#slack)
+[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://www.apollographql.com/slack)
 
 ## Purpose
 

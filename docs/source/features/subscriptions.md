@@ -21,8 +21,8 @@ type Subscription {
 On the client, subscription queries look just like any other kind of operation:
 
 ```graphql
-subscription onCommentAdded($repoFullName: String!){
-  commentAdded(repoFullName: $repoFullName){
+subscription onCommentAdded($repoFullName: String!) {
+  commentAdded(repoFullName: $repoFullName) {
     id
     content
   }
@@ -68,13 +68,13 @@ npm install --save apollo-link-ws
 Then, initialize a GraphQL subscriptions transport link:
 
 ```ts
-import { WebSocketLink } from 'apollo-link-ws';
+import {WebSocketLink} from 'apollo-link-ws';
 
 const wsClient = new WebSocketLink({
   uri: `ws://localhost:5000/`,
   options: {
-    reconnect: true
-  }
+    reconnect: true,
+  },
 });
 ```
 
@@ -130,8 +130,8 @@ Now, queries and mutations will go over HTTP as normal, but subscriptions will b
 
 With GraphQL subscriptions your client will be alerted on push from the server and you should choose the pattern that fits your application the most:
 
-* Use it as a notification and run any logic you want when it fires, for example alerting the user or refetching data
-* Use the data sent along with the notification and merge it directly into the store (existing queries are automatically notified)
+- Use it as a notification and run any logic you want when it fires, for example alerting the user or refetching data
+- Use the data sent along with the notification and merge it directly into the store (existing queries are automatically notified)
 
 With `subscribeToMore`, you can easily do the latter.
 
@@ -141,7 +141,7 @@ Here is a regular query:
 
 ```ts
 import { Apollo, QueryRef } from 'apollo-angular';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import gql from 'graphql-tag';
 
 const COMMENT_QUERY = gql`

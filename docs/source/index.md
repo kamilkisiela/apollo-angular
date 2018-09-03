@@ -37,6 +37,7 @@ We want you to love working with Apollo Client, so we work extra hard to make su
 
 Apollo is lovingly designed to work nicely with all of the tools used by today's Angular developers. Here are some in particular:
 
+- **Angular Schematics**: Apollo Angular supports `ng-add` and `ng-update` (migrations soon)
 - **NativeScript**: Apollo works out of the box in NativeScript.
 - **Angular Router**: Apollo Client is completely router-independent, which means you can use it with any version of [Angular Router](https://github.com/angular/angular) or any other routing library for Angular. It's even easy to set up [server-side rendering](./recipes/server-side-rendering.html).
 
@@ -44,7 +45,7 @@ If you have a favorite Angular tool, and something in Apollo makes it difficult 
 
 <h3 id="graphql-servers">GraphQL servers</h3>
 
-We believe that using GraphQL should be easy and fun. One of the ways Apollo is designed for this is that if you can write you query in GraphiQL, it'll work with Apollo Client! Because it doesn't assume anything beyond the official GraphQL specification, Apollo works with every GraphQL server implementation, for *every* language. It doesn't impose any requirements on your schema either! If you can send a query to a standard GraphQL server, Apollo can handle it. You can find a list of GraphQL server implementations on [graphql.org](http://graphql.org/code/#server-libraries).
+We believe that using GraphQL should be easy and fun. One of the ways Apollo is designed for this is that if you can write your query in GraphiQL, it'll work with Apollo Client! Because it doesn't assume anything beyond the official GraphQL specification, Apollo works with every GraphQL server implementation, for *every* language. It doesn't impose any requirements on your schema either! If you can send a query to a standard GraphQL server, Apollo can handle it. You can find a list of GraphQL server implementations on [graphql.org](http://graphql.org/code/#server-libraries).
 
 <h3 id="other-platforms" title="Other JS + native platforms">Other JavaScript + native platforms</h3>
 

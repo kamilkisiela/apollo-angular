@@ -1,3 +1,4 @@
+import {NgZone} from '@angular/core';
 import {ObservableQuery} from 'apollo-client';
 import {Observable as ApolloObservable} from 'apollo-client/util/Observable';
 import {observeOn} from 'rxjs/operators';
@@ -31,7 +32,7 @@ export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
 }
 
 export class ZoneScheduler implements SchedulerLike {
-  constructor(private zone: Zone) {}
+  constructor(private zone: NgZone) {}
 
   public now = Date.now ? Date.now : () => +new Date();
 
@@ -56,6 +57,9 @@ export function fixObservable<T>(
   return obs;
 }
 
-export function wrapWithZone<T>(obs: Observable<T>): Observable<T> {
-  return obs.pipe(observeOn(new ZoneScheduler(Zone.current)));
+export function wrapWithZone<T>(
+  obs: Observable<T>,
+  ngZone: NgZone,
+): Observable<T> {
+  return obs.pipe(observeOn(new ZoneScheduler(ngZone)));
 }

@@ -2,6 +2,20 @@
 
 ### vNEXT
 
+### v1.3.0
+
+- Make `Subscription` generic [PR #778](https://github.com/apollographql/apollo-angular/pull/778)
+- Schematics (`ng add apollo-angular`) [PR #779](https://github.com/apollographql/apollo-angular/pull/779), [PR #780](https://github.com/apollographql/apollo-angular/pull/780)
+- Allow to use a custom ApolloCache while testing [PR #786](https://github.com/apollographql/apollo-angular/pull/786)
+
+### v1.2.0
+
+- Expose `queryId` in `QueryRef` [PR #733](https://github.com/apollographql/apollo-angular/pull/733)
+- Introduce `Query`, `Mutation`, `Subscription` services [PR #622](https://github.com/apollographql/apollo-angular/pull/622)
+- Angular 6.1 is now required (because of TypeScript 2.8)
+- TypeScript 2.8 is now required (because of Omit type)
+- Apollo Client ^2.3.4 is now required (versions before are not compatible because of the change in apollo-client)
+
 ### v1.1.2
 
 ### v1.1.1

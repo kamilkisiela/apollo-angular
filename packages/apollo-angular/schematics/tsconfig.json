@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../build/schematics",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "target": "es6",
+    "module": "commonjs"
+  },
+  "files": [
+    "install/index.ts"
+  ],
+  "include": []
+}

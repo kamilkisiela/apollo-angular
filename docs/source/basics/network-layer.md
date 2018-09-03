@@ -214,7 +214,7 @@ class AppModule {
     });
 
     apollo.create({
-      link: logoutLink.concat(httpLink),
+      link: logoutLink.concat(http),
     });
   }
 }
