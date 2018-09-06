@@ -51,7 +51,7 @@
     "@angular/platform-browser": "6.1.6",
     "@angular/platform-browser-dynamic": "6.1.6",
     "@schematics/angular": "0.7.5",
-    "@types/graphql": "0.13.4",
+    "@types/graphql": "14.0.0",
     "@types/jest": "23.3.1",
     "@types/node": "10.9.4",
     "@types/semver": "5.5.0",
