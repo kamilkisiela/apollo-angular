@@ -42,7 +42,7 @@
     "semver": "^5.5.1"
   },
   "devDependencies": {
-    "@angular-devkit/core": "0.7.5",
+    "@angular-devkit/core": "0.8.1",
     "@angular-devkit/schematics": "0.7.5",
     "@angular/common": "6.1.7",
     "@angular/compiler": "6.1.7",
