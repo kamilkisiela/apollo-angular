@@ -10,7 +10,7 @@ The other simple way is to use Apollo Angular Boost, our starter kit that config
 
 If you're an advanced user who would like to configure Apollo Client from scratch, head on over to our [Apollo Angular Boost migration guide](../advanced/boost-migration.html). For the majority of users, Apollo Angular Boost should meet your needs, so we don't recommend switching unless you absolutely need more customization.
 
-<h2 id="schematics">Installation with Angular Schematics</h2>
+<h2 id="installation-schematics">Installation with Angular Schematics</h2>
 
 We support `ng-add` command now.
 
@@ -22,7 +22,7 @@ ng add apollo-angular
 
 > By using `ng add` command you can skip the next step!
 
-<h2 id="installation">Installation</h2>
+<h2 id="installation-npm">Installation without Angular Schematics</h2>
 
 First, let's install some packages!
 
