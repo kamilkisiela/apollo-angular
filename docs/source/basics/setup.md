@@ -78,7 +78,7 @@ Apollo Boost requires `HttpClient` so that's why we also used `HttpClientModule`
 
 <h2 id="request">Request data</h2>
 
-Once all is hooked up, you're ready to start requesting data with `Apollo` serivce! `Apollo` is an Angular service exported from `apollo-angular` (`apollo-angular-boost` reexports it) to share GraphQL data with your UI.
+Once all is hooked up, you're ready to start requesting data with `Apollo` service! `Apollo` is an Angular service exported from `apollo-angular` (`apollo-angular-boost` reexports it) to share GraphQL data with your UI.
 
 First, pass your GraphQL query wrapped in the `gql` function to the `query` property in the `Apollo.watchQuery` method, in your component.
 The `Apollo` service is a regular angular service that you familiar with, data are being streamed through Observables. Same here.
