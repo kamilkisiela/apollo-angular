@@ -43,7 +43,7 @@
     "@types/jest": "23.3.2",
     "apollo-cache-inmemory": "1.2.10",
     "apollo-client": "2.4.2",
-    "apollo-link": "1.2.2",
+    "apollo-link": "1.2.3",
     "graphql": "14.0.2",
     "graphql-tag": "2.9.2",
     "jest": "23.6.0",

@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@angular-devkit/core": "0.8.2",
-    "@angular-devkit/schematics": "0.8.1",
+    "@angular-devkit/schematics": "0.8.2",
     "@angular/common": "6.1.7",
     "@angular/compiler": "6.1.7",
     "@angular/compiler-cli": "6.1.7",
@@ -57,7 +57,7 @@
     "@types/semver": "5.5.0",
     "apollo-cache-inmemory": "1.2.10",
     "apollo-client": "2.4.2",
-    "apollo-link": "1.2.2",
+    "apollo-link": "1.2.3",
     "cpx": "1.5.0",
     "graphql": "14.0.2",
     "graphql-tag": "2.9.2",
