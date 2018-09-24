@@ -11,30 +11,46 @@ In this section, you'll learn how to simplify local state management in your app
 
 <h2 id="setup">Setting up</h2>
 
-`apollo-link-state` is already included in Apollo Angular Boost, so you don't have to install it. It's configurable on the `clientState` property on the Apollo Boost constructor:
+First, we need to install `apollo-link-state` package:
 
-```js
-import { ApolloBoost } from 'apollo-boost';
-import {defaults, resolvers} from './resolvers';
-
-@NgModule({
-  ...
-})
-export class AppModule {
-  constructor(boost: ApolloBoost) {
-    boost.create({
-      uri: `https://nx9zvp49q7.lp.gql.zone/graphql`,
-      clientState: {
-        defaults,
-        resolvers,
-        typeDefs,
-      },
-    })
-  }
-}
+```bash
+npm install --save apollo-link-state
 ```
 
-The three options you can pass to `clientState` are:
+```js
+import { withClientState } from 'apollo-link-state';
+import { defaults, resolvers } from './resolvers';
+
+@NgModule({
+  // ...
+  providers: [{
+    provide: APOLLO_OPTIONS,
+    useFactory(httpLink: HttpLink) {
+      const cache = new InMemoryCache();
+
+      const http = httpLink.create({
+        uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+      });
+
+      const local = withClientState({
+        cache,
+        defaults,
+        resolvers
+      });
+
+      return {
+        cache: new InMemoryCache(),
+        link: local.concat(http)
+      }
+    },
+    deps: [HttpLink]
+  }],
+  // ...
+})
+export class AppModule {}
+```
+
+The three options you can pass to `withClientState` are:
 
 <dl>
   <dt>[`defaults`](#defaults.html): Object</dt>
@@ -47,7 +63,7 @@ The three options you can pass to `clientState` are:
 
 None of these options are required. If you don't specify anything, you will still be able to use the `@client` directive to query the cache.
 
-If you'd like a deep dive into the `clientState` config properties, we recommend checking out the [`apollo-link-state` docs](/docs/link/links/state.html). Otherwise, get ready to learn about these properties gradually as we build queries and mutations for local data.
+If you'd like a deep dive into the `withClientState` config properties, we recommend checking out the [`apollo-link-state` docs](/docs/link/links/state.html). Otherwise, get ready to learn about these properties gradually as we build queries and mutations for local data.
 
 > If you’d like to follow along, please open our [example app](https://stackblitz.com/edit/apollo-angular-local-state) on StackBlitz. Since this example lives in the apollo-link-state repository.
 
@@ -63,7 +79,7 @@ Here's what a direct write looks like in our Blog app:
 
 ```ts
 import {Component, OnInit, Input} from '@angular/core';
-import {Apollo} from 'apollo-angular-boost';
+import {Apollo} from 'apollo-angular';
 
 @Component({
   selector: 'filter-link',
@@ -94,7 +110,8 @@ What if we want to immediately subscribe to the data we just wrote to the cache?
 
 ```ts
 import {Component, OnInit, Input} from '@angular/core';
-import {gql, Apollo} from 'apollo-angular-boost';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -179,7 +196,8 @@ Let's learn how to trigger our `toggleTodo` mutation from our component:
 
 ```ts
 import {Component, Input} from '@angular/core';
-import {gql, Apollo} from 'apollo-angular-boost';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 
 const TOGGLE_TODO = gql`
   mutation ToggleTodo($id: Int!) {
@@ -228,7 +246,8 @@ Querying the Apollo cache is similar to querying your GraphQL server. The only d
 
 ```ts
 import {Component, OnInit} from '@angular/core';
-import {gql, Apollo} from 'apollo-angular-boost';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
