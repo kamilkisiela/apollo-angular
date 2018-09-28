@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.4.0
+
+- Support named clients in Query, Mutatio and Subscription classes [PR #799](https://github.com/apollographql/apollo-angular/pull/799)
+
 ### v1.3.0
 
 - Make `Subscription` generic [PR #778](https://github.com/apollographql/apollo-angular/pull/778)
