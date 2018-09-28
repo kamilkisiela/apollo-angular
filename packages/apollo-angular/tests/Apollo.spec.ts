@@ -6,6 +6,7 @@ import {ApolloLink} from 'apollo-link';
 import {NgZone} from '@angular/core';
 import {TestBed, inject, async} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
+import {mergeMap} from 'rxjs/operators';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
@@ -342,6 +343,63 @@ describe('Apollo', () => {
         complete: () => {
           expect(client.mutate).toBeCalled();
           done();
+        },
+      });
+    });
+
+    test('should work with mergeMap', done => {
+      const apollo = new Apollo(ngZone);
+
+      const op1 = {
+        query: gql`
+          mutation first {
+            foo
+          }
+        `,
+      };
+      const data1 = {
+        foo: true,
+      };
+      const op2 = {
+        query: gql`
+          mutation second {
+            bar
+          }
+        `,
+      };
+      const data2 = {
+        boo: true,
+      };
+
+      apollo.create({
+        link: mockSingleLink(
+          {
+            request: op1,
+            result: {data: data1},
+          },
+          {
+            request: op2,
+            result: {data: data2},
+          },
+        ),
+        cache: new InMemoryCache(),
+      });
+
+      const m1 = apollo.mutate({
+        mutation: op1.query,
+      });
+
+      const m2 = apollo.mutate({
+        mutation: op2.query,
+      });
+
+      m1.pipe(mergeMap(() => m2)).subscribe({
+        next(result) {
+          expect(result.data).toMatchObject(data2);
+          done();
+        },
+        error(error) {
+          done.fail(error);
         },
       });
     });

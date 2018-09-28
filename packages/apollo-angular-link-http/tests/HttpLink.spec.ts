@@ -9,6 +9,9 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import {execute, ApolloLink} from 'apollo-link';
+import {ApolloModule, Apollo} from 'apollo-angular';
+import {mergeMap} from 'rxjs/operators';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import {HttpLink} from '../src/HttpLink';
 
@@ -24,7 +27,7 @@ describe('HttpLink', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
+      imports: [HttpClientModule, HttpClientTestingModule, ApolloModule],
       providers: [HttpLink],
     });
   });
@@ -439,5 +442,73 @@ describe('HttpLink', () => {
     }).subscribe(noop);
 
     httpBackend.expectOne('graphql').flush({data});
+  });
+
+  test('should work with mergeMap', done => {
+    const apollo: Apollo = TestBed.get(Apollo);
+
+    const op1 = {
+      query: gql`
+        mutation first {
+          foo
+        }
+      `,
+    };
+    const data1 = {
+      foo: true,
+    };
+    const op2 = {
+      query: gql`
+        mutation second {
+          bar
+        }
+      `,
+    };
+    const data2 = {
+      boo: true,
+    };
+
+    apollo.create({
+      link: httpLink.create({
+        uri: 'graphql',
+      }),
+      cache: new InMemoryCache(),
+    });
+
+    const m1 = apollo.mutate({
+      mutation: op1.query,
+    });
+
+    const m2 = apollo.mutate({
+      mutation: op2.query,
+    });
+
+    m1.pipe(
+      mergeMap(() => {
+        setTimeout(() => {
+          // Resolve second mutation
+          httpBackend
+            .expectOne(req => req.body.operationName === 'second')
+            .flush({
+              data: data2,
+            });
+        });
+
+        return m2;
+      }),
+    ).subscribe({
+      next(result) {
+        expect(result.data).toMatchObject(data2);
+        done();
+      },
+      error(error) {
+        done.fail(error);
+      },
+    });
+
+    // Resolve first mutation
+    httpBackend.expectOne(req => req.body.operationName === 'first').flush({
+      data: data1,
+    });
   });
 });
