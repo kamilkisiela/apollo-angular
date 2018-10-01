@@ -7,17 +7,24 @@ import {
 } from 'apollo-link-persisted-queries';
 
 export interface Options {
-  generateHash?: ((document: DocumentNode) => string) | undefined;
-  disable?: ((error: ErrorResponse) => boolean) | undefined;
+  generateHash?: ((document: DocumentNode) => string);
+  disable?: ((error: ErrorResponse) => boolean);
+  useGETForHashedQueries?: boolean;
 }
 
 const transformLink = setContext((_, context) => {
+  const ctx: any = {};
+
   if (context.http) {
-    return {
-      includeQuery: context.http.includeQuery,
-      includeExtensions: context.http.includeExtensions,
-    };
+    ctx.includeQuery = context.http.includeQuery;
+    ctx.includeExtensions = context.http.includeExtensions;
   }
+
+  if (context.fetchOptions && context.fetchOptions.method) {
+    ctx.method = context.fetchOptions.method;
+  }
+
+  return ctx;
 });
 
 export const createPersistedQueryLink = (options?: Options) =>

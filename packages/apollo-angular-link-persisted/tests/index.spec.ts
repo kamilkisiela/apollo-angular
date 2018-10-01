@@ -77,4 +77,25 @@ describe('createPersistedQueryLink', () => {
       done();
     });
   });
+
+  test('useGETForHashedQueries', (done: jest.DoneCallback) => {
+    const execLink = new MockLink();
+    const spyRequest = jest.spyOn(execLink, 'request').mock;
+    const link = createPersistedQueryLink({
+      useGETForHashedQueries: true,
+    }).concat(execLink);
+
+    execute(link, {
+      query,
+    }).subscribe(() => {
+      const op = spyRequest.calls[1][0] as Operation;
+      const ctx = op.getContext();
+
+      // should be compatible with apollo-angular-link-http
+      expect(ctx.method).toEqual('GET');
+
+      // end
+      done();
+    });
+  });
 });
