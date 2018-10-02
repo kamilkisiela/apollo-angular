@@ -34,7 +34,7 @@
     "apollo-link": "~1.2.2",
     "apollo-link-error": "~1.1.0",
     "apollo-link-state": "~0.4.1",
-    "graphql-tag": "~2.9.2"
+    "graphql-tag": "~2.10.0"
   },
   "devDependencies": {
     "@angular/animations": "6.1.9",
