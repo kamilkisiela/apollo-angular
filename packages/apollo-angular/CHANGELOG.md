@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.4.1
+
+- schematics: bump dependencies
+
 ### v1.4.0
 
 - Support named clients in Query, Mutatio and Subscription classes [PR #799](https://github.com/apollographql/apollo-angular/pull/799)
