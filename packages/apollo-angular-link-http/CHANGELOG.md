@@ -1,5 +1,9 @@
 # Change log
 
+### v1.3.1
+
+- Minor fix `graphql` v14 support
+
 ### v1.3.0
 
 - Supports `graphql` v14
