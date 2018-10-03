@@ -29,7 +29,8 @@
     "test:testing": "jest --config testing/jest.config.js",
     "test:schematics": "jest --config schematics/jest.config.js",
     "prebuild": "rm -rf build/",
-    "deploy": "yarn build && npm publish build"
+    "predeploy": "yarn build",
+    "deploy": "npm publish build"
   },
   "peerDependencies": {
     "@angular/core": "^6.1.0",
@@ -69,5 +70,9 @@
     "typescript": "2.9.2",
     "zone.js": "0.8.26"
   },
-  "schematics": "./schematics/collection.json"
+  "schematics": "./schematics/collection.json",
+  "package-hooks": {
+    "version": "./scripts/version-hook.js",
+    "release": "./scripts/release-hook.js"
+  }
 }

@@ -21,7 +21,8 @@
     "build": "ng-packagr -p ng-package.js",
     "test": "yarn test-only",
     "test-only": "jest --config jest.config.js",
-    "deploy": "yarn build && npm publish build"
+    "predeploy": "yarn build",
+    "deploy": "npm publish build"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0",
@@ -57,5 +58,9 @@
     "ts-jest": "23.10.2",
     "typescript": "2.9.2",
     "zone.js": "0.8.26"
+  },
+  "package-hooks": {
+    "version": "./scripts/version-hook.js",
+    "release": "./scripts/release-hook.js"
   }
 }
