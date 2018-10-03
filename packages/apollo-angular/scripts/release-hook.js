@@ -24,7 +24,7 @@ function compare(name) {
 
   if (!semver.satisfies(inPackage, inHere)) {
     throw new Error(
-      `Version of ${name} does not satisfy the range in apollo-angular schematics`,
+      `Version ${inPackage} of ${name} does not satisfy the range ${inHere} in schematics`,
     );
   }
 }

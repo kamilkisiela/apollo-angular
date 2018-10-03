@@ -135,6 +135,10 @@ function bumpPackage(source, name, version) {
     source,
     pkg.replace(findPackage, `"${name}": "~${version}"`),
   );
+
+  if (JSON.parse(readPackageJson(source)).dependencies[name] !== `~${version}`) {
+    throw new Error(`Bumping ${name} failed in ${source}`);
+  }
 }
 
 function compare(source, name) {
@@ -143,7 +147,7 @@ function compare(source, name) {
 
   if (!semver.satisfies(inPackage, inSource)) {
     throw new Error(
-      `Version of ${name} does not satisfy the range in ${source}`,
+      `Version ${inPackage} of ${name} does not satisfy the range ${inSource} in ${source}`,
     );
   }
 }
