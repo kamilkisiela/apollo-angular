@@ -18,7 +18,6 @@ function forHttp(version) {
 }
 
 function bump(name, version) {
-  console.log(`[apollo-angular] bumping ${name} in schematics`);
   const installPath = 'packages/apollo-angular/schematics/install/index.ts';
   const data = fs.readFileSync(installPath, {encoding: 'utf-8'});
 

@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 module.exports = function(name, version, helpers) {
   switch (name) {
     case 'apollo-angular':

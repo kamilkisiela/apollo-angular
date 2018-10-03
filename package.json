@@ -9,7 +9,7 @@
     "test": "lerna run test",
     "format": "prettier --config .prettierrc --write \"packages/**/*.ts\"",
     "deploy": "lerna run deploy",
-    "package": "./scripts/package.js",
+    "package": "wieldo",
     "coverage": "codecov",
     "precommit": "lint-staged",
     "commitmsg": "commitlint -e"
@@ -30,6 +30,7 @@
     "prettier": "1.14.3",
     "rimraf": "2.6.2",
     "shelljs": "0.8.2",
-    "typescript": "2.9.2"
+    "typescript": "2.9.2",
+    "wieldo": "1.0.0"
   }
 }
