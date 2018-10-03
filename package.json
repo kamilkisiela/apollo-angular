@@ -30,6 +30,6 @@
     "rimraf": "2.6.2",
     "shelljs": "0.8.2",
     "typescript": "2.9.2",
-    "wieldo": "1.0.0"
+    "wieldo": "1.1.0"
   }
 }
