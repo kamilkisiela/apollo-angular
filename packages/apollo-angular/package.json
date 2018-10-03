@@ -71,7 +71,7 @@
     "zone.js": "0.8.26"
   },
   "schematics": "./schematics/collection.json",
-  "package-hooks": {
+  "wieldo": {
     "version": "./scripts/version-hook.js",
     "release": "./scripts/release-hook.js"
   }

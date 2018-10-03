@@ -58,7 +58,7 @@
     "typescript": "2.9.2",
     "zone.js": "0.8.26"
   },
-  "package-hooks": {
+  "wieldo": {
     "version": "./scripts/version-hook.js",
     "release": "./scripts/release-hook.js"
   }
