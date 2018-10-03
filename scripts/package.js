@@ -5,13 +5,15 @@ const path = require('path');
 const semver = require('semver');
 const shelljs = require('shelljs');
 
-program.command('version <name> <version>').action((name, version) => {
-  console.log('> Package:', name);
-  setVersion(name, version);
-});
+program
+  .command('version <name> <version>', 'Sets a new version of a package')
+  .action((name, version) => {
+    console.log('> Package:', name);
+    setVersion(name, version);
+  });
 
 program
-  .command('bump <name> <type>')
+  .command('bump <name> <type>', 'Bumps a version of a package')
   .option('-i, --preid <preid>', 'type of prerelease - x.x.x-[PREID].x')
   .action((name, type, cmd) => {
     console.log('> Package:', name);
@@ -25,20 +27,27 @@ program
     setVersion(name, version);
   });
 
-program.command('release <name>').action(name => {
-  console.log(`> Release: ${name}`);
+program
+  .command('release <name>', 'Releases a new version of a package')
+  .action(name => {
+    console.log(`> Release: ${name}`);
 
-  const version = getVersionOfPackage(name);
-  const prerelease = semver.prerelease(version);
+    const version = getVersionOfPackage(name);
+    const prerelease = semver.prerelease(version);
 
-  runHooks('release', name, version);
+    runHooks('release', name, version);
 
-  const withTag = prerelease ? `-- --tag next` : ``;
+    const withTag = prerelease ? `-- --tag next` : ``;
 
-  // shelljs.exec(`(cd packages/${name} && npm run deploy ${withTag})`);
-});
+    shelljs.exec(`(cd packages/${name} && npm run deploy ${withTag})`);
+  });
 
-function requestVersion(name, version) {
+/**
+ * Changes a version of a package
+ * @param {string} name of package
+ * @param {string} version of package
+ */
+function setVersion(name, version) {
   console.log('');
   console.log('> Current version:', getVersionOfPackage(name));
   console.log('> Requested version:', version);
@@ -50,10 +59,6 @@ function requestVersion(name, version) {
   if (!semver.gt(version, getVersionOfPackage(name))) {
     throw new Error('Version should be greater than the current one');
   }
-}
-
-function setVersion(name, version) {
-  requestVersion(name, version);
 
   const pkg = readPackageJson(name);
   const findVersion = /"version"\:\s*"[^"]+"/;
@@ -69,6 +74,12 @@ function setVersion(name, version) {
   console.log(`> Version changed: ${getVersionOfPackage(name)}`);
 }
 
+/**
+ * Runs hooks on every package
+ * @param {string} type of action (release | version)
+ * @param {string} name of package that a command was ran for
+ * @param {string} version of package
+ */
 function runHooks(type, name, version) {
   const packages = fs
     .readdirSync(path.resolve(__dirname, '../packages'))
@@ -101,10 +112,18 @@ function runHooks(type, name, version) {
   });
 }
 
+/**
+ * Get the current version of a {name} package
+ * @param {string} name of package
+ */
 function getVersionOfPackage(name) {
   return JSON.parse(readPackageJson(name)).version;
 }
 
+/**
+ * Reads {name} package.json (as string)
+ * @param {string} name of package
+ */
 function readPackageJson(name) {
   return fs.readFileSync(
     path.resolve(__dirname, '../packages', name, 'package.json'),
@@ -114,6 +133,11 @@ function readPackageJson(name) {
   );
 }
 
+/**
+ * Writes new package.json
+ * @param {string} name of package
+ * @param {string} data new package.json
+ */
 function writePackageJson(name, data) {
   fs.writeFileSync(
     path.resolve(__dirname, '../packages', name, 'package.json'),
@@ -124,6 +148,12 @@ function writePackageJson(name, data) {
   );
 }
 
+/**
+ * Bump dependency of {name} in {source} package.json
+ * @param {string} source name of a package where change happens
+ * @param {string} name of package that has changed
+ * @param {string} version of package
+ */
 function bumpPackage(source, name, version) {
   console.log(`[${source}] bumping ${name}`);
 
@@ -136,11 +166,18 @@ function bumpPackage(source, name, version) {
     pkg.replace(findPackage, `"${name}": "~${version}"`),
   );
 
-  if (JSON.parse(readPackageJson(source)).dependencies[name] !== `~${version}`) {
+  if (
+    JSON.parse(readPackageJson(source)).dependencies[name] !== `~${version}`
+  ) {
     throw new Error(`Bumping ${name} failed in ${source}`);
   }
 }
 
+/**
+ * Compares dependency of {name} in {source} package.json
+ * @param {string} source name of a package that contains a dependency
+ * @param {string} name of package
+ */
 function compare(source, name) {
   const inSource = JSON.parse(readPackageJson(source)).dependencies[name];
   const inPackage = JSON.parse(readPackageJson(name)).version;
