@@ -19,7 +19,7 @@ ng add apollo-angular
 One thing you need to set is the URL of your GraphQL Server, so open `src/app/graphql.module.ts` and set `uri` variables:
 
 ```typescript
-const uri = 'http://example.com/graphql';
+const uri = 'https://w5xlvm3vzz.lp.gql.zone/graphql'; //our test Graphql Server which returns rates
 ```
 
 **Done!** You can now create your first query, [**let's go through it together here**](#request)
@@ -158,7 +158,7 @@ import gql from 'graphql-tag';
 })
 export class ExchangeRates implements OnInit {
   rates: any[];
-  loading: boolean;
+  loading = true;
   error: any;
 
   constructor(private apollo: Apollo) {}
