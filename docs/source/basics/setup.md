@@ -67,7 +67,7 @@ In our `app.module.ts` file use `ApolloModule` and `APOLLO_OPTIONS` token to con
 ```ts
 import { HttpClientModule } from "@angular/common/http";
 import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
-import { HttpLinkModule HttpLink } from "apollo-angular-link-http";
+import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 @NgModule({
