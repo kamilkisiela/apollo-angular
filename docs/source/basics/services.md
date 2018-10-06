@@ -29,10 +29,25 @@ import {Injectable} from '@angular/core';
 import {Query} from 'apollo-angular';
 import gql from 'graphql-tag';
 
+export interface Post {
+  id: string;
+  title: string;
+  votes: number;
+  author: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
+}
+export interface Response {
+  allPosts: Post[];
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
-export class AllPostsGQL extends Query {
+export class AllPostsGQL extends Query<Response> {
   document = gql`
     query allPosts {
       posts {
