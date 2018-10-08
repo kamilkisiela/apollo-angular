@@ -58,8 +58,12 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
-  public subscribeToMore(options: SubscribeToMoreOptions<T, V>): () => void {
-    return this.obsQuery.subscribeToMore(options);
+  public subscribeToMore<MT, MV>(
+    options: SubscribeToMoreOptions<MT, MV>,
+  ): () => void {
+    // XXX: there's a bug in apollo-client typings
+    // it should not inherit types from ObservableQuery
+    return this.obsQuery.subscribeToMore(options as any);
   }
   public updateQuery(
     mapFn: (previousQueryResult: T, options: UpdateQueryOptions<V>) => T,
