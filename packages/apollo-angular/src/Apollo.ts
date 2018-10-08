@@ -7,12 +7,13 @@ import {
   ApolloQueryResult,
   SubscriptionOptions,
   ApolloClientOptions,
+  ObservableQuery,
 } from 'apollo-client';
 import {FetchResult} from 'apollo-link';
 import {Observable, from} from 'rxjs';
 
 import {QueryRef} from './QueryRef';
-import {TypedVariables, ExtraSubscriptionOptions, R} from './types';
+import {ExtraSubscriptionOptions, R} from './types';
 import {APOLLO_OPTIONS} from './tokens';
 import {fromPromise, wrapWithZone, fixObservable} from './utils';
 
@@ -22,36 +23,34 @@ export class ApolloBase<TCacheShape = any> {
     private _client?: ApolloClient<TCacheShape>,
   ) {}
 
-  public watchQuery<T, V = R>(
-    options: WatchQueryOptions & TypedVariables<V>,
-  ): QueryRef<T, V> {
+  public watchQuery<T, V = R>(options: WatchQueryOptions<V>): QueryRef<T, V> {
     return new QueryRef<T, V>(
-      this.client.watchQuery<T>({...options}),
+      this.client.watchQuery<T, V>({...options}) as ObservableQuery<T, V>,
       this.ngZone,
     );
   }
 
   public query<T, V = R>(
-    options: QueryOptions & TypedVariables<V>,
+    options: QueryOptions<V>,
   ): Observable<ApolloQueryResult<T>> {
     return fromPromise<ApolloQueryResult<T>>(() =>
-      this.client.query<T>({...options}),
+      this.client.query<T, V>({...options}),
     );
   }
 
   public mutate<T, V = R>(
-    options: MutationOptions & TypedVariables<V>,
+    options: MutationOptions<T, V>,
   ): Observable<FetchResult<T>> {
     return fromPromise<FetchResult<T>>(() =>
-      this.client.mutate<T>({...options}),
+      this.client.mutate<T, V>({...options}),
     );
   }
 
-  public subscribe(
-    options: SubscriptionOptions,
+  public subscribe<T, V = R>(
+    options: SubscriptionOptions<V>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<any> {
-    const obs = from(fixObservable(this.client.subscribe({...options})));
+    const obs = from(fixObservable(this.client.subscribe<T, V>({...options})));
 
     return extra && extra.useZone !== true
       ? obs

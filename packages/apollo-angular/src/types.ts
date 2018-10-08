@@ -6,10 +6,8 @@ import {
 } from 'apollo-client';
 import {ExecutionResult} from 'graphql';
 
-export type R = Record<string, any>;
-
-export type TypedVariables<T> = {
-  variables?: T;
+export type R = {
+  [key: string]: any;
 };
 
 export interface ExtraSubscriptionOptions {
@@ -18,17 +16,17 @@ export interface ExtraSubscriptionOptions {
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface WatchQueryOptions
-  extends Omit<CoreWatchQueryOptions, 'query' | 'variables'> {}
+export interface WatchQueryOptions<V>
+  extends Omit<CoreWatchQueryOptions<V>, 'query' | 'variables'> {}
 
-export interface QueryOptions
-  extends Omit<CoreQueryOptions, 'query' | 'variables'> {}
+export interface QueryOptions<V>
+  extends Omit<CoreQueryOptions<V>, 'query' | 'variables'> {}
 
-export interface MutationOptions
-  extends Omit<CoreMutationOptions, 'mutation' | 'variables'> {}
+export interface MutationOptions<T, V>
+  extends Omit<CoreMutationOptions<T, V>, 'mutation' | 'variables'> {}
 
-export interface SubscriptionOptions
-  extends Omit<CoreSubscriptionOptions, 'query' | 'variables'> {}
+export interface SubscriptionOptions<V>
+  extends Omit<CoreSubscriptionOptions<V>, 'query' | 'variables'> {}
 
 export interface SubscriptionResult<T> extends ExecutionResult {
   data?: T;

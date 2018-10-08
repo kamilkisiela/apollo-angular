@@ -18,7 +18,7 @@ export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
   public queryId: string;
 
-  constructor(private obsQuery: ObservableQuery<T>, ngZone: NgZone) {
+  constructor(private obsQuery: ObservableQuery<T, V>, ngZone: NgZone) {
     this.valueChanges = wrapWithZone(
       from(fixObservable(this.obsQuery)),
       ngZone,
@@ -58,7 +58,7 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
-  public subscribeToMore(options: SubscribeToMoreOptions): () => void {
+  public subscribeToMore(options: SubscribeToMoreOptions<T, V>): () => void {
     return this.obsQuery.subscribeToMore(options);
   }
   public updateQuery(

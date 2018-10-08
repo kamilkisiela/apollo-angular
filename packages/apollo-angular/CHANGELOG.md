@@ -2,6 +2,8 @@
 
 ### vNEXT
 
+- Use more generic types and make more strict
+
 ### v1.4.1
 
 - schematics: bump dependencies
