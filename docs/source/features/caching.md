@@ -60,12 +60,18 @@ class AppComponent {
       update: (proxy, { data: { createTodo } }) => {
         // Read the data from our cache for this query.
         const data = proxy.readQuery({ query: TodoAppQuery });
+        
+        // If you are using the Query service (TodoAppGQL) instead of defining your GQL as a constant, you can reference the query as:
+        // const data = proxy.readQuery({ query: this.todoAppGQL.document });
 
         // Add our todo from the mutation to the end.
         data.todos.push(createTodo);
 
         // Write our data back to the cache.
         proxy.writeQuery({ query: TodoAppQuery, data });
+        
+        // alternatively when using Query service:
+        // proxy.writeQuery({ query: this.todoAppGQL.document, data });
       },
     }).subscribe();
   }
