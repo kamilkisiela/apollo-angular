@@ -17,7 +17,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@commitlint/cli": "7.1.2",
+    "@commitlint/cli": "7.2.0",
     "@commitlint/config-angular": "7.1.2",
     "@types/jest": "23.3.3",
     "codecov": "3.1.0",
