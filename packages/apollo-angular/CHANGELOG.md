@@ -2,7 +2,7 @@
 
 ### vNEXT
 
-- Use more generic types and make more strict
+- Use more generic types and make everything more strict [PR #885](https://github.com/apollographql/apollo-angular/pull/885)
 
 ### v1.4.1
 
