@@ -18,15 +18,17 @@
     "angular"
   ],
   "scripts": {
-    "build": "ng-packagr -p ng-package.js",
-    "test": "yarn test-only",
+    "build": "exit 0",
+    "test": "exit 0",
+    "xbuild": "ng-packagr -p ng-package.js",
+    "xtest": "yarn test-only",
     "test-only": "jest --config jest.config.js",
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
-    "@angular/core": "^6.0.0-rc.0",
-    "@ngrx/store": "^6.0.0-beta.1",
-    "rxjs": "^6.0.0-rc.0"
+    "@angular/core": "^6.1.0",
+    "@ngrx/store": "^6.0.0",
+    "rxjs": "^6.0.0"
   },
   "devDependencies": {
     "@angular/animations": "6.1.9",
