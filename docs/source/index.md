@@ -21,7 +21,7 @@ Apollo Client can be used in any JavaScript frontend where you want to describe 
 These docs will help you to go from getting started with Apollo to becoming an expert!
 
 <h2 title="Getting started" id="starting">Getting Started</h2>
-The docs are broken into three distinct sections to make it easy to find your way around:
+The docs are divided into three distinct sections to make it easy to find your way around:
 
 1. **Basics**, which outline the why and how of using Apollo Client to build your application.
 1. **Features**, which showcase some of the advanced capabilities of Apollo Client that your app may need.
