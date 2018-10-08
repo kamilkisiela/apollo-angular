@@ -33,12 +33,12 @@ export default function install(options: Schema): Rule {
 }
 
 export const dependenciesMap: Record<string, string> = {
-  'apollo-angular': '^1.3.0',
-  'apollo-angular-link-http': '^1.2.0',
+  'apollo-angular': '^1.4.1',
+  'apollo-angular-link-http': '^1.3.1',
   'apollo-link': '^1.2.0',
   'apollo-client': '^2.4.0',
-  'apollo-cache-inmemory': '^1.2.0',
-  'graphql-tag': '^2.9.2',
+  'apollo-cache-inmemory': '^1.3.2',
+  'graphql-tag': '^2.10.0',
   graphql: '^0.13.2',
 };
 

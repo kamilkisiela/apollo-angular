@@ -1,6 +1,10 @@
 # Change log
 
-### vNEXR
+### vNEXT
+
+### v1.2.0
+
+- Bump `apollo-angular` to v1.3.0
 
 ### v1.1.0
 

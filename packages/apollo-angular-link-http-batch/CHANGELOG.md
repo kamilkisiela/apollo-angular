@@ -1,5 +1,13 @@
 # Change log
 
+### v1.3.1
+
+- Bump `apollo-angular-link-http-common` to 1.3.0
+
+### v1.3.0
+
+- Supports `graphql` v14
+
 ### v1.2.0
 
 - Uses `ng-packagr`

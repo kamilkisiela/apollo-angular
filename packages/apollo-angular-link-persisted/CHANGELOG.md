@@ -1,12 +1,16 @@
 # Change log
 
-### v1.2.0
+### v1.1.0
+
+- Introduces `useGETForHashedQueries`
+
+### v1.0.0
 
 - Uses `ng-packagr`
 
 ### v1.0.0-beta.2
 
-* Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
+- Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
 
 ### v1.0.0-beta.0
 
