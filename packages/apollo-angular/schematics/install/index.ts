@@ -33,7 +33,7 @@ export default function install(options: Schema): Rule {
 }
 
 export const dependenciesMap: Record<string, string> = {
-  'apollo-angular': '^1.4.1',
+  'apollo-angular': '^1.5.0-rc.0',
   'apollo-angular-link-http': '^1.3.1',
   'apollo-link': '^1.2.0',
   'apollo-client': '^2.4.0',
