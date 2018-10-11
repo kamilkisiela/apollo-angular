@@ -51,7 +51,7 @@
     "graphql-tag": "2.10.0",
     "jest": "23.6.0",
     "jest-zone-patch": "0.0.8",
-    "ng-packagr": "4.2.0",
+    "ng-packagr": "4.3.0",
     "rxjs": "6.3.3",
     "ts-jest": "23.10.4",
     "typescript": "2.9.2",
