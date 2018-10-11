@@ -14,7 +14,7 @@ export class Query<T = {}, V = R> {
 
   constructor(protected apollo: Apollo) {}
 
-  public watch(variables?: V, options?: WatchQueryOptions): QueryRef<T, V> {
+  public watch(variables?: V, options?: WatchQueryOptions<V>): QueryRef<T, V> {
     return this.apollo.use(this.client).watchQuery<T, V>({
       ...options,
       variables,
@@ -24,7 +24,7 @@ export class Query<T = {}, V = R> {
 
   public fetch(
     variables?: V,
-    options?: QueryOptions,
+    options?: QueryOptions<V>,
   ): Observable<ApolloQueryResult<T>> {
     return this.apollo.use(this.client).query<T, V>({
       ...options,

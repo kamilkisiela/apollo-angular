@@ -15,7 +15,7 @@ export class Mutation<T = {}, V = R> {
 
   public mutate(
     variables?: V,
-    options?: MutationOptions,
+    options?: MutationOptions<T, V>,
   ): Observable<FetchResult<T>> {
     return this.apollo.use(this.client).mutate<T, V>({
       ...options,

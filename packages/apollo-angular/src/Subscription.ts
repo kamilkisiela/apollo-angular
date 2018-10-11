@@ -19,10 +19,10 @@ export class Subscription<T = any, V = R> {
 
   public subscribe(
     variables?: V,
-    options?: SubscriptionOptions,
+    options?: SubscriptionOptions<V>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<SubscriptionResult<T>> {
-    return this.apollo.use(this.client).subscribe(
+    return this.apollo.use(this.client).subscribe<T, V>(
       {
         ...options,
         variables,

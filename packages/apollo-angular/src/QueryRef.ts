@@ -18,7 +18,7 @@ export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
   public queryId: string;
 
-  constructor(private obsQuery: ObservableQuery<T>, ngZone: NgZone) {
+  constructor(private obsQuery: ObservableQuery<T, V>, ngZone: NgZone) {
     this.valueChanges = wrapWithZone(
       from(fixObservable(this.obsQuery)),
       ngZone,
@@ -58,8 +58,12 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
-  public subscribeToMore(options: SubscribeToMoreOptions): () => void {
-    return this.obsQuery.subscribeToMore(options);
+  public subscribeToMore<MT = any, MV = R>(
+    options: SubscribeToMoreOptions<MT, MV>,
+  ): () => void {
+    // XXX: there's a bug in apollo-client typings
+    // it should not inherit types from ObservableQuery
+    return this.obsQuery.subscribeToMore(options as any);
   }
   public updateQuery(
     mapFn: (previousQueryResult: T, options: UpdateQueryOptions<V>) => T,
