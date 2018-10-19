@@ -24,12 +24,12 @@
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0",
+    "@angular/common": "^6.0.0 || ^7.0.0",
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "6.1.10",
-    "@angular/core": "6.1.10",
+    "@angular/common": "7.0.0",
+    "@angular/core": "7.0.0",
     "@types/graphql": "14.0.3",
     "@types/jest": "23.3.5",
     "apollo-link": "1.2.3",
@@ -38,6 +38,6 @@
     "jest": "23.6.0",
     "ng-packagr": "4.3.1",
     "ts-jest": "23.10.4",
-    "typescript": "2.9.2"
+    "typescript": "3.1.3"
   }
 }
