@@ -1,5 +1,9 @@
 # Change log
 
+### v1.3.0
+
+- Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)
+
 ### v1.2.0
 
 * Uses `ng-packagr`
