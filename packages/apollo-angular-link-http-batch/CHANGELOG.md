@@ -1,5 +1,9 @@
 # Change log
 
+### v1.4.0
+
+- Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)
+
 ### v1.3.1
 
 - Bump `apollo-angular-link-http-common` to 1.3.0
