@@ -1,6 +1,6 @@
 # Change log
 
-### vNEXT
+### v1.4.0
 
 - Bump `apollo-angular` to v1.5.0
 
