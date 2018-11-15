@@ -7,7 +7,7 @@
     "after 11pm and before 6am on every weekday"
   ],
   "prCreation": "not-pending",
-  "automerge": "true",
+  "automerge": true,
   "major": {
     "automerge": false
   },
