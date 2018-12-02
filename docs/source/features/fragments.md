@@ -84,7 +84,7 @@ A key advantage of GraphQL is the tree-like nature of the response data, which i
 
 Although this technique doesn't always make sense (for instance it's not always the case that the GraphQL schema is driven by the UI requirements), when it does, it's possible to use some patterns in Apollo client to take full advantage of it.
 
-Image this view hierarchy:
+Imagine this view hierarchy:
 
 ```text
 FeedPage
