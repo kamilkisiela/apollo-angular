@@ -227,7 +227,7 @@ import {Component, Input} from '@angular/core';
 import {NewPostGQL} from './graphql';
 
 @Component({ ... })
-export class AcitivityComponent {
+export class ActivityComponent {
   constructor(newPostGQL: NewPostGQL) {
     this.lastPost = newPostGQL.subscribe();
   }
