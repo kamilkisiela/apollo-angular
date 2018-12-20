@@ -39,7 +39,7 @@
     "@angular/http": "7.1.4",
     "@angular/platform-browser": "7.1.4",
     "@angular/platform-browser-dynamic": "7.1.4",
-    "@ngrx/store": "6.1.2",
+    "@ngrx/store": "7.0.0",
     "@types/graphql": "14.0.3",
     "@types/jest": "23.3.10",
     "graphql": "14.0.2",
