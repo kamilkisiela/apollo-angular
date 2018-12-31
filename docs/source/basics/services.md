@@ -16,7 +16,7 @@ The only thing you need to do is to set the document property. That’s it, you 
 In this approach GraphQL Documents are first-class citizens, you think about the query, for example, as a main subject.
 
 > The best part about the new API is that you don't have to create those services, there's a tool that does it for you.
-> To read more about it, go to ["Code Generation"](#code-generation) section
+> To read more about it, go to ["Code Generation"](#Code-Generation) section
 
 ## Query
 
