@@ -31,7 +31,7 @@
     "@angular/common": "7.1.4",
     "@angular/core": "7.1.4",
     "@types/graphql": "14.0.4",
-    "@types/jest": "23.3.10",
+    "@types/jest": "23.3.12",
     "apollo-link": "1.2.6",
     "graphql": "14.0.2",
     "graphql-tag": "2.10.0",
