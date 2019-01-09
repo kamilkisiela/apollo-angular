@@ -30,7 +30,7 @@ import { ApolloBoostModule, ApolloBoost } from "apollo-angular-boost";
 export class AppModule {
   constructor(boost: ApolloBoost) {
     boost.create({
-      uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+      uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
     })
   }
 }
@@ -89,7 +89,7 @@ export class AppModule {
           if (networkError) console.log(`[Network error]: ${networkError}`);
         }),
         httpLink.create({
-          uri: 'https://w5xlvm3vzz.lp.gql.zone/graphql',
+          uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
           withCredentials: true,
         }),
       ]),
