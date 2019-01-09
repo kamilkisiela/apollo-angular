@@ -19,7 +19,7 @@ ng add apollo-angular
 One thing you need to set is the URL of your GraphQL Server, so open `src/app/graphql.module.ts` and set `uri` variables:
 
 ```typescript
-const uri = 'https://w5xlvm3vzz.lp.gql.zone/graphql'; //our test Graphql Server which returns rates
+const uri = 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'; //our test Graphql Server which returns rates
 ```
 
 **Done!** You can now create your first query, [**let's go through it together here**](#request)
@@ -83,7 +83,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
       return {
         cache: new InMemoryCache(),
         link: httpLink.create({
-          uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+          uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
         })
       }
     },

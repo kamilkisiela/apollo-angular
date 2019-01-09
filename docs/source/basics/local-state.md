@@ -29,7 +29,7 @@ import { defaults, resolvers } from './resolvers';
       const cache = new InMemoryCache();
 
       const http = httpLink.create({
-        uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+        uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
       });
 
       const local = withClientState({
