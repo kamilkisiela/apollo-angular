@@ -50,7 +50,7 @@
     "@angular/core": "7.2.1",
     "@angular/platform-browser": "7.2.1",
     "@angular/platform-browser-dynamic": "7.2.1",
-    "@schematics/angular": "7.1.4",
+    "@schematics/angular": "7.2.2",
     "@types/graphql": "14.0.5",
     "@types/jest": "23.3.12",
     "@types/node": "10.12.18",
