@@ -29,6 +29,6 @@
     "rimraf": "2.6.3",
     "shelljs": "0.8.3",
     "tsickle": "0.34.0",
-    "typescript": "3.1.6"
+    "typescript": "3.2.4"
   }
 }
