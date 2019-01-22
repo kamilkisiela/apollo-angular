@@ -48,7 +48,7 @@ function addModuleImportToModule(
   }
 
   const changes = addImportToModule(
-    moduleSource,
+    moduleSource as any, // XXX @schematics/angular went mad
     moduleToImportIn,
     importedModuleName,
     importedModulePath,
