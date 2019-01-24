@@ -106,7 +106,7 @@ export class FilterLinkComponent implements OnInit {
 We got Apollo Client instance through `Apollo.getClient()` method.
 From the client instance, you can directly call `client.writeData` and pass in the data you'd like to write to the cache.
 
-What if we want to immediately subscribe to the data we just wrote to the cache? Let's create an `active` property on the link that marks the link's filter as active if it's the same as the current `visibilityFilter` in the cache. To immediately subscribe to a client-side mutation, use `Apollo.watchQuery` in a component.
+What if we want to immediately subscribe to the data we just wrote to the cache? Let's create an `disabled` property on the link that marks the link's filter as disabled if it's the same as the current `visibilityFilter` in the cache. To immediately subscribe to a client-side mutation, use `Apollo.watchQuery` in a component.
 
 ```ts
 import {Component, OnInit, Input} from '@angular/core';
