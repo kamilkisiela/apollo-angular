@@ -1,6 +1,4 @@
 import {NgZone} from '@angular/core';
-import {ObservableQuery} from 'apollo-client';
-import {Observable as ApolloObservable} from 'apollo-client/util/Observable';
 import {observeOn} from 'rxjs/operators';
 import {
   Observable,
