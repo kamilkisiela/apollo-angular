@@ -13,7 +13,7 @@ included in your project.
 The most common need when using type systems with GraphQL is to type the results
 of an operation. Given that a GraphQL server's schema is strongly typed, we can
 even generate TypeScript definitions automaticaly using a tool like
-[apollo-codegen](https://github.com/apollographql/apollo-codegen). In these docs
+[Graphql Code Generator](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular). In these docs
 however, we will be writing result types manually.
 
 Since the result of a query will be sent to the component or service, we want to
