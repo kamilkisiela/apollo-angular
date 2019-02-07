@@ -76,6 +76,37 @@ describe('HttpBatchLink', () => {
     }, 50);
   });
 
+  test('should fail on uri as function', (done: jest.DoneCallback) => {
+    const link = httpLink.create({
+      uri: () => '/graphql',
+    });
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+      variables: {},
+    };
+    const data = {};
+
+    execute(link, op).subscribe({
+      next: () => {
+        done.fail('Should not be here');
+      },
+      error: () => {
+        done();
+      },
+    });
+
+    setTimeout(() => {
+      httpBackend.expectOne('graphql').flush({data});
+    }, 50);
+  });
+
   test('should support multiple queries', (done: jest.DoneCallback) => {
     const link = httpLink.create({uri: 'graphql', batchKey: () => 'bachKey'});
     const op1 = {

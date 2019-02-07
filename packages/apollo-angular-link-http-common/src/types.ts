@@ -1,13 +1,16 @@
 import {HttpHeaders} from '@angular/common/http';
+import {Operation} from 'apollo-link';
 
 export type HttpRequestOptions = {
   headers?: HttpHeaders;
   withCredentials?: boolean;
 };
 
+export type URIFunction = (operation: Operation) => string;
+
 export type FetchOptions = {
   method?: string;
-  uri?: string;
+  uri?: string | URIFunction;
   includeExtensions?: boolean;
   includeQuery?: boolean;
 };
