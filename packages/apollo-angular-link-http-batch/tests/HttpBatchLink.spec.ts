@@ -91,7 +91,6 @@ describe('HttpBatchLink', () => {
       operationName: 'heroes',
       variables: {},
     };
-    const data = {};
 
     execute(link, op).subscribe({
       next: () => {
@@ -101,10 +100,6 @@ describe('HttpBatchLink', () => {
         done();
       },
     });
-
-    setTimeout(() => {
-      httpBackend.expectOne('graphql').flush({data});
-    }, 50);
   });
 
   test('should support multiple queries', (done: jest.DoneCallback) => {
