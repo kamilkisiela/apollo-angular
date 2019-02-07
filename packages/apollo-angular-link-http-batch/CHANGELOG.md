@@ -2,7 +2,7 @@
 
 ### v1.5.0
 
-- Make sure people don't use `uri` as function
+- Make sure people don't use `uri` as function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)
 
 ### v1.4.0
 
