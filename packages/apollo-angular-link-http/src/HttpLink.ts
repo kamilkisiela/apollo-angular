@@ -45,7 +45,7 @@ export class HttpLinkHandler extends ApolloLink {
 
         const req: Request = {
           method,
-          url,
+          url: typeof url === 'function' ? url(operation) : url,
           body: {
             operationName: operation.operationName,
             variables: operation.variables,

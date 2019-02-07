@@ -44,6 +44,10 @@ export class HttpBatchLinkHandler extends ApolloLink {
         const headers = this.createHeaders(operations);
         const {method, uri, withCredentials} = this.createOptions(operations);
 
+        if (typeof uri === 'function') {
+          throw new Error(`Option 'uri' is a function, should be a string`);
+        }
+
         const req: Request = {
           method,
           url: uri,

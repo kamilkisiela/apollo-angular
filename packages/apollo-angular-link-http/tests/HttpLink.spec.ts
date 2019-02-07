@@ -76,6 +76,60 @@ describe('HttpLink', () => {
     httpBackend.expectOne('graphql').flush({data});
   });
 
+  test('should handle uri as function', () => {
+    const link = httpLink.create({uri: () => 'custom'});
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+      variables: {},
+    };
+    const data = {
+      heroes: [{name: 'Superman'}],
+    };
+
+    execute(link, op).subscribe({
+      next: (result: any) => expect(result).toEqual({data}),
+      error: () => {
+        throw new Error('Should not be here');
+      },
+    });
+
+    httpBackend.expectOne('custom').flush({data});
+  });
+
+  test('should use /graphql by default', () => {
+    const link = httpLink.create({});
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+      variables: {},
+    };
+    const data = {
+      heroes: [{name: 'Superman'}],
+    };
+
+    execute(link, op).subscribe({
+      next: (result: any) => expect(result).toEqual({data}),
+      error: () => {
+        throw new Error('Should not be here');
+      },
+    });
+
+    httpBackend.expectOne('graphql').flush({data});
+  });
+
   test('should send it as JSON with right body and headers', () => {
     const link = httpLink.create({uri: 'graphql'});
     const op = {
@@ -507,8 +561,10 @@ describe('HttpLink', () => {
     });
 
     // Resolve first mutation
-    httpBackend.expectOne(req => req.body.operationName === 'first').flush({
-      data: data1,
-    });
+    httpBackend
+      .expectOne(req => req.body.operationName === 'first')
+      .flush({
+        data: data1,
+      });
   });
 });

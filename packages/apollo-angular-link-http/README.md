@@ -39,14 +39,14 @@ about the request in the extensions field. To enable this, pass
 `includeExtensions` as true. If you would like to use persisted queries or just
 not to send a query, disable `includeQuery`.
 
-| name              | value       | default    | required |
-| ----------------- | ----------- | ---------- | -------- |
-| uri               | string      | `/graphql` | false    |
-| includeExtensions | boolean     | `false`    | false    |
-| includeQuery      | boolean     | `true`     | false    |
-| headers           | HttpHeaders | `none`     | false    |
-| withCredentials   | boolean     | `none`     | false    |
-| method            | string      | `POST`     | false    |
+| name              | value             | default    | required |
+| ----------------- | ----------------- | ---------- | -------- |
+| uri               | string / function | `/graphql` | false    |
+| includeExtensions | boolean           | `false`    | false    |
+| includeQuery      | boolean           | `true`     | false    |
+| headers           | HttpHeaders       | `none`     | false    |
+| withCredentials   | boolean           | `none`     | false    |
+| method            | string            | `POST`     | false    |
 
 ## Context
 
@@ -91,6 +91,26 @@ apollo.query({
     headers: new HttpHeaders().set('X-Custom-Header', 'custom-value'),
   },
 });
+```
+
+### Uri as function
+
+```ts
+@NgModules({
+  imports: [HttpClientModule, ApolloModule, HttpLinkModule],
+})
+class AppModule {
+  constructor(apollo: Apollo, httpLink: httpLink) {
+    apollo.create({
+      link: httpLink.create({
+        uri(operation) {
+          return operation.operationName === 'login' ? '/auth' : '/graphq';
+        },
+      }),
+      cache: new InMemoryCache(),
+    });
+  }
+}
 ```
 
 ### Middleware

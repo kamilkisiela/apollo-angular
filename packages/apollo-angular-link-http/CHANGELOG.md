@@ -1,5 +1,9 @@
 # Change log
 
+### v1.5.0
+
+- Allow to define `uri` through a function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)
+
 ### v1.4.0
 
 - Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)
