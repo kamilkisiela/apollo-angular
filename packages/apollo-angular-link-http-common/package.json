@@ -50,7 +50,7 @@
     "jest-zone-patch": "0.0.10",
     "ng-packagr": "4.7.1",
     "rxjs": "6.4.0",
-    "ts-jest": "23.10.5",
+    "ts-jest": "24.0.0",
     "typescript": "3.2.4",
     "zone.js": "0.8.29"
   }
