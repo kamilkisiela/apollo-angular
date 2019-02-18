@@ -31,7 +31,7 @@
     "apollo-link-persisted-queries": "~0.2.0"
   },
   "devDependencies": {
-    "@types/graphql": "14.0.5",
+    "@types/graphql": "14.0.7",
     "@types/jest": "23.3.13",
     "apollo-link": "1.2.8",
     "graphql": "14.1.1",
