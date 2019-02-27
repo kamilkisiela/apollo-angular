@@ -27,7 +27,7 @@
     "@angular/common": "^6.1.0 || ^7.0.0"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "~1.4.0",
+    "apollo-cache-inmemory": "~1.5.0",
     "apollo-angular": "~1.5.0",
     "apollo-client": "^2.3.1",
     "apollo-angular-link-http": "~1.4.0",
