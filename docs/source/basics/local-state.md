@@ -25,7 +25,7 @@ import { defaults, resolvers } from './resolvers';
   // ...
   providers: [{
     provide: APOLLO_OPTIONS,
-    useFactory(httpLink: HttpLink) {
+    useFactory: (httpLink: HttpLink) => {
       const cache = new InMemoryCache();
 
       const http = httpLink.create({
