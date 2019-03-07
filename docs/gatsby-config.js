@@ -50,7 +50,7 @@ module.exports = {
             'recipes/webpack',
             'recipes/meteor',
             'recipes/angular-cli',
-            'recipies/boost-migration'
+            'recipes/boost-migration'
           ]
         }
       }
