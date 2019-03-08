@@ -6,7 +6,7 @@ module.exports = {
         root: __dirname,
         subtitle: 'Apollo Angular',
         description: 'A guide to using the Apollo GraphQL Client with Angular',
-        contentDir: 'source',
+        contentDir: 'docs/source',
         basePath: '/docs/angular',
         githubRepo: 'apollographql/apollo-angular',
         sidebarCategories: {
