@@ -42,15 +42,15 @@
     "semver": "^5.5.1"
   },
   "devDependencies": {
-    "@angular-devkit/core": "7.3.5",
-    "@angular-devkit/schematics": "7.3.5",
+    "@angular-devkit/core": "7.3.6",
+    "@angular-devkit/schematics": "7.3.6",
     "@angular/common": "7.2.9",
     "@angular/compiler": "7.2.9",
     "@angular/compiler-cli": "7.2.9",
     "@angular/core": "7.2.9",
     "@angular/platform-browser": "7.2.9",
     "@angular/platform-browser-dynamic": "7.2.9",
-    "@schematics/angular": "7.3.5",
+    "@schematics/angular": "7.3.6",
     "@types/graphql": "14.0.7",
     "@types/jest": "23.3.13",
     "@types/node": "10.14.1",
