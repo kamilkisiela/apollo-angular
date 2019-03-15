@@ -57,7 +57,7 @@
     "@types/semver": "5.5.0",
     "apollo-cache-inmemory": "1.5.1",
     "apollo-client": "2.5.1",
-    "apollo-link": "1.2.9",
+    "apollo-link": "1.2.11",
     "cpx": "1.5.0",
     "graphql": "14.1.1",
     "graphql-tag": "2.10.1",
