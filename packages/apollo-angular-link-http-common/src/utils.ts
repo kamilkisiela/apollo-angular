@@ -31,13 +31,13 @@ export const fetch = (
         body: req.body,
       };
     } else {
-      Object.keys(req.body).forEach(param => {
-        if (shouldStringify(param.toLowerCase())) {
-          (req.body as any)[param] = JSON.stringify((req.body as any)[param]);
-        }
-      });
+      const params = Object.keys(req.body).reduce((obj: any, param) => {
+        const value = (req.body as any)[param];
+        obj[param] = shouldStringify(param) ? JSON.stringify(value) : value;
+        return obj;
+      }, {});
 
-      bodyOrParams = {params: req.body};
+      bodyOrParams = {params: params};
     }
   }
 
