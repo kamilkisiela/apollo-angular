@@ -68,7 +68,7 @@ property that is an `Observable`.
 We can see that the result object contains `loading`, a Boolean indicating if
 the query is "in-flight." The observable will only emit once when the query is
 complete, and `loading` will be set to false unless you set the `watchQuery`
-parameters `notifyOnNetworkStatusChange` or `returnPartialData` to true. Once
+parameters `notifyOnNetworkStatusChange` to true. Once
 the query has completed, it will also contain a `data` object with
 `currentUser`, the field we've picked out in `CurrentUserForProfile`.
 
