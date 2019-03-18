@@ -1,5 +1,11 @@
 # Change log
 
+### vNEXT
+
+### v1.5.1
+
+- Prevent production optimisation removing code when using GET [PR #1113](https://github.com/apollographql/apollo-angular/pull/1113)
+
 ### v1.5.0
 
 - Allow to define `uri` through a function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)
