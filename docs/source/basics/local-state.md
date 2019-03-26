@@ -325,6 +325,75 @@ If you open up Apollo DevTools and click on the `GraphiQL` tab, you'll be able t
 
 What’s really cool about using a `@client` directive to specify client-side only fields is that you can actually combine local and remote data in one query.
 
+<h2 id="migrating">Migrating from `apollo-link-state`</h2>
+
+The [`apollo-link-state`](https://github.com/apollographql/apollo-link-state) project was the first to bring local state handling into the Apollo ecosystem. Handling local resolvers through the addition of an `ApolloLink` was a great starting point, and proved that `@client` based queries make sense, and work really well for local state management.
+
+While `apollo-link-state` achieved some of the goals of local state handling, the information available when using any `ApolloLink` is limited by the modularity of the link system. We consider local state management a core part of the Apollo ecosystem, and as Apollo Client progresses, we want to make sure local resolvers are integrated as tightly as possible into core. This integration opens up new possibilities (like `@export` handling) and ties nicely into the future planned adjustments to cache data retention, invalidation, garbage collection, and other planned features that impact both local and remote data.
+
+Updating your application to use Apollo Client's local state management features, instead of `apollo-link-state`, is fairly straightforward. The necessary steps are outlined below.
+
+1. Including `apollo-link-state` as a dependency, and importing it to use `withClientState`, is no longer necessary. You can remove the `apollo-link-state` dependency since local state management is included with `apollo-client` >= 2.5.0.
+
+2. Using `withClientState` is no longer supported. The following
+
+  ```js
+  const cache = new InMemoryCache();
+  const stateLink = withClientState({ cache, resolvers: { ... } });
+  const link = ApolloLink.from([stateLink, new HttpLink({ uri: '...' })]);
+  const client = new ApolloClient({
+    cache,
+    link,
+  });
+  ```
+  becomes
+
+  ```js
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: new HttpLink({ uri: '...' }),
+    resolvers: { ... },
+  });
+  ```
+
+3. `defaults` are no longer supported. To prep the cache, use [`cache.writeData`](#write-data) directly instead. So
+
+  ```js
+  const cache = new InMemoryCache();
+  const stateLink = withClientState({
+    cache,
+    resolvers: { ... },
+    defaults: {
+      someField: 'some value',
+    },
+  });
+  const link = ApolloLink.from([stateLink, new HttpLink({ uri: '...' })]);
+  const client = new ApolloClient({
+    cache,
+    link,
+  });
+  ```
+  becomes:
+
+  ```js
+  const cache = new InMemoryCache();
+  const client = new ApolloClient({
+    cache,
+    link: new HttpLink({ uri: '...' }),
+    resolvers: { ... },
+  });
+  cache.writeData({
+    data: {
+      someField: 'some value',
+    },
+  });
+  ```
+
+4. If you're using Apollo Boost, you shouldn't have to change anything. Apollo Boost has been updated to use Apollo Client's integrated local state handling, which means it is no longer using `apollo-link-state`. Behind the scenes, the Apollo Boost `clientState` constructor parameter now feeds the necessary local state initialization directly into Apollo Client.
+
+5. Test thoroughly! 🙂
+
+
 <h2 id="next-steps">Next steps</h2>
 
 Managing your local data with Apollo Client can simplify your state management code since the Apollo cache is your single source of truth for all data in your application. If you'd like to learn more about Apollo Angular, check out:
