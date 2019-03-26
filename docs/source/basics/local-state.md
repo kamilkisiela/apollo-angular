@@ -2,23 +2,21 @@
 title: Local state management
 description: Learn how to store your local data in Apollo Angular
 ---
-
 We've learned how to manage remote data from our GraphQL server with Apollo Angular, but what should we do with our local data? We want to be able to access boolean flags and device API results from multiple components in our app, but don't want to maintain a separate NGRX or Redux store. Ideally, we would like the Apollo cache to be the single source of truth for all data in our client application.
 
-That's where `apollo-link-state`, our solution for managing local data in Apollo Client, comes in. `apollo-link-state` allows you to store your local data inside the Apollo cache alongside your remote data. To access your local data, just query it with GraphQL. You can even request local and server data within the same query!
+Apollo Client (>= 2.5) has built-in local state handling capabilities, that allow you to store your local data inside the Apollo cache alongside your remote data. To access your local data, just query it with GraphQL. You can even request local and server data within the same query!
 
-In this section, you'll learn how to simplify local state management in your app with `apollo-link-state`. We'll build client-side resolvers to help us execute local queries and mutations. You'll also learn how to query and update the cache with the `@client` directive. Let's jump right in!
+In this section, you'll learn how Apollo Client can help simplify local state management in your app. We'll cover how client-side resolvers can help us execute local queries and mutations. You'll also learn how to query and update the cache with the `@client` directive.
+
+Please note that this documentation is intended to be used to familiarize yourself with Apollo Client's local state management capabilities, and serve as a reference guide. If you're looking for a step by step tutorial outlining how to handle local state with Apollo Client (and leverage other Apollo components to build a fullstack application), please refer to the [Apollo tutorial](https://www.apollographql.com/docs/tutorial/introduction.html).
+
+> ⚠️ If you're interested in integrating local state handling capabilities with Apollo Client < 2.5, please refer to our (now deprecated) [`apollo-link-state`](https://github.com/apollographql/apollo-link-state) project. As of Apollo Client 2.5, local state handling is baked into the core, which means it is no longer necessary to use `apollo-link-state`. For help migrating from `apollo-link-state` to Apollo Client 2.5, please refer to the [Migrating from `apollo-link-state`](#migrating) section.
 
 <h2 id="setup">Setting up</h2>
 
-First, we need to install `apollo-link-state` package:
-
-```bash
-npm install --save apollo-link-state
-```
+First, we need to extend our module:
 
 ```js
-import { withClientState } from 'apollo-link-state';
 import { defaults, resolvers } from './resolvers';
 
 @NgModule({
@@ -26,21 +24,16 @@ import { defaults, resolvers } from './resolvers';
   providers: [{
     provide: APOLLO_OPTIONS,
     useFactory: (httpLink: HttpLink) => {
-      const cache = new InMemoryCache();
 
       const http = httpLink.create({
         uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
       });
 
-      const local = withClientState({
-        cache,
-        defaults,
-        resolvers
-      });
-
       return {
         cache: new InMemoryCache(),
-        link: local.concat(http)
+        link: local.concat(http),
+        resolvers,
+        typeDefs
       }
     },
     deps: [HttpLink]
@@ -50,26 +43,20 @@ import { defaults, resolvers } from './resolvers';
 export class AppModule {}
 ```
 
-The three options you can pass to `withClientState` are:
+The two additional options you can pass to the constructor of `ApolloClient` are:
 
 <dl>
-  <dt>[`defaults`](#defaults.html): Object</dt>
-  <dd>The initial data you want to write to the Apollo cache when the client is initialized</dd>
-  <dt>[`resolvers`](#resolvers.html): Object</dt>
+  <dt>[`resolvers`](#resolvers.html): Resolvers | Resolvers[];</dt>
   <dd>A map of functions that your GraphQL queries and mutations call in order to read and write to the cache</dd>
-  <dt>[`typeDefs`](#schema.html): string | Array<string></dt>
+  <dt>[`typeDefs`](#schema.html): string | string[] | DocumentNode | DocumentNode[]</dt>
   <dd>A string representing your client-side schema written in [Schema Definition Language](/docs/graphql-tools/generate-schema.html#schema-language). This schema is not used for validation (yet!), but is used for introspection in Apollo DevTools</dd>
 </dl>
 
 None of these options are required. If you don't specify anything, you will still be able to use the `@client` directive to query the cache.
 
-If you'd like a deep dive into the `withClientState` config properties, we recommend checking out the [`apollo-link-state` docs](/docs/link/links/state.html). Otherwise, get ready to learn about these properties gradually as we build queries and mutations for local data.
-
-> If you’d like to follow along, please open our [example app](https://stackblitz.com/edit/apollo-angular-local-state) on StackBlitz. Since this example lives in the apollo-link-state repository.
-
 <h2 id="mutations">Updating local data</h2>
 
-There are two ways to perform mutations in `apollo-link-state`. The first way is directly writing to the cache by calling `cache.writeData` within a component. Direct writes are great for one-off mutations that don't depend on the data that's currently in the cache, such as writing a single value. The second way is creating a component with a GraphQL mutation that calls a client-side resolver. We recommend using resolvers if your mutation depends on existing values in the cache, such as adding an item to a list or toggling a boolean. You can think of direct writes like dispatching an action in NGRX, whereas resolvers offer a bit more structure like NGRX. Let's learn about both ways below!
+There are two ways to perform mutations in your local store. The first way is directly writing to the cache by calling `cache.writeData` within a component. Direct writes are great for one-off mutations that don't depend on the data that's currently in the cache, such as writing a single value. The second way is creating a component with a GraphQL mutation that calls a client-side resolver. We recommend using resolvers if your mutation depends on existing values in the cache, such as adding an item to a list or toggling a boolean. You can think of direct writes like dispatching an action in NGRX, whereas resolvers offer a bit more structure like NGRX. Let's learn about both ways below!
 
 <h3 id="direct-writes">Direct writes</h3>
 
@@ -162,7 +149,7 @@ The signature of a resolver function is the exact same as resolver functions on 
 fieldName: (obj, args, context, info) => result;
 ```
 
-1. `obj`: The object containing the result returned from the resolver on the parent field or the `ROOT_QUERY` object in the case of a top-level query or mutation. Don't worry about this one too much for `apollo-link-state`.
+1. `obj`: The object containing the result returned from the resolver on the parent field or the `ROOT_QUERY` object in the case of a top-level query or mutation.
 2. `args`: An object containing all of the arguments passed into the field. For example, if you called a mutation with `updateNetworkStatus(isConnected: true)`, the `args` object would be `{ isConnected: true }`.
 3. `context`: The context object, which is shared between your React components and your Apollo Client network stack. The most important thing to note here is that we've added the Apollo cache to the context for you, so you can manipulate the cache with `readQuery`, `writeQuery`, `readFragment`, `writeFragment`, and `writeData`. Learn more about those methods [here](../advanced/caching.html#direct).
 4. `info`: Information about the execution state of the query. You will probably never have to use this one.
@@ -236,7 +223,7 @@ export class TodoComponent {
 }
 ```
 
-First, we create a GraphQL mutation that takes the todo's id we want to toggle as its only argument. We indicate that this is a local mutation by marking the field with a `@client` directive. This will tell `apollo-link-state` to call our `toggleTodo` mutation resolver in order to resolve the field. Then, we define `Apollo.mutate` in the component just as we would for a remote mutation. Finally, call in your GraphQL mutation in your component and trigger it from within the UI.
+First, we create a GraphQL mutation that takes the todo's id we want to toggle as its only argument. We indicate that this is a local mutation by marking the field with a `@client` directive. This will tell Apollo Client to call our `toggleTodo` mutation resolver in order to resolve the field. Then, we define `Apollo.mutate` in the component just as we would for a remote mutation. Finally, call in your GraphQL mutation in your component and trigger it from within the UI.
 
 If you'd like to see an example of a local mutation adding a todo to a list, check out the `TodoList` component in the [StackBlitz](https://stackblitz.com/edit/apollo-angular-local-state?file=src%2Fapp%2Ftodo-list.component.ts).
 
@@ -304,21 +291,6 @@ export class TodoListComponent implements OnInit {
 
 First, we create our GraphQL query and add `@client` directives to `todos` and `visibilityFilter`. Then, we pass the query to `Apollo.watchQuery` and assign it to a component's property. Reading from the Apollo cache is synchronous, so you won't have to worry about tracking loading state.
 
-Since the query runs as soon as the component is mounted, what do we do if there are no todos in the cache? We need to write an initial state to the cache before the query is run to prevent it from erroring out. That's where defaults come in!
-
-<h3 id="defaults">Defaults</h3>
-
-Your `defaults` object represents the initial state that you would like to write to the cache. It's important to provide defaults for your client-side queries, otherwise they could potentially error out if a mutation hasn't occurred before they run. The shape of your initial state should match how you plan to query it in your application.
-
-```js
-const defaults = {
-  todos: [],
-  visibilityFilter: 'SHOW_ALL',
-};
-```
-
-Your defaults are written to the cache upon initialization of `apollo-link-state` before any operations have occurred. We also write them to the cache again if you reset the Apollo cache.
-
 <h2 id="schema">Client-side schema</h2>
 
 You can optionally pass a client-side schema to the `typeDefs` config property. This schema is not used for validation like it is on the server because the `graphql-js` modules for schema validation would dramatically increase your bundle size. Instead, your client-side schema is used for introspection in Apollo DevTools, where you can explore your schema in GraphiQL.
@@ -345,7 +317,7 @@ const typeDefs = `
 `;
 ```
 
-If you open up Apollo DevTools and click on the `GraphiQL` tab, you'll be able to explore your client schema in the "Docs" section. This app doesn't have a remote schema, but if it did, you would be able to see your local queries and mutations alongside your remote ones. That's the cool part about `apollo-link-state` - it enables you to use GraphQL as a single, unified interface for all of your app's data.
+If you open up Apollo DevTools and click on the `GraphiQL` tab, you'll be able to explore your client schema in the "Docs" section. This app doesn't have a remote schema, but if it did, you would be able to see your local queries and mutations alongside your remote ones. That's the cool part about Apollo Client - it enables you to use GraphQL as a single, unified interface for all of your app's data.
 
 ![GraphiQL Console](../assets/client-schema.png)
 
@@ -355,7 +327,6 @@ What’s really cool about using a `@client` directive to specify client-side on
 
 <h2 id="next-steps">Next steps</h2>
 
-Managing your local data with Apollo Client can simplify your state management code since the Apollo cache is your single source of truth for all data in your application. If you'd like to learn more about `apollo-link-state`, check out:
+Managing your local data with Apollo Client can simplify your state management code since the Apollo cache is your single source of truth for all data in your application. If you'd like to learn more about Apollo Angular, check out:
 
-- [`apollo-link-state` docs](/docs/link/links/state.html): Dive deeper into the concepts we just learned, such as resolvers and mixed queries, by taking a look at the `apollo-link-state` docs.
-- [The future of state management](https://blog.apollographql.com/the-future-of-state-management-dd410864cae2): Read about our vision for the future of state management with GraphQL in the `apollo-link-state` announcement post.
+- [Local state docs](https://www.apollographql.com/docs/tutorial/local-state): Dive deeper into the concepts we just learned, such as resolvers and mixed queries, by taking a look at the Apollo Tutorial docs.
