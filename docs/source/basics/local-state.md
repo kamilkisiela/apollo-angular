@@ -17,7 +17,7 @@ Please note that this documentation is intended to be used to familiarize yourse
 First, we need to extend our module:
 
 ```js
-import { defaults, resolvers } from './resolvers';
+import { resolvers, typeDefs } from './resolvers';
 
 @NgModule({
   // ...
