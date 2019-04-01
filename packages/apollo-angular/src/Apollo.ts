@@ -57,10 +57,19 @@ export class ApolloBase<TCacheShape = any> {
       : wrapWithZone(obs, this.ngZone);
   }
 
+  /**
+   * Get an access to an instance of ApolloClient
+   */
   public getClient() {
     return this._client;
   }
 
+  /**
+   * Set a new instance of ApolloClient
+   * Remember to clean up the store before setting a new client.
+   *
+   * @param client ApolloClient instance
+   */
   public setClient(client: ApolloClient<TCacheShape>) {
     if (this._client) {
       throw new Error('Client has been already defined');
@@ -106,6 +115,11 @@ export class Apollo extends ApolloBase<any> {
     }
   }
 
+  /**
+   * Create an instance of ApolloClient
+   * @param options Options required to create ApolloClient
+   * @param name client's name
+   */
   public create<TCacheShape>(
     options: ApolloClientOptions<TCacheShape>,
     name?: string,
@@ -117,10 +131,17 @@ export class Apollo extends ApolloBase<any> {
     }
   }
 
+  /**
+   * Use a default ApolloClient
+   */
   public default(): ApolloBase<any> {
     return this;
   }
 
+  /**
+   * Use a named ApolloClient
+   * @param name client's name
+   */
   public use(name: string): ApolloBase<any> {
     if (name === 'default') {
       return this.default();
@@ -128,6 +149,10 @@ export class Apollo extends ApolloBase<any> {
     return this.map.get(name);
   }
 
+  /**
+   * Create a default ApolloClient, same as `apollo.create(options)`
+   * @param options ApolloClient's options
+   */
   public createDefault<TCacheShape>(
     options: ApolloClientOptions<TCacheShape>,
   ): void {
@@ -138,6 +163,11 @@ export class Apollo extends ApolloBase<any> {
     return this.setClient(new ApolloClient<TCacheShape>(options));
   }
 
+  /**
+   * Create a named ApolloClient, same as `apollo.create(options, name)`
+   * @param name client's name
+   * @param options ApolloClient's options
+   */
   public createNamed<TCacheShape>(
     name: string,
     options: ApolloClientOptions<TCacheShape>,
@@ -149,5 +179,13 @@ export class Apollo extends ApolloBase<any> {
       name,
       new ApolloBase(this._ngZone, new ApolloClient<TCacheShape>(options)),
     );
+  }
+
+  /**
+   * Remember to clean up the store before removing a client
+   * @param name client's name
+   */
+  public removeClient(name: string): boolean {
+    return this.map.delete(name);
   }
 }
