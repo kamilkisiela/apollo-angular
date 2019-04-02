@@ -31,10 +31,10 @@
     "apollo-link-persisted-queries": "~0.2.0"
   },
   "devDependencies": {
-    "@types/graphql": "14.0.7",
+    "@types/graphql": "14.2.0",
     "@types/jest": "23.3.13",
     "apollo-link": "1.2.11",
-    "graphql": "14.2.0",
+    "graphql": "14.2.1",
     "graphql-tag": "2.10.1",
     "jest": "24.5.0",
     "ng-packagr": "5.0.1",
