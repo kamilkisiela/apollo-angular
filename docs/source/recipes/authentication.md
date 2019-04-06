@@ -41,11 +41,10 @@ Note: the backend must also allow credentials from the requested origin. e.g. if
 
 Another common way to identify yourself when using HTTP is to send along an authorization header. Apollo Links make creating middlewares that lets you modify requests before they are sent to the server. It's easy to add an `Authorization` header to every HTTP request. In this example, we'll pull the login token from `localStorage` every time a request is sent:
 
-```js
+```ts
 import { HttpHeaders } from '@angular/common/http';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
-import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 @NgModule({ ... })
@@ -56,23 +55,23 @@ class AppModule {
   ) {
     const http = httpLink.create({uri: '/graphql'});
 
-    const auth = setContext((_, { headers }) => {
-      // get the authentication token from local storage if it exists
+    const authLink = new ApolloLink((operation, forward) => {
+      // Get the authentication token from local storage if it exists
       const token = localStorage.getItem('token');
-      // return the headers to the context so httpLink can read them
-      // in this example we assume headers property exists
-      // and it is an instance of HttpHeaders
-      if (!token) {
-        return {};
-      } else {
-        return {
-          headers: headers.append('Authorization', `Bearer ${token}`)
-        };
-      }
+
+      // Use the setContext method to set the HTTP headers.
+      operation.setContext({
+          headers: {
+              'Authorization': token ? `Bearer ${token}` : ''
+          }
+      });
+
+      // Call the next link in the middleware chain.
+      return forward(operation);
     });
 
     apollo.create({
-      link: auth.concat(http),
+      link: authLink.concat(http),
       // other options like cache
     });
   }
@@ -86,6 +85,8 @@ The server can use that header to authenticate the user and attach it to the Gra
 In the case that you need to a refresh a token, for example when using the [adal.js](https://github.com/AzureAD/azure-activedirectory-library-for-js) library, you can use an observable wrapped in a promise to wait for a new token:
 
 ```ts
+import { setContext } from 'apollo-link-context';
+
 const auth = setContext(async(_, { headers }) => {
   // Grab token if there is one in storage or hasn't expired
   let token = this.auth.getCachedAccessToken();
