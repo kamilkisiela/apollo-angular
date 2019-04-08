@@ -1,5 +1,9 @@
 # Change log
 
+### vNext
+
+- Supports file upload (set `useMultipart: true` in operation's context)
+
 ### v1.5.0
 
 - Allow to define `uri` through a function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)
