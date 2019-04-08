@@ -1,6 +1,8 @@
 # Change log
 
-### vNext
+### vNEXT
+
+### v1.6.0
 
 - Supports file upload (set `useMultipart: true` in operation's context)
 
