@@ -1,7 +1,8 @@
 import {HttpHeaders, HttpResponse, HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {extractFiles} from 'extract-files';
 
-import {Request} from './types';
+import {Request, Body} from './types';
 
 export const fetch = (
   req: Request,
@@ -11,11 +12,39 @@ export const fetch = (
     ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
   const shouldStringify = (param: string) =>
     ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
+  const isBatching = (req.body as Body[]).length;
+  let shouldUseMultipart = req.options && req.options.useMultipart;
+  let multipartInfo: {
+    clone: Body;
+    files: Map<any, any>;
+  };
+
+  if (shouldUseMultipart) {
+    if (isBatching) {
+      return new Observable(observer =>
+        observer.error(
+          new Error('File upload is not available when combined with Batching'),
+        ),
+      );
+    }
+
+    if (!shouldUseBody) {
+      return new Observable(observer =>
+        observer.error(
+          new Error('File upload is not available when GET is used'),
+        ),
+      );
+    }
+
+    multipartInfo = extractFiles(req.body);
+
+    shouldUseMultipart = !!multipartInfo.files.size;
+  }
 
   // `body` for some, `params` for others
   let bodyOrParams = {};
 
-  if ((req.body as Body[]).length) {
+  if (isBatching) {
     if (!shouldUseBody) {
       return new Observable(observer =>
         observer.error(new Error('Batching is not available for GET requests')),
@@ -26,9 +55,11 @@ export const fetch = (
       body: req.body,
     };
   } else {
+    const body = shouldUseMultipart ? multipartInfo!.clone : req.body;
+
     if (shouldUseBody) {
       bodyOrParams = {
-        body: req.body,
+        body,
       };
     } else {
       const params = Object.keys(req.body).reduce((obj: any, param) => {
@@ -39,6 +70,29 @@ export const fetch = (
 
       bodyOrParams = {params: params};
     }
+  }
+
+  if (shouldUseMultipart && shouldUseBody) {
+    const form = new FormData();
+
+    form.append('operations', JSON.stringify((bodyOrParams as any).body));
+
+    const map: Record<string, any> = {};
+    const files = multipartInfo!.files;
+
+    let i = 0;
+    files.forEach(paths => {
+      map[++i] = paths;
+    });
+
+    form.append('map', JSON.stringify(map));
+
+    i = 0;
+    files.forEach((_, file) => {
+      form.append(++i + '', file, file.name);
+    });
+
+    (bodyOrParams as any).body = form;
   }
 
   // create a request

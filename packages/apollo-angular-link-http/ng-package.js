@@ -7,5 +7,5 @@ module.exports = {
     flatModuleFile: 'ng.apolloLink.http',
     umdModuleIds,
   },
-  whitelistedNonPeerDependencies: ['apollo-angular-link-http-common'],
+  whitelistedNonPeerDependencies: ['apollo-angular-link-http-common', 'extract-files'],
 };

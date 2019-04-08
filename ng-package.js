@@ -16,5 +16,6 @@ module.exports = {
     'apollo-link-persisted-queries': 'persistedQueryLink',
     rxjs: 'rxjs',
     'rxjs/operators': 'rxjs.operators',
+    'extract-files': 'extractFiles'
   },
 };

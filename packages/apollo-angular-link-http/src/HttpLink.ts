@@ -42,6 +42,7 @@ export class HttpLinkHandler extends ApolloLink {
         const method = pick('method', 'POST');
         const url = pick('uri', 'graphql');
         const withCredentials = pick('withCredentials');
+        const useMultipart = pick('useMultipart');
 
         const req: Request = {
           method,
@@ -52,6 +53,7 @@ export class HttpLinkHandler extends ApolloLink {
           },
           options: {
             withCredentials,
+            useMultipart,
             headers: this.options.headers,
           },
         };

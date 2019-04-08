@@ -64,6 +64,7 @@ Options, this one will be used.
 | headers           | HttpHeaders | none            | false    |
 | withCredentials   | boolean     | `as in options` | false    |
 | method            | string      | `as in options` | false    |
+| useMultipart      | boolean     | `as in options` | false    |
 
 ```js
 import {HttpLinkModule, HttpLink} from 'apollo-link-http';
@@ -111,6 +112,19 @@ class AppModule {
     });
   }
 }
+```
+
+### File upload
+
+In order to upload a file, you need to turn on `useMultipart` flag:
+
+```ts
+apollo.query({
+  query: MY_QUERY,
+  context: {
+    useMultipart: true
+  },
+});
 ```
 
 ### Middleware
