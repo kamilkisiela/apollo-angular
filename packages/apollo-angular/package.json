@@ -54,7 +54,7 @@
     "@types/graphql": "14.2.0",
     "@types/jest": "23.3.13",
     "@types/node": "10.14.4",
-    "@types/semver": "5.5.0",
+    "@types/semver": "6.0.0",
     "apollo-cache-inmemory": "1.5.1",
     "apollo-client": "2.5.1",
     "apollo-link": "1.2.11",
