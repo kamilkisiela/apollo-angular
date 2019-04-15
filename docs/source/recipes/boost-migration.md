@@ -105,6 +105,25 @@ The `InMemoryCache` is our recommended cache implementation for Apollo Client. T
 
 If you are using configuration options on Apollo Angular Boost, your migration path will vary depending on which ones you use.
 
+Type your configuration options object as ApolloClientOptions so you can use IntelliSense features on your editor.
+```ts
+export function createApollo(httpLink: HttpLink) {
+  return {
+    cache: new InMemoryCache(),
+    link: ApolloLink.from([
+      onError(({ graphQLErrors, networkError }) => {
+        ...
+      }),
+      httpLink.create({
+        uri: aux.env.graphql
+      }),
+    ]),
+    resolvers,
+    typeDefs
+  } as ApolloClientOptions<any>;
+}
+```
+
 We will try to step by step eject each configuration.
 
 ### uri and HttpOptions
@@ -133,7 +152,17 @@ This one, you put to `HttpLink.create()`.
 
 ### clientState
 
-You can pass whole object to `apollo-link-state` by also including ApolloCache
+You can pass all the proprieties of the object to `apollo-link-state` by also including ApolloCache.
+```ts
+{
+    cache: new InMemoryCache(),
+    link: ApolloLink.from([
+      ...
+    ]),
+    resolvers,
+    typeDefs
+  }
+```
 
 ### onError
 
