@@ -59,7 +59,7 @@ export class QueryRef<T, V = R> {
   }
 
   public subscribeToMore<MT = any, MV = R>(
-    options: SubscribeToMoreOptions<MT, MV>,
+    options: SubscribeToMoreOptions<T, MV, MT>,
   ): () => void {
     // XXX: there's a bug in apollo-client typings
     // it should not inherit types from ObservableQuery
