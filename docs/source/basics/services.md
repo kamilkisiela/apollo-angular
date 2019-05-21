@@ -40,7 +40,7 @@ export interface Post {
   };
 }
 export interface Response {
-  allPosts: Post[];
+  posts: Post[];
 }
 
 
