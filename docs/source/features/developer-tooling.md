@@ -11,7 +11,7 @@ The [Apollo Client Devtools](https://chrome.google.com/webstore/detail/apollo-cl
 
 The devtools appear as an "Apollo" tab in your Chrome inspector, along side the "Elements" and "Console" tabs. There are currently 3 main features of the devtools:
 
-* GraphiQL: Send queries to your server through the Apollo network interface, or query the Apollo cacheto see what data is loaded.
+* GraphiQL: Send queries to your server through the Apollo network interface, or query the Apollo cache to see what data is loaded.
 * Normalized store inspector: Visualize your GraphQL store the way Apollo Client sees it, and search byfield names or values.
 * Watched query inspector: View active queries and variables, and locate the associated UI components.
 
