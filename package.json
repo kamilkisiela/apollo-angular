@@ -21,7 +21,7 @@
     "husky": "2.3.0",
     "jest": "24.5.0",
     "lerna": "3.14.1",
-    "lint-staged": "8.1.5",
+    "lint-staged": "8.1.7",
     "prettier": "1.17.1",
     "rimraf": "2.6.3",
     "shelljs": "0.8.3",
