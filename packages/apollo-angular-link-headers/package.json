@@ -24,12 +24,12 @@
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0 || ^7.0.0",
+    "@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "7.2.13",
-    "@angular/core": "7.2.13",
+    "@angular/common": "8.0.0",
+    "@angular/core": "8.0.0",
     "@types/graphql": "14.2.0",
     "@types/jest": "23.3.13",
     "apollo-link": "1.2.11",
