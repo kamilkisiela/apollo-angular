@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/docs/angular',
   __experimentalThemes: [
     {
       resolve: 'gatsby-theme-apollo-docs',
@@ -6,8 +7,6 @@ module.exports = {
         root: __dirname,
         subtitle: 'Apollo Angular',
         description: 'A guide to using the Apollo GraphQL Client with Angular',
-        contentDir: 'docs/source',
-        basePath: '/docs/angular',
         githubRepo: 'apollographql/apollo-angular',
         sidebarCategories: {
           null: [

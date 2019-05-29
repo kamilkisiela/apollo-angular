@@ -42,7 +42,7 @@ export class AppModule {
 
 If you are new to using Apollo with Angular, you should probably read the [Angular guide](../index.html).
 
-<h2 id="examples">Examples</h2>
+## Examples
 
 There are some Apollo examples written in NativeScript that you may wish to refer to:
 

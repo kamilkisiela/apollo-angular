@@ -15,7 +15,7 @@ All of the methods we will discuss can be called from the `ApolloClient` class. 
 
 You can read more about Caching [here](../basics/caching.html)
 
-<h2 id="updating-the-cache-after-a-mutation">Updating the cache after a mutation</h2>
+## Updating the cache after a mutation
 
 Being able to read and write to the Apollo cache from anywhere in your application gives you a lot of power over your data. However, there is one place where we most often want to update our cached data: after a mutation. As such, Apollo Client has optimized the experience for updating your cache with the read and write methods after a mutation with the `update` function. Let us say that we have the following GraphQL mutation:
 

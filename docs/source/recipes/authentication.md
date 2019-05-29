@@ -105,7 +105,7 @@ const auth = setContext(async(_, { headers }) => {
 });
 ```
 
-<h2 id="login-logout">Reset store on logout</h2>
+## Reset store on logout
 
 Since Apollo caches all of your query results, it's important to get rid of them when the login state changes.
 

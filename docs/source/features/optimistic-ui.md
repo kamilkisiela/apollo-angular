@@ -6,7 +6,7 @@ As explained in the [mutations](../basics/mutations.html#optimistic-ui) section,
 
 Optimistic UI provides an easy way to make your UI respond much faster, while ensuring that the data becomes consistent with the actual response when it arrives.
 
-<h2 id="optimistic-basics">Basic optimistic UI</h2>
+## Basic optimistic UI
 
 Let's say we have an "edit comment" mutation, and we want the UI to update immediately when the user submits the mutation, instead of waiting for the server response. This is what the `optimisticResponse` parameter to the `mutate` method provides.
 
@@ -46,7 +46,7 @@ class AppComponent {
 
 We select `id` and `__typename` because that's what our `dataIdFromObject` uses to determine a globally unique object ID. We need to make sure to provide the right values for those fields, so that Apollo knows what object we are referring to.
 
-<h2 id="optimistic-advanced">Adding to a list</h2>
+## Adding to a list
 
 In the example above, we showed how to seamlessly edit an existing object in the store with an optimistic mutation result. However, many mutations don't just update an existing object in the store, but they insert a new one.
 

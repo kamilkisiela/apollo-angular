@@ -11,7 +11,7 @@ If we're using Apollo Client to manage our remote data, then what do we do with 
 
 The following sections outline some tips to help you make the most of your transition to managing all of your state with Apollo Client.
 
-<h2 id="colocate">Colocate queries with components</h2>
+## Colocate queries with components
 
 When you first start using `Apollo` service for your GraphQL data, it can be tempting to dump all of your queries in one file similar to how developers using Redux put all of their reducers in a single file. Instead, we recommend that you colocate your GraphQL queries with the components that are using them. One of the greatest strengths of GraphQL is its declarative approach to data fetching, which you lose when you have to switch back to another file in order to determine what the shape of your data prop looks like:
 
@@ -53,13 +53,13 @@ class DogPhotoComponent {
 
 In this example, we place our `GET_DOG_PHOTO` query next to our `DogPhoto` component and wrap it with the `gql` function.
 
-<h2 id="data-transformation">Move data transformation to the backend</h2>
+## Move data transformation to the backend
 
 Your GraphQL schema should always reflect how you're consuming the data on the front-end. This is why we recommend that product teams own the design of their GraphQL schema. Shifting to this mentality is a bit of a departure from REST, where front-end developers consume APIs dictated by the backend team and often have to filter and sort the data into the shape their UI components expect.
 
 If you find yourself sorting or filtering the data you receive back from your GraphQL API, it's probably a sign that you need to move that logic to your resolvers instead. Moving filtering and sorting logic to the backend ensures that you can share it across platforms easily instead of duplicating these efforts for every client.
 
-<h2 id="combine-data">Combine local and remote data</h2>
+## Combine local and remote data
 
 With `local state`, you can add virtual fields to your remote data seamlessly and query them from your components by specifying a `@client` directive. In this example, we’re querying the client-only field isLiked alongside our server data. Your components are made up of local and remote data, now your queries can be too! This is one of the main advantages for using Apollo Client to manage all of your application's data.
 

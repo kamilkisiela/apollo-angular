@@ -2,7 +2,7 @@
 title: Angular CLI
 ---
 
-<h2 id="Setup">Setup</h2>
+## Setup
 
 To get started with Apollo and Angular run:
 
@@ -10,7 +10,7 @@ To get started with Apollo and Angular run:
 ng add apollo-angular
 ```
 
-<h2 id="proxy">Proxy</h2>
+## Proxy
 
 If your GraphQL endpoint lives under different host with Angular CLI you can easily define proxy configuration.
 

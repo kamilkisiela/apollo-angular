@@ -8,7 +8,7 @@ GraphQL subscriptions are a way to push data from the server to the clients that
 
 A common use case for subscriptions is notifying the client side about particular events, for example the creation of a new object, updated fields and so on.
 
-<h2 id="overview">Overview</h2>
+## Overview
 
 GraphQL subscriptions have to be defined in the schema, just like queries and mutations:
 
@@ -44,7 +44,7 @@ The response sent to the client looks as follows:
 
 In the above example, the server is written to send a new result every time a comment is added on GitHunt for a specific repository. Note that the code above only defines the GraphQL subscription in the schema. Read [setting up subscriptions on the client](#subscriptions-client) and [setting up GraphQL subscriptions for the server](https://www.apollographql.com/docs/graphql-subscriptions/index.html) to learn how to add subscriptions to your app.
 
-<h3 id="when-to-use">When to use subscriptions</h3>
+### When to use subscriptions
 
 In most cases, intermittent polling or manual refetching are actually the best way to keep your client up to date. So when is a subscription the best option? Subscriptions are especially useful if:
 
@@ -53,7 +53,7 @@ In most cases, intermittent polling or manual refetching are actually the best w
 
 A future version of Apollo or GraphQL might include support for live queries, which would be a low-latency way to replace polling, but at this point general live queries in GraphQL are not yet possible outside of some relatively experimental setups.
 
-<h2 id="subscriptions-client">Client setup</h2>
+## Client setup
 
 The most popular transport for GraphQL subscriptions today is [`subscriptions-transport-ws`](https://github.com/apollographql/subscriptions-transport-ws). This package is maintained by the Apollo community, but can be used with any client or server GraphQL implementation. In this article, we'll explain how to set it up on the client, but you'll also need a server implementation. You can [read about how to use subscriptions with a JavaScript server](/docs/graphql-subscriptions/setup.html), or enjoy subscriptions set up out of the box if you are using a GraphQL backend as a service like [Graphcool](https://www.graph.cool/docs/tutorials/worldchat-subscriptions-example-ui0eizishe/) or [Scaphold](https://scaphold.io/blog/2016/11/09/build-realtime-apps-with-subs.html).
 
@@ -126,7 +126,7 @@ class AppModule {
 
 Now, queries and mutations will go over HTTP as normal, but subscriptions will be done over the websocket transport.
 
-<h2 id="subscribe-to-more">subscribeToMore</h2>
+## subscribeToMore
 
 With GraphQL subscriptions your client will be alerted on push from the server and you should choose the pattern that fits your application the most:
 
@@ -236,7 +236,7 @@ class CommentsComponent {
 }
 ```
 
-<h2 id="authentication">Authentication over WebSocket</h2>
+## Authentication over WebSocket
 
 In many cases it is necessary to authenticate clients before allowing them to receive subscription results. To do this, the `SubscriptionClient` constructor accepts a `connectionParams` field, which passes a custom object that the server can use to validate the connection before setting up any subscriptions.
 

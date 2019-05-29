@@ -8,7 +8,7 @@ Both `apollo-client` and `apollo-angular` ship with definitions in their npm
 packages, so installation should be done for you after the libraries are
 included in your project.
 
-<h2 id="operation-result">Operation result</h2>
+## Operation result
 
 The most common need when using type systems with GraphQL is to type the results
 of an operation. Given that a GraphQL server's schema is strongly typed, we can
@@ -69,7 +69,7 @@ Without specyfing a Generic Type for `Apollo.watchQuery`, TypeScript would throw
 an error saying that `hero` property does not exist in `result.data` object (it
 is an `Object` by default).
 
-<h2 id="options">Options</h2>
+## Options
 
 To make integration between Apollo and Angular even more statically typed you
 can define the shape of variables (in query, watchQuery and mutate methods).
@@ -127,7 +127,7 @@ With this addition, the entirety of the integration between Apollo and Angular
 can be statically typed. When combined with the strong tooling each system
 provides, it can make for a much improved application and developer experience.
 
-<h2 id="other-usage">Other usage</h2>
+## Other usage
 
 It is not only `Apollo` service where you can use generic types for Options and
 Variables. Same logic applies to `QueryRef` object.

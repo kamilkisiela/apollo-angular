@@ -6,7 +6,7 @@ Apollo performs two important core tasks: Executing queries and mutations, and c
 
 Thanks to Apollo's store design, it's possible for the results of a query or mutation to update your UI in all the right places. In many cases it's possible for that to happen automatically, whereas in others you need to help the client out a little in doing so.
 
-<h2 id="normalization">Normalization with `dataIdFromObject`</h2>
+## Normalization with `dataIdFromObject`
 
 Apollo does result caching based on two things:
 
@@ -54,7 +54,7 @@ const person = {
 defaultDataIdFromObject(person); // 'Person:1234'
 ```
 
-<h3 id="automatic-updates">Automatic store updates</h3>
+### Automatic store updates
 
 Let's look at a case where just using the cache normalization results in the correct update to our store. Let's say we do the following query:
 
@@ -80,11 +80,11 @@ mutation {
 
 If the `id` field on both results matches up, then the `score` field everywhere in our UI will be updated automatically! One nice way to take advantage of this property as much as possible is to make your mutation results have all of the data necessary to update the queries previously fetched. A simple trick for this is to use [fragments](fragments.html) to share fields between the query and the mutation that affects it.
 
-<h2 id="after-mutations">Updating after a mutation</h2>
+## Updating after a mutation
 
 In some cases, just using `dataIdFromObject` is not enough for your application UI to update correctly. For example, if you want to add something to a list of objects without refetching the entire list, or if there are some objects that to which you can't assign an object identifier, Apollo Client cannot update existing queries for you. Read on to learn about the other tools at your disposal.
 
-<h3 id="refetchQueries">`refetchQueries`</h3>
+### `refetchQueries`
 
 `refetchQueries` is the simplest way of updating the cache. With `refetchQueries` you can specify one or more queries that you want to run after a mutation is completed in order to refetch the parts of the store that may have been affected by the mutation:
 
@@ -136,8 +136,7 @@ class AppComponent {
 }
 ```
 
-
-<h3 id="directAccess">`update`</h3>
+### `update`
 
 Using `update` gives you full control over the cache, allowing you to make changes to your data model in response to a mutation in any way you like. `update` is the recommended way of updating the cache after a query.
 
@@ -176,7 +175,7 @@ class AppComponent {
 }
 ```
 
-<h3 id="updateQueries">`updateQueries`</h3>
+### `updateQueries`
 
 **NOTE: We recommend using the more flexible `update` API instead of `updateQueries`. The `updateQueries` API may be deprecated in the future.**
 
@@ -288,7 +287,7 @@ In our `updateQueries` function for the `Comment` query, we're doing something r
 
 Once the mutation fires and the result arrives from the server (or, a result is provided through optimistic UI), our `updateQueries` function for the `Comment` query will be called and the `Comment` query will be updated accordingly. Our UI will update with the new information!
 
-<h2 id="fetchMore">Incremental loading: `fetchMore`</h2>
+## Incremental loading: `fetchMore`
 
 `fetchMore` can be used to update the result of a query based on the data returned by another query. Most often, it is used to handle infinite-scroll pagination or other situations where you are loading more data when you already have some.
 
@@ -355,7 +354,7 @@ Here, the `fetchMore` query is the same as the query associated with the compone
 Although `fetchMore` is often used for pagination, there are many other cases in which it is applicable. For example, suppose you have a list of items (say, a collaborative todo list) and you have a way to fetch items that have been updated after a certain time. Then, you don't have to refetch the whole todo list to get updates: you can just incorporate the newly added items with `fetchMore`, as long as your `updateQuery` function correctly merges the new results.
 
 
-<h2 id="cacheRedirect">Cache redirects with `cacheRedirects`</h2>
+## Cache redirects with `cacheRedirects`
 
 In some cases, a query requests data that already exists in the client store under a different key. A very common example of this is when your UI has a list view and a detail view that both use the same data. The list view might run the following query:
 
