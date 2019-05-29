@@ -31,9 +31,9 @@ The result of the above mutation might be:
 }
 ```
 
-When we use mutations in Apollo, the result is typically integrated into the cache automatically [based on the id of the result](../features/cache-updates.html#dataIdFromObject), which in turn updates UI automatically, so we don't explicitly handle the results ourselves. In order for the client to correctly do this, we need to ensure we select the correct fields (as in all the fields that we care about that may have changed).
+When we use mutations in Apollo, the result is typically integrated into the cache automatically [based on the id of the result](/features/cache-updates/#normalization-with-dataidfromobject), which in turn updates UI automatically, so we don't explicitly handle the results ourselves. In order for the client to correctly do this, we need to ensure we select the correct fields (as in all the fields that we care about that may have changed).
 
-<h2 id="basics">Basic Mutations</h2>
+## Basic Mutations
 
 Using `Apollo` it's easy to call mutation. You can simply use `mutate` method.
 
@@ -63,9 +63,9 @@ class NewEntryComponent {
 }
 ```
 
-<h3 id="calling-mutations">Calling mutations</h3>
+### Calling mutations
 
-Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](/docs/react/reference/index.html#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
+Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](https://www.apollographql.com/docs/react/reference/index.html#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
 
 ```ts
 import { Component } from '@angular/core';
@@ -147,9 +147,9 @@ class NewEntryComponent {
 
 ```
 
-> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`](../features/cache-updates.html#updateQueries) callback to update the result of relevant queries with your mutation results.
+> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`][] callback to update the result of relevant queries with your mutation results.
 
-<h2 id="optimistic-ui">Optimistic UI</h2>
+## Optimistic UI
 
 Sometimes your client code can easily predict the result of the mutation, if it succeeds, even before the server responds with the result. For instance, in GitHunt, when a user comments on a repository, we want to show the new comment in context immediately, without waiting on the latency of a round trip to the server, giving the user the experience of a snappy UI. This is what we call [Optimistic UI](http://info.meteor.com/blog/optimistic-ui-with-meteor-latency-compensation). This is possible if the client can predict an *Optimistic Response* for the mutation.
 
@@ -200,9 +200,11 @@ class CommentPageComponent {
 
 For the example above, it is easy to construct an optimistic response, since we know the shape of the new comment and can approximately predict the created date. The optimistic response doesn't have to be exactly correct because it will always will be replaced with the real result from the server, but it should be close enough to make users feel like there is no delay.
 
-> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`](../features/cache-updates.html#updateQueries) to make it appear in this case (and this is what we do in GitHunt).
+> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`][] to make it appear in this case (and this is what we do in GitHunt).
 
-<h2 id="mutation-results">Designing mutation results</h2>
+[`updateQueries`]: /features/cache-updates/#updatequeries
+
+## Designing mutation results
 
 When people talk about GraphQL, they often focus on the data fetching side of things, because that's where GraphQL brings the most value. Mutations can be pretty nice if done well, but the principles of designing good mutations, and especially good mutation result types, are not yet well-understood in the open source community. So when you are working with mutations it might often feel like you need to make a lot of application-specific decisions.
 

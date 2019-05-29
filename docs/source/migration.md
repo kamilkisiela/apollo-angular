@@ -3,7 +3,7 @@ title: Migration Guide
 description: Updating your app to Apollo Client 2.0 and Angular Apollo 1.0
 ---
 
-<h2 id="why" title="Why the 2.0">Why the 2.0</h2>
+## Why the 2.0
 
 #### Apollo Client
 
@@ -13,7 +13,7 @@ The 2.0 version of ApolloClient provides a more customizable experience with Gra
 
 The 1.0 version of Angular integration provides a better experience of using it in Angular. Thanks to changes to the API and the new way we create Apollo it is now possible to use it with anything from Angular's Dependency Injection.
 
-<h3 id="goals" title="Goals">Goals</h3>
+### Goals
 
 #### Apollo Client
 
@@ -35,8 +35,7 @@ The goal of the `2.0` launch is not to provide all of the new features that have
 
 The goal of the `1.0` launch is to improve the experience of using it in Angular.
 
-
-<h2 id="install" title="Installation">Installation</h2>
+## Installation
 
 One of the largest changes with the new version is the breaking apart of the monolith `apollo-client` package into a few small, but isolated modules. This gives way more flexibility, but does require more packages to install.
 
@@ -60,7 +59,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 ```
 
-<h3 id="basic" title="Basic updates">Basic updates</h3>
+### Basic updates
 
 A simple usage of Apollo Client upgrading to the 2.0 would look like this:
 
@@ -144,8 +143,7 @@ Why is that possible?
 
 By using `HttpClient` in `HttpLink` and thanks to DI, the HttpLink does not care about which NgModule provides `HttpClient` to an application since the API of `HttpClient` is always the same.
 
-
-<h3 id="full" title="Custom Configuration">Custom configuration</h3>
+### Custom configuration
 
 Since everything was baked into the 1.0, custom configuration of the parts, like the network interface or cache, all were done on the constructor. With the 2.0, this is broken up slightly, and uneccessary configurations were removed. The following code snippet shows every possible option with the previous version and how to use it with the 2.0:
 
@@ -211,9 +209,9 @@ class AppModule {
 
 *Note* If you were using `customResolvers`, the name of that has been changed to be `cacheResolvers` to be more descriptive of what it does. `customResolvers` will still be supported throughout the 2.0 though to be backwards compatible and ease the upgrade path.
 
-<h2 id="ssr" title="Cache extraction">Cache extraction</h2>
+## Cache extraction
 
-If you have previously used `getInitialState` for SSR, that API has been moved to the cache itself instead of on the client. You can read more about the recipe for server side rendering [here](./recipes/server-side-rendering.html). The upgrade path looks like this:
+If you have previously used `getInitialState` for SSR, that API has been moved to the cache itself instead of on the client. You can read more about the recipe for server side rendering [here](/recipes/server-side-rendering/). The upgrade path looks like this:
 
 **Before**
 
@@ -252,9 +250,9 @@ class AppModule {
 }
 ```
 
-<h2 id="middleware" title="Network Middleware">Network Middleware and Afterware</h2>
+## Network Middleware and Afterware
 
-If you previously used `use` or `useAfter` on the networkInterface from the 1.0 of Apollo Client, you will need to update to use Apollo Links as the new way to handle `*wares` in the 2.0. Apollo Link provides a lot more power for `*ware` features and more information is available [here](/docs/link). A few examples of migrating custom `*ware` methods to Apollo Links are shown below:
+If you previously used `use` or `useAfter` on the networkInterface from the 1.0 of Apollo Client, you will need to update to use Apollo Links as the new way to handle `*wares` in the 2.0. Apollo Link provides a lot more power for `*ware` features and more information is available [here](https://www.apollographql.com/docs/link). A few examples of migrating custom `*ware` methods to Apollo Links are shown below:
 
 #### Middleware
 
@@ -383,9 +381,9 @@ class AppModule {
 }
 ```
 
-For more information on using Apollo Links, check out the [link docs!](/docs/link);
+For more information on using Apollo Links, check out the [link docs!](https://www.apollographql.com/docs/link);
 
-<h2 id="redux" title="Redux">Replacing Redux</h2>
+## Replacing Redux
 
 The 2.0 moves away from using Redux as the caching layer in favor of Apollo maintaining its own store through the provided `cache` passed when creating a client. This allows the new version to be more flexible around how data is cached, and opens the storage of data to many new avenues and view integrations. If you were previously using the Redux integration to do something like logging, you can now use an Apollo Link to log whenever a request is sent to the server. For example:
 
@@ -403,11 +401,12 @@ const logger = new ApolloLink((operation, forward) => {
 
 Ultimately we think the move off Redux will open the door for more powerful cache implementations and further performance gains. If you were using the Redux integration for other uses, please reach out or open an issue so we can help find a solution with the 2.0!
 
-<h2 id="reducers" title="Query Reducers">Query Reducers</h2>
-Query reducers have been finally removed in the 2.0, instead we recommend using the more flexible [`update`](../features/cache-updates.html#directAccess) API instead of reducer.
+## Query Reducers
+
+Query reducers have been finally removed in the 2.0, instead we recommend using the more flexible [`update`](/features/cache-updates/#updating-after-a-mutation) API instead of reducer.
 
 
-<h2 id="observable-variables" title="Observable variables">Observable variables</h2>
+## Observable variables
 
 Apollo 2.0 doesn't ([currently](https://github.com/apollographql/apollo-angular/issues/425)) support passing observables as query variables. For now you can work around this by using `switchMap` on the observable:
 
@@ -423,7 +422,6 @@ this.apollo.watchQuery({
       this.foo = foo;
     });
 ```
-
 
 ***After***
 

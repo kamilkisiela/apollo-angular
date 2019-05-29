@@ -3,14 +3,13 @@ title: Apollo Cache
 description: A guide to customizing and directly accessing your Apollo cache
 ---
 
-
-<h2>InMemoryCache</h2>
+## InMemoryCache
 
 `apollo-cache-inmemory` is the default cache implementation for Apollo Client 2.0. `InMemoryCache` is a normalized data store that supports all of Apollo Client 1.0's features without the dependency on Redux.
 
 In some instances, you may need to manipulate the cache directly, such as updating the store after a mutation. We'll cover some common use cases [here](#recipes).
 
-<h3 id="installation">Installation</h3>
+### Installation
 
 ```bash
 npm install apollo-cache-inmemory --save
@@ -39,7 +38,7 @@ class AppModule {
 }
 ```
 
-<h3 id="configuration">Configuration</h3>
+### Configuration
 
 The `InMemoryCache` constructor takes an optional config object with properties to customize your cache:
 
@@ -48,7 +47,7 @@ The `InMemoryCache` constructor takes an optional config object with properties 
 - fragmentMatcher: By default, the `InMemoryCache` uses a heuristic fragment matcher. If you are using fragments on unions and interfaces, you will need to use an `IntrospectionFragmentMatcher`. For more information, please read [our guide to setting up fragment matching for unions & interfaces].
 - cacheResolves: A map of custom ways to resolve data from other parts of the cache.
 
-<h3 id="normalization">Normalization</h3>
+### Normalization
 
 The `InMemoryCache` normalizes your data before saving it to the store by splitting the result into individual objects, creating a unique identifier for each object, and storing those objects in a flattened data structure. By default, `InMemoryCache` will attempt to use the commonly found primary keys of `id` and `_id` for the unique identifier if they exist along with `__typename` on an object.
 
@@ -78,12 +77,13 @@ const cache = new InMemoryCache({
 });
 ```
 
-<h2 id="direct">Direct Cache Access</h2>
+## Direct Cache Access
+
 To interact directly with your cache, you can use the Apollo Client class methods readQuery, readFragment, writeQuery, and writeFragment. These methods are available to us via the [`DataProxy` interface](https://www.apollographql.com/docs/react/api/apollo-client.html#DataProxy). An instance of ApolloClient can be accessed by `getClient()` method of `Apollo` Service.
 
 Any code demonstration in the following sections will assume that we have already initialized an instance of `ApolloClient` and that we have imported the `gql` tag from `graphql-tag`.
 
-<h3 id="readquery">readQuery</h3>
+### readQuery
 
 The `readQuery` method is very similar to the [`query` method on `ApolloClient`][] except that `readQuery` will _never_ make a request to your GraphQL server. The `query` method, on the other hand, may send a request to your server if the appropriate data is not in your cache whereas `readQuery` will throw an error if the data is not in your cache. `readQuery` will _always_ read from the cache. You can use `readQuery` by giving it a GraphQL query like so:
 
@@ -132,7 +132,7 @@ class AppComponent {
 }
 ```
 
-<h3 id="readfragment">readFragment</h3>
+### readFragment
 
 This method allows you great flexibility around the data in your cache. Whereas `readQuery` only allowed you to read data from your root query type, `readFragment` allows you to read data from _any node you have queried_. This is incredibly powerful. You use this method as follows:
 
@@ -194,7 +194,7 @@ If a todo with that id does not exist in the cache you will get `null` back. If 
 
 The beauty of `readFragment` is that the todo could have come from anywhere! The todo could have been selected as a singleton (`{ todo(id: 5) { ... } }`), the todo could have come from a list of todos (`{ todos { ... } }`), or the todo could have come from a mutation (`mutation { createTodo { ... } }`). As long as at some point your GraphQL server gave you a todo with the provided id and fields `id`, `text`, and `completed` you can read it from the cache at any part of your code.
 
-<h3 id="writequery-and-writefragment">writeQuery` and `writeFragment</h3>
+### writeQuery` and `writeFragment
 
 Not only can you read arbitrary data from the Apollo Client cache, but you can also write any data that you would like to the cache. The methods you use to do this are `writeQuery` and `writeFragment`. They will allow you to change data in your local cache, but it is important to remember that *they will not change any data on your server*. If you reload your environment then changes made with `writeQuery` and `writeFragment` will disappear.
 
@@ -257,11 +257,11 @@ class AppComponent {
 }
 ```
 
-<h2 id="recipes">Recipes</h2>
+## Recipes
 
 Here are some common situations where you would need to access the cache directly. If you're manipulating the cache in an interesting way and would like your example to be featured, please send in a pull request!
 
-<h3 id="server">Server side rendering</h3>
+### Server side rendering
 
-If you would like to learn more about server side rendering, please check our our more in depth guide [here](../recipes/server-side-rendering.html).
+If you would like to learn more about server side rendering, please check our our more in depth guide [here](/recipes/server-side-rendering/).
 

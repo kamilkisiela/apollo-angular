@@ -4,7 +4,7 @@ title: Authentication
 
 Unless all of the data you are loading is completely public, your app has some sort of users, accounts and permissions systems. If different users have different permissions in your application, then you need a way to tell the server which user is associated with each request.
 
-Apollo Client uses the ultra flexible [Apollo Link](/docs/link) that includes several options for authentication.
+Apollo Client uses the ultra flexible [Apollo Link](https://www.apollographql.com/docs/link) that includes several options for authentication.
 
 ## Cookie
 
@@ -105,7 +105,7 @@ const auth = setContext(async(_, { headers }) => {
 });
 ```
 
-<h2 id="login-logout">Reset store on logout</h2>
+## Reset store on logout
 
 Since Apollo caches all of your query results, it's important to get rid of them when the login state changes.
 
