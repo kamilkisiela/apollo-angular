@@ -13,8 +13,8 @@ describe('ng-add', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
 
-  beforeEach(() => {
-    appTree = createTestApp();
+  beforeEach(async () => {
+    appTree = await createTestApp();
     runner = new SchematicTestRunner('schematics', collectionPath);
   });
 
