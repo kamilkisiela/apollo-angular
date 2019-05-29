@@ -1,6 +1,13 @@
 # Change log
 
-### vNEXT
+### vNext
+
+### v1.6.0
+
+- Angular 8 [PR #1206](https://github.com/apollographql/apollo-angular/pull/1206)
+- Bumps packages in schematics
+
+### v1.5.0
 
 - Use more generic types and make everything more strict [PR #885](https://github.com/apollographql/apollo-angular/pull/885)
 - Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)
