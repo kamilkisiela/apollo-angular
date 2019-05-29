@@ -99,7 +99,7 @@ export class AppModule {
 }
 ```
 
-The `InMemoryCache` is our recommended cache implementation for Apollo Client. The `HttpLink` is an Apollo Link that sends HTTP requests through Angular's HttpClient. Your network stack can be made up of one or more links, which you can chain together to create a customizable network stack. Learn more in our [network layer](./network-layer.html) guide or the [Apollo Link](/docs/link.html) docs.
+The `InMemoryCache` is our recommended cache implementation for Apollo Client. The `HttpLink` is an Apollo Link that sends HTTP requests through Angular's HttpClient. Your network stack can be made up of one or more links, which you can chain together to create a customizable network stack. Learn more in our [network layer](/basics/network-layer/) guide or the [Apollo Link](https://www.apollographql.com/docs/link/) docs.
 
 ## Advanced migration
 

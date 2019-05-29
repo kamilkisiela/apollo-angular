@@ -7,7 +7,7 @@ Not only is state management one of the most important aspects of building the f
 
 With a GraphQL and Apollo workflow, you just write queries and let Apollo Client take care of the rest. Apollo Client normalizes and caches your data out of the box with zero configuration. It also enables you to execute complicated features such as optimistic UI, polling, and pagination with only a few lines of code.
 
-If we're using Apollo Client to manage our remote data, then what do we do with local data such as boolean flags and device API information that we'd like to access globally? This is where [`Apollo Client`](/docs/angular/basics/local-state.html) comes in, our solution for local state management that allows you to use your Apollo cache as the single source of truth for data in your application. We recommend managing all of your local and remote data with Apollo Client so GraphQL becomes a unified interface to all of your application's data.
+If we're using Apollo Client to manage our remote data, then what do we do with local data such as boolean flags and device API information that we'd like to access globally? This is where [`Apollo Client`](/basics/local-state/) comes in, our solution for local state management that allows you to use your Apollo cache as the single source of truth for data in your application. We recommend managing all of your local and remote data with Apollo Client so GraphQL becomes a unified interface to all of your application's data.
 
 The following sections outline some tips to help you make the most of your transition to managing all of your state with Apollo Client.
 

@@ -31,7 +31,7 @@ The result of the above mutation might be:
 }
 ```
 
-When we use mutations in Apollo, the result is typically integrated into the cache automatically [based on the id of the result](../features/cache-updates.html#dataIdFromObject), which in turn updates UI automatically, so we don't explicitly handle the results ourselves. In order for the client to correctly do this, we need to ensure we select the correct fields (as in all the fields that we care about that may have changed).
+When we use mutations in Apollo, the result is typically integrated into the cache automatically [based on the id of the result](/features/cache-updates/#normalization-with-dataidfromobject), which in turn updates UI automatically, so we don't explicitly handle the results ourselves. In order for the client to correctly do this, we need to ensure we select the correct fields (as in all the fields that we care about that may have changed).
 
 ## Basic Mutations
 
@@ -65,7 +65,7 @@ class NewEntryComponent {
 
 ### Calling mutations
 
-Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](/docs/react/reference/index.html#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
+Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](https://www.apollographql.com/docs/react/reference/index.html#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
 
 ```ts
 import { Component } from '@angular/core';
@@ -147,7 +147,7 @@ class NewEntryComponent {
 
 ```
 
-> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`](../features/cache-updates.html#updateQueries) callback to update the result of relevant queries with your mutation results.
+> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`][] callback to update the result of relevant queries with your mutation results.
 
 ## Optimistic UI
 
@@ -200,7 +200,9 @@ class CommentPageComponent {
 
 For the example above, it is easy to construct an optimistic response, since we know the shape of the new comment and can approximately predict the created date. The optimistic response doesn't have to be exactly correct because it will always will be replaced with the real result from the server, but it should be close enough to make users feel like there is no delay.
 
-> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`](../features/cache-updates.html#updateQueries) to make it appear in this case (and this is what we do in GitHunt).
+> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`][] to make it appear in this case (and this is what we do in GitHunt).
+
+[`updateQueries`]: /features/cache-updates/#updatequeries
 
 ## Designing mutation results
 

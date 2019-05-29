@@ -22,7 +22,7 @@ One thing you need to set is the URL of your GraphQL Server, so open `src/app/gr
 const uri = 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'; //our test Graphql Server which returns rates
 ```
 
-**Done!** You can now create your first query, [**let's go through it together here**](#request)
+**Done!** You can now create your first query, [**let's go through it together here**](#request-data)
 
 ## Installation without Angular Schematics
 
@@ -109,8 +109,8 @@ One Link that you already have in your application is called `apollo-angular-lin
 
 `apollo-cache-inmemory` is the default cache implementation for Apollo Client 2.0. InMemoryCache is a normalized data store that supports all of Apollo Client 1.0’s features without the dependency on Redux.
 
-- [Explore more the Network Layer of Apollo](./network-layer.html)
-- [Read more about caching](./caching.html)
+- [Explore more the Network Layer of Apollo](/basics/network-layer/)
+- [Read more about caching](/basics/caching/)
 
 ## Request data
 
@@ -192,5 +192,5 @@ If you'd like to play around with the app we just built, you can view it on [Sta
 
 Now that you've learned how to fetch data with Apollo Angular, you're ready to dive deeper into creating more complex queries and mutations. After this section, we recommend moving onto:
 
-- [Queries](./queries.html): Learn how to fetch queries with arguments and dive deeper into configuration options..
-- [Mutations](./mutations.html): Learn how to update data with mutations and when you'll need to update the Apollo cache.
+- [Queries](/basics/queries/): Learn how to fetch queries with arguments and dive deeper into configuration options..
+- [Mutations](/basics/mutations/): Learn how to update data with mutations and when you'll need to update the Apollo cache.

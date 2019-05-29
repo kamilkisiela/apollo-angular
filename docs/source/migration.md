@@ -211,7 +211,7 @@ class AppModule {
 
 ## Cache extraction
 
-If you have previously used `getInitialState` for SSR, that API has been moved to the cache itself instead of on the client. You can read more about the recipe for server side rendering [here](./recipes/server-side-rendering.html). The upgrade path looks like this:
+If you have previously used `getInitialState` for SSR, that API has been moved to the cache itself instead of on the client. You can read more about the recipe for server side rendering [here](/recipes/server-side-rendering/). The upgrade path looks like this:
 
 **Before**
 
@@ -252,7 +252,7 @@ class AppModule {
 
 ## Network Middleware and Afterware
 
-If you previously used `use` or `useAfter` on the networkInterface from the 1.0 of Apollo Client, you will need to update to use Apollo Links as the new way to handle `*wares` in the 2.0. Apollo Link provides a lot more power for `*ware` features and more information is available [here](/docs/link). A few examples of migrating custom `*ware` methods to Apollo Links are shown below:
+If you previously used `use` or `useAfter` on the networkInterface from the 1.0 of Apollo Client, you will need to update to use Apollo Links as the new way to handle `*wares` in the 2.0. Apollo Link provides a lot more power for `*ware` features and more information is available [here](https://www.apollographql.com/docs/link). A few examples of migrating custom `*ware` methods to Apollo Links are shown below:
 
 #### Middleware
 
@@ -381,7 +381,7 @@ class AppModule {
 }
 ```
 
-For more information on using Apollo Links, check out the [link docs!](/docs/link);
+For more information on using Apollo Links, check out the [link docs!](https://www.apollographql.com/docs/link);
 
 ## Replacing Redux
 
@@ -403,7 +403,7 @@ Ultimately we think the move off Redux will open the door for more powerful cach
 
 ## Query Reducers
 
-Query reducers have been finally removed in the 2.0, instead we recommend using the more flexible [`update`](../features/cache-updates.html#directAccess) API instead of reducer.
+Query reducers have been finally removed in the 2.0, instead we recommend using the more flexible [`update`](/features/cache-updates/#updating-after-a-mutation) API instead of reducer.
 
 
 ## Observable variables
@@ -422,7 +422,6 @@ this.apollo.watchQuery({
       this.foo = foo;
     });
 ```
-
 
 ***After***
 

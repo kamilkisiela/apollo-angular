@@ -29,7 +29,7 @@ By default, Apollo identifies objects based on two properties: The `__typename` 
 'Person:1234'
 ```
 
-You can also specify a custom function to generate IDs from each object, and supply it as the `dataIdFromObject` in the [`InMemoryCache`](../basics/caching.md#normalization) options, if you want to specify how Apollo will identify and de-duplicate the objects returned from the server.
+You can also specify a custom function to generate IDs from each object, and supply it as the `dataIdFromObject` in the [`InMemoryCache`](/basics/caching/#normalization) options, if you want to specify how Apollo will identify and de-duplicate the objects returned from the server.
 
 ```ts
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -43,7 +43,7 @@ const cache = new InMemoryCache({
 
 These IDs allow Apollo Client to reactively tell all queries that fetched a particular object about updates to that part of the store.
 
-If you want to get the dataIdFromObjectFunction (for instance when using the [`readFragment` function](../basics/caching.md#readfragment)), you can import it from the InMemoryCache package;
+If you want to get the dataIdFromObjectFunction (for instance when using the [`readFragment` function](/basics/caching/#readfragment)), you can import it from the InMemoryCache package;
 ```js
 import { defaultDataIdFromObject } from 'apollo-cache-inmemory';
 const person = {
@@ -78,7 +78,7 @@ mutation {
 }
 ```
 
-If the `id` field on both results matches up, then the `score` field everywhere in our UI will be updated automatically! One nice way to take advantage of this property as much as possible is to make your mutation results have all of the data necessary to update the queries previously fetched. A simple trick for this is to use [fragments](fragments.html) to share fields between the query and the mutation that affects it.
+If the `id` field on both results matches up, then the `score` field everywhere in our UI will be updated automatically! One nice way to take advantage of this property as much as possible is to make your mutation results have all of the data necessary to update the queries previously fetched. A simple trick for this is to use [fragments](/features/fragments/) to share fields between the query and the mutation that affects it.
 
 ## Updating after a mutation
 
@@ -179,7 +179,7 @@ class AppComponent {
 
 **NOTE: We recommend using the more flexible `update` API instead of `updateQueries`. The `updateQueries` API may be deprecated in the future.**
 
-As its name suggests, `updateQueries` lets you update your UI based on the result of a mutation. To re-emphasize: most of the time, your UI will update automatically based on mutation results, as long as the object IDs in the result match up with the IDs you already have in your store. See the [`normalization`](#normalization) documentation above for more information about how to take advantage of this feature.
+As its name suggests, `updateQueries` lets you update your UI based on the result of a mutation. To re-emphasize: most of the time, your UI will update automatically based on mutation results, as long as the object IDs in the result match up with the IDs you already have in your store. See the [`normalization`](#normalization-with-dataidfromobject) documentation above for more information about how to take advantage of this feature.
 
 However, if you are removing or adding items to a list with a mutation or can't assign object identifiers to the relevant objects, you'll have to use `updateQueries` to make sure that your UI reflects the change correctly.
 
