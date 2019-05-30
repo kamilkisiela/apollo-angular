@@ -1,5 +1,9 @@
 # Change log
 
+### v1.6.0
+
+- Support Angular 8
+
 ### v1.5.0
 
 - Make sure people don't use `uri` as function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)

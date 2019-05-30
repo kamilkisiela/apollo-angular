@@ -6,7 +6,7 @@
   "main": "build/bundles/ng.apolloBoost.umd.js",
   "module": "build/fesm5/ng.apolloBoost.js",
   "typings": "build/ng.apolloBoost.d.ts",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -27,10 +27,10 @@
     "@angular/common": "^6.1.0 || ^7.0.0 || ^8.0.0"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "~1.5.0",
-    "apollo-angular": "~1.5.0",
-    "apollo-client": "^2.3.1",
-    "apollo-angular-link-http": "~1.4.0",
+    "apollo-cache-inmemory": "~1.6.0",
+    "apollo-angular": "~1.6.0",
+    "apollo-client": "^2.6.0",
+    "apollo-angular-link-http": "~1.7.0",
     "apollo-link": "~1.2.2",
     "apollo-link-error": "~1.1.0",
     "apollo-link-state": "~0.4.1",

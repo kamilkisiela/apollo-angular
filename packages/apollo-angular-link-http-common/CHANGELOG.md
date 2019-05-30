@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.7.0
+
+- Support Angular 8
+
 ### v1.6.0
 
 - Supports file upload (set `useMultipart: true` in operation's context)

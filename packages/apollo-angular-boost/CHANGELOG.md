@@ -1,5 +1,9 @@
 # Change log
 
+### v1.5.0
+
+- Support Angular 8
+
 ### v1.4.0
 
 - Bump `apollo-angular` to v1.5.0
