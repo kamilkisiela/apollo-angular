@@ -7,7 +7,7 @@
   "main": "build/bundles/ng.apolloLink.httpBatch.umd.js",
   "module": "build/fesm5/ng.apolloLink.httpBatch.js",
   "typings": "build/ng.apolloLink.httpBatch.d.ts",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"
@@ -31,7 +31,7 @@
   "dependencies": {
     "apollo-link": "^1.0.0",
     "apollo-link-batch": "^1.1.2",
-    "apollo-angular-link-http-common": "~1.5.0"
+    "apollo-angular-link-http-common": "~1.7.0"
   },
   "devDependencies": {
     "@angular/animations": "8.0.0",

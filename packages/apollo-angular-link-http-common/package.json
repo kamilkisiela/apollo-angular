@@ -7,7 +7,7 @@
   "main": "build/bundles/ng.apolloLink.httpCommon.umd.js",
   "module": "build/fesm5/ng.apolloLink.httpCommon.js",
   "typings": "build/ng.apolloLink.httpCommon.d.ts",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "repository": {
     "type": "git",
     "url": "apollographql/apollo-angular"

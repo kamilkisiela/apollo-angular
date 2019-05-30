@@ -1,5 +1,9 @@
 # Change log
 
+### v1.4.0
+
+- Support Angular 8
+
 ### v1.3.0
 
 - Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)
