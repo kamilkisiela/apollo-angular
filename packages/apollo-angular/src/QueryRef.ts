@@ -16,7 +16,9 @@ import {R} from './types';
 
 export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
-  public queryId: string;
+  public options: ObservableQuery<T, V>['options'];
+  public queryId: ObservableQuery<T, V>['queryId'];
+  public variables: V;
 
   constructor(private obsQuery: ObservableQuery<T, V>, ngZone: NgZone) {
     this.valueChanges = wrapWithZone(
