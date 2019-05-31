@@ -1,0 +1,42 @@
+version: 2.1
+
+executors:
+  main-executor:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/project
+
+jobs:
+  install-and-build:
+    executor: main-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - run:
+          name: Build packages
+          command: yarn build
+      - persist_to_workspace:
+          root: .
+          paths: .
+  test:
+    executor: main-executor
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Test packages
+          command: yarn test
+      - run:
+          name: Send Code Coverage
+          command: yarn coverage
+workflows:
+  version: 2.1
+
+  btd:
+    jobs:
+      - install-and-build
+      - test:
+          requires:
+            - install-and-build
