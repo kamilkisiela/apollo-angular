@@ -81,7 +81,7 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.startPolling(pollInterval);
   }
 
-  public setOptions(opts: any): Promise<ApolloQueryResult<T>> {
+  public setOptions(opts: any) {
     return this.obsQuery.setOptions(opts);
   }
 
@@ -89,7 +89,7 @@ export class QueryRef<T, V = R> {
     variables: V,
     tryFetch: boolean = false,
     fetchResults = true,
-  ): Promise<ApolloQueryResult<T>> {
+  ) {
     return this.obsQuery.setVariables(variables, tryFetch, fetchResults);
   }
 }
