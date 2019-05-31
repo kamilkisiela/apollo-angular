@@ -44,7 +44,7 @@
     "@types/jest": "23.3.13",
     "graphql": "14.3.1",
     "graphql-tag": "2.10.1",
-    "jest": "24.5.0",
+    "jest": "24.8.0",
     "jest-zone-patch": "0.0.10",
     "ng-packagr": "5.2.0",
     "rxjs": "6.5.2",
