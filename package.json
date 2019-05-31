@@ -17,7 +17,7 @@
   ],
   "devDependencies": {
     "@types/jest": "23.3.13",
-    "codecov": "3.3.0",
+    "codecov": "3.5.0",
     "husky": "2.3.0",
     "jest": "24.5.0",
     "lerna": "3.14.1",
