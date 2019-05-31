@@ -193,7 +193,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.query = jest.fn(options => {
+      client.query = jest.fn<any, any>(options => {
         if (options.used) {
           throw new Error('options was reused');
         }
@@ -295,7 +295,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.mutate = jest.fn(options => {
+      client.mutate = jest.fn<any, any>(options => {
         if (options.used) {
           throw new Error('options was reused');
         }

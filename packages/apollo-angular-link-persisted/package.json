@@ -32,11 +32,11 @@
   },
   "devDependencies": {
     "@types/graphql": "14.2.0",
-    "@types/jest": "23.3.13",
+    "@types/jest": "24.0.13",
     "apollo-link": "1.2.11",
     "graphql": "14.3.1",
     "graphql-tag": "2.10.1",
-    "jest": "24.5.0",
+    "jest": "24.8.0",
     "ng-packagr": "5.2.0",
     "ts-jest": "24.0.2",
     "typescript": "3.4.5"
