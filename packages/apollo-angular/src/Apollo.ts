@@ -19,8 +19,8 @@ import {fromPromise, wrapWithZone, fixObservable} from './utils';
 
 export class ApolloBase<TCacheShape = any> {
   constructor(
-    private ngZone: NgZone,
-    private _client?: ApolloClient<TCacheShape>,
+    protected ngZone: NgZone,
+    protected _client?: ApolloClient<TCacheShape>,
   ) {}
 
   public watchQuery<T, V = R>(options: WatchQueryOptions<V>): QueryRef<T, V> {
@@ -124,10 +124,10 @@ export class Apollo extends ApolloBase<any> {
     options: ApolloClientOptions<TCacheShape>,
     name?: string,
   ): void {
-    if (name && name !== 'default') {
-      this.createNamed<TCacheShape>(name, options);
-    } else {
+    if (isDefault(name)) {
       this.createDefault<TCacheShape>(options);
+    } else {
+      this.createNamed<TCacheShape>(name, options);
     }
   }
 
@@ -143,7 +143,7 @@ export class Apollo extends ApolloBase<any> {
    * @param name client's name
    */
   public use(name: string): ApolloBase<any> {
-    if (name === 'default') {
+    if (isDefault(name)) {
       return this.default();
     }
     return this.map.get(name);
@@ -185,7 +185,15 @@ export class Apollo extends ApolloBase<any> {
    * Remember to clean up the store before removing a client
    * @param name client's name
    */
-  public removeClient(name: string): boolean {
-    return this.map.delete(name);
+  public removeClient(name?: string): void {
+    if (isDefault(name)) {
+      this._client = undefined;
+    } else {
+      this.map.delete(name);
+    }
   }
+}
+
+function isDefault(name?: string): boolean {
+  return !name || name === 'default';
 }

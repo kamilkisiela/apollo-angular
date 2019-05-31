@@ -671,4 +671,31 @@ describe('Apollo', () => {
       });
     }),
   ));
+
+  test('should remove default client', () => {
+    const apollo = mockApollo(mockSingleLink(), ngZone);
+
+    expect(apollo.getClient()).toBeDefined();
+
+    apollo.removeClient();
+
+    expect(apollo.getClient()).toBeUndefined();
+  });
+
+  test('should remove named client', () => {
+    const apollo = mockApollo(mockSingleLink(), ngZone);
+
+    apollo.createNamed('test', {
+      link: mockSingleLink(),
+      cache: new InMemoryCache(),
+    });
+
+    expect(apollo.getClient()).toBeDefined();
+    expect(apollo.use('test').getClient()).toBeDefined();
+
+    apollo.removeClient('test');
+
+    expect(apollo.getClient()).toBeDefined();
+    expect(apollo.use('test')).toBeUndefined();
+  });
 });
