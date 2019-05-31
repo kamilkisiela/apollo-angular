@@ -16,7 +16,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/jest": "23.3.13",
+    "@types/jest": "23.3.14",
     "codecov": "3.5.0",
     "husky": "2.3.0",
     "jest": "24.5.0",
