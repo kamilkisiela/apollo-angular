@@ -1,14 +1,14 @@
 version: 2.1
 
 executors:
-  main-executor:
+  default:
     docker:
       - image: circleci/node:10
     working_directory: ~/project
 
 jobs:
   install-and-build:
-    executor: main-executor
+    executor: default
     steps:
       - checkout
       - run:
@@ -21,7 +21,7 @@ jobs:
           root: .
           paths: .
   test:
-    executor: main-executor
+    executor: default
     steps:
       - attach_workspace:
           at: ~/project
@@ -33,7 +33,6 @@ jobs:
           command: yarn coverage
 workflows:
   version: 2.1
-
   btd:
     jobs:
       - install-and-build
