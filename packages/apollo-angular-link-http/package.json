@@ -39,7 +39,6 @@
     "@angular/compiler": "8.0.0",
     "@angular/compiler-cli": "8.0.0",
     "@angular/core": "8.0.0",
-    "@angular/http": "7.2.13",
     "@angular/platform-browser": "8.0.0",
     "@angular/platform-browser-dynamic": "8.0.0",
     "@angular/platform-server": "8.0.0",
