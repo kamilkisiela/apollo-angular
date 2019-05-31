@@ -12,30 +12,30 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install Dependencies
-        command: yarn install
+          name: Install Dependencies
+          command: yarn install
       - run:
-        name: Build packages
-        command: yarn build
+          name: Build packages
+          command: yarn build
       - persist_to_workspace:
-        root: .
-        paths: .
+          root: .
+          paths: .
   test:
     executor: default
     steps:
       - attach_workspace:
-        at: ~/project
+          at: ~/project
       - run:
-        name: Test packages
-        command: yarn test
+          name: Test packages
+          command: yarn test
       - run:
-        name: Send Code Coverage
-        command: yarn coverage
+          name: Send Code Coverage
+          command: yarn coverage
 workflows:
   version: 2.1
   btd:
     jobs:
       - install-and-build
       - test:
-        requires:
-          - install-and-build
+          requires:
+            - install-and-build
