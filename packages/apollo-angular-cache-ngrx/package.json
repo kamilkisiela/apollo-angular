@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
     "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0",
-    "@ngrx/store": "^6.0.0 || ^7.0.0",
+    "@ngrx/store": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "rxjs": "^6.0.0"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "@angular/core": "8.0.0",
     "@angular/platform-browser": "8.0.0",
     "@angular/platform-browser-dynamic": "8.0.0",
-    "@ngrx/store": "7.4.0",
+    "@ngrx/store": "8.0.1",
     "@types/graphql": "14.2.0",
     "@types/jest": "24.0.13",
     "graphql": "14.3.1",
