@@ -1,12 +1,12 @@
 import {HttpHeaders, HttpResponse, HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {extractFiles} from 'extract-files';
 
-import {Request, Body} from './types';
+import {Request, Body, ExtractFiles} from './types';
 
 export const fetch = (
   req: Request,
   httpClient: HttpClient,
+  extractFiles: ExtractFiles,
 ): Observable<HttpResponse<Object>> => {
   const shouldUseBody =
     ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
