@@ -86,7 +86,7 @@ By adding a [custom resolver](/features/cache-updates/#cache-redirects-with-cach
 ```ts
 import { Apollo } from 'apollo-angular';
 import { toIdValue } from 'apollo-utilities';
-import { InMemoryCache } from 'apollo-cache-imemory';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 @NgModule({ ... })
 class AppModule {
