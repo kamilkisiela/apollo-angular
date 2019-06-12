@@ -58,7 +58,11 @@ export class HttpBatchLinkHandler extends ApolloLink {
           },
         };
 
-        const sub = fetch(req, this.httpClient).subscribe({
+        const sub = fetch(req, this.httpClient, () => {
+          throw new Error(
+            'File upload is not available when combined with Batching',
+          );
+        }).subscribe({
           next: result => observer.next(result.body),
           error: err => observer.error(err),
           complete: () => observer.complete(),

@@ -17,6 +17,7 @@ import {
   mergeHeaders,
   prioritize,
 } from 'apollo-angular-link-http-common';
+import {extractFiles} from 'extract-files';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
@@ -73,7 +74,7 @@ export class HttpLinkHandler extends ApolloLink {
           );
         }
 
-        const sub = fetch(req, this.httpClient).subscribe({
+        const sub = fetch(req, this.httpClient, extractFiles).subscribe({
           next: response => {
             operation.setContext({response});
             observer.next(response.body);

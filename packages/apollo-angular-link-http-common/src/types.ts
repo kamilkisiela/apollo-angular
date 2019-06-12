@@ -33,3 +33,10 @@ export type Request = {
   body: Body | Body[];
   options: HttpRequestOptions;
 };
+
+export type ExtractFiles = (
+  body: Body | Body[],
+) => {
+  clone: Body;
+  files: Map<any, any>;
+};
