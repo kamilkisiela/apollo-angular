@@ -2,9 +2,14 @@
 
 ### vNEXT
 
+### v1.8.0
+
+- Creates an abstraction of file upload logic [PR #1239](https://github.com/apollographql/apollo-angular/pull/1239)
+- No longer depends on `extract-files` [PR #1239](https://github.com/apollographql/apollo-angular/pull/1239)
+
 ### v1.7.0
 
-- Support Angular 8
+- Supports Angular 8
 
 ### v1.6.0
 

@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.8.0
+
+- Sync with common@1.8.0
+
 ### v1.7.0
 
 - Support Angular 8
