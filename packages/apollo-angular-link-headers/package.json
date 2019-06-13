@@ -28,8 +28,8 @@
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "8.0.0",
-    "@angular/core": "8.0.0",
+    "@angular/common": "8.0.1",
+    "@angular/core": "8.0.1",
     "@types/graphql": "14.2.0",
     "@types/jest": "24.0.13",
     "apollo-link": "1.2.11",
