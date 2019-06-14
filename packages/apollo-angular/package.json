@@ -52,7 +52,7 @@
     "@angular/platform-browser-dynamic": "8.0.1",
     "@schematics/angular": "8.0.2",
     "@types/graphql": "14.2.0",
-    "@types/jest": "24.0.13",
+    "@types/jest": "24.0.14",
     "@types/node": "10.14.9",
     "@types/semver": "6.0.0",
     "apollo-cache-inmemory": "1.6.2",
