@@ -45,7 +45,7 @@
     "@types/graphql": "14.2.0",
     "@types/jest": "24.0.14",
     "apollo-cache-inmemory": "1.6.2",
-    "apollo-client": "2.6.2",
+    "apollo-client": "2.6.3",
     "graphql": "14.3.1",
     "graphql-tag": "2.10.1",
     "jest": "24.8.0",
