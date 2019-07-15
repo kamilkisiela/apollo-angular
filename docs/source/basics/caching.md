@@ -45,7 +45,7 @@ The `InMemoryCache` constructor takes an optional config object with properties 
 - addTypename: A boolean to determine whether to add __typename to the document (default: `true`)
 - dataIdFromObject: A function that takes a data object and returns a unique identifier to be used when normalizing the data in the store. Learn more about how to customize `dataIdFromObject` in the [Normalization](#normalization) section.
 - fragmentMatcher: By default, the `InMemoryCache` uses a heuristic fragment matcher. If you are using fragments on unions and interfaces, you will need to use an `IntrospectionFragmentMatcher`. For more information, please read [our guide to setting up fragment matching for unions & interfaces].
-- cacheResolves: A map of custom ways to resolve data from other parts of the cache.
+- cacheRedirects (previously known as cacheResolvers or customResolvers): A map of custom ways to resolve data from other parts of the cache.
 
 ### Normalization
 
