@@ -175,7 +175,7 @@ export class ExchangeRates implements OnInit {
           }
         `,
       })
-      .valueChanges.subscribe(result => {
+      .valueChanges.subscribe((result: any) => {
         this.rates = result.data && result.data.rates;
         this.loading = result.loading;
         this.error = result.error;
