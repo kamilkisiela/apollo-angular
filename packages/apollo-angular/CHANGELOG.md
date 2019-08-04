@@ -2,6 +2,8 @@
 
 ### vNext
 
+- Fixed type definition for subscribe [PR #1290](https://github.com/apollographql/apollo-angular/pull/1290)
+
 ### v1.6.0
 
 - Angular 8 [PR #1206](https://github.com/apollographql/apollo-angular/pull/1206)
