@@ -39,7 +39,7 @@
     "@angular/platform-browser-dynamic": "8.1.1",
     "@angular/platform-server": "8.1.1",
     "@types/graphql": "14.2.2",
-    "@types/jest": "24.0.14",
+    "@types/jest": "24.0.18",
     "apollo-cache-inmemory": "1.6.2",
     "apollo-client": "2.6.3",
     "apollo-link": "1.2.12",
