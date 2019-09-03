@@ -3,9 +3,9 @@
   "description": "The easiest way to get started with Apollo Client in Angular",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
-  "main": "build/bundles/ng.apolloBoost.umd.js",
-  "module": "build/fesm5/ng.apolloBoost.js",
-  "typings": "build/ng.apolloBoost.d.ts",
+  "main": "build/bundles/ngApolloBoost.umd.js",
+  "module": "build/fesm5/ngApolloBoost.js",
+  "typings": "build/ngApolloBoost.d.ts",
   "version": "1.5.0",
   "repository": {
     "type": "git",

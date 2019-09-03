@@ -4,9 +4,9 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ng.apolloCache.ngrx.umd.js",
-  "module": "build/fesm5/ng.apolloCache.ngrx.js",
-  "typings": "build/ng.apolloCache.ngrx.d.ts",
+  "main": "build/bundles/ngApolloCacheNgrx.umd.js",
+  "module": "build/fesm5/ngApolloCacheNgrx.js",
+  "typings": "build/ngApolloCacheNgrx.d.ts",
   "version": "1.0.0-beta.2",
   "repository": {
     "type": "git",

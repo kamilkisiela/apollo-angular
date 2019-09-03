@@ -7,7 +7,7 @@ import {
   FetchResult,
 } from 'apollo-link';
 import {BatchLink, BatchHandler} from 'apollo-link-batch';
-import {print} from 'graphql/language/printer';
+import {print} from 'graphql';
 import {
   fetch,
   Body,

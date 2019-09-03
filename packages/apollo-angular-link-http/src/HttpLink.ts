@@ -7,7 +7,7 @@ import {
   RequestHandler,
   FetchResult,
 } from 'apollo-link';
-import {print} from 'graphql/language/printer';
+import {print} from 'graphql';
 import {
   fetch,
   Options,

@@ -4,7 +4,7 @@ module.exports = {
   dest: 'build',
   lib: {
     entryFile: 'src/index.ts',
-    flatModuleFile: 'ng.apolloBoost',
+    flatModuleFile: 'ngApolloBoost',
     umdModuleIds,
   },
   whitelistedNonPeerDependencies: [

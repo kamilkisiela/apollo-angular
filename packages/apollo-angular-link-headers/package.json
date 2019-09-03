@@ -4,9 +4,9 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ng.apolloLink.headers.umd.js",
-  "module": "build/fesm5/ng.apolloLink.headers.js",
-  "typings": "build/ng.apolloLink.headers.d.ts",
+  "main": "build/bundles/ngApolloLinkHeaders.umd.js",
+  "module": "build/fesm5/ngApolloLinkHeaders.js",
+  "typings": "build/ngApolloLinkHeaders.d.ts",
   "version": "1.4.0",
   "repository": {
     "type": "git",

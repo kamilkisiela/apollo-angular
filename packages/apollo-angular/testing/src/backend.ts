@@ -6,7 +6,7 @@ import {
   Observable as LinkObservable,
 } from 'apollo-link';
 import {DocumentNode} from 'graphql';
-import {print} from 'graphql/language/printer';
+import {print} from 'graphql';
 
 import {ApolloTestingController, MatchOperation} from './controller';
 import {TestOperation} from './operation';
@@ -113,9 +113,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
     const matches = this.match(match);
     if (matches.length > 1) {
       throw new Error(
-        `Expected one matching operation for criteria "${description}", found ${
-          matches.length
-        } operations.`,
+        `Expected one matching operation for criteria "${description}", found ${matches.length} operations.`,
       );
     }
     if (matches.length === 0) {
@@ -135,9 +133,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
     const matches = this.match(match);
     if (matches.length > 0) {
       throw new Error(
-        `Expected zero matching operations for criteria "${description}", found ${
-          matches.length
-        }.`,
+        `Expected zero matching operations for criteria "${description}", found ${matches.length}.`,
       );
     }
   }
