@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {FetchResult} from 'apollo-link';
 
 import {Apollo} from './Apollo';
-import {MutationOptions, R} from './types';
+import {MutationOptionsAlone, R} from './types';
 
 @Injectable()
 export class Mutation<T = {}, V = R> {
@@ -15,7 +15,7 @@ export class Mutation<T = {}, V = R> {
 
   public mutate(
     variables?: V,
-    options?: MutationOptions<T, V>,
+    options?: MutationOptionsAlone<T, V>,
   ): Observable<FetchResult<T>> {
     return this.apollo.use(this.client).mutate<T, V>({
       ...options,

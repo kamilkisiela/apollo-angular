@@ -65,7 +65,7 @@ describe('QueryRef', () => {
 
     client = createClient(mockedLink);
     obsQuery = client.watchQuery(heroesOperation);
-    queryRef = new QueryRef<any>(obsQuery, ngZone);
+    queryRef = new QueryRef<any>(obsQuery, ngZone, {} as any);
   });
 
   test('should listen to changes', done => {

@@ -2,7 +2,6 @@ import {Injectable, Optional, Inject, NgZone} from '@angular/core';
 import {
   ApolloClient,
   QueryOptions,
-  WatchQueryOptions,
   MutationOptions,
   ApolloQueryResult,
   SubscriptionOptions,
@@ -13,7 +12,7 @@ import {FetchResult} from 'apollo-link';
 import {Observable, from} from 'rxjs';
 
 import {QueryRef} from './QueryRef';
-import {ExtraSubscriptionOptions, R} from './types';
+import {WatchQueryOptions, ExtraSubscriptionOptions, R} from './types';
 import {APOLLO_OPTIONS} from './tokens';
 import {fromPromise, wrapWithZone, fixObservable} from './utils';
 
@@ -27,6 +26,7 @@ export class ApolloBase<TCacheShape = any> {
     return new QueryRef<T, V>(
       this.client.watchQuery<T, V>({...options}) as ObservableQuery<T, V>,
       this.ngZone,
+      options,
     );
   }
 
