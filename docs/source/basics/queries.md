@@ -22,7 +22,8 @@ For instance, in GitHunt, we want to display the current user (if logged in) in
 the `Profile` component:
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
