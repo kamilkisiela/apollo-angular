@@ -17,7 +17,7 @@ export interface ExtraSubscriptionOptions {
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export interface WatchQueryOptionsAlone<V>
-  extends Omit<CoreWatchQueryOptions<V>, 'query' | 'variables'> {}
+  extends Omit<WatchQueryOptions<V>, 'query' | 'variables'> {}
 
 export interface QueryOptionsAlone<V>
   extends Omit<CoreQueryOptions<V>, 'query' | 'variables'> {}
