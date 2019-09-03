@@ -49,7 +49,7 @@ export class ApolloBase<TCacheShape = any> {
   public subscribe<T, V = R>(
     options: SubscriptionOptions<V>,
     extra?: ExtraSubscriptionOptions,
-  ): Observable<any> {
+  ): Observable<FetchResult<T>> {
     const obs = from(fixObservable(this.client.subscribe<T, V>({...options})));
 
     return extra && extra.useZone !== true
