@@ -2,7 +2,11 @@
 
 ### vNext
 
+### v1.7.0
+
 - Fixed type definition for subscribe [PR #1290](https://github.com/apollographql/apollo-angular/pull/1290)
+- Fix global scope naming for UMD build [PR #1305](https://github.com/apollographql/apollo-angular/pull/1305)
+- Introduce useInitialLoading in watch [PR #1306](https://github.com/apollographql/apollo-angular/pull/1306)
 
 ### v1.6.0
 
