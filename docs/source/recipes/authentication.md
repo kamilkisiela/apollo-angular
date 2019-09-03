@@ -129,8 +129,7 @@ const PROFILE_QUERY = gql`
 
 @Injectable()
 class AuthService {
-  apollo: Apollo;
-
+constructor(private apollo: Apollo) {}
   logout() {
     // some app logic
 
