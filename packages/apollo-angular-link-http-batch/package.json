@@ -4,9 +4,9 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ng.apolloLink.httpBatch.umd.js",
-  "module": "build/fesm5/ng.apolloLink.httpBatch.js",
-  "typings": "build/ng.apolloLink.httpBatch.d.ts",
+  "main": "build/bundles/ngApolloLinkHttpBatch.umd.js",
+  "module": "build/fesm5/ngApolloLinkHttpBatch.js",
+  "typings": "build/ngApolloLinkHttpBatch.d.ts",
   "version": "1.7.0",
   "repository": {
     "type": "git",

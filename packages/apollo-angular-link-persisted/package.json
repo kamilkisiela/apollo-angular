@@ -4,9 +4,9 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ng.apolloLink.persisted.umd.js",
-  "module": "build/fesm5/ng.apolloLink.persisted.js",
-  "typings": "build/ng.apolloLink.persisted.d.ts",
+  "main": "build/bundles/ngApolloLinkPersisted.umd.js",
+  "module": "build/fesm5/ngApolloLinkPersisted.js",
+  "typings": "build/ngApolloLinkPersisted.d.ts",
   "version": "1.1.0",
   "repository": {
     "type": "git",

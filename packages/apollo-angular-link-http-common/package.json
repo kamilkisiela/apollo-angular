@@ -4,9 +4,9 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ng.apolloLink.httpCommon.umd.js",
-  "module": "build/fesm5/ng.apolloLink.httpCommon.js",
-  "typings": "build/ng.apolloLink.httpCommon.d.ts",
+  "main": "build/bundles/ngApolloLinkHttpCommon.umd.js",
+  "module": "build/fesm5/ngApolloLinkHttpCommon.js",
+  "typings": "build/ngApolloLinkHttpCommon.d.ts",
   "version": "1.8.0",
   "repository": {
     "type": "git",
