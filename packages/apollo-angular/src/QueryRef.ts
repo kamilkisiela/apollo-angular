@@ -34,7 +34,7 @@ export class QueryRef<T, V = R> {
             ...this.obsQuery.getCurrentResult(),
             error: undefined,
             partial: undefined,
-            stale: false,
+            stale: true,
           }),
         )
       : wrapped;
