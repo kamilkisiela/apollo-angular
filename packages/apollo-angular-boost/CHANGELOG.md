@@ -1,5 +1,12 @@
 # Change log
 
+### vNext
+
+### v1.6.0
+
+- Bump `apollo-angular-link-http` to `~1.8.0`
+- Bump `apollo-angular` to `1.7.0`
+
 ### v1.5.0
 
 - Support Angular 8
