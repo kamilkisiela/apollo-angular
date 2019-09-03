@@ -29,6 +29,12 @@ export interface SubscriptionOptionsAlone<V>
   extends Omit<CoreSubscriptionOptions<V>, 'query' | 'variables'> {}
 
 export interface WatchQueryOptions<V> extends CoreWatchQueryOptions<V> {
+  /**
+   * Observable starts with `{ loading: true }`.
+   * There's a big chance the next major version will enable that by default.
+   *
+   * Disabled by default
+   */
   useInitialLoading?: boolean;
 }
 
