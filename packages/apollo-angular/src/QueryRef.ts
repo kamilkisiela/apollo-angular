@@ -12,7 +12,8 @@ import {
 import {Observable, from} from 'rxjs';
 
 import {wrapWithZone, fixObservable} from './utils';
-import {R} from './types';
+import {WatchQueryOptions, R} from './types';
+import {startWith} from 'rxjs/operators';
 
 export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
@@ -20,11 +21,23 @@ export class QueryRef<T, V = R> {
   public queryId: ObservableQuery<T, V>['queryId'];
   public variables: V;
 
-  constructor(private obsQuery: ObservableQuery<T, V>, ngZone: NgZone) {
-    this.valueChanges = wrapWithZone(
-      from(fixObservable(this.obsQuery)),
-      ngZone,
-    );
+  constructor(
+    private obsQuery: ObservableQuery<T, V>,
+    ngZone: NgZone,
+    options: WatchQueryOptions<V>,
+  ) {
+    const wrapped = wrapWithZone(from(fixObservable(this.obsQuery)), ngZone);
+
+    this.valueChanges = options.useInitialLoading
+      ? wrapped.pipe(
+          startWith({
+            ...this.obsQuery.getCurrentResult(),
+            error: undefined,
+            partial: undefined,
+            stale: false,
+          }),
+        )
+      : wrapped;
     this.queryId = this.obsQuery.queryId;
   }
 

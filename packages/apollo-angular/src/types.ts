@@ -16,17 +16,21 @@ export interface ExtraSubscriptionOptions {
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface WatchQueryOptions<V>
+export interface WatchQueryOptionsAlone<V>
   extends Omit<CoreWatchQueryOptions<V>, 'query' | 'variables'> {}
 
-export interface QueryOptions<V>
+export interface QueryOptionsAlone<V>
   extends Omit<CoreQueryOptions<V>, 'query' | 'variables'> {}
 
-export interface MutationOptions<T, V>
+export interface MutationOptionsAlone<T, V>
   extends Omit<CoreMutationOptions<T, V>, 'mutation' | 'variables'> {}
 
-export interface SubscriptionOptions<V>
+export interface SubscriptionOptionsAlone<V>
   extends Omit<CoreSubscriptionOptions<V>, 'query' | 'variables'> {}
+
+export interface WatchQueryOptions<V> extends CoreWatchQueryOptions<V> {
+  useInitialLoading?: boolean;
+}
 
 export interface SubscriptionResult<T> extends ExecutionResult {
   data?: T;

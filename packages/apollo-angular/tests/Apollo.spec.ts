@@ -8,6 +8,7 @@ import {TestBed, inject, async} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
 import {InMemoryCache} from 'apollo-cache-inmemory';
+import {NetworkStatus} from 'apollo-client';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
 import {ZoneScheduler} from '../src/utils';
@@ -664,6 +665,54 @@ describe('Apollo', () => {
       apollo.query<any>(op).subscribe({
         next: result => {
           expect(result.data).toMatchObject(data);
+        },
+        error: e => {
+          throw new Error(e);
+        },
+      });
+    }),
+  ));
+
+  test('should useInitialLoading', async(
+    inject([Apollo], (apollo: Apollo) => {
+      const op = {
+        query: gql`
+          query heroes {
+            heroes {
+              name
+              __typename
+            }
+          }
+        `,
+        variables: {},
+        useInitialLoading: true,
+      };
+      const data = {
+        heroes: [
+          {
+            name: 'Superman',
+            __typename: 'Hero',
+          },
+        ],
+      };
+
+      let alreadyCalled = false;
+
+      // create
+      apollo.create<any>({
+        link: mockSingleLink({request: op, result: {data}}),
+        cache: new InMemoryCache(),
+      });
+
+      // query
+      apollo.watchQuery<any>(op).valueChanges.subscribe({
+        next: result => {
+          if (alreadyCalled) {
+            expect(result.data).toMatchObject(data);
+          } else {
+            expect(result.loading).toBe(true);
+            expect(result.networkStatus).toBe(NetworkStatus.loading);
+          }
         },
         error: e => {
           throw new Error(e);
