@@ -53,7 +53,7 @@
     "@schematics/angular": "8.3.3",
     "@types/graphql": "14.5.0",
     "@types/jest": "24.0.18",
-    "@types/node": "12.7.4",
+    "@types/node": "12.7.5",
     "@types/semver": "6.0.1",
     "apollo-cache-inmemory": "1.6.3",
     "apollo-client": "2.6.4",
