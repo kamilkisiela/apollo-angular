@@ -166,7 +166,7 @@ class AppComponent {
         // Read the data from our cache for this query.
         const data = store.readQuery({ query: CommentAppQuery });
         // Add our comment from the mutation to the end.
-        data.comments.push(submitComment);
+        data.comments = [ ...data.comments, submitComment];
         // Write our data back to the cache.
         store.writeQuery({ query: CommentAppQuery, data });
       },
