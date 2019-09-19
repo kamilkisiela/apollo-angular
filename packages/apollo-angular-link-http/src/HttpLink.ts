@@ -4,7 +4,6 @@ import {
   ApolloLink,
   Observable as LinkObservable,
   Operation,
-  RequestHandler,
   FetchResult,
 } from 'apollo-link';
 import {print} from 'graphql';
@@ -21,7 +20,9 @@ import {extractFiles} from 'extract-files';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
-  public requester: RequestHandler;
+  public requester: (
+    operation: Operation,
+  ) => LinkObservable<FetchResult> | null;
 
   constructor(private httpClient: HttpClient, private options: Options) {
     super();
