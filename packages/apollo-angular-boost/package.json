@@ -23,14 +23,14 @@
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
-    "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0",
-    "@angular/common": "^6.1.0 || ^7.0.0 || ^8.0.0"
+    "@angular/common": "^6.1.0 || ^7.0.0 || ^8.0.0",
+    "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "~1.6.0",
     "apollo-angular": "~1.7.0",
-    "apollo-client": "^2.6.0",
     "apollo-angular-link-http": "~1.8.0",
+    "apollo-cache-inmemory": "~1.6.0",
+    "apollo-client": "^2.6.0",
     "apollo-link": "~1.2.2",
     "apollo-link-error": "~1.1.0",
     "apollo-link-state": "~0.4.1",
@@ -47,12 +47,12 @@
     "@angular/platform-server": "8.2.7",
     "@types/graphql": "14.5.0",
     "@types/jest": "24.0.18",
-    "graphql": "14.5.4",
+    "graphql": "14.5.6",
     "jest": "24.9.0",
     "jest-zone-patch": "0.0.10",
     "ng-packagr": "5.5.1",
     "rxjs": "6.5.3",
-    "ts-jest": "24.0.2",
+    "ts-jest": "24.1.0",
     "typescript": "3.5.3",
     "zone.js": "0.10.2"
   }
