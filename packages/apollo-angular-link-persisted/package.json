@@ -34,7 +34,7 @@
     "@types/graphql": "14.5.0",
     "@types/jest": "24.0.18",
     "apollo-link": "1.2.13",
-    "graphql": "14.5.6",
+    "graphql": "14.5.8",
     "graphql-tag": "2.10.1",
     "jest": "24.9.0",
     "ng-packagr": "5.5.1",
