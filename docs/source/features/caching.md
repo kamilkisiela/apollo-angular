@@ -60,7 +60,7 @@ class AppComponent {
       update: (proxy, { data: { createTodo } }) => {
         // Read the data from our cache for this query.
         const data = proxy.readQuery({ query: TodoAppQuery });
-        
+
         // If you are using the Query service (TodoAppGQL) instead of defining your GQL as a constant, you can reference the query as:
         // const data = proxy.readQuery({ query: this.todoAppGQL.document });
 
@@ -69,7 +69,7 @@ class AppComponent {
 
         // Write our data back to the cache.
         proxy.writeQuery({ query: TodoAppQuery, data });
-        
+
         // alternatively when using Query service:
         // proxy.writeQuery({ query: this.todoAppGQL.document, data });
       },
@@ -78,7 +78,7 @@ class AppComponent {
 }
 ```
 
-The first `proxy` argument is an instance of [`DataProxy`](https://www.apollographql.com/docs/react/reference/#DataProxy) has the same for methods that we just learned exist on the Apollo Client: `readQuery`, `readFragment`, `writeQuery`, and `writeFragment`. The reason we call them on a `proxy` object here instead of on our `client` instance is that we can easily apply optimistic updates (which we will demonstrate in a bit). The `proxy` object also provides an isolated transaction which shields you from any other mutations going on at the same time, and the `proxy` object also batches writes together until the very end.
+The first `proxy` argument is an instance of [`DataProxy`](https://www.apollographql.com/docs/react/api/apollo-client/#ApolloClient.mutate) has the same for methods that we just learned exist on the Apollo Client: `readQuery`, `readFragment`, `writeQuery`, and `writeFragment`. The reason we call them on a `proxy` object here instead of on our `client` instance is that we can easily apply optimistic updates (which we will demonstrate in a bit). The `proxy` object also provides an isolated transaction which shields you from any other mutations going on at the same time, and the `proxy` object also batches writes together until the very end.
 
 If you provide an `optimisticResponse` option to the mutation then the `update` function will be run twice. Once immediately after you call `apollo.mutate` with the data from `optimisticResponse`. After the mutation successfully executes against the server the changes made in the first call to `update` will be rolled back and `update` will be called with the *actual* data returned by the mutation and not just the optimistic response.
 
@@ -116,5 +116,5 @@ The `update` function is not a good place for side-effects as it may be called m
 
 **Resources:**
 
-- [`ApolloClient#mutate` API documentation](https://www.apollographql.com/docs/react/reference/#ApolloClient.mutate)
-- [`DataProxy` API documentation](https://www.apollographql.com/docs/react/reference/#DataProxy)
+- [`ApolloClient#mutate` API documentation](https://www.apollographql.com/docs/react/api/apollo-client/#ApolloClient.mutate)
+- [`DataProxy` API documentation](https://www.apollographql.com/docs/react/api/apollo-client/#ApolloClient.mutate)

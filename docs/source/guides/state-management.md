@@ -48,7 +48,6 @@ class DogPhotoComponent {
       });
   }
 }
-);
 ```
 
 In this example, we place our `GET_DOG_PHOTO` query next to our `DogPhoto` component and wrap it with the `gql` function.

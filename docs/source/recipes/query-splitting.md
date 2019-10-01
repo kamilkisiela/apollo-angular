@@ -185,4 +185,4 @@ class AppComponent {
 }
 ```
 
-Unfortunately if the user would now visit the second view without ever visiting the first view this would result in two network requests (since the data for the first query is not in the store yet). By using a [`BatchedHttpLink`](https://www.apollographql.com/docs/link/links/batch-http/) those two queries can be send to the server in one network request.
+Unfortunately if the user would now visit the second view without ever visiting the first view this would result in two network requests (since the data for the first query is not in the store yet). By using a [`HttpBatchLink`](https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-http-batch) those two queries can be send to the server in one network request.

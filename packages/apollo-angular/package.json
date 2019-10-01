@@ -9,10 +9,7 @@
   "module": "build/fesm5/ngApollo.js",
   "typings": "build/ngApollo.d.ts",
   "homepage": "https://www.apollographql.com/docs/angular/",
-  "repository": {
-    "type": "git",
-    "url": "apollographql/apollo-angular"
-  },
+  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular",
   "keywords": [
     "apollo",
     "graphql",
