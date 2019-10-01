@@ -8,7 +8,7 @@
   "module": "build/fesm5/ngApolloLinkHeaders.js",
   "typings": "build/ngApolloLinkHeaders.d.ts",
   "version": "1.4.0",
-  "repository": "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-headers",
+  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-headers",
   "keywords": [
     "apollo",
     "graphql",
