@@ -263,5 +263,5 @@ Here are some common situations where you would need to access the cache directl
 
 ### Server side rendering
 
-If you would like to learn more about server side rendering, please check our our more in depth guide [here](/recipes/server-side-rendering/).
+If you would like to learn more about server side rendering, please check out more in depth guide [here](/recipes/server-side-rendering/).
 
