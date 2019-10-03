@@ -11,6 +11,10 @@ export const APOLLO_TESTING_CACHE = new InjectionToken<ApolloCache<any>>(
   'apollo-angular/testing cache',
 );
 
+export const APOLLO_TESTING_CLIENT_NAME = new InjectionToken<string>(
+  'apollo-angular/testing client name',
+);
+
 @NgModule({
   imports: [ApolloModule],
   providers: [
@@ -25,14 +29,28 @@ export class ApolloTestingModule {
     @Optional()
     @Inject(APOLLO_TESTING_CACHE)
     cache?: ApolloCache<any>,
+    @Optional()
+    @Inject(APOLLO_TESTING_CLIENT_NAME)
+    name?: string,
   ) {
-    apollo.create({
-      link: new ApolloLink(operation => backend.handle(operation)),
-      cache:
-        cache ||
-        new InMemoryCache({
-          addTypename: false,
-        }),
-    });
+    if (name) {
+      apollo.create({
+        link: new ApolloLink(operation => backend.handle(operation)),
+        cache:
+          cache ||
+          new InMemoryCache({
+            addTypename: false,
+          }),
+      }, name);
+    } else {
+      apollo.create({
+        link: new ApolloLink(operation => backend.handle(operation)),
+        cache:
+          cache ||
+          new InMemoryCache({
+            addTypename: false,
+          }),
+      });
+    }
   }
 }
