@@ -20,7 +20,7 @@
     "codecov": "3.6.1",
     "husky": "3.0.7",
     "jest": "24.9.0",
-    "lerna": "3.16.4",
+    "lerna": "3.17.0",
     "lint-staged": "9.4.1",
     "prettier": "1.18.2",
     "rimraf": "3.0.0",
