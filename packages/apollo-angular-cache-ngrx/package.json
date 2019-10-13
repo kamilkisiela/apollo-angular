@@ -38,7 +38,7 @@
     "@angular/core": "8.2.10",
     "@angular/platform-browser": "8.2.10",
     "@angular/platform-browser-dynamic": "8.2.10",
-    "@ngrx/store": "8.3.0",
+    "@ngrx/store": "8.4.0",
     "@types/graphql": "14.5.0",
     "@types/jest": "24.0.18",
     "graphql": "14.5.8",
