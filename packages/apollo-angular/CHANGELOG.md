@@ -2,6 +2,8 @@
 
 ### vNext
 
+- Introduces `APOLLO_NAMED_OPTIONS` token. Allows to create named Apollo clients using Dependency Injection ([PR #1364](https://github.com/apollographql/apollo-angular/pull/1364))
+
 ### v1.7.0
 
 - Fixed type definition for subscribe [PR #1290](https://github.com/apollographql/apollo-angular/pull/1290)

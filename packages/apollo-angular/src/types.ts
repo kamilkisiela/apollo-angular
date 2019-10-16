@@ -3,6 +3,7 @@ import {
   QueryOptions as CoreQueryOptions,
   MutationOptions as CoreMutationOptions,
   SubscriptionOptions as CoreSubscriptionOptions,
+  ApolloClientOptions,
 } from 'apollo-client';
 import {ExecutionResult} from 'graphql';
 
@@ -41,3 +42,5 @@ export interface WatchQueryOptions<V> extends CoreWatchQueryOptions<V> {
 export interface SubscriptionResult<T> extends ExecutionResult {
   data?: T;
 }
+
+export type NamedOptions = Record<string, ApolloClientOptions<any>>;
