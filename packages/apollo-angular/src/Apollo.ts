@@ -12,8 +12,13 @@ import {FetchResult} from 'apollo-link';
 import {Observable, from} from 'rxjs';
 
 import {QueryRef} from './QueryRef';
-import {WatchQueryOptions, ExtraSubscriptionOptions, R} from './types';
-import {APOLLO_OPTIONS} from './tokens';
+import {
+  WatchQueryOptions,
+  ExtraSubscriptionOptions,
+  R,
+  NamedOptions,
+} from './types';
+import {APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS} from './tokens';
 import {fromPromise, wrapWithZone, fixObservable} from './utils';
 
 export class ApolloBase<TCacheShape = any> {
@@ -107,11 +112,23 @@ export class Apollo extends ApolloBase<any> {
     @Optional()
     @Inject(APOLLO_OPTIONS)
     apolloOptions?: ApolloClientOptions<any>,
+    @Optional()
+    @Inject(APOLLO_NAMED_OPTIONS)
+    apolloNamedOptions?: NamedOptions,
   ) {
     super(_ngZone);
 
     if (apolloOptions) {
       this.createDefault(apolloOptions);
+    }
+
+    if (apolloNamedOptions && typeof apolloNamedOptions === 'object') {
+      for (const name in apolloNamedOptions) {
+        if (apolloNamedOptions.hasOwnProperty(name)) {
+          const options = apolloNamedOptions[name];
+          this.createNamed(name, options);
+        }
+      }
     }
   }
 

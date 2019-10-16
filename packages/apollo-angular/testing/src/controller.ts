@@ -1,7 +1,6 @@
-import {Operation} from 'apollo-link';
 import {DocumentNode} from 'graphql';
 
-import {TestOperation} from './operation';
+import {TestOperation, Operation} from './operation';
 
 export type MatchOperationFn = (op: Operation) => boolean;
 export type MatchOperation =

@@ -123,7 +123,7 @@ test('expect and answer', () => {
   component = fixture.componentInstance;
 
   //Call the relevant method
-  component.getDog().subscribe((dog) => {
+  component.getDog().subscribe(dog => {
     //Make some assertion about the result;
     expect(dog.id).toEqual(0);
     expect(dog.name).toEqual('Mr Apollo');
@@ -139,13 +139,13 @@ test('expect and answer', () => {
 
   // Respond with mock data, causing Observable to resolve.
   op.flush({
-    data : {
+    data: {
       dog: {
         id: 0,
         name: 'Mr Apollo',
-        breed: 'foo'
+        breed: 'foo',
       },
-    }
+    },
   });
 
   // Finally, assert that there are no outstanding operations.
@@ -190,6 +190,126 @@ It's an object returned by `expectOne` and `match` methods.
 - `flush(result: ExecutionResult | ApolloError): void` - it accepts a result object or ApolloError instance
 - `networkError(error: Error): void` - to flush an operation with a network error
 - `graphqlErrors(errors: GraphQLError[]): void` - to flush an operation with graphql errors
+
+## Using named clients
+
+The process is pretty much the same as using a default client but the setup is a bit different:
+
+```ts
+import {
+  ApolloTestingModule,
+  ApolloTestingController,
+} from 'apollo-angular/testing';
+
+describe('DogComponent', () => {
+  controller: ApolloTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ApolloTestingModule.withClients(['clientA', 'clientB'])],
+    });
+
+    controller = TestBed.get(ApolloTestingController);
+  });
+
+  afterEach(() => {
+    controller.verify();
+  });
+});
+```
+
+Now you're able to test named clients.
+
+If you want to check which client was called to perform a graphql operation:
+
+```ts
+test('expect to call clientA', () => {
+  // Scaffold the component
+  TestBed.createComponent(DogComponent);
+  component = fixture.componentInstance;
+
+  // Call the relevant method
+  component.getDog().subscribe();
+
+  const op = controller.expectOne(GET_DOG_QUERY);
+
+  // Check what is the name of a client that performed the query
+  expect(op.clientName).toEqual('clientA');
+
+  // Respond with mock data, causing Observable to resolve.
+  op.flush({
+    data: {
+      dog: {
+        id: 0,
+        name: 'Mr Apollo',
+        breed: 'foo',
+      },
+    },
+  });
+
+  // Finally, assert that there are no outstanding operations.
+  controller.verify();
+});
+```
+
+## Using a custom cache
+
+By default, every ApolloCache is created with these options:
+
+```js
+{
+  addTypename: false;
+}
+```
+
+If you would like to change it in the default client, do the following:
+
+```ts
+import {APOLLO_TESTING_CACHE} from 'apollo-angular/testing';
+
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    imports: [ApolloTestingModule],
+    providers: [
+      {
+        provide: APOLLO_TESTING_CACHE,
+        useValue: {
+          addTypename: true,
+        },
+      },
+    ],
+  });
+
+  // ...
+});
+```
+
+For named clients:
+
+```ts
+import {APOLLO_TESTING_NAMED_CACHE} from 'apollo-angular/testing';
+
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    imports: [ApolloTestingModule],
+    providers: [
+      {
+        provide: APOLLO_TESTING_CACHE,
+        useValue: {
+          clientA: {
+            addTypename: true,
+          },
+          clientB: {
+            addTypename: true,
+          }
+        },
+      },
+    ],
+  });
+
+  // ...
+});
+```
 
 ## Summary
 

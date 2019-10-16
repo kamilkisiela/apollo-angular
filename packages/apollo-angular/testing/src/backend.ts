@@ -1,15 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observer} from 'rxjs';
-import {
-  Operation,
-  FetchResult,
-  Observable as LinkObservable,
-} from 'apollo-link';
+import {FetchResult, Observable as LinkObservable} from 'apollo-link';
 import {DocumentNode} from 'graphql';
 import {print} from 'graphql';
 
 import {ApolloTestingController, MatchOperation} from './controller';
-import {TestOperation} from './operation';
+import {TestOperation, Operation} from './operation';
 
 /**
  * A testing backend for `Apollo`.

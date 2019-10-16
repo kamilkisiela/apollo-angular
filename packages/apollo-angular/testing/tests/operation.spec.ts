@@ -7,7 +7,12 @@ import {ApolloTestingBackend} from '../src/backend';
 describe('TestOperation', () => {
   test('accepts a null body', () => {
     const mock = new ApolloTestingBackend();
-    const link = new ApolloLink(op => mock.handle(op));
+    const link = new ApolloLink(op =>
+      mock.handle({
+        ...op,
+        clientName: 'default',
+      }),
+    );
     const query = gql`
       query allHeroes {
         heroes {
