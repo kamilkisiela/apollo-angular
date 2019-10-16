@@ -7,10 +7,7 @@
   "module": "build/fesm5/ngApolloBoost.js",
   "typings": "build/ngApolloBoost.d.ts",
   "version": "1.6.0",
-  "repository": {
-    "type": "git",
-    "url": "apollographql/apollo-angular"
-  },
+  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-boost",
   "keywords": [
     "apollo",
     "graphql",

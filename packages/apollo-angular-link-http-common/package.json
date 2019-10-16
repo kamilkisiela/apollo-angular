@@ -8,10 +8,7 @@
   "module": "build/fesm5/ngApolloLinkHttpCommon.js",
   "typings": "build/ngApolloLinkHttpCommon.d.ts",
   "version": "1.8.0",
-  "repository": {
-    "type": "git",
-    "url": "apollographql/apollo-angular"
-  },
+  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-http-common",
   "keywords": [
     "apollo",
     "graphql",

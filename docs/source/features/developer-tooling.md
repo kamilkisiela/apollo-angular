@@ -106,7 +106,7 @@ The tag name is configurable using the CLI `--tag-name` option.
 
 ### .graphqlconfig support
 
-Instead of using the `--schema` option to point out you GraphQL schema, you can specify it in a [`.graphqlconfig`](https://github.com/graphcool/graphql-config) file.
+Instead of using the `--schema` option to point out you GraphQL schema, you can specify it in a [`.graphqlconfig`](https://github.com/kamilkisiela/graphql-config) file.
 
 In case you specify multiple schemas in your `.graphqlconfig` file, choose which one to pick by using the `--project-name` option.
 

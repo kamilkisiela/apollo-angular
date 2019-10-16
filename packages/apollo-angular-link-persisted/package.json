@@ -8,10 +8,7 @@
   "module": "build/fesm5/ngApolloLinkPersisted.js",
   "typings": "build/ngApolloLinkPersisted.d.ts",
   "version": "1.1.0",
-  "repository": {
-    "type": "git",
-    "url": "apollographql/apollo-angular"
-  },
+  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-persisted",
   "keywords": [
     "apollo",
     "graphql",
