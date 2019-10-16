@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.9.0
+
+- Fix deep import of graphql `print`
+
 ### v1.8.0
 
 - Sync with common@1.8.0
