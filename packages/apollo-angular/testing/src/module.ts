@@ -33,7 +33,7 @@ export class ApolloTestingModule {
     cache?: ApolloCache<any>,
     @Optional()
     @Inject(APOLLO_TESTING_NAMED_CACHE)
-    namedCaches?: NamedCaches,
+    namedCaches?: any, // FIX: using NamedCaches here makes ngc fail
   ) {
     function createOptions(c?: ApolloCache<any> | null) {
       return {
@@ -49,7 +49,7 @@ export class ApolloTestingModule {
     apollo.create(createOptions(cache));
 
     if (namedCaches && typeof namedCaches === 'object') {
-      for (const name in namedCaches) {
+      for (const name in namedCaches as NamedCaches) {
         if (namedCaches.hasOwnProperty(name)) {
           apollo.createNamed(name, createOptions(namedCaches[name]));
         }
