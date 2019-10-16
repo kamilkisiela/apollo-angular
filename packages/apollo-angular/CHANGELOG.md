@@ -2,6 +2,8 @@
 
 ### vNext
 
+### v1.8.0
+
 - Introduces `APOLLO_NAMED_OPTIONS` token. Allows to create named Apollo clients using Dependency Injection ([PR #1365](https://github.com/apollographql/apollo-angular/pull/1365))
 - Allow to test named Apollo client ([PR #1365](https://github.com/apollographql/apollo-angular/pull/1365))
 
