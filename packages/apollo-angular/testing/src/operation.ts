@@ -1,10 +1,14 @@
 import {ApolloError} from 'apollo-client';
-import {Operation, FetchResult} from 'apollo-link';
+import {Operation as LinkOperation, FetchResult} from 'apollo-link';
 import {GraphQLError, ExecutionResult} from 'graphql';
 import {Observer} from 'rxjs';
 
 const isApolloError = (err: any): err is ApolloError =>
   err && err.hasOwnProperty('graphQLErrors');
+
+export type Operation = LinkOperation & {
+  clientName: string;
+};
 
 export class TestOperation {
   constructor(

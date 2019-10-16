@@ -5,4 +5,4 @@ export {
   APOLLO_TESTING_NAMED_CACHE,
   NamedCaches,
 } from './module';
-export {TestOperation} from './operation';
+export {TestOperation, Operation} from './operation';
