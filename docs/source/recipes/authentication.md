@@ -39,43 +39,58 @@ Note: the backend must also allow credentials from the requested origin. e.g. if
 
 ## Header
 
-Another common way to identify yourself when using HTTP is to send along an authorization header. Apollo Links make creating middlewares that lets you modify requests before they are sent to the server. It's easy to add an `Authorization` header to every HTTP request. In this example, we'll pull the login token from `localStorage` every time a request is sent:
+Another common way to identify yourself when using HTTP is to send along an authorization header. Apollo Links make creating middlewares that lets you modify requests before they are sent to the server. It's easy to add an `Authorization` header to every HTTP request. In this example, we'll pull the login token from `localStorage` every time a request is sent.
+
+In `graphql.module.ts`:
 
 ```ts
-import { HttpHeaders } from '@angular/common/http';
-import { Apollo } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
 
-@NgModule({ ... })
-class AppModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
-    const http = httpLink.create({uri: '/graphql'});
+const uri = '/graphql';
 
-    const authLink = new ApolloLink((operation, forward) => {
-      // Get the authentication token from local storage if it exists
-      const token = localStorage.getItem('token');
+export function provideApollo(httpLink: HttpLink) {
+  const basic = setContext((operation, context) => ({
+    headers: {
+      Accept: 'charset=utf-8'
+    }
+  }));
 
-      // Use the setContext method to set the HTTP headers.
-      operation.setContext({
-          headers: {
-              'Authorization': token ? `Bearer ${token}` : ''
-          }
-      });
+  // Get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  const auth = setContext((operation, context) => ({
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+  }));
 
-      // Call the next link in the middleware chain.
-      return forward(operation);
-    });
+  const link = ApolloLink.from([basic, auth, httpLink.create({ uri })]);
+  const cache = new InMemoryCache();
 
-    apollo.create({
-      link: authLink.concat(http),
-      // other options like cache
-    });
+  return {
+    link,
+    cache
   }
 }
+
+@NgModule({
+  exports: [
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule
+  ],
+  providers: [{
+    provide: APOLLO_OPTIONS,
+    useFactory: provideApollo,
+    deps: [HttpLink]
+  }]
+})
+export class GraphQLModule {}
+
 ```
 
 The server can use that header to authenticate the user and attach it to the GraphQL execution context, so resolvers can modify their behavior based on a user's role and permissions.
@@ -90,18 +105,20 @@ import { setContext } from 'apollo-link-context';
 const auth = setContext(async(_, { headers }) => {
   // Grab token if there is one in storage or hasn't expired
   let token = this.auth.getCachedAccessToken();
-  
+
   if (!token) {
     // An observable to fetch a new token
     // Converted .toPromise()
     await this.auth.acquireToken().toPromise();
-    
+
     // Set new token to the response (adal puts the new token in storage when fetched)
     token = this.auth.getCachedAccessToken();
   }
   // Return the headers as usual
   return {
-    headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 });
 ```
