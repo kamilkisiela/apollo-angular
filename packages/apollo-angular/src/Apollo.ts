@@ -17,21 +17,30 @@ import {
   ExtraSubscriptionOptions,
   R,
   NamedOptions,
+  Flags,
 } from './types';
-import {APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS} from './tokens';
-import {fromPromise, wrapWithZone, fixObservable} from './utils';
+import {APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS, APOLLO_FLAGS} from './tokens';
+import {fromPromise, wrapWithZone, fixObservable, pickFlag} from './utils';
 
 export class ApolloBase<TCacheShape = any> {
+  private useInitialLoading: boolean;
+
   constructor(
     protected ngZone: NgZone,
+    protected flags?: Flags,
     protected _client?: ApolloClient<TCacheShape>,
-  ) {}
+  ) {
+    this.useInitialLoading = pickFlag(flags, 'useInitialLoading', false);
+  }
 
   public watchQuery<T, V = R>(options: WatchQueryOptions<V>): QueryRef<T, V> {
     return new QueryRef<T, V>(
       this.client.watchQuery<T, V>({...options}) as ObservableQuery<T, V>,
       this.ngZone,
-      options,
+      {
+        useInitialLoading: this.useInitialLoading,
+        ...options,
+      },
     );
   }
 
@@ -117,8 +126,9 @@ export class Apollo extends ApolloBase<any> {
     @Optional()
     @Inject(APOLLO_NAMED_OPTIONS)
     apolloNamedOptions?: NamedOptions,
+    @Optional() @Inject(APOLLO_FLAGS) flags?: Flags,
   ) {
-    super(_ngZone);
+    super(_ngZone, flags);
 
     if (apolloOptions) {
       this.createDefault(apolloOptions);
@@ -196,7 +206,11 @@ export class Apollo extends ApolloBase<any> {
     }
     this.map.set(
       name,
-      new ApolloBase(this._ngZone, new ApolloClient<TCacheShape>(options)),
+      new ApolloBase(
+        this._ngZone,
+        this.flags,
+        new ApolloClient<TCacheShape>(options),
+      ),
     );
   }
 
