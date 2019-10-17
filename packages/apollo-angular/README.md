@@ -1,4 +1,6 @@
-# [Apollo Angular](https://www.apollographql.com/docs/angular/) [![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular) [![Build status](https://travis-ci.org/apollographql/apollo-angular.svg?branch=master)](https://travis-ci.org/apollographql/apollo-angular) [![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://www.apollographql.com/slack)
+[![Angular](https://user-images.githubusercontent.com/25294569/63955021-b99fca80-ca8c-11e9-9362-1ee8083edd2e.gif)](https://www.apollographql.com/docs/angular/)
+
+# [Apollo Angular](https://www.apollographql.com/docs/angular/) [![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular) [![Build status](https://travis-ci.org/apollographql/apollo-angular.svg?branch=master)](https://travis-ci.org/apollographql/apollo-angular) [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/apollo)
 
 Apollo Angular allows you to fetch data from your GraphQL server and use it in building complex and reactive UIs using the Angular framework. Apollo Angular may be used in any context that Angular may be used. In the browser, in NativeScript, or in Node.js when you want to do server-side rendering.
 

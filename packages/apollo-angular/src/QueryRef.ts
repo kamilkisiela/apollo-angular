@@ -12,17 +12,32 @@ import {
 import {Observable, from} from 'rxjs';
 
 import {wrapWithZone, fixObservable} from './utils';
-import {R} from './types';
+import {WatchQueryOptions, R} from './types';
+import {startWith} from 'rxjs/operators';
 
 export class QueryRef<T, V = R> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
-  public queryId: string;
+  public options: ObservableQuery<T, V>['options'];
+  public queryId: ObservableQuery<T, V>['queryId'];
+  public variables: V;
 
-  constructor(private obsQuery: ObservableQuery<T, V>, ngZone: NgZone) {
-    this.valueChanges = wrapWithZone(
-      from(fixObservable(this.obsQuery)),
-      ngZone,
-    );
+  constructor(
+    private obsQuery: ObservableQuery<T, V>,
+    ngZone: NgZone,
+    options: WatchQueryOptions<V>,
+  ) {
+    const wrapped = wrapWithZone(from(fixObservable(this.obsQuery)), ngZone);
+
+    this.valueChanges = options.useInitialLoading
+      ? wrapped.pipe(
+          startWith({
+            ...this.obsQuery.getCurrentResult(),
+            error: undefined,
+            partial: undefined,
+            stale: true,
+          }),
+        )
+      : wrapped;
     this.queryId = this.obsQuery.queryId;
   }
 
@@ -59,7 +74,7 @@ export class QueryRef<T, V = R> {
   }
 
   public subscribeToMore<MT = any, MV = R>(
-    options: SubscribeToMoreOptions<MT, MV>,
+    options: SubscribeToMoreOptions<T, MV, MT>,
   ): () => void {
     // XXX: there's a bug in apollo-client typings
     // it should not inherit types from ObservableQuery
@@ -79,7 +94,7 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.startPolling(pollInterval);
   }
 
-  public setOptions(opts: any): Promise<ApolloQueryResult<T>> {
+  public setOptions(opts: any) {
     return this.obsQuery.setOptions(opts);
   }
 
@@ -87,7 +102,7 @@ export class QueryRef<T, V = R> {
     variables: V,
     tryFetch: boolean = false,
     fetchResults = true,
-  ): Promise<ApolloQueryResult<T>> {
+  ) {
     return this.obsQuery.setVariables(variables, tryFetch, fetchResults);
   }
 }

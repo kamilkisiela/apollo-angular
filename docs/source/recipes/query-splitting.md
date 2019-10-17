@@ -81,7 +81,7 @@ query seriesEpisodes($seriesId: Int!) {
 }
 ```
 
-By adding a [custom resolver](../features/cache-updates.html#cacheRedirect) for the `oneSeries` field (and having dataIdFromObject function which normalizes the cache), the data can be resolved instantly from the store without a server round trip.
+By adding a [custom resolver](/features/cache-updates/#cache-redirects-with-cacheredirects) for the `oneSeries` field (and having dataIdFromObject function which normalizes the cache), the data can be resolved instantly from the store without a server round trip.
 
 ```ts
 import { Apollo } from 'apollo-angular';
@@ -185,4 +185,4 @@ class AppComponent {
 }
 ```
 
-Unfortunately if the user would now visit the second view without ever visiting the first view this would result in two network requests (since the data for the first query is not in the store yet). By using a [`BatchedHttpLink`](/docs/link/links/batch-http.html) those two queries can be send to the server in one network request.
+Unfortunately if the user would now visit the second view without ever visiting the first view this would result in two network requests (since the data for the first query is not in the store yet). By using a [`HttpBatchLink`](https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-http-batch) those two queries can be send to the server in one network request.

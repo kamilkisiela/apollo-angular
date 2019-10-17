@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 
 import {Apollo} from './Apollo';
 import {
-  SubscriptionOptions,
+  SubscriptionOptionsAlone,
   ExtraSubscriptionOptions,
   SubscriptionResult,
   R,
@@ -19,7 +19,7 @@ export class Subscription<T = any, V = R> {
 
   public subscribe(
     variables?: V,
-    options?: SubscriptionOptions<V>,
+    options?: SubscriptionOptionsAlone<V>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<SubscriptionResult<T>> {
     return this.apollo.use(this.client).subscribe<T, V>(

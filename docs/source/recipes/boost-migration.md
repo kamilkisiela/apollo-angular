@@ -7,11 +7,11 @@ Apollo Angular Boost is a great way to get started with Apollo Angular quickly, 
 
 We're working on an eject feature (maybe Angular's schematic) for Apollo Angular Boost that will make migration easier in the future, but for now, let's walk through how to migrate off of Apollo Boost.
 
-<h2 id="basic-migration">Basic migration</h2>
+## Basic migration
 
 If you're not using any configuration options on Apollo Angular Boost, migration should be relatively simple. All you will have to change is the file where you initialize Apollo.
 
-<h3 id="before">Before</h3>
+### Before
 
 Here's what client initialization looks like with Apollo Angular Boost:
 
@@ -30,13 +30,13 @@ import { ApolloBoostModule, ApolloBoost } from "apollo-angular-boost";
 export class AppModule {
   constructor(boost: ApolloBoost) {
     boost.create({
-      uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+      uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
     })
   }
 }
 ```
 
-<h3 id="after">After</h3>
+### After
 
 To create a basic client with the same defaults as Apollo Angular Boost, first you need to install some packages:
 
@@ -89,7 +89,7 @@ export class AppModule {
           if (networkError) console.log(`[Network error]: ${networkError}`);
         }),
         httpLink.create({
-          uri: 'https://w5xlvm3vzz.lp.gql.zone/graphql',
+          uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
           withCredentials: true,
         }),
       ]),
@@ -99,11 +99,30 @@ export class AppModule {
 }
 ```
 
-The `InMemoryCache` is our recommended cache implementation for Apollo Client. The `HttpLink` is an Apollo Link that sends HTTP requests through Angular's HttpClient. Your network stack can be made up of one or more links, which you can chain together to create a customizable network stack. Learn more in our [network layer](./network-layer.html) guide or the [Apollo Link](/docs/link.html) docs.
+The `InMemoryCache` is our recommended cache implementation for Apollo Client. The `HttpLink` is an Apollo Link that sends HTTP requests through Angular's HttpClient. Your network stack can be made up of one or more links, which you can chain together to create a customizable network stack. Learn more in our [network layer](/basics/network-layer/) guide or the [Apollo Link](https://www.apollographql.com/docs/link/) docs.
 
-<h2 id="advanced-migration">Advanced migration</h2>
+## Advanced migration
 
 If you are using configuration options on Apollo Angular Boost, your migration path will vary depending on which ones you use.
+
+Type your configuration options object as ApolloClientOptions so you can use IntelliSense features on your editor.
+```ts
+export function createApollo(httpLink: HttpLink) {
+  return {
+    cache: new InMemoryCache(),
+    link: ApolloLink.from([
+      onError(({ graphQLErrors, networkError }) => {
+        ...
+      }),
+      httpLink.create({
+        uri: aux.env.graphql
+      }),
+    ]),
+    resolvers,
+    typeDefs
+  } as ApolloClientOptions<any>;
+}
+```
 
 We will try to step by step eject each configuration.
 
@@ -133,7 +152,17 @@ This one, you put to `HttpLink.create()`.
 
 ### clientState
 
-You can pass whole object to `apollo-link-state` by also including ApolloCache
+You can pass all the proprieties of the object to `apollo-link-state` by also including ApolloCache.
+```ts
+{
+    cache: new InMemoryCache(),
+    link: ApolloLink.from([
+      ...
+    ]),
+    resolvers,
+    typeDefs
+  }
+```
 
 ### onError
 

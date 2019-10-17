@@ -4,14 +4,11 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ng.apolloLink.headers.umd.js",
-  "module": "build/fesm5/ng.apolloLink.headers.js",
-  "typings": "build/ng.apolloLink.headers.d.ts",
-  "version": "1.3.0",
-  "repository": {
-    "type": "git",
-    "url": "apollographql/apollo-angular"
-  },
+  "main": "build/bundles/ngApolloLinkHeaders.umd.js",
+  "module": "build/fesm5/ngApolloLinkHeaders.js",
+  "typings": "build/ngApolloLinkHeaders.d.ts",
+  "version": "1.4.0",
+  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-headers",
   "keywords": [
     "apollo",
     "graphql",
@@ -24,20 +21,20 @@
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0 || ^7.0.0",
+    "@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "7.0.1",
-    "@angular/core": "7.0.1",
-    "@types/graphql": "14.0.3",
-    "@types/jest": "23.3.5",
-    "apollo-link": "1.2.3",
-    "graphql": "14.0.2",
-    "graphql-tag": "2.10.0",
-    "jest": "23.6.0",
-    "ng-packagr": "4.4.0",
-    "ts-jest": "23.10.4",
-    "typescript": "3.1.3"
+    "@angular/common": "8.2.11",
+    "@angular/core": "8.2.11",
+    "@types/graphql": "14.5.0",
+    "@types/jest": "24.0.19",
+    "apollo-link": "1.2.13",
+    "graphql": "14.5.8",
+    "graphql-tag": "2.10.1",
+    "jest": "24.9.0",
+    "ng-packagr": "5.7.0",
+    "ts-jest": "24.1.0",
+    "typescript": "3.5.3"
   }
 }

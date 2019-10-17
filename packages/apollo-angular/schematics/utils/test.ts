@@ -7,26 +7,26 @@ import {
 
 const collectionPath = join(__dirname, '../collection.json');
 
-export function createTestApp(appOptions = {}): UnitTestTree {
+export async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
   const baseRunner = new SchematicTestRunner('schematics', collectionPath);
 
-  const workspaceTree = baseRunner.runExternalSchematic(
-    '@schematics/angular',
-    'workspace',
-    {
+  const workspaceTree = await baseRunner
+    .runExternalSchematicAsync('@schematics/angular', 'workspace', {
       name: 'workspace',
       version: '6.0.0',
       newProjectRoot: 'projects',
-    },
-  );
+    })
+    .toPromise();
 
-  return baseRunner.runExternalSchematic(
-    '@schematics/angular',
-    'application',
-    {
-      ...appOptions,
-      name: 'apollo',
-    },
-    workspaceTree,
-  );
+  return baseRunner
+    .runExternalSchematicAsync(
+      '@schematics/angular',
+      'application',
+      {
+        ...appOptions,
+        name: 'apollo',
+      },
+      workspaceTree,
+    )
+    .toPromise();
 }

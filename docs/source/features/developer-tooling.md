@@ -3,15 +3,15 @@ title: Developer tools
 description: How to use extensions and developer tools to get insight into what your app is doing.
 ---
 
-<h2 id="devtools">Apollo Client Devtools</h2>
+## Apollo Client Devtools
 
 The [Apollo Client Devtools](https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm) is a Chrome extension.
 
-<h3 id="features">Features</h3>
+### Features
 
 The devtools appear as an "Apollo" tab in your Chrome inspector, along side the "Elements" and "Console" tabs. There are currently 3 main features of the devtools:
 
-* GraphiQL: Send queries to your server through the Apollo network interface, or query the Apollo cacheto see what data is loaded.
+* GraphiQL: Send queries to your server through the Apollo network interface, or query the Apollo cache to see what data is loaded.
 * Normalized store inspector: Visualize your GraphQL store the way Apollo Client sees it, and search byfield names or values.
 * Watched query inspector: View active queries and variables, and locate the associated UI components.
 
@@ -27,12 +27,12 @@ View the state of your client-side cache as a tree and inspect every object insi
 
 View the queries being actively watched on any given page. See when they're loading, what variables they're using, and, if in the future if you’re using Angular, which Angular component they’re attached to.
 
-<h3 id="installation">Installation</h3>
+### Installation
 
 You can install the extension via the [Chrome Webstore](https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm).
 If you want to install a local version of the extension instead, skip ahead to the __Developing__ section.
 
-<h3 id="configuration">Configuration</h3>
+### Configuration
 
 While your app is in dev mode, the devtools will appear as an "Apollo" tab in your chrome inspector. To enable the devtools in your app even in production, pass `connectToDevTools: true` to the ApolloClient constructor in your app.  Pass `connectToDevTools: false` if want to manually disable this functionality.
 
@@ -41,7 +41,7 @@ The "Apollo" tab will appear in the Chrome console if a global `window.__APOLLO_
 Find more information about contributing and debugging on the [Apollo Client DevTools GitHub page](https://github.com/apollographql/apollo-client-devtools).
 
 
-<h2 id="codegen">Apollo Codegen</h2>
+## Apollo Codegen
 
 Apollo Codegen is a tool to generate API code or type annotations based on a GraphQL schema and query documents.
 
@@ -49,7 +49,7 @@ It currently generates Swift code, TypeScript annotations, Flow annotations, and
 
 See [Apollo iOS](https://github.com/apollographql/apollo-ios) for details on the mapping from GraphQL results to Swift types, as well as runtime support for executing queries and mutations. For Scala, see [React Apollo Scala.js](https://github.com/apollographql/react-apollo-scalajs) for details on how to use generated Scala code in a Scala.js app with Apollo Client.
 
-<h3 id="usage">Usage</h3>
+### Usage
 
 If you want to use `apollo-codegen`, you can install it command globally:
 
@@ -57,7 +57,7 @@ If you want to use `apollo-codegen`, you can install it command globally:
 npm install -g apollo-codegen
 ```
 
-<h3 id="introspect">`introspect-schema`</h3>
+### `introspect-schema`
 
 The purpose of this command is to create a JSON introspection dump file for a given graphql schema. The input schema can be fetched from a remote graphql server or from a local file. The resulting JSON introspection dump file is needed as input to the [generate](#generate) command.
 
@@ -77,7 +77,7 @@ To generate a GraphQL schema introspection JSON from a local GraphQL schema:
 apollo-codegen introspect-schema schema.graphql --output schema.json
 ```
 
-<h3 id="generate">`generate`</h3>
+### `generate`
 
 The purpose of this command is to generate types for query and mutation operations made against the schema (it will not generate types for the schema itself).
 
@@ -98,23 +98,23 @@ apollo-codegen generate **/*.graphql --schema schema.json --target flow --output
 apollo-codegen generate **/*.graphql --schema schema.json --target scala --output operation-result-types.scala
 ```
 
-<h3 id="template">`gql` template support</h3>
+### `gql` template support
 
 If the source file for generation is a javascript or typescript file, the codegen will try to extrapolate the queries inside the [gql tag](https://github.com/apollographql/graphql-tag) templates.
 
 The tag name is configurable using the CLI `--tag-name` option.
 
-<h3 id="graphqlconfig" title=".graphqlconfig">[.graphqlconfig](https://github.com/graphcool/graphql-config) support</h3>
+### .graphqlconfig support
 
-Instead of using the `--schema` option to point out you GraphQL schema, you can specify it in a `.graphqlconfig` file.
+Instead of using the `--schema` option to point out you GraphQL schema, you can specify it in a [`.graphqlconfig`](https://github.com/kamilkisiela/graphql-config) file.
 
 In case you specify multiple schemas in your `.graphqlconfig` file, choose which one to pick by using the `--project-name` option.
 
-<h3 id="typescript-and-flow">Typescript and Flow</h3>
+### Typescript and Flow
 
 When using `apollo-codegen` with Typescript or Flow, make sure to add the `__typename` introspection field to every selection set within your graphql operations.
 
-If you're using a client like `apollo-client` that does this automatically for your GraphQL operations, pass in the -`-addTypename` option to `apollo-codegen` to make sure the generated Typescript and Flow types have the `__typename` field as well. This is required to ensure proper type generation support for `GraphQLUnionType` and `GraphQLInterfaceType` fields.
+If you're using a client like `apollo-client` that does this automatically for your GraphQL operations, pass in the `--addTypename` option to `apollo-codegen` to make sure the generated Typescript and Flow types have the `__typename` field as well. This is required to ensure proper type generation support for `GraphQLUnionType` and `GraphQLInterfaceType` fields.
 
 **Why is the __typename field required?**
 

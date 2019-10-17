@@ -1,2 +1,5 @@
 db.json
 _multiconfig.yml
+!package-lock.json
+.cache
+public

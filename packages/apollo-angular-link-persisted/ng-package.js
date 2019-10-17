@@ -4,7 +4,7 @@ module.exports = {
   dest: 'build',
   lib: {
     entryFile: 'src/index.ts',
-    flatModuleFile: 'ng.apolloLink.persisted',
+    flatModuleFile: 'ngApolloLinkPersisted',
     umdModuleIds,
   },
   whitelistedNonPeerDependencies: [

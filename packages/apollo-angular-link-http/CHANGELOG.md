@@ -1,5 +1,27 @@
 # Change log
 
+### vNEXT
+
+### v1.9.0
+
+- Fix deep import of graphql `print`
+
+### v1.8.0
+
+- Sync with common@1.8.0
+
+### v1.7.0
+
+- Support Angular 8
+
+### v1.6.0
+
+- Supports file upload (set `useMultipart: true` in operation's context)
+
+### v1.5.0
+
+- Allow to define `uri` through a function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)
+
 ### v1.4.0
 
 - Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)

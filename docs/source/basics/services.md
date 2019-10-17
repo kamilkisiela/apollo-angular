@@ -40,7 +40,7 @@ export interface Post {
   };
 }
 export interface Response {
-  allPosts: Post[];
+  posts: Post[];
 }
 
 
@@ -227,7 +227,7 @@ import {Component, Input} from '@angular/core';
 import {NewPostGQL} from './graphql';
 
 @Component({ ... })
-export class AcitivityComponent {
+export class ActivityComponent {
   constructor(newPostGQL: NewPostGQL) {
     this.lastPost = newPostGQL.subscribe();
   }
@@ -289,4 +289,4 @@ export class ListComponent implements OnInit {
 }
 ```
 
-To learn more about the tool, please read the ["Apollo-Angular 1.2  —  using GraphQL in your apps just got a whole lot easier!"](https://medium.com/the-guild/apollo-angular-code-generation-7903da1f8559) article or go straight to [documentation](https://www.npmjs.com/package/graphql-codegen-apollo-angular-template).
+To learn more about the tool, please read the ["Apollo-Angular 1.2  —  using GraphQL in your apps just got a whole lot easier!"](https://medium.com/the-guild/apollo-angular-code-generation-7903da1f8559) article or go straight to [documentation](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular).

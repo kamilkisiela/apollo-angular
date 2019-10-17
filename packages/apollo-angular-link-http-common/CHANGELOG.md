@@ -1,5 +1,28 @@
 # Change log
 
+### vNEXT
+
+### v1.8.0
+
+- Creates an abstraction of file upload logic [PR #1239](https://github.com/apollographql/apollo-angular/pull/1239)
+- No longer depends on `extract-files` [PR #1239](https://github.com/apollographql/apollo-angular/pull/1239)
+
+### v1.7.0
+
+- Supports Angular 8
+
+### v1.6.0
+
+- Supports file upload (set `useMultipart: true` in operation's context)
+
+### v1.5.1
+
+- Prevent production optimisation removing code when using GET [PR #1113](https://github.com/apollographql/apollo-angular/pull/1113)
+
+### v1.5.0
+
+- Allow to define `uri` through a function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)
+
 ### v1.4.0
 
 - Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)

@@ -7,7 +7,7 @@ import {
   FetchResult,
 } from 'apollo-link';
 import {BatchLink, BatchHandler} from 'apollo-link-batch';
-import {print} from 'graphql/language/printer';
+import {print} from 'graphql';
 import {
   fetch,
   Body,
@@ -44,6 +44,10 @@ export class HttpBatchLinkHandler extends ApolloLink {
         const headers = this.createHeaders(operations);
         const {method, uri, withCredentials} = this.createOptions(operations);
 
+        if (typeof uri === 'function') {
+          throw new Error(`Option 'uri' is a function, should be a string`);
+        }
+
         const req: Request = {
           method,
           url: uri,
@@ -54,7 +58,11 @@ export class HttpBatchLinkHandler extends ApolloLink {
           },
         };
 
-        const sub = fetch(req, this.httpClient).subscribe({
+        const sub = fetch(req, this.httpClient, () => {
+          throw new Error(
+            'File upload is not available when combined with Batching',
+          );
+        }).subscribe({
           next: result => observer.next(result.body),
           error: err => observer.error(err),
           complete: () => observer.complete(),

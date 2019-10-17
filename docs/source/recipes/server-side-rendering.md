@@ -50,7 +50,7 @@ class AppModule {
 }
 ```
 
-<h2 id="server-rendering">Server-side rendering</h2>
+## Server-side rendering
 
 You can render your entire Angular-based Apollo application on a Node server the same way as you would normally do with an Angular app.
 
@@ -59,7 +59,7 @@ No changes are required to client queries to support this, so your Apollo-based 
 > SSR works out of the box when using `HttpLink` from `apollo-angular-link-http` because it uses Angular's `HttpClient` internally.
 > This would't be that easy with `apollo-link-http`. That non-angular Link uses Fetch API which would have to schedule a macroTask (Zone.js) so Angular could wait for the request to finish.
 
-<h2 id="store-rehydration">Store rehydration</h2>
+## Store rehydration
 
 For applications that can perform some queries on the server prior to rendering the UI on the client, Apollo allows for setting the initial state of data. This is sometimes called rehydration, since the data is "dehydrated" when it is serialized and included in the initial HTML payload.
 
@@ -199,7 +199,7 @@ Super easy and clean!
 
 With all this when the client runs the first set of queries, the data will be returned instantly because it is already in the store!
 
-If you are using [`forceFetch`](../features/cache-updates.html#forceFetch) on some of the initial queries, you can pass the `ssrForceFetchDelay` option to skip force fetching during initialization, so that even those queries run using the cache:
+If you are using `forceFetch` on some of the initial queries, you can pass the `ssrForceFetchDelay` option to skip force fetching during initialization, so that even those queries run using the cache:
 
 ```ts
 // to use it create two Apollo Clients
@@ -219,7 +219,7 @@ apollo.create({
 });
 ```
 
-<h2 id="http-caching">Http Caching</h2>
+## Http Caching
 
 As you know, `HttpLink` from `apollo-angular-link-http` package uses Angular's `HttpClient` to make requests. Thanks to that and `@nguniversal/common` it is super easy to make SSR working without even writing a single line of code.
 
@@ -261,16 +261,16 @@ class AppModule {
 }
 ```
 
-<h2 id="best-practices">Best Practices</h2>
+## Best Practices
 
 You saw how to use Server-Side Rendering and Store Rehydration in your application, but you will need to be a little careful in how you create Apollo on the server to ensure everything works there as well:
 
-1. When [creating Apollo](../basics/setup.html) (`Apollo.create`) on the server, you'll need to set up your HttpLink to connect to the API server correctly. This might look different to how you do it on the client, since you'll probably have to use an absolute URL to the server if you were using a relative URL on the client.
+1. When [creating Apollo](/basics/setup/) (`Apollo.create`) on the server, you'll need to set up your HttpLink to connect to the API server correctly. This might look different to how you do it on the client, since you'll probably have to use an absolute URL to the server if you were using a relative URL on the client.
 
 1. Since you only want to fetch each query result once, pass the `ssrMode: true` option to the `Apollo.create` to avoid repeated force-fetching.
 
-1. You need to ensure that you create a new client or store instance for each request, rather than re-using the same client for multiple requests. Otherwise the UI will be getting stale data and you'll have problems with [authentication](authentication.html).
+1. You need to ensure that you create a new client or store instance for each request, rather than re-using the same client for multiple requests. Otherwise the UI will be getting stale data and you'll have problems with [authentication](/recipes/authentication/).
 
-<h2 id="example">Example</h2>
+## Example
 
 You can [take a look](https://github.com/kamilkisiela/apollo-angular-ssr) on a simple example with the implementation we talked about.

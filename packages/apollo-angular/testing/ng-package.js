@@ -4,7 +4,7 @@ module.exports = {
   dest: 'build',
   lib: {
     entryFile: 'src/index.ts',
-    flatModuleFile: 'ng.apollo.testing',
+    flatModuleFile: 'ngApolloTesting',
     umdModuleIds,
   },
 };

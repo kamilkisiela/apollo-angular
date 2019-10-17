@@ -1,6 +1,24 @@
 # Change log
 
-### vNEXT
+### vNext
+
+### v1.8.0
+
+- Introduces `APOLLO_NAMED_OPTIONS` token. Allows to create named Apollo clients using Dependency Injection ([PR #1365](https://github.com/apollographql/apollo-angular/pull/1365))
+- Allow to test named Apollo client ([PR #1365](https://github.com/apollographql/apollo-angular/pull/1365))
+
+### v1.7.0
+
+- Fixed type definition for subscribe [PR #1290](https://github.com/apollographql/apollo-angular/pull/1290)
+- Fix global scope naming for UMD build [PR #1305](https://github.com/apollographql/apollo-angular/pull/1305)
+- Introduce useInitialLoading in watch [PR #1306](https://github.com/apollographql/apollo-angular/pull/1306)
+
+### v1.6.0
+
+- Angular 8 [PR #1206](https://github.com/apollographql/apollo-angular/pull/1206)
+- Bumps packages in schematics
+
+### v1.5.0
 
 - Use more generic types and make everything more strict [PR #885](https://github.com/apollographql/apollo-angular/pull/885)
 - Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)

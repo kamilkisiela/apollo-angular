@@ -2,11 +2,11 @@
 title: Setup and options
 ---
 
-<h2 id="installation">Installation</h2>
+## Installation
 
 The simplest way to get started with Apollo Angular is by running `ng add apollo-angular` command.
 
-<h2 id="with-schematics">Installation with Angular Schematics</h2>
+## Installation with Angular Schematics
 
 We support `ng-add` command now.
 
@@ -19,12 +19,12 @@ ng add apollo-angular
 One thing you need to set is the URL of your GraphQL Server, so open `src/app/graphql.module.ts` and set `uri` variables:
 
 ```typescript
-const uri = 'https://w5xlvm3vzz.lp.gql.zone/graphql'; //our test Graphql Server which returns rates
+const uri = 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'; //our test Graphql Server which returns rates
 ```
 
-**Done!** You can now create your first query, [**let's go through it together here**](#request)
+**Done!** You can now create your first query, [**let's go through it together here**](#request-data)
 
-<h2 id="without-schematics">Installation without Angular Schematics</h2>
+## Installation without Angular Schematics
 
 If you want to setup Apollo without the help of Angular Schematics, first, let's install some packages:
 
@@ -79,11 +79,11 @@ import { InMemoryCache } from "apollo-cache-inmemory";
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
-    useFactory(httpLink: HttpLink) {
+    useFactory: (httpLink: HttpLink) => {
       return {
         cache: new InMemoryCache(),
         link: httpLink.create({
-          uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+          uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
         })
       }
     },
@@ -101,7 +101,7 @@ Take a closer look what we did there:
 
 Apollo's HttpLink requires `HttpClient` so that's why we also used `HttpClientModule` from `@angular/common/http`.
 
-<h2 id="links-cache">Links and Cache</h2>
+## Links and Cache
 
 Apollo Client has a pluggable network interface layer, which can let you configure how queries are sent over HTTP, or replace the whole network part with something completely custom, like a websocket transport, mocked server data, or anything else you can imagine.
 
@@ -109,11 +109,10 @@ One Link that you already have in your application is called `apollo-angular-lin
 
 `apollo-cache-inmemory` is the default cache implementation for Apollo Client 2.0. InMemoryCache is a normalized data store that supports all of Apollo Client 1.0’s features without the dependency on Redux.
 
+- [Explore more the Network Layer of Apollo](/basics/network-layer/)
+- [Read more about caching](/basics/caching/)
 
-- [Explore more the Network Layer of Apollo](./network-layer.html)
-- [Read more about caching](./caching.html)
-
-<h2 id="request">Request data</h2>
+## Request data
 
 Once all is hooked up, you're ready to start requesting data with `Apollo` service!
 
@@ -132,7 +131,8 @@ An object passed through an Observable contains `loading`, `error`, and `data` p
 
 Let's create an `ExchangeRates` component to see the `Apollo` service in action!
 
-<h3 id="basic-operations">Basic Operations</h3>
+### Basic Operations
+
 If you want to see how easy it is to fetch data from a GraphQL server with Apollo, you can use the `query` method. It is as easy as this:
 
 ```ts
@@ -188,9 +188,9 @@ Congrats, you just made your first query! 🎉 If you render your `ExchangeRates
 
 If you'd like to play around with the app we just built, you can view it on [StackBlitz](https://stackblitz.com/edit/basic-apollo-angular-app). Don't stop there! Try building more components with `Apollo` service and experimenting with the concepts you just learned.
 
-<h2 id="next-steps">Next steps</h2>
+## Next steps
 
 Now that you've learned how to fetch data with Apollo Angular, you're ready to dive deeper into creating more complex queries and mutations. After this section, we recommend moving onto:
 
-- [Queries](./queries.html): Learn how to fetch queries with arguments and dive deeper into configuration options..
-- [Mutations](./mutations.html): Learn how to update data with mutations and when you'll need to update the Apollo cache.
+- [Queries](/basics/queries/): Learn how to fetch queries with arguments and dive deeper into configuration options..
+- [Mutations](/basics/mutations/): Learn how to update data with mutations and when you'll need to update the Apollo cache.

@@ -4,10 +4,9 @@ import {
   ApolloLink,
   Observable as LinkObservable,
   Operation,
-  RequestHandler,
   FetchResult,
 } from 'apollo-link';
-import {print} from 'graphql/language/printer';
+import {print} from 'graphql';
 import {
   fetch,
   Options,
@@ -17,10 +16,13 @@ import {
   mergeHeaders,
   prioritize,
 } from 'apollo-angular-link-http-common';
+import {extractFiles} from 'extract-files';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
-  public requester: RequestHandler;
+  public requester: (
+    operation: Operation,
+  ) => LinkObservable<FetchResult> | null;
 
   constructor(private httpClient: HttpClient, private options: Options) {
     super();
@@ -42,16 +44,18 @@ export class HttpLinkHandler extends ApolloLink {
         const method = pick('method', 'POST');
         const url = pick('uri', 'graphql');
         const withCredentials = pick('withCredentials');
+        const useMultipart = pick('useMultipart');
 
         const req: Request = {
           method,
-          url,
+          url: typeof url === 'function' ? url(operation) : url,
           body: {
             operationName: operation.operationName,
             variables: operation.variables,
           },
           options: {
             withCredentials,
+            useMultipart,
             headers: this.options.headers,
           },
         };
@@ -71,7 +75,7 @@ export class HttpLinkHandler extends ApolloLink {
           );
         }
 
-        const sub = fetch(req, this.httpClient).subscribe({
+        const sub = fetch(req, this.httpClient, extractFiles).subscribe({
           next: response => {
             operation.setContext({response});
             observer.next(response.body);

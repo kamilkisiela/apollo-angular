@@ -9,7 +9,7 @@
       It may also respond with warnings, messages, or fail the build if something is off.
       Don't worry, it'll help you to fix what is broken!
 
-    - travis-ci will run tests, checking style of code, and generally make
+    - GitHub Actions will run tests, checking style of code, and generally make
       sure everything is working as expected
 
   Please look at the following checklist to ensure that your PR

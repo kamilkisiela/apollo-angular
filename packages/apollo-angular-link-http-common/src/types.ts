@@ -1,13 +1,17 @@
 import {HttpHeaders} from '@angular/common/http';
+import {Operation} from 'apollo-link';
 
 export type HttpRequestOptions = {
   headers?: HttpHeaders;
   withCredentials?: boolean;
+  useMultipart?: boolean;
 };
+
+export type URIFunction = (operation: Operation) => string;
 
 export type FetchOptions = {
   method?: string;
-  uri?: string;
+  uri?: string | URIFunction;
   includeExtensions?: boolean;
   includeQuery?: boolean;
 };
@@ -28,4 +32,11 @@ export type Request = {
   url: string;
   body: Body | Body[];
   options: HttpRequestOptions;
+};
+
+export type ExtractFiles = (
+  body: Body | Body[],
+) => {
+  clone: Body;
+  files: Map<any, any>;
 };

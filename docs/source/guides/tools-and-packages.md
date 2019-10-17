@@ -45,10 +45,10 @@ To learn more about the tool, please read the ["Apollo-Angular 1.2  —  usi
 
 More about Query, Mutation, Subscription services in ["Query, Mutation, Subscription services"](http://apollographql.com/docs/angular/basics/services.html) chapter of Apollo Angular documentation.
 
-[Read documentation](https://www.npmjs.com/package/graphql-codegen-apollo-angular-template)
+[Read documentation](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular)
 
 ```bash
-yarn add graphql-code-generator graphql-codegen-apollo-angular-template
+yarn add graphql-code-generator graphql-codegen-typescript-apollo-angular
 ```
 
 ### Other packages

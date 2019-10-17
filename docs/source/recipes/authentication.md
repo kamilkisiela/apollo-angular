@@ -4,7 +4,7 @@ title: Authentication
 
 Unless all of the data you are loading is completely public, your app has some sort of users, accounts and permissions systems. If different users have different permissions in your application, then you need a way to tell the server which user is associated with each request.
 
-Apollo Client uses the ultra flexible [Apollo Link](/docs/link) that includes several options for authentication.
+Apollo Client uses the ultra flexible [Apollo Link](https://www.apollographql.com/docs/link) that includes several options for authentication.
 
 ## Cookie
 
@@ -45,23 +45,27 @@ In `graphql.module.ts`:
 
 ```ts
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule, Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { setContext } from 'apollo-link-context';
 import { ApolloLink } from 'apollo-link';
 
 const uri = '/graphql';
 
 export function provideApollo(httpLink: HttpLink) {
-  const basic = setContext((operation, ctx) => ({
-    headers: new HttpHeaders().set('Accept', 'charset=utf-8')
+  const basic = setContext((operation, context) => ({
+    headers: {
+      Accept': 'charset=utf-8'
+    }
   }));
 
+  // Get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
-  const auth = setContext((operation, ctx) => ({
-    headers: ctx.headers.append('Authorization', `Bearer ${token}`)
+  const auth = setContext((operation, context) => ({
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   }));
 
   const link = ApolloLink.from([basic, auth, httpLink.create({ uri })]);
@@ -96,6 +100,8 @@ The server can use that header to authenticate the user and attach it to the Gra
 In the case that you need to a refresh a token, for example when using the [adal.js](https://github.com/AzureAD/azure-activedirectory-library-for-js) library, you can use an observable wrapped in a promise to wait for a new token:
 
 ```ts
+import { setContext } from 'apollo-link-context';
+
 const auth = setContext(async(_, { headers }) => {
   // Grab token if there is one in storage or hasn't expired
   let token = this.auth.getCachedAccessToken();
@@ -110,12 +116,14 @@ const auth = setContext(async(_, { headers }) => {
   }
   // Return the headers as usual
   return {
-    headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 });
 ```
 
-<h2 id="login-logout">Reset store on logout</h2>
+## Reset store on logout
 
 Since Apollo caches all of your query results, it's important to get rid of them when the login state changes.
 
@@ -138,8 +146,7 @@ const PROFILE_QUERY = gql`
 
 @Injectable()
 class AuthService {
-  apollo: Apollo;
-
+constructor(private apollo: Apollo) {}
   logout() {
     // some app logic
 

@@ -8,6 +8,7 @@ import {TestBed, inject, async} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
 import {InMemoryCache} from 'apollo-cache-inmemory';
+import {NetworkStatus} from 'apollo-client';
 
 import {Apollo, ApolloBase} from '../src/Apollo';
 import {ZoneScheduler} from '../src/utils';
@@ -193,7 +194,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.query = jest.fn(options => {
+      client.query = jest.fn<any, any>(options => {
         if (options.used) {
           throw new Error('options was reused');
         }
@@ -295,7 +296,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.mutate = jest.fn(options => {
+      client.mutate = jest.fn<any, any>(options => {
         if (options.used) {
           throw new Error('options was reused');
         }
@@ -671,4 +672,79 @@ describe('Apollo', () => {
       });
     }),
   ));
+
+  test('should useInitialLoading', async(
+    inject([Apollo], (apollo: Apollo) => {
+      const op = {
+        query: gql`
+          query heroes {
+            heroes {
+              name
+              __typename
+            }
+          }
+        `,
+        variables: {},
+        useInitialLoading: true,
+      };
+      const data = {
+        heroes: [
+          {
+            name: 'Superman',
+            __typename: 'Hero',
+          },
+        ],
+      };
+
+      let alreadyCalled = false;
+
+      // create
+      apollo.create<any>({
+        link: mockSingleLink({request: op, result: {data}}),
+        cache: new InMemoryCache(),
+      });
+
+      // query
+      apollo.watchQuery<any>(op).valueChanges.subscribe({
+        next: result => {
+          if (alreadyCalled) {
+            expect(result.data).toMatchObject(data);
+          } else {
+            expect(result.loading).toBe(true);
+            expect(result.networkStatus).toBe(NetworkStatus.loading);
+          }
+        },
+        error: e => {
+          throw new Error(e);
+        },
+      });
+    }),
+  ));
+
+  test('should remove default client', () => {
+    const apollo = mockApollo(mockSingleLink(), ngZone);
+
+    expect(apollo.getClient()).toBeDefined();
+
+    apollo.removeClient();
+
+    expect(apollo.getClient()).toBeUndefined();
+  });
+
+  test('should remove named client', () => {
+    const apollo = mockApollo(mockSingleLink(), ngZone);
+
+    apollo.createNamed('test', {
+      link: mockSingleLink(),
+      cache: new InMemoryCache(),
+    });
+
+    expect(apollo.getClient()).toBeDefined();
+    expect(apollo.use('test').getClient()).toBeDefined();
+
+    apollo.removeClient('test');
+
+    expect(apollo.getClient()).toBeDefined();
+    expect(apollo.use('test')).toBeUndefined();
+  });
 });

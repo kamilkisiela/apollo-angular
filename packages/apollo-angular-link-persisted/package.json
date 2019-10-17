@@ -4,14 +4,11 @@
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ng.apolloLink.persisted.umd.js",
-  "module": "build/fesm5/ng.apolloLink.persisted.js",
-  "typings": "build/ng.apolloLink.persisted.d.ts",
+  "main": "build/bundles/ngApolloLinkPersisted.umd.js",
+  "module": "build/fesm5/ngApolloLinkPersisted.js",
+  "typings": "build/ngApolloLinkPersisted.d.ts",
   "version": "1.1.0",
-  "repository": {
-    "type": "git",
-    "url": "apollographql/apollo-angular"
-  },
+  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-persisted",
   "keywords": [
     "apollo",
     "graphql",
@@ -31,14 +28,14 @@
     "apollo-link-persisted-queries": "~0.2.0"
   },
   "devDependencies": {
-    "@types/graphql": "14.0.3",
-    "@types/jest": "23.3.7",
-    "apollo-link": "1.2.3",
-    "graphql": "14.0.2",
-    "graphql-tag": "2.10.0",
-    "jest": "23.6.0",
-    "ng-packagr": "4.4.0",
-    "ts-jest": "23.10.4",
-    "typescript": "3.1.3"
+    "@types/graphql": "14.5.0",
+    "@types/jest": "24.0.19",
+    "apollo-link": "1.2.13",
+    "graphql": "14.5.8",
+    "graphql-tag": "2.10.1",
+    "jest": "24.9.0",
+    "ng-packagr": "5.7.0",
+    "ts-jest": "24.1.0",
+    "typescript": "3.5.3"
   }
 }

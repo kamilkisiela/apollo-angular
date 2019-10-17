@@ -4,7 +4,7 @@ title: Multiple clients
 
 With `apollo-angular` it is possible to use multiple Apollo Clients in your application.
 
-<h2 id="creating-clients">Creating clients</h2>
+## Creating clients
 
 You are already familiar with how to create a single client so it should be easy to understand it.
 
@@ -41,8 +41,7 @@ apollo.createDefault(options)
 apollo.createNamed(name, options);
 ```
 
-
-<h2 id="using-apollo">Using Apollo</h2>
+## Using Apollo
 
 Since we have our clients available in an app, now is the time to see how to use them.
 

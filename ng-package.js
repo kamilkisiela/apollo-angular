@@ -5,9 +5,9 @@ module.exports = {
     '@ngrx/store': 'ngrx.store',
     'apollo-link': 'apolloLink.core',
     'apollo-client': 'apollo',
-    'apollo-angular': 'ng.apollo',
-    'apollo-angular-link-http': 'ng.apolloLink.http',
-    'apollo-angular-link-http-common': 'ng.apolloLink.httpCommon',
+    'apollo-angular': 'ngApollo',
+    'apollo-angular-link-http': 'ngApolloLinkHttp',
+    'apollo-angular-link-http-common': 'ngApolloLinkHttpCommon',
     'apollo-cache-inmemory': 'apollo.cache.inmemory',
     'apollo-link-state': 'apolloLink.state',
     'apollo-link-error': 'apolloLink.error',
@@ -16,5 +16,6 @@ module.exports = {
     'apollo-link-persisted-queries': 'persistedQueryLink',
     rxjs: 'rxjs',
     'rxjs/operators': 'rxjs.operators',
+    'extract-files': 'extractFiles'
   },
 };

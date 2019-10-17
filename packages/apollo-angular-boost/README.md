@@ -122,7 +122,7 @@ import { ApolloBoost } from 'apollo-boost';
 export class GraphQLModule {
   constructor(apollo: ApolloBoost) {
     apollo.create({
-      uri: 'https://nx9zvp49q7.lp.gql.zone/graphql',
+      uri: 'https://5vxky4z9pl.sse.codesandbox.io/graphql',
       httpOptions: {
         withCredentials: true
       },

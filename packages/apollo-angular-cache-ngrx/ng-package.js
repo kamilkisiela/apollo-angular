@@ -4,7 +4,7 @@ module.exports = {
   dest: 'build',
   lib: {
     entryFile: 'src/index.ts',
-    flatModuleFile: 'ng.apolloCache.ngrx',
+    flatModuleFile: 'ngApolloCacheNgrx',
     umdModuleIds,
   },
   whitelistedNonPeerDependencies: ['apollo-cache', 'apollo-cache-inmemory'],

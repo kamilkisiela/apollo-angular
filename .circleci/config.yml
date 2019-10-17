@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:12.12.0
+    steps:
+      - checkout
+      - run:
+          name: Install
+          command: yarn
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Test
+          command: yarn test
+      - store_test_results:
+          path: test-results
+      - run:
+          name: Coverage
+          command: yarn coverage

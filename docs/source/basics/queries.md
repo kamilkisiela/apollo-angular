@@ -12,7 +12,7 @@ don't have to learn anything special about the query syntax, since everything is
 just standard GraphQL. Anything you can type into the GraphQL query IDE, you
 can also put into your Apollo Client code.
 
-<h2 id="basics">Basic Queries</h2>
+## Basic Queries
 
 When we are using a basic query, we can use the `Apollo.watchQuery` method in a
 very simple way. We simply need to parse our query into a GraphQL document using
@@ -22,7 +22,8 @@ For instance, in GitHunt, we want to display the current user (if logged in) in
 the `Profile` component:
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
@@ -68,7 +69,7 @@ property that is an `Observable`.
 We can see that the result object contains `loading`, a Boolean indicating if
 the query is "in-flight." The observable will only emit once when the query is
 complete, and `loading` will be set to false unless you set the `watchQuery`
-parameters `notifyOnNetworkStatusChange` or `returnPartialData` to true. Once
+parameters `notifyOnNetworkStatusChange` to true. Once
 the query has completed, it will also contain a `data` object with
 `currentUser`, the field we've picked out in `CurrentUserForProfile`.
 
@@ -82,7 +83,7 @@ It's also possible to fetch data only once. The `query` method of `Apollo`
 service returns an `Observable` that also resolves with the same result as
 above.
 
-<h3 id="queryref">What is QueryRef</h3>
+### What is QueryRef
 
 As you know, `Apollo.query` method returns an Observable that emits a result,
 just once. `Apollo.watchQuery` also does the same, except it can emit multiple
@@ -110,9 +111,9 @@ Observable we talked about. To subscribe to query results, you have to access it
 `valueChanges` property which exposes a clean RxJS Observable.
 
 It's worth mentioning that `QueryRef` accepts two generic types. More about that in
-[Static Typing](../features/static-typing.html).
+[Static Typing](/features/static-typing/).
 
-<h2 id="options">Providing `options`</h2>
+## Providing `options`
 
 `watchQuery` and `query` methods expect one argument, an object with options. If
 you want to configure the query, you can provide any available option in the
@@ -157,7 +158,7 @@ class ProfileComponent implements OnInit, OnDestroy {
 }
 ```
 
-<h2 id="select-pipe">Using with AsyncPipe</h2>
+## Using with AsyncPipe
 
 In Angular, the simplest way of displaying data that comes from Observable is to
 put `AsyncPipe` on top of the property inside the UI. You can also achieve this
@@ -224,7 +225,7 @@ The result of the query has this structure:
 Without using `SelectPipe`, you would get the whole object instead of only the
 `data.feed`.
 
-<h2 id="rxjs">Using with RxJS</h2>
+## Using with RxJS
 
 `Apollo` is compatible with RxJS by using same Observable so it can be used with
 operators.
