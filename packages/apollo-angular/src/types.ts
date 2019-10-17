@@ -44,3 +44,10 @@ export interface SubscriptionResult<T> extends ExecutionResult {
 }
 
 export type NamedOptions = Record<string, ApolloClientOptions<any>>;
+
+export type Flags = {
+  /**
+   * Strict mode makes sure ApolloModule is only imported once
+   */
+  strict?: boolean;
+};

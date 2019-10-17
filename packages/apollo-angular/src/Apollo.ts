@@ -100,7 +100,9 @@ export class ApolloBase<TCacheShape = any> {
   }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Apollo extends ApolloBase<any> {
   private map: Map<string, ApolloBase<any>> = new Map<
     string,
