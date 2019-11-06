@@ -24,7 +24,7 @@
     "prettier": "1.18.2",
     "rimraf": "3.0.0",
     "shelljs": "0.8.3",
-    "tsickle": "0.37.0",
+    "tsickle": "0.37.1",
     "typescript": "3.5.3"
   }
 }
