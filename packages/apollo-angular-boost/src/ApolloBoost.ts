@@ -72,16 +72,12 @@ export class ApolloBoost {
       uri: (config && config.uri) || '/graphql',
     });
 
-    const link = ApolloLink.from([
-      errorLink,
-      requestHandler,
-      stateLink,
-      httpLink,
-    ].filter(x => !!x) as ApolloLink[]);
+    const link = ApolloLink.from(
+      [errorLink, requestHandler, stateLink, httpLink].filter(
+        x => !!x,
+      ) as ApolloLink[],
+    );
 
-    this.apollo.create({
-      link,
-      cache,
-    });
+    this.apollo.create({link, cache}, config.clientName);
   }
 }

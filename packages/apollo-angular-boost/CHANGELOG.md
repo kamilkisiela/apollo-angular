@@ -1,6 +1,7 @@
 # Change log
 
 ### vNext
+- Support multiple Apollo clients
 
 ### v1.7.0
 

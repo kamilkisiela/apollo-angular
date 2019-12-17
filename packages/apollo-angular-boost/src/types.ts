@@ -11,4 +11,5 @@ export interface PresetConfig {
   clientState?: ClientStateConfig;
   onError?: ErrorLink.ErrorHandler;
   cacheRedirects?: CacheResolverMap;
+  clientName?: string;
 }
