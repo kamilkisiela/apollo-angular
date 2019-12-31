@@ -25,16 +25,16 @@
     "apollo-link": "^1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "8.2.13",
-    "@angular/core": "8.2.13",
+    "@angular/common": "8.2.14",
+    "@angular/core": "8.2.14",
     "@types/graphql": "14.5.0",
-    "@types/jest": "24.0.23",
+    "@types/jest": "24.0.25",
     "apollo-link": "1.2.13",
     "graphql": "14.5.8",
     "graphql-tag": "2.10.1",
     "jest": "24.9.0",
     "ng-packagr": "5.7.1",
-    "ts-jest": "24.1.0",
+    "ts-jest": "24.2.0",
     "typescript": "3.5.3"
   }
 }
