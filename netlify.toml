@@ -1,6 +1,6 @@
 [build]
   base    = "docs/"
-  publish = "public/"
+  publish = "docs/public/"
   command = "gatsby build --prefix-paths && mkdir -p docs/angular && mv public/* docs/angular && mv docs public/ && mv public/docs/angular/_redirects public"
 [build.environment]
   NPM_VERSION = "6"
