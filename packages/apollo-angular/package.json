@@ -36,7 +36,7 @@
     "zone.js": "~0.8.20 || ~0.9.0 || ~0.10.0"
   },
   "dependencies": {
-    "semver": "^6.0.0"
+    "semver": "^7.0.0"
   },
   "devDependencies": {
     "@angular-devkit/core": "8.3.21",
