@@ -36,6 +36,6 @@
     "jest": "24.9.0",
     "ng-packagr": "5.7.1",
     "ts-jest": "25.0.0",
-    "typescript": "3.5.3"
+    "typescript": "3.8.3"
   }
 }
