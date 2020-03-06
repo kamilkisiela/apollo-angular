@@ -4,29 +4,54 @@ import gql from 'graphql-tag';
 import {buildOperationForLink} from './utils';
 import {ApolloTestingBackend} from '../src/backend';
 
+const testQuery = gql`
+  query allHeroes {
+    heroes {
+      name
+    }
+  }
+`;
+
 describe('TestOperation', () => {
-  test('accepts a null body', () => {
-    const mock = new ApolloTestingBackend();
-    const link = new ApolloLink(op =>
+  let mock: ApolloTestingBackend;
+  let link: ApolloLink;
+
+  beforeEach(() => {
+    mock = new ApolloTestingBackend();
+    link = new ApolloLink(op =>
       mock.handle({
         ...op,
         clientName: 'default',
       }),
     );
-    const query = gql`
-      query allHeroes {
-        heroes {
-          name
+  });
+
+  test('accepts a null body', (done) => {
+    const operation = buildOperationForLink(testQuery, {});
+
+    execute(link, operation as any).subscribe(result => {
+      expect(result).toBeNull();
+      done();
+    });
+
+    mock.expectOne(testQuery).flush(null);
+  });
+
+  test('should accepts data for flush operation', (done) => {
+    const operation = buildOperationForLink(testQuery, {});
+
+    execute(link, operation as any).subscribe(result => {
+      expect(result).toEqual({
+        data: {
+          heroes: []
         }
-      }
-    `;
-    const operation = buildOperationForLink(query, {});
+      });
 
-    let response: any;
-    execute(link, operation as any).subscribe(result => (response = result));
+      done();
+    });
 
-    mock.expectOne(query).flush(null);
-
-    expect(response).toBeNull();
+    mock.expectOne(testQuery).flushData({
+      heroes: []
+    });
   });
 });
