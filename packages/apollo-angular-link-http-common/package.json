@@ -7,7 +7,7 @@
   "main": "build/bundles/ngApolloLinkHttpCommon.umd.js",
   "module": "build/fesm5/ngApolloLinkHttpCommon.js",
   "typings": "build/ngApolloLinkHttpCommon.d.ts",
-  "version": "1.8.0",
+  "version": "1.9.0-alpha.0",
   "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-http-common",
   "keywords": [
     "apollo",
@@ -18,36 +18,39 @@
     "build": "ng-packagr -p ng-package.js",
     "test": "yarn test-only",
     "test-only": "exit 0",
-    "deploy": "yarn build && npm publish build"
+    "deploy": "yarn build && npm publish build",
+    "deploy:next": "yarn build && npm publish build --tag next"
   },
   "peerDependencies": {
-    "@angular/core": "^6.0.0 || ^7.0.0 || ^8.0.0",
-    "@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "@angular/core": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
+    "@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
     "apollo-link": "^1.0.0",
     "graphql": ">=0.11.0 <0.14.0 || ^14.0.0"
   },
+  "dependencies": {
+    "tslib": "^1.11.0"
+  },
   "devDependencies": {
-    "@angular/animations": "8.2.14",
-    "@angular/common": "8.2.14",
-    "@angular/compiler": "8.2.14",
-    "@angular/compiler-cli": "8.2.14",
-    "@angular/core": "8.2.14",
-    "@angular/platform-browser": "8.2.14",
-    "@angular/platform-browser-dynamic": "8.2.14",
-    "@angular/platform-server": "8.2.14",
-    "@types/graphql": "14.5.0",
-    "@types/jest": "24.9.1",
+    "@angular/animations": "9.1.0",
+    "@angular/common": "9.1.0",
+    "@angular/compiler": "9.1.0",
+    "@angular/compiler-cli": "9.1.0",
+    "@angular/core": "9.1.0",
+    "@angular/platform-browser": "9.1.0",
+    "@angular/platform-browser-dynamic": "9.1.0",
+    "@angular/platform-server": "9.1.0",
+    "@types/jest": "25.1.4",
     "apollo-cache-inmemory": "1.6.5",
     "apollo-client": "2.6.8",
     "apollo-link": "1.2.13",
-    "graphql": "14.5.8",
-    "graphql-tag": "2.10.1",
-    "jest": "24.9.0",
+    "graphql": "14.6.0",
+    "graphql-tag": "2.10.3",
+    "jest": "25.2.3",
     "jest-zone-patch": "0.0.10",
-    "ng-packagr": "5.7.1",
+    "ng-packagr": "9.1.0",
     "rxjs": "6.5.4",
-    "ts-jest": "25.0.0",
-    "typescript": "3.5.3",
-    "zone.js": "0.10.2"
+    "ts-jest": "25.2.1",
+    "typescript": "3.8.3",
+    "zone.js": "0.10.3"
   }
 }

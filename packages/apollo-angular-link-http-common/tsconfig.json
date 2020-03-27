@@ -3,5 +3,8 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build"
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false
   }
 }
