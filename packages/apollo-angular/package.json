@@ -29,7 +29,7 @@
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
-    "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0",
+    "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
     "apollo-client": "^2.3.4",
     "apollo-link": "^1.0.0",
     "rxjs": "^6.0.0",
@@ -41,12 +41,12 @@
   "devDependencies": {
     "@angular-devkit/core": "8.3.23",
     "@angular-devkit/schematics": "8.3.23",
-    "@angular/common": "8.2.14",
-    "@angular/compiler": "8.2.14",
-    "@angular/compiler-cli": "8.2.14",
-    "@angular/core": "8.2.14",
-    "@angular/platform-browser": "8.2.14",
-    "@angular/platform-browser-dynamic": "8.2.14",
+    "@angular/common": "9.1.1",
+    "@angular/compiler": "9.1.1",
+    "@angular/compiler-cli": "9.1.1",
+    "@angular/core": "9.1.1",
+    "@angular/platform-browser": "9.1.1",
+    "@angular/platform-browser-dynamic": "9.1.1",
     "@schematics/angular": "8.3.23",
     "@types/graphql": "14.5.0",
     "@types/jest": "24.9.1",

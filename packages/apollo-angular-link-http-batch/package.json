@@ -21,8 +21,8 @@
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0",
-    "@angular/core": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
+    "@angular/core": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
     "graphql": ">=0.11.0 <0.14.0 || ^14.0.0"
   },
   "dependencies": {
@@ -31,14 +31,14 @@
     "apollo-link-batch": "^1.1.2"
   },
   "devDependencies": {
-    "@angular/animations": "8.2.14",
-    "@angular/common": "8.2.14",
-    "@angular/compiler": "8.2.14",
-    "@angular/compiler-cli": "8.2.14",
-    "@angular/core": "8.2.14",
-    "@angular/platform-browser": "8.2.14",
-    "@angular/platform-browser-dynamic": "8.2.14",
-    "@angular/platform-server": "8.2.14",
+    "@angular/animations": "9.1.1",
+    "@angular/common": "9.1.1",
+    "@angular/compiler": "9.1.1",
+    "@angular/compiler-cli": "9.1.1",
+    "@angular/core": "9.1.1",
+    "@angular/platform-browser": "9.1.1",
+    "@angular/platform-browser-dynamic": "9.1.1",
+    "@angular/platform-server": "9.1.1",
     "@types/graphql": "14.5.0",
     "@types/jest": "24.9.1",
     "apollo-cache-inmemory": "1.6.5",
