@@ -39,7 +39,7 @@
     "@angular/platform-browser": "9.1.0",
     "@angular/platform-browser-dynamic": "9.1.0",
     "@angular/platform-server": "9.1.0",
-    "@types/jest": "25.1.4",
+    "@types/jest": "25.2.1",
     "apollo-cache-inmemory": "1.6.5",
     "apollo-client": "2.6.8",
     "apollo-link": "1.2.14",
