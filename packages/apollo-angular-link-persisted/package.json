@@ -7,7 +7,7 @@
   "main": "build/bundles/ngApolloLinkPersisted.umd.js",
   "module": "build/fesm5/ngApolloLinkPersisted.js",
   "typings": "build/ngApolloLinkPersisted.d.ts",
-  "version": "1.2.0-alpha.0",
+  "version": "1.2.0",
   "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-persisted",
   "keywords": [
     "apollo",

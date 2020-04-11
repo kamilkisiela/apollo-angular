@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.9.0
+
+- Bump version ranges for GraphQL and Apollo Link
+
 ### v1.8.0
 
 - Creates an abstraction of file upload logic [PR #1239](https://github.com/apollographql/apollo-angular/pull/1239)

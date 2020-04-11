@@ -1,5 +1,9 @@
 # Change log
 
+### v1.5.0
+
+- Bump version ranges for GraphQL and Apollo Link
+
 ### v1.4.0
 
 - Support Angular 8
