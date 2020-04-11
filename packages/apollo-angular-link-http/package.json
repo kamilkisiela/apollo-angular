@@ -45,7 +45,7 @@
     "apollo-angular": "1.9.0-alpha.0",
     "apollo-cache-inmemory": "1.6.5",
     "apollo-client": "2.6.8",
-    "apollo-link": "1.2.13",
+    "apollo-link": "1.2.14",
     "graphql": "15.0.0",
     "graphql-tag": "2.10.3",
     "jest": "25.2.3",
