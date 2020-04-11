@@ -5,6 +5,9 @@
     "baseUrl": ".",
     "outDir": "build"
   },
+  "angularCompilerOptions": {
+    "enableIvy": false
+  },
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts"

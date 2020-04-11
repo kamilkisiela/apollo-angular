@@ -2,17 +2,26 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es5",
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
+    "importHelpers": true,
+    "inlineSources": true,
     "sourceMap": true,
     "declaration": true,
     "outDir": "build",
     "lib": ["es6", "dom", "esnext.asynciterable"],
     "types": ["jest"],
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true
+  },
+  "angularCompilerOptions": {
+    "enableResourceInlining": true,
+    "fullTemplateTypeCheck": true,
+    "skipTemplateCodegen": true,
+    "strictInjectionParameters": true,
+    "strictMetadataEmit": true
   }
 }

@@ -2,6 +2,10 @@
   "extends": "../../tsconfig",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "build"
+    "outDir": "build",
+    "emitDecoratorMetadata": true
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false
   }
 }
