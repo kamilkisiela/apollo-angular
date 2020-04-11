@@ -1,5 +1,11 @@
 # Change log
 
+## vNext
+
+### v1.2.0
+
+- Bump version ranges for GraphQL and Apollo Link
+
 ### v1.1.0
 
 - Introduces `useGETForHashedQueries`

@@ -2,6 +2,10 @@
 
 ### vNext
 
+### v1.9.0
+
+- Bump version ranges for GraphQL and Apollo Link
+
 ### v1.8.0
 
 - Introduces `APOLLO_NAMED_OPTIONS` token. Allows to create named Apollo clients using Dependency Injection ([PR #1365](https://github.com/apollographql/apollo-angular/pull/1365))

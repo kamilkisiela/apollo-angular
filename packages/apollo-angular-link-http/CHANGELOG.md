@@ -2,6 +2,10 @@
 
 ### vNEXT
 
+### v1.10.0
+
+- Bump version ranges for GraphQL and Apollo Link
+
 ### v1.9.0
 
 - Fix deep import of graphql `print`
