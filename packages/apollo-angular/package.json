@@ -60,7 +60,7 @@
     "cpx": "1.5.0",
     "graphql": "15.0.0",
     "graphql-tag": "2.10.3",
-    "jest": "25.2.3",
+    "jest": "25.3.0",
     "jest-zone-patch": "0.0.10",
     "ng-packagr": "9.1.0",
     "rxjs": "6.5.4",
