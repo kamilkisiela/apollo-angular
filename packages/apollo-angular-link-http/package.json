@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "apollo-angular-link-http-common": "~1.9.0",
-    "extract-files": "6.0.0",
+    "extract-files": "8.1.0",
     "tslib": "^1.11.0"
   },
   "devDependencies": {
