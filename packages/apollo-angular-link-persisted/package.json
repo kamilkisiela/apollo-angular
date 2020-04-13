@@ -35,7 +35,7 @@
     "graphql": "15.0.0",
     "graphql-tag": "2.10.3",
     "jest": "25.2.3",
-    "ng-packagr": "9.1.0",
+    "ng-packagr": "9.1.1",
     "ts-jest": "25.2.1",
     "typescript": "3.8.3"
   }
