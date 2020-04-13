@@ -51,7 +51,7 @@ class FeedComponent implements OnInit {
         offset: 0,
         limit: this.itemsPerPage,
       },
-      forceFetch: true,
+      fetchPolicy: 'network-only',
     });
 
     this.feed = this.feedQuery
