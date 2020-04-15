@@ -1,0 +1,30 @@
+{
+  "name": "website",
+  "scripts": {
+    "postinstall": "patch-package",
+    "start": "docusaurus start",
+    "build": "node ./links.js && docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy"
+  },
+  "dependencies": {
+    "@docusaurus/core": "2.0.0-alpha.50",
+    "@docusaurus/preset-classic": "2.0.0-alpha.50",
+    "globby": "11.0.0",
+    "patch-package": "6.2.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
