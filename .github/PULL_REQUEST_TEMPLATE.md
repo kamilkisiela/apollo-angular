@@ -5,10 +5,6 @@
   with reviewing and ensuring Apollo Angular is production ready after each
   pull request merge.
 
-    - meteor-bot will respond asking you to sign the CLA if this is your first PR.
-      It may also respond with warnings, messages, or fail the build if something is off.
-      Don't worry, it'll help you to fix what is broken!
-
     - GitHub Actions will run tests, checking style of code, and generally make
       sure everything is working as expected
 
