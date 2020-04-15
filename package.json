@@ -3,20 +3,17 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "prebuild": "rimraf packages/*/build/ packages/*/coverage/",
+    "prebuild": "rimraf packages/*/build/",
     "build": "lerna run build",
     "test": "lerna run test",
-    "format": "prettier --config .prettierrc --write \"packages/**/*.ts\"",
-    "deploy": "lerna run deploy",
-    "coverage": "codecov",
-    "precommit": "lint-staged"
+    "format": "prettier --write \"packages/**/*.ts\"",
+    "deploy": "lerna run deploy"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
     "@types/jest": "25.1.4",
-    "codecov": "3.6.5",
     "husky": "4.2.3",
     "jest": "25.2.3",
     "lerna": "3.20.2",
@@ -25,5 +22,20 @@
     "rimraf": "3.0.2",
     "shelljs": "0.8.3",
     "typescript": "3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/**/{src,tests}/**/*.ts": [
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }

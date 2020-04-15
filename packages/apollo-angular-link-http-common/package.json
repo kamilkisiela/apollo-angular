@@ -1,14 +1,22 @@
 {
   "name": "apollo-angular-link-http-common",
   "description": "Common logic for http links. For internal use only.",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
   "license": "MIT",
   "sideEffects": false,
   "main": "build/bundles/ngApolloLinkHttpCommon.umd.js",
   "module": "build/fesm5/ngApolloLinkHttpCommon.js",
   "typings": "build/ngApolloLinkHttpCommon.d.ts",
   "version": "1.9.0",
-  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-http-common",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilkisiela/apollo-angular",
+    "directory": "packages/apollo-angular-link-http-common"
+  },
   "keywords": [
     "apollo",
     "graphql",

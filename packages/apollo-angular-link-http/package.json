@@ -1,14 +1,22 @@
 {
   "name": "apollo-angular-link-http",
   "description": "An Apollo Link to allow sending a single http request per operation.",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
   "license": "MIT",
   "sideEffects": false,
   "main": "build/bundles/ngApolloLinkHttp.umd.js",
   "module": "build/fesm5/ngApolloLinkHttp.js",
   "typings": "build/ngApolloLinkHttp.d.ts",
   "version": "1.10.0",
-  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-http",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilkisiela/apollo-angular",
+    "directory": "packages/apollo-angular-link-http"
+  },
   "keywords": [
     "apollo",
     "graphql",

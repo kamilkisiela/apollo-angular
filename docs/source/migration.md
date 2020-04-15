@@ -408,7 +408,7 @@ Query reducers have been finally removed in the 2.0, instead we recommend using 
 
 ## Observable variables
 
-Apollo 2.0 doesn't ([currently](https://github.com/apollographql/apollo-angular/issues/425)) support passing observables as query variables. For now you can work around this by using `switchMap` on the observable:
+Apollo 2.0 doesn't ([currently](https://github.com/kamilkisiela/apollo-angular/issues/425)) support passing observables as query variables. For now you can work around this by using `switchMap` on the observable:
 
 ***Before***
 

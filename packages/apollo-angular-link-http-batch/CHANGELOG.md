@@ -14,11 +14,11 @@
 
 ### v1.5.0
 
-- Make sure people don't use `uri` as function [PR #1084](https://github.com/apollographql/apollo-angular/pull/1084)
+- Make sure people don't use `uri` as function [PR #1084](https://github.com/kamilkisiela/apollo-angular/pull/1084)
 
 ### v1.4.0
 
-- Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)
+- Angular 7 [PR #913](https://github.com/kamilkisiela/apollo-angular/pull/913)
 
 ### v1.3.1
 
@@ -40,12 +40,12 @@
 
 ### v1.1.0
 
-- Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
-- Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
+- Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/kamilkisiela/apollo-angular/pull/580))
+- Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/kamilkisiela/apollo-angular/pull/580))
 
 ### v1.0.1
 
-- Fix return type of `request` method ([PR #570](https://github.com/apollographql/apollo-angular/pull/570))
+- Fix return type of `request` method ([PR #570](https://github.com/kamilkisiela/apollo-angular/pull/570))
 
 ### v1.0.0
 

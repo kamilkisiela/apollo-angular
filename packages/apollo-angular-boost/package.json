@@ -1,13 +1,21 @@
 {
   "name": "apollo-angular-boost",
   "description": "The easiest way to get started with Apollo Client in Angular",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
   "license": "MIT",
   "main": "build/bundles/ngApolloBoost.umd.js",
   "module": "build/fesm5/ngApolloBoost.js",
   "typings": "build/ngApolloBoost.d.ts",
   "version": "1.8.0",
-  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-boost",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilkisiela/apollo-angular",
+    "directory": "packages/apollo-angular-boost"
+  },
   "keywords": [
     "apollo",
     "graphql",

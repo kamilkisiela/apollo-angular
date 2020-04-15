@@ -1,7 +1,11 @@
 {
   "name": "apollo-angular-cache-ngrx",
   "description": "Allows to use @ngrx/store as Apollo Cache",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
   "license": "MIT",
   "sideEffects": false,
   "main": "build/bundles/ngApolloCacheNgrx.umd.js",
@@ -10,7 +14,7 @@
   "version": "1.0.0-beta.2",
   "repository": {
     "type": "git",
-    "url": "apollographql/apollo-angular"
+    "url": "kamilkisiela/apollo-angular"
   },
   "keywords": [
     "apollo",
