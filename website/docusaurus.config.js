@@ -16,7 +16,7 @@ module.exports = {
     announcementBar: {
       id: 'support_us',
       content:
-        'If you like Apollo Angular give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/kamilkisiela/apollo-angular/">GitHub</a>!',
+        '⭐ If you like Apollo Angular give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/kamilkisiela/apollo-angular/">GitHub</a> ⭐',
       backgroundColor: '#292d3e',
       textColor: '#bfc7d5',
     },
