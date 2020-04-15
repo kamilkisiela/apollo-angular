@@ -33,7 +33,7 @@
     "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0 || ^9.0.0"
   },
   "dependencies": {
-    "apollo-angular": "~1.9.0",
+    "apollo-angular": "~1.9.1",
     "apollo-angular-link-http": "~1.10.0",
     "apollo-cache-inmemory": "~1.6.0",
     "apollo-client": "^2.6.0",
