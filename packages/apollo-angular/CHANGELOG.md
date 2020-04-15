@@ -2,6 +2,8 @@
 
 ### vNext
 
+- Fix an issue with TypeScript prior v3.5 - private get accessor [#1491](https://github.com/kamilkisiela/apollo-angular/issues/1491)
+
 ### v1.9.0
 
 - Bump version ranges for GraphQL and Apollo Link
