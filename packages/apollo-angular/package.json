@@ -2,14 +2,22 @@
   "name": "apollo-angular",
   "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
   "version": "1.9.0",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
   "license": "MIT",
   "sideEffects": false,
   "main": "build/bundles/ngApollo.umd.js",
   "module": "build/fesm5/ngApollo.js",
   "typings": "build/ngApollo.d.ts",
   "homepage": "https://www.apollographql.com/docs/angular/",
-  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilkisiela/apollo-angular",
+    "directory": "packages/apollo-angular"
+  },
   "keywords": [
     "apollo",
     "graphql",

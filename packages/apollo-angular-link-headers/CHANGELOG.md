@@ -10,7 +10,7 @@
 
 ### v1.3.0
 
-- Angular 7 [PR #913](https://github.com/apollographql/apollo-angular/pull/913)
+- Angular 7 [PR #913](https://github.com/kamilkisiela/apollo-angular/pull/913)
 
 ### v1.2.0
 
@@ -18,8 +18,8 @@
 
 ### v1.1.0
 
-* Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
-* Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/apollographql/apollo-angular/pull/580))
+* Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/kamilkisiela/apollo-angular/pull/580))
+* Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/kamilkisiela/apollo-angular/pull/580))
 
 ### v1.0.0
 

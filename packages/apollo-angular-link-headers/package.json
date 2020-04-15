@@ -1,14 +1,22 @@
 {
   "name": "apollo-angular-link-headers",
   "description": "An Apollo Link to easily transform headers from being a key-value object to an instance of HttpHeaders. Great combination with apollo-angular-link-http.",
-  "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
   "license": "MIT",
   "sideEffects": false,
   "main": "build/bundles/ngApolloLinkHeaders.umd.js",
   "module": "build/fesm5/ngApolloLinkHeaders.js",
   "typings": "build/ngApolloLinkHeaders.d.ts",
   "version": "1.5.0",
-  "repository": "https://github.com/apollographql/apollo-angular/tree/master/packages/apollo-angular-link-headers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilkisiela/apollo-angular",
+    "directory": "packages/apollo-angular-link-headers"
+  },
   "keywords": [
     "apollo",
     "graphql",
