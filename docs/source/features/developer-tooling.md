@@ -51,6 +51,8 @@ See [Apollo iOS](https://github.com/apollographql/apollo-ios) for details on the
 
 ### Usage
 
+##### Note: This and the sections below of this documentation are outdated. `apollo-codegen` is now deprecated, and you should use [`apollo`](https://www.npmjs.com/package/apollo#code-generation) instead.
+
 If you want to use `apollo-codegen`, you can install it command globally:
 
 ```bash
