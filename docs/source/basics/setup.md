@@ -119,7 +119,7 @@ Once all is hooked up, you're ready to start requesting data with `Apollo` servi
 `Apollo` is an Angular service exported from `apollo-angular` to share GraphQL data with your UI.
 
 First, pass your GraphQL query wrapped in the `gql` function (from `graphql-tag`) to the `query` property in the `Apollo.watchQuery` method, in your component.
-The `Apollo` service is a regular angular service that you familiar with, data are being streamed through Observables. Same here.
+The `Apollo` service is a regular angular service available to you, and your data is streamed through Observables.
 
 The `watchQuery` method returns a `QueryRef` object which has the `valueChanges`
 property that is an `Observable`.
