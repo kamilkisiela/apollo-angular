@@ -51,7 +51,7 @@ See [Apollo iOS](https://github.com/apollographql/apollo-ios) for details on the
 
 ### Usage
 
-##### Note: This and the sections below of this documentation are outdated. `apollo-codegen` is now deprecated, and you should use [`apollo`](https://www.npmjs.com/package/apollo#code-generation) instead.
+##### Note: This and the sections below of this documentation are outdated. `apollo-codegen` is now deprecated. Try using [`apollo`](https://www.npmjs.com/package/apollo#code-generation) or [`graphql-code-generator`](https://graphql-code-generator.com/) instead for GQL code generation.
 
 If you want to use `apollo-codegen`, you can install it command globally:
 
