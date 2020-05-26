@@ -95,7 +95,7 @@ describe('DogComponent', () => {
       imports: [ApolloTestingModule],
     });
 
-    controller = TestBed.get(ApolloTestingController);
+    controller = TestBed.inject(ApolloTestingController);
   });
 
   afterEach(() => {
