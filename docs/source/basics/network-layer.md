@@ -182,7 +182,7 @@ class AppModule {
 }
 ```
 
-Given the above code, the header's `Authorization` value will be that of `token` and the `recent-activity` value will. This example shows how you can use more than one middleware to make multiple/separate modifications to the request being processed in the form of a chain.  This example doesn't show the use of `localStorage`, but is instead just meant to demonstrate the use of more than one middleware using Apollo Link.
+Given the above code, the header's `Authorization` value will be that of `token` and the `recent-activity` value will be that of `lastOnlineTime`. This example shows how you can use more than one middleware to make multiple/separate modifications to the request being processed in the form of a chain.  This example doesn't show the use of `localStorage`, but is instead just meant to demonstrate the use of more than one middleware using Apollo Link.
 
 ### Afterware
 
@@ -244,4 +244,4 @@ For more information about using WebSocket's with Apollo Link, check out the [in
 
 ### Query Batching
 
-Apollo lets you automatically batch multiple queries into one request when they are made within a certain interval. This means that if you render several components, for example a navbar, sidebar, and content, and each of those do their own GraphQL query, they will all be sent in one roundtrip. Batching works only with server that support batched queries (for example graphql-server). Batched requests to servers that don’t support batching will fail. To learn how to use batching with Apollo checkout the [indepth guide](https://github.com/kamilkisiela/apollo-angular/tree/master/packages/apollo-angular-link-http-batch)
+Apollo lets you automatically batch multiple queries into one request when they are made within a certain interval. This means that if you render several components, for example a navbar, sidebar, and content, and each of those do their own GraphQL query, they will all be sent in one roundtrip. Batching works only with servers that support batched queries (for example graphql-server). Batched requests to servers that don’t support batching will fail. To learn how to use batching with Apollo checkout the [indepth guide](https://github.com/kamilkisiela/apollo-angular/tree/master/packages/apollo-angular-link-http-batch)
