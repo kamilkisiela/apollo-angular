@@ -145,7 +145,7 @@ The following example shows the use of multiple middlewares passed as an array:
 ```ts
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, from } from 'apollo-link';
 
 @NgModule({ ... })
 class AppModule {
