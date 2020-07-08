@@ -11,7 +11,7 @@
   "main": "build/bundles/ngApolloLinkHttpBatch.umd.js",
   "module": "build/fesm5/ngApolloLinkHttpBatch.js",
   "typings": "build/ngApolloLinkHttpBatch.d.ts",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kamilkisiela/apollo-angular",
@@ -35,7 +35,7 @@
     "graphql": ">=0.11.0 <0.14.0 || ^14.0.0 || ^15.0.0"
   },
   "dependencies": {
-    "apollo-angular-link-http-common": "~1.9.0",
+    "apollo-angular-link-http-common": "~1.10.0",
     "apollo-link": "^1.0.0",
     "apollo-link-batch": "^1.1.2",
     "tslib": "^2.0.0"
@@ -61,5 +61,9 @@
     "ts-jest": "26.1.1",
     "typescript": "3.9.6",
     "zone.js": "0.10.3"
+  },
+  "publishConfig":{
+    "access": "public",
+    "registry":"https://registry.npmjs.org"
   }
 }

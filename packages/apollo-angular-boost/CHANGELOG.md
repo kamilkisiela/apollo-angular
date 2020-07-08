@@ -2,6 +2,10 @@
 
 ### vNext
 
+### v1.9.0
+
+- Support Angular 10
+
 ### v1.8.0
 
 - Bump version ranges for GraphQL and Apollo Link

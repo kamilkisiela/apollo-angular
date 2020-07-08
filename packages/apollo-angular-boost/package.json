@@ -10,7 +10,7 @@
   "main": "build/bundles/ngApolloBoost.umd.js",
   "module": "build/fesm5/ngApolloBoost.js",
   "typings": "build/ngApolloBoost.d.ts",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kamilkisiela/apollo-angular",
@@ -33,8 +33,8 @@
     "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0"
   },
   "dependencies": {
-    "apollo-angular": "~1.9.1",
-    "apollo-angular-link-http": "~1.10.0",
+    "apollo-angular": "~1.10.0",
+    "apollo-angular-link-http": "~1.11.0",
     "apollo-cache-inmemory": "~1.6.0",
     "apollo-client": "^2.6.0",
     "apollo-link": "~1.2.14",
@@ -61,5 +61,9 @@
     "ts-jest": "26.1.1",
     "typescript": "3.9.6",
     "zone.js": "0.10.3"
+  },
+  "publishConfig":{
+    "access": "public",
+    "registry":"https://registry.npmjs.org"
   }
 }

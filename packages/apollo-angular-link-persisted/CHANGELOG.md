@@ -1,6 +1,10 @@
 # Change log
 
-## vNext
+### vNext
+
+### v1.3.0
+
+- Support Angular 10
 
 ### v1.2.0
 
