@@ -4,7 +4,7 @@ import {SchematicTestRunner} from '@angular-devkit/schematics/testing';
 import {getFileContent} from '@schematics/angular/utility/test';
 import {CompilerOptions} from 'typescript';
 
-import {createTestApp} from '../utils';
+import {createTestApp, parseJSON} from '../utils';
 import {dependenciesMap} from '../install';
 
 const collectionPath = resolve(__dirname, '../collection.json');
@@ -25,7 +25,7 @@ describe('ng-add', () => {
     const packageJsonPath = '/package.json';
     expect(tree.files).toContain(packageJsonPath);
 
-    const packageJson = JSON.parse(getFileContent(tree, packageJsonPath));
+    const packageJson = parseJSON(getFileContent(tree, packageJsonPath));
     const {dependencies} = packageJson;
 
     for (const dependency in dependenciesMap) {
@@ -72,14 +72,13 @@ describe('ng-add', () => {
     );
   });
 
-  test('should add esnext.asynciterable to tsconfig.json', async () => {
+  test('should add esnext.asynciterable to tsconfig.base.json', async () => {
     const tree = await runner
       .runSchematicAsync('ng-add', {}, appTree)
       .toPromise();
-    const rootModulePath = '/tsconfig.json';
-    const compilerOptions: CompilerOptions = JSON.parse(
-      getFileContent(tree, rootModulePath),
-    ).compilerOptions;
+    const rootModulePath = '/tsconfig.base.json';
+    const config = parseJSON(getFileContent(tree, rootModulePath));
+    const compilerOptions: CompilerOptions = config.compilerOptions;
 
     expect(compilerOptions.lib).toContain('esnext.asynciterable');
   });

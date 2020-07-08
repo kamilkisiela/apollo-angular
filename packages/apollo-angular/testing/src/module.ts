@@ -2,13 +2,7 @@ import {ApolloModule, Apollo} from 'apollo-angular';
 import {ApolloLink, Operation as LinkOperation} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloCache} from 'apollo-cache';
-import {
-  NgModule,
-  InjectionToken,
-  Inject,
-  Optional,
-  ModuleWithProviders,
-} from '@angular/core';
+import {NgModule, InjectionToken, Inject, Optional} from '@angular/core';
 
 import {ApolloTestingController} from './controller';
 import {ApolloTestingBackend} from './backend';
@@ -57,7 +51,7 @@ export class ApolloTestingModuleCore {
   ) {
     function createOptions(name: string, c?: ApolloCache<any> | null) {
       return {
-        link: new ApolloLink(operation =>
+        link: new ApolloLink((operation) =>
           backend.handle(addClient(name, operation)),
         ),
         cache:
@@ -71,7 +65,7 @@ export class ApolloTestingModuleCore {
     apollo.create(createOptions('default', cache));
 
     if (namedClients && namedClients.length) {
-      namedClients.forEach(name => {
+      namedClients.forEach((name) => {
         const caches =
           namedCaches && typeof namedCaches === 'object' ? namedCaches : {};
 
@@ -85,7 +79,7 @@ export class ApolloTestingModuleCore {
   imports: [ApolloTestingModuleCore],
 })
 export class ApolloTestingModule {
-  static withClients(names: string[]): ModuleWithProviders {
+  static withClients(names: string[]) {
     return {
       ngModule: ApolloTestingModuleCore,
       providers: [

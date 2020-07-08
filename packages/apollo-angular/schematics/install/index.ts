@@ -137,16 +137,29 @@ function inludeAsyncIterableLib() {
       compilerOptions.lib.push(requiredLib);
       host.overwrite(tsconfigPath, JSON.stringify(tsconfig, null, 2));
     } else {
-      console.error(
-        terminal.yellow(
-          '\n' +
-            tags.stripIndent`
-              We couln't find '${requiredLib}' in the list of library files to be included in the compilation.
-              It's required by 'apollo-client' package so please add it to your tsconfig.
-            ` +
-            '\n',
-        ),
-      );
+      const tsconfigBasePath = 'tsconfig.base.json';
+      const tsconfigBase = getJsonFile(host, tsconfigBasePath);
+      const baseCompilerOptions: CompilerOptions = tsconfigBase.compilerOptions;
+
+      if (
+        baseCompilerOptions &&
+        baseCompilerOptions.lib &&
+        !baseCompilerOptions.lib.find(lib => lib.toLowerCase() === requiredLib)
+      ) {
+        baseCompilerOptions.lib.push(requiredLib);
+        host.overwrite(tsconfigBasePath, JSON.stringify(tsconfigBase, null, 2));
+      } else {
+        console.error(
+          terminal.yellow(
+            '\n' +
+              tags.stripIndent`
+                We couln't find '${requiredLib}' in the list of library files to be included in the compilation.
+                It's required by 'apollo-client' package so please add it to your tsconfig.
+              ` +
+              '\n',
+          ),
+        );
+      }
     }
 
     return host;

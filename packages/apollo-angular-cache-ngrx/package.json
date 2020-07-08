@@ -31,33 +31,33 @@
     "deploy:next": "yarn build && npm publish build --tag next"
   },
   "peerDependencies": {
-    "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
+    "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0",
     "@ngrx/store": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "rxjs": "^6.0.0"
   },
   "devDependencies": {
-    "@angular/animations": "9.1.1",
-    "@angular/common": "9.1.1",
-    "@angular/compiler": "9.1.1",
-    "@angular/compiler-cli": "9.1.1",
-    "@angular/core": "9.1.1",
-    "@angular/platform-browser": "9.1.1",
-    "@angular/platform-browser-dynamic": "9.1.1",
-    "@ngrx/store": "8.6.0",
-    "@types/jest": "25.2.1",
-    "graphql": "15.0.0",
+    "@angular/animations": "10.0.2",
+    "@angular/common": "10.0.2",
+    "@angular/compiler": "10.0.2",
+    "@angular/compiler-cli": "10.0.2",
+    "@angular/core": "10.0.2",
+    "@angular/platform-browser": "10.0.2",
+    "@angular/platform-browser-dynamic": "10.0.2",
+    "@ngrx/store": "9.2.0",
+    "@types/jest": "26.0.4",
+    "graphql": "15.3.0",
     "graphql-tag": "2.10.3",
-    "jest": "25.3.0",
+    "jest": "26.1.0",
     "jest-zone-patch": "0.0.10",
-    "ng-packagr": "9.1.1",
-    "rxjs": "6.5.5",
-    "ts-jest": "25.3.1",
-    "typescript": "3.8.3",
+    "ng-packagr": "10.0.0",
+    "rxjs": "6.6.0",
+    "ts-jest": "26.1.1",
+    "typescript": "3.9.6",
     "zone.js": "0.10.3"
   },
   "dependencies": {
     "apollo-cache": "^1.1.0",
     "apollo-cache-inmemory": "^1.1.5",
-    "tslib": "^1.11.0"
+    "tslib": "^2.0.0"
   }
 }
