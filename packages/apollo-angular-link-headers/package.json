@@ -11,7 +11,7 @@
   "main": "build/bundles/ngApolloLinkHeaders.umd.js",
   "module": "build/fesm5/ngApolloLinkHeaders.js",
   "typings": "build/ngApolloLinkHeaders.d.ts",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kamilkisiela/apollo-angular",
@@ -47,5 +47,9 @@
     "ng-packagr": "10.0.0",
     "ts-jest": "26.1.1",
     "typescript": "3.9.6"
+  },
+  "publishConfig":{
+    "access": "public",
+    "registry":"https://registry.npmjs.org"
   }
 }

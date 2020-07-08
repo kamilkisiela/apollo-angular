@@ -27,8 +27,8 @@
     "xbuild": "ng-packagr -p ng-package.js",
     "xtest": "yarn test-only",
     "test-only": "jest --config jest.config.js",
-    "deploy": "yarn build && npm publish build",
-    "deploy:next": "yarn build && npm publish build --tag next"
+    "deploy": "exit 0",
+    "deploy:next": "exit 0"
   },
   "peerDependencies": {
     "@angular/core": "^6.1.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0",

@@ -2,6 +2,10 @@
 
 ### vNext
 
+### v1.10.0
+
+- Support Angular 10
+
 ### v1.9.1
 
 - Fix an issue with TypeScript prior v3.5 - private get accessor [#1491](https://github.com/kamilkisiela/apollo-angular/issues/1491)

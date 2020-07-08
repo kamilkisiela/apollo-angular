@@ -11,7 +11,7 @@
   "main": "build/bundles/ngApolloLinkHttpCommon.umd.js",
   "module": "build/fesm5/ngApolloLinkHttpCommon.js",
   "typings": "build/ngApolloLinkHttpCommon.d.ts",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kamilkisiela/apollo-angular",
@@ -60,5 +60,9 @@
     "ts-jest": "26.1.1",
     "typescript": "3.9.6",
     "zone.js": "0.10.3"
+  },
+  "publishConfig":{
+    "access": "public",
+    "registry":"https://registry.npmjs.org"
   }
 }
