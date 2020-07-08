@@ -8,5 +8,4 @@ export {PresetConfig} from './types';
 export {APOLLO_BOOST_CONFIG} from './tokens';
 export {ApolloBoost} from './ApolloBoost';
 export {ApolloBoostModule} from './ApolloBoostModule';
-export {InMemoryCache} from 'apollo-cache-inmemory';
 export {gql};

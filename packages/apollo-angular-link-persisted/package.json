@@ -35,16 +35,16 @@
   "dependencies": {
     "apollo-link-context": "^1.0.7",
     "apollo-link-persisted-queries": "~0.2.0",
-    "tslib": "^1.11.0"
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@types/jest": "25.2.1",
+    "@types/jest": "26.0.4",
     "apollo-link": "1.2.14",
-    "graphql": "15.0.0",
+    "graphql": "15.3.0",
     "graphql-tag": "2.10.3",
-    "jest": "25.3.0",
-    "ng-packagr": "9.1.1",
-    "ts-jest": "25.3.1",
-    "typescript": "3.8.3"
+    "jest": "26.1.0",
+    "ng-packagr": "10.0.0",
+    "ts-jest": "26.1.1",
+    "typescript": "3.9.6"
   }
 }

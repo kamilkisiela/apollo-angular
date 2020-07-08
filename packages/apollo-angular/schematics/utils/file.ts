@@ -1,6 +1,10 @@
 import * as ts from 'typescript';
 import {Tree, SchematicsException} from '@angular-devkit/schematics';
 
+export function parseJSON<T = any>(content: string): T {
+  return JSON.parse(content.replace(/(\/\*[^*]*\*\/)|(\/\/[^*]*)/g, ''))
+}
+
 /**
  * Returns the parsed content of a json file.
  * @param host {Tree} The source tree.
@@ -14,8 +18,8 @@ export function getJsonFile(host: Tree, path: string) {
 
   const content = buffer.toString('utf-8');
   try {
-    const json = JSON.parse(content);
-    return json;
+    // remove comments :)
+    return parseJSON(content);
   } catch (e) {
     throw new SchematicsException(`Couldn't parse ${path}!`);
   }
