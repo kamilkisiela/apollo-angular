@@ -3,7 +3,7 @@ import {DocumentNode} from 'graphql';
 import {Observable} from 'rxjs';
 import {FetchResult} from 'apollo-link';
 
-import {Apollo} from './Apollo';
+import {Apollo} from './apollo';
 import {MutationOptionsAlone, R} from './types';
 
 @Injectable()

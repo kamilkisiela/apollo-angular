@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {HttpBatchLink} from './HttpBatchLink';
+import {HttpBatchLink} from './http-batch-link';
 
 export const PROVIDERS = [HttpBatchLink];
 

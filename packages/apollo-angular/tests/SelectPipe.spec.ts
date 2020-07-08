@@ -1,6 +1,6 @@
 import './_setup';
 
-import {SelectPipe} from '../src/SelectPipe';
+import {SelectPipe} from '../src/select-pipe';
 
 describe('SelectPipe', () => {
   let pipe: SelectPipe;

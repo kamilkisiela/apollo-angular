@@ -11,7 +11,7 @@ import {
 import {FetchResult} from 'apollo-link';
 import {Observable, from} from 'rxjs';
 
-import {QueryRef} from './QueryRef';
+import {QueryRef} from './query-ref';
 import {
   WatchQueryOptions,
   ExtraSubscriptionOptions,
@@ -29,7 +29,10 @@ export class ApolloBase<TCacheShape = any> {
 
   public watchQuery<T, V = R>(options: WatchQueryOptions<V>): QueryRef<T, V> {
     return new QueryRef<T, V>(
-      this.ensureClient().watchQuery<T, V>({...options}) as ObservableQuery<T, V>,
+      this.ensureClient().watchQuery<T, V>({...options}) as ObservableQuery<
+        T,
+        V
+      >,
       this.ngZone,
       options,
     );
@@ -55,7 +58,11 @@ export class ApolloBase<TCacheShape = any> {
     options: SubscriptionOptions<V>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<FetchResult<T>> {
-    const obs = from(fixObservable(this.ensureClient().subscribe<T, V>({...options})));
+    const obs = from(
+      fixObservable(
+        this.ensureClient().subscribe<T, V>({...options}),
+      ),
+    );
 
     return extra && extra.useZone !== true
       ? obs

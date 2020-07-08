@@ -63,8 +63,8 @@ export class HttpBatchLinkHandler extends ApolloLink {
             'File upload is not available when combined with Batching',
           );
         }).subscribe({
-          next: result => observer.next(result.body),
-          error: err => observer.error(err),
+          next: (result) => observer.next(result.body),
+          error: (err) => observer.error(err),
           complete: () => observer.complete(),
         });
 
@@ -104,7 +104,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
   }
 
   private createBody(operations: Operation[]): Body[] {
-    return operations.map(operation => {
+    return operations.map((operation) => {
       const includeExtensions = prioritize(
         operation.getContext().includeExtensions,
         this.options.includeExtensions,
@@ -143,9 +143,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
     const context: Context & {skipBatching?: boolean} = operation.getContext();
 
     if (context.skipBatching) {
-      return Math.random()
-        .toString(36)
-        .substr(2, 9);
+      return Math.random().toString(36).substr(2, 9);
     }
 
     const headers =

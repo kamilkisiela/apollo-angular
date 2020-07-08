@@ -10,7 +10,7 @@ import {
 } from '@angular/common/http/testing';
 import {execute, ApolloLink, Operation} from 'apollo-link';
 
-import {HttpBatchLink} from '../src/HttpBatchLink';
+import {HttpBatchLink} from '../src/http-batch-link';
 
 const noop = () => {
   //
@@ -131,7 +131,7 @@ describe('HttpBatchLink', () => {
     execute(link, op2).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.body[0].operationName).toEqual(op1.operationName);
         expect(req.body[1].operationName).toEqual(op2.operationName);
         done();
@@ -157,7 +157,7 @@ describe('HttpBatchLink', () => {
     execute(link, op).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.body[0].operationName).toEqual(op.operationName);
         expect(req.reportProgress).toEqual(false);
         expect(req.responseType).toEqual('json');
@@ -185,7 +185,7 @@ describe('HttpBatchLink', () => {
     execute(link, op).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.method).toEqual('POST');
         expect(req.body[0].operationName).toEqual(op.operationName);
         expect(req.detectContentTypeHeader()).toEqual('application/json');
@@ -217,7 +217,7 @@ describe('HttpBatchLink', () => {
     execute(link, op).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.method).toEqual('PUT');
         done();
         return true;
@@ -260,7 +260,7 @@ describe('HttpBatchLink', () => {
     execute(link, op2).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.body[0].extensions.fooExt).toEqual(true);
         expect(req.body[1].extensions.fooExt).toEqual(false);
         done();
@@ -287,7 +287,7 @@ describe('HttpBatchLink', () => {
     execute(link, op).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.withCredentials).toEqual(true);
         done();
         return true;
@@ -313,7 +313,7 @@ describe('HttpBatchLink', () => {
     execute(link, op).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.headers.get('X-Custom-Header')).toEqual('foo');
         done();
         return true;
@@ -341,7 +341,7 @@ describe('HttpBatchLink', () => {
     execute(link, op).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.headers.get('X-Custom-Header')).toEqual('foo');
         done();
         return true;
@@ -384,7 +384,7 @@ describe('HttpBatchLink', () => {
     execute(link, op2).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.headers.get('X-Custom-Foo')).toEqual('foo');
         expect(req.headers.get('X-Custom-Bar')).toEqual('bar');
         expect(req.headers.get('X-Custom-Baz')).toEqual('baz');
@@ -414,7 +414,7 @@ describe('HttpBatchLink', () => {
     execute(link, op).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         expect(req.url).toEqual('gql');
         done();
         return true;
@@ -452,7 +452,7 @@ describe('HttpBatchLink', () => {
     execute(link, op1).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         // link options should stay untouched
         expect(req.url).toEqual('graphql');
         expect(req.method).toEqual('POST');
@@ -519,7 +519,7 @@ describe('HttpBatchLink', () => {
     }).subscribe(noop);
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         // operation #1
         expect(req.body[0].query).not.toBeDefined();
         expect(req.body[0].extensions).toEqual({
@@ -573,7 +573,7 @@ describe('HttpBatchLink', () => {
     let calls = 0;
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         if (req.body[0].operationName === 'op1') {
           // is operation #1
           // has no operation #2
@@ -629,7 +629,7 @@ describe('HttpBatchLink', () => {
     let calls = 0;
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         if (req.body[0].operationName === 'op1') {
           // is operation #1
           expect(req.url).toEqual('graphql');
@@ -687,7 +687,7 @@ describe('HttpBatchLink', () => {
     let calls = 0;
 
     setTimeout(() => {
-      httpBackend.match(req => {
+      httpBackend.match((req) => {
         if (req.body[0].operationName === 'op1') {
           // is operation #1
           // has no operation #2

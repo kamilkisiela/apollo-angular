@@ -45,10 +45,10 @@ export class ApolloBoost {
       config && config.request
         ? new ApolloLink(
             (operation, forward) =>
-              new Observable(observer => {
+              new Observable((observer) => {
                 let handle: any;
                 Promise.resolve(operation)
-                  .then(oper => config.request(oper))
+                  .then((oper) => config.request(oper))
                   .then(() => {
                     handle = forward(operation).subscribe({
                       next: observer.next.bind(observer),
@@ -72,12 +72,11 @@ export class ApolloBoost {
       uri: (config && config.uri) || '/graphql',
     });
 
-    const link = ApolloLink.from([
-      errorLink,
-      requestHandler,
-      stateLink,
-      httpLink,
-    ].filter(x => !!x) as ApolloLink[]);
+    const link = ApolloLink.from(
+      [errorLink, requestHandler, stateLink, httpLink].filter(
+        (x) => !!x,
+      ) as ApolloLink[],
+    );
 
     this.apollo.create({
       link,

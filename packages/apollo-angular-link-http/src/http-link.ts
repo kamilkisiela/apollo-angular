@@ -76,11 +76,11 @@ export class HttpLinkHandler extends ApolloLink {
         }
 
         const sub = fetch(req, this.httpClient, extractFiles).subscribe({
-          next: response => {
+          next: (response) => {
             operation.setContext({response});
             observer.next(response.body);
           },
-          error: err => observer.error(err),
+          error: (err) => observer.error(err),
           complete: () => observer.complete(),
         });
 

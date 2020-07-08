@@ -10,7 +10,7 @@ import {mergeMap} from 'rxjs/operators';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {NetworkStatus} from 'apollo-client';
 
-import {Apollo, ApolloBase} from '../src/Apollo';
+import {Apollo, ApolloBase} from '../src/apollo';
 import {ZoneScheduler} from '../src/utils';
 import {mockSingleLink} from './mocks/mockLinks';
 
@@ -35,7 +35,7 @@ describe('Apollo', () => {
     });
 
     ngZone = {
-      run: jest.fn(cb => cb()),
+      run: jest.fn((cb) => cb()),
     } as any;
   });
 
@@ -138,7 +138,7 @@ describe('Apollo', () => {
             done.fail(e);
           }
         },
-        error: err => {
+        error: (err) => {
           done.fail(err);
         },
       });
@@ -194,7 +194,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.query = jest.fn<any, any>(options => {
+      client.query = jest.fn<any, any>((options) => {
         if (options.used) {
           throw new Error('options was reused');
         }
@@ -296,7 +296,7 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.mutate = jest.fn<any, any>(options => {
+      client.mutate = jest.fn<any, any>((options) => {
         if (options.used) {
           throw new Error('options was reused');
         }
@@ -348,7 +348,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should work with mergeMap', done => {
+    test('should work with mergeMap', (done) => {
       const apollo = new Apollo(ngZone);
 
       const op1 = {
@@ -537,7 +537,7 @@ describe('Apollo', () => {
               },
             })
             .subscribe({
-              next: result => {
+              next: (result) => {
                 expect(result.data.addHero).toMatchObject(BarHero);
               },
               error(error) {
@@ -663,10 +663,10 @@ describe('Apollo', () => {
 
       // query
       apollo.query<any>(op).subscribe({
-        next: result => {
+        next: (result) => {
           expect(result.data).toMatchObject(data);
         },
-        error: e => {
+        error: (e) => {
           throw new Error(e);
         },
       });
@@ -706,7 +706,7 @@ describe('Apollo', () => {
 
       // query
       apollo.watchQuery<any>(op).valueChanges.subscribe({
-        next: result => {
+        next: (result) => {
           if (alreadyCalled) {
             expect(result.data).toMatchObject(data);
           } else {
@@ -714,7 +714,7 @@ describe('Apollo', () => {
             expect(result.networkStatus).toBe(NetworkStatus.loading);
           }
         },
-        error: e => {
+        error: (e) => {
           throw new Error(e);
         },
       });
