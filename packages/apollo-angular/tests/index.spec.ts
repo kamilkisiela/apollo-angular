@@ -2,10 +2,10 @@ import './_setup';
 
 import * as api from '../src';
 
-import {Apollo} from '../src/Apollo';
-import {SelectPipe} from '../src/SelectPipe';
-import {QueryRef} from '../src/QueryRef';
-import {ApolloModule} from '../src/ApolloModule';
+import {Apollo} from '../src/apollo';
+import {SelectPipe} from '../src/select-pipe';
+import {QueryRef} from '../src/query-ref';
+import {ApolloModule} from '../src/apollo-module';
 
 describe('public api', () => {
   test('should export Apollo', () => {

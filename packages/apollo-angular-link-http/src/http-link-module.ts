@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {HttpLink} from './HttpLink';
+import {HttpLink} from './http-link';
 
 export const PROVIDERS = [HttpLink];
 

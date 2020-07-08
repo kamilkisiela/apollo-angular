@@ -10,7 +10,7 @@ import {InMemoryCache} from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
 import gql from 'graphql-tag';
 
-import {QueryRef} from '../src/QueryRef';
+import {QueryRef} from '../src/query-ref';
 import {mockSingleLink} from './mocks/mockLinks';
 
 const createClient = (link: ApolloLink) =>
@@ -51,7 +51,7 @@ describe('QueryRef', () => {
   let queryRef: QueryRef<any>;
 
   beforeEach(() => {
-    ngZone = {run: jest.fn(cb => cb())} as any;
+    ngZone = {run: jest.fn((cb) => cb())} as any;
     const mockedLink = mockSingleLink(
       {
         request: heroesOperation,
@@ -68,13 +68,13 @@ describe('QueryRef', () => {
     queryRef = new QueryRef<any>(obsQuery, ngZone, {} as any);
   });
 
-  test('should listen to changes', done => {
+  test('should listen to changes', (done) => {
     queryRef.valueChanges.subscribe({
-      next: result => {
+      next: (result) => {
         expect(result.data).toBeDefined();
         done();
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
     });
@@ -89,11 +89,11 @@ describe('QueryRef', () => {
     expect(mockCallback.mock.calls.length).toBe(1);
   });
 
-  test('should be able refetch and receive new results', done => {
+  test('should be able refetch and receive new results', (done) => {
     let calls = 0;
 
     queryRef.valueChanges.subscribe({
-      next: result => {
+      next: (result) => {
         calls++;
 
         expect(result.data).toBeDefined();
@@ -102,7 +102,7 @@ describe('QueryRef', () => {
           done();
         }
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
       complete: () => {
@@ -115,7 +115,7 @@ describe('QueryRef', () => {
     }, 200);
   });
 
-  test('should be able refetch and receive new results after using rxjs operator', done => {
+  test('should be able refetch and receive new results after using rxjs operator', (done) => {
     let calls = 0;
     const obs = queryRef.valueChanges;
 
@@ -271,7 +271,7 @@ describe('QueryRef', () => {
     expect(mockCallback.mock.calls[0][0]).toBe(variables);
   });
 
-  test('should handle multiple subscribers', done => {
+  test('should handle multiple subscribers', (done) => {
     const obsFirst = queryRef.valueChanges;
     const obsSecond = queryRef.valueChanges;
 
@@ -281,12 +281,12 @@ describe('QueryRef', () => {
     };
 
     const subFirst = obsFirst.subscribe({
-      next: result => {
+      next: (result) => {
         calls.first++;
 
         expect(result.data).toBeDefined();
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
       complete: () => {
@@ -295,7 +295,7 @@ describe('QueryRef', () => {
     });
 
     const subSecond = obsSecond.subscribe({
-      next: result => {
+      next: (result) => {
         calls.second++;
 
         expect(result.data).toBeDefined();
@@ -306,7 +306,7 @@ describe('QueryRef', () => {
           check();
         });
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
       complete: () => {
@@ -327,7 +327,7 @@ describe('QueryRef', () => {
     };
   });
 
-  test('should unsubscribe', done => {
+  test('should unsubscribe', (done) => {
     const obs = queryRef.valueChanges;
     const id = queryRef.queryId;
 
@@ -344,7 +344,7 @@ describe('QueryRef', () => {
     });
   });
 
-  test('should unsubscribe based on rxjs operators', done => {
+  test('should unsubscribe based on rxjs operators', (done) => {
     const gate = new Subject<void>();
     const obs = queryRef.valueChanges.pipe(takeUntil(gate));
     const id = queryRef.queryId;

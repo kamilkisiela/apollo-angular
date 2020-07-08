@@ -27,7 +27,7 @@ import {filter, first} from 'rxjs/operators';
 
 import gql from 'graphql-tag';
 
-import {HttpLink} from '../src/HttpLink';
+import {HttpLink} from '../src/http-link';
 
 describe('integration', () => {
   beforeEach(() => {
@@ -69,13 +69,13 @@ describe('integration', () => {
       public ngOnInit() {
         execute(this.httpLink.create({uri: 'graphql', method: 'GET'}), {
           query,
-        }).subscribe(result => {
+        }).subscribe((result) => {
           this.text = result.data.website.status;
         });
 
         this.httpBackend
           .match(
-            req =>
+            (req) =>
               req.url === 'graphql' &&
               req.params.get('operationName') === 'websiteInfo',
           )[0]
@@ -116,7 +116,7 @@ describe('integration', () => {
 
       platform
         .bootstrapModule(AsyncServerModule)
-        .then(moduleRef => {
+        .then((moduleRef) => {
           const applicationRef: ApplicationRef = moduleRef.injector.get(
             ApplicationRef,
           );
@@ -137,7 +137,7 @@ describe('integration', () => {
     }));
 
     test('using renderModule should work', async(() => {
-      renderModule(AsyncServerModule, {document: doc}).then(output => {
+      renderModule(AsyncServerModule, {document: doc}).then((output) => {
         expect(clearNgVersion(output)).toMatchSnapshot();
         called = true;
       });
@@ -160,7 +160,7 @@ describe('integration', () => {
         .createCompiler()
         .compileModuleSync(AsyncServerModule);
 
-      renderModuleFactory(moduleFactory, {document: doc}).then(output => {
+      renderModuleFactory(moduleFactory, {document: doc}).then((output) => {
         expect(clearNgVersion(output)).toMatchSnapshot();
         called = true;
       });

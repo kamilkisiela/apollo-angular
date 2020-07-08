@@ -3,8 +3,8 @@ import {DocumentNode} from 'graphql';
 import {ApolloQueryResult} from 'apollo-client';
 import {Observable} from 'rxjs';
 
-import {Apollo} from './Apollo';
-import {QueryRef} from './QueryRef';
+import {Apollo} from './apollo';
+import {QueryRef} from './query-ref';
 import {WatchQueryOptionsAlone, QueryOptionsAlone, R} from './types';
 
 @Injectable()

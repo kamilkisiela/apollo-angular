@@ -13,7 +13,7 @@ import {ApolloModule, Apollo} from 'apollo-angular';
 import {mergeMap} from 'rxjs/operators';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
-import {HttpLink} from '../src/HttpLink';
+import {HttpLink} from '../src/http-link';
 
 const noop = () => {
   //
@@ -146,7 +146,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.body.operationName).toBe(op.operationName);
       expect(req.reportProgress).toBe(false);
       expect(req.responseType).toBe('json');
@@ -171,7 +171,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.method).toBe('POST');
       expect(req.body.operationName).toBe(op.operationName);
       expect(req.detectContentTypeHeader()).toBe('application/json');
@@ -200,7 +200,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.method).toBe('GET');
       expect(req.params.get('variables')).toBe(JSON.stringify(op.variables));
       expect(req.params.get('extensions')).toBe(JSON.stringify(op.extensions));
@@ -229,7 +229,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.body.extensions.fooExt).toBe(true);
       return true;
     });
@@ -255,7 +255,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.body.extensions).toBeUndefined();
       return true;
     });
@@ -278,7 +278,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.withCredentials).toBe(true);
       return true;
     });
@@ -301,7 +301,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.headers.get('X-Custom-Header')).toBe('foo');
       return true;
     });
@@ -326,7 +326,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.headers.get('X-Custom-Header')).toBe('foo');
       return true;
     });
@@ -352,7 +352,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.headers.get('X-Custom-Foo')).toBe('foo');
       expect(req.headers.get('X-Custom-Bar')).toBe('bar');
       return true;
@@ -413,7 +413,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.url).toBe('external-graphql');
       expect(req.method).toBe('POST');
       expect(req.withCredentials).toBe(false);
@@ -455,7 +455,7 @@ describe('HttpLink', () => {
       },
     }).subscribe(noop);
 
-    httpBackend.match(req => {
+    httpBackend.match((req) => {
       expect(req.body.query).not.toBeDefined();
       expect(req.body.extensions).toEqual({
         persistedQuery: {hash: '1234'},
@@ -466,7 +466,7 @@ describe('HttpLink', () => {
 
   test('should set reponse in context', (done: jest.DoneCallback) => {
     const afterware = new ApolloLink((op, forward) => {
-      return forward(op).map(response => {
+      return forward(op).map((response) => {
         const context = op.getContext();
 
         expect(context.response).toBeDefined();
@@ -498,7 +498,7 @@ describe('HttpLink', () => {
     httpBackend.expectOne('graphql').flush({data});
   });
 
-  test('should work with mergeMap', done => {
+  test('should work with mergeMap', (done) => {
     const apollo: Apollo = TestBed.get(Apollo);
 
     const op1 = {
@@ -542,7 +542,7 @@ describe('HttpLink', () => {
         setTimeout(() => {
           // Resolve second mutation
           httpBackend
-            .expectOne(req => req.body.operationName === 'second')
+            .expectOne((req) => req.body.operationName === 'second')
             .flush({
               data: data2,
             });
@@ -562,7 +562,7 @@ describe('HttpLink', () => {
 
     // Resolve first mutation
     httpBackend
-      .expectOne(req => req.body.operationName === 'first')
+      .expectOne((req) => req.body.operationName === 'first')
       .flush({
         data: data1,
       });

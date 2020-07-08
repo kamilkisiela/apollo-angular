@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 
-import {Apollo} from './Apollo';
-import {SelectPipe} from './SelectPipe';
+import {Apollo} from './apollo';
+import {SelectPipe} from './select-pipe';
 
 export const PROVIDERS = [Apollo];
 export const DECLARATIONS = [SelectPipe];

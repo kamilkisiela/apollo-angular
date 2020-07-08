@@ -1,3 +1,3 @@
-export {HttpBatchLink, HttpBatchLinkHandler} from './HttpBatchLink';
-export {HttpBatchLinkModule, PROVIDERS} from './HttpBatchLinkModule';
+export {HttpBatchLink, HttpBatchLinkHandler} from './http-batch-link';
+export {HttpBatchLinkModule, PROVIDERS} from './http-batch-link-module';
 export {BatchOptions} from './types';

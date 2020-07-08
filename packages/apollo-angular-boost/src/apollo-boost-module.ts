@@ -2,7 +2,7 @@ import {NgModule, Optional, Inject} from '@angular/core';
 import {ApolloModule} from 'apollo-angular';
 import {HttpLinkModule} from 'apollo-angular-link-http';
 
-import {ApolloBoost} from './ApolloBoost';
+import {ApolloBoost} from './apollo-boost';
 import {APOLLO_BOOST_CONFIG} from './tokens';
 import {PresetConfig} from './types';
 
