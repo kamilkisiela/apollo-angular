@@ -1,11 +1,7 @@
 import {setupAngular} from './_setup';
 import {Apollo} from 'apollo-angular';
 import {TestBed} from '@angular/core/testing';
-import {
-  InMemoryCache,
-  ApolloReducerConfig,
-  HeuristicFragmentMatcher,
-} from 'apollo-cache-inmemory';
+import {InMemoryCache, ApolloReducerConfig} from '@apollo/client/core';
 
 import {ApolloTestingModule, APOLLO_TESTING_CACHE} from '../src';
 
@@ -23,7 +19,6 @@ describe('ApolloTestingModule', () => {
 
     expect(cache).toBeInstanceOf(InMemoryCache);
     expect(config.addTypename).toBe(false);
-    expect(config.fragmentMatcher).toBeInstanceOf(HeuristicFragmentMatcher);
   });
 
   test('should allow to use custom ApolloCache', () => {

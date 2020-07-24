@@ -27,7 +27,7 @@ It is simple to install Apollo Angular and related libraries
 ng add apollo-angular
 
 # installing each piece independently
-yarn add apollo-client apollo-cache-inmemory apollo-angular-link-http apollo-angular graphql-tag graphql
+yarn add @apollo/client apollo-angular graphql
 ```
 
 That’s it! You may now use Apollo Angular in any of your Angular environments.
@@ -42,8 +42,7 @@ Finally, to demonstrate the power of Apollo Angular in building interactive UIs 
 
 ```ts
 import {Component, OnInit} from '@angular/core';
-import gql from 'graphql-tag';
-import {Apollo} from 'apollo-angular';
+import {Apollo, gql} from 'apollo-angular';
 
 const GET_DOGS = gql`
   {

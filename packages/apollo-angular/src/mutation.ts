@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {DocumentNode} from 'graphql';
 import {Observable} from 'rxjs';
-import {FetchResult} from 'apollo-link';
+import {FetchResult} from '@apollo/client/core';
 
 import {Apollo} from './apollo';
-import {MutationOptionsAlone, R} from './types';
+import {MutationOptionsAlone, EmptyObject} from './types';
 
 @Injectable()
-export class Mutation<T = {}, V = R> {
+export class Mutation<T = {}, V = EmptyObject> {
   public readonly document: DocumentNode;
   public client = 'default';
 

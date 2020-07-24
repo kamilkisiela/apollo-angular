@@ -1,7 +1,10 @@
-import {ApolloModule, Apollo} from 'apollo-angular';
-import {ApolloLink, Operation as LinkOperation} from 'apollo-link';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {ApolloCache} from 'apollo-cache';
+import {
+  Apollo,
+  ApolloLink,
+  Operation as LinkOperation,
+  InMemoryCache,
+  ApolloCache,
+} from 'apollo-angular';
 import {NgModule, InjectionToken, Inject, Optional} from '@angular/core';
 
 import {ApolloTestingController} from './controller';
@@ -29,7 +32,6 @@ function addClient(name: string, op: LinkOperation): Operation {
 }
 
 @NgModule({
-  imports: [ApolloModule],
   providers: [
     ApolloTestingBackend,
     {provide: ApolloTestingController, useExisting: ApolloTestingBackend},

@@ -1,13 +1,15 @@
 import './_setup';
 
 import {NgZone} from '@angular/core';
-import {ObservableQuery} from 'apollo-client';
+import {
+  ApolloClient,
+  ObservableQuery,
+  ApolloLink,
+  InMemoryCache,
+} from '@apollo/client/core';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
-import {ApolloLink} from 'apollo-link';
-import {InMemoryCache} from 'apollo-cache-inmemory';
 
-import ApolloClient from 'apollo-client';
 import gql from 'graphql-tag';
 
 import {QueryRef} from '../src/query-ref';
@@ -160,16 +162,6 @@ describe('QueryRef', () => {
     obsQuery.result = mockCallback.mockReturnValue('expected');
 
     const result = queryRef.result();
-
-    expect(result).toBe('expected');
-    expect(mockCallback.mock.calls.length).toBe(1);
-  });
-
-  test('should be able to call currentResult()', () => {
-    const mockCallback = jest.fn();
-    obsQuery.currentResult = mockCallback.mockReturnValue('expected');
-
-    const result = queryRef.currentResult();
 
     expect(result).toBe('expected');
     expect(mockCallback.mock.calls.length).toBe(1);
@@ -335,11 +327,11 @@ describe('QueryRef', () => {
       //
     });
 
-    expect(client.queryManager.queryStore.get(id)).toBeDefined();
+    expect(client['queryManager'].queries.get(id)).toBeDefined();
 
     setTimeout(() => {
       sub.unsubscribe();
-      expect(client.queryManager.queryStore.get(id)).toBeUndefined();
+      expect(client['queryManager'].queries.get(id)).toBeUndefined();
       done();
     });
   });
@@ -353,11 +345,11 @@ describe('QueryRef', () => {
       //
     });
 
-    expect(client.queryManager.queryStore.get(id)).toBeDefined();
+    expect(client['queryManager'].queries.get(id)).toBeDefined();
 
     gate.next();
 
-    expect(client.queryManager.queryStore.get(id)).toBeUndefined();
+    expect(client['queryManager'].queries.get(id)).toBeUndefined();
     done();
   });
 });

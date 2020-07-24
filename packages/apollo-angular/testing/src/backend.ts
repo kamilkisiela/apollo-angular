@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observer} from 'rxjs';
-import {FetchResult, Observable as LinkObservable} from 'apollo-link';
+import {FetchResult, LinkObservable} from 'apollo-angular';
 import {DocumentNode} from 'graphql';
 import {print} from 'graphql';
 
@@ -38,18 +38,18 @@ export class ApolloTestingBackend implements ApolloTestingController {
   private _match(match: MatchOperation): TestOperation[] {
     if (typeof match === 'string') {
       return this.open.filter(
-        testOp => testOp.operation.operationName === match,
+        (testOp) => testOp.operation.operationName === match,
       );
     } else if (typeof match === 'function') {
-      return this.open.filter(testOp => match(testOp.operation));
+      return this.open.filter((testOp) => match(testOp.operation));
     } else {
       if (this.isDocumentNode(match)) {
         return this.open.filter(
-          testOp => print(testOp.operation.query) === print(match),
+          (testOp) => print(testOp.operation.query) === print(match),
         );
       }
 
-      return this.open.filter(testOp => this.matchOp(match, testOp));
+      return this.open.filter((testOp) => this.matchOp(match, testOp));
     }
   }
 
@@ -88,7 +88,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
   public match(match: MatchOperation): TestOperation[] {
     const results = this._match(match);
 
-    results.forEach(result => {
+    results.forEach((result) => {
       const index = this.open.indexOf(result);
       if (index !== -1) {
         this.open.splice(index, 1);
@@ -143,7 +143,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
     if (open.length > 0) {
       // Show the methods and URLs of open operations in the error, for convenience.
       const operations = open
-        .map(testOp => testOp.operation.operationName)
+        .map((testOp) => testOp.operation.operationName)
         .join(', ');
       throw new Error(
         `Expected no open operations, found ${open.length}: ${operations}`,

@@ -2,13 +2,11 @@ import {setupAngular} from './_setup';
 
 import gql from 'graphql-tag';
 
-import {ApolloLink} from 'apollo-link';
 import {NgZone} from '@angular/core';
-import {TestBed, inject, async} from '@angular/core/testing';
+import {TestBed, TestBedStatic, inject, async} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {NetworkStatus} from 'apollo-client';
+import {ApolloLink, InMemoryCache, NetworkStatus} from '@apollo/client/core';
 
 import {Apollo, ApolloBase} from '../src/apollo';
 import {ZoneScheduler} from '../src/utils';
@@ -27,10 +25,11 @@ function mockApollo(link: ApolloLink, _ngZone: NgZone) {
 
 describe('Apollo', () => {
   let ngZone: NgZone;
+  let testBed: TestBedStatic;
   beforeAll(() => setupAngular());
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    testBed = TestBed.configureTestingModule({
       providers: [Apollo],
     });
 
@@ -89,6 +88,7 @@ describe('Apollo', () => {
     });
 
     test('should be able to refetch', (done: jest.DoneCallback) => {
+      expect.assertions(3);
       const query = gql`
         query refetch($first: Int) {
           heroes(first: $first) {
@@ -128,10 +128,10 @@ describe('Apollo', () => {
           try {
             if (calls === 1) {
               expect(data).toMatchObject(data1);
-            } else if (calls === 3) {
-              // 3 because there is an intermediate loading state
+            } else if (calls === 2) {
               expect(data).toMatchObject(data2);
-            } else if (calls > 3) {
+              done();
+            } else if (calls > 2) {
               throw new Error('Called third time');
             }
           } catch (e) {
@@ -147,7 +147,6 @@ describe('Apollo', () => {
         obs.refetch(variables2).then(({data}) => {
           try {
             expect(data).toMatchObject(data2);
-            done();
           } catch (e) {
             done.fail(e);
           }
@@ -158,6 +157,7 @@ describe('Apollo', () => {
 
   describe('query()', () => {
     test('should be called with the same options', (done: jest.DoneCallback) => {
+      expect.assertions(2);
       const apollo = new Apollo(ngZone);
 
       apollo.create({
@@ -185,6 +185,7 @@ describe('Apollo', () => {
     });
 
     test('should not reuse options map', (done: jest.DoneCallback) => {
+      expect.assertions(2);
       const apollo = new Apollo(ngZone);
 
       apollo.create({
@@ -223,6 +224,7 @@ describe('Apollo', () => {
     });
 
     test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+      expect.assertions(2);
       const apollo = new Apollo(ngZone);
 
       apollo.create({
@@ -249,6 +251,7 @@ describe('Apollo', () => {
 
   describe('mutate()', () => {
     test('should be called with the same options', (done: jest.DoneCallback) => {
+      expect.assertions(2);
       const apollo = new Apollo(ngZone);
 
       apollo.create({
@@ -287,6 +290,7 @@ describe('Apollo', () => {
     });
 
     test('should not reuse options map', (done: jest.DoneCallback) => {
+      expect.assertions(2);
       const apollo = new Apollo(ngZone);
 
       apollo.create({
@@ -325,6 +329,7 @@ describe('Apollo', () => {
     });
 
     test('should not be called without subscribing to it', (done: jest.DoneCallback) => {
+      expect.assertions(2);
       const apollo = new Apollo(ngZone);
 
       apollo.create({
@@ -349,6 +354,7 @@ describe('Apollo', () => {
     });
 
     test('should work with mergeMap', (done) => {
+      expect.assertions(1);
       const apollo = new Apollo(ngZone);
 
       const op1 = {
@@ -408,6 +414,7 @@ describe('Apollo', () => {
 
   describe('subscribe', () => {
     test('should be called with the same options and return Observable', (done: jest.DoneCallback) => {
+      expect.assertions(2);
       const apollo = new Apollo(ngZone);
 
       apollo.create({
@@ -476,6 +483,7 @@ describe('Apollo', () => {
 
   describe('query updates', () => {
     test('should update a query after mutation', (done: jest.DoneCallback) => {
+      expect.assertions(3);
       const query = gql`
         query heroes {
           allHeroes {
@@ -552,6 +560,7 @@ describe('Apollo', () => {
     });
 
     test('should update a query with Optimistic Response after mutation', (done: jest.DoneCallback) => {
+      expect.assertions(3);
       const query = gql`
         query heroes {
           allHeroes {
@@ -635,6 +644,7 @@ describe('Apollo', () => {
 
   test('should use HttpClient', async(
     inject([Apollo], (apollo: Apollo) => {
+      expect.assertions(1);
       const op = {
         query: gql`
           query heroes {
@@ -673,53 +683,55 @@ describe('Apollo', () => {
     }),
   ));
 
-  test('should useInitialLoading', async(
-    inject([Apollo], (apollo: Apollo) => {
-      const op = {
-        query: gql`
-          query heroes {
-            heroes {
-              name
-              __typename
-            }
+  test('should useInitialLoading', async (done) => {
+    expect.assertions(3);
+    const apollo = testBed.inject(Apollo);
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+            __typename
           }
-        `,
-        variables: {},
-        useInitialLoading: true,
-      };
-      const data = {
-        heroes: [
-          {
-            name: 'Superman',
-            __typename: 'Hero',
-          },
-        ],
-      };
-
-      let alreadyCalled = false;
-
-      // create
-      apollo.create<any>({
-        link: mockSingleLink({request: op, result: {data}}),
-        cache: new InMemoryCache(),
-      });
-
-      // query
-      apollo.watchQuery<any>(op).valueChanges.subscribe({
-        next: (result) => {
-          if (alreadyCalled) {
-            expect(result.data).toMatchObject(data);
-          } else {
-            expect(result.loading).toBe(true);
-            expect(result.networkStatus).toBe(NetworkStatus.loading);
-          }
+        }
+      `,
+      variables: {},
+      useInitialLoading: true,
+    };
+    const data = {
+      heroes: [
+        {
+          name: 'Superman',
+          __typename: 'Hero',
         },
-        error: (e) => {
-          throw new Error(e);
-        },
-      });
-    }),
-  ));
+      ],
+    };
+
+    let alreadyCalled = false;
+
+    // create
+    apollo.create<any>({
+      link: mockSingleLink({request: op, result: {data}}),
+      cache: new InMemoryCache(),
+    });
+
+    // query
+    apollo.watchQuery<any>(op).valueChanges.subscribe({
+      next: (result) => {
+        if (alreadyCalled) {
+          expect(result.data).toMatchObject(data);
+          done();
+        } else {
+          expect(result.loading).toBe(true);
+          expect(result.networkStatus).toBe(NetworkStatus.loading);
+          alreadyCalled = true;
+        }
+      },
+      error: (e) => {
+        done.fail(e);
+      },
+    });
+  });
 
   test('should remove default client', () => {
     const apollo = mockApollo(mockSingleLink(), ngZone);

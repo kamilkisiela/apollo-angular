@@ -2,6 +2,10 @@
 
 ### vNext
 
+- Support Apollo Client 3.0 (use `@apollo/client/core`)
+- `Http`, `HttpBatch` and `Headers` links are now part of apollo-angular: `apollo-angular/http` and `apollo-angular/headers`
+- Re-export Apollo Client 3.0
+
 ### v1.10.0
 
 - Support Angular 10

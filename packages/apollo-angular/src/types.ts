@@ -4,10 +4,10 @@ import {
   MutationOptions as CoreMutationOptions,
   SubscriptionOptions as CoreSubscriptionOptions,
   ApolloClientOptions,
-} from 'apollo-client';
+} from '@apollo/client/core';
 import {ExecutionResult} from 'graphql';
 
-export type R = {
+export type EmptyObject = {
   [key: string]: any;
 };
 
@@ -17,19 +17,23 @@ export interface ExtraSubscriptionOptions {
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface WatchQueryOptionsAlone<V>
-  extends Omit<WatchQueryOptions<V>, 'query' | 'variables'> {}
+export interface WatchQueryOptionsAlone<TVariables>
+  extends Omit<WatchQueryOptions<TVariables>, 'query' | 'variables'> {}
 
-export interface QueryOptionsAlone<V>
-  extends Omit<CoreQueryOptions<V>, 'query' | 'variables'> {}
+export interface QueryOptionsAlone<TVariables>
+  extends Omit<CoreQueryOptions<TVariables>, 'query' | 'variables'> {}
 
-export interface MutationOptionsAlone<T, V>
-  extends Omit<CoreMutationOptions<T, V>, 'mutation' | 'variables'> {}
+export interface MutationOptionsAlone<TData, TVariables>
+  extends Omit<
+    CoreMutationOptions<TData, TVariables>,
+    'mutation' | 'variables'
+  > {}
 
-export interface SubscriptionOptionsAlone<V>
-  extends Omit<CoreSubscriptionOptions<V>, 'query' | 'variables'> {}
+export interface SubscriptionOptionsAlone<TVariables>
+  extends Omit<CoreSubscriptionOptions<TVariables>, 'query' | 'variables'> {}
 
-export interface WatchQueryOptions<V> extends CoreWatchQueryOptions<V> {
+export interface WatchQueryOptions<TVariables>
+  extends CoreWatchQueryOptions<TVariables> {
   /**
    * Observable starts with `{ loading: true }`.
    * There's a big chance the next major version will enable that by default.
@@ -39,8 +43,18 @@ export interface WatchQueryOptions<V> extends CoreWatchQueryOptions<V> {
   useInitialLoading?: boolean;
 }
 
-export interface SubscriptionResult<T> extends ExecutionResult {
-  data?: T;
+export interface SubscriptionResult<TData> extends ExecutionResult {
+  data?: TData;
 }
 
 export type NamedOptions = Record<string, ApolloClientOptions<any>>;
+
+export type Flags = {
+  /**
+   * Observable starts with `{ loading: true }`.
+   * There's a big chance the next major version will enable that by default.
+   *
+   * Disabled by default
+   */
+  useInitialLoading?: boolean;
+};

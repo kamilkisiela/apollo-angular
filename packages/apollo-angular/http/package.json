@@ -1,0 +1,15 @@
+{
+  "name": "apollo-angular/http",
+  "description": "An Apollo Link to allow sending an http request per operation.",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "../build/http/bundle.umd.js",
+  "module": "../build/http/src/index.js",
+  "jsnext:main": "../build/http/src/index.js",
+  "typings": "../build/http/src/index.d.ts"
+}
