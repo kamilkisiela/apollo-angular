@@ -10,11 +10,7 @@ Add Apollo Angular and its dependencies and configures the application.
 
 - Adds the following packages as dependencies to `package.json`:
   - apollo-angular
-  - apollo-angular-link-http
-  - apollo-link
-  - apollo-client
-  - apollo-cache-inmemory
-  - graphql-tag
+  - @apollo/client
   - graphql
 - Adds `GraphQLModule` with required setup to use the plugin.
 - Imports `GraphQLModule` in the root NgModule (`AppModule`).
