@@ -139,7 +139,7 @@ export class AppModule {}
 ```
 Basic usage
 
-```
+```ts
 import { Injectable } from '@angular/core';
 import { Apollo, ApolloBase } from 'apollo-angular';
 
