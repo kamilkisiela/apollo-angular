@@ -147,7 +147,7 @@ class NewEntryComponent {
 
 ```
 
-> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`][] callback to update the result of relevant queries with your mutation results.
+> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`](../features/cache-updates.md#updatequeries) callback to update the result of relevant queries with your mutation results.
 
 ## Optimistic UI
 
@@ -200,9 +200,7 @@ class CommentPageComponent {
 
 For the example above, it is easy to construct an optimistic response, since we know the shape of the new comment and can approximately predict the created date. The optimistic response doesn't have to be exactly correct because it will always will be replaced with the real result from the server, but it should be close enough to make users feel like there is no delay.
 
-> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`][] to make it appear in this case (and this is what we do in GitHunt).
-
-[`updateQueries`]: /features/cache-updates/#updatequeries
+> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`](../features/cache-updates.md#updatequeries) to make it appear in this case (and this is what we do in GitHunt).
 
 ## Designing mutation results
 

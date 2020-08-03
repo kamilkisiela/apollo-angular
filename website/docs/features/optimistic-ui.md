@@ -10,7 +10,7 @@ Optimistic UI provides an easy way to make your UI respond much faster, while en
 
 Let's say we have an "edit comment" mutation, and we want the UI to update immediately when the user submits the mutation, instead of waiting for the server response. This is what the `optimisticResponse` parameter to the `mutate` method provides.
 
-The main way to get GraphQL data into your UI components with Apollo is to use a query, so if we want our optimistic response to update the UI, we have to make sure to return an optimistic response that will update the correct query result. Learn more about how to do this with the [`dataIdFromObject`](./cache-updates.md#normalization-with-dataidfromobject) option.
+The main way to get GraphQL data into your UI components with Apollo is to use a query, so if we want our optimistic response to update the UI, we have to make sure to return an optimistic response that will update the correct query result. Learn more about how to do this with the [`dataIdFromObject`](../features/cache-updates.md#normalization-with-dataidfromobject) option.
 
 Here's what this looks like in the code:
 

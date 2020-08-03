@@ -111,7 +111,7 @@ Observable we talked about. To subscribe to query results, you have to access it
 `valueChanges` property which exposes a clean RxJS Observable.
 
 It's worth mentioning that `QueryRef` accepts two generic types. More about that in
-[Static Typing](../features/static-typing.md).
+).
 
 ## Providing `options`
 
