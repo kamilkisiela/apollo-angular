@@ -1,0 +1,29 @@
+{
+  "name": "apollo-angular-website",
+  "scripts": {
+    "start": "docusaurus start",
+    "build": "node ./links.js && docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy"
+  },
+  "dependencies": {
+    "@docusaurus/core": "2.0.0-alpha.61",
+    "@docusaurus/preset-classic": "2.0.0-alpha.61",
+    "@docusaurus/plugin-ideal-image": "2.0.0-alpha.61",
+    "globby": "11.0.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

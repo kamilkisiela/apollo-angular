@@ -12,7 +12,7 @@
   "main": "build/bundles/ngApollo.umd.js",
   "module": "build/fesm5/ngApollo.js",
   "typings": "build/ngApollo.d.ts",
-  "homepage": "https://www.apollographql.com/docs/angular/",
+  "homepage": "https://www.apollo-angular.com/",
   "repository": {
     "type": "git",
     "url": "https://github.com/kamilkisiela/apollo-angular",

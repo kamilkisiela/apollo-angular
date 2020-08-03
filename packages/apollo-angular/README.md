@@ -1,6 +1,6 @@
-[![Angular](https://user-images.githubusercontent.com/25294569/63955021-b99fca80-ca8c-11e9-9362-1ee8083edd2e.gif)](https://www.apollographql.com/docs/angular/)
+[![Angular](https://user-images.githubusercontent.com/25294569/63955021-b99fca80-ca8c-11e9-9362-1ee8083edd2e.gif)](https://www.apollo-angular.com/)
 
-# [Apollo Angular](https://www.apollographql.com/docs/angular/) [![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular) [![Build status](https://travis-ci.org/kamilkisiela/apollo-angular.svg?branch=master)](https://travis-ci.org/kamilkisiela/apollo-angular) [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/apollo)
+# [Apollo Angular](https://www.apollo-angular.com/) [![npm version](https://badge.fury.io/js/apollo-angular.svg)](https://badge.fury.io/js/apollo-angular) [![Build status](https://travis-ci.org/kamilkisiela/apollo-angular.svg?branch=master)](https://travis-ci.org/kamilkisiela/apollo-angular) [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/apollo)
 
 Apollo Angular allows you to fetch data from your GraphQL server and use it in building complex and reactive UIs using the Angular framework. Apollo Angular may be used in any context that Angular may be used. In the browser, in NativeScript, or in Node.js when you want to do server-side rendering.
 
@@ -79,18 +79,18 @@ export class DogsComponent implements OnInit {
 }
 ```
 
-To learn more about querying with Apollo Angular be sure to start reading the [documentation article on queries](https://www.apollographql.com/docs/angular/basics/queries.html).
+To learn more about querying with Apollo Angular be sure to start reading the [documentation article on queries](https://www.apollo-angular.com/docs/basics/queries).
 
 ## Documentation
 
-All of the documentation for Apollo Angular including usage articles and helpful recipes lives on: [https://www.apollographql.com/docs/angular/](https://www.apollographql.com/docs/angular/)
+All of the documentation for Apollo Angular including usage articles and helpful recipes lives on: [https://www.apollo-angular.com/](https://www.apollo-angular.com/)
 
 ### Recipes
 
-- [Authentication](https://www.apollographql.com/docs/angular/recipes/authentication.html)
-- [Pagination](https://www.apollographql.com/docs/angular/recipes/pagination.html)
-- [Optimistic UI](https://www.apollographql.com/docs/angular/features/optimistic-ui.html)
-- [Server Side Rendering](https://www.apollographql.com/docs/angular/recipes/server-side-rendering.html)
+- [Authentication](https://www.apollo-angular.com/docs/recipes/authentication)
+- [Pagination](https://www.apollo-angular.com/docs/recipes/pagination)
+- [Optimistic UI](https://www.apollo-angular.com/docs/features/optimistic-ui)
+- [Server Side Rendering](https://www.apollo-angular.com/docs/recipes/server-side-rendering)
 
 ## Contributing
 

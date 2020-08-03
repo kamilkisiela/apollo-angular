@@ -1,0 +1,15 @@
+{
+  "name": "apollo-angular",
+  "version": 2,
+  "public": false,
+  "redirects": [
+    {
+      "source": "/docs",
+      "destination": "/docs/index",
+      "permanent": true
+    }
+  ],
+  "github": {
+    "enabled": false
+  }
+}

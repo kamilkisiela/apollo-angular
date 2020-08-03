@@ -7,7 +7,8 @@
     "build": "lerna run build",
     "test": "lerna run test",
     "format": "prettier --write \"packages/**/*.ts\"",
-    "deploy": "lerna run deploy"
+    "deploy": "lerna run deploy",
+    "now-build": "(cd website && yarn && yarn build && mv build ../public)"
   },
   "workspaces": [
     "packages/*"
