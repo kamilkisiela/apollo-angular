@@ -9,7 +9,6 @@
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.61",
     "@docusaurus/preset-classic": "2.0.0-alpha.61",
-    "@docusaurus/plugin-ideal-image": "2.0.0-alpha.61",
     "globby": "11.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1"
