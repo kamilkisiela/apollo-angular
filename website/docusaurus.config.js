@@ -1,11 +1,11 @@
 module.exports = {
   title: 'Apollo Angular',
   tagline:
-    'A guide to using the Apollo GraphQL Client with Angular',
+    'GraphQL Client for Angular Framework',
 
   url: 'https://apollo-angular.com',
   baseUrl: '/',
-  favicon: 'img/favicon/favicon.png',
+  favicon: 'img/logo/favicon.png',
   onBrokenLinks: 'throw',
 
   organizationName: 'kamilkisiela',
@@ -17,7 +17,7 @@ module.exports = {
       disableSwitch: true,
     },
     sidebarCollapsible: true,
-    image: 'img/github/app-action.jpg',
+    image: 'img/cover.png',
     navbar: {
       title: 'Apollo Angular',
       items: [
