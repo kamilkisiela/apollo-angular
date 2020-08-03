@@ -6,6 +6,7 @@ module.exports = {
   url: 'https://apollo-angular.com',
   baseUrl: '/',
   favicon: 'img/favicon/favicon.png',
+  onBrokenLinks: 'throw',
 
   organizationName: 'kamilkisiela',
   projectName: 'apollo-angular',
@@ -13,17 +14,30 @@ module.exports = {
   themeConfig: {
     colorMode: {
       defaultMode: 'light',
-      disableSwitch: false,
-      respectPrefersColorScheme: true,
+      disableSwitch: true,
     },
     sidebarCollapsible: true,
     image: 'img/github/app-action.jpg',
     navbar: {
       title: 'Apollo Angular',
-      logo: {
-        alt: 'Apollo Angular logo',
-        src: 'img/logo/logo-apollo-space.svg',
-      }
+      items: [
+        {
+          to: 'docs/index',
+          activeBasePath: 'docs',
+          label: 'API & Documentation',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/kamilkisiela/apollo-angular',
+          label: 'GitHub',
+          position: 'right',
+        },
+        {
+          href: 'https://the-guild.dev/contact',
+          label: 'Support',
+          position: 'right'
+        },
+      ],
     },
     footer: {
       style: 'dark',
@@ -124,9 +138,9 @@ module.exports = {
           editUrl:
             'https://github.com/kamilkisiela/apollo-angular/edit/master/website/',
         },
-        // theme: {
-        //   customCss: require.resolve('./src/css/custom.css'),
-        // },
+        theme: {
+          customCss: require.resolve('./src/css/custom.css'),
+        },
         sitemap: {
           cacheTime: 600 * 1001, // 600 sec - cache purge period
           changefreq: 'weekly',

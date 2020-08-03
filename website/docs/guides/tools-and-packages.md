@@ -48,7 +48,7 @@ More about Query, Mutation, Subscription services in ["Query, Mutation, Subscrip
 [Read documentation](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular)
 
 ```bash
-yarn add graphql-code-generator graphql-codegen-typescript-apollo-angular
+yarn add @graphql-codegen/cli @graphql-codegen/typescript-apollo-angular
 ```
 
 ### Other packages

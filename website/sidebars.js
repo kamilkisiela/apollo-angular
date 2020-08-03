@@ -16,7 +16,6 @@ module.exports = {
       'features/optimistic-ui',
       'features/cache-updates',
       'features/fragments',
-      'features/developer-tooling',
       'features/subscriptions',
       'features/nativescript',
       'features/multiple-clients',
