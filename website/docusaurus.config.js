@@ -108,7 +108,6 @@ module.exports = {
     // },
   },
   scripts: [
-    '/js/scroll-to.js',
     'https://the-guild.dev/static/banner.js',
   ],
   stylesheets: [
