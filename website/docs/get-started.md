@@ -2,6 +2,7 @@
 title: Get started
 description: Set up Apollo in your Angular app
 ---
+
 This short set of instructions gets you up and running with Apollo Angular.
 
 # Installation
@@ -56,28 +57,27 @@ Great, now that you have all the dependencies you need, let's create your first 
 In our `app.module.ts` file use `APOLLO_OPTIONS` token to configure Apollo:
 
 ```typescript
-import { HttpClientModule } from "@angular/common/http";
-import { APOLLO_OPTIONS } from "apollo-angular";
-import { HttpLink } from "apollo-angular/http";
-import { InMemoryCache } from "@apollo/client/core";
+import {HttpClientModule} from '@angular/common/http';
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-  ],
-  providers: [{
-    provide: APOLLO_OPTIONS,
-    useFactory: (httpLink: HttpLink) => {
-      return {
-        cache: new InMemoryCache(),
-        link: httpLink.create({
-          uri: "https://48p1r2roz4.sse.codesandbox.io"
-        })
-      }
+  imports: [BrowserModule, HttpClientModule],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'https://48p1r2roz4.sse.codesandbox.io',
+          }),
+        };
+      },
+      deps: [HttpLink],
     },
-    deps: [HttpLink]
-  }],
+  ],
 })
 export class AppModule {}
 ```
@@ -108,7 +108,7 @@ Once all is hooked up, you're ready to start requesting data with `Apollo` servi
 The `Apollo` is an Angular service exported from `apollo-angular` to share GraphQL data with your UI.
 
 First, pass your GraphQL query wrapped in the `gql` function (from `@apollo/client/core`) to the `query` property in the `Apollo.watchQuery` method, in your component.
-The `Apollo` service is a regular angular service that you familiar with, data are being streamed through Observables. Same here.
+The `Apollo` service is a regular angular service available to you, and your data is streamed through Observables.
 
 The `watchQuery` method returns a `QueryRef` object which has the `valueChanges`
 property that is an `Observable`.
@@ -138,7 +138,7 @@ import {Apollo, gql} from 'apollo-angular';
     </div>
     <div *ngIf="rates">
       <div *ngFor="let rate of rates">
-        <p>{{rate.currency}}: {{rate.rate}}</p>
+        <p>{{ rate.currency }}: {{ rate.rate }}</p>
       </div>
     </div>
   `,
@@ -162,7 +162,7 @@ export class ExchangeRates implements OnInit {
           }
         `,
       })
-      .valueChanges.subscribe(result => {
+      .valueChanges.subscribe((result: any) => {
         this.rates = result?.data?.rates;
         this.loading = result.loading;
         this.error = result.error;
@@ -174,6 +174,70 @@ export class ExchangeRates implements OnInit {
 Congrats, you just made your first query! 🎉 If you render your `ExchangeRates` component within your `App` component from the previous example, you'll first see a loading indicator and then data on the page once it's ready. Apollo Client automatically caches this data when it comes back from the server, so you won't see a loading indicator if you run the same query twice.
 
 If you'd like to play around with the app we just built, you can view it on [StackBlitz](https://stackblitz.com/edit/basic-apollo-angular-app). Don't stop there! Try building more components with `Apollo` service and experimenting with the concepts you just learned.
+
+## Named clients
+
+It is possible to have several apollo clients in the application, for example pointing to different endpoints.
+
+In our `app.module.ts` file use `ApolloModule` and `APOLLO_OPTIONS` token to configure Apollo Client:
+
+```typescript
+import {HttpClientModule} from '@angular/common/http';
+import {APOLLO_NAMED_OPTIONS, NamedOptions} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
+
+@NgModule({
+  imports: [BrowserModule, HttpClientModule],
+  providers: [
+    {
+      provide: APOLLO_NAMED_OPTIONS, // <-- Different from standard initialization
+      useFactory(httpLink: HttpLink): NamedOptions {
+        return {
+          newClientName: {
+            // <-- this settings will be saved by name: newClientName
+            cache: new InMemoryCache(),
+            link: httpLink.create({
+              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
+            }),
+          },
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
+})
+export class AppModule {}
+```
+
+### Basic usage
+
+```typescript
+import {Injectable} from '@angular/core';
+import {Apollo, ApolloBase, gql} from 'apollo-angular';
+
+@Injectable()
+class ApiService {
+  private apollo: ApolloBase;
+
+  constructor(private apolloProvider: Apollo) {
+    this.apollo = this.apolloProvider.use('newClientName');
+  }
+
+  getData(): Observable<ApolloQueryResult> {
+    return this.apollo.watchQuery({
+      query: gql`
+        {
+          rates(currency: "USD") {
+            currency
+            rate
+          }
+        }
+      `,
+    });
+  }
+}
+```
 
 ## Next steps
 

@@ -95,7 +95,7 @@ describe('DogComponent', () => {
       imports: [ApolloTestingModule],
     });
 
-    controller = TestBed.get(ApolloTestingController);
+    controller = TestBed.inject(ApolloTestingController);
   });
 
   afterEach(() => {
@@ -209,7 +209,7 @@ describe('DogComponent', () => {
       imports: [ApolloTestingModule.withClients(['clientA', 'clientB'])],
     });
 
-    controller = TestBed.get(ApolloTestingController);
+    controller = TestBed.inject(ApolloTestingController);
   });
 
   afterEach(() => {

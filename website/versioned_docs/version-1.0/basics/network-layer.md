@@ -176,13 +176,13 @@ class AppModule {
     })
 
     apollo.create({
-      link: from([authMiddleware, otherMiddleware, http]),
+      link: ApolloLink.from([authMiddleware, otherMiddleware, http]),
     });
   }
 }
 ```
 
-Given the above code, the header's `Authorization` value will be that of `token` and the `recent-activity` value will. This example shows how you can use more than one middleware to make multiple/separate modifications to the request being processed in the form of a chain.  This example doesn't show the use of `localStorage`, but is instead just meant to demonstrate the use of more than one middleware using Apollo Link.
+Given the above code, the header's `Authorization` value will be that of `token` and the `recent-activity` value will be that of `lastOnlineTime`. This example shows how you can use more than one middleware to make multiple/separate modifications to the request being processed in the form of a chain.  This example doesn't show the use of `localStorage`, but is instead just meant to demonstrate the use of more than one middleware using Apollo Link.
 
 ### Afterware
 
