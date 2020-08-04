@@ -1,5 +1,6 @@
 ---
 title: Subscriptions
+description: Get real-time updates from your GraphQL server
 ---
 
 In addition to fetching data using queries and modifying data using mutations, the GraphQL spec supports a third operation type, called `subscription`.
@@ -12,7 +13,7 @@ A common use case for subscriptions is notifying the client side about particula
 
 GraphQL subscriptions have to be defined in the schema, just like queries and mutations:
 
-```ts
+```typescript
 type Subscription {
   commentAdded(repoFullName: String!): Comment
 }
@@ -31,7 +32,7 @@ subscription onCommentAdded($repoFullName: String!) {
 
 The response sent to the client looks as follows:
 
-```json
+```typescripton
 {
   "data": {
     "commentAdded": {
@@ -55,20 +56,12 @@ A future version of Apollo or GraphQL might include support for live queries, wh
 
 ## Client setup
 
-The most popular transport for GraphQL subscriptions today is [`subscriptions-transport-ws`](https://github.com/apollographql/subscriptions-transport-ws). This package is maintained by the Apollo community, but can be used with any client or server GraphQL implementation. In this article, we'll explain how to set it up on the client, but you'll also need a server implementation. You can [read about how to use subscriptions with a JavaScript server](https://www.apollographql.com/docs/graphql-subscriptions/setup/), or enjoy subscriptions set up out of the box if you are using a GraphQL backend as a service like [Graphcool](https://www.graph.cool/docs/tutorials/worldchat-subscriptions-example-ui0eizishe/) or [Scaphold](https://scaphold.io/blog/2016/11/09/build-realtime-apps-with-subs.html).
+Because subscriptions maintain a persistent connection, they can't use the default HTTP transport that Apollo Client uses for queries and mutations. Instead, Apollo Client subscriptions most commonly communicate over WebSocket, via the community-maintained [`subscriptions-transport-ws`](https://github.com/apollographql/subscriptions-transport-ws) library.
 
 Let's look at how to add support for this transport to Apollo Client.
 
-First, install the WebSocket Apollo Link (`apollo-link-ws`) from npm:
-
-```shell
-npm install --save apollo-link-ws
-```
-
-Then, initialize a GraphQL subscriptions transport link:
-
-```ts
-import {WebSocketLink} from 'apollo-link-ws';
+```typescript
+import {WebSocketLink} from '@apollo/client/link/ws';
 
 const wsClient = new WebSocketLink({
   uri: `ws://localhost:5000/`,
@@ -78,50 +71,55 @@ const wsClient = new WebSocketLink({
 });
 ```
 
-```ts
-import { Apollo } from 'apollo-angular';
-import { split } from 'apollo-link';
-import { HttpLink } from 'apollo-angular-link-http';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
+```typescript
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {split, ApolloClientOptions} from '@apollo/client/core';
+import {WebSocketLink} from '@apollo/client/link/ws';
+import {getMainDefinition} from '@apollo/client/utilities';
 
-@NgModule({ ... })
-class AppModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
-    // Create an http link:
-    const http = httpLink.create({
-      uri: 'http://localhost:3000/graphql'
-    });
+@NgModule({
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink): ApolloClientOptions {
+        // Create an http link:
+        const http = httpLink.create({
+          uri: 'http://localhost:3000/graphql',
+        });
 
-    // Create a WebSocket link:
-    const ws = new WebSocketLink({
-      uri: `ws://localhost:5000/`,
-      options: {
-        reconnect: true
-      }
-    });
+        // Create a WebSocket link:
+        const ws = new WebSocketLink({
+          uri: `ws://localhost:5000/`,
+          options: {
+            reconnect: true,
+          },
+        });
 
-    // using the ability to split links, you can send data to each link
-    // depending on what kind of operation is being sent
-    const link = split(
-      // split based on operation type
-      ({ query }) => {
-        const { kind, operation } = getMainDefinition(query);
-        return kind === 'OperationDefinition' && operation === 'subscription';
+        // using the ability to split links, you can send data to each link
+        // depending on what kind of operation is being sent
+        const link = split(
+          // split based on operation type
+          ({query}) => {
+            const {kind, operation} = getMainDefinition(query);
+            return (
+              kind === 'OperationDefinition' && operation === 'subscription'
+            );
+          },
+          ws,
+          http,
+        );
+
+        return {
+          link,
+          // ... options
+        };
       },
-      ws,
-      http,
-    );
-
-    apollo.create({
-      link,
-      // ... options
-    });
-  }
-}
+      deps: [HttpLink],
+    },
+  ],
+})
+class AppModule {}
 ```
 
 Now, queries and mutations will go over HTTP as normal, but subscriptions will be done over the websocket transport.
@@ -135,14 +133,13 @@ With GraphQL subscriptions your client will be alerted on push from the server a
 
 With `subscribeToMore`, you can easily do the latter.
 
-`subscribeToMore` is a method available on every query in `apollo-angular`. It works just like [`fetchMore`](./cache-updates.md#incremental-loading-fetchmore), except that the update function gets called every time the subscription returns, instead of only once.
+`subscribeToMore` is a method available on every query in `apollo-angular`. It works just like [`fetchMore`](../caching/interaction.md#incremental-loading-fetchmore), except that the update function gets called every time the subscription returns, instead of only once.
 
 Here is a regular query:
 
-```ts
-import { Apollo, QueryRef } from 'apollo-angular';
+```typescript
+import { Apollo, QueryRef, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import gql from 'graphql-tag';
 
 const COMMENT_QUERY = gql`
   query Comment($repoName: String!) {
@@ -180,14 +177,14 @@ Add a function called `subscribeToNewComments` that will subscribe using `subscr
 
 Note that the `updateQuery` callback must return an object of the same shape as the initial query data, otherwise the new data won't be merged. Here the new comment is pushed in the `comments` list of the `entry`:
 
-```ts
+```typescript
 const COMMENTS_SUBSCRIPTION = gql`
-    subscription onCommentAdded($repoFullName: String!){
-      commentAdded(repoFullName: $repoFullName){
-        id
-        content
-      }
+  subscription onCommentAdded($repoFullName: String!){
+    commentAdded(repoFullName: $repoFullName){
+      id
+      content
     }
+  }
 `;
 
 @Component({ ... })
@@ -223,7 +220,7 @@ class CommentsComponent {
 
 and start the actual subscription by calling the `subscribeToNewComments` function with the subscription variables:
 
-```ts
+```typescript
 @Component({ ... })
 class CommentsComponent {
   // ... same component as one above
@@ -240,16 +237,17 @@ class CommentsComponent {
 
 In many cases it is necessary to authenticate clients before allowing them to receive subscription results. To do this, the `SubscriptionClient` constructor accepts a `connectionParams` field, which passes a custom object that the server can use to validate the connection before setting up any subscriptions.
 
-```js
-import { WebSocketLink } from 'apollo-link-ws';
+```typescript
+import {WebSocketLink} from 'apollo-link-ws';
 
 const wsLink = new WebSocketLink({
   uri: `ws://localhost:5000/`,
   options: {
     reconnect: true,
     connectionParams: {
-        authToken: user.authToken,
+      authToken: user.authToken,
     },
+  },
 });
 ```
 

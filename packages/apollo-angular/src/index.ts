@@ -10,3 +10,4 @@ export {
   ExtraSubscriptionOptions,
   Flags,
 } from './types';
+export {gql} from '@apollo/client/core';

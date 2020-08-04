@@ -1,6 +1,12 @@
 ---
-title: Prefetching data
+title: Improving performance
 ---
+
+# Redirecting to cached data
+
+In some cases, a query requests data that already exists in the client cache under a different reference. A very common example of this is when your UI has a list view and a detail view that both use the same data. To avoid re-requesting data that already exists in the cache, see [Cache redirects using field policy read functions](../caching/advanced-topics.md#cache-redirects-using-field-policy-read-functions).
+
+# Prefetching data
 
 One of the easiest ways to make your application's UI feel a lot snappier with Apollo Client is to use prefetching. Prefetching simply means fetching data before it needs to be rendered on the screen, for example by loading all data required for a view as soon as you anticipate that a user will navigate to it.
 
@@ -9,9 +15,8 @@ In Apollo Client, prefetching is very simple and can be done by running a compon
 GitHunt uses `Apollo` and calls `query` method as soon as the user hovers over a link to the comments  page.
 With the data prefetched, the comments page renders immediately, and the user often experiences no delay at all:
 
-```ts
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+```typescript
+import { Apollo, gql } from 'apollo-angular';
 
 @Component({
   template: `

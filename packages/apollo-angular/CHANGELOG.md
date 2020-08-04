@@ -4,6 +4,7 @@
 
 - Support Apollo Client 3.0 (use `@apollo/client/core`)
 - `Http`, `HttpBatch` and `Headers` links are now part of apollo-angular: `apollo-angular/http` and `apollo-angular/headers`
+- Re-exports `gql` of `graphql-tag` (`import { gql } from 'apollo-angular'`)
 
 ### v1.10.0
 

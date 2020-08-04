@@ -10,9 +10,9 @@ Apollo Client uses the ultra flexible [Apollo Link](https://www.apollographql.co
 
 If your app is browser based and you are using cookies for login and session management with a backend, it is very easy to tell your network interface to send the cookie along with every request.
 
-```ts
+```typescript
 import { Apollo } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
+import { HttpLink } from 'apollo-angular/http';
 
 @NgModule({ ... })
 class AppModule {
@@ -43,14 +43,13 @@ Another common way to identify yourself when using HTTP is to send along an auth
 
 In `graphql.module.ts`:
 
-```ts
+```typescript
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ApolloModule, Apollo, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
+import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache,ApolloLink } from '@apollo/client/core';
+import { setContext } from '@apollo/client/link/context';
 
 const uri = '/graphql';
 
@@ -81,8 +80,6 @@ export function provideApollo(httpLink: HttpLink) {
 @NgModule({
   exports: [
     HttpClientModule,
-    ApolloModule,
-    HttpLinkModule
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
@@ -100,8 +97,8 @@ The server can use that header to authenticate the user and attach it to the Gra
 
 In the case that you need to a refresh a token, for example when using the [adal.js](https://github.com/AzureAD/azure-activedirectory-library-for-js) library, you can use an observable wrapped in a promise to wait for a new token:
 
-```ts
-import { setContext } from 'apollo-link-context';
+```typescript
+import { setContext } from '@apollo/client/link/context';
 
 const auth = setContext(async(_, { headers }) => {
   // Grab token if there is one in storage or hasn't expired
@@ -132,9 +129,8 @@ The easiest way to ensure that the UI and store state reflects the current user'
 
 Another option is to reload the page, which will have a similar effect.
 
-```ts
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+```typescript
+import { Apollo, gql } from 'apollo-angular';
 
 const PROFILE_QUERY = gql`
   query CurrentUserForLayout {

@@ -1,5 +1,5 @@
 ---
-title: Small Example
+title: Simple Example
 description: A tiny app
 ---
 

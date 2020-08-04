@@ -31,6 +31,10 @@ module.exports = {
       backgroundColor: 'var(--ifm-color-secondary)',
       textColor: 'var(--ifm-color-black)',
     },
+    prism: {
+      theme: require('prism-react-renderer/themes/github'),
+      darkTheme: require('prism-react-renderer/themes/dracula'),
+    },
     navbar: {
       title: 'Apollo Angular',
       items: [
@@ -69,20 +73,12 @@ module.exports = {
               to: 'docs',
             },
             {
-              label: 'Basics',
-              to: 'docs/basics/setup',
+              label: 'Fetching',
+              to: 'docs/data/queries',
             },
             {
-              label: 'Features',
-              to: 'docs/features/error-handling',
-            },
-            {
-              label: 'Guides',
-              to: 'docs/guides/state-management',
-            },
-            {
-              label: 'Recipes',
-              to: 'docs/recipes/query-splitting',
+              label: 'Local State',
+              to: 'docs/local-state/management',
             },
           ],
         },
@@ -133,10 +129,15 @@ module.exports = {
     googleAnalytics: {
       trackingID: 'UA-125180910-5',
     },
+    gtag: {
+      trackingID: 'UA-125180910-5',
+    },
     // algolia: {
     //   apiKey: 'c81d6a17b6d40971f230c0d79b03ff23',
     //   indexName: 'apollo-angular',
-    //   algoliaOptions: {},
+    //   searchParameters: {
+    //     facetFilters: [`version:${versions[0]}`],
+    //   },
     // },
   },
   scripts: ['https://the-guild.dev/static/banner.js'],

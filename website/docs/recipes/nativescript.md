@@ -4,26 +4,24 @@ title: Integrating with NativeScript
 
 You can use Apollo with NativeScript exactly as you would with normal Angular application.
 
-To introduce Apollo to your app, install `apollo-angular` and `apollo-angular-link-http` from npm and use them in your app as outlined in the [setup](../basics/setup.md) article:
+To introduce Apollo to your app, install `apollo-angular` from npm and use them in your app as outlined in the [setup](../get-started.md) article:
 
 ```bash
-npm install apollo-angular apollo-angular-link-http --save
+npm install apollo-angular --save
 ```
 
 > *Note* There are more packages to be installed, so check out the "initialization" article.
 
-```ts
+```typescript
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
-import { ApolloModule, Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { Apollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 
 @NgModule({
   imports: [
     NativeScriptModule,
     NativeScriptHttpClientModule, // this provides HttpClient
-    ApolloModule,
-    HttpLinkModule
   ]
 })
 export class AppModule {

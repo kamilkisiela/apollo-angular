@@ -12,19 +12,19 @@ There are few ways of creating named clients.
 
 One way is to use `Apollo.create`. Normally, you would use it like this:
 
-```ts
+```typescript
 apollo.create(options)
 ```
 
 This will define a default client but there is one optional argument.
 
-```ts
+```typescript
 apollo.create(options, name?)
 ```
 
 An example:
 
-```ts
+```typescript
 apollo.create(defaultOptions)
 apollo.create(extraOptions, 'extra')
 ```
@@ -35,7 +35,7 @@ Now you have the default client and one called `extra`.
 
 The other way is to use helper methods.
 
-```ts
+```typescript
 apollo.createDefault(options)
 // and
 apollo.createNamed(name, options);
@@ -49,7 +49,7 @@ If a client is defined as the default, you can directly use all methods of the `
 
 About named clients, simply use the method called `use(name: string)`.
 
-```ts
+```typescript
 import { Component, OnInit } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
 

@@ -1,10 +1,11 @@
 ---
-title: Static Typing
+title: Using Apollo with TypeScript
+sidebar_title: Using TypeScript
 ---
 
 As your application grows, you may find it helpful to include a type system to
 assist in development. Apollo supports type definitions for TypeScript system.
-Both `apollo-client` and `apollo-angular` ship with definitions in their npm
+Both `@apollo/client` and `apollo-angular` ship with definitions in their npm
 packages, so installation should be done for you after the libraries are
 included in your project.
 
@@ -20,9 +21,8 @@ Since the result of a query will be sent to the component or service, we want to
 be able to tell our type system the shape of it. Here is an example setting
 types for an operation using TypeScript:
 
-```ts
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+```typescript
+import { Apollo, gql } from 'apollo-angular';
 
 const HERO_QUERY = gql`
   query GetCharacter($episode: Episode!) {
@@ -75,9 +75,8 @@ To make integration between Apollo and Angular even more statically typed you
 can define the shape of variables (in query, watchQuery and mutate methods).
 Here is an example setting the type of variables:
 
-```javascript
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+```typescript
+import { Apollo, gql } from 'apollo-angular';
 
 const HERO_QUERY = gql`
   query GetCharacter($episode: Episode!) {
@@ -132,7 +131,7 @@ provides, it can make for a much improved application and developer experience.
 It is not only `Apollo` service where you can use generic types for Options and
 Variables. Same logic applies to `QueryRef` object.
 
-```ts
+```typescript
 import { QueryRef } from 'apollo-angular';
 
 type Hero = {

@@ -1,63 +1,65 @@
 ---
 title: Mutations
+description: Update data with the Apollo.mutate
 ---
 
 In addition to fetching data using queries, Apollo also handles GraphQL mutations. Mutations are identical to queries in syntax, the only difference being that you use the keyword `mutation` instead of `query` to indicate that the operation is used to change the dataset behind the schema.
 
-```ts
-mutation {
-  submitRepository(repoFullName: "apollographql/apollo-client") {
+```typescript
+mutation upvotePost {
+  upvotePost(
+    postId: 12
+  ) {
     id
-    repoName
+    votes
   }
 }
 ```
 
 GraphQL mutations consist of two parts:
 
-1. The mutation name with arguments (`submitRepository`), which represents the actual operation to be done on the server
-1. The fields you want back from the result of the mutation to update the client (`id` and `repoName`)
+1. The mutation name with arguments (`upvotePost`), which represents the actual operation to be done on the server
+1. The fields you want back from the result of the mutation to update the client (`id` and `vote`)
 
 The result of the above mutation might be:
 
-```json
+```typescripton
 {
   "data": {
-    "submitRepository": {
-      "id": "123",
-      "repoName": "apollographql/apollo-client"
+    "upvotePost": {
+      "id": 12,
+      "votes": 123
     }
   }
 }
 ```
 
-When we use mutations in Apollo, the result is typically integrated into the cache automatically [based on the id of the result](../features/cache-updates.md#normalization-with-dataidfromobject), which in turn updates UI automatically, so we don't explicitly handle the results ourselves. In order for the client to correctly do this, we need to ensure we select the correct fields (as in all the fields that we care about that may have changed).
+When we use mutations in Apollo, the result is typically integrated into the cache automatically [based on the id of the result](../caching/interaction.md#normalization-with-dataidfromobject), which in turn updates UI automatically, so we don't explicitly handle the results ourselves. In order for the client to correctly do this, we need to ensure we select the correct fields (as in all the fields that we care about that may have changed).
 
 ## Basic Mutations
 
 Using `Apollo` it's easy to call mutation. You can simply use `mutate` method.
 
-```ts
+```typescript
 import { Component } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-
-const submitRepository = gql`
-  mutation submitRepository {
-    submitRepository(repoFullName: "apollographql/apollo-client") {
-      createdAt
+const UPVOTE_POST = gql`
+  mutation UpvotePost {
+    upvotePost(postId: 12) {
+      id
+      votes
     }
   }
 `;
 
 @Component({ ... })
-class NewEntryComponent {
+class UpvotePostComponent {
   constructor(private apollo: Apollo) {}
 
   newRepository() {
     this.apollo.mutate({
-      mutation: submitRepository
+      mutation: UPVOTE_POST
     }).subscribe();
   }
 }
@@ -67,29 +69,29 @@ class NewEntryComponent {
 
 Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](https://www.apollographql.com/docs/react/api/apollo-client/#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
 
-```ts
+```typescript
 import { Component } from '@angular/core';
 
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 
-const submitRepository = gql`
-  mutation submitRepository($repoFullName: String!) {
-    submitRepository(repoFullName: $repoFullName) {
-      createdAt
+const UPVOTE_POST = gql`
+  mutation UpvotePost($postId: Int!) {
+    upvotePost(postId: $postId) {
+      id
+      votes
     }
   }
 `;
 
 @Component({ ... })
-class NewEntryComponent {
+class UpvotePostComponent {
   constructor(private apollo: Apollo) {}
 
-  newRepository() {
+  upvote() {
     this.apollo.mutate({
-      mutation: submitRepository,
+      mutation: UPVOTE_POST,
       variables: {
-        repoFullName: 'apollographql/apollo-client'
+        postId: 12
       }
     }).subscribe(({ data }) => {
       console.log('got data', data);
@@ -104,27 +106,30 @@ As you can see, `mutate` method returns an `Observable` that resolves with `Apol
 
 However, typically you'd want to keep the concern of understanding the mutation's structure out of your presentational component. The best way to do this is to use a service to bind your mutate function:
 
-```ts
+```typescript
 import {Component, Injectable} from '@angular/core';
-import {Apollo} from 'apollo-angular';
-import gql from 'graphql-tag';
+import {Apollo, gql} from 'apollo-angular';
 
-@Injectable()
-class SubmitRepositoryService {
-  mutation = gql`
-      mutation submitRepository($repoFullName: String!) {
-        submitRepository(repoFullName: $repoFullName) {
-          createdAt
-        }
-  }`;
+const UPVOTE_POST = gql`
+  mutation UpvotePost($postId: Int!) {
+    upvotePost(postId: $postId) {
+      id
+      votes
+    }
+  }
+`;
 
+@Injectable({
+  providedIn: 'root'
+})
+class UpvoteService {
   constructor(private apollo: Apollo) {}
 
-  submitRepository(repoFullName: string) {
+  upvote(postId: string) {
     return this.apollo.mutate({
-      mutation: this.mutation,
+      mutation: UPVOTE_POST,
       variables: {
-        repoFullName: repoFullName
+        postId
       }
     });
   }
@@ -132,11 +137,11 @@ class SubmitRepositoryService {
 
 
 @Component({ ... })
-class NewEntryComponent {
-  constructor(private submitRepoService: SubmitRepositoryService) {}
+class UpvoteComponent {
+  constructor(private upvoteService: UpvoteService) {}
 
   newRepository() {
-    this.submitRepoService.submitRepository('apollographql/apollo-client')
+    this.upvoteService.upvote(12)
       .subscribe(({ data }) => {
         console.log('got data', data);
       }, (error) => {
@@ -147,7 +152,7 @@ class NewEntryComponent {
 
 ```
 
-> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`](../features/cache-updates.md#updatequeries) callback to update the result of relevant queries with your mutation results.
+> Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`](../caching/interaction.md#updatequeries) callback to update the result of relevant queries with your mutation results.
 
 ## Optimistic UI
 
@@ -155,42 +160,36 @@ Sometimes your client code can easily predict the result of the mutation, if it 
 
 Apollo Client gives you a way to specify the `optimisticResponse` option, that will be used to update active queries immediately, in the same way that the server's mutation response will. Once the actual mutation response returns, the optimistic part will be thrown away and replaced with the real result.
 
-```ts
+```typescript
 import { Component } from '@angular/core';
 
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+import { Apollo, gql } from 'apollo-angular';
 
-const submitComment = gql`
-  mutation submitComment($repoFullName: String!, $commentContent: String!) {
-    submitComment(repoFullName: $repoFullName, commentContent: $commentContent) {
-      postedBy {
-        login
-        html_url
-      }
-      createdAt
-      content
+const CHANGE_POST_TITLE = gql`
+  mutation ChangePostTitle($postId: Int!, $title: String!) {
+    changePostTitle(postId: $postId, title: $title) {
+      id
+      title
     }
   }
 `;
 
 @Component({ ... })
-class CommentPageComponent {
+class PostComponent {
   currentUser: User;
 
   constructor(private apollo: Apollo) {}
 
-  submit({ repoFullName, commentContent }) {
+  upvote({ postId, title }) {
     this.apollo.mutate({
-      mutation: submitComment,
-      variables: { repoFullName, commentContent },
+      mutation: CHANGE_POST_TITLE,
+      variables: { postId, title },
       optimisticResponse: {
         __typename: 'Mutation',
-        submitComment: {
-          __typename: 'Comment',
-          postedBy: this.currentUser,
-          createdAt: +new Date,
-          content: commentContent,
+        changePostTitle: {
+          __typename: 'Post',
+          id: postId,
+          title
         },
       },
     }).subscribe();
@@ -200,7 +199,7 @@ class CommentPageComponent {
 
 For the example above, it is easy to construct an optimistic response, since we know the shape of the new comment and can approximately predict the created date. The optimistic response doesn't have to be exactly correct because it will always will be replaced with the real result from the server, but it should be close enough to make users feel like there is no delay.
 
-> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`](../features/cache-updates.md#updatequeries) to make it appear in this case (and this is what we do in GitHunt).
+> As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`](../caching/interaction.md#updatequeries) to make it appear in this case.
 
 ## Designing mutation results
 

@@ -2,7 +2,7 @@
   "name": "apollo-angular-website",
   "scripts": {
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build": "node links.js && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy"
   },

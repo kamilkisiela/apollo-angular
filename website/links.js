@@ -3,19 +3,28 @@
 const globby = require('globby');
 const fs = require('fs');
 const path = require('path');
-
-const files = globby.sync('docs/**', {
-  absolute: true,
-  cwd: __dirname,
-});
+const versions = require('./versions.json').filter(ver => ver !== 'next')
 
 const errors = [];
 
-files.forEach((file) =>
-  checkFile(file, (error) => {
-    errors.push(error);
-  }),
-);
+function checkLinks(pattern) {
+  const files = globby.sync(pattern, {
+    absolute: true,
+    cwd: __dirname,
+  });
+
+  files.forEach((file) =>
+    checkFile(file, (error) => {
+      errors.push(error);
+    }),
+  );
+}
+
+checkLinks('docs/**');
+
+versions.forEach(version => {
+  checkLinks(`versioned_docs/versio-${version}/**`);
+});
 
 if (errors.length) {
   errors.forEach((error) => {

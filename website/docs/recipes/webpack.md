@@ -2,7 +2,7 @@
 title: Webpack loader
 ---
 
-You can load GraphQL queries over `.graphql` files using Webpack. The package `graphql-tag` comes with a loader easy to setup and with some benefits:
+You can load GraphQL queries over `.graphql` files using Webpack. The package [`@graphql-tools/webpack-loader`](https://www.npmjs.com/package/@graphql-tools/webpack-loader) comes with a loader easy to setup and with some benefits:
 
 1. Do not process GraphQL ASTs on client-side
 1. Enable queries to be separated from logic
@@ -20,19 +20,19 @@ query CurrentUserForLayout {
 
 You can load this file adding a rule in your webpack config file:
 
-```js
+```typescript
 loaders: [
   {
     test: /\.(graphql|gql)$/,
     exclude: /node_modules/,
-    loader: 'graphql-tag/loader'
+    loader: '@graphql-tools/webpack-loader'
   }
 ]
 ```
 
 As you can see, `.graphql` or `.gql` files will be parsed whenever imported:
 
-```ts
+```typescript
 import { Component } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
@@ -51,7 +51,7 @@ class ProfileComponent {
 
 ### Jest
 
-[Jest](https://facebook.github.io/jest/) can't use the Webpack loaders. To make the same transformation work in Jest, use [jest-transform-graphql](https://github.com/remind101/jest-transform-graphql).
+[Jest](https://facebook.github.io/jest/) can't use the Webpack loaders. To make the same transformation work in Jest, use [`@graphql-tools/jest-transform`](https://www.npmjs.com/package/@graphql-tools/jest-transform).
 
 ## Fragments
 

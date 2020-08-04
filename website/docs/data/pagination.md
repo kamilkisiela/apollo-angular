@@ -11,7 +11,7 @@ In this article, we'll cover the technical details of using Apollo to implement 
 
 ## Using `fetchMore`
 
-Apollo lets you do pagination with a method called [`fetchMore`](../features/cache-updates.md#incremental-loading-fetchmore). You need to specify what query and variables to use for the update, and how to merge the new query result with the existing data on the client. How exactly you do that will determine what kind of pagination you are implementing.
+Apollo lets you do pagination with a method called [`fetchMore`](../caching/interaction.md#incremental-loading-fetchmore). You need to specify what query and variables to use for the update, and how to merge the new query result with the existing data on the client. How exactly you do that will determine what kind of pagination you are implementing.
 
 ## Offset-based
 
@@ -19,9 +19,8 @@ Offset based pagination - also called numbered pages - is a very common pattern,
 
 Here is an example with numbered pages taken from [GitHunt](https://github.com/apollographql/githunt-angular):
 
-```ts
-import { Apollo, QueryRef } from 'apollo-angular';
-import gql from 'graphql-tag';
+```typescript
+import { Apollo, QueryRef, gql } from 'apollo-angular';
 
 const feedQuery = gql`
   query Feed($type: FeedType!, $offset: Int, $limit: Int) {
@@ -80,7 +79,6 @@ class FeedComponent implements OnInit {
   }
 }
 ```
-[source code](https://github.com/apollographql/githunt-angular)
 
 As you can see, `fetchMore` is accessible through the `QueryRef` object.
 
@@ -111,7 +109,7 @@ In cursor-based pagination a cursor is used to keep track of where in the data s
 
 In the example below, we use a `fetchMore` query to continuously load new comments, which then appear at the top. The cursor to be used in the `fetchMore` query is provided in the initial server response, and has to be updated whenever more data is fetched.
 
-```ts
+```typescript
 const moreComments = gql`
   query moreComments($cursor: String) {
     moreComments(cursor: $cursor) {

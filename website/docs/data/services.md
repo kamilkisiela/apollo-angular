@@ -24,10 +24,9 @@ To get started with the new API, let's see how you define queries with it.
 
 You create a service and extend it with a `Query` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
-```ts
+```typescript
 import {Injectable} from '@angular/core';
-import {Query} from 'apollo-angular';
-import gql from 'graphql-tag';
+import {Query, gql} from 'apollo-angular';
 
 export interface Post {
   id: string;
@@ -71,7 +70,7 @@ We have now a ready to use GraphQL Query that takes advantage of `Apollo` servic
 
 Let's see how to actually use it in a component:
 
-```ts
+```typescript
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -99,7 +98,7 @@ export class ListComponent implements OnInit {
 
 ### Example with variables
 
-```ts
+```typescript
 @Component({...})
 export class ListComponent implements OnInit {
 
@@ -132,10 +131,9 @@ export class ListComponent implements OnInit {
 
 You create a service and extend it with a `Mutation` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
-```ts
+```typescript
 import {Injectable} from '@angular/core';
-import {Mutation} from 'apollo-angular';
-import gql from 'graphql-tag';
+import {Mutation, gql} from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -158,7 +156,7 @@ We have now a ready to use GraphQL Mutation.
 
 Let's see how to actually use it in a component:
 
-```ts
+```typescript
 import {Component, Input} from '@angular/core';
 import {UpvotePostGQL} from './graphql';
 
@@ -196,10 +194,9 @@ export class UpvoterComponent {
 
 You create a service and extend it with a `Subscription` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
-```ts
+```typescript
 import {Injectable} from '@angular/core';
-import {Subscription} from 'apollo-angular';
-import gql from 'graphql-tag';
+import {Subscription, gql} from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -222,7 +219,7 @@ We have now a ready to use GraphQL Subscription.
 
 Let's see how to actually use it in a component:
 
-```ts
+```typescript
 import {Component, Input} from '@angular/core';
 import {NewPostGQL} from './graphql';
 
@@ -263,7 +260,7 @@ query allPosts {
 
 Code generation tool outputs to a file, a fully featured service called `AllPostsGQL` with every interface you will need.
 
-```ts
+```typescript
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

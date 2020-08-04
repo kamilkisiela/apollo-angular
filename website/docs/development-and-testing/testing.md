@@ -13,10 +13,9 @@ This guide will explain step-by-step how to test `apollo-angular` code. The foll
 
 Consider the component below, which makes a basic query, and displays its results:
 
-```js
+```typescript
 import {Component, OnInit, Input} from '@angular/core';
-import {Apollo} from 'apollo-angular';
-import gql from 'graphql-tag';
+import {Apollo, gql} from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { shareReplay, pluck} from 'rxjs/operators';
 
@@ -81,7 +80,7 @@ Here's an example of a test for the above `Dog` component using `ApolloTestingCo
 
 But first, we need to set everything up.
 
-```ts
+```typescript
 import {
   ApolloTestingModule,
   ApolloTestingController,
@@ -116,7 +115,7 @@ Because `ApolloTestingController` is similar to `HttpTestingController` we won't
 
 With all that we can write a test that expects an operation to occur and provides a mock response.
 
-```ts
+```typescript
 test('expect and answer', () => {
   //Scaffold the component
   TestBed.createComponent(DogComponent);
@@ -195,7 +194,7 @@ It's an object returned by `expectOne` and `match` methods.
 
 The process is pretty much the same as using a default client but the setup is a bit different:
 
-```ts
+```typescript
 import {
   ApolloTestingModule,
   ApolloTestingController,
@@ -222,7 +221,7 @@ Now you're able to test named clients.
 
 If you want to check which client was called to perform a graphql operation:
 
-```ts
+```typescript
 test('expect to call clientA', () => {
   // Scaffold the component
   TestBed.createComponent(DogComponent);
@@ -256,7 +255,7 @@ test('expect to call clientA', () => {
 
 By default, every ApolloCache is created with these options:
 
-```js
+```typescript
 {
   addTypename: false;
 }
@@ -264,7 +263,7 @@ By default, every ApolloCache is created with these options:
 
 If you would like to change it in the default client, do the following:
 
-```ts
+```typescript
 import {APOLLO_TESTING_CACHE} from 'apollo-angular/testing';
 
 beforeEach(() => {
@@ -286,7 +285,7 @@ beforeEach(() => {
 
 For named clients:
 
-```ts
+```typescript
 import {APOLLO_TESTING_NAMED_CACHE} from 'apollo-angular/testing';
 
 beforeEach(() => {
