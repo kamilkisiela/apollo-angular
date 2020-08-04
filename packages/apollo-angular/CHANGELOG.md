@@ -2,6 +2,10 @@
 
 ### vNext
 
+### v2.0.2
+
+- Fix duplicated imports in v2 migration
+
 ### v2.0.1
 
 - Fix missing migration code

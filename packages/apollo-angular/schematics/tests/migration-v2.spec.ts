@@ -80,6 +80,37 @@ describe('Migration: Apollo Angular V2', () => {
     );
   });
 
+  test('should update imports without leaking to other files', async () => {
+    appTree.create(
+      'file1.ts',
+      `
+        import { ApolloClient } from 'apollo-client';
+        import { ApolloLink } from 'apollo-link';
+      `,
+    );
+
+    appTree.create(
+      'file2.ts',
+      `
+        import { InMemoryCache } from 'apollo-cache-inmemory';
+        import { ApolloClient } from 'apollo-client';
+      `,
+    );
+    const tree = await runner
+      .runSchematicAsync(migrationName, {}, appTree)
+      .toPromise();
+
+    const file1 = tree.readContent('file1.ts').trim();
+    const file2 = tree.readContent('file2.ts').trim();
+
+    expect(file1).toContain(
+      `import {ApolloClient, ApolloLink} from '@apollo/client/core';`,
+    );
+    expect(file2).toContain(
+      `import {InMemoryCache, ApolloClient} from '@apollo/client/core';`,
+    );
+  });
+
   test('should enable allowSyntheticDefaultImports in tsconfig.base.json', async () => {
     const tree = await runner
       .runSchematicAsync(migrationName, {}, appTree)

@@ -44,7 +44,7 @@ function migrateDependencies() {
       'apollo-link-ws',
       'apollo-angular-link-http',
       'apollo-angular-link-http-batch',
-      'apollo-angular-link-headers'
+      'apollo-angular-link-headers',
     ];
 
     const removedPackages: string[] = [];
@@ -122,55 +122,55 @@ function getIdentifiers(
 }
 
 export async function migrateImports(tree: Tree) {
-  const importsMap: Record<
-    string,
-    Array<{
-      name: string;
-      alias?: string;
-    }>
-  > = {};
-
-  function collectIdentifiers(
-    packageName: string,
-    namedBindings: ts.NamedImportBindings,
-  ) {
-    getIdentifiers(namedBindings, ({name, alias}) => {
-      if (!importsMap[packageName]) {
-        importsMap[packageName] = [];
-      }
-
-      importsMap[packageName].push({
-        name,
-        alias,
-      });
-    });
-  }
-
-  function redirectImport({
-    source,
-    target,
-    modulePath,
-    statement,
-    recorder,
-  }: {
-    source: string;
-    target: string;
-    modulePath: string;
-    statement: any;
-    recorder: UpdateRecorder;
-  }) {
-    if (modulePath === source) {
-      if (statement.importClause.namedBindings) {
-        collectIdentifiers(target, statement.importClause.namedBindings);
-      }
-
-      recorder.remove(statement.getStart(), statement.getWidth());
-    }
-  }
-
   tree.visit((path) => {
     if (path.includes('node_modules') || !path.endsWith('.ts')) {
       return;
+    }
+
+    const importsMap: Record<
+      string,
+      Array<{
+        name: string;
+        alias?: string;
+      }>
+    > = {};
+
+    function collectIdentifiers(
+      packageName: string,
+      namedBindings: ts.NamedImportBindings,
+    ) {
+      getIdentifiers(namedBindings, ({name, alias}) => {
+        if (!importsMap[packageName]) {
+          importsMap[packageName] = [];
+        }
+
+        importsMap[packageName].push({
+          name,
+          alias,
+        });
+      });
+    }
+
+    function redirectImport({
+      source,
+      target,
+      modulePath,
+      statement,
+      recorder,
+    }: {
+      source: string;
+      target: string;
+      modulePath: string;
+      statement: any;
+      recorder: UpdateRecorder;
+    }) {
+      if (modulePath === source) {
+        if (statement.importClause.namedBindings) {
+          collectIdentifiers(target, statement.importClause.namedBindings);
+        }
+
+        recorder.remove(statement.getStart(), statement.getWidth());
+      }
     }
 
     const sourceFile = ts.createSourceFile(
@@ -316,12 +316,12 @@ export async function migrateImports(tree: Tree) {
           if (!importsMap['apollo-angular']) {
             importsMap['apollo-angular'] = [];
           }
+
+          const alias = statement.importClause.name.escapedText.toString();
+
           importsMap['apollo-angular'].push({
             name: 'gql',
-            alias:
-              statement.importClause.name.escapedText.toString() === 'gql'
-                ? undefined
-                : statement.importClause.name.escapedText.toString(),
+            alias: alias !== 'gql' ? alias : undefined,
           });
 
           recorder.remove(statement.getStart(), statement.getWidth());
@@ -330,6 +330,7 @@ export async function migrateImports(tree: Tree) {
     });
 
     const importSources = Object.keys(importsMap);
+
     importSources.forEach((importSource) => {
       const props = importsMap[importSource]
         .map((im) => (im.alias ? `${im.name} as ${im.alias}` : im.name))
