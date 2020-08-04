@@ -4,6 +4,12 @@
     "title": "Apollo Angular Install Options Schema",
     "type": "object",
     "properties": {
+      "endpoint": {
+        "type": "string",
+        "minLength": 0,
+        "default": "",
+        "x-prompt": "Url to your GraphQL endpoint"
+      }
     },
     "required": []
-}
+  }

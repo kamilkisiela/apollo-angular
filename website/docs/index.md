@@ -1,15 +1,11 @@
 ---
 title: Introduction
-description: What is Apollo Client and what does it do?
+description: What is Apollo Angular and what does it do?
 ---
 
 ## Write queries, not code
 
-[Apollo](https://www.nasa.gov/mission_pages/apollo/missions/index.html) Client is the ultra-flexible, community driven GraphQL client for Angular, JavaScript, and native platforms. It is designed from the ground up to make it easy to build UI components that fetch data with GraphQL. To get the most value out of Apollo Client, you should use it with one of its view layer integrations. To get started with the Angular integration, go to [setup](./basics/setup.md).
-
-Apollo Client also has view layer integrations for [all the popular frontend frameworks](https://www.apollographql.com/client). For the best experience, make sure to use the view integration layer for your frontend framework of choice.
-
-Apollo Client can be used in any JavaScript frontend where you want to describe your data using GraphQL. It's:
+[Apollo](https://www.nasa.gov/mission_pages/apollo/missions/index.html) Angular is the ultra-flexible, community driven GraphQL client for Angular, JavaScript, and native platforms. It is designed from the ground up to make it easy to build UI components that fetch data with GraphQL. To get the most value out of Apollo Client, you should use it with one of its view layer integrations. To get started with the Angular integration, go to [Get Started](./get-started.md).
 
 1. **Incrementally adoptable**, so that you can drop it into an existing JavaScript app and start using GraphQL for just part of your UI.
 1. **Universally compatible**, so that Apollo works with any build setup, any GraphQL server, and any GraphQL schema.
@@ -25,23 +21,23 @@ These docs will help you to go from getting started with Apollo to becoming an e
 
 The docs are divided into three distinct sections to make it easy to find your way around:
 
-1. **Basics**, which outline the why and how of using Apollo Client to build your application.
-1. **Features**, which showcase some of the advanced capabilities of Apollo Client that your app may need.
+1. **Basics**, which outline the why and how of using Apollo Angular to build your application.
+1. **Features**, which showcase some of the advanced capabilities of Apollo Angular that your app may need.
 1. **Recipes**, to isolate and explain how to do common patterns.
 
-Getting started is as simple as installing a few libraries from [npm](https://npmjs.org)! The [setup](./basics/setup.md) is a good place to start your adventure with Apollo!
+Getting started is as simple as installing a few libraries from npm! The [Get Started](./get-started.md) is a good place to start your adventure with Apollo!
 
 ### Compatible tools
 
-We want you to love working with Apollo Client, so we work extra hard to make sure it works with the client or server tools you're already using! The maintainers and contributors focus on solving the hard problems around GraphQL caching, request management, and UI updating, and we want that to be available to anyone regardless of their technical requirements and preferences for other parts of the app.
+We want you to love working with Apollo Angular, so we work extra hard to make sure it works with the client or server tools you're already using! The maintainers and contributors focus on solving the hard problems around GraphQL caching, request management, and UI updating, and we want that to be available to anyone regardless of their technical requirements and preferences for other parts of the app.
 
 ### The Angular toolbox
 
 Apollo is lovingly designed to work nicely with all of the tools used by today's Angular developers. Here are some in particular:
 
-- **Angular Schematics**: Apollo Angular supports `ng-add` and `ng-update` (migrations soon)
+- **Angular Schematics**: Apollo Angular supports `ng-add` and `ng-update`
 - **NativeScript**: Apollo works out of the box in NativeScript.
-- **Angular Router**: Apollo Client is completely router-independent, which means you can use it with any version of [Angular Router](https://github.com/angular/angular) or any other routing library for Angular. It's even easy to set up [server-side rendering](./recipes/server-side-rendering.md).
+- **Angular Router**: Apollo Client is completely router-independent, which means you can use it with any version of [Angular Router](https://github.com/angular/angular) or any other routing library for Angular. It's even easy to set up [server-side rendering](./performance/server-side-rendering.md).
 - **Ionic**: Apollo works great with [Ionic Framework](http://ionicframework.com/) apps written in Angular
 
 If you have a favorite Angular tool, and something in Apollo makes it difficult to integrate, please open an issue and let's work together to make it work nicely and add it to the list!

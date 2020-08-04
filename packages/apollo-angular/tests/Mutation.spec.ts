@@ -2,7 +2,7 @@ import {setupAngular} from './_setup';
 
 import {Injectable} from '@angular/core';
 import {TestBed, inject} from '@angular/core/testing';
-import gql from 'graphql-tag';
+import {gql} from '@apollo/client/core';
 
 import {Mutation, Apollo} from '../src';
 
@@ -77,11 +77,11 @@ describe('Mutation', () => {
   });
 
   test('should pass options to Apollo.mutate', () => {
-    addHero.mutate({}, {fetchPolicy: 'network-only'});
+    addHero.mutate({}, {fetchPolicy: 'no-cache'});
 
     expect(apolloMock.mutate).toBeCalled();
     expect(apolloMock.mutate.mock.calls[0][0]).toMatchObject({
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'no-cache',
     });
   });
 

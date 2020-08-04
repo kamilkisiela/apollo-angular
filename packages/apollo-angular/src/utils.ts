@@ -1,6 +1,11 @@
 import {NgZone} from '@angular/core';
 import {observeOn} from 'rxjs/operators';
 import {
+  ObservableQuery,
+  ApolloQueryResult,
+  Observable as AObservable,
+} from '@apollo/client/core';
+import {
   Observable,
   Subscription,
   queueScheduler,
@@ -10,15 +15,15 @@ import {
 } from 'rxjs';
 
 export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
-  return new Observable<T>(subscriber => {
+  return new Observable<T>((subscriber) => {
     promiseFn().then(
-      result => {
+      (result) => {
         if (!subscriber.closed) {
           subscriber.next(result);
           subscriber.complete();
         }
       },
-      error => {
+      (error) => {
         if (!subscriber.closed) {
           subscriber.error(error);
         }
@@ -48,9 +53,15 @@ export class ZoneScheduler implements SchedulerLike {
 // XXX: Apollo's QueryObservable is not compatible with RxJS
 // TODO: remove it in one of future releases
 // https://github.com/ReactiveX/rxjs/blob/9fb0ce9e09c865920cf37915cc675e3b3a75050b/src/internal/util/subscribeTo.ts#L32
-export function fixObservable<T>(obs: T): T {
+export function fixObservable<T>(
+  obs: ObservableQuery<T>,
+): Observable<ApolloQueryResult<T>>;
+export function fixObservable<T>(obs: AObservable<T>): Observable<T>;
+export function fixObservable<T>(
+  obs: AObservable<T> | ObservableQuery<T>,
+): Observable<ApolloQueryResult<T>> | Observable<T> {
   (obs as any)[observable] = () => obs;
-  return obs;
+  return obs as any;
 }
 
 export function wrapWithZone<T>(
@@ -58,4 +69,14 @@ export function wrapWithZone<T>(
   ngZone: NgZone,
 ): Observable<T> {
   return obs.pipe(observeOn(new ZoneScheduler(ngZone)));
+}
+
+export function pickFlag<TFlags, K extends keyof TFlags>(
+  flags: TFlags | undefined,
+  flag: K,
+  defaultValue: TFlags[K],
+): TFlags[K] {
+  return flags && typeof flags[flag] !== 'undefined'
+    ? flags[flag]
+    : defaultValue;
 }

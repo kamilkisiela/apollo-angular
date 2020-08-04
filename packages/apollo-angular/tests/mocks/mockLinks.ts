@@ -3,8 +3,7 @@ import {
   ApolloLink,
   FetchResult,
   Observable,
-  // Observer,
-} from 'apollo-link';
+} from '@apollo/client/core';
 
 import {print} from 'graphql';
 
@@ -20,7 +19,7 @@ export class MockLink extends ApolloLink {
 
   constructor(mockedResponses: MockedResponse[]) {
     super();
-    mockedResponses.forEach(mockedResponse => {
+    mockedResponses.forEach((mockedResponse) => {
       this.addMockedResponse(mockedResponse);
     });
   }
@@ -53,7 +52,7 @@ export class MockLink extends ApolloLink {
       );
     }
 
-    return new Observable<FetchResult>(observer => {
+    return new Observable<FetchResult>((observer: any) => {
       let timer = setTimeout(
         () => {
           if (error) {

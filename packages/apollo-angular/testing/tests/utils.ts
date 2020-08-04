@@ -1,5 +1,5 @@
 import {DocumentNode} from 'graphql';
-import {getOperationName} from 'apollo-utilities';
+import {getOperationName} from '@apollo/client/utilities';
 
 export const buildOperationForLink = (
   document: DocumentNode,

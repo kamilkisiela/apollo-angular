@@ -1,5 +1,4 @@
-import {execute, ApolloLink} from 'apollo-link';
-import gql from 'graphql-tag';
+import {execute, ApolloLink, gql} from '@apollo/client/core';
 
 import {buildOperationForLink} from './utils';
 import {ApolloTestingBackend} from '../src/backend';
@@ -29,7 +28,7 @@ describe('TestOperation', () => {
   test('accepts a null body', (done) => {
     const operation = buildOperationForLink(testQuery, {});
 
-    execute(link, operation as any).subscribe(result => {
+    execute(link, operation as any).subscribe((result: any) => {
       expect(result).toBeNull();
       done();
     });
@@ -40,7 +39,7 @@ describe('TestOperation', () => {
   test('should accepts data for flush operation', (done) => {
     const operation = buildOperationForLink(testQuery, {});
 
-    execute(link, operation as any).subscribe(result => {
+    execute(link, operation as any).subscribe((result: any) => {
       expect(result).toEqual({
         data: {
           heroes: []

@@ -2,11 +2,11 @@ import {setupAngular} from './_setup';
 
 import {TestBed, inject} from '@angular/core/testing';
 import {HttpClientModule} from '@angular/common/http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
+import {InMemoryCache} from '@apollo/client/core';
 
 import {mockSingleLink} from './mocks/mockLinks';
 
-import {Apollo, ApolloModule, APOLLO_OPTIONS} from '../src';
+import {Apollo, APOLLO_OPTIONS} from '../src';
 
 describe('Integration', () => {
   beforeAll(() => setupAngular());
@@ -14,7 +14,7 @@ describe('Integration', () => {
   describe('default', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, ApolloModule],
+        imports: [HttpClientModule],
         providers: [
           {
             provide: APOLLO_OPTIONS,

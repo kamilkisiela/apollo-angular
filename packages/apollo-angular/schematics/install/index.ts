@@ -1,5 +1,4 @@
 import {dirname} from 'path';
-import {satisfies} from 'semver';
 import {
   apply,
   chain,
@@ -13,7 +12,6 @@ import {
 } from '@angular-devkit/schematics';
 import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
 import {getAppModulePath} from '@schematics/angular/utility/ng-ast-utils';
-import {resolve} from '@angular-devkit/core/node';
 import {tags, terminal} from '@angular-devkit/core';
 import {CompilerOptions} from 'typescript';
 
@@ -23,9 +21,9 @@ import {addModuleImportToRootModule} from '../utils/ast';
 
 export default function install(options: Schema): Rule {
   return chain([
-    assertTypescriptVersion(),
     addDependencies(),
-    inludeAsyncIterableLib,
+    inludeAsyncIterableLib(),
+    allowSyntheticDefaultImports(),
     addSetupFiles(options),
     importSetupModule(options),
     importHttpClientModule(options),
@@ -33,63 +31,10 @@ export default function install(options: Schema): Rule {
 }
 
 export const dependenciesMap: Record<string, string> = {
-  'apollo-angular': '^1.10.0',
-  'apollo-angular-link-http': '^1.11.0',
-  'apollo-link': '^1.2.11',
-  'apollo-client': '^2.6.0',
-  'apollo-cache-inmemory': '^1.6.0',
-  'graphql-tag': '^2.10.0',
-  graphql: '^14.6.0',
+  'apollo-angular': '^2.0.0',
+  '@apollo/client': '^3.0.0',
+  graphql: '^15.0.0',
 };
-
-function assertTypescriptVersion() {
-  return (host: Tree) => {
-    const allowed = '>=2.8.0';
-    let tsVersion: string;
-
-    try {
-      const resolveOptions = {
-        basedir: host.root.path,
-        checkGlobal: false,
-        checkLocal: true,
-      };
-      tsVersion = require(resolve('typescript', resolveOptions)).version;
-    } catch {
-      console.error(
-        terminal.bold(
-          terminal.red(tags.stripIndents`
-        Versions of typescript could not be determined.
-        The most common reason for this is a broken npm install.
-        Please make sure your package.json contains typescript in
-        devDependencies, then delete node_modules and package-lock.json (if you have one) and
-        run npm install again.
-      `),
-        ),
-      );
-      process.exit(2);
-
-      return;
-    }
-
-    if (!satisfies(tsVersion, allowed)) {
-      // First line of warning looks weird being split in two, disable tslint for it.
-      console.error(
-        terminal.yellow(
-          '\n' +
-            tags.stripIndent`
-        typescript@'${allowed}' is required but ${tsVersion} was found instead.
-        Using this version can result in undefined behaviour and difficult to debug problems.
-        Please run the following command to install a compatible version of TypeScript.
-            npm install typescript@'${allowed}'
-      ` +
-            '\n',
-        ),
-      );
-    }
-
-    return host;
-  };
-}
 
 /**
  * Add all necessary node packages
@@ -132,7 +77,7 @@ function inludeAsyncIterableLib() {
     if (
       compilerOptions &&
       compilerOptions.lib &&
-      !compilerOptions.lib.find(lib => lib.toLowerCase() === requiredLib)
+      !compilerOptions.lib.find((lib) => lib.toLowerCase() === requiredLib)
     ) {
       compilerOptions.lib.push(requiredLib);
       host.overwrite(tsconfigPath, JSON.stringify(tsconfig, null, 2));
@@ -144,7 +89,9 @@ function inludeAsyncIterableLib() {
       if (
         baseCompilerOptions &&
         baseCompilerOptions.lib &&
-        !baseCompilerOptions.lib.find(lib => lib.toLowerCase() === requiredLib)
+        !baseCompilerOptions.lib.find(
+          (lib) => lib.toLowerCase() === requiredLib,
+        )
       ) {
         baseCompilerOptions.lib.push(requiredLib);
         host.overwrite(tsconfigBasePath, JSON.stringify(tsconfigBase, null, 2));
@@ -154,7 +101,50 @@ function inludeAsyncIterableLib() {
             '\n' +
               tags.stripIndent`
                 We couln't find '${requiredLib}' in the list of library files to be included in the compilation.
-                It's required by 'apollo-client' package so please add it to your tsconfig.
+                It's required by '@apollo/client/core' package so please add it to your tsconfig.
+              ` +
+              '\n',
+          ),
+        );
+      }
+    }
+
+    return host;
+  };
+}
+
+function allowSyntheticDefaultImports() {
+  return (host: Tree) => {
+    const tsconfigPath = 'tsconfig.json';
+    const tsconfig = getJsonFile(host, tsconfigPath);
+    const compilerOptions: CompilerOptions = tsconfig.compilerOptions;
+
+    if (
+      compilerOptions &&
+      compilerOptions.lib &&
+      !compilerOptions.allowSyntheticDefaultImports
+    ) {
+      compilerOptions.allowSyntheticDefaultImports = true;
+      host.overwrite(tsconfigPath, JSON.stringify(tsconfig, null, 2));
+    } else {
+      const tsconfigBasePath = 'tsconfig.base.json';
+      const tsconfigBase = getJsonFile(host, tsconfigBasePath);
+      const baseCompilerOptions: CompilerOptions = tsconfigBase.compilerOptions;
+
+      if (
+        baseCompilerOptions &&
+        baseCompilerOptions.lib &&
+        !baseCompilerOptions.allowSyntheticDefaultImports
+      ) {
+        baseCompilerOptions.allowSyntheticDefaultImports = true;
+        host.overwrite(tsconfigBasePath, JSON.stringify(tsconfigBase, null, 2));
+      } else {
+        console.error(
+          terminal.yellow(
+            '\n' +
+              tags.stripIndent`
+                We couln't enable 'allowSyntheticDefaultImports' flag.
+                It's required by '@apollo/client/core' package so please add it to your tsconfig.
               ` +
               '\n',
           ),
@@ -173,7 +163,9 @@ function addSetupFiles(options: Schema) {
     const appModuleDirectory = dirname(appModulePath);
 
     const templateSource = apply(url('./files'), [
-      template({}),
+      template({
+        endpoint: options.endpoint,
+      }),
       move(appModuleDirectory),
     ]);
 

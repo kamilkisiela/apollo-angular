@@ -7,11 +7,11 @@ import {
   SubscriptionOptionsAlone,
   ExtraSubscriptionOptions,
   SubscriptionResult,
-  R,
+  EmptyObject,
 } from './types';
 
 @Injectable()
-export class Subscription<T = any, V = R> {
+export class Subscription<T = any, V = EmptyObject> {
   public readonly document: DocumentNode;
   public client = 'default';
 

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "migration-2.0.0": {
+      "version": "2.0.0-alpha.0",
+      "description": "Update to Apollo Angular 2 and Apollo Client 3",
+      "factory": "./migrations/v2"
+    }
+  }
+}

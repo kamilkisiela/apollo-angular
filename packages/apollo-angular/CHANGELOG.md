@@ -2,6 +2,22 @@
 
 ### vNext
 
+### v2.0.0
+
+Migration from v1.0 to v2.0:
+
+    ng update apollo-angular
+
+List of breaking changes and a migration strategy available on our ["Migration Guide"](https://apollo-angular.com/docs/migration).
+
+Changes:
+
+- Support Apollo Client 3.0 (use `@apollo/client/core`)
+- `Http`, `HttpBatch` and `Headers` links are now part of apollo-angular: `apollo-angular/http` and `apollo-angular/headers`
+- Re-export `gql` of `graphql-tag` (`import { gql } from 'apollo-angular'`)
+- Add `flushData` method to `TestingOperation` ([PR #1474](https://github.com/kamilkisiela/apollo-angular/pull/1474) by [@fetis](https://github.com/fetis))
+- Remove `apollo-angular-boost` and `apollo-angular-cache-ngrx`
+
 ### v1.10.0
 
 - Support Angular 10

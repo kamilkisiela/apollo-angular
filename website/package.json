@@ -2,12 +2,14 @@
   "name": "apollo-angular-website",
   "scripts": {
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build": "node links.js && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy"
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.61",
+    "@docusaurus/plugin-client-redirects": "2.0.0-alpha.61",
+    "@docusaurus/plugin-ideal-image": "2.0.0-alpha.61",
     "@docusaurus/preset-classic": "2.0.0-alpha.61",
     "globby": "11.0.1",
     "react": "16.13.1",

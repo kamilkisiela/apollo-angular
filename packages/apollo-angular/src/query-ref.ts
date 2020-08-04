@@ -7,15 +7,14 @@ import {
   FetchMoreOptions,
   SubscribeToMoreOptions,
   UpdateQueryOptions,
-  ApolloCurrentResult,
-} from 'apollo-client';
+} from '@apollo/client/core';
 import {Observable, from} from 'rxjs';
 
 import {wrapWithZone, fixObservable} from './utils';
-import {WatchQueryOptions, R} from './types';
+import {WatchQueryOptions, EmptyObject} from './types';
 import {startWith} from 'rxjs/operators';
 
-export class QueryRef<T, V = R> {
+export class QueryRef<T, V = EmptyObject> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
   public options: ObservableQuery<T, V>['options'];
   public queryId: ObservableQuery<T, V>['queryId'];
@@ -47,10 +46,6 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.result();
   }
 
-  public currentResult(): ApolloCurrentResult<T> {
-    return this.obsQuery.currentResult();
-  }
-
   public getLastResult(): ApolloQueryResult<T> {
     return this.obsQuery.getLastResult();
   }
@@ -73,7 +68,7 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
-  public subscribeToMore<MT = any, MV = R>(
+  public subscribeToMore<MT = any, MV = EmptyObject>(
     options: SubscribeToMoreOptions<T, MV, MT>,
   ): () => void {
     // XXX: there's a bug in apollo-client typings
@@ -98,11 +93,7 @@ export class QueryRef<T, V = R> {
     return this.obsQuery.setOptions(opts);
   }
 
-  public setVariables(
-    variables: V,
-    tryFetch: boolean = false,
-    fetchResults = true,
-  ) {
-    return this.obsQuery.setVariables(variables, tryFetch, fetchResults);
+  public setVariables(variables: V) {
+    return this.obsQuery.setVariables(variables);
   }
 }

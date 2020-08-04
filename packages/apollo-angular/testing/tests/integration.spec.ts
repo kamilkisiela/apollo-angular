@@ -1,17 +1,15 @@
 import {setupAngular} from './_setup';
 import {Apollo} from 'apollo-angular';
+import {InMemoryCache, gql} from '@apollo/client/core';
 import {TestBed, inject} from '@angular/core/testing';
-import {addTypenameToDocument} from 'apollo-utilities';
+import {addTypenameToDocument} from '@apollo/client/utilities';
 import {print} from 'graphql';
-
-import gql from 'graphql-tag';
 
 import {
   ApolloTestingModule,
   ApolloTestingController,
   APOLLO_TESTING_CACHE,
 } from '../src';
-import {InMemoryCache} from 'apollo-cache-inmemory';
 
 describe('Integration', () => {
   let apollo: Apollo;
@@ -58,11 +56,11 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: result => {
+      next: (result) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
     });
@@ -91,11 +89,11 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: result => {
+      next: (result) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
     });
@@ -124,11 +122,11 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: result => {
+      next: (result) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
     });
@@ -160,17 +158,17 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: result => {
+      next: (result) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: e => {
+      error: (e) => {
         done.fail(e);
       },
     });
 
     backend
-      .expectOne(operation => {
+      .expectOne((operation) => {
         expect(operation.operationName).toBe(op.operationName);
         expect(operation.variables).toEqual(op.variables);
         expect(print(operation.query)).toBe(print(op.query));
@@ -180,7 +178,7 @@ describe('Integration', () => {
       .flush({data});
   });
 
-  test('it should be able to test with fragments', done => {
+  test('it should be able to test with fragments', (done) => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
@@ -222,7 +220,7 @@ describe('Integration', () => {
     };
 
     apollo.query<any>(op).subscribe({
-      next: result => {
+      next: (result) => {
         expect(result.data).toMatchObject(data);
         done();
       },

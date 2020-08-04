@@ -2,13 +2,9 @@
 title: Angular CLI
 ---
 
-## Setup
-
 To get started with Apollo and Angular run:
 
-```bash
-ng add apollo-angular
-```
+    ng add apollo-angular
 
 ## Proxy
 
@@ -16,7 +12,7 @@ If your GraphQL endpoint lives under different host with Angular CLI you can eas
 
 Take for example `api.example.com/graphql`:
 
-```json
+```typescripton
 {
   "/graphql": {
     "target": "http://api.example.com"
@@ -28,13 +24,9 @@ Create a json file (`proxy.config.json` for example) with that configuration.
 
 To run server use `--proxy-config` option:
 
-```bash
-ng serve --proxy-config <path to file>
-```
+    ng serve --proxy-config <path to file>
 
 An example:
 
-```bash
-ng serve --proxy-config proxy.config.json
-```
+    ng serve --proxy-config proxy.config.json
 
