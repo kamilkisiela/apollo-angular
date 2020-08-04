@@ -1,12 +1,15 @@
 import {setupAngular} from './_setup';
 
-import gql from 'graphql-tag';
-
 import {NgZone} from '@angular/core';
 import {TestBed, TestBedStatic, inject, async} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
-import {ApolloLink, InMemoryCache, NetworkStatus} from '@apollo/client/core';
+import {
+  ApolloLink,
+  InMemoryCache,
+  NetworkStatus,
+  gql,
+} from '@apollo/client/core';
 
 import {Apollo, ApolloBase} from '../src/apollo';
 import {ZoneScheduler} from '../src/utils';

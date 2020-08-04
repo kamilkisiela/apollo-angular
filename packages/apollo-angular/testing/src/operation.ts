@@ -2,7 +2,7 @@ import {
   ApolloError,
   Operation as LinkOperation,
   FetchResult,
-} from 'apollo-angular';
+} from '@apollo/client/core';
 import {GraphQLError, ExecutionResult} from 'graphql';
 import {ExecutionResultDataDefault} from 'graphql/execution/execute';
 import {Observer} from 'rxjs';

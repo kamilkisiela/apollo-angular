@@ -1,7 +1,10 @@
-import {ApolloLink, execute, LinkObservable} from 'apollo-angular';
+import {
+  ApolloLink,
+  execute,
+  Observable as LinkObservable,
+  gql,
+} from '@apollo/client/core';
 import {HttpHeaders} from '@angular/common/http';
-
-import gql from 'graphql-tag';
 
 import {httpHeaders} from '../src';
 

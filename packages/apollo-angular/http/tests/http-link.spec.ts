@@ -1,14 +1,13 @@
 import {setupAngular} from './_setup';
 
-import gql from 'graphql-tag';
-
 import {TestBed, inject, async} from '@angular/core/testing';
 import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import {Apollo, execute, ApolloLink, InMemoryCache} from 'apollo-angular';
+import {Apollo} from 'apollo-angular';
+import {execute, ApolloLink, InMemoryCache, gql} from '@apollo/client/core';
 import {mergeMap} from 'rxjs/operators';
 
 import {HttpLink} from '../src/http-link';

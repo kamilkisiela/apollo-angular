@@ -1,6 +1,7 @@
 {
   "name": "apollo-angular-link-persisted",
   "description": "Use persisted queries with Apollo Link",
+  "version": "1.3.0",
   "author": {
     "name": "Kamil Kisiela",
     "email": "kamil.kisiela@gmail.com",
@@ -11,7 +12,7 @@
   "main": "build/bundles/ngApolloLinkPersisted.umd.js",
   "module": "build/fesm5/ngApolloLinkPersisted.js",
   "typings": "build/ngApolloLinkPersisted.d.ts",
-  "version": "1.3.0",
+  "homepage": "https://www.apollo-angular.com/",
   "repository": {
     "type": "git",
     "url": "https://github.com/kamilkisiela/apollo-angular",

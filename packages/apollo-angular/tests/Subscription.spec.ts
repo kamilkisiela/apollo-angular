@@ -2,7 +2,7 @@ import {setupAngular} from './_setup';
 
 import {Injectable} from '@angular/core';
 import {TestBed, inject} from '@angular/core/testing';
-import gql from 'graphql-tag';
+import {gql} from '@apollo/client/core';
 
 import {Subscription, Apollo} from '../src';
 

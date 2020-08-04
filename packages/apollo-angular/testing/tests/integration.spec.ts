@@ -1,10 +1,9 @@
 import {setupAngular} from './_setup';
-import {Apollo, InMemoryCache} from 'apollo-angular';
+import {Apollo} from 'apollo-angular';
+import {InMemoryCache, gql} from '@apollo/client/core';
 import {TestBed, inject} from '@angular/core/testing';
 import {addTypenameToDocument} from '@apollo/client/utilities';
 import {print} from 'graphql';
-
-import gql from 'graphql-tag';
 
 import {
   ApolloTestingModule,

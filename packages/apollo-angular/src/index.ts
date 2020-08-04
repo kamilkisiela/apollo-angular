@@ -10,4 +10,3 @@ export {
   ExtraSubscriptionOptions,
   Flags,
 } from './types';
-export * from './client';

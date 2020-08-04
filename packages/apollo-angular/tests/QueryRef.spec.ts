@@ -6,11 +6,10 @@ import {
   ObservableQuery,
   ApolloLink,
   InMemoryCache,
+  gql,
 } from '@apollo/client/core';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
-
-import gql from 'graphql-tag';
 
 import {QueryRef} from '../src/query-ref';
 import {mockSingleLink} from './mocks/mockLinks';

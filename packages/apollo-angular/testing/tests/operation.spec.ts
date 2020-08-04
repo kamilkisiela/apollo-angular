@@ -1,5 +1,4 @@
-import {execute, ApolloLink} from '@apollo/client/core';
-import gql from 'graphql-tag';
+import {execute, ApolloLink, gql} from '@apollo/client/core';
 
 import {buildOperationForLink} from './utils';
 import {ApolloTestingBackend} from '../src/backend';

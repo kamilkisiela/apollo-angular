@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {
   ApolloLink,
-  LinkObservable,
+  Observable as LinkObservable,
   Operation,
   FetchResult,
-} from 'apollo-angular';
+} from '@apollo/client/core';
 import {BatchLink, BatchHandler} from '@apollo/client/link/batch';
 import {print} from 'graphql';
 import {Body, Context, Request, Options} from './types';
