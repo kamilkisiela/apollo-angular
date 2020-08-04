@@ -1,0 +1,6 @@
+---
+title: Meteor
+description: Specifics about using Apollo in your Meteor application.
+---
+
+**The docs for using Meteor with the 2.0 version of Apollo Client will be available soon. Work is still in progress and theses docs will be updated when it is ready.**

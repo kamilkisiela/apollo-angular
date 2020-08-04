@@ -39,7 +39,7 @@ We want you to love working with Apollo Client, so we work extra hard to make su
 
 Apollo is lovingly designed to work nicely with all of the tools used by today's Angular developers. Here are some in particular:
 
-- **Angular Schematics**: Apollo Angular supports `ng-add` and `ng-update`
+- **Angular Schematics**: Apollo Angular supports `ng-add` and `ng-update` (migrations soon)
 - **NativeScript**: Apollo works out of the box in NativeScript.
 - **Angular Router**: Apollo Client is completely router-independent, which means you can use it with any version of [Angular Router](https://github.com/angular/angular) or any other routing library for Angular. It's even easy to set up [server-side rendering](./recipes/server-side-rendering.md).
 - **Ionic**: Apollo works great with [Ionic Framework](http://ionicframework.com/) apps written in Angular
