@@ -16,49 +16,57 @@ import TabItem from '@theme/TabItem';
 - The `apollo-angular` includes now GraphQL request handling (`apollo-angular/http`), which previously required installing separate packages.
 - New Apollo Angular no longer supports the `SelectPipe`.
 
+## Update with Angular Schematics
+
+Apollo Angular comes with set of migration schematics:
+
+    ng update apollo-angular
+
+> Important! Migration doesn't cover all use-cases and NgModules like `ApolloModule` or `HttpLinkModule` have to be deleted manually. To improve the migration script, please open issues and PRs!
+
 ## Installation
 
 To get started with the v2.0, you will change your imports to use the two packages. A typical upgrade looks like this:
 
 <Tabs
-  defaultValue="before"
-  values={[
-    {label: 'Before', value: 'before'},
-    {label: 'After', value: 'after'},
-    {label: 'Diff', value: 'diff'},
-  ]}>
-  <TabItem value="before">
+defaultValue="before"
+values={[
+{label: 'Before', value: 'before'},
+{label: 'After', value: 'after'},
+{label: 'Diff', value: 'diff'},
+]}>
+<TabItem value="before">
 
-  ```typescript
-    import {ApolloClient} from 'apollo-client';
-    import {InMemoryCache} from 'apollo-cache-inmemory';
-    import {Apollo} from 'apollo-angular';
-    import gql from 'graphql-tag';
-    import {HttpLink} from 'apollo-angular-link-http';
-  ```
+```typescript
+import {ApolloClient} from 'apollo-client';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
+import {HttpLink} from 'apollo-angular-link-http';
+```
 
   </TabItem>
   <TabItem value="after">
 
-  ```typescript
-    import {ApolloClient, InMemoryCache} from '@apollo/client/core';
-    import {Apollo, gql} from 'apollo-angular';
-    import {HttpLink} from 'apollo-angular/http';
-  ```
+```typescript
+import {ApolloClient, InMemoryCache} from '@apollo/client/core';
+import {Apollo, gql} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+```
 
   </TabItem>
   <TabItem value="diff">
 
-  ```diff
-  -import {ApolloClient} from 'apollo-client';
-  -import {InMemoryCache} from 'apollo-cache-inmemory';
-  +import {ApolloClient, InMemoryCache} from '@apollo/client/core';
-  -import {Apollo} from 'apollo-angular';
-  -import gql from 'graphql-tag';
-  +import {Apollo, gql} from 'apollo-angular';
-  -import {HttpLink} from 'apollo-angular-link-http';
-  +import {HttpLink} from 'apollo-angular/http';
-  ```
+```diff
+-import {ApolloClient} from 'apollo-client';
+-import {InMemoryCache} from 'apollo-cache-inmemory';
++import {ApolloClient, InMemoryCache} from '@apollo/client/core';
+-import {Apollo} from 'apollo-angular';
+-import gql from 'graphql-tag';
++import {Apollo, gql} from 'apollo-angular';
+-import {HttpLink} from 'apollo-angular-link-http';
++import {HttpLink} from 'apollo-angular/http';
+```
 
   </TabItem>
 </Tabs>
@@ -68,117 +76,117 @@ To get started with the v2.0, you will change your imports to use the two packag
 A simple usage of Apollo Angular upgrading to the 2.0 would look like this:
 
 <Tabs
-  defaultValue="before"
-  values={[
-    {label: 'Before', value: 'before'},
-    {label: 'After', value: 'after'},
-    {label: 'Diff', value: 'diff'},
-  ]}>
-  <TabItem value="before">
+defaultValue="before"
+values={[
+{label: 'Before', value: 'before'},
+{label: 'After', value: 'after'},
+{label: 'Diff', value: 'diff'},
+]}>
+<TabItem value="before">
 
-  ```typescript
-  import {NgModule} from '@angular/core';
-  import {HttpClientModule} from '@angular/common/http';
-  import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-  import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
-  import {InMemoryCache} from 'apollo-cache-inmemory';
+```typescript
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 
-  @NgModule({
-    imports: [
-      // ... other modules
-      HttpClientModule,
-      HttpLinkModule,
-      ApolloModule,
-    ],
-    providers: [
-      {
-        provide: APOLLO_OPTIONS,
-        useFactory(httpLink: HttpLink) {
-          return {
-            cache: new InMemoryCache(),
-            link: httpLink.create({
-              uri: 'http://localhost:3000',
-            }),
-          };
-        },
-        deps: [HttpLink],
+@NgModule({
+  imports: [
+    // ... other modules
+    HttpClientModule,
+    HttpLinkModule,
+    ApolloModule,
+  ],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:3000',
+          }),
+        };
       },
-    ],
-  })
-  class AppModule {}
-  ```
+      deps: [HttpLink],
+    },
+  ],
+})
+class AppModule {}
+```
 
   </TabItem>
   <TabItem value="after">
 
-  ```typescript
-  import {NgModule} from '@angular/core';
-  import {HttpClientModule} from '@angular/common/http';
-  import {APOLLO_OPTIONS} from 'apollo-angular';
-  import {HttpLink} from 'apollo-angular/http';
-  import {InMemoryCache} from '@apollo/client/core';
+```typescript
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
 
-  @NgModule({
-    imports: [
-      // ... other modules
-      HttpClientModule,
-    ],
-    providers: [
-      {
-        provide: APOLLO_OPTIONS,
-        useFactory(httpLink: HttpLink) {
-          return {
-            cache: new InMemoryCache(),
-            link: httpLink.create({
-              uri: 'http://localhost:3000',
-            }),
-          };
-        },
-        deps: [HttpLink],
+@NgModule({
+  imports: [
+    // ... other modules
+    HttpClientModule,
+  ],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:3000',
+          }),
+        };
       },
-    ],
-  })
-  class AppModule {}
-  ```
+      deps: [HttpLink],
+    },
+  ],
+})
+class AppModule {}
+```
 
   </TabItem>
   <TabItem value="diff">
 
-  ```diff language="typescript"
-  import {NgModule} from '@angular/core';
-  import {HttpClientModule} from '@angular/common/http';
-  -import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-  +import {APOLLO_OPTIONS} from 'apollo-angular';
-  -import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
-  +import {HttpLink} from 'apollo-angular/http';
-  -import {InMemoryCache} from 'apollo-cache-inmemory';
-  +import {InMemoryCache} from '@apollo/client/core';
+```diff language="typescript"
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+-import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
++import {APOLLO_OPTIONS} from 'apollo-angular';
+-import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
++import {HttpLink} from 'apollo-angular/http';
+-import {InMemoryCache} from 'apollo-cache-inmemory';
++import {InMemoryCache} from '@apollo/client/core';
 
 
-  @NgModule({
-    imports: [
-      // ... other modules
-      HttpClientModule,
-  -   HttpLinkModule,
-  -   ApolloModule,
-    ],
-    providers: [
-      {
-        provide: APOLLO_OPTIONS,
-        useFactory(httpLink: HttpLink) {
-          return {
-            cache: new InMemoryCache(),
-            link: httpLink.create({
-              uri: 'http://localhost:3000',
-            }),
-          };
-        },
-        deps: [HttpLink],
+@NgModule({
+  imports: [
+    // ... other modules
+    HttpClientModule,
+-   HttpLinkModule,
+-   ApolloModule,
+  ],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:3000',
+          }),
+        };
       },
-    ],
-  })
-  class AppModule {}
-  ```
+      deps: [HttpLink],
+    },
+  ],
+})
+class AppModule {}
+```
 
   </TabItem>
 </Tabs>
@@ -240,7 +248,7 @@ The separate `apollo-link-*` packages, that were previously maintained in the ht
 The `apollo-angular` package includes `graphql-tag` as a dependency and re-exports `gql`. To simplify your dependencies, we recommend importing `gql` from `apollo-angular` and removing all `graphql-tag` dependencies.
 
 ```typescript
-import { gql } from 'apollo-angular';
+import {gql} from 'apollo-angular';
 ```
 
 ### Using apollo-utilities without the rest of Apollo Client
@@ -270,36 +278,36 @@ The following cache changes are not backward compatible. Take them into consider
 - `(client/cache).writeData` have been fully removed. `(client/cache).writeQuery`, `(client/cache).writeFragment`, and/or `cache.modify` can be used to update the cache.
 
 <Tabs
-  defaultValue="before"
-  values={[
-    {label: 'Before', value: 'before'},
-    {label: 'After', value: 'after'},
-  ]}>
-  <TabItem value="before">
+defaultValue="before"
+values={[
+{label: 'Before', value: 'before'},
+{label: 'After', value: 'after'},
+]}>
+<TabItem value="before">
 
-  ```typescript
-  client.writeData({
-    data: {
-      cartItems: [],
-    },
-  });
-  ```
+```typescript
+client.writeData({
+  data: {
+    cartItems: [],
+  },
+});
+```
 
   </TabItem>
   <TabItem value="after">
 
-  ```typescript
-  client.writeQuery({
-    query: gql`
-      query GetCartItems {
-        cartItems
-      }
-    `,
-    data: {
-      cartItems: [],
-    },
-  });
-  ```
+```typescript
+client.writeQuery({
+  query: gql`
+    query GetCartItems {
+      cartItems
+    }
+  `,
+  data: {
+    cartItems: [],
+  },
+});
+```
 
   </TabItem>
 </Tabs>
