@@ -8,6 +8,8 @@ export {
   NamedOptions,
   SubscriptionResult,
   WatchQueryOptions,
+  MutationOptions,
+  SubscriptionOptions,
   ExtraSubscriptionOptions,
   Flags,
 } from './types';

@@ -2,6 +2,7 @@ import {setupAngular} from './_setup';
 
 import {NgZone} from '@angular/core';
 import {TestBed, TestBedStatic, inject, async} from '@angular/core/testing';
+import {TypedDocumentNode} from '@graphql-typed-document-node/core';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
 import {
@@ -9,6 +10,7 @@ import {
   InMemoryCache,
   NetworkStatus,
   gql,
+  DocumentNode,
 } from '@apollo/client/core';
 
 import {Apollo, ApolloBase} from '../src/apollo';
@@ -29,6 +31,7 @@ function mockApollo(link: ApolloLink, _ngZone: NgZone) {
 describe('Apollo', () => {
   let ngZone: NgZone;
   let testBed: TestBedStatic;
+
   beforeAll(() => setupAngular());
 
   beforeEach(() => {
@@ -73,6 +76,111 @@ describe('Apollo', () => {
   });
 
   describe('watchQuery()', () => {
+    test('should use TypedDocumentNode generics', async () => {
+      const query: TypedDocumentNode<
+        {
+          foo: string;
+        },
+        {
+          upperCase: boolean;
+        }
+      > = gql`
+        query getFoo($upperCase: Boolean!) {
+          foo(upperCase: $upperCase)
+        }
+      `;
+
+      const mutation: TypedDocumentNode<
+        {
+          setFoo: string;
+        },
+        {
+          foo: string;
+        }
+      > = gql`
+        mutation setFoo($foo: String!) {
+          setFoo(foo: $foo)
+        }
+      `;
+
+      const subscription: TypedDocumentNode<
+        {
+          onFoo: string;
+        },
+        {
+          foo: string;
+        }
+      > = gql`
+        subscription onFoo($foo: String!) {
+          onFoo(foo: $foo)
+        }
+      `;
+
+      const apollo = new Apollo(ngZone);
+
+      jest.spyOn(apollo, 'subscribe').mockImplementation(() =>
+        of({
+          data: {
+            onFoo: 'changed-foo',
+          },
+        }),
+      );
+
+      apollo.create({
+        link: mockSingleLink(
+          {
+            request: {query, variables: {upperCase: true}},
+            result: {
+              data: {
+                foo: 'FOO',
+              },
+            },
+          },
+          {
+            request: {query: mutation, variables: {foo: 'new-foo'}},
+            result: {
+              data: {
+                setFoo: 'new-foo',
+              },
+            },
+          },
+        ),
+        cache: new InMemoryCache(),
+      });
+
+      const queryRef = apollo.watchQuery({
+        query,
+        variables: {
+          upperCase: true,
+        },
+      });
+      const queryResult = await queryRef.valueChanges.toPromise();
+
+      expect(queryResult.data.foo).toBe('FOO');
+
+      const mutationResult = await apollo
+        .mutate({
+          mutation,
+          variables: {
+            foo: 'new-foo',
+          },
+        })
+        .toPromise();
+
+      expect(mutationResult.data.setFoo).toBe('new-foo');
+
+      const subscriptionResult = await apollo
+        .subscribe({
+          query: subscription,
+          variables: {
+            foo: 'changed-foo',
+          },
+        })
+        .toPromise();
+
+      expect(subscriptionResult.data.onFoo).toBe('changed-foo');
+    });
+
     test('should be called with the same options', () => {
       const apollo = new Apollo(ngZone);
 
@@ -125,7 +233,7 @@ describe('Apollo', () => {
       let calls = 0;
 
       obs.valueChanges.subscribe({
-        next: ({data}: any) => {
+        next: ({data}) => {
           calls++;
 
           try {
@@ -170,13 +278,20 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      const options = {query: 'gql'} as any;
+      const options = {
+        query: gql`
+          {
+            noop
+          }
+        `,
+      };
       client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
 
       const obs = apollo.query(options);
 
       obs.subscribe({
         next(r) {
+          // TODO: `r` is `unknown` ...
           expect(r).toEqual('query');
           expect(client.query).toBeCalledWith(options);
           done();

@@ -23,7 +23,7 @@ export class QueryRef<T, V = EmptyObject> {
   constructor(
     private obsQuery: ObservableQuery<T, V>,
     ngZone: NgZone,
-    options: WatchQueryOptions<V>,
+    options: WatchQueryOptions<V, T>,
   ) {
     const wrapped = wrapWithZone(from(fixObservable(this.obsQuery)), ngZone);
 

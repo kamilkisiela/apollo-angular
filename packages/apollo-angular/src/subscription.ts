@@ -9,10 +9,11 @@ import {
   SubscriptionResult,
   EmptyObject,
 } from './types';
+import {TypedDocumentNode} from '@graphql-typed-document-node/core';
 
 @Injectable()
 export class Subscription<T = any, V = EmptyObject> {
-  public readonly document: DocumentNode;
+  public readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
   constructor(protected apollo: Apollo) {}

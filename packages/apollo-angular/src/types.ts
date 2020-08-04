@@ -5,7 +5,8 @@ import {
   SubscriptionOptions as CoreSubscriptionOptions,
   ApolloClientOptions,
 } from '@apollo/client/core';
-import {ExecutionResult} from 'graphql';
+import {ExecutionResult, DocumentNode} from 'graphql';
+import {TypedDocumentNode} from '@graphql-typed-document-node/core';
 
 export type EmptyObject = {
   [key: string]: any;
@@ -17,8 +18,8 @@ export interface ExtraSubscriptionOptions {
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface WatchQueryOptionsAlone<TVariables>
-  extends Omit<WatchQueryOptions<TVariables>, 'query' | 'variables'> {}
+export interface WatchQueryOptionsAlone<TVariables, TQuery = EmptyObject>
+  extends Omit<WatchQueryOptions<TVariables, TQuery>, 'query' | 'variables'> {}
 
 export interface QueryOptionsAlone<TVariables>
   extends Omit<CoreQueryOptions<TVariables>, 'query' | 'variables'> {}
@@ -32,7 +33,7 @@ export interface MutationOptionsAlone<TData, TVariables>
 export interface SubscriptionOptionsAlone<TVariables>
   extends Omit<CoreSubscriptionOptions<TVariables>, 'query' | 'variables'> {}
 
-export interface WatchQueryOptions<TVariables>
+export interface WatchQueryOptions<TVariables, TData>
   extends CoreWatchQueryOptions<TVariables> {
   /**
    * Observable starts with `{ loading: true }`.
@@ -41,6 +42,20 @@ export interface WatchQueryOptions<TVariables>
    * Disabled by default
    */
   useInitialLoading?: boolean;
+  query: DocumentNode | TypedDocumentNode<TData, TVariables>;
+  variables?: TVariables;
+}
+
+export interface MutationOptions<TData, TVariables>
+  extends MutationOptionsAlone<TData, TVariables> {
+  mutation: DocumentNode | TypedDocumentNode<TData, TVariables>;
+  variables?: TVariables;
+}
+
+export interface SubscriptionOptions<TData, TVariables>
+  extends SubscriptionOptionsAlone<TVariables> {
+  query: DocumentNode | TypedDocumentNode<TData, TVariables>;
+  variables?: TVariables;
 }
 
 export interface SubscriptionResult<TData> extends ExecutionResult {

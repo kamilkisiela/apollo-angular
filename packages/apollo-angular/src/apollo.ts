@@ -2,9 +2,7 @@ import {Injectable, Optional, Inject, NgZone} from '@angular/core';
 import {
   ApolloClient,
   QueryOptions,
-  MutationOptions,
   ApolloQueryResult,
-  SubscriptionOptions,
   ApolloClientOptions,
   ObservableQuery,
   FetchResult,
@@ -14,6 +12,8 @@ import {Observable, from} from 'rxjs';
 import {QueryRef} from './query-ref';
 import {
   WatchQueryOptions,
+  MutationOptions,
+  SubscriptionOptions,
   ExtraSubscriptionOptions,
   EmptyObject,
   NamedOptions,
@@ -33,8 +33,8 @@ export class ApolloBase<TCacheShape = any> {
     this.useInitialLoading = pickFlag(flags, 'useInitialLoading', false);
   }
 
-  public watchQuery<TData, TVariables = EmptyObject>(
-    options: WatchQueryOptions<TVariables>,
+  public watchQuery<TData = EmptyObject, TVariables = EmptyObject>(
+    options: WatchQueryOptions<TVariables, TData>,
   ): QueryRef<TData, TVariables> {
     return new QueryRef<TData, TVariables>(
       this.ensureClient().watchQuery<TData, TVariables>({
@@ -65,7 +65,7 @@ export class ApolloBase<TCacheShape = any> {
   }
 
   public subscribe<T, V = EmptyObject>(
-    options: SubscriptionOptions<V>,
+    options: SubscriptionOptions<T, V>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<FetchResult<T>> {
     const obs = from(
