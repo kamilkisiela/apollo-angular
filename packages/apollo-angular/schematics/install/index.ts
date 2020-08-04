@@ -31,7 +31,7 @@ export default function install(options: Schema): Rule {
 }
 
 export const dependenciesMap: Record<string, string> = {
-  'apollo-angular': '^2.0.1',
+  'apollo-angular': '^2.0.2',
   '@apollo/client': '^3.0.0',
   graphql: '^15.0.0',
 };
