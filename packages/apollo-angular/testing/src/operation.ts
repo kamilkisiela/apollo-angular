@@ -4,7 +4,6 @@ import {
   FetchResult,
 } from '@apollo/client/core';
 import {GraphQLError, ExecutionResult} from 'graphql';
-import {ExecutionResultDataDefault} from 'graphql/execution/execute';
 import {Observer} from 'rxjs';
 
 const isApolloError = (err: any): err is ApolloError =>
@@ -14,25 +13,25 @@ export type Operation = LinkOperation & {
   clientName: string;
 };
 
-export class TestOperation {
+export class TestOperation<T = {[key: string]: any}> {
   constructor(
     public operation: Operation,
-    private observer: Observer<FetchResult>,
+    private observer: Observer<FetchResult<T>>,
   ) {}
 
   public flush(result: ExecutionResult | ApolloError): void {
     if (isApolloError(result)) {
       this.observer.error(result);
     } else {
-      this.observer.next(result as FetchResult);
+      this.observer.next(result as FetchResult<T>);
       this.observer.complete();
     }
   }
 
-  public flushData(data: ExecutionResultDataDefault | null): void {
+  public flushData(data: {[key: string]: any} | null): void {
     this.flush({
       data,
-    })
+    });
   }
 
   public networkError(error: Error): void {
