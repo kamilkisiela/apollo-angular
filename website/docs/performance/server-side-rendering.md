@@ -156,43 +156,6 @@ apollo.create({
 });
 ```
 
-## Http Caching
-
-As you know, `HttpLink` from `apollo-angular/http` package uses Angular's `HttpClient` to make requests. Thanks to that and `@nguniversal/common` it is super easy to make SSR working without even writing a single line of code.
-
-`TransferHttpCacheModule`, which is a part of `@nguniversal/common`, intercepts `HttpClient` requests on the server and store the response in the `TransferState` key-value store. This is transferred to the client, which then uses it to respond to the same `HttpClient` requests on the client.
-
-Here you can see how simple is that:
-
-```typescript
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
-// SSR
-import {TransferHttpCacheModule} from '@nguniversal/common';
-import {Apollo} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-
-@NgModule({
-  imports: [
-    // ...
-    BrowserModule,
-    TransferHttpCacheModule,
-    HttpClientModule,
-  ],
-  // ...
-})
-class AppModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    apollo.create({
-      link: httpLink.create({uri: '/graphql'}),
-      cache: new InMemoryCache(),
-    });
-  }
-}
-```
-
 ## Best Practices
 
 You saw how to use Server-Side Rendering and Store Rehydration in your application, but you will need to be a little careful in how you create Apollo on the server to ensure everything works there as well:
