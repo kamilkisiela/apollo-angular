@@ -10,7 +10,8 @@
     "module": "commonjs"
   },
   "files": [
-    "install/index.ts"
+    "install/index.ts",
+    "migrations/v2.ts"
   ],
   "include": []
 }

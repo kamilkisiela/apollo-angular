@@ -2,6 +2,10 @@
 
 ### vNext
 
+### v2.0.1
+
+- Fix missing migration code
+
 ### v2.0.0
 
 Migration from v1.0 to v2.0:
