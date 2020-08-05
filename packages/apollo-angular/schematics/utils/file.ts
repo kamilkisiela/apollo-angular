@@ -10,7 +10,7 @@ export function parseJSON<T = any>(content: string): T {
  * @param host {Tree} The source tree.
  * @param path {String} The path to the file to read. Relative to the root of the tree.
  */
-export function getJsonFile(host: Tree, path: string) {
+export function getJsonFile(host: Tree, path: string, strict = false) {
   const buffer = host.read(path);
   if (buffer === null) {
     throw new SchematicsException(`Couldn't read ${path}!`);
@@ -18,6 +18,9 @@ export function getJsonFile(host: Tree, path: string) {
 
   const content = buffer.toString('utf-8');
   try {
+    if (strict) {
+      return JSON.parse(content);
+    }
     // remove comments :)
     return parseJSON(content);
   } catch (e) {
