@@ -2,6 +2,8 @@
 
 ### vNext
 
+- Fix v2 migration: default export (`ApolloClient`) of `apollo-client`
+
 ### v2.0.3
 
 - Use JSON.parse to parse `package.json` file in v2 migration
