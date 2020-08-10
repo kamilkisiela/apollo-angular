@@ -132,13 +132,13 @@ module.exports = {
     gtag: {
       trackingID: 'UA-125180910-5',
     },
-    // algolia: {
-    //   apiKey: 'c81d6a17b6d40971f230c0d79b03ff23',
-    //   indexName: 'apollo-angular',
-    //   searchParameters: {
-    //     facetFilters: [`version:${versions[0]}`],
-    //   },
-    // },
+    algolia: {
+      apiKey: '6943271737537e235c3761fcce4f5a2f',
+      indexName: 'apollo-angular',
+      searchParameters: {
+        facetFilters: [`version:${versions[0]}`],
+      },
+    },
   },
   scripts: ['https://the-guild.dev/static/banner.js'],
   stylesheets: [
