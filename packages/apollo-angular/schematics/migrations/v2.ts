@@ -173,6 +173,37 @@ export async function migrateImports(tree: Tree) {
       }
     }
 
+    function redirectDefaultImport({
+      identifier,
+      source,
+      target,
+      modulePath,
+      statement,
+      recorder,
+    }: {
+      identifier: string;
+      source: string;
+      target: string;
+      modulePath: string;
+      statement: any;
+      recorder: UpdateRecorder;
+    }) {
+      if (modulePath === source && statement.importClause.name) {
+        if (!importsMap[target]) {
+          importsMap[target] = [];
+        }
+
+        const alias = statement.importClause.name.escapedText.toString();
+
+        importsMap[target].push({
+          name: identifier,
+          alias: alias !== identifier ? alias : undefined,
+        });
+
+        recorder.remove(statement.getStart(), statement.getWidth());
+      }
+    }
+
     const sourceFile = ts.createSourceFile(
       path,
       tree.read(path).toString(),
@@ -312,20 +343,23 @@ export async function migrateImports(tree: Tree) {
           modulePath,
         });
 
-        if (modulePath === 'graphql-tag') {
-          if (!importsMap['apollo-angular']) {
-            importsMap['apollo-angular'] = [];
-          }
+        redirectDefaultImport({
+          identifier: 'ApolloClient',
+          source: 'apollo-client',
+          target: '@apollo/client/core',
+          recorder,
+          statement,
+          modulePath,
+        });
 
-          const alias = statement.importClause.name.escapedText.toString();
-
-          importsMap['apollo-angular'].push({
-            name: 'gql',
-            alias: alias !== 'gql' ? alias : undefined,
-          });
-
-          recorder.remove(statement.getStart(), statement.getWidth());
-        }
+        redirectDefaultImport({
+          identifier: 'gql',
+          source: 'graphql-tag',
+          target: 'apollo-angular',
+          recorder,
+          statement,
+          modulePath,
+        });
       }
     });
 
@@ -333,6 +367,13 @@ export async function migrateImports(tree: Tree) {
 
     importSources.forEach((importSource) => {
       const props = importsMap[importSource]
+        .filter((im, i, all) => {
+          if (im.alias) {
+            return all.findIndex((f) => f.alias === im.alias) === i;
+          }
+
+          return all.findIndex((f) => f.name === im.name) === i;
+        })
         .map((im) => (im.alias ? `${im.name} as ${im.alias}` : im.name))
         .join(', ');
       recorder.insertLeft(

@@ -80,6 +80,21 @@ describe('Migration: Apollo Angular V2', () => {
     );
   });
 
+  test('should migrate apollo-client default export', async () => {
+    appTree.create(
+      'file.ts',
+      `
+        import ApolloClient from 'apollo-client';
+      `,
+    );
+    const tree = await runner
+      .runSchematicAsync(migrationName, {}, appTree)
+      .toPromise();
+    const file = tree.readContent('file.ts').trim();
+
+    expect(file).toContain(`import {ApolloClient} from '@apollo/client/core';`);
+  });
+
   test('should update imports without leaking to other files', async () => {
     appTree.create(
       'file1.ts',
