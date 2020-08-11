@@ -163,7 +163,7 @@ import {HttpLink} from 'apollo-angular/http';
           operation.setContext({
             headers: new HttpHeaders().set(
               'Authorization',
-              localStorage.getItem('token') || null,
+              `Bearer ${localStorage.getItem('token') || null}`,
             ),
           });
           return forward(operation);
