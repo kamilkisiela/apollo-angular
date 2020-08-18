@@ -17,7 +17,7 @@ export default function (): Rule {
 function migrateDependencies() {
   return (tree: Tree, context: SchematicContext) => {
     const packageJsonPath = 'package.json';
-    const packageJson = getJsonFile(tree, packageJsonPath, true);
+    const packageJson = getJsonFile(tree, packageJsonPath);
 
     packageJson.dependencies = packageJson.dependencies || {};
 

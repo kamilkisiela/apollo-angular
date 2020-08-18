@@ -25,7 +25,10 @@ describe('ng-add', () => {
     const packageJsonPath = '/package.json';
     expect(tree.files).toContain(packageJsonPath);
 
-    const packageJson = parseJSON(getFileContent(tree, packageJsonPath));
+    const packageJson = parseJSON(
+      packageJsonPath,
+      getFileContent(tree, packageJsonPath),
+    );
     const {dependencies} = packageJson;
 
     for (const dependency in dependenciesMap) {
@@ -77,7 +80,10 @@ describe('ng-add', () => {
       .runSchematicAsync('ng-add', {}, appTree)
       .toPromise();
     const rootModulePath = '/tsconfig.base.json';
-    const config = parseJSON(getFileContent(tree, rootModulePath));
+    const config = parseJSON(
+      rootModulePath,
+      getFileContent(tree, rootModulePath),
+    );
     const compilerOptions: CompilerOptions = config.compilerOptions;
 
     expect(compilerOptions.lib).toContain('esnext.asynciterable');
