@@ -3,6 +3,7 @@
 ### vNext
 
 - Fix v2 migration: default export (`ApolloClient`) of `apollo-client`
+- Use TypeScript to parse JSON files (supports comments in JSON)
 
 ### v2.0.3
 
