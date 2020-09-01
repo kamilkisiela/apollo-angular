@@ -132,6 +132,7 @@ describe('Migration: Apollo Angular V2', () => {
       .toPromise();
     const rootModulePath = '/tsconfig.base.json';
     const compilerOptions: CompilerOptions = parseJSON(
+      rootModulePath,
       getFileContent(tree, rootModulePath),
     ).compilerOptions;
 
@@ -140,6 +141,7 @@ describe('Migration: Apollo Angular V2', () => {
 
   test('should update package.json', async () => {
     const oldPackageJson = parseJSON(
+      'package.json',
       appTree.read('package.json').toString('utf-8'),
     );
 
@@ -160,7 +162,10 @@ describe('Migration: Apollo Angular V2', () => {
       .runSchematicAsync(migrationName, {}, appTree)
       .toPromise();
 
-    const packageJson = parseJSON(tree.readContent('package.json'));
+    const packageJson = parseJSON(
+      'package.json',
+      tree.readContent('package.json'),
+    );
 
     expect(packageJson.dependencies['apollo-angular']).toEqual(
       dependenciesMap['apollo-angular'],
