@@ -80,6 +80,38 @@ describe('Migration: Apollo Angular V2', () => {
     );
   });
 
+  test('should keep existing imports', async () => {
+    appTree.create(
+      'file.ts',
+      `
+      import { Injectable } from '@angular/core'
+      import { Observable, empty } from 'rxjs'
+      import { map, catchError } from 'rxjs/operators'
+      import { Apollo, ApolloBase } from 'apollo-angular'
+      import { ApolloError } from '@apollo/client/core'
+      import { HttpLink } from 'apollo-angular-link-http'
+    `,
+    );
+    const tree = await runner
+      .runSchematicAsync(migrationName, {}, appTree)
+      .toPromise();
+
+    const file = tree.readContent('file.ts').trim();
+
+    expect(file).toMatch(/^\s*import { Injectable } from '@angular\/core'/m);
+    expect(file).toMatch(/^\s*import { Observable, empty } from 'rxjs'/m);
+    expect(file).toMatch(
+      /^\s*import { map, catchError } from 'rxjs\/operators'/m,
+    );
+    expect(file).toMatch(
+      /^\s*import {Apollo, ApolloBase} from 'apollo-angular'/m,
+    );
+    expect(file).toMatch(/^\s*import {HttpLink} from 'apollo-angular\/http'/m);
+    expect(file).toMatch(
+      /^\s*import { ApolloError } from '@apollo\/client\/core'/m,
+    );
+  });
+
   test('should migrate apollo-client default export', async () => {
     appTree.create(
       'file.ts',
