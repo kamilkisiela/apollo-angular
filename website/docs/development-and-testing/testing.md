@@ -293,7 +293,7 @@ beforeEach(() => {
     imports: [ApolloTestingModule],
     providers: [
       {
-        provide: APOLLO_TESTING_CACHE,
+        provide: APOLLO_TESTING_NAMED_CACHE,
         useValue: {
           clientA: {
             addTypename: true,
