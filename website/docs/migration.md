@@ -8,9 +8,7 @@ import TabItem from '@theme/TabItem';
 
 - Apollo Client is now distributed as the `@apollo/client` package (previous versions are distributed as `apollo-client`).
 - The `@apollo/client` package includes both core logic and GraphQL request handling, which previously required installing separate packages.
-- The `@apollo/client` includes React-specific code so it's very important to use `@apollo/client/core` instead.
-- The `@apollo/client` includes React-specific code so it's very very important to use `@apollo/client/core` instead.
-- The `@apollo/client` includes React-specific code so it's very very very important to use `@apollo/client/core` instead.
+- ‼️ The `@apollo/client` includes React-specific code so it's very important to use `@apollo/client/core` instead.
 - Apollo's cache (`InMemoryCache`) is more flexible and performant. It now supports garbage collection, storage of both normalized and non-normalized data, and the customization of cached data with new `TypePolicy` and `FieldPolicy` APIs.
 - No more `NgModules`.
 - The `apollo-angular` includes now GraphQL request handling (`apollo-angular/http`), which previously required installing separate packages.
