@@ -53,20 +53,26 @@ import { setContext } from '@apollo/client/link/context';
 
 const uri = '/graphql';
 
-export function provideApollo(httpLink: HttpLink) {
+export function createApollo(httpLink: HttpLink) {
   const basic = setContext((operation, context) => ({
     headers: {
       Accept: 'charset=utf-8'
     }
   }));
 
-  // Get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
-  const auth = setContext((operation, context) => ({
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
-  }));
+  const auth = setContext((operation, context) => {
+    const token = localStorage.getItem('token');
+
+    if (token === null) {
+      return {};
+    } else {
+      return {
+        headers: {
+          Authorization: `JWT ${token}`
+        }
+      };
+    }
+  });
 
   const link = ApolloLink.from([basic, auth, httpLink.create({ uri })]);
   const cache = new InMemoryCache();
@@ -83,7 +89,7 @@ export function provideApollo(httpLink: HttpLink) {
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
-    useFactory: provideApollo,
+    useFactory: createApollo,
     deps: [HttpLink]
   }]
 })
