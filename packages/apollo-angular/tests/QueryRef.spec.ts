@@ -166,6 +166,33 @@ describe('QueryRef', () => {
     expect(mockCallback.mock.calls.length).toBe(1);
   });
 
+  test('should be able to call getCurrentResult() and get updated results', (done) => {
+    let calls = 0;
+    const obs = queryRef.valueChanges;
+
+    obs.pipe(map((result: any) => result.data)).subscribe({
+      next: (result: any) => {
+        calls++;
+        const currentResult = queryRef.getCurrentResult();
+        expect(currentResult.data.heroes.length).toBe(result.heroes.length);
+
+        if (calls === 2) {
+          done();
+        }
+      },
+      error: (e: any) => {
+        done.fail(e);
+      },
+      complete: () => {
+        done.fail('Should not be here');
+      },
+    });
+
+    setTimeout(() => {
+      queryRef.refetch();
+    }, 200);
+  });
+
   test('should be able to call getLastResult()', () => {
     const mockCallback = jest.fn();
     obsQuery.getLastResult = mockCallback.mockReturnValue('expected');
