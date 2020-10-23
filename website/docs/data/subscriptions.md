@@ -64,7 +64,7 @@ Let's look at how to add support for this transport to Apollo Client.
 import {WebSocketLink} from '@apollo/client/link/ws';
 
 const wsClient = new WebSocketLink({
-  uri: `ws://localhost:5000/`,
+  uri: `ws://localhost:5000/graphql`,
   options: {
     reconnect: true,
   },
@@ -241,7 +241,7 @@ In many cases it is necessary to authenticate clients before allowing them to re
 import {WebSocketLink} from 'apollo-link-ws';
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:5000/`,
+  uri: `ws://localhost:5000/graphql`,
   options: {
     reconnect: true,
     connectionParams: {
