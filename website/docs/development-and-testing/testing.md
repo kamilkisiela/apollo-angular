@@ -87,7 +87,7 @@ import {
 } from 'apollo-angular/testing';
 
 describe('DogComponent', () => {
-  controller: ApolloTestingController;
+  let controller: ApolloTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -201,7 +201,7 @@ import {
 } from 'apollo-angular/testing';
 
 describe('DogComponent', () => {
-  controller: ApolloTestingController;
+  let controller: ApolloTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
