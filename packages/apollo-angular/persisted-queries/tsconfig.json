@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "outDir": "../build/persisted-queries",
+    "paths": {
+      "apollo-angular": ["../"]
+    }
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
+}

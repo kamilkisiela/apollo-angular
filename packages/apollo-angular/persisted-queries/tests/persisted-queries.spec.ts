@@ -1,6 +1,10 @@
-import {ApolloLink, execute, Observable, Operation} from 'apollo-link';
-
-import gql from 'graphql-tag';
+import {
+  gql,
+  ApolloLink,
+  execute,
+  Observable,
+  Operation,
+} from '@apollo/client/core';
 
 import {createPersistedQueryLink} from '../src';
 
@@ -25,9 +29,8 @@ class MockLink extends ApolloLink {
       : data;
   }
 
-  // imitate apollo-angular-link-http
   public request(operation: Operation) {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       const request: any = {};
 
       if (operation.getContext().includeQuery) {
@@ -48,7 +51,9 @@ describe('createPersistedQueryLink', () => {
     const execLink = new MockLink();
     const spyRequest = jest.spyOn(execLink, 'request').mock;
     const spyRequester = jest.spyOn(execLink, 'requester').mock;
-    const link = createPersistedQueryLink().concat(execLink);
+    const link = createPersistedQueryLink({
+      sha256: () => 'soooo-unique',
+    }).concat(execLink);
 
     execute(link, {
       query,
@@ -83,6 +88,7 @@ describe('createPersistedQueryLink', () => {
     const spyRequest = jest.spyOn(execLink, 'request').mock;
     const link = createPersistedQueryLink({
       useGETForHashedQueries: true,
+      sha256: () => 'sha256',
     }).concat(execLink);
 
     execute(link, {

@@ -1,6 +1,5 @@
 import {NgZone} from '@angular/core';
 import {
-  ApolloCurrentQueryResult,
   ApolloQueryResult,
   ObservableQuery,
   ApolloError,
@@ -31,7 +30,7 @@ export class QueryRef<T, V = EmptyObject> {
     this.valueChanges = options.useInitialLoading
       ? wrapped.pipe(
           startWith({
-            ...this.obsQuery.getCurrentResult(),
+            ...this.obsQuery.getCurrentResult(false),
             error: undefined,
             partial: undefined,
             stale: true,
@@ -47,7 +46,7 @@ export class QueryRef<T, V = EmptyObject> {
     return this.obsQuery.result();
   }
 
-  public getCurrentResult(): ApolloCurrentQueryResult<T> {
+  public getCurrentResult(): ApolloQueryResult<T> {
     return this.obsQuery.getCurrentResult();
   }
 

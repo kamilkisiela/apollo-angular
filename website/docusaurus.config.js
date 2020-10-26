@@ -22,7 +22,7 @@ module.exports = {
       defaultMode: 'light',
       disableSwitch: true,
     },
-    sidebarCollapsible: true,
+    hideableSidebar: true,
     image: 'img/cover.png',
     announcementBar: {
       id: 'supportus',
@@ -41,7 +41,6 @@ module.exports = {
         {
           type: 'docsVersionDropdown',
           position: 'left',
-          nextVersionLabel: '2.0.0-next',
         },
         {
           to: 'docs',
@@ -171,6 +170,7 @@ module.exports = {
     [
       require.resolve('@docusaurus/preset-classic'),
       {
+        debug: true,
         docs: {
           path: 'docs',
           homePageId: 'index',
@@ -178,6 +178,12 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/kamilkisiela/apollo-angular/edit/master/website/',
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: `v2`,
+            },
+          },
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

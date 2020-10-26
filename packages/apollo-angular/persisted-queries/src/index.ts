@@ -1,16 +1,8 @@
-import {DocumentNode} from 'graphql';
-import {ApolloLink} from '@apollo/client/core';
+import {ApolloLink} from '@apollo/client/link/core';
 import {setContext} from '@apollo/client/link/context';
-import {
-  createPersistedQueryLink as _createPersistedQueryLink,
-  ErrorResponse,
-} from 'apollo-link-persisted-queries';
+import {createPersistedQueryLink as _createPersistedQueryLink} from '@apollo/client/link/persisted-queries';
 
-export interface Options {
-  generateHash?: ((document: DocumentNode) => string);
-  disable?: ((error: ErrorResponse) => boolean);
-  useGETForHashedQueries?: boolean;
-}
+export type Options = Parameters<typeof _createPersistedQueryLink>[0];
 
 const transformLink = setContext((_, context) => {
   const ctx: any = {};
@@ -28,5 +20,4 @@ const transformLink = setContext((_, context) => {
 });
 
 export const createPersistedQueryLink = (options?: Options) =>
-  // XXX: `as any` because the original package has different version of ApolloLink
   ApolloLink.from([_createPersistedQueryLink(options), transformLink as any]);

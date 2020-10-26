@@ -3,8 +3,7 @@ import {setupAngular} from './_setup';
 import {TestBed, inject} from '@angular/core/testing';
 import {HttpClientModule} from '@angular/common/http';
 import {InMemoryCache} from '@apollo/client/core';
-
-import {mockSingleLink} from './mocks/mockLinks';
+import {mockSingleLink} from '@apollo/client/testing';
 
 import {Apollo, APOLLO_OPTIONS} from '../src';
 
