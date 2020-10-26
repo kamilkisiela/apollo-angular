@@ -1,0 +1,15 @@
+{
+  "name": "apollo-angular/persisted-queries",
+  "description": "Use persisted queries with Apollo Link",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela/"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "../build/persisted-queries/bundle.umd.js",
+  "module": "../build/persisted-queries/src/index.js",
+  "jsnext:main": "../build/persisted-queries/src/index.js",
+  "typings": "../build/persisted-queries/src/index.d.ts"
+}
