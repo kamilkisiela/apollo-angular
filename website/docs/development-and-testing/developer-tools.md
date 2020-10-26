@@ -5,16 +5,6 @@ description: Improve your developer experience with these these services and ext
 
 Thank you to our amazing community members who have created tools and packages around Apollo Angular! If you’ve built something and would like it to be featured, please send a pull request to add it to the list.
 
-## Persisted Queries
-
-An Apollo Link that allows to use [Automatic Persisted Queries](https://blog.apollographql.com/improve-graphql-performance-with-automatic-persisted-queries-c31d27b8e6ea) with `apollo-angular/http`.
-
-[Read documentation](https://www.npmjs.com/package/apollo-angular-link-persisted)
-
-```bash
-yarn add apollo-angular-link-persisted
-```
-
 ## Code generation
 
 A tool to generate a ready to use in your component, strongly typed Angular services, for every defined query, mutation or subscription.

@@ -36,6 +36,7 @@ module.exports = {
     ],
     Recipes: [
       'recipes/simple-example',
+      'recipes/automatic-persisted-queries',
       'recipes/angular-cli',
       'recipes/webpack',
       'recipes/authentication',
