@@ -51,7 +51,9 @@ describe('createPersistedQueryLink', () => {
     const execLink = new MockLink();
     const spyRequest = jest.spyOn(execLink, 'request').mock;
     const spyRequester = jest.spyOn(execLink, 'requester').mock;
-    const link = createPersistedQueryLink().concat(execLink);
+    const link = createPersistedQueryLink({
+      sha256: () => 'soooo-unique',
+    }).concat(execLink);
 
     execute(link, {
       query,
@@ -86,6 +88,7 @@ describe('createPersistedQueryLink', () => {
     const spyRequest = jest.spyOn(execLink, 'request').mock;
     const link = createPersistedQueryLink({
       useGETForHashedQueries: true,
+      sha256: () => 'sha256',
     }).concat(execLink);
 
     execute(link, {

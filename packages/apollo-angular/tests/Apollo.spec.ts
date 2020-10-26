@@ -10,10 +10,10 @@ import {
   NetworkStatus,
   gql,
 } from '@apollo/client/core';
+import {mockSingleLink} from '@apollo/client/testing';
 
 import {Apollo, ApolloBase} from '../src/apollo';
 import {ZoneScheduler} from '../src/utils';
-import {mockSingleLink} from './mocks/mockLinks';
 
 function mockApollo(link: ApolloLink, _ngZone: NgZone) {
   const apollo = new Apollo(_ngZone);
@@ -686,21 +686,17 @@ describe('Apollo', () => {
     }),
   ));
 
-  test('should useInitialLoading', async (done) => {
+  test.only('should useInitialLoading', async (done) => {
     expect.assertions(3);
     const apollo = testBed.inject(Apollo);
-    const op = {
-      query: gql`
-        query heroes {
-          heroes {
-            name
-            __typename
-          }
+    const query = gql`
+      query heroes {
+        heroes {
+          name
+          __typename
         }
-      `,
-      variables: {},
-      useInitialLoading: true,
-    };
+      }
+    `;
     const data = {
       heroes: [
         {
@@ -714,26 +710,31 @@ describe('Apollo', () => {
 
     // create
     apollo.create<any>({
-      link: mockSingleLink({request: op, result: {data}}),
+      link: mockSingleLink({request: {query}, result: {data}}),
       cache: new InMemoryCache(),
     });
 
     // query
-    apollo.watchQuery<any>(op).valueChanges.subscribe({
-      next: (result) => {
-        if (alreadyCalled) {
-          expect(result.data).toMatchObject(data);
-          done();
-        } else {
-          expect(result.loading).toBe(true);
-          expect(result.networkStatus).toBe(NetworkStatus.loading);
-          alreadyCalled = true;
-        }
-      },
-      error: (e) => {
-        done.fail(e);
-      },
-    });
+    apollo
+      .watchQuery<any>({
+        query,
+        useInitialLoading: true,
+      })
+      .valueChanges.subscribe({
+        next: (result) => {
+          if (alreadyCalled) {
+            expect(result.data).toMatchObject(data);
+            done();
+          } else {
+            expect(result.loading).toBe(true);
+            expect(result.networkStatus).toBe(NetworkStatus.loading);
+            alreadyCalled = true;
+          }
+        },
+        error: (e) => {
+          done.fail(e);
+        },
+      });
   });
 
   test('should remove default client', () => {

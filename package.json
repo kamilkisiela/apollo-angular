@@ -20,6 +20,7 @@
     "lerna": "3.22.1",
     "lint-staged": "10.2.11",
     "prettier": "2.0.5",
+    "react": "17.0.1",
     "rimraf": "3.0.2",
     "shelljs": "0.8.4",
     "typescript": "3.9.7"

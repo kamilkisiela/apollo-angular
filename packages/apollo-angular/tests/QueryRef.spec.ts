@@ -10,9 +10,9 @@ import {
 } from '@apollo/client/core';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
+import {mockSingleLink} from '@apollo/client/testing';
 
 import {QueryRef} from '../src/query-ref';
-import {mockSingleLink} from './mocks/mockLinks';
 
 const createClient = (link: ApolloLink) =>
   new ApolloClient({
