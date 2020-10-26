@@ -15,11 +15,12 @@ npm install apollo-angular --save
 ```typescript
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
-import { Apollo } from 'apollo-angular';
+import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 
 @NgModule({
   imports: [
+    ApolloModule,
     NativeScriptModule,
     NativeScriptHttpClientModule, // this provides HttpClient
   ]

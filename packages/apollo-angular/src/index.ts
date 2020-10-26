@@ -1,3 +1,4 @@
+export {ApolloModule} from './apollo-module';
 export {Apollo, ApolloBase} from './apollo';
 export {QueryRef} from './query-ref';
 export {Query} from './query';

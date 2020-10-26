@@ -10,7 +10,6 @@ import TabItem from '@theme/TabItem';
 - The `@apollo/client` package includes both core logic and GraphQL request handling, which previously required installing separate packages.
 - ‼️ The `@apollo/client` includes React-specific code so it's very important to use `@apollo/client/core` instead.
 - Apollo's cache (`InMemoryCache`) is more flexible and performant. It now supports garbage collection, storage of both normalized and non-normalized data, and the customization of cached data with new `TypePolicy` and `FieldPolicy` APIs.
-- No more `NgModules`.
 - The `apollo-angular` includes now GraphQL request handling (`apollo-angular/http`), which previously required installing separate packages.
 - New Apollo Angular no longer supports the `SelectPipe`.
 
@@ -20,7 +19,7 @@ Apollo Angular comes with set of migration schematics:
 
     ng update apollo-angular
 
-> Important! Migration doesn't cover all use-cases and NgModules like `ApolloModule` or `HttpLinkModule` have to be deleted manually. To improve the migration script, please open issues and PRs!
+> Important! Migration doesn't cover all use-cases and NgModules like `HttpLinkModule` have to be deleted manually. To improve the migration script, please open issues and PRs!
 
 ## Installation
 
@@ -153,8 +152,7 @@ class AppModule {}
 ```diff language="typescript"
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
--import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 -import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
 +import {HttpLink} from 'apollo-angular/http';
 -import {InMemoryCache} from 'apollo-cache-inmemory';
@@ -165,8 +163,8 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     // ... other modules
     HttpClientModule,
+    ApolloModule,
 -   HttpLinkModule,
--   ApolloModule,
   ],
   providers: [
     {
@@ -192,7 +190,7 @@ class AppModule {}
 What's different?
 
 - `apollo-angular-link-http` and `apollo-angular-link-http-batch` are now available under `apollo-angular/http`
-- No `ApolloModule` and `HttpLinkModule`
+- No `HttpLinkModule`
 - `apollo-client`, `apollo-link` and `apollo-cache-inmemory` are now under `@apollo/client/core`
 - Use `@apollo/client/core` instead of `@apollo/client` because the latter includes React-related code.
 
@@ -202,7 +200,7 @@ Few things to be explained.
 
 ### No SelectPipe
 
-Dropping `SelectPipe` allowed us to completely remove the need for `ApolloModule` (`NgModule`). There are two reasons. We haven't seen any big applications using the pipe and the logic there is very simple to recreate.
+There are two reasons behind dropping `SelectPipe`. We haven't seen any big applications using the pipe and the logic there is very simple to recreate.
 
 ```typescript
 import {Pipe, PipeTransform} from '@angular/core';
@@ -219,12 +217,6 @@ export class SelectPipe implements PipeTransform {
 }
 ```
 
-### No NgModules
-
-Because we removed the `SelectPipe`, there was no need to keep the `ApolloModule` anymore.
-
-The `Apollo` class is now defined as a tree-shakable injectable and provided to the root injector. You can use it from anywhere in the application.
-
 ### HttpLink and HttpBatchLink
 
 The previous version of Apollo Angular (v1.0) setup had two extra packages: `apollo-angular-link-http` and `apollo-angular-link-http-batch`.
@@ -235,6 +227,7 @@ Now it's just one: `apollo-angular/http`.
 
 The separate `apollo-link-*` packages, that were previously maintained in the https://github.com/apollographql/apollo-link repo, have been merged into the Apollo Client project. These links now have their own nested `@apollo/client/link/*` entry points. Imports should be updated as follows:
 
+- `apollo-angular-link-persisted` is now `apollo-angular/persisted-queries`
 - `apollo-link-context` is now `@apollo/client/link/context`
 - `apollo-link-error` is now `@apollo/client/link/error`
 - `apollo-link-retry` is now `@apollo/client/link/retry`

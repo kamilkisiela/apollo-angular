@@ -29,6 +29,7 @@ const resolvers = {
 };
 
 @NgModule({
+  import: [ApolloModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,

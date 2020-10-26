@@ -16,10 +16,11 @@ As of Apollo Client 3.0, the `InMemoryCache` class is provided by the `@apollo/c
 Create an `InMemoryCache` object and provide it to the `APOLLO_OPTIONS` token, like so:
 
 ```typescript
-import {APOLLO_OPTIONS} from 'apollo-angular';
+import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {InMemoryCache} from '@apollo/client/core';
 
 @NgModule({
+  imports: [ApolloModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,

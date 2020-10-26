@@ -15,9 +15,10 @@ Why not `@apollo/client/link/http`? You get SSR for free, ability to use Http In
 
 ```typescript
 import {HttpLink} from 'apollo-angular/http';
-import {APOLLO_OPTIONS} from 'apollo-angular';
+import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 
 @NgModule({
+  imports: [ApolloModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
@@ -112,7 +113,7 @@ apollo.query({
 
 ```typescript
 @NgModules({
-  imports: [HttpClientModule],
+  imports: [ApolloModule, HttpClientModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
@@ -153,7 +154,7 @@ import {ApolloLink} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
 
 @NgModules({
-  imports: [HttpClientModule],
+  imports: [ApolloModule, HttpClientModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
@@ -193,7 +194,7 @@ import {onError} from '@apollo/client/link/error';
 import {Auth} from './auth.service';
 
 @NgModules({
-  imports: [HttpClientModule],
+  imports: [ApolloModule, HttpClientModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
@@ -229,6 +230,7 @@ An Apollo Link to combine multiple GraphQL operations into single HTTP request.
 import {HttpBatchLink} from 'apollo-angular/http';
 
 @NgModule({
+  imports: [ApolloModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,

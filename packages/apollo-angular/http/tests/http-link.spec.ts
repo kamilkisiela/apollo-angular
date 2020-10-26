@@ -6,7 +6,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import {Apollo} from 'apollo-angular';
+import {ApolloModule, Apollo} from 'apollo-angular';
 import {execute, ApolloLink, InMemoryCache, gql} from '@apollo/client/core';
 import {mergeMap} from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ describe('HttpLink', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
+      imports: [ApolloModule, HttpClientModule, HttpClientTestingModule],
       providers: [HttpLink],
     });
   });
