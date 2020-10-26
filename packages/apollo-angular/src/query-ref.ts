@@ -1,6 +1,5 @@
 import {NgZone} from '@angular/core';
 import {
-  ApolloCurrentQueryResult,
   ApolloQueryResult,
   ObservableQuery,
   ApolloError,
@@ -47,7 +46,7 @@ export class QueryRef<T, V = EmptyObject> {
     return this.obsQuery.result();
   }
 
-  public getCurrentResult(): ApolloCurrentQueryResult<T> {
+  public getCurrentResult(): ApolloQueryResult<T> {
     return this.obsQuery.getCurrentResult();
   }
 
