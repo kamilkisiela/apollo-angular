@@ -2,6 +2,10 @@
 
 ### vNext
 
+- Move `apollo-angular-link-persisted` to `apollo-angular/persisted-queries` (support Apollo Client 3.0)
+
+### v2.0.4
+
 - Fix v2 migration: default export (`ApolloClient`) of `apollo-client`
 - Use TypeScript to parse JSON files (supports comments in JSON)
 
