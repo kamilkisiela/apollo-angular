@@ -45,12 +45,13 @@ export class AppModule {}
 
 The two additional options you can pass to the constructor of `ApolloClient` are:
 
-<dl>
-  <dt>[`resolvers`](#resolvers.html): Resolvers | Resolvers[];</dt>
-  <dd>A map of functions that your GraphQL queries and mutations call in order to read and write to the cache</dd>
-  <dt>[`typeDefs`](#schema.html): string | string[] | DocumentNode | DocumentNode[]</dt>
-  <dd>A string representing your client-side schema written in [Schema Definition Language](https://www.graphql-tools.com/docs/generate-schema). This schema is not used for validation (yet!), but is used for introspection in Apollo DevTools</dd>
-</dl>
+[`resolvers`](#resolvers.html): `Resolvers` | `Resolvers[]`;
+
+- A map of functions that your GraphQL queries and mutations call in order to read and write to the cache
+
+[`typeDefs`](#schema.html): `string` | `string[]` | `DocumentNode` | `DocumentNode[]`
+
+- A string representing your client-side schema written in [Schema Definition Language](/docs/graphql-tools/generate-schema.html#schema-language). This schema is not used for validation (yet!), but is used for introspection in Apollo DevTools
 
 None of these options are required. If you don't specify anything, you will still be able to use the `@client` directive to query the cache.
 
@@ -318,6 +319,8 @@ const typeDefs = `
 ```
 
 If you open up Apollo DevTools and click on the `GraphiQL` tab, you'll be able to explore your client schema in the "Docs" section. This app doesn't have a remote schema, but if it did, you would be able to see your local queries and mutations alongside your remote ones. That's the cool part about Apollo Client - it enables you to use GraphQL as a single, unified interface for all of your app's data.
+
+![GraphiQL Console](../../../static/img/devtools/apollo-client-devtools/apollo-devtools-graphiql.png)
 
 ## Combining local and remote data
 
