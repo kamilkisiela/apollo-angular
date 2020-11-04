@@ -51,7 +51,7 @@ The two additional options you can pass to the constructor of `ApolloClient` are
 
 [`typeDefs`](#schema.html): `string` | `string[]` | `DocumentNode` | `DocumentNode[]`
 
-- A string representing your client-side schema written in [Schema Definition Language](/docs/graphql-tools/generate-schema.html#schema-language). This schema is not used for validation (yet!), but is used for introspection in Apollo DevTools
+- A string representing your client-side schema written in [Schema Definition Language](https://www.graphql-tools.com/docs/introduction/#schema-language). This schema is not used for validation (yet!), but is used for introspection in Apollo DevTools
 
 None of these options are required. If you don't specify anything, you will still be able to use the `@client` directive to query the cache.
 
