@@ -132,3 +132,32 @@ export function prioritize<T>(...values: T[]): T {
 
   return picked;
 }
+
+export function createHeadersWithClientAwereness(context: Record<string, any>) {
+  // `apollographql-client-*` headers are automatically set if a
+  // `clientAwareness` object is found in the context. These headers are
+  // set first, followed by the rest of the headers pulled from
+  // `context.headers`.
+  let headers =
+    context.headers && context.headers instanceof HttpHeaders
+      ? context.headers
+      : new HttpHeaders(context.headers);
+
+  if (context.clientAwareness) {
+    const {name, version} = context.clientAwareness;
+
+    // If desired, `apollographql-client-*` headers set by
+    // the `clientAwareness` object can be overridden by
+    // `apollographql-client-*` headers set in `context.headers`.
+
+    if (name && !headers.has('apollographql-client-name')) {
+      headers = headers.set('apollographql-client-name', name);
+    }
+
+    if (version && !headers.has('apollographql-client-version')) {
+      headers = headers.set('apollographql-client-version', version);
+    }
+  }
+
+  return headers;
+}

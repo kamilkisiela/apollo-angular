@@ -3,6 +3,7 @@
 ### vNext
 
 - Move `apollo-angular-link-persisted` to `apollo-angular/persisted-queries` (support Apollo Client 3.0)
+- Support `clientAwareness` (`apollographql-client-name` and `apollographql-client-version` headers) in `HttpLink` and `HttpBatchLink`
 
 ### v2.0.4
 
