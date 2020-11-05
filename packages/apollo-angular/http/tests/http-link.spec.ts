@@ -329,6 +329,40 @@ describe('HttpLink', () => {
     });
   });
 
+  test('should use clientAwareness from context in headers', () => {
+    const link = httpLink.create({
+      uri: 'graphql',
+    });
+    const clientAwareness = {
+      name: 'iOS',
+      version: '1.0.0',
+    };
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      context: {
+        clientAwareness,
+      },
+    };
+
+    execute(link, op).subscribe(noop);
+
+    httpBackend.match((req) => {
+      expect(req.headers.get('apollographql-client-name')).toBe(
+        clientAwareness.name,
+      );
+      expect(req.headers.get('apollographql-client-version')).toBe(
+        clientAwareness.version,
+      );
+      return true;
+    });
+  });
+
   test('should merge headers from context and contructor options', () => {
     const link = httpLink.create({
       uri: 'graphql',

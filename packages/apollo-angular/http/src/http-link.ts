@@ -9,7 +9,12 @@ import {
 import {print} from 'graphql';
 import {extractFiles} from 'extract-files';
 import {Options, Body, Request, Context} from './types';
-import {fetch, mergeHeaders, prioritize} from './utils';
+import {
+  createHeadersWithClientAwereness,
+  fetch,
+  mergeHeaders,
+  prioritize,
+} from './utils';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
@@ -61,12 +66,9 @@ export class HttpLinkHandler extends ApolloLink {
           (req.body as Body).query = print(operation.query);
         }
 
-        if (context.headers) {
-          req.options.headers = mergeHeaders(
-            req.options.headers,
-            context.headers,
-          );
-        }
+        const headers = createHeadersWithClientAwereness(context);
+
+        req.options.headers = mergeHeaders(req.options.headers, headers);
 
         const sub = fetch(req, this.httpClient, extractFiles).subscribe({
           next: (response) => {

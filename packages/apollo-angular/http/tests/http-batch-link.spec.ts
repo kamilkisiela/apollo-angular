@@ -347,6 +347,43 @@ describe('HttpBatchLink', () => {
     }, 50);
   });
 
+  test('should support headers from context', (done: jest.DoneCallback) => {
+    const link = httpLink.create({
+      uri: 'graphql',
+    });
+    const clientAwareness = {
+      name: 'iOS',
+      version: '1.0.0',
+    };
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      context: {
+        clientAwareness,
+      },
+    };
+
+    execute(link, op).subscribe(noop);
+
+    setTimeout(() => {
+      httpBackend.match((req) => {
+        expect(req.headers.get('apollographql-client-name')).toBe(
+          clientAwareness.name,
+        );
+        expect(req.headers.get('apollographql-client-version')).toBe(
+          clientAwareness.version,
+        );
+        done();
+        return true;
+      });
+    }, 50);
+  });
+
   test('should merge headers from context and contructor options', (done: jest.DoneCallback) => {
     const link = httpLink.create({
       uri: 'graphql',
