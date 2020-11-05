@@ -75,11 +75,11 @@ describe('ng-add', () => {
     );
   });
 
-  test('should add esnext.asynciterable to tsconfig.base.json', async () => {
+  test('should add esnext.asynciterable to tsconfig.json', async () => {
     const tree = await runner
       .runSchematicAsync('ng-add', {}, appTree)
       .toPromise();
-    const rootModulePath = '/tsconfig.base.json';
+    const rootModulePath = '/tsconfig.json';
     const config = parseJSON(
       rootModulePath,
       getFileContent(tree, rootModulePath),

@@ -158,11 +158,11 @@ describe('Migration: Apollo Angular V2', () => {
     );
   });
 
-  test('should enable allowSyntheticDefaultImports in tsconfig.base.json', async () => {
+  test('should enable allowSyntheticDefaultImports in tsconfig.json', async () => {
     const tree = await runner
       .runSchematicAsync(migrationName, {}, appTree)
       .toPromise();
-    const rootModulePath = '/tsconfig.base.json';
+    const rootModulePath = '/tsconfig.json';
     const compilerOptions: CompilerOptions = parseJSON(
       rootModulePath,
       getFileContent(tree, rootModulePath),
