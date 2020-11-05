@@ -2,19 +2,14 @@
 
 /// @ts-check
 
-const [, , packageName, packageVersion] = process.argv;
+const [, , packageVersion] = process.argv;
 const fs = require('fs');
-const globby = require('globby');
 const {resolve} = require('path');
 
-async function main() {
-  const rootPkg = readJSON(resolve(__dirname, '../package.json'));
-  const packageDirs = await globby(rootPkg.workspaces, {
-    cwd: process.cwd(),
-    onlyDirectories: true,
-  });
+const packageName = 'apollo-angular';
 
-  packageDirs.forEach(updatePkg);
+async function main() {
+  updatePkg(resolve(__dirname, '../packages/apollo-angular'));
 
   const schematics = resolve(
     process.cwd(),
@@ -37,21 +32,7 @@ function updatePkg(packageDir) {
   const filepath = resolve(packageDir, 'package.json');
   const pkg = readJSON(filepath);
 
-  if (pkg.name === packageName) {
-    pkg.version = packageVersion;
-  }
-
-  if (pkg.peerDependencies && pkg.peerDependencies[packageName]) {
-    pkg.peerDependencies[packageName] = `^${packageVersion}`;
-  }
-
-  if (pkg.dependencies && pkg.dependencies[packageName]) {
-    pkg.dependencies[packageName] = `~${packageVersion}`;
-  }
-
-  if (pkg.devDependencies && pkg.devDependencies[packageName]) {
-    pkg.devDependencies[packageName] = packageVersion;
-  }
+  pkg.version = packageVersion;
 
   writeJSON(filepath, pkg);
 }
