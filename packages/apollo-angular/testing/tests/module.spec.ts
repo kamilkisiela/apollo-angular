@@ -1,9 +1,13 @@
 import {setupAngular} from './_setup';
 import {Apollo} from 'apollo-angular';
 import {TestBed} from '@angular/core/testing';
-import {InMemoryCache, ApolloReducerConfig} from '@apollo/client/core';
+import {InMemoryCache, ApolloReducerConfig, gql} from '@apollo/client/core';
 
-import {ApolloTestingModule, APOLLO_TESTING_CACHE} from '../src';
+import {
+  ApolloTestingModule,
+  APOLLO_TESTING_CACHE,
+  ApolloTestingController,
+} from '../src';
 
 describe('ApolloTestingModule', () => {
   beforeAll(() => setupAngular());
@@ -13,8 +17,8 @@ describe('ApolloTestingModule', () => {
       imports: [ApolloTestingModule],
     });
 
-    const apollo: Apollo = TestBed.get(Apollo);
-    const cache = apollo.getClient().cache as InMemoryCache;
+    const apollo = TestBed.inject(Apollo);
+    const cache = apollo.client.cache as InMemoryCache;
     const config: ApolloReducerConfig = (cache as any).config;
 
     expect(cache).toBeInstanceOf(InMemoryCache);
@@ -34,8 +38,58 @@ describe('ApolloTestingModule', () => {
       ],
     });
 
-    const apollo: Apollo = TestBed.get(Apollo);
+    const apollo = TestBed.inject(Apollo);
 
-    expect(apollo.getClient().cache).toBe(cache);
+    expect(apollo.client.cache).toBe(cache);
+  });
+
+  test.only('should not modify test data', (done) => {
+    TestBed.configureTestingModule({
+      imports: [ApolloTestingModule],
+    });
+
+    const apollo = TestBed.inject(Apollo);
+    const backend = TestBed.inject(ApolloTestingController);
+
+    const testQuery = gql`
+      query allHeroes {
+        heroes {
+          name
+        }
+      }
+    `;
+
+    const testGqlData = {
+      data: {
+        heroes: [
+          {
+            id: '1',
+            name: 'Spiderman',
+          },
+          {
+            id: '2',
+            name: 'Batman',
+          },
+        ],
+      },
+    };
+
+    apollo
+      .query({
+        query: testQuery,
+      })
+      .subscribe((result: any) => {
+        console.log(JSON.stringify(result.data));
+        done();
+      });
+
+    console.log('before', JSON.stringify(testGqlData));
+
+    backend.expectOne('allHeroes').flush(testGqlData);
+
+    // you'll get an exception here
+    // backend.expectOne('allHeroes').flush(Object.freeze(testGqlData));
+
+    console.log('after', JSON.stringify(testGqlData));
   });
 });
