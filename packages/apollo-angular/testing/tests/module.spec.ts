@@ -43,7 +43,7 @@ describe('ApolloTestingModule', () => {
     expect(apollo.client.cache).toBe(cache);
   });
 
-  test.only('should not modify test data', (done) => {
+  test('should not modify test data', (done) => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
     });
@@ -59,18 +59,19 @@ describe('ApolloTestingModule', () => {
       }
     `;
 
+    const testData = [
+      {
+        id: '1',
+        name: 'Spiderman',
+      },
+      {
+        id: '2',
+        name: 'Batman',
+      },
+    ];
     const testGqlData = {
       data: {
-        heroes: [
-          {
-            id: '1',
-            name: 'Spiderman',
-          },
-          {
-            id: '2',
-            name: 'Batman',
-          },
-        ],
+        heroes: testData,
       },
     };
 
@@ -79,17 +80,11 @@ describe('ApolloTestingModule', () => {
         query: testQuery,
       })
       .subscribe((result: any) => {
-        console.log(JSON.stringify(result.data));
+        expect(result.data.heroes[0].name).toBe('Spiderman');
         done();
       });
 
-    console.log('before', JSON.stringify(testGqlData));
-
     backend.expectOne('allHeroes').flush(testGqlData);
-
-    // you'll get an exception here
-    // backend.expectOne('allHeroes').flush(Object.freeze(testGqlData));
-
-    console.log('after', JSON.stringify(testGqlData));
+    expect(testGqlData.data.heroes).toEqual(testData);
   });
 });

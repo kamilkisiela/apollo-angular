@@ -23,7 +23,8 @@ export class TestOperation<T = {[key: string]: any}> {
     if (isApolloError(result)) {
       this.observer.error(result);
     } else {
-      this.observer.next(result as FetchResult<T>);
+      const fetchResult = result ? {...result} : result;
+      this.observer.next(fetchResult as FetchResult<T>);
       this.observer.complete();
     }
   }
