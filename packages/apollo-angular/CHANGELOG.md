@@ -2,6 +2,8 @@
 
 ### vNext
 
+- Fixes [#1594](https://github.com/kamilkisiela/apollo-angular/issues/1594)
+
 ### v2.1.0
 
 - Move `apollo-angular-link-persisted` to `apollo-angular/persisted-queries` (support Apollo Client 3.0)
@@ -127,7 +129,7 @@ Changes:
 - Brings back Server-Side Rendering
 - Allows to type the operation variables
 
-**BREAKING CHANGES:** - [see Migration](../../Migration.md)
+**BREAKING CHANGES:** - [see Migration](https://apollo-angular.com/docs/1.0/migration)
 
 - Drops `apollo-client-rxjs` (thanks to `QueryRef`)
 - Replaces`ApolloQueryObservable` with `QueryRef`
