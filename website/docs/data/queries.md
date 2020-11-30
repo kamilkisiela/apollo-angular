@@ -197,7 +197,7 @@ class FeedComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.data = this.apollo
+    this.posts = this.apollo
       .watchQuery({query: GET_FEED})
       .valueChanges.pipe(map((result) => result.data.posts));
   }
