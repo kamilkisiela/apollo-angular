@@ -233,7 +233,7 @@ test('expect to call clientA', () => {
   const op = controller.expectOne(GET_DOG_QUERY);
 
   // Check what is the name of a client that performed the query
-  expect(op.clientName).toEqual('clientA');
+  expect(op.operation.clientName).toEqual('clientA');
 
   // Respond with mock data, causing Observable to resolve.
   op.flush({
@@ -293,7 +293,7 @@ beforeEach(() => {
     imports: [ApolloTestingModule],
     providers: [
       {
-        provide: APOLLO_TESTING_CACHE,
+        provide: APOLLO_TESTING_NAMED_CACHE,
         useValue: {
           clientA: {
             addTypename: true,

@@ -32,7 +32,7 @@ Whenever the value of a reactive variable changes, Apollo Client automatically d
 
 # Local resolvers (deprecated)
 
-n earlier versions of Apollo Client, you define local resolvers to populate and modify local-only fields. These resolvers are similar in structure and purpose to the resolvers that your GraphQL server defines.
+In earlier versions of Apollo Client, you define local resolvers to populate and modify local-only fields. These resolvers are similar in structure and purpose to the resolvers that your GraphQL server defines.
 
 This functionality is still available in Apollo Client 3, but it is deprecated.
 
