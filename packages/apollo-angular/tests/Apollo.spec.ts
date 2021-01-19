@@ -686,7 +686,7 @@ describe('Apollo', () => {
     }),
   ));
 
-  test.only('should useInitialLoading', async (done) => {
+  test('should useInitialLoading', async (done) => {
     expect.assertions(3);
     const apollo = testBed.inject(Apollo);
     const query = gql`
