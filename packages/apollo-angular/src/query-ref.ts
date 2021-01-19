@@ -7,12 +7,43 @@ import {
   FetchMoreOptions,
   SubscribeToMoreOptions,
   UpdateQueryOptions,
+  NetworkStatus,
 } from '@apollo/client/core';
 import {Observable, from} from 'rxjs';
 
 import {wrapWithZone, fixObservable} from './utils';
 import {WatchQueryOptions, EmptyObject} from './types';
-import {startWith} from 'rxjs/operators';
+
+function useInitialLoading<T, V>(obsQuery: ObservableQuery<T, V>) {
+  return function useInitialLoadingOperator<T>(
+    source: Observable<T>,
+  ): Observable<T> {
+    return new Observable(function useInitialLoadingSubscription(subscriber) {
+      const currentResult = obsQuery.getCurrentResult();
+      const {loading, errors, error, partial, data} = currentResult;
+      const {partialRefetch, fetchPolicy} = obsQuery.options;
+
+      const hasError = errors || error;
+
+      if (
+        partialRefetch &&
+        partial &&
+        (!data || Object.keys(data).length === 0) &&
+        fetchPolicy !== 'cache-only' &&
+        !loading &&
+        !hasError
+      ) {
+        subscriber.next({
+          ...currentResult,
+          loading: true,
+          networkStatus: NetworkStatus.loading,
+        } as any);
+      }
+
+      return source.subscribe(subscriber);
+    });
+  };
+}
 
 export class QueryRef<T, V = EmptyObject> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
@@ -28,14 +59,7 @@ export class QueryRef<T, V = EmptyObject> {
     const wrapped = wrapWithZone(from(fixObservable(this.obsQuery)), ngZone);
 
     this.valueChanges = options.useInitialLoading
-      ? wrapped.pipe(
-          startWith({
-            ...this.obsQuery.getCurrentResult(false),
-            error: undefined,
-            partial: undefined,
-            stale: true,
-          }),
-        )
+      ? wrapped.pipe(useInitialLoading(this.obsQuery))
       : wrapped;
     this.queryId = this.obsQuery.queryId;
   }
