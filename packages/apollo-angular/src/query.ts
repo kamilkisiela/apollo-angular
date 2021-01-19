@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DocumentNode} from 'graphql';
+import {TypedDocumentNode} from '@graphql-typed-document-node/core';
 import {ApolloQueryResult} from '@apollo/client/core';
 import {Observable} from 'rxjs';
 
@@ -9,7 +10,7 @@ import {WatchQueryOptionsAlone, QueryOptionsAlone, EmptyObject} from './types';
 
 @Injectable()
 export class Query<T = {}, V = EmptyObject> {
-  public readonly document: DocumentNode;
+  public readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
   constructor(protected apollo: Apollo) {}

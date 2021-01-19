@@ -34,7 +34,7 @@ export class ApolloBase<TCacheShape = any> {
   }
 
   public watchQuery<TData, TVariables = EmptyObject>(
-    options: WatchQueryOptions<TVariables>,
+    options: WatchQueryOptions<TVariables, TData>,
   ): QueryRef<TData, TVariables> {
     return new QueryRef<TData, TVariables>(
       this.ensureClient().watchQuery<TData, TVariables>({
@@ -49,7 +49,7 @@ export class ApolloBase<TCacheShape = any> {
   }
 
   public query<T, V = EmptyObject>(
-    options: QueryOptions<V>,
+    options: QueryOptions<V, T>,
   ): Observable<ApolloQueryResult<T>> {
     return fromPromise<ApolloQueryResult<T>>(() =>
       this.ensureClient().query<T, V>({...options}),
@@ -65,7 +65,7 @@ export class ApolloBase<TCacheShape = any> {
   }
 
   public subscribe<T, V = EmptyObject>(
-    options: SubscriptionOptions<V>,
+    options: SubscriptionOptions<V, T>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<FetchResult<T>> {
     const obs = from(
