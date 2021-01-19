@@ -22,11 +22,11 @@ export abstract class ApolloTestingController {
   public abstract match(match: MatchOperation): TestOperation[];
 
   /**
-   * Expect that a single  has been made which matches the given URL, and return its
+   * Expect that a single operation has been made which matches the given URL, and return its
    * mock.
    *
-   * If no such  has been made, or more than one such  has been made, fail with an
-   * error message including the given  description, if any.
+   * If no such operation has been made, or more than one such operation has been made, fail with an
+   * error message including the given operation description, if any.
    */
   public abstract expectOne(
     operationName: string,
@@ -34,20 +34,20 @@ export abstract class ApolloTestingController {
   ): TestOperation;
 
   /**
-   * Expect that a single  has been made which matches the given parameters, and return
+   * Expect that a single operation has been made which matches the given parameters, and return
    * its mock.
    *
-   * If no such  has been made, or more than one such  has been made, fail with an
-   * error message including the given  description, if any.
+   * If no such operation has been made, or more than one such operation has been made, fail with an
+   * error message including the given operation description, if any.
    */
   public abstract expectOne(op: Operation, description?: string): TestOperation;
 
   /**
-   * Expect that a single  has been made which matches the given predicate function, and
+   * Expect that a single operation has been made which matches the given predicate function, and
    * return its mock.
    *
-   * If no such  has been made, or more than one such  has been made, fail with an
-   * error message including the given  description, if any.
+   * If no such operation has been made, or more than one such operation has been made, fail with an
+   * error message including the given operation description, if any.
    */
   public abstract expectOne(
     matchFn: MatchOperationFn,
@@ -55,11 +55,11 @@ export abstract class ApolloTestingController {
   ): TestOperation;
 
   /**
-   * Expect that a single  has been made which matches the given condition, and return
+   * Expect that a single operation has been made which matches the given condition, and return
    * its mock.
    *
-   * If no such  has been made, or more than one such  has been made, fail with an
-   * error message including the given  description, if any.
+   * If no such operation has been made, or more than one such operation has been made, fail with an
+   * error message including the given operation description, if any.
    */
   public abstract expectOne(
     match: MatchOperation,
@@ -69,7 +69,7 @@ export abstract class ApolloTestingController {
   /**
    * Expect that no operations have been made which match the given URL.
    *
-   * If a matching  has been made, fail with an error message including the given
+   * If a matching operation has been made, fail with an error message including the given
    * description, if any.
    */
   public abstract expectNone(operationName: string, description?: string): void;
@@ -77,7 +77,7 @@ export abstract class ApolloTestingController {
   /**
    * Expect that no operations have been made which match the given parameters.
    *
-   * If a matching  has been made, fail with an error message including the given
+   * If a matching operation has been made, fail with an error message including the given
    * description, if any.
    */
   public abstract expectNone(op: Operation, description?: string): void;
@@ -85,7 +85,7 @@ export abstract class ApolloTestingController {
   /**
    * Expect that no operations have been made which match the given predicate function.
    *
-   * If a matching  has been made, fail with an error message including the given
+   * If a matching operation has been made, fail with an error message including the given
    * description, if any.
    */
   public abstract expectNone(
@@ -96,7 +96,7 @@ export abstract class ApolloTestingController {
   /**
    * Expect that no operations have been made which match the given condition.
    *
-   * If a matching  has been made, fail with an error message including the given
+   * If a matching operation has been made, fail with an error message including the given
    * description, if any.
    */
   public abstract expectNone(match: MatchOperation, description?: string): void;
