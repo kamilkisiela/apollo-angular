@@ -1,4 +1,4 @@
-import {Apollo} from 'apollo-angular';
+import {ApolloModule, Apollo} from 'apollo-angular';
 import {
   ApolloLink,
   Operation as LinkOperation,
@@ -32,6 +32,7 @@ function addClient(name: string, op: LinkOperation): Operation {
 }
 
 @NgModule({
+  imports: [ApolloModule],
   providers: [
     ApolloTestingBackend,
     {provide: ApolloTestingController, useExisting: ApolloTestingBackend},

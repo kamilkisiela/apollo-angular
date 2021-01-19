@@ -19,7 +19,7 @@ import {NgModule, InjectionToken} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 // Apollo
-import {Apollo, APOLLO_OPTIONS} from 'apollo-angular';
+import {ApolloModule, Apollo, APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
 
@@ -29,6 +29,7 @@ const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
   imports: [
     // ...
     BrowserModule,
+    ApolloModule,
     HttpClientModule,
   ],
   providers: [
