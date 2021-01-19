@@ -12,7 +12,7 @@ import {
 } from '@angular-devkit/schematics';
 import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
 import {getAppModulePath} from '@schematics/angular/utility/ng-ast-utils';
-import {tags, terminal} from '@angular-devkit/core';
+import {tags} from '@angular-devkit/core';
 import {CompilerOptions} from 'typescript';
 
 import {getJsonFile, getMainPath} from '../utils';
@@ -89,14 +89,12 @@ function inludeAsyncIterableLib() {
       !updateTSConfig('tsconfig.base.json', host, updateFn)
     ) {
       console.error(
-        terminal.yellow(
-          '\n' +
-            tags.stripIndent`
+        '\n' +
+          tags.stripIndent`
               We couln't find '${requiredLib}' in the list of library files to be included in the compilation.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
-            '\n',
-        ),
+          '\n',
       );
     }
 
@@ -142,14 +140,12 @@ function allowSyntheticDefaultImports() {
       !updateTSConfig('tsconfig.base.json', host, updateFn)
     ) {
       console.error(
-        terminal.yellow(
-          '\n' +
-            tags.stripIndent`
+        '\n' +
+          tags.stripIndent`
               We couln't enable 'allowSyntheticDefaultImports' flag.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
-            '\n',
-        ),
+          '\n',
       );
     }
 
