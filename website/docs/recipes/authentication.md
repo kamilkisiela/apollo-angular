@@ -11,10 +11,13 @@ Apollo Client uses the ultra flexible [Apollo Link](https://www.apollographql.co
 If your app is browser based and you are using cookies for login and session management with a backend, it is very easy to tell your network interface to send the cookie along with every request.
 
 ```typescript
-import { Apollo } from 'apollo-angular';
+import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 
-@NgModule({ ... })
+@NgModule({
+  imports: [ApolloModule],
+  // ...
+})
 class AppModule {
   constructor(
     apollo: Apollo,
@@ -46,7 +49,7 @@ In `graphql.module.ts`:
 ```typescript
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+import { ApolloModule, Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache,ApolloLink } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
@@ -86,6 +89,7 @@ export function createApollo(httpLink: HttpLink) {
 @NgModule({
   exports: [
     HttpClientModule,
+    ApolloModule,
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
