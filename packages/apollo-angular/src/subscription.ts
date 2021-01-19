@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DocumentNode} from 'graphql';
+import {TypedDocumentNode} from '@graphql-typed-document-node/core';
 import {Observable} from 'rxjs';
 
 import {Apollo} from './apollo';
@@ -12,7 +13,7 @@ import {
 
 @Injectable()
 export class Subscription<T = any, V = EmptyObject> {
-  public readonly document: DocumentNode;
+  public readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
   constructor(protected apollo: Apollo) {}
