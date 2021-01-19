@@ -724,11 +724,127 @@ describe('Apollo', () => {
         next: (result) => {
           if (alreadyCalled) {
             expect(result.data).toMatchObject(data);
-            done();
+            setTimeout(done, 3000);
           } else {
             expect(result.loading).toBe(true);
             expect(result.networkStatus).toBe(NetworkStatus.loading);
             alreadyCalled = true;
+          }
+        },
+        error: (e) => {
+          done.fail(e);
+        },
+      });
+  });
+
+  test('useInitialLoading should emit false once when data is already available', async (done) => {
+    expect.assertions(1);
+    const apollo = testBed.inject(Apollo);
+    const query = gql`
+      query heroes {
+        heroes {
+          name
+          __typename
+        }
+      }
+    `;
+    const data = {
+      heroes: [
+        {
+          name: 'Superman',
+          __typename: 'Hero',
+        },
+      ],
+    };
+
+    let calls = 0;
+
+    const cache = new InMemoryCache();
+
+    cache.writeQuery({
+      query: query,
+      data,
+    });
+
+    // create
+    apollo.create<any>({
+      link: mockSingleLink({request: {query}, result: {data}}),
+      cache,
+    });
+
+    // query
+    apollo
+      .watchQuery<any>({
+        query,
+        useInitialLoading: true,
+      })
+      .valueChanges.subscribe({
+        next: () => {
+          calls++;
+
+          if (calls === 1) {
+            setTimeout(() => {
+              expect(calls).toEqual(1);
+              done();
+            }, 3000);
+          }
+        },
+        error: (e) => {
+          done.fail(e);
+        },
+      });
+  });
+
+  test('should emit cached result only once', async (done) => {
+    expect.assertions(2);
+    const apollo = testBed.inject(Apollo);
+    const query = gql`
+      query heroes {
+        heroes {
+          name
+          __typename
+        }
+      }
+    `;
+    const data = {
+      heroes: [
+        {
+          name: 'Superman',
+          __typename: 'Hero',
+        },
+      ],
+    };
+
+    let calls = 0;
+
+    const cache = new InMemoryCache();
+
+    cache.writeQuery({
+      query: query,
+      data,
+    });
+
+    // create
+    apollo.create<any>({
+      link: mockSingleLink({request: {query}, result: {data}}),
+      cache,
+    });
+
+    // query
+    apollo
+      .watchQuery<any>({
+        query,
+      })
+      .valueChanges.subscribe({
+        next: (result) => {
+          calls++;
+
+          if (calls === 1) {
+            setTimeout(() => {
+              expect(calls).toEqual(1);
+              expect(result.loading).toEqual(false);
+              done();
+            }, 3000);
           }
         },
         error: (e) => {
