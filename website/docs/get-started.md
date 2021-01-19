@@ -58,12 +58,12 @@ In our `app.module.ts` file use `APOLLO_OPTIONS` token to configure Apollo:
 
 ```typescript
 import {HttpClientModule} from '@angular/common/http';
-import {APOLLO_OPTIONS} from 'apollo-angular';
+import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule],
+  imports: [BrowserModule, ApolloModule, HttpClientModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
@@ -183,12 +183,12 @@ In our `app.module.ts` file use `ApolloModule` and `APOLLO_OPTIONS` token to con
 
 ```typescript
 import {HttpClientModule} from '@angular/common/http';
-import {APOLLO_NAMED_OPTIONS, NamedOptions} from 'apollo-angular';
+import {ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule],
+  imports: [BrowserModule, ApolloModule, HttpClientModule],
   providers: [
     {
       provide: APOLLO_NAMED_OPTIONS, // <-- Different from standard initialization
