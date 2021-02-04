@@ -3,6 +3,7 @@
 ### vNext
 
 - Fixes [#1594](https://github.com/kamilkisiela/apollo-angular/issues/1594)
+- feat: strip unncessary characters from the query [#1630](https://github.com/kamilkisiela/apollo-angular/pull/1630)
 
 ### v2.1.0
 
