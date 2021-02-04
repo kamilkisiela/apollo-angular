@@ -6,7 +6,7 @@ import {
   Operation,
   FetchResult,
 } from '@apollo/client/core';
-import {print} from 'graphql';
+import {print, stripIgnoredCharacters} from 'graphql';
 import {extractFiles} from 'extract-files';
 import {Options, Body, Request, Context} from './types';
 import {
@@ -63,7 +63,9 @@ export class HttpLinkHandler extends ApolloLink {
         }
 
         if (includeQuery) {
-          (req.body as Body).query = print(operation.query);
+          (req.body as Body).query = stripIgnoredCharacters(
+            print(operation.query),
+          );
         }
 
         const headers = createHeadersWithClientAwereness(context);
