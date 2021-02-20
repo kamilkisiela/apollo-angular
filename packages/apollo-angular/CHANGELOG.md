@@ -3,6 +3,7 @@
 ### vNext
 
 - Fixes [#1594](https://github.com/kamilkisiela/apollo-angular/issues/1594)
+- Fix: Use let in Apollo constructor due to firefox bug
 
 ### v2.1.0
 
