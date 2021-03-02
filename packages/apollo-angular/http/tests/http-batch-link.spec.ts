@@ -224,42 +224,6 @@ describe('HttpBatchLink', () => {
     }, 50);
   });
 
-  test('custom operation printer', () => {
-    const link = httpLink.create({
-      uri: 'graphql',
-      method: 'GET',
-      includeQuery: true,
-      operationPrinter(doc) {
-        return stripIgnoredCharacters(print(doc));
-      },
-    });
-    const op = {
-      query: gql`
-        query heroes {
-          heroes {
-            name
-          }
-        }
-      `,
-      operationName: 'heroes',
-      variables: {up: 'dog'},
-      extensions: {what: 'what'},
-    };
-
-    execute(link, op).subscribe(noop);
-
-    httpBackend.match((req) => {
-      expect(req.method).toBe('GET');
-      expect(req.urlWithParams).not.toEqual(
-        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%20%7B%0A%20%20heroes%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A',
-      );
-      expect(req.urlWithParams).toEqual(
-        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%7Bheroes%7Bname%7D%7D',
-      );
-      return true;
-    });
-  });
-
   test('should include extensions if allowed', (done: jest.DoneCallback) => {
     const link = httpLink.create({
       uri: 'graphql',
