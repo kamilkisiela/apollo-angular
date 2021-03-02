@@ -2,6 +2,8 @@
 
 ### vNext
 
+### v2.4.0
+
 - Fix: Use let in Apollo constructor due to firefox bug [#1632](https://github.com/kamilkisiela/apollo-angular/pull/1632)
 - Adds `operationPrinter` option to replace operation printing logic in `HttpLink` and `HttpBatchLink` [#1637](https://github.com/kamilkisiela/apollo-angular/pull/1637)
 
