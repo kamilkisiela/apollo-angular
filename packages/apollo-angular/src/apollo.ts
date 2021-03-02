@@ -158,7 +158,7 @@ export class Apollo extends ApolloBase<any> {
     }
 
     if (apolloNamedOptions && typeof apolloNamedOptions === 'object') {
-      for (const name in apolloNamedOptions) {
+      for (let name in apolloNamedOptions) {
         if (apolloNamedOptions.hasOwnProperty(name)) {
           const options = apolloNamedOptions[name];
           this.createNamed(name, options);
