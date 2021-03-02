@@ -36,7 +36,7 @@ export const GET_DOG_QUERY = gql`
     <div *ngIf="loading$">Loading ...</div>
     <div *ngIf="error$">Error!</div>
     <p *ngIf="dog$ | async as dog">
-      {dog.name} is a {dog.breed}
+      {{dog.name}} is a {{dog.breed}}
     </p>
   `
 })
