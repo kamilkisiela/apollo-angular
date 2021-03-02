@@ -19,10 +19,9 @@ export type FetchOptions = {
 
 export type OperationPrinter = (operation: DocumentNode) => string;
 
-export type Options = {
+export interface Options extends FetchOptions, HttpRequestOptions {
   operationPrinter?: OperationPrinter;
-} & FetchOptions &
-  HttpRequestOptions;
+}
 
 export type Body = {
   query?: string;
@@ -31,7 +30,7 @@ export type Body = {
   extensions?: Record<string, any>;
 };
 
-export type Context = {} & FetchOptions & HttpRequestOptions;
+export interface Context extends FetchOptions, HttpRequestOptions {}
 
 export type Request = {
   method: string;

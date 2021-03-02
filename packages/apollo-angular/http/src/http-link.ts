@@ -35,7 +35,7 @@ export class HttpLinkHandler extends ApolloLink {
         const context: Context = operation.getContext();
 
         // decides which value to pick, Context, Options or to just use the default
-        const pick = <K extends keyof Context | keyof Options>(
+        const pick = <K extends keyof Context>(
           key: K,
           init?: Context[K] | Options[K],
         ): Context[K] | Options[K] => {
