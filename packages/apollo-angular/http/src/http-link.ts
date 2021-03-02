@@ -8,7 +8,7 @@ import {
 } from '@apollo/client/core';
 import {print} from 'graphql';
 import {extractFiles} from 'extract-files';
-import {Options, Body, Request, Context} from './types';
+import {Options, Body, Request, Context, OperationPrinter} from './types';
 import {
   createHeadersWithClientAwereness,
   fetch,
@@ -21,9 +21,14 @@ export class HttpLinkHandler extends ApolloLink {
   public requester: (
     operation: Operation,
   ) => LinkObservable<FetchResult> | null;
+  private print: OperationPrinter = print;
 
   constructor(private httpClient: HttpClient, private options: Options) {
     super();
+
+    if (this.options.operationPrinter) {
+      this.print = this.options.operationPrinter;
+    }
 
     this.requester = (operation: Operation) =>
       new LinkObservable((observer: any) => {
@@ -63,7 +68,7 @@ export class HttpLinkHandler extends ApolloLink {
         }
 
         if (includeQuery) {
-          (req.body as Body).query = print(operation.query);
+          (req.body as Body).query = this.print(operation.query);
         }
 
         const headers = createHeadersWithClientAwereness(context);

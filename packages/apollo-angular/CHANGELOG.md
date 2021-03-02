@@ -3,6 +3,7 @@
 ### vNext
 
 - Fixes [#1594](https://github.com/kamilkisiela/apollo-angular/issues/1594)
+- Adds `operationPrinter` option to replace operation printing logic in `HttpLink` and `HttpBatchLink`
 
 ### v2.1.0
 

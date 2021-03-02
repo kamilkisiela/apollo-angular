@@ -8,7 +8,7 @@ import {
 } from '@apollo/client/core';
 import {BatchLink, BatchHandler} from '@apollo/client/link/batch';
 import {print} from 'graphql';
-import {Body, Context, Request, Options} from './types';
+import {Body, Context, Request, Options, OperationPrinter} from './types';
 import {
   createHeadersWithClientAwereness,
   fetch,
@@ -29,12 +29,17 @@ export class HttpBatchLinkHandler extends ApolloLink {
   public batcher: ApolloLink;
   private batchInterval: number;
   private batchMax: number;
+  private print: OperationPrinter = print;
 
   constructor(private httpClient: HttpClient, private options: BatchOptions) {
     super();
 
     this.batchInterval = options.batchInterval || defaults.batchInterval;
     this.batchMax = options.batchMax || defaults.batchMax;
+
+    if (this.options.operationPrinter) {
+      this.print = this.options.operationPrinter;
+    }
 
     const batchHandler: BatchHandler = (operations: Operation[]) => {
       return new LinkObservable((observer: any) => {
@@ -124,7 +129,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
       }
 
       if (includeQuery) {
-        body.query = print(operation.query);
+        body.query = this.print(operation.query);
       }
 
       return body;
