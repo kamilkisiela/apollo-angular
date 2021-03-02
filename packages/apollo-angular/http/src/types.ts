@@ -1,3 +1,4 @@
+import {DocumentNode} from 'graphql';
 import {HttpHeaders} from '@angular/common/http';
 import {Operation} from '@apollo/client/core';
 
@@ -16,7 +17,11 @@ export type FetchOptions = {
   includeQuery?: boolean;
 };
 
-export type Options = {} & FetchOptions & HttpRequestOptions;
+export type OperationPrinter = (operation: DocumentNode) => string;
+
+export interface Options extends FetchOptions, HttpRequestOptions {
+  operationPrinter?: OperationPrinter;
+}
 
 export type Body = {
   query?: string;
@@ -25,7 +30,7 @@ export type Body = {
   extensions?: Record<string, any>;
 };
 
-export type Context = {} & FetchOptions & HttpRequestOptions;
+export interface Context extends FetchOptions, HttpRequestOptions {}
 
 export type Request = {
   method: string;
