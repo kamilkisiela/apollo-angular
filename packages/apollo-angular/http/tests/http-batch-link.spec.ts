@@ -7,7 +7,6 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import {execute, ApolloLink, Operation, gql} from '@apollo/client/core';
-import {stripIgnoredCharacters, print} from 'graphql';
 
 import {HttpBatchLink} from '../src/http-batch-link';
 
