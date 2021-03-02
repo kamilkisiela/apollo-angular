@@ -16,8 +16,8 @@ Consider the component below, which makes a basic query, and displays its result
 ```typescript
 import {Component, OnInit, Input} from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
-import { Observable } from 'rxjs';
-import { shareReplay, pluck} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {shareReplay, pluck} from 'rxjs/operators';
 
 // Make sure the query is also exported -- not just the component
 export const GET_DOG_QUERY = gql`
@@ -38,7 +38,7 @@ export const GET_DOG_QUERY = gql`
     <p *ngIf="dog$ | async as dog">
       {{dog.name}} is a {{dog.breed}}
     </p>
-  `
+  `,
 })
 export class DogComponent implements OnInit {
   @Input() name: string;
@@ -58,14 +58,14 @@ export class DogComponent implements OnInit {
   }
 
   getDog() {
-    return this.apollo.watchQuery({
-      query: GET_DOG_QUERY,
-      variables: {
-        name: this.name
-      }
-    })
-    .valueChanges
-    .pipe(shareReplay(1));
+    return this.apollo
+      .watchQuery({
+        query: GET_DOG_QUERY,
+        variables: {
+          name: this.name,
+        },
+      })
+      .valueChanges.pipe(shareReplay(1));
   }
 }
 ```
@@ -122,7 +122,7 @@ test('expect and answer', () => {
   component = fixture.componentInstance;
 
   //Call the relevant method
-  component.getDog().subscribe(dog => {
+  component.getDog().subscribe((dog) => {
     //Make some assertion about the result;
     expect(dog.id).toEqual(0);
     expect(dog.name).toEqual('Mr Apollo');
@@ -153,6 +153,15 @@ test('expect and answer', () => {
 ```
 
 When it receives a `GET_DOG_QUERY` with matching `variables`, it returns the corresponding object that has been flushed.
+
+For mutation, `expectOne` should use a function to check the query definitions and return a boolean:
+
+```typescript
+const op = controller.expectOne((operation) => {
+  expect(operation.query.definitions).toEqual(MODIFY_DOG_QUERY.definitions);
+  return true;
+});
+```
 
 ### expectOne
 
@@ -300,7 +309,7 @@ beforeEach(() => {
           },
           clientB: {
             addTypename: true,
-          }
+          },
         },
       },
     ],
