@@ -81,7 +81,7 @@ export class DogsComponent implements OnInit {
 }
 ```
 
-To learn more about querying with Apollo Angular be sure to start reading the [documentation article on queries](https://www.apollo-angular.com/docs/basics/queries).
+To learn more about querying with Apollo Angular be sure to start reading the [documentation article on queries](https://apollo-angular.com/docs/data/queries/).
 
 ## Documentation
 
