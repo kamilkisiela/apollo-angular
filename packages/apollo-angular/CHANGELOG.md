@@ -2,9 +2,20 @@
 
 ### vNext
 
-- Fixes [#1594](https://github.com/kamilkisiela/apollo-angular/issues/1594)
-- Fix: Use let in Apollo constructor due to firefox bug
-- Adds `operationPrinter` option to replace operation printing logic in `HttpLink` and `HttpBatchLink`
+- Fix: Use let in Apollo constructor due to firefox bug [#1632](https://github.com/kamilkisiela/apollo-angular/pull/1632)
+- Adds `operationPrinter` option to replace operation printing logic in `HttpLink` and `HttpBatchLink` [#1637](https://github.com/kamilkisiela/apollo-angular/pull/1637)
+
+### v2.3.0
+
+- `830da182` build: Allows zone.js v11 [#1629](https://github.com/kamilkisiela/apollo-angular/pull/1629)
+- `136663f0` docs: Update queries.md [#1616](https://github.com/kamilkisiela/apollo-angular/pull/1616)
+
+### v2.2.0
+
+- `b152d53` Added Angular 11 peer dependency [#1615](https://github.com/kamilkisiela/apollo-angular/pull/1615)
+- `d179a66` docs: Integrated documentation changes [#1590](https://github.com/kamilkisiela/apollo-angular/pull/1590)
+- `5d938a3` Update README.md [#1598](https://github.com/kamilkisiela/apollo-angular/pull/1598)
+- `60b8445` fix: test data modification [#1596](https://github.com/kamilkisiela/apollo-angular/pull/1596)
 
 ### v2.1.0
 
