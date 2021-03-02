@@ -9,6 +9,7 @@ import {
 import {Apollo} from 'apollo-angular';
 import {execute, ApolloLink, InMemoryCache, gql} from '@apollo/client/core';
 import {mergeMap} from 'rxjs/operators';
+import {stripIgnoredCharacters, print} from 'graphql';
 
 import {HttpLink} from '../src/http-link';
 
@@ -202,6 +203,42 @@ describe('HttpLink', () => {
       expect(req.params.get('variables')).toBe(JSON.stringify(op.variables));
       expect(req.params.get('extensions')).toBe(JSON.stringify(op.extensions));
       expect(req.params.get('operationName')).toBe(op.operationName);
+      return true;
+    });
+  });
+
+  test('custom operation printer', () => {
+    const link = httpLink.create({
+      uri: 'graphql',
+      method: 'GET',
+      includeQuery: true,
+      operationPrinter(doc) {
+        return stripIgnoredCharacters(print(doc));
+      },
+    });
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+      variables: {up: 'dog'},
+      extensions: {what: 'what'},
+    };
+
+    execute(link, op).subscribe(noop);
+
+    httpBackend.match((req) => {
+      expect(req.method).toBe('GET');
+      expect(req.urlWithParams).not.toEqual(
+        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%20%7B%0A%20%20heroes%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A',
+      );
+      expect(req.urlWithParams).toEqual(
+        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%7Bheroes%7Bname%7D%7D',
+      );
       return true;
     });
   });
