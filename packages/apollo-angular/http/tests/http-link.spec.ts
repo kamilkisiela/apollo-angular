@@ -690,4 +690,54 @@ describe('HttpLink', () => {
       return true;
     });
   });
+
+  test('commas between arguments should not be removed', () => {
+    const link = httpLink.create({
+      uri: 'graphql',
+    });
+    const op = {
+      query: gql`
+        query heroes($first: Int!, $limit: Int!) {
+          heroes(first: $first, limit: $limit) {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+    };
+
+    execute(link, op).subscribe(noop);
+
+    httpBackend.match((req) => {
+      expect(req.method).toBe('POST');
+      expect(req.body.query).toMatch(',');
+      expect(req.body.operationName).toBe(op.operationName);
+      return true;
+    });
+  });
+
+  test('commas between arguments should not be removed in Mutations', () => {
+    const link = httpLink.create({
+      uri: 'graphql',
+    });
+    const op = {
+      query: gql`
+        mutation addRandomHero($name: String!, $level: Int!) {
+          addRandomHero(name: $name, level: $level) {
+            name
+          }
+        }
+      `,
+      operationName: 'addRandomHero',
+    };
+
+    execute(link, op).subscribe(noop);
+
+    httpBackend.match((req) => {
+      expect(req.method).toBe('POST');
+      expect(req.body.query).toMatch(',');
+      expect(req.body.operationName).toBe(op.operationName);
+      return true;
+    });
+  });
 });
