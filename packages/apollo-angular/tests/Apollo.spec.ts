@@ -738,7 +738,7 @@ describe('Apollo', () => {
   });
 
   test('useInitialLoading should emit false once when data is already available', async (done) => {
-    expect.assertions(1);
+    expect.assertions(4);
     const apollo = testBed.inject(Apollo);
     const query = gql`
       query heroes {
@@ -776,15 +776,19 @@ describe('Apollo', () => {
     apollo
       .watchQuery<any>({
         query,
+        notifyOnNetworkStatusChange: true,
         useInitialLoading: true,
       })
       .valueChanges.subscribe({
-        next: () => {
+        next: (result) => {
           calls++;
 
           if (calls === 1) {
             setTimeout(() => {
               expect(calls).toEqual(1);
+              expect(result.loading).toEqual(false);
+              expect(result.networkStatus).toEqual(NetworkStatus.ready);
+              expect(result.data).toEqual(data);
               done();
             }, 3000);
           }
@@ -796,7 +800,7 @@ describe('Apollo', () => {
   });
 
   test('should emit cached result only once', async (done) => {
-    expect.assertions(2);
+    expect.assertions(3);
     const apollo = testBed.inject(Apollo);
     const query = gql`
       query heroes {
@@ -843,6 +847,7 @@ describe('Apollo', () => {
             setTimeout(() => {
               expect(calls).toEqual(1);
               expect(result.loading).toEqual(false);
+              expect(result.data).toEqual(data);
               done();
             }, 3000);
           }
