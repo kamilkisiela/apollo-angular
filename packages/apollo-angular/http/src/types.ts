@@ -21,6 +21,7 @@ export type OperationPrinter = (operation: DocumentNode) => string;
 
 export interface Options extends FetchOptions, HttpRequestOptions {
   operationPrinter?: OperationPrinter;
+  useGETForQueries?: boolean;
 }
 
 export type Body = {

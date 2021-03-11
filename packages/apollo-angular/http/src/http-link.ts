@@ -42,12 +42,22 @@ export class HttpLinkHandler extends ApolloLink {
           return prioritize(context[key], this.options[key], init);
         };
 
+        let method = pick('method', 'POST');
         const includeQuery = pick('includeQuery', true);
         const includeExtensions = pick('includeExtensions', false);
-        const method = pick('method', 'POST');
         const url = pick('uri', 'graphql');
         const withCredentials = pick('withCredentials');
         const useMultipart = pick('useMultipart');
+        const useGETForQueries = this.options.useGETForQueries === true;
+
+        const isQuery = operation.query.definitions.some(
+          (def) =>
+            def.kind === 'OperationDefinition' && def.operation === 'query',
+        );
+
+        if (useGETForQueries && isQuery) {
+          method = 'GET';
+        }
 
         const req: Request = {
           method,
