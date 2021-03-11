@@ -113,6 +113,8 @@ const STATE_KEY = makeStateKey<any>('apollo.state');
           transferState.onSerialize(STATE_KEY, () => {
             return cache.extract();
           });
+          // Reset cache after extraction to avoid sharing between requests
+          cache.reset();
         }
 
         return {
