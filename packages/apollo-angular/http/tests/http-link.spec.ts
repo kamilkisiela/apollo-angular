@@ -635,4 +635,59 @@ describe('HttpLink', () => {
         data: data1,
       });
   });
+
+  test('should be able to useGETForQueries', () => {
+    const link = httpLink.create({
+      uri: 'graphql',
+      useGETForQueries: true,
+      includeExtensions: true,
+    });
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+      variables: {up: 'dog'},
+      extensions: {what: 'what'},
+    };
+
+    execute(link, op).subscribe(noop);
+
+    httpBackend.match((req) => {
+      expect(req.method).toBe('GET');
+      expect(req.params.get('variables')).toBe(JSON.stringify(op.variables));
+      expect(req.params.get('extensions')).toBe(JSON.stringify(op.extensions));
+      expect(req.params.get('operationName')).toBe(op.operationName);
+      return true;
+    });
+  });
+
+  test('useGETForQueries should use GET only for queries :)', () => {
+    const link = httpLink.create({
+      uri: 'graphql',
+      useGETForQueries: true,
+    });
+    const op = {
+      query: gql`
+        mutation addRandomHero {
+          addRandomHero {
+            name
+          }
+        }
+      `,
+      operationName: 'addRandomHero',
+    };
+
+    execute(link, op).subscribe(noop);
+
+    httpBackend.match((req) => {
+      expect(req.method).toBe('POST');
+      expect(req.body.operationName).toBe(op.operationName);
+      return true;
+    });
+  });
 });
