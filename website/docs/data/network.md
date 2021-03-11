@@ -56,6 +56,7 @@ not to send a query, disable `includeQuery`.
 | headers           | HttpHeaders       | `none`     | false    |
 | withCredentials   | boolean           | `none`     | false    |
 | method            | string            | `POST`     | false    |
+| useGETForQueries  | boolean           | `false`    | false    |
 
 ## Context
 
