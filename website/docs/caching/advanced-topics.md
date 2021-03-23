@@ -281,25 +281,20 @@ If you want to clear the store but don't want to refetch active queries, use
 
 ## Cache persistence
 
-If you would like to persist and rehydrate your Apollo Cache from a storage provider like `AsyncStorage` or `localStorage`, you can use [`apollo-cache-persist`](https://github.com/apollographql/apollo-cache-persist). `apollo-cache-persist` works with all Apollo caches, including `InMemoryCache` & `Hermes`, and a variety of different [storage providers](https://github.com/apollographql/apollo-cache-persist#storage-providers).
+If you would like to persist and rehydrate your Apollo Cache from a storage provider like `localStorage`, you can use [`apollo3-cache-persist`](https://github.com/apollographql/apollo-cache-persist). `apollo3-cache-persist` works with all Apollo caches, including `InMemoryCache` & `Hermes`, and a variety of different [storage providers](https://github.com/apollographql/apollo-cache-persist#storage-providers).
 
-To get started, simply pass your Apollo Cache and a storage provider to `persistCache`. By default, the contents of your Apollo Cache will be immediately restored asynchronously, and persisted upon every write to the cache with a short configurable debounce interval.
-
-> Note: The `persistCache` method is async and returns a `Promise`.
+To get started, simply pass your Apollo Cache and a storage provider to `persistCacheSync`. By default, the contents of your Apollo Cache will be immediately restored, and persisted upon every write to the cache with a short configurable debounce interval.
 
 ```typescript
-import {AsyncStorage} from 'react-native';
 import {InMemoryCache} from '@apollo/client/core';
-import {persistCache} from 'apollo-cache-persist';
+import {persistCacheSync, LocalStorageWrapper} from 'apollo3-cache-persist';
 
 const cache = new InMemoryCache();
 
-persistCache({
+persistCacheSync({
   cache,
-  storage: AsyncStorage,
-}).then(() => {
-  // Continue setting up Apollo as usual.
+  storage: new LocalStorageWrapper(window.LocalStorage),
 });
 ```
 
-For more advanced usage, such as persisting the cache when the app is in the background, and additional configuration options, please check the [README of `apollo-cache-persist`](https://github.com/apollographql/apollo-cache-persist).
+For more advanced usage, such as persisting the cache when the app is in the background, and additional configuration options, please check the [README of `apollo3-cache-persist`](https://github.com/apollographql/apollo-cache-persist).
