@@ -1,8 +1,9 @@
 import {NgZone} from '@angular/core';
-import {observeOn} from 'rxjs/operators';
+import {observeOn, startWith, map} from 'rxjs/operators';
 import {
   ObservableQuery,
   ApolloQueryResult,
+  FetchResult,
   Observable as AObservable,
 } from '@apollo/client/core';
 import {
@@ -13,6 +14,7 @@ import {
   SchedulerAction,
   observable,
 } from 'rxjs';
+import {MutationResult} from './types';
 
 export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
   return new Observable<T>((subscriber) => {
@@ -32,6 +34,30 @@ export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
 
     return () => subscriber.unsubscribe();
   });
+}
+
+export function useMutationLoading<T>(
+  source: Observable<FetchResult<T>>,
+  enabled: boolean,
+) {
+  if (!enabled) {
+    return source.pipe(
+      map<FetchResult<T>, MutationResult<T>>((result) => ({
+        ...result,
+        loading: false,
+      })),
+    );
+  }
+
+  return source.pipe(
+    startWith<MutationResult<T>>({
+      loading: true,
+    }),
+    map<MutationResult<T>, MutationResult<T>>((result) => ({
+      ...result,
+      loading: !!result.loading,
+    })),
+  );
 }
 
 export class ZoneScheduler implements SchedulerLike {
