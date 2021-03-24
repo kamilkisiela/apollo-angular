@@ -250,6 +250,49 @@ describe('Apollo', () => {
         },
       });
     });
+
+    test('should NOT useInitialLoading by default', async (done) => {
+      expect.assertions(2);
+      const apollo = testBed.inject(Apollo);
+      const query = gql`
+        query heroes {
+          heroes {
+            name
+            __typename
+          }
+        }
+      `;
+      const data = {
+        heroes: [
+          {
+            name: 'Superman',
+            __typename: 'Hero',
+          },
+        ],
+      };
+
+      // create
+      apollo.create<any>({
+        link: mockSingleLink({request: {query}, result: {data}}),
+        cache: new InMemoryCache(),
+      });
+
+      // query
+      apollo
+        .query<any>({
+          query,
+        })
+        .subscribe({
+          next: (result) => {
+            expect(result.loading).toBe(false);
+            expect(result.data).toMatchObject(data);
+            setTimeout(done, 3000);
+          },
+          error: (e) => {
+            done.fail(e);
+          },
+        });
+    });
   });
 
   describe('mutate()', () => {
@@ -276,13 +319,17 @@ describe('Apollo', () => {
           foo: 'test',
         },
       };
-      client.mutate = jest.fn().mockReturnValue(Promise.resolve('mutation'));
+      client.mutate = jest.fn().mockReturnValue(
+        Promise.resolve({
+          data: 'mutation',
+        }),
+      );
 
       const obs = apollo.mutate<any, {foo: string}>(options);
 
       obs.subscribe({
         next(r) {
-          expect(r).toEqual('mutation');
+          expect(r.data).toEqual('mutation');
           expect(client.mutate).toBeCalledWith(options);
           done();
         },
@@ -413,6 +460,96 @@ describe('Apollo', () => {
         },
       });
     });
+
+    test('should NOT useMutationLoading by default', async (done) => {
+      expect.assertions(2);
+      const apollo = testBed.inject(Apollo);
+      const query = gql`
+        mutation addRandomHero {
+          addRandomHero {
+            name
+            __typename
+          }
+        }
+      `;
+      const data = {
+        addRandomHero: {
+          name: 'Superman',
+          __typename: 'Hero',
+        },
+      };
+
+      // create
+      apollo.create<any>({
+        link: mockSingleLink({request: {query}, result: {data}}),
+        cache: new InMemoryCache(),
+      });
+
+      // mutation
+      apollo
+        .mutate<any>({
+          mutation: query,
+        })
+        .subscribe({
+          next: (result) => {
+            expect(result.loading).toBe(false);
+            expect(result.data).toMatchObject(data);
+            setTimeout(done, 3000);
+          },
+          error: (e) => {
+            done.fail(e);
+          },
+        });
+    });
+
+    test('should useMutationLoading on demand', async (done) => {
+      expect.assertions(3);
+      const apollo = testBed.inject(Apollo);
+      const query = gql`
+        mutation addRandomHero {
+          addRandomHero {
+            name
+            __typename
+          }
+        }
+      `;
+      const data = {
+        addRandomHero: {
+          name: 'Superman',
+          __typename: 'Hero',
+        },
+      };
+
+      let alreadyCalled = false;
+
+      // create
+      apollo.create<any>({
+        link: mockSingleLink({request: {query}, result: {data}}),
+        cache: new InMemoryCache(),
+      });
+
+      // mutation
+      apollo
+        .mutate<any>({
+          mutation: query,
+          useMutationLoading: true,
+        })
+        .subscribe({
+          next: (result) => {
+            if (alreadyCalled) {
+              expect(result.loading).toBe(false);
+              expect(result.data).toMatchObject(data);
+              setTimeout(done, 3000);
+            } else {
+              expect(result.loading).toBe(true);
+              alreadyCalled = true;
+            }
+          },
+          error: (e) => {
+            done.fail(e);
+          },
+        });
+    });
   });
 
   describe('subscribe', () => {
@@ -427,7 +564,11 @@ describe('Apollo', () => {
 
       const client = apollo.getClient();
 
-      client.subscribe = jest.fn().mockReturnValue(of('subscription'));
+      client.subscribe = jest.fn().mockReturnValue(
+        of({
+          data: 'subscription',
+        }),
+      );
 
       const options = {query: 'gql'} as any;
       const obs = apollo.subscribe(options);
@@ -436,7 +577,7 @@ describe('Apollo', () => {
 
       obs.subscribe({
         next(result) {
-          expect(result).toBe('subscription');
+          expect(result.data).toBe('subscription');
           done();
         },
         error() {

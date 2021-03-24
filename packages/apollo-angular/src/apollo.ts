@@ -2,7 +2,6 @@ import {Injectable, Optional, Inject, NgZone} from '@angular/core';
 import {
   ApolloClient,
   QueryOptions,
-  MutationOptions,
   ApolloQueryResult,
   SubscriptionOptions,
   ApolloClientOptions,
@@ -18,12 +17,21 @@ import {
   EmptyObject,
   NamedOptions,
   Flags,
+  MutationResult,
+  MutationOptions,
 } from './types';
 import {APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS, APOLLO_FLAGS} from './tokens';
-import {fromPromise, wrapWithZone, fixObservable, pickFlag} from './utils';
+import {
+  fromPromise,
+  useMutationLoading,
+  wrapWithZone,
+  fixObservable,
+  pickFlag,
+} from './utils';
 
 export class ApolloBase<TCacheShape = any> {
   private useInitialLoading: boolean;
+  private useMutationLoading: boolean;
 
   constructor(
     protected ngZone: NgZone,
@@ -31,6 +39,7 @@ export class ApolloBase<TCacheShape = any> {
     protected _client?: ApolloClient<TCacheShape>,
   ) {
     this.useInitialLoading = pickFlag(flags, 'useInitialLoading', false);
+    this.useMutationLoading = pickFlag(flags, 'useMutationLoading', false);
   }
 
   public watchQuery<TData, TVariables = EmptyObject>(
@@ -58,9 +67,10 @@ export class ApolloBase<TCacheShape = any> {
 
   public mutate<T, V = EmptyObject>(
     options: MutationOptions<T, V>,
-  ): Observable<FetchResult<T>> {
-    return fromPromise<FetchResult<T>>(() =>
-      this.ensureClient().mutate<T, V>({...options}),
+  ): Observable<MutationResult<T>> {
+    return useMutationLoading(
+      fromPromise(() => this.ensureClient().mutate<T, V>({...options})),
+      options.useMutationLoading ?? this.useMutationLoading,
     );
   }
 

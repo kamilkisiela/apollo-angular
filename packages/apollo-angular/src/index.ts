@@ -10,6 +10,7 @@ export {
   SubscriptionResult,
   WatchQueryOptions,
   ExtraSubscriptionOptions,
+  MutationResult,
   Flags,
 } from './types';
 export {gql, graphql} from './gql';

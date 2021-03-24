@@ -7,6 +7,7 @@
 - Bring back `ApolloModule` (`0a24c4f`)[https://github.com/kamilkisiela/apollo-angular/commit/0a24c4f7af8189a825483c57b2d60cb7a875b18f]
 - Fix `useInitialLoading` (`750429c`)[https://github.com/kamilkisiela/apollo-angular/commit/750429cbe0aaad07a3fdc2e2ef046fe8be4aad28]
 - Typed `gql` and `graphql` tags - both accept two generic types and support TypedDocumentNode
+- Add `useMutationLoading` flag
 
 ### v2.4.0
 
