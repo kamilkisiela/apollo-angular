@@ -201,6 +201,85 @@ For the example above, it is easy to construct an optimistic response, since we 
 
 > As this comment is *new* and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`](../caching/interaction.md#updatequeries) to make it appear in this case.
 
+## Loading state
+
+The result of `Apollo.mutate()` contains `loading` property. By default, it's always `false` and the result is emitted with the response from the ApolloLink execution chain. In order to correct it you can enable `useMutationLoading` flag in configuration.
+
+```typescript
+import {HttpClientModule} from '@angular/common/http';
+import {ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
+
+@NgModule({
+  imports: [BrowserModule, ApolloModule, HttpClientModule],
+  providers: [
+    {
+      provide: APOLLO_FLAGS,
+      useValue: {
+        useMutationLoading: true, // enable it here
+      },
+    },
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'https://48p1r2roz4.sse.codesandbox.io',
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
+})
+export class AppModule {}
+```
+
+> `useMutationLoading` is disabled to avoid any breaking changes, this may be enabled in next major version.
+
+```typescript
+import {Component, Injectable} from '@angular/core';
+import {Apollo, gql} from 'apollo-angular';
+
+const UPVOTE_POST = gql`
+  mutation UpvotePost($postId: Int!) {
+    upvotePost(postId: $postId) {
+      id
+      votes
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root'
+})
+class UpvoteService {
+  constructor(private apollo: Apollo) {}
+
+  upvote(postId: string) {
+    return this.apollo.mutate({
+      mutation: UPVOTE_POST,
+      variables: {
+        postId
+      }
+    }).subscribe(result => {
+      console.log({
+        loading: result.loading,
+        data: result.data,
+      });
+
+      // first call:
+      //  { loading: true }
+      // second call:
+      //  { loading: false, data: {..} }
+    });
+  }
+}
+
+```
+
 ## Designing mutation results
 
 When people talk about GraphQL, they often focus on the data fetching side of things, because that's where GraphQL brings the most value. Mutations can be pretty nice if done well, but the principles of designing good mutations, and especially good mutation result types, are not yet well-understood in the open source community. So when you are working with mutations it might often feel like you need to make a lot of application-specific decisions.

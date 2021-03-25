@@ -6,13 +6,15 @@ const allDocHomesPaths = [
 ];
 
 module.exports = {
-  title: 'Apollo Angular',
+  title: 'Apollo Angular - GraphQL Client by The Guild',
   tagline: 'GraphQL Client for Angular Framework',
 
   url: 'https://apollo-angular.com',
   baseUrl: '/',
   favicon: 'img/logo/favicon.png',
   onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
+  onDuplicateRoutes: 'throw',
 
   organizationName: 'kamilkisiela',
   projectName: 'apollo-angular',
@@ -173,7 +175,6 @@ module.exports = {
         debug: true,
         docs: {
           path: 'docs',
-          homePageId: 'index',
           include: ['**/*.md', '**/*.mdx'],
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
@@ -189,7 +190,6 @@ module.exports = {
           customCss: require.resolve('./src/css/custom.css'),
         },
         sitemap: {
-          cacheTime: 600 * 1001, // 600 sec - cache purge period
           changefreq: 'weekly',
           priority: 0.5,
         },
