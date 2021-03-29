@@ -61,35 +61,35 @@ jobs:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
-      uses: DamianReeves/write-file-action
-      name: Write verdaccio config
-      with:
-        path: verdaccio.yaml
-        contents: |
-          auth:
-            auth-memory:
-              users:
-                foo:
-                  name: test
-                  password: test
-          store:
-            memory:
-              limit: 1000
-          npmjs:
-            url: https://registry.npmjs.org/
-          packages:
-            '@*/*':
-              access: $all
-              publish: $all
-            '**':
-              access: $all
-              publish: $all
-          middlewares:
-            audit:
-              enabled: true
-          logs:
-            - {type: stdout, format: pretty, level: trace}
-        write-mode: overwrite
+      - uses: DamianReeves/write-file-action
+        name: Write verdaccio config
+        with:
+          path: verdaccio.yaml
+          contents: |
+            auth:
+              auth-memory:
+                users:
+                  foo:
+                    name: test
+                    password: test
+            store:
+              memory:
+                limit: 1000
+            npmjs:
+              url: https://registry.npmjs.org/
+            packages:
+              '@*/*':
+                access: $all
+                publish: $all
+              '**':
+                access: $all
+                publish: $all
+            middlewares:
+              audit:
+                enabled: true
+            logs:
+              - {type: stdout, format: pretty, level: trace}
+          write-mode: overwrite
 
       - name: Install Verdaccio
         run: yarn global install verdaccio
