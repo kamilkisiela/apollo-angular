@@ -8,7 +8,7 @@
         "type": "string",
         "minLength": 0,
         "default": "",
-        "x-prompt": "Url to your GraphQL endpoint"
+        "x-prompt": "Url to your GraphQL API"
       }
     },
     "required": []

@@ -1,6 +1,5 @@
 import {Injectable, Optional, Inject, NgZone} from '@angular/core';
-import {
-  ApolloClient,
+import type {
   QueryOptions,
   ApolloQueryResult,
   SubscriptionOptions,
@@ -8,6 +7,7 @@ import {
   ObservableQuery,
   FetchResult,
 } from '@apollo/client/core';
+import {ApolloClient} from '@apollo/client/core';
 import {Observable, from} from 'rxjs';
 
 import {QueryRef} from './query-ref';

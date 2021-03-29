@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {DocumentNode} from 'graphql';
-import {TypedDocumentNode} from '@graphql-typed-document-node/core';
+import type {DocumentNode} from 'graphql';
+import type {TypedDocumentNode} from '@apollo/client/core';
 
 import {Apollo} from './apollo';
 import {MutationOptionsAlone, EmptyObject} from './types';

@@ -1,4 +1,4 @@
-import {
+import type {
   WatchQueryOptions as CoreWatchQueryOptions,
   QueryOptions as CoreQueryOptions,
   MutationOptions as CoreMutationOptions,
@@ -6,7 +6,7 @@ import {
   ApolloClientOptions,
   FetchResult,
 } from '@apollo/client/core';
-import {ExecutionResult} from 'graphql';
+import type {ExecutionResult} from 'graphql';
 
 export type EmptyObject = {
   [key: string]: any;

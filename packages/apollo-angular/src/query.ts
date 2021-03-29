@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {DocumentNode} from 'graphql';
-import {TypedDocumentNode} from '@graphql-typed-document-node/core';
-import {ApolloQueryResult} from '@apollo/client/core';
-import {Observable} from 'rxjs';
+import type {DocumentNode} from 'graphql';
+import type {ApolloQueryResult, TypedDocumentNode} from '@apollo/client/core';
+import type {Observable} from 'rxjs';
 
 import {Apollo} from './apollo';
 import {QueryRef} from './query-ref';

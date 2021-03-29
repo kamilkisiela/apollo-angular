@@ -1,20 +1,14 @@
 import {NgZone} from '@angular/core';
 import {observeOn, startWith, map} from 'rxjs/operators';
-import {
+import type {
   ObservableQuery,
   ApolloQueryResult,
   FetchResult,
   Observable as AObservable,
 } from '@apollo/client/core';
-import {
-  Observable,
-  Subscription,
-  queueScheduler,
-  SchedulerLike,
-  SchedulerAction,
-  observable,
-} from 'rxjs';
-import {MutationResult} from './types';
+import type {Subscription, SchedulerLike, SchedulerAction} from 'rxjs';
+import {Observable, queueScheduler, observable} from 'rxjs';
+import type {MutationResult} from './types';
 
 export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
   return new Observable<T>((subscriber) => {

@@ -13,7 +13,7 @@ export async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
   const workspaceTree = await baseRunner
     .runExternalSchematicAsync('@schematics/angular', 'workspace', {
       name: 'workspace',
-      version: '6.0.0',
+      version: '11.0.0',
       newProjectRoot: 'projects',
     })
     .toPromise();

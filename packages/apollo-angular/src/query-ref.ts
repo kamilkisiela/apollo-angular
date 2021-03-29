@@ -1,5 +1,5 @@
 import {NgZone} from '@angular/core';
-import {
+import type {
   ApolloQueryResult,
   ObservableQuery,
   ApolloError,
@@ -7,8 +7,8 @@ import {
   FetchMoreOptions,
   SubscribeToMoreOptions,
   UpdateQueryOptions,
-  NetworkStatus,
 } from '@apollo/client/core';
+import {NetworkStatus} from '@apollo/client/core';
 import {Observable, from} from 'rxjs';
 
 import {wrapWithZone, fixObservable} from './utils';
