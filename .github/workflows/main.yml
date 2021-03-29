@@ -77,7 +77,7 @@ jobs:
               keepAliveTimeout: 60
             uplinks:
               npmjs:
-                url: https://registry.npmjs.org/
+                url: https://registry.npmjs.org
             packages:
               '@*/*':
                 access: $all
