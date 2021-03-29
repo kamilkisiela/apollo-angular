@@ -5,7 +5,7 @@ export {Query} from './query';
 export {Mutation} from './mutation';
 export {Subscription} from './subscription';
 export {APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS, APOLLO_FLAGS} from './tokens';
-export {
+export type {
   NamedOptions,
   SubscriptionResult,
   WatchQueryOptions,
