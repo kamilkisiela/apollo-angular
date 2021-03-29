@@ -97,10 +97,10 @@ jobs:
           write-mode: overwrite
 
       - name: Install Verdaccio
-        run: yarn global add verdaccio verdaccio-auth-memory --prefix /usr/local
+        run: npm install -g verdaccio verdaccio-auth-memory
 
       - name: Start Verdaccio
-        run: nohup yarn verdaccio --config verdaccio.yaml
+        run: nohup verdaccio --config verdaccio.yaml
 
       - name: Wait for Verdaccio
         run: grep -q 'http address' <(tail -f mktemp.log)
