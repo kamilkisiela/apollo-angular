@@ -95,10 +95,11 @@ jobs:
         run: yarn global add verdaccio
 
       - name: Start Verdaccio
-        run: nohup verdaccio --config verdaccio.yaml &> mktemp &
+        run: nohup verdaccio --config verdaccio.yaml > mktemp.log &
 
       - name: Wait for Verdaccio
-        run: grep -q 'http address' <(tail -f mktemp)
+        run: grep -q 'http address' <(tail -f mktemp.log)
+        timeout-minutes: 3
 
       - name: Authenticate
         run: npm-auth-to-token -u test -p test -e test@test.com -r http://0.0.0.0:4873
