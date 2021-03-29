@@ -13,7 +13,7 @@ There are few ways of creating named clients.
 One way is to use `Apollo.create`. Normally, you would use it like this:
 
 ```typescript
-apollo.create(options)
+apollo.create(options);
 ```
 
 This will define a default client but there is one optional argument.
@@ -25,8 +25,8 @@ apollo.create(options, name?)
 An example:
 
 ```typescript
-apollo.create(defaultOptions)
-apollo.create(extraOptions, 'extra')
+apollo.create(defaultOptions);
+apollo.create(extraOptions, 'extra');
 ```
 
 Now you have the default client and one called `extra`.
@@ -36,9 +36,47 @@ Now you have the default client and one called `extra`.
 The other way is to use helper methods.
 
 ```typescript
-apollo.createDefault(options)
+apollo.createDefault(options);
 // and
 apollo.createNamed(name, options);
+```
+
+## Creating clients using `APOLLO_NAMED_OPTIONS`
+
+In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo Client:
+
+```typescript
+import {HttpClientModule} from '@angular/common/http';
+import {ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
+
+@NgModule({
+  imports: [BrowserModule, ApolloModule, HttpClientModule],
+  providers: [
+    {
+      provide: APOLLO_NAMED_OPTIONS, // <-- Different from standard initialization
+      useFactory(httpLink: HttpLink): NamedOptions {
+        return {
+          default: /* <-- this settings will be saved as default client */ {
+            cache: new InMemoryCache(),
+            link: httpLink.create({
+              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
+            }),
+          },
+          newClientName: /* <-- these settings will be saved by name: newClientName */ {
+            cache: new InMemoryCache(),
+            link: httpLink.create({
+              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
+            }),
+          },
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
+})
+export class AppModule {}
 ```
 
 ## Using Apollo

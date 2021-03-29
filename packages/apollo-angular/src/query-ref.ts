@@ -7,6 +7,7 @@ import type {
   FetchMoreOptions,
   SubscribeToMoreOptions,
   UpdateQueryOptions,
+  TypedDocumentNode,
 } from '@apollo/client/core';
 import {NetworkStatus} from '@apollo/client/core';
 import {Observable, from} from 'rxjs';
@@ -44,6 +45,10 @@ function useInitialLoading<T, V>(obsQuery: ObservableQuery<T, V>) {
     });
   };
 }
+
+export type QueryRefFromDocument<
+  T extends TypedDocumentNode
+> = T extends TypedDocumentNode<infer R, infer V> ? QueryRef<R, V> : never;
 
 export class QueryRef<T, V = EmptyObject> {
   public valueChanges: Observable<ApolloQueryResult<T>>;

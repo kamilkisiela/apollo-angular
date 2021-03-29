@@ -1,6 +1,7 @@
 ---
 title: Introduction
 description: What is Apollo Angular and what does it do?
+slug: /
 ---
 
 ## Write queries, not code

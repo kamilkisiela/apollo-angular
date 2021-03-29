@@ -330,13 +330,13 @@ class PostsComponent implements OnInit, OnDestroy {
 
 Call the `refresh` method and notice that the UI updates with a new dog photo. Refetching is an excellent way to guarantee fresh data, but it introduces some complexity with loading state. In the next section, we'll cover strategies for handling complex loading and error state.
 
-### Inspecting error states
+## Inspecting error states
 
 You can customize your query error handling by providing the `errorPolicy` configuration option to `Apollo.watchQuery` or `Apollo.query`. The default value is `none`, which tells Apollo Angular to treat all GraphQL errors as runtime errors. In this case, Apollo Angular discards any query response data returned by the server and sets the error property in the result object to true.
 
 If you set `errorPolicy` to `all`, Apollo Angular does not discard query response data, allowing you to render partial results.
 
-### Loading state
+## Loading state
 
 Every response you get from `Apollo.watchQuery()` contains `loading` property. By default, it's always `false` and the first result is emitted with the response from the ApolloLink execution chain. In order to correct it you can enable `useInitialLoading` flag in configuration.
 

@@ -1,6 +1,6 @@
 ---
-title: Testing Apollo in Angular
-description: Have peace of mind when using apollo-angular in production
+title: Testing
+description: Have peace of mind when using apollo-angular in production and learn how to test GraphQL in Angular
 ---
 
 Running tests against code meant for production has long been a best practice. It provides additional security for the code that's already written, and prevents accidental regressions in the future. Components utilizing `apollo-angular`, the Angular implementation of Apollo Client, are no exception.

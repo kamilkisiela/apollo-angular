@@ -179,7 +179,7 @@ If you'd like to play around with the app we just built, you can view it on [Sta
 
 It is possible to have several apollo clients in the application, for example pointing to different endpoints.
 
-In our `app.module.ts` file use `ApolloModule` and `APOLLO_OPTIONS` token to configure Apollo Client:
+In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo Client:
 
 ```typescript
 import {HttpClientModule} from '@angular/common/http';

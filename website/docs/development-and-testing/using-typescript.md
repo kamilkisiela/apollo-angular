@@ -1,6 +1,6 @@
 ---
-title: Using Apollo with TypeScript
-sidebar_title: Using TypeScript
+title: TypeScript
+sidebar_title: Using TypeScript with GraphQL and Angular and making everything type safe
 ---
 
 As your application grows, you may find it helpful to include a type system to
@@ -24,7 +24,18 @@ types for an operation using TypeScript:
 ```typescript
 import { Apollo, gql } from 'apollo-angular';
 
-const HERO_QUERY = gql`
+type Hero = {
+  name: string;
+  id: string;
+  appearsIn: string[];
+  friends: Hero[];
+};
+
+type Response = {
+  hero: Hero;
+};
+
+const HERO_QUERY = gql<Response>`
   query GetCharacter($episode: Episode!) {
     hero(episode: $episode) {
       name
@@ -38,22 +49,11 @@ const HERO_QUERY = gql`
   }
 `;
 
-type Hero = {
-  name: string;
-  id: string;
-  appearsIn: string[];
-  friends: Hero[];
-};
-
-type Response = {
-  hero: Hero;
-};
-
 @Component({ ... })
 class AppComponent {
   response
   constructor(apollo: Apollo) {
-    apollo.watchQuery<Response>({
+    apollo.watchQuery({
       query: HERO_QUERY,
       variables: { episode: 'JEDI' }
     })
@@ -78,20 +78,6 @@ Here is an example setting the type of variables:
 ```typescript
 import { Apollo, gql } from 'apollo-angular';
 
-const HERO_QUERY = gql`
-  query GetCharacter($episode: Episode!) {
-    hero(episode: $episode) {
-      name
-      id
-      friends {
-        name
-        id
-        appearsIn
-      }
-    }
-  }
-`;
-
 type Hero = {
   name: string;
   id: string;
@@ -107,10 +93,24 @@ type Variables = {
   episode: string
 };
 
+const HERO_QUERY = gql<Response, Variables>`
+  query GetCharacter($episode: Episode!) {
+    hero(episode: $episode) {
+      name
+      id
+      friends {
+        name
+        id
+        appearsIn
+      }
+    }
+  }
+`;
+
 @Component({ ... })
 class AppComponent {
   constructor(apollo: Apollo) {
-    apollo.watchQuery<Response, Variables>({
+    apollo.watchQuery({
       query: HERO_QUERY,
       variables: { episode: 'JEDI' } // controlled by TypeScript
     })
