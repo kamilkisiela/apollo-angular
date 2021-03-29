@@ -72,11 +72,12 @@ jobs:
                   foo:
                     name: test
                     password: test
-            store:
-              memory:
-                limit: 1000
-            npmjs:
-              url: https://registry.npmjs.org/
+            storage: ./storage
+            server:
+              keepAliveTimeout: 60
+            uplinks:
+              npmjs:
+                url: https://registry.npmjs.org/
             packages:
               '@*/*':
                 access: $all
@@ -88,6 +89,10 @@ jobs:
               audit:
                 enabled: true
             logs:
+              - {type: stdout, format: pretty, level: trace}middlewares:
+              audit:
+                enabled: true
+            logs:
               - {type: stdout, format: pretty, level: trace}
           write-mode: overwrite
 
@@ -95,7 +100,7 @@ jobs:
         run: yarn global add verdaccio
 
       - name: Start Verdaccio
-        run: nohup verdaccio --config verdaccio.yaml > mktemp.log &
+        run: nohup verdaccio --config verdaccio.yaml &> mktemp.log &
 
       - name: Wait for Verdaccio
         run: grep -q 'http address' <(tail -f mktemp.log)
