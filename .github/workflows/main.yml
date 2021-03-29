@@ -106,8 +106,8 @@ jobs:
         run: npm publish ./packages/apollo-angular/apollo-angular.tgz --registry http://0.0.0.0:4873 --access public
 
       - name: Create Nx Workspace
-        run: npx create-nx-workspace test-ng --preset=angular --appName=gql --style=css --linter=eslint --cli=nx --nxCloud=false
+        run: yarn create nx-workspace test-ng --preset=angular --appName=gql --style=css --linter=eslint --cli=angular --nxCloud=false
 
       - name: ng add apollo-angular
         working-directory: test-ng
-        run: yarn nx add apollo-angular --registry http://0.0.0.0:4873
+        run: yarn ng add apollo-angular --registry http://0.0.0.0:4873
