@@ -61,7 +61,7 @@ jobs:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
-      - uses: DamianReeves/write-file-action
+      - uses: DamianReeves/write-file-action@master
         name: Write verdaccio config
         with:
           path: verdaccio.yaml
