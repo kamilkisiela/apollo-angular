@@ -96,7 +96,7 @@ jobs:
         run: npm install -g verdaccio verdaccio-auth-memory
 
       - name: Start Verdaccio
-        run: nohup verdaccio --config verdaccio.yaml
+        run: nohup verdaccio --config verdaccio.yaml &> mktemp.log &
 
       - name: Wait for Verdaccio
         run: grep -q 'http address' <(tail -f mktemp.log)
