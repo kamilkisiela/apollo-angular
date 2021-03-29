@@ -35,14 +35,14 @@ jobs:
       - name: Test
         run: yarn test
 
-      - name: Pack
-        run: yarn workspace apollo-angular pack --filename apollo-angular.tgz
+      # - name: Pack
+      #   run: yarn workspace apollo-angular pack --filename apollo-angular.tgz
 
-      - uses: actions/cache@v2
-        name: Share tarball
-        with:
-          path: 'packages/apollo-angular/apollo-angular.tgz'
-          key: ${{ github.sha }}
+      # - uses: actions/cache@v2
+      #   name: Share tarball
+      #   with:
+      #     path: 'packages/apollo-angular/apollo-angular.tgz'
+      #     key: ${{ github.sha }}
 
   # test-nx:
   #   name: Test on Nx workspace
