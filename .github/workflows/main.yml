@@ -11,26 +11,55 @@ jobs:
         node_version: [10, 14]
 
     steps:
-    - uses: actions/checkout@master
+      - uses: actions/checkout@master
 
-    - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@master
-      with:
-        node-version: ${{ matrix.node_version }}
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node_version }}
 
-    - uses: actions/cache@v2
-      name: Cache node_modules
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
+      - uses: actions/cache@v2
+        name: Cache node_modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-    - name: Install
-      run: yarn
+      - name: Install
+        run: yarn
 
-    - name: Build
-      run: yarn build
+      - name: Build
+        run: yarn build
 
-    - name: Test
-      run: yarn test
+      - name: Test
+        run: yarn test
+
+      - name: Pack
+        run: yarn workspace apollo-angular pack --filename apollo-angular.tgz
+
+      - uses: actions/cache@v2
+        name: Share tarball
+        with:
+          path: 'packages/apollo-angular/apollo-angular.tgz'
+          key: ${{ github.sha }}
+
+  test-nx:
+    name: Test on Nx workspace
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Use Node.js 14
+        uses: actions/setup-node@master
+        with:
+          node-version: 14
+
+      - uses: actions/cache@v2
+        name: Share tarball
+        with:
+          path: 'packages/apollo-angular/apollo-angular.tgz'
+          key: ${{ github.sha }}
+
+      - name: Create Nx Workspace
+        run: npx create-nx-workspace test-ng --preset=angular --appName=gql --style=css --linter=eslint --nxCloud=false
