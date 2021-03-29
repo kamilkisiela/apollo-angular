@@ -92,7 +92,7 @@ jobs:
           write-mode: overwrite
 
       - name: Install Verdaccio
-        run: yarn global install verdaccio
+        run: yarn global add verdaccio
 
       - name: Start Verdaccio
         run: nohup verdaccio --config verdaccio.yaml &> mktemp &
