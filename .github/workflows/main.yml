@@ -102,9 +102,6 @@ jobs:
         run: grep -q 'http address' <(tail -f mktemp.log)
         timeout-minutes: 3
 
-      - name: Authenticate
-        run: npm-auth-to-token -u test -p test -e test@test.com -r http://0.0.0.0:4873
-
       - name: Publish
         run: npm --registry http://0.0.0.0:4873 publish package/apollo-angular/apollo-angular.tgz
 
