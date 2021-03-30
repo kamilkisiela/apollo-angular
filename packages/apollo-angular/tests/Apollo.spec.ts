@@ -785,7 +785,7 @@ describe('Apollo', () => {
     });
   });
 
-  test('should use HttpClient', () => {
+  test('should use HttpClient', (done) => {
     expect.assertions(1);
     const apollo = testBed.inject(Apollo);
     const op = {
@@ -818,9 +818,10 @@ describe('Apollo', () => {
     apollo.query<any>(op).subscribe({
       next: (result) => {
         expect(result.data).toMatchObject(data);
+        done();
       },
       error: (e) => {
-        throw new Error(e);
+        done.fail(e);
       },
     });
   });
