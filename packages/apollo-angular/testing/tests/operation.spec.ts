@@ -17,7 +17,7 @@ describe('TestOperation', () => {
 
   beforeEach(() => {
     mock = new ApolloTestingBackend();
-    link = new ApolloLink(op =>
+    link = new ApolloLink((op) =>
       mock.handle({
         ...op,
         clientName: 'default',
@@ -42,15 +42,15 @@ describe('TestOperation', () => {
     execute(link, operation as any).subscribe((result: any) => {
       expect(result).toEqual({
         data: {
-          heroes: []
-        }
+          heroes: [],
+        },
       });
 
       done();
     });
 
     mock.expectOne(testQuery).flushData({
-      heroes: []
+      heroes: [],
     });
   });
 });

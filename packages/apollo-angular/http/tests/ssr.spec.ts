@@ -35,7 +35,6 @@ describe.skip('integration', () => {
   });
 
   describe('render', () => {
-
     // Mock GraphQL endpoint
     const query = gql`
       query websiteInfo {
@@ -126,7 +125,7 @@ describe.skip('integration', () => {
         {
           provide: INITIAL_CONFIG,
           useValue: {
-            document: doc
+            document: doc,
           },
         },
       ]);

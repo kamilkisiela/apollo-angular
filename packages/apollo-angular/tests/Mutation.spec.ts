@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {TestBed, inject} from '@angular/core/testing';
-import {gql} from '@apollo/client/core';
+import {TestBed} from '@angular/core/testing';
 
-import {Mutation, Apollo} from '../src';
+import {Mutation, Apollo, gql} from '../src';
 
 const mutation = gql`
   mutation addHero($name: String) {
@@ -44,11 +43,9 @@ describe('Mutation', () => {
         AddHeroMutation,
       ],
     });
-  });
 
-  beforeEach(inject([AddHeroMutation], (_addHero: AddHeroMutation) => {
-    addHero = _addHero;
-  }));
+    addHero = TestBed.inject(AddHeroMutation);
+  });
 
   test('should have document defined', () => {
     expect(addHero.document).toEqual(mutation);

@@ -1,18 +1,16 @@
-import './_setup';
-
 import {NgZone} from '@angular/core';
 import {
   ApolloClient,
   ObservableQuery,
   ApolloLink,
   InMemoryCache,
-  gql,
 } from '@apollo/client/core';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {mockSingleLink} from '@apollo/client/testing';
 
 import {QueryRef} from '../src/query-ref';
+import {gql} from '../src/gql';
 
 const createClient = (link: ApolloLink) =>
   new ApolloClient({

@@ -45,7 +45,7 @@ function getWorkspaceConfig(host: Tree): any {
 
 function getWorkspacePath(host: Tree): string {
   const possibleFiles = ['/angular.json', '/.angular.json'];
-  const path = possibleFiles.find(path => host.exists(path));
+  const path = possibleFiles.find((path) => host.exists(path));
 
   if (!path) {
     throw new SchematicsException(

@@ -1,6 +1,6 @@
 import {Apollo} from 'apollo-angular';
 import {InMemoryCache, gql} from '@apollo/client/core';
-import {TestBed, inject} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {addTypenameToDocument} from '@apollo/client/utilities';
 import {print} from 'graphql';
 
@@ -18,15 +18,9 @@ describe('Integration', () => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
     });
+    apollo = TestBed.inject(Apollo);
+    backend = TestBed.inject(ApolloTestingController);
   });
-
-  beforeEach(inject(
-    [Apollo, ApolloTestingController],
-    (_apollo: Apollo, _backend: ApolloTestingController) => {
-      apollo = _apollo;
-      backend = _backend;
-    },
-  ));
 
   afterEach(() => {
     backend.verify();

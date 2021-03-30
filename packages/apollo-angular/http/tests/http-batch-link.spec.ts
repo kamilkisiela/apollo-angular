@@ -1,4 +1,4 @@
-import {TestBed, inject} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {
   HttpClientTestingModule,
@@ -21,22 +21,13 @@ describe('HttpBatchLink', () => {
       imports: [HttpClientModule, HttpClientTestingModule],
       providers: [HttpBatchLink],
     });
+    httpLink = TestBed.inject(HttpBatchLink);
+    httpBackend = TestBed.inject(HttpTestingController);
   });
 
-  beforeEach(inject(
-    [HttpBatchLink, HttpTestingController],
-    (_httpLink: HttpBatchLink, _httpBackend: HttpTestingController) => {
-      httpLink = _httpLink;
-      httpBackend = _httpBackend;
-    },
-  ));
-
-  afterEach(inject(
-    [HttpTestingController],
-    (backend: HttpTestingController) => {
-      backend.verify();
-    },
-  ));
+  afterEach(() => {
+    TestBed.inject(HttpTestingController).verify();
+  });
 
   test('should use HttpClient', (done: jest.DoneCallback) => {
     const link = httpLink.create({uri: 'graphql'});

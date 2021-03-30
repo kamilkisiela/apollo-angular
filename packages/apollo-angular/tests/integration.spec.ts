@@ -1,4 +1,4 @@
-import {TestBed, inject} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {HttpClientModule} from '@angular/common/http';
 import {InMemoryCache} from '@apollo/client/core';
 import {mockSingleLink} from '@apollo/client/testing';
@@ -24,13 +24,9 @@ describe('Integration', () => {
       });
     });
 
-    test('apollo should be initialzed', (done: jest.DoneCallback) => {
-      inject([Apollo], (apollo: Apollo) => {
-        expect(() => {
-          apollo.getClient();
-        }).not.toThrow();
-        done();
-      })();
+    test('apollo should be initialzed', () => {
+      const apollo = TestBed.inject(Apollo);
+      expect(() => apollo.client).not.toThrow();
     });
   });
 });
