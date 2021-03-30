@@ -28,14 +28,7 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.js && yarn build:schematics",
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
-    "test": "yarn test-only",
-    "posttest": "yarn test:testing && yarn test:http && yarn test:persisted-queries && yarn test:headers && yarn test:schematics",
-    "test-only": "jest --config jest.config.js",
-    "test:testing": "jest --config testing/jest.config.js",
-    "test:http": "jest --config http/jest.config.js",
-    "test:persisted-queries": "jest --config persisted-queries/jest.config.js",
-    "test:headers": "jest --config headers/jest.config.js",
-    "test:schematics": "jest --config schematics/jest.config.js",
+    "test": "jest --config jest.config.js",
     "prebuild": "rm -rf build/",
     "deploy": "yarn build && npm publish build",
     "deploy:next": "yarn build && npm publish build --tag next"

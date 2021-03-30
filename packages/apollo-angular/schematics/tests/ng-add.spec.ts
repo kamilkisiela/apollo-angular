@@ -15,7 +15,7 @@ describe('ng-add', () => {
 
   beforeEach(async () => {
     appTree = await createTestApp();
-    runner = new SchematicTestRunner('schematics', collectionPath);
+    runner = new SchematicTestRunner('apollo-angular', collectionPath);
   });
 
   test('should update package.json dependencies', async () => {

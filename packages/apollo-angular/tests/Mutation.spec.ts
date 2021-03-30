@@ -1,5 +1,3 @@
-import {setupAngular} from './_setup';
-
 import {Injectable} from '@angular/core';
 import {TestBed, inject} from '@angular/core/testing';
 import {gql} from '@apollo/client/core';
@@ -35,8 +33,6 @@ describe('Mutation', () => {
 
     return apolloMock;
   }
-
-  beforeAll(() => setupAngular());
 
   beforeEach(() => {
     TestBed.configureTestingModule({

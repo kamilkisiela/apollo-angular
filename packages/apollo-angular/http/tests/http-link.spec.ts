@@ -1,5 +1,3 @@
-import {setupAngular} from './_setup';
-
 import {TestBed, inject, async} from '@angular/core/testing';
 import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {
@@ -20,8 +18,6 @@ const noop = () => {
 describe('HttpLink', () => {
   let httpLink: HttpLink;
   let httpBackend: HttpTestingController;
-
-  beforeAll(() => setupAngular());
 
   beforeEach(() => {
     TestBed.configureTestingModule({

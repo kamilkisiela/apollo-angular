@@ -1,4 +1,3 @@
-import {setupAngular} from './_setup';
 import {Apollo} from 'apollo-angular';
 import {InMemoryCache, gql} from '@apollo/client/core';
 import {TestBed, inject} from '@angular/core/testing';
@@ -14,8 +13,6 @@ import {
 describe('Integration', () => {
   let apollo: Apollo;
   let backend: ApolloTestingController;
-
-  beforeAll(() => setupAngular());
 
   beforeEach(() => {
     TestBed.configureTestingModule({

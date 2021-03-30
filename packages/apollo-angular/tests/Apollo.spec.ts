@@ -1,5 +1,3 @@
-import {setupAngular} from './_setup';
-
 import {NgZone} from '@angular/core';
 import {TestBed, TestBedStatic, inject, async} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
@@ -29,7 +27,6 @@ function mockApollo(link: ApolloLink, _ngZone: NgZone) {
 describe('Apollo', () => {
   let ngZone: NgZone;
   let testBed: TestBedStatic;
-  beforeAll(() => setupAngular());
 
   beforeEach(() => {
     testBed = TestBed.configureTestingModule({
