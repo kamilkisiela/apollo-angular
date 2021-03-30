@@ -41,7 +41,7 @@ yarn add @graphql-codegen/cli @graphql-codegen/typescript-apollo-angular
 [GraphQL ESLint](https://github.com/dotansimha/graphql-eslint/) is a parser, plugin and set rules for GraphQL (for schema and operations). Easily customizable with custom rules. Integrates with IDEs and modern GraphQL tools.
 
 - Integrates with ESLint core (as a ESTree parser).
-- Works on `.graphql` files, `gql` usages and `/* GraphQL */` magic comments.
+- Works on `.graphql` files, `gql` or `graphql` usages and `/* GraphQL */` magic comments.
 - Lints both GraphQL schema and GraphQL operations.
 - Extended type info for more advanced usages
 - Supports ESLint directives (for example: `disable-next-line`)

@@ -17,7 +17,7 @@ can also put into your Apollo Client code.
 
 When we are using a basic query, we can use the `Apollo.watchQuery` method in a
 very simple way. We simply need to parse our query into a GraphQL document using
-the `gql` tag from `@apollo/client/core` library.
+the `gql` tag from `apollo-angular` library.
 
 For instance, [in our example](https://graphql-voter-app.herokuapp.com/), we want to display a list of posts in `Posts` component:
 
