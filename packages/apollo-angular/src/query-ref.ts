@@ -52,9 +52,7 @@ export type QueryRefFromDocument<
 
 export class QueryRef<T, V = EmptyObject> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
-  public options: ObservableQuery<T, V>['options'];
   public queryId: ObservableQuery<T, V>['queryId'];
-  public variables: V;
 
   constructor(
     private obsQuery: ObservableQuery<T, V>,
@@ -70,6 +68,14 @@ export class QueryRef<T, V = EmptyObject> {
   }
 
   // ObservableQuery's methods
+
+  public get options() {
+    return this.obsQuery.options;
+  }
+
+  public get variables() {
+    return this.obsQuery.variables;
+  }
 
   public result(): Promise<ApolloQueryResult<T>> {
     return this.obsQuery.result();
