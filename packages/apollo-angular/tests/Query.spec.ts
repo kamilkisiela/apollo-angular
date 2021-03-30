@@ -1,10 +1,7 @@
-import {setupAngular} from './_setup';
-
 import {Injectable} from '@angular/core';
-import {TestBed, inject} from '@angular/core/testing';
-import {gql} from '@apollo/client/core';
+import {TestBed} from '@angular/core/testing';
 
-import {Query, Apollo} from '../src';
+import {Query, Apollo, gql} from '../src';
 
 const query = gql`
   query heroes {
@@ -56,8 +53,6 @@ describe('Query', () => {
     return apolloMock;
   }
 
-  beforeAll(() => setupAngular());
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -69,15 +64,10 @@ describe('Query', () => {
         HeroesNamedQuery,
       ],
     });
-  });
 
-  beforeEach(inject(
-    [HeroesQuery, HeroesNamedQuery],
-    (_heroesQuery: HeroesQuery, _heroesNamedQuery: HeroesNamedQuery) => {
-      heroesQuery = _heroesQuery;
-      heroesNamedQuery = _heroesNamedQuery;
-    },
-  ));
+    heroesQuery = TestBed.inject(HeroesQuery);
+    heroesNamedQuery = TestBed.inject(HeroesNamedQuery);
+  });
 
   test('should have document defined', () => {
     expect(heroesQuery.document).toEqual(query);

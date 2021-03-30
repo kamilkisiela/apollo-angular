@@ -1,10 +1,7 @@
-import {setupAngular} from './_setup';
-
 import {Injectable} from '@angular/core';
-import {TestBed, inject} from '@angular/core/testing';
-import {gql} from '@apollo/client/core';
+import {TestBed} from '@angular/core/testing';
 
-import {Subscription, Apollo} from '../src';
+import {Subscription, Apollo, gql} from '../src';
 
 const query = gql`
   query heroes {
@@ -36,8 +33,6 @@ describe('Subscription', () => {
     return apolloMock;
   }
 
-  beforeAll(() => setupAngular());
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -48,11 +43,8 @@ describe('Subscription', () => {
         HeroesSubscription,
       ],
     });
+    heroes = TestBed.inject(HeroesSubscription);
   });
-
-  beforeEach(inject([HeroesSubscription], (_heroes: HeroesSubscription) => {
-    heroes = _heroes;
-  }));
 
   test('should have document defined', () => {
     expect(heroes.document).toEqual(query);

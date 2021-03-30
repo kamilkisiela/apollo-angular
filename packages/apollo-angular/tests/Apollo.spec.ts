@@ -1,18 +1,12 @@
-import {setupAngular} from './_setup';
-
 import {NgZone} from '@angular/core';
-import {TestBed, TestBedStatic, inject, async} from '@angular/core/testing';
+import {TestBed, TestBedStatic} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
-import {
-  ApolloLink,
-  InMemoryCache,
-  NetworkStatus,
-  gql,
-} from '@apollo/client/core';
+import {ApolloLink, InMemoryCache, NetworkStatus} from '@apollo/client/core';
 import {mockSingleLink} from '@apollo/client/testing';
 
 import {Apollo, ApolloBase} from '../src/apollo';
+import {gql} from '../src/gql';
 import {ZoneScheduler} from '../src/utils';
 
 function mockApollo(link: ApolloLink, _ngZone: NgZone) {
@@ -29,7 +23,6 @@ function mockApollo(link: ApolloLink, _ngZone: NgZone) {
 describe('Apollo', () => {
   let ngZone: NgZone;
   let testBed: TestBedStatic;
-  beforeAll(() => setupAngular());
 
   beforeEach(() => {
     testBed = TestBed.configureTestingModule({
@@ -51,7 +44,7 @@ describe('Apollo', () => {
       });
 
       expect(apollo.default() instanceof ApolloBase).toBe(true);
-      expect(apollo.default().getClient()).toBeDefined();
+      expect(apollo.default().client).toBeDefined();
     });
   });
 
@@ -68,7 +61,7 @@ describe('Apollo', () => {
       );
 
       expect(apollo.use('extra') instanceof ApolloBase).toBe(true);
-      expect(apollo.use('extra').getClient()).toBeDefined();
+      expect(apollo.use('extra').client).toBeDefined();
     });
   });
 
@@ -81,8 +74,14 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
-      const options = {query: 'gql'} as any;
+      const client = apollo.client;
+      const options = {
+        query: gql`
+          {
+            test
+          }
+        `,
+      };
 
       client.watchQuery = jest.fn().mockReturnValue(new Observable());
       apollo.watchQuery(options);
@@ -168,7 +167,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
 
       const options = {query: 'gql'} as any;
       client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
@@ -196,7 +195,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
 
       client.query = jest.fn<any, any>((options) => {
         if (options.used) {
@@ -235,7 +234,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
 
       client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
 
@@ -305,7 +304,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
 
       const options = {
         mutation: gql`
@@ -348,7 +347,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
 
       client.mutate = jest.fn<any, any>((options) => {
         if (options.used) {
@@ -387,7 +386,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
 
       client.mutate = jest.fn().mockReturnValue(Promise.resolve('mutation'));
 
@@ -562,7 +561,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
 
       client.subscribe = jest.fn().mockReturnValue(
         of({
@@ -594,7 +593,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
       const options = {query: 'gql'} as any;
 
       client.subscribe = jest.fn().mockReturnValue(['subscription']);
@@ -613,7 +612,7 @@ describe('Apollo', () => {
         cache: new InMemoryCache(),
       });
 
-      const client = apollo.getClient();
+      const client = apollo.client;
       const options = {query: 'gql'} as any;
 
       client.subscribe = jest.fn().mockReturnValue(['subscription']);
@@ -786,46 +785,46 @@ describe('Apollo', () => {
     });
   });
 
-  test('should use HttpClient', async(
-    inject([Apollo], (apollo: Apollo) => {
-      expect.assertions(1);
-      const op = {
-        query: gql`
-          query heroes {
-            heroes {
-              name
-              __typename
-            }
+  test('should use HttpClient', (done) => {
+    expect.assertions(1);
+    const apollo = testBed.inject(Apollo);
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+            __typename
           }
-        `,
-        variables: {},
-      };
-      const data = {
-        heroes: [
-          {
-            name: 'Superman',
-            __typename: 'Hero',
-          },
-        ],
-      };
-
-      // create
-      apollo.create<any>({
-        link: mockSingleLink({request: op, result: {data}}),
-        cache: new InMemoryCache(),
-      });
-
-      // query
-      apollo.query<any>(op).subscribe({
-        next: (result) => {
-          expect(result.data).toMatchObject(data);
+        }
+      `,
+      variables: {},
+    };
+    const data = {
+      heroes: [
+        {
+          name: 'Superman',
+          __typename: 'Hero',
         },
-        error: (e) => {
-          throw new Error(e);
-        },
-      });
-    }),
-  ));
+      ],
+    };
+
+    // create
+    apollo.create<any>({
+      link: mockSingleLink({request: op, result: {data}}),
+      cache: new InMemoryCache(),
+    });
+
+    // query
+    apollo.query<any>(op).subscribe({
+      next: (result) => {
+        expect(result.data).toMatchObject(data);
+        done();
+      },
+      error: (e) => {
+        done.fail(e);
+      },
+    });
+  });
 
   test('should useInitialLoading', async (done) => {
     expect.assertions(3);
@@ -1002,11 +1001,11 @@ describe('Apollo', () => {
   test('should remove default client', () => {
     const apollo = mockApollo(mockSingleLink(), ngZone);
 
-    expect(apollo.getClient()).toBeDefined();
+    expect(apollo.client).toBeDefined();
 
     apollo.removeClient();
 
-    expect(apollo.getClient()).toBeUndefined();
+    expect(apollo.client).toBeUndefined();
   });
 
   test('should remove named client', () => {
@@ -1017,12 +1016,12 @@ describe('Apollo', () => {
       cache: new InMemoryCache(),
     });
 
-    expect(apollo.getClient()).toBeDefined();
-    expect(apollo.use('test').getClient()).toBeDefined();
+    expect(apollo.client).toBeDefined();
+    expect(apollo.use('test').client).toBeDefined();
 
     apollo.removeClient('test');
 
-    expect(apollo.getClient()).toBeDefined();
+    expect(apollo.client).toBeDefined();
     expect(apollo.use('test')).toBeUndefined();
   });
 });

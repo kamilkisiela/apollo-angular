@@ -1,6 +1,4 @@
-import {setupAngular} from './_setup';
-
-import {TestBed, inject, async} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {
   HttpClientTestingModule,
@@ -21,31 +19,18 @@ describe('HttpLink', () => {
   let httpLink: HttpLink;
   let httpBackend: HttpTestingController;
 
-  beforeAll(() => setupAngular());
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ApolloModule, HttpClientModule, HttpClientTestingModule],
       providers: [HttpLink],
     });
+    httpLink = TestBed.inject(HttpLink);
+    httpBackend = TestBed.inject(HttpTestingController);
   });
 
-  beforeEach(async(
-    inject(
-      [HttpLink, HttpTestingController],
-      (_httpLink: HttpLink, _httpBackend: HttpTestingController) => {
-        httpLink = _httpLink;
-        httpBackend = _httpBackend;
-      },
-    ),
-  ));
-
-  afterEach(inject(
-    [HttpTestingController],
-    (backend: HttpTestingController) => {
-      backend.verify();
-    },
-  ));
+  afterEach(() => {
+    TestBed.inject(HttpTestingController).verify();
+  });
 
   test('should use HttpClient', () => {
     const link = httpLink.create({uri: 'graphql'});

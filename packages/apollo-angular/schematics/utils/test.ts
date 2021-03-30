@@ -8,9 +8,9 @@ import {
 const collectionPath = join(__dirname, '../collection.json');
 
 export async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
-  const baseRunner = new SchematicTestRunner('schematics', collectionPath);
+  const runner = new SchematicTestRunner('apollo-angular', collectionPath);
 
-  const workspaceTree = await baseRunner
+  const workspaceTree = await runner
     .runExternalSchematicAsync('@schematics/angular', 'workspace', {
       name: 'workspace',
       version: '11.0.0',
@@ -18,7 +18,7 @@ export async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
     })
     .toPromise();
 
-  return baseRunner
+  return runner
     .runExternalSchematicAsync(
       '@schematics/angular',
       'application',
