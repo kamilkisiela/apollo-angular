@@ -1,5 +1,5 @@
 import {NgZone} from '@angular/core';
-import {TestBed, TestBedStatic, inject, async} from '@angular/core/testing';
+import {TestBed, TestBedStatic} from '@angular/core/testing';
 import {Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
 import {ApolloLink, InMemoryCache, NetworkStatus} from '@apollo/client/core';
