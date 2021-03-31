@@ -16,12 +16,22 @@ Steps to reproduce the behavior:
 
 **Environment:**
 
-- `@apollo/client`:
-- `apollo-angular`:
-- `graphql`:
-- `@angular/core`:
-- `@angular/cli`:
-- `typescript`:
+<!--
+Plase run
+
+  npm list --depth 0 "@apollo/client" "apollo-angular" "graphql" "@angular/core" "@angular/cli" "typescript"
+
+to gather the related package versions
+-->
+
+```
+- @angular/cli@XX.YY.ZZ
+- @angular/core@XX.YY.ZZ
+- @apollo/client@XX.YY.ZZ
+- apollo-angular@XX.YY.ZZ
+- graphql@XX.YY.ZZ
+- typescript@XX.YY.ZZ
+```
 
 **Additional context**
 
