@@ -1,6 +1,7 @@
 {
   "name": "apollo-angular-website",
   "scripts": {
+    "postinstall": "patch-package",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "deploy": "docusaurus deploy"
@@ -10,6 +11,7 @@
     "@docusaurus/plugin-client-redirects": "2.0.0-alpha.72",
     "@docusaurus/plugin-ideal-image": "2.0.0-alpha.72",
     "@docusaurus/preset-classic": "2.0.0-alpha.72",
+    "patch-package": "^6.4.7",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
