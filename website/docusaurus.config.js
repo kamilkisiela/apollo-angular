@@ -134,11 +134,10 @@ module.exports = {
       trackingID: 'UA-125180910-5',
     },
     algolia: {
-      apiKey: '6943271737537e235c3761fcce4f5a2f',
-      indexName: 'apollo-angular',
-      searchParameters: {
-        facetFilters: [`version:${versions[0]}`],
-      },
+      appId: 'ANRJKXZTRW',
+      apiKey: '811d453fc7f80306044dd5cc4b87e064',
+      indexName: 'theguild',
+      algoliaOptions: {}
     },
   },
   scripts: ['https://the-guild.dev/static/banner.js'],
