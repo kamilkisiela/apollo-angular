@@ -58,8 +58,8 @@ export interface WatchQueryOptions<TVariables = EmptyObject, TData = any>
   useInitialLoading?: boolean;
 }
 
-export interface MutationOptions<TVariables = EmptyObject, TData = any>
-  extends CoreMutationOptions<TVariables, TData> {
+export interface MutationOptions<TData = any, TVariables = EmptyObject>
+  extends CoreMutationOptions<TData, TVariables> {
   /**
    * Observable starts with `{ loading: true }`.
    * There's a big chance the next major version will enable that by default.
