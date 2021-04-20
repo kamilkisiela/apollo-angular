@@ -59,3 +59,7 @@ html[data-theme='dark'] .DocSearch {
     var(--ifm-color-emphasis-100) 100%
   );
 }
+
+.menu button {
+  margin-bottom: 70px;
+}
