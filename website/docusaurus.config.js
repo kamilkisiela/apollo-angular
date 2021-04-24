@@ -140,7 +140,7 @@ module.exports = {
       algoliaOptions: {}
     },
   },
-  scripts: ['https://the-guild.dev/static/banner.js'],
+  scripts: [],
   stylesheets: [
     'https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap',
   ],

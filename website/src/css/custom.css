@@ -20,6 +20,10 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
+.DocSearch {
+  display: none !important;
+}
+
 html[data-theme='light'] .DocSearch {
   /* --docsearch-primary-color: var(--ifm-color-primary); */
   /* --docsearch-text-color: var(--ifm-font-color-base); */
