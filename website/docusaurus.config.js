@@ -133,14 +133,7 @@ module.exports = {
     gtag: {
       trackingID: 'UA-125180910-5',
     },
-    algolia: {
-      appId: 'ANRJKXZTRW',
-      apiKey: '811d453fc7f80306044dd5cc4b87e064',
-      indexName: 'theguild',
-      algoliaOptions: {}
-    },
   },
-  scripts: ['https://the-guild.dev/static/banner.js'],
   stylesheets: [
     'https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap',
   ],
