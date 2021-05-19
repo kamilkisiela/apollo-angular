@@ -29,6 +29,7 @@ const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
   imports: [
     // ...
     BrowserModule,
+    BrowserTransferStateModule,
     ApolloModule,
     HttpClientModule,
   ],
