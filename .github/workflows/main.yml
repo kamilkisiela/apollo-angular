@@ -43,8 +43,8 @@ jobs:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
-  test:
-    name: Test
+  tests:
+    name: Tests
     needs: build
     runs-on: ubuntu-latest
 
