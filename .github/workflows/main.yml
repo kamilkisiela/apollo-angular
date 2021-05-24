@@ -3,20 +3,16 @@ name: CI
 on: [pull_request, push]
 
 jobs:
-  test:
-    name: Test on node ${{ matrix.node_version }}
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node_version: [12, 14]
-
     steps:
       - uses: actions/checkout@master
 
-      - name: Use Node.js ${{ matrix.node_version }}
+      - name: Use Node.js 14
         uses: actions/setup-node@master
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: 14
 
       - uses: actions/cache@v2
         name: Cache node_modules
@@ -32,9 +28,6 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Test
-        run: yarn test
-
       - name: Pack
         run: (cd packages/apollo-angular/build && yarn pack --filename apollo-angular.tgz && mv apollo-angular.tgz ../apollo-angular.tgz)
 
@@ -44,9 +37,35 @@ jobs:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Use Node.js 14
+        uses: actions/setup-node@master
+        with:
+          node-version: 14
+
+      - uses: actions/cache@v2
+        name: Cache node_modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install
+        run: yarn
+
+      - name: Test
+        run: yarn test
+
   angular:
     name: Test on Angular ${{ matrix.angular_version }}
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
