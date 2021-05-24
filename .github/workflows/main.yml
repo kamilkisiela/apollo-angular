@@ -116,7 +116,7 @@ jobs:
         run: npm publish ./packages/apollo-angular/apollo-angular.tgz --registry http://0.0.0.0:4873 --access public
 
       - name: Install Angular CLI
-        run: npm install @angular/cli@${{ matrix.angular_version }}
+        run: npm install @angular/cli@${{ matrix.angular_version }} --global
 
       - name: Create Application
         run: ng new testapp --package-manager npm --defaults --minimal
