@@ -76,6 +76,7 @@ jobs:
         with:
           path: verdaccio.yaml
           contents: |
+            storage: /tmp/verdaccio-workspace/storage
             auth:
               auth-memory:
                 users:
@@ -105,7 +106,7 @@ jobs:
           write-mode: overwrite
 
       - name: Install Verdaccio
-        run: npm install -g verdaccio verdaccio-auth-memory
+        run: npm install -g verdaccio verdaccio-auth-memory verdaccio-memory
 
       - name: Start Verdaccio
         run: nohup verdaccio --config verdaccio.yaml &> mktemp.log &
