@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        angular_version: [10, 11, 12]
+        angular_version: [9, 10, 11, 12]
     steps:
       - name: Use Node.js 14
         uses: actions/setup-node@master
