@@ -71,54 +71,54 @@ jobs:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
-      - uses: DamianReeves/write-file-action@master
-        name: Write verdaccio config
-        with:
-          path: verdaccio.yaml
-          contents: |
-            store:
-              memory:
-                limit: 1000
-            auth:
-              auth-memory:
-                users:
-                  foo:
-                    name: test
-                    password: test
-            storage: ./storage
-            server:
-              keepAliveTimeout: 60
-            uplinks:
-              npmjs:
-                url: https://registry.npmjs.org
-            packages:
-              '@*/*':
-                access: $all
-                publish: $all
-                proxy: npmjs
-              '**':
-                access: $all
-                publish: $all
-                proxy: npmjs
-            middlewares:
-              audit:
-                enabled: true
-            logs:
-              - {type: stdout, format: pretty, level: trace}
-          write-mode: overwrite
+      # - uses: DamianReeves/write-file-action@master
+      #   name: Write verdaccio config
+      #   with:
+      #     path: verdaccio.yaml
+      #     contents: |
+      #       store:
+      #         memory:
+      #           limit: 1000
+      #       auth:
+      #         auth-memory:
+      #           users:
+      #             foo:
+      #               name: test
+      #               password: test
+      #       storage: ./storage
+      #       server:
+      #         keepAliveTimeout: 60
+      #       uplinks:
+      #         npmjs:
+      #           url: https://registry.npmjs.org
+      #       packages:
+      #         '@*/*':
+      #           access: $all
+      #           publish: $all
+      #           proxy: npmjs
+      #         '**':
+      #           access: $all
+      #           publish: $all
+      #           proxy: npmjs
+      #       middlewares:
+      #         audit:
+      #           enabled: true
+      #       logs:
+      #         - {type: stdout, format: pretty, level: trace}
+      #     write-mode: overwrite
 
-      - name: Install Verdaccio
-        run: npm install -g verdaccio verdaccio-auth-memory verdaccio-memory
+      # - name: Install Verdaccio
+      #   run: npm install -g verdaccio verdaccio-auth-memory verdaccio-memory
 
-      - name: Start Verdaccio
-        run: nohup verdaccio --config verdaccio.yaml &> mktemp.log &
+      # - name: Start Verdaccio
+      #   run: nohup verdaccio --config verdaccio.yaml &> mktemp.log &
 
-      - name: Wait for Verdaccio
-        run: grep -q 'http address' <(tail -f mktemp.log)
-        timeout-minutes: 3
+      # - name: Wait for Verdaccio
+      #   run: grep -q 'http address' <(tail -f mktemp.log)
+      #   timeout-minutes: 3
 
-      - name: Publish
-        run: npm publish ./packages/apollo-angular/apollo-angular.tgz --registry http://0.0.0.0:4873 --access public
+      # - name: Publish
+      #   run: npm publish ./packages/apollo-angular/apollo-angular.tgz --registry http://0.0.0.0:4873 --access public
 
       - name: Install Angular CLI
         run: npm install @angular/cli@${{ matrix.angular_version }} --global
@@ -127,6 +127,5 @@ jobs:
         run: ng new testapp --package-manager npm --defaults --minimal
 
       - name: ng add apollo-angular
-        working-directory: testapp
-        run: yarn ng add apollo-angular --registry http://0.0.0.0:4873 --skip-confirmation --defaults
+        run: cd testapp && yarn ng add ../packages/apollo-angular/apollo-angular.tgz --registry http://0.0.0.0:4873 --skip-confirmation --defaults
 
