@@ -3,20 +3,16 @@ name: CI
 on: [pull_request, push]
 
 jobs:
-  test:
-    name: Test on node ${{ matrix.node_version }}
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node_version: [12, 14]
-
     steps:
       - uses: actions/checkout@master
 
-      - name: Use Node.js ${{ matrix.node_version }}
+      - name: Use Node.js 14
         uses: actions/setup-node@master
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: 14
 
       - uses: actions/cache@v2
         name: Cache node_modules
@@ -32,5 +28,87 @@ jobs:
       - name: Build
         run: yarn build
 
+      - uses: actions/cache@v2
+        name: Share build
+        with:
+          path: 'packages/apollo-angular/build'
+          key: ${{ github.sha }}
+
+      - name: Pack
+        run: (cd packages/apollo-angular/build && yarn pack --filename apollo-angular.tgz && mv apollo-angular.tgz ../apollo-angular.tgz)
+
+      - uses: actions/cache@v2
+        name: Share tarball
+        with:
+          path: 'packages/apollo-angular/apollo-angular.tgz'
+          key: ${{ github.sha }}
+
+  tests:
+    name: Tests
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Use Node.js 14
+        uses: actions/setup-node@master
+        with:
+          node-version: 14
+
+      - uses: actions/cache@v2
+        name: Cache node_modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install
+        run: yarn
+
+      - uses: actions/cache@v2
+        name: Share build
+        with:
+          path: 'packages/apollo-angular/build'
+          key: ${{ github.sha }}
+
       - name: Test
         run: yarn test
+
+  angular:
+    name: Test on Angular ${{ matrix.angular_version }}
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        angular_version: [9, 10, 11, 12]
+    steps:
+      - name: Use Node.js 14
+        uses: actions/setup-node@master
+        with:
+          node-version: 14
+
+      - uses: actions/cache@v2
+        name: Share tarball
+        with:
+          path: 'packages/apollo-angular/apollo-angular.tgz'
+          key: ${{ github.sha }}
+
+      - name: Install Angular CLI
+        run: npm install @angular/cli@${{ matrix.angular_version }} --global
+
+      - name: ng new
+        run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
+
+      - name: ng add apollo-angular
+        if: ${{ matrix.angular_version >= 12 }}
+        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation)
+
+      - name: ng add apollo-angular
+        if: ${{ matrix.angular_version < 12 }}
+        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose)
+
+      - name: ng build
+        run: (cd testapp && yarn ng run testapp:build:production)
+
