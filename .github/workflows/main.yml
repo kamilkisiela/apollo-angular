@@ -76,7 +76,9 @@ jobs:
         with:
           path: verdaccio.yaml
           contents: |
-            storage: /tmp/verdaccio-workspace/storage
+            store:
+              memory:
+                limit: 1000
             auth:
               auth-memory:
                 users:
