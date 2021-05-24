@@ -67,7 +67,7 @@ jobs:
         run: npm install @angular/cli@${{ matrix.angular_version }} --global
 
       - name: Create Application
-        run: ng new testapp --package-manager npm --defaults --minimal
+        run: ng new testapp --package-manager npm --defaults --minimal --skip-git
 
       - name: ng add apollo-angular
         run: cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose
