@@ -92,9 +92,11 @@ jobs:
               '@*/*':
                 access: $all
                 publish: $all
+                proxy: npmjs
               '**':
                 access: $all
                 publish: $all
+                proxy: npmjs
             middlewares:
               audit:
                 enabled: true
