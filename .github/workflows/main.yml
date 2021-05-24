@@ -66,9 +66,17 @@ jobs:
       - name: Install Angular CLI
         run: npm install @angular/cli@${{ matrix.angular_version }} --global
 
-      - name: Create Application
+      - name: ng new
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
       - name: ng add apollo-angular
-        run: cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose
+        if: ${{ matrix.angular_version >= 12 }}
+        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation)
+
+      - name: ng add apollo-angular
+        if: ${{ matrix.angular_version < 12 }}
+        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose)
+
+      - name: ng build
+        run: (cd testapp && yarn ng run testapp:build:production)
 
