@@ -78,5 +78,5 @@ jobs:
         run: ng new testapp --package-manager npm --defaults --minimal
 
       - name: ng add apollo-angular
-        run: cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz
+        run: cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults
 
