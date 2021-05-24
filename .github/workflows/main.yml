@@ -28,6 +28,12 @@ jobs:
       - name: Build
         run: yarn build
 
+      - uses: actions/cache@v2
+        name: Share build
+        with:
+          path: 'packages/apollo-angular/build'
+          key: ${{ github.sha }}
+
       - name: Pack
         run: (cd packages/apollo-angular/build && yarn pack --filename apollo-angular.tgz && mv apollo-angular.tgz ../apollo-angular.tgz)
 
@@ -60,6 +66,12 @@ jobs:
 
       - name: Install
         run: yarn
+
+      - uses: actions/cache@v2
+        name: Share build
+        with:
+          path: 'packages/apollo-angular/build'
+          key: ${{ github.sha }}
 
       - name: Test
         run: yarn test
