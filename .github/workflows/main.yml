@@ -44,7 +44,7 @@ jobs:
         run: yarn test
 
       - name: Pack
-        run: yarn workspace apollo-angular pack --filename apollo-angular.tgz
+        run: yarn workspace apollo-angular pack --filename apollo-angular.tgz --dir build
 
       - uses: actions/cache@v2
         name: Share tarball
