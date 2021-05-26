@@ -2,6 +2,8 @@
 
 ### vNext
 
+### v2.6.0
+
 - Support TypedDocumentNode
 
 ### v2.5.0
