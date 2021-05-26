@@ -17,11 +17,11 @@ export interface ExtraSubscriptionOptions {
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface WatchQueryOptionsAlone<TVariables>
-  extends Omit<WatchQueryOptions<TVariables>, 'query' | 'variables'> {}
+export interface WatchQueryOptionsAlone<TVariables, TData>
+  extends Omit<WatchQueryOptions<TVariables, TData>, 'query' | 'variables'> {}
 
-export interface QueryOptionsAlone<TVariables>
-  extends Omit<CoreQueryOptions<TVariables>, 'query' | 'variables'> {}
+export interface QueryOptionsAlone<TVariables, TData>
+  extends Omit<CoreQueryOptions<TVariables, TData>, 'query' | 'variables'> {}
 
 export interface MutationOptionsAlone<TData, TVariables>
   extends Omit<
@@ -29,11 +29,14 @@ export interface MutationOptionsAlone<TData, TVariables>
     'mutation' | 'variables'
   > {}
 
-export interface SubscriptionOptionsAlone<TVariables>
-  extends Omit<CoreSubscriptionOptions<TVariables>, 'query' | 'variables'> {}
+export interface SubscriptionOptionsAlone<TVariables, TData>
+  extends Omit<
+    CoreSubscriptionOptions<TVariables, TData>,
+    'query' | 'variables'
+  > {}
 
-export interface WatchQueryOptions<TVariables>
-  extends CoreWatchQueryOptions<TVariables> {
+export interface WatchQueryOptions<TVariables, TData>
+  extends CoreWatchQueryOptions<TVariables, TData> {
   /**
    * Observable starts with `{ loading: true }`.
    * There's a big chance the next major version will enable that by default.

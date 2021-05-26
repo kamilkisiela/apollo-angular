@@ -2,6 +2,8 @@
 
 ### vNext
 
+- Support TypedDocumentNode
+
 ### v2.5.0
 
 - Support Angular 12

@@ -7,5 +7,5 @@ module.exports = {
     flatModuleFile: 'ngApollo',
     umdModuleIds,
   },
-  whitelistedNonPeerDependencies: ['semver', 'extract-files'],
+  whitelistedNonPeerDependencies: ['semver', 'extract-files', '@graphql-typed-document-node/core'],
 };
