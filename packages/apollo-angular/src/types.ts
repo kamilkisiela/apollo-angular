@@ -5,6 +5,7 @@ import {
   SubscriptionOptions as CoreSubscriptionOptions,
   ApolloClientOptions,
 } from '@apollo/client/core';
+import {TypedDocumentNode} from '@graphql-typed-document-node/core';
 import {ExecutionResult} from 'graphql';
 
 export type EmptyObject = {
@@ -16,6 +17,16 @@ export interface ExtraSubscriptionOptions {
 }
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export type ResultOf<T extends TypedDocumentNode> = T extends TypedDocumentNode<
+  infer R
+>
+  ? R
+  : never;
+
+export type VariablesOf<
+  T extends TypedDocumentNode
+> = T extends TypedDocumentNode<any, infer V> ? V : never;
 
 export interface WatchQueryOptionsAlone<TVariables, TData>
   extends Omit<WatchQueryOptions<TVariables, TData>, 'query' | 'variables'> {}
