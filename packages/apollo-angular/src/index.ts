@@ -10,5 +10,8 @@ export {
   WatchQueryOptions,
   ExtraSubscriptionOptions,
   Flags,
+  ResultOf,
+  VariablesOf,
 } from './types';
 export {gql} from '@apollo/client/core';
+export {gql as graphql} from '@apollo/client/core';
