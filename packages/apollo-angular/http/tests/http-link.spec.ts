@@ -4,7 +4,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import {Apollo, ApolloModule} from 'apollo-angular';
+import {Apollo, ApolloModule} from '../../src';
 import {execute, ApolloLink, InMemoryCache, gql} from '@apollo/client/core';
 import {mergeMap} from 'rxjs/operators';
 import {stripIgnoredCharacters, print} from 'graphql';
@@ -604,11 +604,11 @@ describe('HttpLink', () => {
         return m2;
       }),
     ).subscribe({
-      next(result) {
+      next(result: any) {
         expect(result.data).toMatchObject(data2);
         done();
       },
-      error(error) {
+      error(error: any) {
         done.fail(error);
       },
     });

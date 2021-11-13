@@ -1,4 +1,4 @@
-import {ApolloModule, Apollo} from 'apollo-angular';
+import {ApolloModule, Apollo} from '../../src';
 import {
   ApolloLink,
   Operation as LinkOperation,

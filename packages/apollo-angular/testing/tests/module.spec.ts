@@ -1,4 +1,4 @@
-import {Apollo} from 'apollo-angular';
+import {Apollo} from '../../src';
 import {TestBed} from '@angular/core/testing';
 import {InMemoryCache, ApolloReducerConfig, gql} from '@apollo/client/core';
 

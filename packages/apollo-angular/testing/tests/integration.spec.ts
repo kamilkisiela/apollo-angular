@@ -1,4 +1,4 @@
-import {Apollo} from 'apollo-angular';
+import {Apollo} from '../../src';
 import {InMemoryCache, gql} from '@apollo/client/core';
 import {TestBed} from '@angular/core/testing';
 import {addTypenameToDocument} from '@apollo/client/utilities';
@@ -47,11 +47,11 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: (result) => {
+      next: (result: any) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: (e) => {
+      error: (e: any) => {
         done.fail(e);
       },
     });
@@ -80,11 +80,11 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: (result) => {
+      next: (result: any) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: (e) => {
+      error: (e: any) => {
         done.fail(e);
       },
     });
@@ -113,11 +113,11 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: (result) => {
+      next: (result: any) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: (e) => {
+      error: (e: any) => {
         done.fail(e);
       },
     });
@@ -149,11 +149,11 @@ describe('Integration', () => {
 
     // query
     apollo.query<any>(op).subscribe({
-      next: (result) => {
+      next: (result: any) => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: (e) => {
+      error: (e: any) => {
         done.fail(e);
       },
     });
@@ -211,7 +211,7 @@ describe('Integration', () => {
     };
 
     apollo.query<any>(op).subscribe({
-      next: (result) => {
+      next: (result: any) => {
         expect(result.data).toMatchObject(data);
         done();
       },
