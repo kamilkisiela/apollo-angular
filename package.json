@@ -15,6 +15,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@angular-devkit/build-angular": "^13.0.2",
     "@angular-devkit/core": "^13.0.0",
     "@angular-devkit/schematics": "^13.0.0",
     "@angular/animations": "^13.0.0",
