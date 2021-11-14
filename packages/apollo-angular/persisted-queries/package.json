@@ -8,8 +8,6 @@
   },
   "license": "MIT",
   "sideEffects": false,
-  "main": "../build/persisted-queries/bundle.umd.js",
-  "module": "../build/persisted-queries/src/index.js",
-  "jsnext:main": "../build/persisted-queries/src/index.js",
-  "typings": "../build/persisted-queries/src/index.d.ts"
+  "module": "../build/fesm2020/ngApolloLinkPersisted.mjs",
+  "typings": "../build/persisted-queries/index.d.ts"
 }

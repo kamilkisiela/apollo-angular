@@ -2,6 +2,9 @@
   "name": "apollo-angular-monorepo",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "prebuild": "rimraf packages/*/build/",
     "build": "yarn workspaces run build",
@@ -35,6 +38,7 @@
     "@types/node": "15.6.0",
     "@types/semver": "7.3.6",
     "babel-jest": "^27.3.1",
+    "browserlist": "^1.0.1",
     "cpx": "1.5.0",
     "graphql": "15.5.0",
     "husky": "4.3.8",
@@ -67,5 +71,10 @@
     "bracketSpacing": false,
     "singleQuote": true,
     "trailingComma": "all"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ]
 }

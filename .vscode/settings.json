@@ -7,7 +7,7 @@
     "**/.git": true,
     "**/.DS_Store": true,
     "**/node_modules/**": true,
-    "**/build/**": true,
+    "**/build/**": false,
     "**/coverage/**": true,
     "**/npm/**": true
   },

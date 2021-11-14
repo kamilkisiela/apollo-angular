@@ -5,8 +5,6 @@
     "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
   "sideEffects": false,
-  "main": "../build/testing/bundle.umd.js",
-  "module": "../build/testing/src/index.js",
-  "jsnext:main": "../build/testing/src/index.js",
-  "typings": "../build/testing/src/index.d.ts"
+  "module": "../build/fesm2020/ngApolloTesting.mjs",
+  "typings": "../build/testing/index.d.ts"
 }

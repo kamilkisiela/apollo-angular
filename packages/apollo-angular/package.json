@@ -9,8 +9,10 @@
   },
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ngApollo.umd.js",
-  "module": "build/fesm5/ngApollo.js",
+  "engines": {
+    "node": ">=14"
+  },
+  "module": "build/fesm2020/ngApollo.mjs",
   "typings": "build/ngApollo.d.ts",
   "homepage": "https://www.apollo-angular.com/",
   "repository": {
