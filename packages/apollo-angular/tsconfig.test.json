@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "target": "es6",
     "module": "commonjs",
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true

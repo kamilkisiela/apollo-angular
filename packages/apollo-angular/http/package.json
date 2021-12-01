@@ -8,8 +8,6 @@
   },
   "license": "MIT",
   "sideEffects": false,
-  "main": "../build/http/bundle.umd.js",
-  "module": "../build/http/src/index.js",
-  "jsnext:main": "../build/http/src/index.js",
-  "typings": "../build/http/src/index.d.ts"
+  "module": "../build/fesm2020/ngApolloLinkHttp.mjs",
+  "typings": "../build/http/index.d.ts"
 }

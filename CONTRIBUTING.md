@@ -8,12 +8,16 @@ Oh, and if you haven't already, sign up for the [Apollo Slack](https://www.apoll
 
 Here are some ways to contribute to the project, from easiest to most difficult:
 
-* [Reporting bugs](#reporting-bugs)
-* [Improving the documentation](#improving-the-documentation)
-* [Responding to issues](#responding-to-issues)
-* [Small bug fixes](#small-bug-fixes)
-* [Suggesting features](#suggesting-features)
-* [Big pull requests](#big-prs)
+- [Apollo Contributor Guide](#apollo-contributor-guide)
+  - [Issues](#issues)
+    - [Reporting bugs](#reporting-bugs)
+    - [Improving the documentation](#improving-the-documentation)
+    - [Responding to issues](#responding-to-issues)
+    - [Small bug fixes](#small-bug-fixes)
+    - [Suggesting features](#suggesting-features)
+  - [Big PRs](#big-prs)
+    - [Code review guidelines](#code-review-guidelines)
+    - [How to setup development environment](#how-to-setup-development-environment)
 
 ## Issues
 
@@ -81,8 +85,8 @@ It’s important that every piece of code in Apollo packages is reviewed by at l
 1. **Code has appropriate comments.** Code should be commented, or written in a clear “self-documenting” way.
 1. **Idiomatic use of the language.** In TypeScript, make sure the typings are specific and correct. In ES2015, make sure to use imports rather than require and const instead of var, etc. Ideally a linter enforces a lot of this, but use your common sense and follow the style of the surrounding code.
 
-
 ### How to setup development environment
+
 Run `npx lerna bootstrap` to download dependencies and link packages.
 
 After this run `yarn build` to generate `apollo-angular-*` packages.
