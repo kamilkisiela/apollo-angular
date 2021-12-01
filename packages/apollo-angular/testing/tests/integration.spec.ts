@@ -1,4 +1,4 @@
-import {Apollo} from '../../src';
+import {Apollo} from 'apollo-angular';
 import {InMemoryCache, gql} from '@apollo/client/core';
 import {TestBed} from '@angular/core/testing';
 import {addTypenameToDocument} from '@apollo/client/utilities';

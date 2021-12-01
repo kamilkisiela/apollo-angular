@@ -74,7 +74,7 @@ jobs:
           key: ${{ github.sha }}
 
       - name: Test
-        run: yarn test
+        run: yarn test --ci
 
   angular:
     name: Test on Angular ${{ matrix.angular_version }}
