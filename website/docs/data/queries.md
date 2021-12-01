@@ -27,7 +27,7 @@ import { Subscription } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
 
 // We use the gql tag to parse our query string into a query document
-const GET_POST = gql`
+const GET_POSTS = gql`
   query GetPosts {
     posts {
       id
@@ -232,7 +232,7 @@ import { Subscription } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
 
 // We use the gql tag to parse our query string into a query document
-const GET_POST = gql`
+const GET_POSTS = gql`
   query GetPosts {
     posts {
       id
@@ -286,7 +286,7 @@ import { Subscription } from 'rxjs';
 import { Apollo, QueryRef, gql } from 'apollo-angular';
 
 // We use the gql tag to parse our query string into a query document
-const GET_POST = gql`
+const GET_POSTS = gql`
   query GetPosts {
     posts {
       id
