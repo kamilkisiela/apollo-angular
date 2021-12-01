@@ -74,7 +74,7 @@ jobs:
           key: ${{ github.sha }}
 
       - name: Test
-        run: yarn test
+        run: yarn test --ci
 
   angular:
     name: Test on Angular ${{ matrix.angular_version }}
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        angular_version: [9, 10, 11, 12]
+        angular_version: [12, 13]
     steps:
       - name: Use Node.js 14
         uses: actions/setup-node@master

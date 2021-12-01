@@ -9,8 +9,10 @@
   },
   "license": "MIT",
   "sideEffects": false,
-  "main": "build/bundles/ngApollo.umd.js",
-  "module": "build/fesm5/ngApollo.js",
+  "engines": {
+    "node": ">=14"
+  },
+  "module": "build/fesm2020/ngApollo.mjs",
   "typings": "build/ngApollo.d.ts",
   "homepage": "https://www.apollo-angular.com/",
   "repository": {
@@ -28,16 +30,16 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.js && yarn build:schematics",
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
-    "test": "jest --config jest.config.js",
+    "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js",
     "prebuild": "rm -rf build/",
     "deploy": "yarn build && npm publish build",
     "deploy:next": "yarn build && npm publish build --tag next"
   },
   "peerDependencies": {
-    "@angular/core": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0",
+    "@angular/core": "^12.0.0 || ^13.0.0",
     "@apollo/client": "^3.0.0",
     "graphql": "^14.0.0 || ^15.0.0",
-    "rxjs": "^6.0.0",
+    "rxjs": "^6.0.0 || ^7.0.0",
     "zone.js": ">=0.10.0 <0.12.0"
   },
   "dependencies": {
