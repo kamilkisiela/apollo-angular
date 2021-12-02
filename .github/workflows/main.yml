@@ -114,7 +114,7 @@ jobs:
         run: (cd testapp && ng add @cypress/schematic --defaults --verbose --skip-confirmation)
 
       - name: Update Angular code
-        run: ../scripts/prepare-e2e.js testapp
+        run: ./scripts/prepare-e2e.js testapp
 
       - name: ng e2e
         run: (cd testapp && yarn ng run testapp:cypress-run:production)
