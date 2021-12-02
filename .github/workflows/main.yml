@@ -102,28 +102,20 @@ jobs:
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
       - name: ng add apollo-angular
-        working-directory: testapp
-        run: ng add ../../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation
+        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation)
 
       - name: ng build
-        working-directory: testapp
-        run: yarn ng run testapp:build:production
+        run: (cd testapp && yarn ng run testapp:build:production)
 
       - name: Setup E2E tests
-        working-directory: testapp
         run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
       - name: ng add cypress
-        working-directory: testapp
-        run: ng add @cypress/schematic --defaults --verbose --skip-confirmation
+        run: (testapp && ng add @cypress/schematic --defaults --verbose --skip-confirmation)
 
       - name: Update Angular code
-        run: |
-          ls
-          ls scripts
-          ./scripts/prepare-e2e.js testapp
+        run: ../scripts/prepare-e2e.js testapp
 
       - name: ng e2e
-        working-directory: testapp
-        run: yarn ng run testapp:cypress-run:production
+        run: (cd testapp && yarn ng run testapp:cypress-run:production)
 
