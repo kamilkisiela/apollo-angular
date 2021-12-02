@@ -120,7 +120,9 @@ jobs:
         run: (cd testapp && yarn ng run testapp:build:production)
 
       - name: Setup E2E tests
-        run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+        run: |
+          sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+          (cd testapp && yarn add -D cypress-fail-on-console-error)
 
       - name: ng add cypress
         run: (cd testapp && ng add @cypress/schematic --defaults --verbose --skip-confirmation)

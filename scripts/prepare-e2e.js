@@ -27,6 +27,11 @@ function updateCypress() {
     .replace(`cy.contains('sandbox app is running!')`, '');
 
   fs.writeFileSync(filepath, code, 'utf8');
+
+  fs.writeFileSync(path.join(cwd, `./${name}/cypress/support/index.ts`), `
+    import failOnConsoleError from 'cypress-fail-on-console-error';
+    failOnConsoleError();
+  `, 'utf8');
 }
 
 updateComponent();
