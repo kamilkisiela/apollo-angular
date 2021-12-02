@@ -102,7 +102,8 @@ jobs:
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
       - name: ng add apollo-angular
-        working-directory: ng add ../../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation
+        working-directory: testapp
+        run: ng add ../../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation
 
       - name: ng build
         working-directory: testapp
