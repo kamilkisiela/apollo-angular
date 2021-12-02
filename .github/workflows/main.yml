@@ -43,6 +43,12 @@ jobs:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
+      - uses: actions/cache@v2
+        name: Share script
+        with:
+          path: 'scripts/prepare-e2e.js'
+          key: ${{ github.sha }}
+
   tests:
     name: Tests
     needs: build
@@ -51,10 +57,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@master
         with:
-          node-version: 14
+          node-version: 16
 
       - uses: actions/cache@v2
         name: Cache node_modules
@@ -87,12 +93,18 @@ jobs:
       - name: Use Node.js 14
         uses: actions/setup-node@master
         with:
-          node-version: 14
+          node-version: 16
 
       - uses: actions/cache@v2
         name: Share tarball
         with:
           path: 'packages/apollo-angular/apollo-angular.tgz'
+          key: ${{ github.sha }}
+
+      - uses: actions/cache@v2
+        name: Share script
+        with:
+          path: 'scripts/prepare-e2e.js'
           key: ${{ github.sha }}
 
       - name: Install Angular CLI
@@ -102,13 +114,20 @@ jobs:
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
       - name: ng add apollo-angular
-        if: ${{ matrix.angular_version >= 12 }}
         run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation)
-
-      - name: ng add apollo-angular
-        if: ${{ matrix.angular_version < 12 }}
-        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose)
 
       - name: ng build
         run: (cd testapp && yarn ng run testapp:build:production)
+
+      - name: Setup E2E tests
+        run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+
+      - name: ng add cypress
+        run: (cd testapp && ng add @cypress/schematic --defaults --verbose --skip-confirmation)
+
+      - name: Update Angular code
+        run: ./scripts/prepare-e2e.js testapp
+
+      - name: ng e2e
+        run: (cd testapp && yarn ng run testapp:cypress-run:production)
 
