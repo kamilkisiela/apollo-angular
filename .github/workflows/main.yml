@@ -110,16 +110,14 @@ jobs:
 
       - name: Setup E2E tests
         working-directory: testapp
-        run: |
-          sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+        run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
       - name: ng add cypress
         working-directory: testapp
         run: ng add @cypress/schematic --defaults --verbose --skip-confirmation
 
       - name: Update Angular code
-        working-directory: testapp
-        run: node ../scripts/prepare-e2e.js testapp
+        run: node ./scripts/prepare-e2e.js testapp
 
       - name: ng e2e
         working-directory: testapp
