@@ -43,6 +43,12 @@ jobs:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
+      - uses: actions/cache@v2
+        name: Share script
+        with:
+          path: 'scripts/prepare-e2e.js'
+          key: ${{ github.sha }}
+
   tests:
     name: Tests
     needs: build
@@ -93,6 +99,12 @@ jobs:
         name: Share tarball
         with:
           path: 'packages/apollo-angular/apollo-angular.tgz'
+          key: ${{ github.sha }}
+
+      - uses: actions/cache@v2
+        name: Share script
+        with:
+          path: 'scripts/prepare-e2e.js'
           key: ${{ github.sha }}
 
       - name: Install Angular CLI
