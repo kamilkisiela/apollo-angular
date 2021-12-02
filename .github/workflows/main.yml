@@ -102,7 +102,7 @@ jobs:
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
       - name: ng add apollo-angular
-        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation)
+        working-directory: ng add ../../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation
 
       - name: ng build
         working-directory: testapp
@@ -117,7 +117,10 @@ jobs:
         run: ng add @cypress/schematic --defaults --verbose --skip-confirmation
 
       - name: Update Angular code
-        run: node ./scripts/prepare-e2e.js testapp
+        run: |
+          ls
+          ls scripts
+          ./scripts/prepare-e2e.js testapp
 
       - name: ng e2e
         working-directory: testapp
