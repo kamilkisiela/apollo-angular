@@ -69,7 +69,7 @@ export interface MutationOptions<TData = any, TVariables = EmptyObject>
   useMutationLoading?: boolean;
 }
 
-export interface SubscriptionResult<TData> extends ExecutionResult {
+export interface SubscriptionResult<TData> extends ExecutionResult<TData> {
   data?: TData;
 }
 
