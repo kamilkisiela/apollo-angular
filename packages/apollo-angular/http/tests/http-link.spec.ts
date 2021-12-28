@@ -725,4 +725,32 @@ describe('HttpLink', () => {
       return true;
     });
   });
+
+  test('should cancel XHR when unsubscribing', () => {
+    const link = httpLink.create({uri: 'graphql'});
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+      variables: {},
+    };
+
+    execute(link, op)
+      .subscribe({
+        next: () => {
+          throw new Error('Should not be here');
+        },
+        error: () => {
+          throw new Error('Should not be here');
+        },
+      })
+      .unsubscribe();
+
+    expect(httpBackend.expectOne('graphql').cancelled).toBe(true);
+  });
 });

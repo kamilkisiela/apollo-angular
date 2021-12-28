@@ -723,4 +723,35 @@ describe('HttpBatchLink', () => {
       });
     }, 50);
   });
+
+  test('should cancel XHR when unsubscribing', (done: jest.DoneCallback) => {
+    const link = httpLink.create({uri: 'graphql', batchMax: 1});
+    const op = {
+      query: gql`
+        query heroes {
+          heroes {
+            name
+          }
+        }
+      `,
+      operationName: 'heroes',
+      variables: {},
+    };
+
+    execute(link, op)
+      .subscribe({
+        next: () => {
+          done.fail('Should not be here');
+        },
+        error: () => {
+          done.fail('Should not be here');
+        },
+      })
+      .unsubscribe();
+
+    setTimeout(() => {
+      expect(httpBackend.expectOne('graphql').cancelled).toBe(true);
+      done();
+    }, 50);
+  });
 });
