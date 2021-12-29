@@ -1,6 +1,6 @@
 import React from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { ThemeProvider, Header } from 'the-guild-components';
+import { ThemeProvider, Header } from '@theguild/components';
 
 // Default implementation, that you can customize
 function Root({ children }) {
@@ -9,7 +9,7 @@ function Root({ children }) {
       <BrowserOnly>
         {() => (
           <ThemeProvider>
-            <Header activeLink={'/open-source'} accentColor="var(--ifm-color-primary)" />
+            <Header themeSwitch activeLink={'/open-source'} accentColor="var(--ifm-color-primary)" />
           </ThemeProvider>
         )}
       </BrowserOnly>
