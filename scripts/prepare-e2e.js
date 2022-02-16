@@ -11,7 +11,7 @@ function updateComponent() {
   const code =
     `import { Apollo } from 'apollo-angular';\n` +
     `import { version } from 'graphql';\n` +
-    `window.GRAPHQL_VERSION = version;\n`
+    `(window as any).GRAPHQL_VERSION = version;\n`
     fs
       .readFileSync(filepath, 'utf8')
       .replace(
