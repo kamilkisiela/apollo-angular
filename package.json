@@ -35,7 +35,6 @@
     "@babel/core": "^7.17.4",
     "@babel/preset-env": "^7.16.11",
     "@schematics/angular": "^13.2.3",
-    "@types/extract-files": "8.1.1",
     "@types/jest": "26.0.23",
     "@types/node": "15.6.0",
     "babel-jest": "^27.5.1",
