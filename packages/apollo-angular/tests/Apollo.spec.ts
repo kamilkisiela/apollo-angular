@@ -285,7 +285,9 @@ describe('Apollo', () => {
           next: (result) => {
             expect(result.loading).toBe(false);
             expect(result.data).toMatchObject(data);
-            setTimeout(() => { return done() }, 3000);
+            setTimeout(() => {
+              return done();
+            }, 3000);
           },
           error: (e) => {
             done.fail(e);
@@ -493,7 +495,9 @@ describe('Apollo', () => {
           next: (result) => {
             expect(result.loading).toBe(false);
             expect(result.data).toMatchObject(data);
-            setTimeout(() => { return done() }, 3000);
+            setTimeout(() => {
+              return done();
+            }, 3000);
           },
           error: (e) => {
             done.fail(e);
@@ -538,7 +542,9 @@ describe('Apollo', () => {
             if (alreadyCalled) {
               expect(result.loading).toBe(false);
               expect(result.data).toMatchObject(data);
-              setTimeout(() => { return done(); }, 3000);
+              setTimeout(() => {
+                return done();
+              }, 3000);
             } else {
               expect(result.loading).toBe(true);
               alreadyCalled = true;
@@ -865,7 +871,9 @@ describe('Apollo', () => {
         next: (result) => {
           if (alreadyCalled) {
             expect(result.data).toMatchObject(data);
-            setTimeout(() => { return done(); }, 3000);
+            setTimeout(() => {
+              return done();
+            }, 3000);
           } else {
             expect(result.loading).toBe(true);
             expect(result.networkStatus).toBe(NetworkStatus.loading);

@@ -40,9 +40,7 @@ export type Request = {
   options: HttpRequestOptions;
 };
 
-export type ExtractFiles = (
-  body: Body | Body[],
-) => {
+export type ExtractFiles = (body: Body | Body[]) => {
   clone: Body;
   files: Map<any, any>;
 };

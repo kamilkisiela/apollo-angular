@@ -21,7 +21,7 @@ import {addModuleImportToRootModule} from '../utils/ast';
 
 export default function install(options: Schema): Rule {
   return chain([
-    addDependencies(),
+    addDependencies(options),
     inludeAsyncIterableLib(),
     allowSyntheticDefaultImports(),
     addSetupFiles(options),
@@ -33,7 +33,7 @@ export default function install(options: Schema): Rule {
 export const dependenciesMap: Record<string, string> = {
   'apollo-angular': '^2.4.0',
   '@apollo/client': '^3.0.0',
-  graphql: '^15.0.0',
+  graphql: '^16.0.0',
 };
 
 /**
@@ -41,7 +41,7 @@ export const dependenciesMap: Record<string, string> = {
  * as dependencies in the package.json
  * and installs them by running `npm install`.
  */
-function addDependencies() {
+function addDependencies(options: Schema) {
   return (host: Tree, context: SchematicContext) => {
     const packageJsonPath = 'package.json';
     const packageJson = getJsonFile(host, packageJsonPath);
@@ -52,7 +52,11 @@ function addDependencies() {
       if (dependenciesMap.hasOwnProperty(dependency)) {
         const version = dependenciesMap[dependency];
         if (!packageJson.dependencies[dependency]) {
-          packageJson.dependencies[dependency] = version;
+          if (dependency === 'graphql') {
+            packageJson.dependencies[dependency] = options.graphql ? `^${options.graphql}` : version;
+          } else {
+            packageJson.dependencies[dependency] = version;
+          }
         }
       }
     }

@@ -18,9 +18,8 @@ export type ResultOf<T extends TypedDocumentNode> = T extends TypedDocumentNode<
 >
   ? R
   : never;
-export type VariablesOf<
-  T extends TypedDocumentNode
-> = T extends TypedDocumentNode<any, infer V> ? V : never;
+export type VariablesOf<T extends TypedDocumentNode> =
+  T extends TypedDocumentNode<any, infer V> ? V : never;
 
 export interface ExtraSubscriptionOptions {
   useZone?: boolean;

@@ -5,5 +5,5 @@ module.exports = {
     entryFile: 'src/index.ts',
     flatModuleFile: 'ngApollo'
   },
-  allowedNonPeerDependencies: ['semver', 'extract-files'],
+  allowedNonPeerDependencies: ['extract-files'],
 };

@@ -9,10 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@master
         with:
-          node-version: 14
+          node-version: 16
 
       - uses: actions/cache@v2
         name: Cache node_modules
@@ -83,12 +83,13 @@ jobs:
         run: yarn test --ci
 
   angular:
-    name: Test on Angular ${{ matrix.angular_version }}
+    name: Test on Angular ${{ matrix.angular_version }} GraphQL ${{ matrix.graphql_version }}
     needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
         angular_version: [12, 13]
+        graphql_version: [15, 16]
     steps:
       - name: Use Node.js 14
         uses: actions/setup-node@master
@@ -113,7 +114,7 @@ jobs:
       - name: ng new
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
-      - name: ng add apollo-angular
+      - name: ng add apollo-angular --graphql ${{ matrix.graphql_version }}
         run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation)
 
       - name: ng build
