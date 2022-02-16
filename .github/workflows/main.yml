@@ -114,8 +114,8 @@ jobs:
       - name: ng new
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
-      - name: ng add apollo-angular --graphql ${{ matrix.graphql_version }}
-        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --defaults --verbose --skip-confirmation)
+      - name: ng add apollo-angular
+        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --graphql ${{ matrix.graphql_version }} --defaults --verbose --skip-confirmation)
 
       - name: ng build
         run: (cd testapp && yarn ng run testapp:build:production)
