@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "demo",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ng run demo:serve",
+    "build": "ng run demo:build:production"
+  },
+  "peerDependencies": {
+    "apollo-angular": "*"
+  }
+}
