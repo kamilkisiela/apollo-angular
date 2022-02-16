@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "start": "ng run demo:serve",
-    "build": "ng run demo:build:production"
+    "build": "ng run demo:build:production",
+    "test": "exit 0"
   },
   "peerDependencies": {
     "apollo-angular": "*"
