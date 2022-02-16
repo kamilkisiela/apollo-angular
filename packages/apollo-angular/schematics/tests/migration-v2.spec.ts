@@ -5,7 +5,7 @@ import {getFileContent} from '@schematics/angular/utility/test';
 import {CompilerOptions} from 'typescript';
 
 import {createTestApp, parseJSON} from '../utils';
-import {dependenciesMap} from '../install';
+import {createDependenciesMap} from '../install';
 
 const migrationsPath = resolve(__dirname, '../migrations.json');
 const migrationName = 'migration-2.0.0';
@@ -198,6 +198,8 @@ describe('Migration: Apollo Angular V2', () => {
       'package.json',
       tree.readContent('package.json'),
     );
+
+    const dependenciesMap = createDependenciesMap({});
 
     expect(packageJson.dependencies['apollo-angular']).toEqual(
       dependenciesMap['apollo-angular'],

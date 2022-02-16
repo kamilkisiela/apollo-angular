@@ -30,11 +30,13 @@ export default function install(options: Schema): Rule {
   ]);
 }
 
-export const dependenciesMap: Record<string, string> = {
+export function createDependenciesMap(options: Schema): Record<string, string> {
+  return {
   'apollo-angular': '^2.4.0',
   '@apollo/client': '^3.0.0',
-  graphql: '^16.0.0',
+  graphql: `^${options.graphql ?? '16.0.0'}`,
 };
+}
 
 /**
  * Add all necessary node packages
@@ -48,6 +50,7 @@ function addDependencies(options: Schema) {
 
     packageJson.dependencies = packageJson.dependencies || {};
 
+    const dependenciesMap = createDependenciesMap(options);
     for (const dependency in dependenciesMap) {
       if (dependenciesMap.hasOwnProperty(dependency)) {
         const version = dependenciesMap[dependency];

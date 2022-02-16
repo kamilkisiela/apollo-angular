@@ -11,12 +11,11 @@ function updateComponent() {
   const code =
     `import { Apollo } from 'apollo-angular';\n` +
     `import { version } from 'graphql';\n` +
-    `console.info('GraphQL version:', version)\n` +
     fs
       .readFileSync(filepath, 'utf8')
       .replace(
         'AppComponent {',
-        'AppComponent { constructor(private apollo: Apollo) {}',
+        'AppComponent { constructor(private apollo: Apollo) { console.info("GraphQL version:", version); }',
       );
 
   fs.writeFileSync(filepath, code, 'utf8');

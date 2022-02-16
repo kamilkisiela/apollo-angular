@@ -5,7 +5,7 @@ import {getFileContent} from '@schematics/angular/utility/test';
 import {CompilerOptions} from 'typescript';
 
 import {createTestApp, parseJSON} from '../utils';
-import {dependenciesMap} from '../install';
+import {createDependenciesMap} from '../install';
 
 const collectionPath = resolve(__dirname, '../collection.json');
 
@@ -30,6 +30,8 @@ describe('ng-add', () => {
       getFileContent(tree, packageJsonPath),
     );
     const {dependencies} = packageJson;
+
+    const dependenciesMap = createDependenciesMap({});
 
     for (const dependency in dependenciesMap) {
       if (dependenciesMap.hasOwnProperty(dependency)) {
