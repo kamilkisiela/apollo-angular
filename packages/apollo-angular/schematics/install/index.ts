@@ -55,11 +55,7 @@ function addDependencies(options: Schema) {
       if (dependenciesMap.hasOwnProperty(dependency)) {
         const version = dependenciesMap[dependency];
         if (!packageJson.dependencies[dependency]) {
-          if (dependency === 'graphql') {
-            packageJson.dependencies[dependency] = options.graphql ? `^${options.graphql}` : version;
-          } else {
-            packageJson.dependencies[dependency] = version;
-          }
+          packageJson.dependencies[dependency] = version;
         }
       }
     }
