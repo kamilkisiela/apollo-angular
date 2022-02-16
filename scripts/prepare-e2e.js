@@ -10,6 +10,8 @@ function updateComponent() {
   let filepath = path.join(cwd, `./${name}/src/app/app.component.ts`);
   const code =
     `import { Apollo } from 'apollo-angular';\n` +
+    `import { version } from 'graphql';\n` +
+    `console.info('GraphQL version:', version)\n` +
     fs
       .readFileSync(filepath, 'utf8')
       .replace(

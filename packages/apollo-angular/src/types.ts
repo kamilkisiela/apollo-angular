@@ -68,9 +68,7 @@ export interface MutationOptions<TData = any, TVariables = EmptyObject>
   useMutationLoading?: boolean;
 }
 
-export interface SubscriptionResult<TData> extends ExecutionResult {
-  data?: TData;
-}
+export interface SubscriptionResult<TData> extends ExecutionResult<TData> {}
 
 export type NamedOptions = Record<string, ApolloClientOptions<any>>;
 
