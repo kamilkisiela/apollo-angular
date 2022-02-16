@@ -31,7 +31,9 @@ describe('ng-add', () => {
     );
     const {dependencies} = packageJson;
 
-    const dependenciesMap = createDependenciesMap({});
+    const dependenciesMap = createDependenciesMap({
+      graphql: '16',
+    });
 
     for (const dependency in dependenciesMap) {
       if (dependenciesMap.hasOwnProperty(dependency)) {
