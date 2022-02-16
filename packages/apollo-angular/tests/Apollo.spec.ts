@@ -426,7 +426,7 @@ describe('Apollo', () => {
         `,
       };
       const data2 = {
-        boo: true,
+        bar: true,
       };
 
       apollo.create({
