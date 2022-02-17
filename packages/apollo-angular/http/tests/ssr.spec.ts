@@ -100,9 +100,8 @@ describe.skip('integration', () => {
         },
       ]);
       const moduleRef = await platform.bootstrapModule(AsyncServerModule);
-      const applicationRef: ApplicationRef = moduleRef.injector.get(
-        ApplicationRef,
-      );
+      const applicationRef: ApplicationRef =
+        moduleRef.injector.get(ApplicationRef);
       await applicationRef.isStable
         .pipe(
           filter((isStable: boolean) => isStable),

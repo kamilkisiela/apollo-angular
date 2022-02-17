@@ -18,9 +18,8 @@ export type ResultOf<T extends TypedDocumentNode> = T extends TypedDocumentNode<
 >
   ? R
   : never;
-export type VariablesOf<
-  T extends TypedDocumentNode
-> = T extends TypedDocumentNode<any, infer V> ? V : never;
+export type VariablesOf<T extends TypedDocumentNode> =
+  T extends TypedDocumentNode<any, infer V> ? V : never;
 
 export interface ExtraSubscriptionOptions {
   useZone?: boolean;
@@ -69,9 +68,7 @@ export interface MutationOptions<TData = any, TVariables = EmptyObject>
   useMutationLoading?: boolean;
 }
 
-export interface SubscriptionResult<TData> extends ExecutionResult {
-  data?: TData;
-}
+export interface SubscriptionResult<TData> extends ExecutionResult<TData> {}
 
 export type NamedOptions = Record<string, ApolloClientOptions<any>>;
 

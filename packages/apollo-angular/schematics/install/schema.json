@@ -9,6 +9,12 @@
         "minLength": 0,
         "default": "",
         "x-prompt": "Url to your GraphQL API"
+      },
+      "graphql": {
+        "type": "string",
+        "minLength": 0,
+        "default": "16",
+        "x-prompt": "Version of GraphQL"
       }
     },
     "required": []

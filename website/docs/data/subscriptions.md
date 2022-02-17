@@ -32,7 +32,7 @@ subscription onCommentAdded($repoFullName: String!) {
 
 The response sent to the client looks as follows:
 
-```typescripton
+```typescript
 {
   "data": {
     "commentAdded": {

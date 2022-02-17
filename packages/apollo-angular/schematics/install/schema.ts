@@ -3,4 +3,6 @@ export interface Schema {
   project?: string;
   /** Url to your GraphQL endpoint */
   endpoint?: string;
+  /** Version of GraphQL (16 by default) */
+  graphql?: string;
 }

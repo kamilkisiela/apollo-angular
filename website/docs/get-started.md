@@ -37,16 +37,16 @@ If you want to setup Apollo without the help of Angular Schematics, first, let's
 - `apollo-angular`: Bridge between Angular and Apollo Client
 - `graphql`: Second most important package
 
-The `@apollo/client` package requires `AsyncIterable` so make sure your tsconfig.json includes `esnext.asynciterable`:
+
+The `@apollo/client` package requires `AsyncIterable` so make sure your tsconfig.json includes `es2020`:
 
 ```typescripton
 {
   "compilerOptions": {
     // ...
     "lib": [
-      "es2017",
+      "es2020",
       "dom",
-      "esnext.asynciterable"
     ]
   }
 }

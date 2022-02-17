@@ -24,7 +24,7 @@ export class TestOperation<T = {[key: string]: any}> {
       this.observer.error(result);
     } else {
       const fetchResult = result ? {...result} : result;
-      this.observer.next(fetchResult as FetchResult<T>);
+      this.observer.next(fetchResult as any);
       this.observer.complete();
     }
   }

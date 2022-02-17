@@ -8,7 +8,7 @@ import {
 import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
 import * as ts from 'typescript';
 import {getJsonFile} from '../utils';
-import {dependenciesMap} from '../install/index';
+import {createDependenciesMap} from '../install/index';
 
 export default function (): Rule {
   return chain([migrateImports, migrateTsConfig, migrateDependencies]);
@@ -20,6 +20,8 @@ function migrateDependencies() {
     const packageJson = getJsonFile(tree, packageJsonPath);
 
     packageJson.dependencies = packageJson.dependencies || {};
+
+    const dependenciesMap = createDependenciesMap({});
 
     for (const dependency in dependenciesMap) {
       if (dependenciesMap.hasOwnProperty(dependency)) {

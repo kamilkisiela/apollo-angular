@@ -7,7 +7,6 @@ import {
   FetchResult,
 } from '@apollo/client/core';
 import {print} from 'graphql';
-import {extractFiles} from 'extract-files';
 import {Options, Body, Request, Context, OperationPrinter} from './types';
 import {
   createHeadersWithClientAwereness,
@@ -85,7 +84,11 @@ export class HttpLinkHandler extends ApolloLink {
 
         req.options.headers = mergeHeaders(req.options.headers, headers);
 
-        const sub = fetch(req, this.httpClient, extractFiles).subscribe({
+        const sub = fetch(
+          req,
+          this.httpClient,
+          this.options.extractFiles,
+        ).subscribe({
           next: (response) => {
             operation.setContext({response});
             observer.next(response.body);
