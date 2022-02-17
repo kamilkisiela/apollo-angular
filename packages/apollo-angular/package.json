@@ -1,7 +1,7 @@
 {
   "name": "apollo-angular",
   "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
-  "version": "3.0.0-rc.4",
+  "version": "3.0.0",
   "author": {
     "name": "Kamil Kisiela",
     "email": "kamil.kisiela@gmail.com",
