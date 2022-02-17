@@ -6,7 +6,7 @@ import {Request, Body, ExtractFiles} from './types';
 export const fetch = (
   req: Request,
   httpClient: HttpClient,
-  extractFiles: ExtractFiles,
+  extractFiles?: ExtractFiles,
 ): Observable<HttpResponse<Object>> => {
   const shouldUseBody =
     ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
@@ -32,6 +32,16 @@ export const fetch = (
       return new Observable((observer) =>
         observer.error(
           new Error('File upload is not available when GET is used'),
+        ),
+      );
+    }
+
+    if (!extractFiles) {
+      return new Observable((observer) =>
+        observer.error(
+          new Error(
+            `To use File upload you need to pass "extractFiles" function from "extract-files" library to HttpLink's options`,
+          ),
         ),
       );
     }
