@@ -10,6 +10,15 @@
 - Add `useMutationLoading` flag [`bc223fe`](https://github.com/kamilkisiela/apollo-angular/commit/bc223fe6487edd35c56ad908e4739580ce69f056)
 - Fix type inference for Mutations [#1659](https://github.com/kamilkisiela/apollo-angular/pull/1659)
 - Declare support for Angular 12
+- Declare support for Angular 13
+- Remove `extract-files` library from dependencies (you need to pass `extractFiles` function to HttpLink's options)
+
+**Migration from v2 to v3**
+
+1. Use `ApolloModule` in your NgModule to provide `Apollo` service
+2. If you're using old version of `graphql`, update to latest v15 or v16.
+3. In case of file uploads, import `extractFiles` from `extract-files` library and pass it to `HttpLink.create({ ..., extractFiles })`
+4. Done.
 
 ### v2.4.0
 
