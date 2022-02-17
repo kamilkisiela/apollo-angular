@@ -1,7 +1,6 @@
 {
   "name": "apollo-angular-website",
   "scripts": {
-    "postinstall": "patch-package",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "deploy": "docusaurus deploy"
