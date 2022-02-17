@@ -32,7 +32,7 @@ export default function install(options: Schema): Rule {
 
 export function createDependenciesMap(options: Schema): Record<string, string> {
   return {
-  'apollo-angular': '^3.0.0-rc.3',
+  'apollo-angular': '^3.0.0-rc.4',
   '@apollo/client': '^3.0.0',
   graphql: `^${options.graphql ?? '16.0.0'}`,
 };
