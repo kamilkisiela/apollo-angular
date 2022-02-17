@@ -57,7 +57,6 @@ not to send a query, disable `includeQuery`.
 | withCredentials   | boolean           | `none`     | false    |
 | method            | string            | `POST`     | false    |
 | useGETForQueries  | boolean           | `false`    | false    |
-| extractFiles      | function          | `none`     | false    |
 
 ## Context
 
@@ -147,32 +146,6 @@ apollo.query({
     useMultipart: true,
   },
 });
-```
-
-You also have to define `extractFiles` function:
-
-```typescript
-import { extractFiles } from 'extract-files'; // the import depends on the version of `extract-files`
-
-@NgModules({
-  imports: [ApolloModule, HttpClientModule],
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink) {
-        return {
-          link: httpLink.create({
-            uri: '/graphql',
-            extractFiles, // <-
-          }),
-          cache: new InMemoryCache(),
-        };
-      },
-      deps: [HttpLink],
-    },
-  ],
-})
-class AppModule {}
 ```
 
 ### Middleware
