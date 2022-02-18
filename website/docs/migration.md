@@ -55,7 +55,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
-+ import extractFiles from "extract-files/extractFiles.mjs"
++ import extractFiles from 'extract-files/extractFiles.mjs';
 
 @NgModule({
   imports: [
