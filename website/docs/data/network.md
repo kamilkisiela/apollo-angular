@@ -152,7 +152,7 @@ apollo.query({
 You also have to define `extractFiles` function:
 
 ```typescript
-import { extractFiles } from 'extract-files'; // the import depends on the version of `extract-files`
+import extractFiles from "extract-files/extractFiles.mjs"; // the import depends on the version of `extract-files`
 
 @NgModules({
   imports: [ApolloModule, HttpClientModule],
