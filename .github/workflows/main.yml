@@ -91,7 +91,7 @@ jobs:
         angular_version: [12, 13]
         graphql_version: [15, 16]
     steps:
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@master
         with:
           node-version: 16
