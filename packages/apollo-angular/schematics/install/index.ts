@@ -19,7 +19,7 @@ import {getJsonFile, getMainPath} from '../utils';
 import {Schema} from './schema';
 import {addModuleImportToRootModule} from '../utils/ast';
 
-export default function install(options: Schema): Rule {
+export function factory(options: Schema): Rule {
   return chain([
     addDependencies(options),
     inludeAsyncIterableLib(),
