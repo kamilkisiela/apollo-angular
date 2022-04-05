@@ -1,5 +1,9 @@
 # Change log
 
+### v3.0.1
+
+- Fix previously corrupted distribution of `apollo-angular` package.
+
 ### v3.0.0
 
 - `useGETForQueries` in Http Link [`5996109`](https://github.com/kamilkisiela/apollo-angular/commit/599610934e5f9cf8cc2d62abc270edddc937cc60)
