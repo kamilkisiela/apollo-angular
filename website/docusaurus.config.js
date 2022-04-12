@@ -128,10 +128,10 @@ module.exports = {
       ],
     },
     googleAnalytics: {
-      trackingID: 'UA-125180910-5',
+      trackingID: 'G-YCYYF9JKLZ',
     },
     gtag: {
-      trackingID: 'UA-125180910-5',
+      trackingID: 'G-YCYYF9JKLZ',
     },
   },
   stylesheets: [
