@@ -1,28 +1,26 @@
-module.exports = {
+export default {
   rootDir: '.',
+  extensionsToTreatAsEsm: ['.ts'],
+  moduleFileExtensions: ["ts", "js", "json", "mjs"],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.test.json',
+      useESM: true,
+    }
+  },
   transform: {
-    '^.+\\.(ts|mjs|js)$': 'jest-preset-angular',
+    "^.+\\.(ts|js|mjs)$": "jest-preset-angular",
   },
   moduleNameMapper: {
     '^apollo-angular': '<rootDir>',
   },
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.test.json'
-    }
-  },
-  transformIgnorePatterns: [
-    'node_modules/(?!.*\\.mjs$)'
-  ],
-  preset: 'jest-preset-angular',
-  resolver: '<rootDir>/../../node_modules/jest-preset-angular/build/resolvers/ng-jest-resolver.js',
-  moduleFileExtensions: ['js', 'ts', 'mjs'],
   testRegex: '\\.spec\\.ts$',
   setupFilesAfterEnv: ['<rootDir>/tests/_setup.ts'],
   collectCoverage: false,
   verbose: false,
-  // notify: true,
   errorOnDeprecated: true,
-  testURL: 'http://localhost/',
+  testEnvironmentOptions: {
+    url: 'http://localhost/',
+  },
   testEnvironment: 'jsdom'
 };

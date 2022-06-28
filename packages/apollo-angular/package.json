@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "apollo-angular",
   "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
   "version": "3.0.1",
@@ -30,7 +31,7 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.json && yarn build:schematics",
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
-    "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js",
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "prebuild": "rm -rf build/",
     "deploy": "yarn build && npm publish build",
     "deploy:next": "yarn build && npm publish build --tag next"

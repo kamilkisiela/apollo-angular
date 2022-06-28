@@ -5,7 +5,7 @@ import 'zone.js/dist/sync-test';
 import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 import 'jest-zone-patch';
-import 'jest-preset-angular';
+import 'jest-preset-angular/setup-jest.mjs';
 
 import {TestBed} from '@angular/core/testing';
 import {
