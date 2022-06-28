@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        angular_version: [12, 13]
+        angular_version: [13, 14]
         graphql_version: [15, 16]
     steps:
       - name: Use Node.js 16
