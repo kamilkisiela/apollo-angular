@@ -47,7 +47,7 @@ class AppModule {}
 
 ## File upload
 
-New `apollo-angular` no longer depends on `extract-files` library. In order to use file uploads, you need to pass the `extractFiles` function (or create your own) to the `ApolloLink.create()`:
+New `apollo-angular` no longer depends on `extract-files` library. In order to use file uploads, you need to pass an implementation of the `extractFiles` function (or create your own function with the same type signature) to the `ApolloLink.create()`:
 
 ```diff language="typescript"
 import {NgModule} from '@angular/core';
@@ -72,6 +72,37 @@ import {InMemoryCache} from '@apollo/client/core';
           link: httpLink.create({
             uri: 'http://localhost:3000',
 +           extractFiles,
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
+})
+class AppModule {}
+```
+
+If you don't need to implement any custom behavior for the `extractFiles` function, you can implement it along with `extract-files`'s  `isExtractableFile` method like so:
+
+```diff language="typescript"
+import extractFiles from 'extract-files/extractFiles.mjs`;
+import isExtractableFile from 'extract-files/isExtractableFile.mjs';
+
+@NgModule({
+  imports: [
+    // ... other modules
+    HttpClientModule,
+    ApolloModule,
+  ],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:3000',
++           extractFiles: (body) => extractFiles(body, isExtractableFile),
           }),
         };
       },
