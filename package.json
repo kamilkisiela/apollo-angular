@@ -14,9 +14,11 @@
     "now-build": "(cd website && yarn && yarn build && mv build ../public)",
     "ci-only:integration": "./scripts/integration tests"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.0.6",
     "@angular-devkit/core": "^14.0.6",
