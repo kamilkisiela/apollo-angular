@@ -1,7 +1,7 @@
 import {resolve} from 'path';
 import {Tree} from '@angular-devkit/schematics';
 import {SchematicTestRunner} from '@angular-devkit/schematics/testing';
-import {getFileContent} from '@schematics/angular/utility/test';
+import {getFileContent} from '@schematics/angular/utility/test/get-file-content';
 import {CompilerOptions} from 'typescript';
 
 import {createTestApp, parseJSON} from '../utils';
