@@ -13,7 +13,7 @@
     "node": ">=14"
   },
   "module": "build/fesm2020/ngApollo.mjs",
-  "typings": "build/ngApollo.d.ts",
+  "typings": "build/index.d.ts",
   "homepage": "https://www.apollo-angular.com/",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "angular-schematics"
   ],
   "scripts": {
-    "build": "ng-packagr -p ng-package.js && yarn build:schematics",
+    "build": "ng-packagr -p ng-package.json && yarn build:schematics",
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
     "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js",
     "prebuild": "rm -rf build/",
@@ -36,8 +36,8 @@
     "deploy:next": "yarn build && npm publish build --tag next"
   },
   "peerDependencies": {
-    "@angular/core": "^12.0.0 || ^13.0.0",
-    "@apollo/client": "^3.0.0",
+    "@angular/core": "^13.0.0 || ^14.0.0",
+    "@apollo/client": "^3.6.0",
     "graphql": "^14.0.0 || ^15.0.0 || ^16.0.0",
     "rxjs": "^6.0.0 || ^7.0.0",
     "zone.js": ">=0.10.0 <0.12.0"
