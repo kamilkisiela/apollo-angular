@@ -36,9 +36,9 @@
     "deploy:next": "yarn build && npm publish build --tag next"
   },
   "peerDependencies": {
-    "@angular/core": "^13.0.0 || ^14.0.0",
-    "@apollo/client": "^3.6.0",
-    "graphql": "^14.0.0 || ^15.0.0 || ^16.0.0",
+    "@angular/core": "^14.0.0",
+    "@apollo/client": "^3.0.0",
+    "graphql": "^15.0.0 || ^16.0.0",
     "rxjs": "^6.0.0 || ^7.0.0",
     "zone.js": ">=0.10.0 <0.12.0"
   },
