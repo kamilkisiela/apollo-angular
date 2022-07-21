@@ -23,7 +23,7 @@ function updateComponent() {
 }
 
 function updateCypress() {
-  let filepath = path.join(cwd, `./${name}/cypress/integration/spec.ts`);
+  let filepath = path.join(cwd, `./${name}/cypress/e2e/spec.cy.ts`);
   const code = fs
     .readFileSync(filepath, 'utf8')
     .replace(`cy.contains('sandbox app is running!')`, `cy.window().its('GRAPHQL_VERSION').should('equal', ${version})`);
