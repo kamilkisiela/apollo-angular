@@ -23,6 +23,8 @@ module.exports = {
   verbose: false,
   // notify: true,
   errorOnDeprecated: true,
-  testURL: 'http://localhost/',
-  testEnvironment: 'jsdom'
+  testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost/'
+  }
 };

@@ -4,7 +4,6 @@ import type {
   ObservableQuery,
   ApolloError,
   FetchMoreQueryOptions,
-  FetchMoreOptions,
   SubscribeToMoreOptions,
   UpdateQueryOptions,
   TypedDocumentNode,
@@ -100,8 +99,8 @@ export class QueryRef<T, V = EmptyObject> {
     return this.obsQuery.refetch(variables);
   }
 
-  public fetchMore<K extends keyof V>(
-    fetchMoreOptions: FetchMoreQueryOptions<V, K> & FetchMoreOptions<T, V>,
+  public fetchMore<K = V>(
+    fetchMoreOptions: FetchMoreQueryOptions<K, T>,
   ): Promise<ApolloQueryResult<T>> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }

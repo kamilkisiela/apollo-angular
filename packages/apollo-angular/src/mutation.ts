@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import type {DocumentNode} from 'graphql';
 import type {TypedDocumentNode} from '@apollo/client/core';
+import type {Observable} from 'rxjs';
 
 import {Apollo} from './apollo';
-import {MutationOptionsAlone, EmptyObject} from './types';
+import type {MutationOptionsAlone, EmptyObject, MutationResult} from './types';
 
 @Injectable()
 export class Mutation<T = {}, V = EmptyObject> {
@@ -12,7 +13,10 @@ export class Mutation<T = {}, V = EmptyObject> {
 
   constructor(protected apollo: Apollo) {}
 
-  public mutate(variables?: V, options?: MutationOptionsAlone<T, V>) {
+  public mutate(
+    variables?: V,
+    options?: MutationOptionsAlone<T, V>,
+  ): Observable<MutationResult<T>> {
     return this.apollo.use(this.client).mutate<T, V>({
       ...options,
       variables,
