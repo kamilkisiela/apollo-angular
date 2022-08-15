@@ -2,6 +2,10 @@
 
 ### vNext
 
+### v4.0.1
+
+- Add missing `apollo-angular/persisted-queries` and `apollo-angular/testing`
+
 ### v4.0.0
 
 - Support Angular v14
