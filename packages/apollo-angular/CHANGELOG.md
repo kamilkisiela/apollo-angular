@@ -1,5 +1,11 @@
 # Change log
 
+### vNext
+
+### v4.0.0
+
+- Support Angular v14
+
 ### v3.0.1
 
 - Fix previously corrupted distribution of `apollo-angular` package.
