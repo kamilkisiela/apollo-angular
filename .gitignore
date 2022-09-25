@@ -44,18 +44,17 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# Output of 'npm pack'
-*.tgz
-
 # IDEs
 .idea/
 
 # Packages lock
 package-lock.json
-packages/**/package-lock.json
 
 # npm directories (for deploying)
 packages/*/npm/
 
 # docs
 docs/public/docs
+
+.next/
+website/public/sitemap.xml
