@@ -25,7 +25,7 @@ export interface ExtraSubscriptionOptions {
   useZone?: boolean;
 }
 
-export interface MutationResult<TData = any> extends FetchResult<TData> {
+export type MutationResult<TData = any> = FetchResult<TData> & {
   loading: boolean;
 }
 
