@@ -2,6 +2,11 @@
 
 ### vNext
 
+### v4.1.0
+
+- Support `@apollo/client` v3.7.X
+- Fix typescript issue with `MutationResult` type #1818
+
 ### v4.0.1
 
 - Add missing `apollo-angular/persisted-queries` and `apollo-angular/testing`
