@@ -1,13 +1,13 @@
-import {NgZone} from '@angular/core';
-import {TestBed, TestBedStatic} from '@angular/core/testing';
-import {Observable, of} from 'rxjs';
-import {mergeMap} from 'rxjs/operators';
-import {ApolloLink, InMemoryCache, NetworkStatus} from '@apollo/client/core';
-import {mockSingleLink} from '@apollo/client/testing';
+import { NgZone } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { ApolloLink, InMemoryCache, NetworkStatus } from '@apollo/client/core';
+import { mockSingleLink } from '@apollo/client/testing';
 
-import {Apollo, ApolloBase} from '../src/apollo';
-import {gql} from '../src/gql';
-import {ZoneScheduler} from '../src/utils';
+import { Apollo, ApolloBase } from '../src/apollo';
+import { gql } from '../src/gql';
+import { ZoneScheduler } from '../src/utils';
 
 function mockApollo(link: ApolloLink, _ngZone: NgZone) {
   const apollo = new Apollo(_ngZone);
@@ -22,7 +22,7 @@ function mockApollo(link: ApolloLink, _ngZone: NgZone) {
 
 describe('Apollo', () => {
   let ngZone: NgZone;
-  let testBed: TestBedStatic;
+  let testBed: TestBed;
 
   beforeEach(() => {
     testBed = TestBed.configureTestingModule({
@@ -30,7 +30,7 @@ describe('Apollo', () => {
     });
 
     ngZone = {
-      run: jest.fn((cb) => cb()),
+      run: jest.fn(cb => cb()),
     } as any;
   });
 
@@ -57,7 +57,7 @@ describe('Apollo', () => {
           link: mockSingleLink(),
           cache: new InMemoryCache(),
         },
-        'extra',
+        'extra'
       );
 
       expect(apollo.use('extra') instanceof ApolloBase).toBe(true);
@@ -100,31 +100,31 @@ describe('Apollo', () => {
         }
       `;
 
-      const data1 = {heroes: [{name: 'Foo', __typename: 'Hero'}]};
-      const variables1 = {first: 0};
+      const data1 = { heroes: [{ name: 'Foo', __typename: 'Hero' }] };
+      const variables1 = { first: 0 };
 
-      const data2 = {heroes: [{name: 'Bar', __typename: 'Hero'}]};
-      const variables2 = {first: 1};
+      const data2 = { heroes: [{ name: 'Bar', __typename: 'Hero' }] };
+      const variables2 = { first: 1 };
 
       const link = mockSingleLink(
         {
-          request: {query, variables: variables1},
-          result: {data: data1},
+          request: { query, variables: variables1 },
+          result: { data: data1 },
         },
         {
-          request: {query, variables: variables2},
-          result: {data: data2},
-        },
+          request: { query, variables: variables2 },
+          result: { data: data2 },
+        }
       );
 
       const apollo = mockApollo(link, ngZone);
-      const options = {query, variables: variables1};
+      const options = { query, variables: variables1 };
       const obs = apollo.watchQuery(options);
 
       let calls = 0;
 
       obs.valueChanges.subscribe({
-        next: ({data}: any) => {
+        next: ({ data }: any) => {
           calls++;
 
           try {
@@ -140,13 +140,13 @@ describe('Apollo', () => {
             done.fail(e);
           }
         },
-        error: (err) => {
+        error: err => {
           done.fail(err);
         },
       });
 
       setTimeout(() => {
-        obs.refetch(variables2).then(({data}) => {
+        obs.refetch(variables2).then(({ data }) => {
           try {
             expect(data).toMatchObject(data2);
           } catch (e) {
@@ -169,7 +169,7 @@ describe('Apollo', () => {
 
       const client = apollo.client;
 
-      const options = {query: 'gql'} as any;
+      const options = { query: 'gql' } as any;
       client.query = jest.fn().mockReturnValue(Promise.resolve('query'));
 
       const obs = apollo.query(options);
@@ -197,7 +197,7 @@ describe('Apollo', () => {
 
       const client = apollo.client;
 
-      client.query = jest.fn<any, any>((options) => {
+      client.query = jest.fn<any, any>(options => {
         if (options.used) {
           throw new Error('options was reused');
         }
@@ -250,7 +250,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should NOT useInitialLoading by default', (done) => {
+    test('should NOT useInitialLoading by default', done => {
       expect.assertions(2);
       const apollo = testBed.inject(Apollo);
       const query = gql`
@@ -272,7 +272,7 @@ describe('Apollo', () => {
 
       // create
       apollo.create<any>({
-        link: mockSingleLink({request: {query}, result: {data}}),
+        link: mockSingleLink({ request: { query }, result: { data } }),
         cache: new InMemoryCache(),
       });
 
@@ -282,14 +282,14 @@ describe('Apollo', () => {
           query,
         })
         .subscribe({
-          next: (result) => {
+          next: result => {
             expect(result.loading).toBe(false);
             expect(result.data).toMatchObject(data);
             setTimeout(() => {
               return done();
             }, 3000);
           },
-          error: (e) => {
+          error: e => {
             done.fail(e);
           },
         });
@@ -323,10 +323,10 @@ describe('Apollo', () => {
       client.mutate = jest.fn().mockReturnValue(
         Promise.resolve({
           data: 'mutation',
-        }),
+        })
       );
 
-      const obs = apollo.mutate<any, {foo: string}>(options);
+      const obs = apollo.mutate<any, { foo: string }>(options);
 
       obs.subscribe({
         next(r) {
@@ -351,7 +351,7 @@ describe('Apollo', () => {
 
       const client = apollo.client;
 
-      client.mutate = jest.fn<any, any>((options) => {
+      client.mutate = jest.fn<any, any>(options => {
         if (options.used) {
           throw new Error('options was reused');
         }
@@ -404,7 +404,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should work with mergeMap', (done) => {
+    test('should work with mergeMap', done => {
       expect.assertions(1);
       const apollo = new Apollo(ngZone);
 
@@ -433,12 +433,12 @@ describe('Apollo', () => {
         link: mockSingleLink(
           {
             request: op1,
-            result: {data: data1},
+            result: { data: data1 },
           },
           {
             request: op2,
-            result: {data: data2},
-          },
+            result: { data: data2 },
+          }
         ),
         cache: new InMemoryCache(),
       });
@@ -462,7 +462,7 @@ describe('Apollo', () => {
       });
     });
 
-    test('should NOT useMutationLoading by default', (done) => {
+    test('should NOT useMutationLoading by default', done => {
       expect.assertions(2);
       const apollo = testBed.inject(Apollo);
       const query = gql`
@@ -482,7 +482,7 @@ describe('Apollo', () => {
 
       // create
       apollo.create<any>({
-        link: mockSingleLink({request: {query}, result: {data}}),
+        link: mockSingleLink({ request: { query }, result: { data } }),
         cache: new InMemoryCache(),
       });
 
@@ -492,20 +492,20 @@ describe('Apollo', () => {
           mutation: query,
         })
         .subscribe({
-          next: (result) => {
+          next: result => {
             expect(result.loading).toBe(false);
             expect(result.data).toMatchObject(data);
             setTimeout(() => {
               return done();
             }, 3000);
           },
-          error: (e) => {
+          error: e => {
             done.fail(e);
           },
         });
     });
 
-    test('should useMutationLoading on demand', (done) => {
+    test('should useMutationLoading on demand', done => {
       expect.assertions(3);
       const apollo = testBed.inject(Apollo);
       const query = gql`
@@ -527,7 +527,7 @@ describe('Apollo', () => {
 
       // create
       apollo.create<any>({
-        link: mockSingleLink({request: {query}, result: {data}}),
+        link: mockSingleLink({ request: { query }, result: { data } }),
         cache: new InMemoryCache(),
       });
 
@@ -538,7 +538,7 @@ describe('Apollo', () => {
           useMutationLoading: true,
         })
         .subscribe({
-          next: (result) => {
+          next: result => {
             if (alreadyCalled) {
               expect(result.loading).toBe(false);
               expect(result.data).toMatchObject(data);
@@ -550,7 +550,7 @@ describe('Apollo', () => {
               alreadyCalled = true;
             }
           },
-          error: (e) => {
+          error: e => {
             done.fail(e);
           },
         });
@@ -572,10 +572,10 @@ describe('Apollo', () => {
       client.subscribe = jest.fn().mockReturnValue(
         of({
           data: 'subscription',
-        }),
+        })
       );
 
-      const options = {query: 'gql'} as any;
+      const options = { query: 'gql' } as any;
       const obs = apollo.subscribe(options);
 
       expect(client.subscribe).toBeCalledWith(options);
@@ -601,7 +601,7 @@ describe('Apollo', () => {
       });
 
       const client = apollo.client;
-      const options = {query: 'gql'} as any;
+      const options = { query: 'gql' } as any;
 
       client.subscribe = jest.fn().mockReturnValue(['subscription']);
 
@@ -620,11 +620,11 @@ describe('Apollo', () => {
       });
 
       const client = apollo.client;
-      const options = {query: 'gql'} as any;
+      const options = { query: 'gql' } as any;
 
       client.subscribe = jest.fn().mockReturnValue(['subscription']);
 
-      const obs = apollo.subscribe(options, {useZone: false});
+      const obs = apollo.subscribe(options, { useZone: false });
       const operator = (obs as any).operator;
 
       expect(operator).toBeUndefined();
@@ -650,33 +650,33 @@ describe('Apollo', () => {
           }
         }
       `;
-      const variables = {name: 'Bar'};
+      const variables = { name: 'Bar' };
       // tslint:disable:variable-name
       const __typename = 'Hero';
 
-      const FooHero = {name: 'Foo', __typename};
-      const BarHero = {name: 'Bar', __typename};
+      const FooHero = { name: 'Foo', __typename };
+      const BarHero = { name: 'Bar', __typename };
 
-      const data1 = {allHeroes: [FooHero]};
-      const dataMutation = {addHero: BarHero};
-      const data2 = {allHeroes: [FooHero, BarHero]};
+      const data1 = { allHeroes: [FooHero] };
+      const dataMutation = { addHero: BarHero };
+      const data2 = { allHeroes: [FooHero, BarHero] };
 
       const link = mockSingleLink(
         {
-          request: {query},
-          result: {data: data1},
+          request: { query },
+          result: { data: data1 },
         },
         {
-          request: {query: mutation, variables},
-          result: {data: dataMutation},
-        },
+          request: { query: mutation, variables },
+          result: { data: dataMutation },
+        }
       );
       const apollo = mockApollo(link, ngZone);
 
-      const obs = apollo.watchQuery({query});
+      const obs = apollo.watchQuery({ query });
 
       let calls = 0;
-      obs.valueChanges.subscribe(({data}) => {
+      obs.valueChanges.subscribe(({ data }) => {
         calls++;
 
         if (calls === 1) {
@@ -687,7 +687,7 @@ describe('Apollo', () => {
               mutation,
               variables,
               updateQueries: {
-                heroes: (prev: any, {mutationResult}: any) => {
+                heroes: (prev: any, { mutationResult }: any) => {
                   return {
                     allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
                   };
@@ -695,7 +695,7 @@ describe('Apollo', () => {
               },
             })
             .subscribe({
-              next: (result) => {
+              next: result => {
                 expect(result.data.addHero).toMatchObject(BarHero);
               },
               error(error) {
@@ -729,34 +729,34 @@ describe('Apollo', () => {
           }
         }
       `;
-      const variables = {name: 'Bar'};
+      const variables = { name: 'Bar' };
       const __typename = 'Hero';
 
-      const FooHero = {id: 1, name: 'Foo', __typename};
-      const BarHero = {id: 2, name: 'Bar', __typename};
-      const OptimisticHero: any = {id: null, name: 'Temp', __typename};
+      const FooHero = { id: 1, name: 'Foo', __typename };
+      const BarHero = { id: 2, name: 'Bar', __typename };
+      const OptimisticHero: any = { id: null, name: 'Temp', __typename };
 
-      const data1 = {allHeroes: [FooHero]};
-      const dataMutation = {addHero: BarHero};
-      const data2 = {allHeroes: [FooHero, OptimisticHero]};
-      const data3 = {allHeroes: [FooHero, BarHero]};
+      const data1 = { allHeroes: [FooHero] };
+      const dataMutation = { addHero: BarHero };
+      const data2 = { allHeroes: [FooHero, OptimisticHero] };
+      const data3 = { allHeroes: [FooHero, BarHero] };
 
       const link = mockSingleLink(
         {
-          request: {query},
-          result: {data: data1},
+          request: { query },
+          result: { data: data1 },
         },
         {
-          request: {query: mutation, variables},
-          result: {data: dataMutation},
-        },
+          request: { query: mutation, variables },
+          result: { data: dataMutation },
+        }
       );
       const apollo = mockApollo(link, ngZone);
 
-      const obs = apollo.watchQuery({query});
+      const obs = apollo.watchQuery({ query });
 
       let calls = 0;
-      obs.valueChanges.subscribe(({data}) => {
+      obs.valueChanges.subscribe(({ data }) => {
         calls++;
 
         if (calls === 1) {
@@ -770,7 +770,7 @@ describe('Apollo', () => {
                 addHero: OptimisticHero,
               },
               updateQueries: {
-                heroes: (prev: any, {mutationResult}: any) => {
+                heroes: (prev: any, { mutationResult }: any) => {
                   return {
                     allHeroes: [...prev.allHeroes, mutationResult.data.addHero],
                   };
@@ -792,7 +792,7 @@ describe('Apollo', () => {
     });
   });
 
-  test('should use HttpClient', (done) => {
+  test('should use HttpClient', done => {
     expect.assertions(1);
     const apollo = testBed.inject(Apollo);
     const op = {
@@ -817,23 +817,23 @@ describe('Apollo', () => {
 
     // create
     apollo.create<any>({
-      link: mockSingleLink({request: op, result: {data}}),
+      link: mockSingleLink({ request: op, result: { data } }),
       cache: new InMemoryCache(),
     });
 
     // query
     apollo.query<any>(op).subscribe({
-      next: (result) => {
+      next: result => {
         expect(result.data).toMatchObject(data);
         done();
       },
-      error: (e) => {
+      error: e => {
         done.fail(e);
       },
     });
   });
 
-  test('should useInitialLoading', (done) => {
+  test('should useInitialLoading', done => {
     expect.assertions(3);
     const apollo = testBed.inject(Apollo);
     const query = gql`
@@ -857,7 +857,7 @@ describe('Apollo', () => {
 
     // create
     apollo.create<any>({
-      link: mockSingleLink({request: {query}, result: {data}}),
+      link: mockSingleLink({ request: { query }, result: { data } }),
       cache: new InMemoryCache(),
     });
 
@@ -868,7 +868,7 @@ describe('Apollo', () => {
         useInitialLoading: true,
       })
       .valueChanges.subscribe({
-        next: (result) => {
+        next: result => {
           if (alreadyCalled) {
             expect(result.data).toMatchObject(data);
             setTimeout(() => {
@@ -880,13 +880,13 @@ describe('Apollo', () => {
             alreadyCalled = true;
           }
         },
-        error: (e) => {
+        error: e => {
           done.fail(e);
         },
       });
   });
 
-  test('useInitialLoading should emit false once when data is already available', (done) => {
+  test('useInitialLoading should emit false once when data is already available', done => {
     expect.assertions(4);
     const apollo = testBed.inject(Apollo);
     const query = gql`
@@ -917,7 +917,7 @@ describe('Apollo', () => {
 
     // create
     apollo.create<any>({
-      link: mockSingleLink({request: {query}, result: {data}}),
+      link: mockSingleLink({ request: { query }, result: { data } }),
       cache,
     });
 
@@ -929,7 +929,7 @@ describe('Apollo', () => {
         useInitialLoading: true,
       })
       .valueChanges.subscribe({
-        next: (result) => {
+        next: result => {
           calls++;
 
           if (calls === 1) {
@@ -942,13 +942,13 @@ describe('Apollo', () => {
             }, 3000);
           }
         },
-        error: (e) => {
+        error: e => {
           throw e;
         },
       });
   });
 
-  test('should emit cached result only once', (done) => {
+  test('should emit cached result only once', done => {
     expect.assertions(3);
     const apollo = testBed.inject(Apollo);
     const query = gql`
@@ -979,7 +979,7 @@ describe('Apollo', () => {
 
     // create
     apollo.create<any>({
-      link: mockSingleLink({request: {query}, result: {data}}),
+      link: mockSingleLink({ request: { query }, result: { data } }),
       cache,
     });
 
@@ -989,7 +989,7 @@ describe('Apollo', () => {
         query,
       })
       .valueChanges.subscribe({
-        next: (result) => {
+        next: result => {
           calls++;
 
           if (calls === 1) {
@@ -1001,7 +1001,7 @@ describe('Apollo', () => {
             }, 3000);
           }
         },
-        error: (e) => {
+        error: e => {
           done.fail(e);
         },
       });

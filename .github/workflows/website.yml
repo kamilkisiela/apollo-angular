@@ -1,44 +1,43 @@
-name: Website Deployment
-on: [pull_request, push]
+name: website
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  checks:
-    if: github.event_name != 'push'
+  deployment:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: checkout
+        uses: actions/checkout@v3
         with:
-          node-version: 16.x
-          cache: yarn
-      - name: Test Build
-        working-directory: website
-        run: |
-          yarn install
-          yarn build
-  gh-release:
-    if: contains(github.event.head_commit.message, '[deploy_website]') || contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+          fetch-depth: 0
+
+      - uses: the-guild-org/shared-config/setup@main
+        name: website
         with:
-          node-version: 16.x
-          cache: yarn
-      - name: Build website
-        working-directory: website
-        run: |
-          yarn install
-          yarn build
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+          nodeVersion: 18 # change if needed
+          packageManager: yarn # change if needed
+
+      - uses: the-guild-org/shared-config/website-cf@main
+        name: build and deploy website
+        env:
+          NEXT_BASE_PATH: ${{ github.ref == 'refs/heads/master' && '/graphql/apollo-angular' || '' }}
+          SITE_URL: ${{ github.ref == 'refs/heads/master' && 'https://the-guild.dev/graphql/apollo-angular' || '' }}
+          NEXT_PUBLIC_ALGOLIA_INDEX_NAME: ${{ secrets.NEXT_PUBLIC_ALGOLIA_INDEX_NAME }}
+          NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY }}
+          NEXT_PUBLIC_ALGOLIA_APP_ID: ${{ secrets.NEXT_PUBLIC_ALGOLIA_APP_ID }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Build output to publish to the `gh-pages` branch:
-          publish_dir: ./website/build
-          # Assign commit authorship to the official GH-Actions bot for deploys to `gh-pages` branch:
-          # https://github.com/actions/checkout/issues/13#issuecomment-724415212
-          # The GH actions bot is used by default if you didn't specify the two fields.
-          # You can swap them out with your own user credentials.
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          cloudflareApiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflareAccountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          projectName: apollo-angular
+          prId: ${{ github.event.pull_request.number }}
+          websiteDirectory: ./
+          buildScript: cd website && yarn && yarn build && yarn next export
+          artifactDir: website/out

@@ -1,0 +1,25 @@
+{
+  "index": {
+    "title": "Home",
+    "type": "page",
+    "hidden": true,
+    "theme": {
+      "layout": "raw"
+    }
+  },
+  "docs": {
+    "title": "v3",
+    "type": "page",
+    "versioned": true
+  },
+  "v2": {
+    "title": "v2",
+    "type": "page",
+    "versioned": true
+  },
+  "v1": {
+    "title": "v1",
+    "type": "page",
+    "versioned": true
+  }
+}

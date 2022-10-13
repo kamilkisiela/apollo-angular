@@ -1,18 +1,21 @@
 {
-  "name": "apollo-angular-website",
+  "name": "website",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "start": "docusaurus start",
-    "build": "docusaurus build",
-    "deploy": "docusaurus deploy"
+    "algolia-sync": "node scripts/algolia-ci.mjs",
+    "build": "next build && next-sitemap --config next-sitemap.config.cjs",
+    "dev": "next",
+    "start": "next start",
+    "test": "echo 'nothing to do here'"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-alpha.72",
-    "@docusaurus/plugin-client-redirects": "2.0.0-alpha.72",
-    "@docusaurus/plugin-ideal-image": "2.0.0-alpha.72",
-    "@docusaurus/preset-classic": "2.0.0-alpha.72",
-    "@theguild/components": "1.9.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "@theguild/components": "4.2.1",
+    "next": "12.3.1",
+    "next-sitemap": "3.1.24",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "browserslist": {
     "production": [
@@ -25,5 +28,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@theguild/algolia": "1.0.1",
+    "@theguild/tailwind-config": "0.1.1",
+    "@types/node": "18.8.3",
+    "@types/react": "18.0.21",
+    "cssnano": "^5.1.13",
+    "patch-package": "6.4.7",
+    "tailwindcss": "^3.1.8",
+    "typescript": "4.8.4"
   }
 }
