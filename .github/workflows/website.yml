@@ -39,5 +39,5 @@ jobs:
           projectName: apollo-angular
           prId: ${{ github.event.pull_request.number }}
           websiteDirectory: ./
-          buildScript: cd website && yarn && yarn build && yarn next export
+          buildScript: cd website && yarn && yarn build
           artifactDir: website/out

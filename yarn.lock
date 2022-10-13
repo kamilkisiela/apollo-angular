@@ -2508,10 +2508,10 @@
     lodash "^4.17.21"
     remove-markdown "0.5.0"
 
-"@theguild/components@4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@theguild/components/-/components-4.2.1.tgz#43b0eb2fc1ba41236f9eb6ef5aae5134b7b3389a"
-  integrity sha512-1Fd8U4yk4jPQulMLRAvpOUWcLdGP3gDykclT9UJ6LrLcU5TTetzKJO8t8Qgq2MW3koDXMmpryamt9ziaG8aS7g==
+"@theguild/components@4.2.4":
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@theguild/components/-/components-4.2.4.tgz#edd61d2c7db8a1efc208f3b72bd3fc99b7ad8e7c"
+  integrity sha512-VF6M8ra858X3tCdLgCPJa9CAVCZtWdiVLc4HXeFDcmFNUtWlfgwS0e51QH496cMndRMLR3N4yjaHljYpQ7tGmA==
   dependencies:
     "@algolia/autocomplete-js" "1.7.1"
     "@algolia/autocomplete-plugin-algolia-insights" "1.7.1"
@@ -2522,7 +2522,6 @@
     "@radix-ui/react-navigation-menu" "1.0.0"
     algoliasearch "4.14.2"
     clsx "1.2.1"
-    critters "0.0.16"
     focus-trap-react "10.0.0"
     mermaid "9.1.7"
     next-videos "1.5.0"
@@ -2543,10 +2542,10 @@
   dependencies:
     prettier-plugin-sh "^0.12.8"
 
-"@theguild/tailwind-config@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@theguild/tailwind-config/-/tailwind-config-0.1.1.tgz#ff77a44d97ca62bfb710a29024daee5f17b27cdc"
-  integrity sha512-eA3bclBuyMycNue9ngBnk92q9BzmZZSipfFXq3/DZrl87K5BDhrOuzQ/mEJ4oh+hDEX0MkbFidL4Cupz229i9w==
+"@theguild/tailwind-config@0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@theguild/tailwind-config/-/tailwind-config-0.1.3.tgz#fbd3b438c89a36f6bae35023c79dc129a6263d7c"
+  integrity sha512-kUkxM5NJeBczrC+go4pGD2sKlFSV7B2KuMjqP3LvyZOJYiDTCUargL9X7j4C0EsIhf3ktD6FLuEyk4u82viL2w==
   dependencies:
     autoprefixer "^10.4.12"
     cssnano "^5.1.13"
@@ -2787,7 +2786,7 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*", "@types/node@18.8.3":
+"@types/node@*":
   version "18.8.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.8.3.tgz#ce750ab4017effa51aed6a7230651778d54e327c"
   integrity sha512-0os9vz6BpGwxGe9LOhgP/ncvYN5Tx1fNcd2TM3rD/aCGBkysb+ZWpXEocG24h6ZzOi13+VB8HndAQFezsSOw1w==
@@ -2796,6 +2795,11 @@
   version "16.11.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.7.tgz#36820945061326978c42a01e56b61cd223dfdc42"
   integrity sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==
+
+"@types/node@18.8.5":
+  version "18.8.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.8.5.tgz#6a31f820c1077c3f8ce44f9e203e68a176e8f59e"
+  integrity sha512-Bq7G3AErwe5A/Zki5fdD3O6+0zDChhg671NfPjtIcbtzDNZTv4NPKMRFr7gtYPG7y+B8uTiNK4Ngd9T0FTar6Q==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -4457,7 +4461,7 @@ cssnano-utils@^3.1.0:
   resolved "https://registry.yarnpkg.com/cssnano-utils/-/cssnano-utils-3.1.0.tgz#95684d08c91511edfc70d2636338ca37ef3a6861"
   integrity sha512-JQNR19/YZhz4psLX/rQ9M83e3z2Wf/HdJbryzte4a3NSuafyp9w/I4U+hx5C2S9g41qlstH7DEWnZaaj83OuEA==
 
-cssnano@^5.1.13:
+cssnano@5.1.13, cssnano@^5.1.13:
   version "5.1.13"
   resolved "https://registry.yarnpkg.com/cssnano/-/cssnano-5.1.13.tgz#83d0926e72955332dc4802a7070296e6258efc0a"
   integrity sha512-S2SL2ekdEz6w6a2epXn4CmMKU4K3KpcyXLKfAYc9UQQqJRkD/2eLUG0vJ3Db/9OvO5GuAdgXw3pFbR6abqghDQ==
@@ -11909,7 +11913,7 @@ tabbable@^6.0.0:
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.0.0.tgz#7f95ea69134e9335979092ba63866fe67b521b01"
   integrity sha512-SxhZErfHc3Yozz/HLAl/iPOxuIj8AtUw13NRewVOjFW7vbsqT1f3PuiHrPQbUkRcLNEgAedAv2DnjLtzynJXiw==
 
-tailwindcss@^3.1.8:
+tailwindcss@3.1.8, tailwindcss@^3.1.8:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.1.8.tgz#4f8520550d67a835d32f2f4021580f9fddb7b741"
   integrity sha512-YSneUCZSFDYMwk+TGq8qYFdCA3yfBRdBlS7txSq0LUmzyeqRe3a8fBQzbz9M3WS/iFT4BNf/nmw9mEzrnSaC0g==
