@@ -14,7 +14,7 @@ export default withGuildDocs({
       '/docs/1.0/:slug*': '/v1/:slug*', // Redirect /docs/1.0/... to /v1/...
       '/docs/1.0/basics': '/v1/basics/setup',
       '/docs/1.0/features': '/v1/features/error-handling',
-      '/docs/1.0/state-management': '/v1/guides/state-management',
+      '/docs/1.0/guides': '/v1/guides/state-management',
       '/docs/1.0/recipes': '/v1/recipes/simple-example',
     }).map(([from, to]) => ({
       source: from,
