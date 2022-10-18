@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint sort-keys: error */
-import { AngularLogo, defineConfig } from '@theguild/components';
+import { AngularLogo, defineConfig, Giscus, useTheme } from '@theguild/components';
+import { useRouter } from 'next/router';
 
 const SITE_NAME = 'Apollo Angular';
 
@@ -21,5 +23,27 @@ export default defineConfig({
       </div>
     </>
   ),
+  main: {
+    extraContent() {
+      const { resolvedTheme } = useTheme();
+      const { route } = useRouter();
+
+      if (route === '/') {
+        return null;
+      }
+      return (
+        <Giscus
+          // ensure giscus is reloaded when client side route is changed
+          key={route}
+          repo="kamilkisiela/apollo-angular"
+          repoId="MDEwOlJlcG9zaXRvcnk1NjM1NjcwNg=="
+          category="Docs Discussions"
+          categoryId="DIC_kwDOA1vvYs4CSDSL"
+          mapping="pathname"
+          theme={resolvedTheme}
+        />
+      );
+    },
+  },
   titleSuffix: ` – ${SITE_NAME}`,
 });
