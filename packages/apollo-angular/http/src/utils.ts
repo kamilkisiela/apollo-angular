@@ -143,7 +143,7 @@ export function prioritize<T>(...values: T[]): T {
   return picked;
 }
 
-export function createHeadersWithClientAwereness(context: Record<string, any>) {
+export function createHeadersWithClientAwareness(context: Record<string, any>) {
   // `apollographql-client-*` headers are automatically set if a
   // `clientAwareness` object is found in the context. These headers are
   // set first, followed by the rest of the headers pulled from
