@@ -22,14 +22,14 @@ export function IndexPage(): ReactElement {
         className="[&_h3]:mt-6"
         items={[
           {
-            title: 'Easy to Us',
+            title: 'Easy to Use',
             description:
               'Designed from the ground up to be easily configured and used to get your application up and running quickly.',
             image: {
               src: UndrawNavigator,
               loading: 'eager',
               placeholder: 'empty',
-              alt: 'Easy to Us',
+              alt: 'Easy to Use',
             },
           },
           {

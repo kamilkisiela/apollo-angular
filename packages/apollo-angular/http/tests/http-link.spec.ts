@@ -303,7 +303,7 @@ describe('HttpLink', () => {
     });
   });
 
-  test('should support headers from contructor options', () => {
+  test('should support headers from constructor options', () => {
     const link = httpLink.create({
       uri: 'graphql',
       headers: new HttpHeaders().set('X-Custom-Header', 'foo'),
@@ -385,7 +385,7 @@ describe('HttpLink', () => {
     });
   });
 
-  test('should merge headers from context and contructor options', () => {
+  test('should merge headers from context and constructor options', () => {
     const link = httpLink.create({
       uri: 'graphql',
       headers: new HttpHeaders().set('X-Custom-Foo', 'foo'),
@@ -517,7 +517,7 @@ describe('HttpLink', () => {
     });
   });
 
-  test('should set reponse in context', (done: jest.DoneCallback) => {
+  test('should set response in context', (done: jest.DoneCallback) => {
     const afterware = new ApolloLink((op, forward) => {
       return forward(op).map((response: any) => {
         const context = op.getContext();

@@ -24,7 +24,7 @@ describe('Integration', () => {
       });
     });
 
-    test('apollo should be initialzed', () => {
+    test('apollo should be initialized', () => {
       const apollo = TestBed.inject(Apollo);
       expect(() => apollo.client).not.toThrow();
     });

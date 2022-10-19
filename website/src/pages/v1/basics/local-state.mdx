@@ -161,7 +161,7 @@ fieldName: (obj, args, context, info) => result;
 3. `context`: The context object, which is shared between your Angular components and your Apollo Client network stack. The most important thing to note here is that we've added the Apollo cache to the context for you, so you can manipulate the cache with `readQuery`, `writeQuery`, `readFragment`, `writeFragment`, and `writeData`. Learn more about those methods [here](../features/caching).
 4. `info`: Information about the execution state of the query. You will probably never have to use this one.
 
-Let's take a look at an example of a resolver where we toggle a todo's completed status:
+Let's take a look at an example of a resolver where we toggle a todos completed status:
 
 ```ts
 export const resolvers = {

@@ -91,4 +91,4 @@ Run `npx lerna bootstrap` to download dependencies and link packages.
 
 After this run `yarn build` to generate `apollo-angular-*` packages.
 
-You can check you setup by running `yarn test`, it should test all packages and don't produce any errors.
+You can check your setup by running `yarn test`, it should test all packages and don't produce any errors.

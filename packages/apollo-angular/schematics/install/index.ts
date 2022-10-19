@@ -22,7 +22,7 @@ import {addModuleImportToRootModule} from '../utils/ast';
 export function factory(options: Schema): Rule {
   return chain([
     addDependencies(options),
-    inludeAsyncIterableLib(),
+    includeAsyncIterableLib(),
     allowSyntheticDefaultImports(),
     addSetupFiles(options),
     importSetupModule(options),
@@ -70,7 +70,7 @@ function addDependencies(options: Schema) {
   };
 }
 
-function inludeAsyncIterableLib() {
+function includeAsyncIterableLib() {
   const requiredLib = 'esnext.asynciterable';
 
   function updateFn(tsconfig: any) {
@@ -94,7 +94,7 @@ function inludeAsyncIterableLib() {
       console.error(
         '\n' +
           tags.stripIndent`
-              We couln't find '${requiredLib}' in the list of library files to be included in the compilation.
+              We couldn't find '${requiredLib}' in the list of library files to be included in the compilation.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
           '\n',
@@ -145,7 +145,7 @@ function allowSyntheticDefaultImports() {
       console.error(
         '\n' +
           tags.stripIndent`
-              We couln't enable 'allowSyntheticDefaultImports' flag.
+              We couldn't enable 'allowSyntheticDefaultImports' flag.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
           '\n',
