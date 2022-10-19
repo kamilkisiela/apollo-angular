@@ -9,7 +9,7 @@ import {
 import {print} from 'graphql';
 import {Options, Body, Request, Context, OperationPrinter} from './types';
 import {
-  createHeadersWithClientAwereness,
+  createHeadersWithClientAwareness,
   fetch,
   mergeHeaders,
   prioritize,
@@ -80,7 +80,7 @@ export class HttpLinkHandler extends ApolloLink {
           (req.body as Body).query = this.print(operation.query);
         }
 
-        const headers = createHeadersWithClientAwereness(context);
+        const headers = createHeadersWithClientAwareness(context);
 
         req.options.headers = mergeHeaders(req.options.headers, headers);
 

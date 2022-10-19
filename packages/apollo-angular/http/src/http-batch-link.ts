@@ -10,7 +10,7 @@ import {BatchLink, BatchHandler} from '@apollo/client/link/batch';
 import {print} from 'graphql';
 import {Body, Context, Request, Options, OperationPrinter} from './types';
 import {
-  createHeadersWithClientAwereness,
+  createHeadersWithClientAwareness,
   fetch,
   mergeHeaders,
   prioritize,
@@ -141,7 +141,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
       (headers: HttpHeaders, operation: Operation) => {
         return mergeHeaders(headers, operation.getContext().headers);
       },
-      createHeadersWithClientAwereness({
+      createHeadersWithClientAwareness({
         headers: this.options.headers,
         clientAwareness: operations[0]?.getContext()?.clientAwareness,
       }),
