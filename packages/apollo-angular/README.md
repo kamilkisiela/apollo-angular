@@ -85,7 +85,7 @@ To learn more about querying with Apollo Angular be sure to start reading the [d
 
 ## Documentation
 
-All of the documentation for Apollo Angular including usage articles and helpful recipes lives on: [https://www.apollo-angular.com/](https://www.apollo-angular.com/)
+All the documentation for Apollo Angular including usage articles and helpful recipes lives on: [https://www.apollo-angular.com/](https://www.apollo-angular.com/)
 
 ## Contributing
 
@@ -93,7 +93,7 @@ All of the documentation for Apollo Angular including usage articles and helpful
 
 This project uses Lerna.
 
-Bootstraping:
+Bootstrapping:
 
 ```bash
 yarn install

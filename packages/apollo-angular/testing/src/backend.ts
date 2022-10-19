@@ -11,7 +11,7 @@ import {TestOperation, Operation} from './operation';
  *
  * `ApolloTestingBackend` works by keeping a list of all open operations.
  * As operations come in, they're added to the list. Users can assert that specific
- * operations were made and then flush them. In the end, a verify() method asserts
+ * operations were made and then flush them. In the end, a `verify()` method asserts
  * that no unexpected operations were made.
  */
 @Injectable()

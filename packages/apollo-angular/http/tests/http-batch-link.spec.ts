@@ -277,7 +277,7 @@ describe('HttpBatchLink', () => {
     }, 50);
   });
 
-  test('should support headers from contructor options', (done: jest.DoneCallback) => {
+  test('should support headers from constructor options', (done: jest.DoneCallback) => {
     const link = httpLink.create({
       uri: 'graphql',
       headers: new HttpHeaders().set('X-Custom-Header', 'foo'),
@@ -364,7 +364,7 @@ describe('HttpBatchLink', () => {
     }, 50);
   });
 
-  test('should merge headers from context and contructor options', (done: jest.DoneCallback) => {
+  test('should merge headers from context and constructor options', (done: jest.DoneCallback) => {
     const link = httpLink.create({
       uri: 'graphql',
       headers: new HttpHeaders().set('X-Custom-Foo', 'foo'),

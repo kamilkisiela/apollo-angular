@@ -13,13 +13,13 @@ async function main() {
     onlyDirectories: true,
   });
 
-  packageDirs.forEach(bumpAlha);
+  packageDirs.forEach(bumpAlpha);
 }
 
 /**
  * @param {string} packageDir
  */
-function bumpAlha(packageDir) {
+function bumpAlpha(packageDir) {
   const filepath = resolve(packageDir, 'package.json');
   const pkg = readJSON(filepath);
 

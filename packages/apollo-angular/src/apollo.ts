@@ -68,7 +68,7 @@ export class ApolloBase<TCacheShape = any> {
   }
 
   /**
-   * Get an access to an instance of ApolloClient
+   * Get an instance of ApolloClient
    * @deprecated use `apollo.client` instead
    */
   public getClient() {
@@ -87,7 +87,7 @@ export class ApolloBase<TCacheShape = any> {
   }
 
   /**
-   * Get an access to an instance of ApolloClient
+   * Get an instance of ApolloClient
    */
   public get client(): ApolloClient<TCacheShape> {
     return this._client;

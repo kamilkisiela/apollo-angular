@@ -10,7 +10,7 @@ included in your project.
 
 The most common need when using type systems with GraphQL is to type the results
 of an operation. Given that a GraphQL server's schema is strongly typed, we can
-even generate TypeScript definitions automaticaly using a tool like
+even generate TypeScript definitions automatically using a tool like
 [Graphql Code Generator](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular). In these docs
 however, we will be writing result types manually.
 
@@ -63,7 +63,7 @@ class AppComponent {
 }
 ```
 
-Without specyfing a Generic Type for `Apollo.watchQuery`, TypeScript would throw
+Without specifying a Generic Type for `Apollo.watchQuery`, TypeScript would throw
 an error saying that `hero` property does not exist in `result.data` object (it
 is an `Object` by default).
 
