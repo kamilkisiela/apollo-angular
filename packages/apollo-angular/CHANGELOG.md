@@ -2,6 +2,8 @@
 
 ### vNext
 
+- Fix creating default client when using named options (`APOLLO_NAMED_OPTIONS`)
+
 ### v4.1.0
 
 - Support `@apollo/client` v3.7.X
