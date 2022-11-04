@@ -1007,6 +1007,22 @@ describe('Apollo', () => {
       });
   });
 
+  test('should create default client with named options', () => {
+    const apollo = new Apollo(ngZone, undefined, {
+      default: {
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      },
+      test: {
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      },
+    });
+
+    expect(apollo.client).toBeDefined();
+    expect(apollo.use('test').client).toBeDefined();
+  });
+
   test('should remove default client', () => {
     const apollo = mockApollo(mockSingleLink(), ngZone);
 
