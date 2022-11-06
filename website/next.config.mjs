@@ -94,6 +94,7 @@ export default withGuildDocs({
       '/docs/features/multiple-clients': '/docs/recipes/multiple-clients',
       '/docs/1.0/features/subscriptions': '/v1/features/subscriptions',
       '/docs/features/fragments': '/docs/data/fragments',
+      '/get-started': '/docs/get-started',
     }).map(([from, to]) => ({
       source: from,
       destination: to,
