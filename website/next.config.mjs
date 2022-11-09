@@ -30,14 +30,14 @@ export default withGuildDocs({
       '/docs/2.0/development-and-testing/:slug*': '/v2/development-and-testing/:slug',
       '/docs/2.0/performance/:slug*': '/v2/performance/:slug',
       '/docs/2.0/recipes/:slug*': '/v2/recipes/:slug',
-      '/docs/2.0/migration/:slug*': '/v2/migration/:slug',
+      '/docs/2.0/migration/:slug*': '/v2/migration',
       '/2.0/caching/:slug*': '/v2/caching/:slug',
       '/2.0/data/:slug*': '/v2/data/:slug',
       '/2.0/local-state/:slug*': '/v2/local-state/:slug',
       '/2.0/development-and-testing/:slug*': '/v2/development-and-testing/:slug',
       '/2.0/performance/:slug*': '/v2/performance/:slug',
       '/2.0/recipes/:slug*': '/v2/recipes/:slug',
-      '/2.0/migration/:slug*': '/v2/migration/:slug',
+      '/2.0/migration/:slug*': '/v2/migration',
 
       '/v1/guides': '/v1/guides/state-management',
       '/v1/features': '/v1/features/error-handling',
@@ -49,7 +49,6 @@ export default withGuildDocs({
       '/v2/development-and-testing': '/v2/development-and-testing/using-typescript',
       '/v2/performance': '/v2/performance/improving-performance',
       '/v2/recipes': '/v2/recipes/simple-example',
-      '/v2/migration': '/v2/migration',
       '/docs/2.0': '/v2', // Redirect direct to path
       '/docs/1.0': '/v1', // Redirect direct to path
       '/docs/basics/:slug*': '/docs/data/:slug',
