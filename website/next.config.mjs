@@ -38,6 +38,7 @@ export default withGuildDocs({
       '/2.0/performance/:slug*': '/v2/performance/:slug',
       '/2.0/recipes/:slug*': '/v2/recipes/:slug',
       '/2.0/migration/:slug*': '/v2/migration',
+      '/docs/features/subscriptions.html': '/docs/data/subscriptions',
 
       '/v1/guides': '/v1/guides/state-management',
       '/v1/features': '/v1/features/error-handling',
