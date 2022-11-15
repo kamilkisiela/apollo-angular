@@ -3,6 +3,7 @@
 ### vNext
 
 - Fix creating default client when using named options (`APOLLO_NAMED_OPTIONS`)
+- Support newest zone.js #1841
 
 ### v4.1.0
 
