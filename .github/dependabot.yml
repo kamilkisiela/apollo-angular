@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: '/'
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-patch', 'version-update:semver-minor']
