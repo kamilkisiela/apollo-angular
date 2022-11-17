@@ -298,7 +298,7 @@ The batching options indicate how operations are batched together.
 - `batchMax` - the size of batches
 - `batchKey` a function that accepts an operation and returns a string key, which uniquely names the batch the operation belongs to, defaults to returning the same string
 
-<Callout type="warning" emoji="⚠️">
+<Callout type="warning" >
   **Note**: `batchKey` by default batches together requests with the same uri and the same options. Since options from
   an operation's context overwrites those from a link you could end up with few different keys and what it means, few
   separate requests.
@@ -310,7 +310,7 @@ Works in the same way as in `HttpLink`.
 
 To skip batching you can set `skipBatching: true` in operation's context.
 
-<Callout type="warning" emoji="⚠️">
+<Callout type="warning">
   **Note**: `skipBatching` works only with the default `batchKey`. To create custom one you should check if
   `skipBatching` is set in context and generate a random `batchKey` for that operation.
 </Callout>
