@@ -83,18 +83,19 @@ jobs:
         run: yarn test --ci
 
   angular:
-    name: Test on Angular ${{ matrix.angular_version }} GraphQL ${{ matrix.graphql_version }}
+    name: Test on Angular ${{ matrix.angular_version }} GraphQL ${{ matrix.graphql_version }} Node ${{ matrix.node_version }}
     needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
         angular_version: [14, 15]
         graphql_version: [15, 16]
+        node_version: [16, 18]
     steps:
-      - name: Use Node.js 16
+      - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@master
         with:
-          node-version: 16
+          node-version: ${{ matrix.node_version }}
 
       - uses: actions/cache@v2
         name: Share tarball
