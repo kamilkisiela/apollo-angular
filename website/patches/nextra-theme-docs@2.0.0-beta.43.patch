@@ -1,7 +1,7 @@
-diff --git a/dist/index.d.ts b/dist/index.d.ts
+diff --git a/node_modules/nextra-theme-docs/dist/index.d.ts b/node_modules/nextra-theme-docs/dist/index.d.ts
 index 31f0aeddc674255f8b0c78c3d56fbf9d3330a00d..c99bc3dbe259a707474491b4c226e8394349087e 100644
---- a/dist/index.d.ts
-+++ b/dist/index.d.ts
+--- a/node_modules/nextra-theme-docs/dist/index.d.ts
++++ b/node_modules/nextra-theme-docs/dist/index.d.ts
 @@ -31,6 +31,7 @@ interface PageItem extends MdxFile {
      display?: Display;
      withIndexPage?: boolean;
@@ -10,10 +10,10 @@ index 31f0aeddc674255f8b0c78c3d56fbf9d3330a00d..c99bc3dbe259a707474491b4c226e839
  }
  interface MenuItem extends MdxFile {
      title: string;
-diff --git a/dist/index.js b/dist/index.js
+diff --git a/node_modules/nextra-theme-docs/dist/index.js b/node_modules/nextra-theme-docs/dist/index.js
 index 609bd7085e28a737a4c64197451e2ef1454035a3..647a952c7b15c3883eb6547c8c8f07bd22360238 100644
---- a/dist/index.js
-+++ b/dist/index.js
+--- a/node_modules/nextra-theme-docs/dist/index.js
++++ b/node_modules/nextra-theme-docs/dist/index.js
 @@ -51,16 +51,16 @@ var __async = (__this, __arguments, generator) => {
  };
  
