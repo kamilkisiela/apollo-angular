@@ -58,4 +58,5 @@ docs/public/docs
 
 .next/
 website/public/sitemap.xml
+website/public/_redirects
 website/out/
