@@ -104,6 +104,6 @@ yarn run deploy
 git add .
 git commit -m "Release v$VERSION"
 git tag $VERSION -m $VERSION
-git push origin main
+git push
 ```
 3. Create a release on https://github.com/kamilkisiela/apollo-angular/releases/new
