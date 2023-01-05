@@ -32,8 +32,8 @@
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
     "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js",
     "prebuild": "rm -rf build/",
-    "deploy": "yarn build && npm publish build",
-    "deploy:next": "yarn build && npm publish build --tag next"
+    "deploy": "yarn build && cd build/ && npm publish",
+    "deploy:next": "yarn build && cd build/ && npm publish --tag next"
   },
   "peerDependencies": {
     "@angular/core": "^14.0.0 || ^15.0.0",
