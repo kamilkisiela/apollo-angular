@@ -1,7 +1,7 @@
 {
   "name": "apollo-angular",
   "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "author": {
     "name": "Kamil Kisiela",
     "email": "kamil.kisiela@gmail.com",
@@ -32,8 +32,8 @@
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
     "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js",
     "prebuild": "rm -rf build/",
-    "deploy": "yarn build && npm publish build",
-    "deploy:next": "yarn build && npm publish build --tag next"
+    "deploy": "yarn build && cd build/ && npm publish --access public --registry https://registry.npmjs.org/",
+    "deploy:next": "yarn build && cd build/ && npm publish --access public --registry https://registry.npmjs.org/ --tag next"
   },
   "peerDependencies": {
     "@angular/core": "^14.0.0 || ^15.0.0",

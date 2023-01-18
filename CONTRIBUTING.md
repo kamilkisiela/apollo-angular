@@ -92,3 +92,18 @@ Run `npx lerna bootstrap` to download dependencies and link packages.
 After this run `yarn build` to generate `apollo-angular-*` packages.
 
 You can check your setup by running `yarn test`, it should test all packages and don't produce any errors.
+
+## Releasing
+
+1. Update `packages/apollo-angular/CHANGELOG.md`
+2. Run something like that:
+```sh
+VERSION=1.2.3
+./scripts/version.js $VERSION
+yarn run deploy
+git add .
+git commit -m "Release v$VERSION"
+git tag $VERSION -m $VERSION
+git push
+```
+3. Create a release on https://github.com/kamilkisiela/apollo-angular/releases/new

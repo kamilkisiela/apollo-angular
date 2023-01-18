@@ -1,6 +1,10 @@
 # Change log
 
-### vNEXT
+### v4.2.0
+
+- Support Angular 15
+- Support Node 18
+- Fix broken published package
 
 ### v4.1.1
 
