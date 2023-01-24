@@ -18,6 +18,7 @@ Here are some ways to contribute to the project, from easiest to most difficult:
   - [Big PRs](#big-prs)
     - [Code review guidelines](#code-review-guidelines)
     - [How to setup development environment](#how-to-setup-development-environment)
+  - [Releasing](#releasing)
 
 ## Issues
 
@@ -47,7 +48,7 @@ For a small bug fix change (less than 20 lines of code changed), feel free to op
 
 ### Suggesting features
 
-Most of the features in Apollo came from suggestions by you, the community! We welcome any ideas about how to make Apollo  better for your use case. Unless there is overwhelming demand for a feature, it might not get implemented immediately, but please include as much information as possible that will help people have a discussion about your proposal:
+Most of the features in Apollo came from suggestions by you, the community! We welcome any ideas about how to make Apollo better for your use case. Unless there is overwhelming demand for a feature, it might not get implemented immediately, but please include as much information as possible that will help people have a discussion about your proposal:
 
 1. **Use case:** What are you trying to accomplish, in specific terms? Often, there might already be a good way to do what you need and a new feature is unnecessary, but it’s hard to know without information about the specific use case.
 1. **Could this be a plugin?** In many cases, a feature might be too niche to be included in the core of a library, and is better implemented as a companion package. If there isn’t a way to extend the library to do what you want, could we add additional plugin APIs? It’s important to make the case for why a feature should be part of the core functionality of the library.
@@ -61,8 +62,8 @@ Once there is a consensus on the need for a new feature, proceed as listed below
 
 This includes:
 
-* Big bug fixes
-* New features
+- Big bug fixes
+- New features
 
 For significant changes to a repository, it’s important to settle on a design before starting on the implementation. This way, we can make sure that major improvements get the care and attention they deserve. Since big changes can be risky and might not always get merged, it’s good to reduce the amount of possible wasted effort by agreeing on an implementation design/plan first.
 
@@ -95,15 +96,20 @@ You can check your setup by running `yarn test`, it should test all packages and
 
 ## Releasing
 
-1. Update `packages/apollo-angular/CHANGELOG.md`
-2. Run something like that:
-```sh
-VERSION=1.2.3
-./scripts/version.js $VERSION
-yarn run deploy
-git add .
-git commit -m "Release v$VERSION"
-git tag $VERSION -m $VERSION
-git push
-```
-3. Create a release on https://github.com/kamilkisiela/apollo-angular/releases/new
+We are using `Changeset` to manage and publish our releasing flow.
+
+1. Make your changes to the code and test them thoroughly.
+2. Run the command `yarn changeset` in your terminal. This will prompt you to select the type of change you made. The available options are patch, minor, and major.
+
+   1. `Patch` for backward-compatible bug fixes.
+   2. `Minor` for new features and backward-compatible changes.
+   3. `Major` for breaking changes.
+
+3. Once you have selected the type of change, `Changeset` will ask you to describe your changes.
+4. Once you have written about your changes, `Changeset` will create an `MD` file. This file will be located in the `.changeset` directory. Don't forget to add this file to your pull request.
+5. In your pull request, `changeset-bot` will detect your `MD` file and will understand the type of your change you made.
+6. Once the pull request will be merged, the `changeset` will create a new pull request with a summary of the new version.
+7. Once the new pull request will be merged, the `Apollo-Angular` package will do a version update on the NPM website.
+
+[Changesets docs](https://github.com/changesets/changesets)
+[Apollo Angular NPM](https://www.npmjs.com/package/apollo-angular)
