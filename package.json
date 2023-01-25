@@ -35,7 +35,7 @@
     "@angular/platform-browser-dynamic": "^14.0.6",
     "@angular/platform-server": "^14.0.6",
     "@angular/router": "^14.0.6",
-    "@apollo/client": "3.7.0",
+    "@apollo/client": "3.7.5",
     "@babel/core": "^7.17.4",
     "@babel/preset-env": "^7.16.11",
     "@schematics/angular": "^14.0.6",
