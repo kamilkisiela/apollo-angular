@@ -33,7 +33,7 @@
     "@theguild/algolia": "1.0.2",
     "@theguild/tailwind-config": "0.2.1",
     "@types/node": "18.11.17",
-    "@types/react": "18.0.26",
+    "@types/react": "18.0.27",
     "cssnano": "5.1.14",
     "patch-package": "6.5.0",
     "tailwindcss": "3.2.4",
