@@ -1,23 +1,12 @@
-import {dirname} from 'path';
-import {
-  apply,
-  chain,
-  url,
-  template,
-  Tree,
-  Rule,
-  SchematicContext,
-  mergeWith,
-  move,
-} from '@angular-devkit/schematics';
-import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
-import {getAppModulePath} from '@schematics/angular/utility/ng-ast-utils';
-import {tags} from '@angular-devkit/core';
-import {CompilerOptions} from 'typescript';
-
-import {getJsonFile, getMainPath} from '../utils';
-import {Schema} from './schema';
-import {addModuleImportToRootModule} from '../utils/ast';
+import { getJsonFile, getMainPath } from '../utils';
+import { addModuleImportToRootModule } from '../utils/ast';
+import { Schema } from './schema';
+import { tags } from '@angular-devkit/core';
+import { apply, chain, url, template, Tree, Rule, SchematicContext, mergeWith, move } from '@angular-devkit/schematics';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
+import { dirname } from 'path';
+import { CompilerOptions } from 'typescript';
 
 export function factory(options: Schema): Rule {
   return chain([
@@ -32,10 +21,10 @@ export function factory(options: Schema): Rule {
 
 export function createDependenciesMap(options: Schema): Record<string, string> {
   return {
-  'apollo-angular': '^4.2.0',
-  '@apollo/client': '^3.0.0',
-  graphql: `^${options.graphql ?? '16.0.0'}`,
-};
+    'apollo-angular': '^4.2.0',
+    '@apollo/client': '^3.0.0',
+    graphql: `^${options.graphql ?? '16.0.0'}`,
+  };
 }
 
 /**
@@ -76,28 +65,22 @@ function includeAsyncIterableLib() {
   function updateFn(tsconfig: any) {
     const compilerOptions: CompilerOptions = tsconfig.compilerOptions;
 
-    if (
-      compilerOptions &&
-      compilerOptions.lib &&
-      !compilerOptions.lib.find((lib) => lib.toLowerCase() === requiredLib)
-    ) {
+    if (compilerOptions && compilerOptions.lib && !compilerOptions.lib.find(lib => lib.toLowerCase() === requiredLib)) {
       compilerOptions.lib.push(requiredLib);
       return true;
     }
+    return false;
   }
 
   return (host: Tree) => {
-    if (
-      !updateTSConfig('tsconfig.json', host, updateFn) &&
-      !updateTSConfig('tsconfig.base.json', host, updateFn)
-    ) {
+    if (!updateTSConfig('tsconfig.json', host, updateFn) && !updateTSConfig('tsconfig.base.json', host, updateFn)) {
       console.error(
         '\n' +
           tags.stripIndent`
               We couldn't find '${requiredLib}' in the list of library files to be included in the compilation.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
-          '\n',
+          '\n'
       );
     }
 
@@ -105,11 +88,7 @@ function includeAsyncIterableLib() {
   };
 }
 
-function updateTSConfig(
-  tsconfigPath: string,
-  host: Tree,
-  updateFn: (tsconfig: any) => boolean,
-): boolean {
+function updateTSConfig(tsconfigPath: string, host: Tree, updateFn: (tsconfig: any) => boolean): boolean {
   try {
     const tsconfig = getJsonFile(host, tsconfigPath);
 
@@ -135,20 +114,19 @@ function allowSyntheticDefaultImports() {
       tsconfig.compilerOptions.allowSyntheticDefaultImports = true;
       return true;
     }
+
+    return false;
   }
 
   return (host: Tree) => {
-    if (
-      !updateTSConfig('tsconfig.json', host, updateFn) &&
-      !updateTSConfig('tsconfig.base.json', host, updateFn)
-    ) {
+    if (!updateTSConfig('tsconfig.json', host, updateFn) && !updateTSConfig('tsconfig.base.json', host, updateFn)) {
       console.error(
         '\n' +
           tags.stripIndent`
               We couldn't enable 'allowSyntheticDefaultImports' flag.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
-          '\n',
+          '\n'
       );
     }
 
@@ -175,12 +153,7 @@ function addSetupFiles(options: Schema) {
 
 function importSetupModule(options: Schema) {
   return (host: Tree) => {
-    addModuleImportToRootModule(
-      host,
-      'GraphQLModule',
-      './graphql.module',
-      options.project,
-    );
+    addModuleImportToRootModule(host, 'GraphQLModule', './graphql.module', options.project);
 
     return host;
   };
@@ -188,11 +161,6 @@ function importSetupModule(options: Schema) {
 
 function importHttpClientModule(options: Schema) {
   return (host: Tree) => {
-    addModuleImportToRootModule(
-      host,
-      'HttpClientModule',
-      '@angular/common/http',
-      options.project,
-    );
+    addModuleImportToRootModule(host, 'HttpClientModule', '@angular/common/http', options.project);
   };
 }

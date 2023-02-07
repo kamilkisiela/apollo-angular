@@ -15,7 +15,8 @@
     "experimentalDecorators": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "strictNullChecks": true
   },
   "angularCompilerOptions": {
     "enableResourceInlining": true,

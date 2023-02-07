@@ -6,6 +6,7 @@ import type {
   ApolloClientOptions,
   ObservableQuery,
   FetchResult,
+  OperationVariables,
 } from '@apollo/client/core';
 import { ApolloClient } from '@apollo/client/core';
 import { Observable, from } from 'rxjs';
@@ -32,7 +33,7 @@ export class ApolloBase<TCacheShape = any> {
     this.useMutationLoading = pickFlag(flags, 'useMutationLoading', false);
   }
 
-  public watchQuery<TData, TVariables = EmptyObject>(
+  public watchQuery<TData, TVariables extends OperationVariables = EmptyObject>(
     options: WatchQueryOptions<TVariables, TData>
   ): QueryRef<TData, TVariables> {
     return new QueryRef<TData, TVariables>(

@@ -45,7 +45,7 @@ export class AuthorPageComponent implements OnInit {
           }
         `,
         variables: {
-          authorId: parseInt(this.route.snapshot.paramMap.get('id'), 10),
+          authorId: parseInt(this.route.snapshot.paramMap.get('id')!, 10),
         },
       })
       .valueChanges.pipe(map((result) => result.data.postsOf));

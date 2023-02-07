@@ -31,7 +31,7 @@
     "build": "ng-packagr -p ng-package.json && yarn build:schematics",
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
     "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js",
-    "prebuild": "rm -rf build/",
+    "prebuild": "del /S /Q build",
     "release": "yarn build && changeset publish"
   },
   "peerDependencies": {
@@ -41,7 +41,7 @@
     "rxjs": "^6.0.0 || ^7.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.5.0"
   },
   "publishConfig": {
     "directory": "build",
