@@ -7,6 +7,7 @@ import type {
   SubscribeToMoreOptions,
   UpdateQueryOptions,
   TypedDocumentNode,
+  OperationVariables,
 } from '@apollo/client/core';
 import {NetworkStatus} from '@apollo/client/core';
 import {Observable, from} from 'rxjs';
@@ -14,7 +15,7 @@ import {Observable, from} from 'rxjs';
 import {wrapWithZone, fixObservable} from './utils';
 import {WatchQueryOptions, EmptyObject} from './types';
 
-function useInitialLoading<T, V>(obsQuery: ObservableQuery<T, V>) {
+function useInitialLoading<T, V extends OperationVariables>(obsQuery: ObservableQuery<T, V>) {
   return function useInitialLoadingOperator<T>(
     source: Observable<T>,
   ): Observable<T> {
@@ -45,10 +46,11 @@ function useInitialLoading<T, V>(obsQuery: ObservableQuery<T, V>) {
   };
 }
 
-export type QueryRefFromDocument<T extends TypedDocumentNode> =
-  T extends TypedDocumentNode<infer R, infer V> ? QueryRef<R, V> : never;
+export type QueryRefFromDocument<T extends TypedDocumentNode> = T extends TypedDocumentNode<infer R, infer V>
+  ? QueryRef<R, V & OperationVariables>
+  : never;
 
-export class QueryRef<T, V = EmptyObject> {
+export class QueryRef<T, V extends OperationVariables = EmptyObject> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
   public queryId: ObservableQuery<T, V>['queryId'];
 

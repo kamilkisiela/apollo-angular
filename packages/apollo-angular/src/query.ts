@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import type {DocumentNode} from 'graphql';
-import type {ApolloQueryResult, TypedDocumentNode} from '@apollo/client/core';
+import type { ApolloQueryResult, TypedDocumentNode, OperationVariables } from '@apollo/client/core';
 import type {Observable} from 'rxjs';
 
 import {Apollo} from './apollo';
@@ -8,7 +8,7 @@ import {QueryRef} from './query-ref';
 import {WatchQueryOptionsAlone, QueryOptionsAlone, EmptyObject} from './types';
 
 @Injectable()
-export class Query<T = {}, V = EmptyObject> {
+export class Query<T = {}, V extends OperationVariables = EmptyObject> {
   public readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
