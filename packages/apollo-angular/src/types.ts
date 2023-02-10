@@ -6,6 +6,7 @@ import type {
   ApolloClientOptions,
   FetchResult,
   TypedDocumentNode,
+  OperationVariables,
 } from '@apollo/client/core';
 import type { ExecutionResult } from 'graphql';
 
@@ -26,7 +27,7 @@ export type MutationResult<TData = any> = FetchResult<TData> & {
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface WatchQueryOptionsAlone<TVariables = EmptyObject, TData = any>
+export interface WatchQueryOptionsAlone<TVariables extends OperationVariables = EmptyObject, TData = any>
   extends Omit<WatchQueryOptions<TVariables, TData>, 'query' | 'variables'> {}
 
 export interface QueryOptionsAlone<TVariables = EmptyObject, TData = any>
@@ -38,7 +39,7 @@ export interface MutationOptionsAlone<TData = EmptyObject, TVariables = any>
 export interface SubscriptionOptionsAlone<TVariables = EmptyObject, TData = any>
   extends Omit<CoreSubscriptionOptions<TVariables, TData>, 'query' | 'variables'> {}
 
-export interface WatchQueryOptions<TVariables = EmptyObject, TData = any>
+export interface WatchQueryOptions<TVariables extends OperationVariables = EmptyObject, TData = any>
   extends CoreWatchQueryOptions<TVariables, TData> {
   /**
    * Observable starts with `{ loading: true }`.
