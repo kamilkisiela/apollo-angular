@@ -1,34 +1,34 @@
 # Change log
 
-### v4.2.0
+## v4.2.0
 
 - Support Angular 15
 - Support Node 18
 - Fix broken published package
 
-### v4.1.1
+## v4.1.1
 
 - Fix creating default client when using named options (`APOLLO_NAMED_OPTIONS`)
 - Support newest zone.js #1841
 
-### v4.1.0
+## v4.1.0
 
 - Support `@apollo/client` v3.7.X
 - Fix typescript issue with `MutationResult` type #1818
 
-### v4.0.1
+## v4.0.1
 
 - Add missing `apollo-angular/persisted-queries` and `apollo-angular/testing`
 
-### v4.0.0
+## v4.0.0
 
 - Support Angular v14
 
-### v3.0.1
+## v3.0.1
 
 - Fix previously corrupted distribution of `apollo-angular` package.
 
-### v3.0.0
+## v3.0.0
 
 - `useGETForQueries` in Http Link [`5996109`](https://github.com/kamilkisiela/apollo-angular/commit/599610934e5f9cf8cc2d62abc270edddc937cc60)
 - Bring back `ApolloModule` [`0a24c4f`](https://github.com/kamilkisiela/apollo-angular/commit/0a24c4f7af8189a825483c57b2d60cb7a875b18f)
@@ -46,54 +46,54 @@
 3. In case of file uploads, import `extractFiles` from `extract-files` library and pass it to `HttpLink.create({ ..., extractFiles })`
 4. Done.
 
-### v2.6.0
+## v2.6.0
 
 - Support `TypedDocumentNode` [`120594a`](https://github.com/kamilkisiela/apollo-angular/commit/120594a3f744e0d233ede3239b08e6721cb35d54)
 
-### v2.5.0
+## v2.5.0
 
 - Declare support for Angular 12
 
-### v2.4.0
+## v2.4.0
 
 - Fix: Use let in Apollo constructor due to firefox bug [#1632](https://github.com/kamilkisiela/apollo-angular/pull/1632)
 - Adds `operationPrinter` option to replace operation printing logic in `HttpLink` and `HttpBatchLink` [#1637](https://github.com/kamilkisiela/apollo-angular/pull/1637)
 
-### v2.3.0
+## v2.3.0
 
 - `830da182` build: Allows zone.js v11 [#1629](https://github.com/kamilkisiela/apollo-angular/pull/1629)
 - `136663f0` docs: Update queries.md [#1616](https://github.com/kamilkisiela/apollo-angular/pull/1616)
 
-### v2.2.0
+## v2.2.0
 
 - `b152d53` Added Angular 11 peer dependency [#1615](https://github.com/kamilkisiela/apollo-angular/pull/1615)
 - `d179a66` docs: Integrated documentation changes [#1590](https://github.com/kamilkisiela/apollo-angular/pull/1590)
 - `5d938a3` Update README.md [#1598](https://github.com/kamilkisiela/apollo-angular/pull/1598)
 - `60b8445` fix: test data modification [#1596](https://github.com/kamilkisiela/apollo-angular/pull/1596)
 
-### v2.1.0
+## v2.1.0
 
 - Move `apollo-angular-link-persisted` to `apollo-angular/persisted-queries` (support Apollo Client 3.0)
 - Support `clientAwareness` (`apollographql-client-name` and `apollographql-client-version` headers) in `HttpLink` and `HttpBatchLink`
 
-### v2.0.4
+## v2.0.4
 
 - Fix v2 migration: default export (`ApolloClient`) of `apollo-client`
 - Use TypeScript to parse JSON files (supports comments in JSON)
 
-### v2.0.3
+## v2.0.3
 
 - Use JSON.parse to parse `package.json` file in v2 migration
 
-### v2.0.2
+## v2.0.2
 
 - Fix duplicated imports in v2 migration
 
-### v2.0.1
+## v2.0.1
 
 - Fix missing migration code
 
-### v2.0.0
+## v2.0.0
 
 Migration from v1.0 to v2.0:
 
@@ -109,54 +109,54 @@ Changes:
 - Add `flushData` method to `TestingOperation` ([PR #1474](https://github.com/kamilkisiela/apollo-angular/pull/1474) by [@fetis](https://github.com/fetis))
 - Remove `apollo-angular-boost` and `apollo-angular-cache-ngrx`
 
-### v1.10.0
+## v1.10.0
 
 - Support Angular 10
 
-### v1.9.1
+## v1.9.1
 
 - Fix an issue with TypeScript prior v3.5 - private get accessor [#1491](https://github.com/kamilkisiela/apollo-angular/issues/1491)
 
-### v1.9.0
+## v1.9.0
 
 - Bump version ranges for GraphQL and Apollo Link
 
-### v1.8.0
+## v1.8.0
 
 - Introduces `APOLLO_NAMED_OPTIONS` token. Allows to create named Apollo clients using Dependency Injection ([PR #1365](https://github.com/kamilkisiela/apollo-angular/pull/1365))
 - Allow to test named Apollo client ([PR #1365](https://github.com/kamilkisiela/apollo-angular/pull/1365))
 
-### v1.7.0
+## v1.7.0
 
 - Fixed type definition for subscribe [PR #1290](https://github.com/kamilkisiela/apollo-angular/pull/1290)
 - Fix global scope naming for UMD build [PR #1305](https://github.com/kamilkisiela/apollo-angular/pull/1305)
 - Introduce useInitialLoading in watch [PR #1306](https://github.com/kamilkisiela/apollo-angular/pull/1306)
 
-### v1.6.0
+## v1.6.0
 
 - Angular 8 [PR #1206](https://github.com/kamilkisiela/apollo-angular/pull/1206)
 - Bumps packages in schematics
 
-### v1.5.0
+## v1.5.0
 
 - Use more generic types and make everything more strict [PR #885](https://github.com/kamilkisiela/apollo-angular/pull/885)
 - Angular 7 [PR #913](https://github.com/kamilkisiela/apollo-angular/pull/913)
 
-### v1.4.1
+## v1.4.1
 
 - schematics: bump dependencies
 
-### v1.4.0
+## v1.4.0
 
 - Support named clients in Query, Mutatio and Subscription classes [PR #799](https://github.com/kamilkisiela/apollo-angular/pull/799)
 
-### v1.3.0
+## v1.3.0
 
 - Make `Subscription` generic [PR #778](https://github.com/kamilkisiela/apollo-angular/pull/778)
 - Schematics (`ng add apollo-angular`) [PR #779](https://github.com/kamilkisiela/apollo-angular/pull/779), [PR #780](https://github.com/kamilkisiela/apollo-angular/pull/780)
 - Allow to use a custom ApolloCache while testing [PR #786](https://github.com/kamilkisiela/apollo-angular/pull/786)
 
-### v1.2.0
+## v1.2.0
 
 - Expose `queryId` in `QueryRef` [PR #733](https://github.com/kamilkisiela/apollo-angular/pull/733)
 - Introduce `Query`, `Mutation`, `Subscription` services [PR #622](https://github.com/kamilkisiela/apollo-angular/pull/622)
@@ -164,14 +164,14 @@ Changes:
 - TypeScript 2.8 is now required (because of Omit type)
 - Apollo Client ^2.3.4 is now required (versions before are not compatible because of the change in apollo-client)
 
-### v1.1.2
+## v1.1.2
 
-### v1.1.1
+## v1.1.1
 
 - Fix typescript compilation errors caused by recent Apollo Client
   interface changes. [Issue #659](https://github.com/kamilkisiela/apollo-angular/issues/659) [PR #660](https://github.com/kamilkisiela/apollo-angular/pull/660)
 
-### v1.1.0
+## v1.1.0
 
 - Introduces `ExtraSubscriptionOptions`. Allows to run `Apollo.subscribe` outside
   the Zone ([PR #488](https://github.com/kamilkisiela/apollo-angular/pull/488))
@@ -180,11 +180,11 @@ Changes:
 - Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/kamilkisiela/apollo-angular/pull/580))
 - Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/kamilkisiela/apollo-angular/pull/580))
 
-### v1.0.1
+## v1.0.1
 
 - Brings typed variables to `QueryRef`
 
-### v1.0.0
+## v1.0.0
 
 - Supports **ApolloClient 2.0**
 - Supports ApolloLinks and ApolloCache
@@ -205,12 +205,12 @@ Changes:
 - No longer exposes `ClientMap`, `ClientMapWrapper`, `ClientWrapper`
 - Removes 'variables as Observables' feature
 
-### v0.13.3
+## v0.13.3
 
 - Don't reuse options object for mutate and query
   ([PR #356](https://github.com/kamilkisiela/apollo-angular/pull/356))
 
-### v0.13.2
+## v0.13.2
 
 - Use `InjectionToken`, instead of deprecated `OpaqueToken`
   ([PR #358](https://github.com/kamilkisiela/apollo-angular/pull/358))
@@ -221,7 +221,7 @@ Changes:
 - Fix AoT issue in Angular 5 **(added InjectDecorator on ClientMap in Apollo)**
   ([PR #365](https://github.com/kamilkisiela/apollo-angular/pull/365))
 
-### v0.13.1
+## v0.13.1
 
 - Update dependencies
   ([PR #347](https://github.com/kamilkisiela/apollo-angular/pull/304))
@@ -229,19 +229,19 @@ Changes:
   to `mutate()` and `query()`
   ([PR #304](https://github.com/kamilkisiela/apollo-angular/pull/304))
 
-### v0.13.0
+## v0.13.0
 
 - Run `subscribe`, `mutate` and `query` within a Zone
   ([PR #297](https://github.com/kamilkisiela/apollo-angular/pull/297))
 
-### v0.12.0
+## v0.12.0
 
 - Support `apollo-client@1.0.0-rc.2`
   ([PR #290](https://github.com/kamilkisiela/apollo-angular/pull/290))
 - Support `jsnext:main`
   ([PR #277](https://github.com/kamilkisiela/apollo-angular/pull/277))
 
-### v0.11.0
+## v0.11.0
 
 - Remove `DeprecatedWatchQueryOptions` and use `WatchQueryOptions`
   ([PR #274](https://github.com/kamilkisiela/apollo-angular/pull/274))
@@ -272,7 +272,7 @@ class AppComponent {
 
 Behaves the same as the `ObservableQuery` of `apollo-client`.
 
-### v0.10.0
+## v0.10.0
 
 - **BRAKING CHANGE** Change name of the service to `Apollo`, instead of
   `Angular2Apollo`
@@ -280,7 +280,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - Introduce multiple clients
   ([PR #263](https://github.com/kamilkisiela/apollo-angular/pull/263))
 
-### v0.9.0
+## v0.9.0
 
 - Support `apollo-client@0.8.0`
   ([PR #206](https://github.com/kamilkisiela/apollo-angular/pull/206))
@@ -297,7 +297,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - **BREAKING CHANGE** Change the name of the package. Use `apollo-angular`
   instead of `angular2-apollo`, which is now deprecated
 
-### v0.8.0
+## v0.8.0
 
 - Made `mutate()` and `query()` methods to return `Observable` instead of
   `Promise`
@@ -307,12 +307,12 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
   [PR #146](https://github.com/kamilkisiela/apollo-angular/pull/146),
   [PR #148](https://github.com/kamilkisiela/apollo-angular/pull/148) )
 
-### v0.7.0
+## v0.7.0
 
 - Added support for **Ahead of Time** compilation
   ([PR #124](https://github.com/kamilkisiela/apollo-angular/pull/124))
 
-### v0.6.0
+## v0.6.0
 
 - Added support for ApolloClient `v0.5.X` ([PR #])
 - Added `subscribeToMore` function
@@ -321,7 +321,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - **BREAKING CHANGE** Removed `Apollo` decorator (use `Angular2Apollo` service)
 - **BREAKING CHANGE** Removed `ApolloQueryPipe` (use `SelectPipe` instead)
 
-### v0.5.0
+## v0.5.0
 
 - Added `subscribe` method to `Angular2Apollo` service
   ([PR #113](https://github.com/kamilkisiela/apollo-angular/pull/113))
@@ -331,12 +331,12 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - **Deprecated** `Apollo` decorator (use `Angular2Apollo` service)
 - **BREAKING CHANGE** No longer support for ApolloClient v0.3.X
 
-### v0.4.6
+## v0.4.6
 
 - Moved to Angular 2 final and updated RxJS to the latest version
   ([PR #96](https://github.com/kamilkisiela/apollo-angular/pull/96))
 
-### v0.4.5
+## v0.4.5
 
 - Moved to Angular2 RC6
   ([PR #81](https://github.com/kamilkisiela/apollo-angular/pull/81))
@@ -344,7 +344,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
   ([PR #82](https://github.com/kamilkisiela/apollo-angular/pull/82))
   ([Issue #80](https://github.com/kamilkisiela/apollo-angular/issues/80))
 
-### v0.4.4
+## v0.4.4
 
 - Fixed format of arguments in backward compatible methods
   ([PR #74](https://github.com/kamilkisiela/apollo-angular/pull/74))
@@ -358,7 +358,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - Added `SelectPipe` and deprecated `ApolloQueryPipe`
   ([PR #78](https://github.com/kamilkisiela/apollo-angular/pull/78))
 
-### v0.4.3
+## v0.4.3
 
 - Added `ApolloModule` (with RC5 of Angular2 comes NgModules)
   ([PR #63](https://github.com/kamilkisiela/apollo-angular/pull/63))
@@ -366,7 +366,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
   be automatically re-run when those obserables emit new values.
   ([PR #64](https://github.com/kamilkisiela/apollo-angular/pull/64))
 
-### v0.4.2
+## v0.4.2
 
 - Added `fetchMore` support
   ([PR #58](https://github.com/kamilkisiela/apollo-angular/pull/58))
@@ -378,7 +378,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - Fixed `ApolloQueryObservable` incompatibility with `Rx.Observable`
   ([PR #59](https://github.com/kamilkisiela/apollo-angular/pull/59))
 
-### v0.4.1
+## v0.4.1
 
 - Added `ApolloQueryObservable` to support `Rx.Observable` in
   `Angular2Apollo.watchQuery` method
@@ -386,7 +386,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - Added `query` method to `Angular2Apollo` service
   ([PR #51](https://github.com/kamilkisiela/apollo-angular/pull/51))
 
-### v0.4.0
+## v0.4.0
 
 - Passing all the options of mutation in `Apollo` decorator
   [PR #39](https://github.com/kamilkisiela/apollo-angular/pull/39)
@@ -399,7 +399,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - Added `ApolloQuery` interface
   ([PR #45](https://github.com/kamilkisiela/apollo-angular/pull/45))
 
-### v0.3.0
+## v0.3.0
 
 - Added SSR support
 - Left `lodash` as the only one dependency and `@angular/core` with
@@ -410,7 +410,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - Fixed overwriting query data with the same value on every poll interval
   ([PR #34](https://github.com/kamilkisiela/apollo-angular/pull/34))
 
-### v0.2.0
+## v0.2.0
 
 - Added polling, refetching and access to unsubscribe method
   ([PR #19](https://github.com/kamilkisiela/apollo-angular/pull/19))
@@ -423,18 +423,18 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 - Fixed issue with not setting a query with not defined variables
   ([PR #19](https://github.com/kamilkisiela/apollo-angular/pull/19))
 
-### v0.1.0
+## v0.1.0
 
 - Added Angular2 RC1 and ApolloClient 0.3.X support
   ([PR #16](https://github.com/kamilkisiela/apollo-angular/pull/16),
   [PR #17](https://github.com/kamilkisiela/apollo-angular/pull/17))
 
-### v0.0.2
+## v0.0.2
 
 - Added `@Apollo` decorator
   ([99fed6e](https://github.com/kamilkisiela/apollo-angular/commit/99fed6e),
   [9f0107e](https://github.com/kamilkisiela/apollo-angular/commit/9f0107e))
 
-### v0.0.1
+## v0.0.1
 
 Initial release. We didn't track changes before this version.
