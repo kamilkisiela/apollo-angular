@@ -1,5 +1,11 @@
 # Change log
 
+## 4.2.1
+
+### Patch Changes
+
+- [#1910](https://github.com/kamilkisiela/apollo-angular/pull/1910) [`ff0b0d72`](https://github.com/kamilkisiela/apollo-angular/commit/ff0b0d721f847b536b3ba5dd4b598e2055d4532f) Thanks [@phryneas](https://github.com/phryneas)! - `TVariable` generics now `extend OperationVariables` to accommodate an upstream type change in @apollo/client@3.7.6. #1910, #1907
+
 ## v4.2.0
 
 - Support Angular 15
