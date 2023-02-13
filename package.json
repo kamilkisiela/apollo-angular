@@ -6,6 +6,7 @@
     "node": ">=14"
   },
   "scripts": {
+    "release": "changeset publish",
     "postinstall": "yarn workspace website patch-package",
     "prebuild": "rimraf packages/*/build/",
     "build": "yarn workspaces run build",
