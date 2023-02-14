@@ -32,7 +32,8 @@ apollo.create(extraOptions, 'extra');
 Now you have the default client and one called `extra`.
 
 <Callout type="warning">
-  If you want to define a default client, simply do not use any `name` argument or set it to `default`.
+  If you want to define a default client, simply do not use any `name` argument or set it to
+  `default`.
 </Callout>
 
 The other way is to use helper methods.
@@ -45,12 +46,13 @@ apollo.createNamed(name, options);
 
 ## Creating Clients Using `APOLLO_NAMED_OPTIONS`
 
-In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo Client:
+In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo
+Client:
 
 ```ts filename="app.module.ts"
-import { HttpClientModule } from '@angular/common/http';
-import { ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions } from 'apollo-angular';
+import { APOLLO_NAMED_OPTIONS, ApolloModule, NamedOptions } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
@@ -90,8 +92,8 @@ If a client is defined as the default, you can directly use all methods of the `
 About named clients, simply use the method called `use(name: string)`.
 
 ```typescript
-import { Component } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
+import { Component } from '@angular/core';
 
 @Component({
   // ...

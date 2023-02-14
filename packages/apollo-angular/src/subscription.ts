@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
 import type { DocumentNode } from 'graphql';
-import type { TypedDocumentNode } from '@apollo/client/core';
 import type { Observable } from 'rxjs';
-
+import { Injectable } from '@angular/core';
+import type { TypedDocumentNode } from '@apollo/client/core';
 import { Apollo } from './apollo';
-import { SubscriptionOptionsAlone, ExtraSubscriptionOptions, SubscriptionResult, EmptyObject } from './types';
+import {
+  EmptyObject,
+  ExtraSubscriptionOptions,
+  SubscriptionOptionsAlone,
+  SubscriptionResult,
+} from './types';
 
 @Injectable()
 export class Subscription<T = any, V = EmptyObject> {
@@ -16,7 +20,7 @@ export class Subscription<T = any, V = EmptyObject> {
   public subscribe(
     variables?: V,
     options?: SubscriptionOptionsAlone<V, T>,
-    extra?: ExtraSubscriptionOptions
+    extra?: ExtraSubscriptionOptions,
   ): Observable<SubscriptionResult<T>> {
     return this.apollo.use(this.client).subscribe<T, V>(
       {
@@ -24,7 +28,7 @@ export class Subscription<T = any, V = EmptyObject> {
         variables,
         query: this.document,
       },
-      extra
+      extra,
     );
   }
 }

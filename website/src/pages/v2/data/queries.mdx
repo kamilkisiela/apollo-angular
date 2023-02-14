@@ -6,23 +6,22 @@ import { Callout } from '@theguild/components';
 
 # Queries
 
-On this page, you can learn how to use Apollo to attach GraphQL query results to
-your Angular UI. This guide assumes some familiarity with GraphQL itself. You
-can read about GraphQL queries themselves in detail at
-[graphql.org](http://graphql.org/docs/queries/).
+On this page, you can learn how to use Apollo to attach GraphQL query results to your Angular UI.
+This guide assumes some familiarity with GraphQL itself. You can read about GraphQL queries
+themselves in detail at [graphql.org](http://graphql.org/docs/queries/).
 
-One of our core values is "it's just GraphQL." When using Apollo Client, you
-don't have to learn anything special about the query syntax, since everything is
-just standard GraphQL. Anything you can type into the GraphQL query IDE, you
-can also put into your Apollo Client code.
+One of our core values is "it's just GraphQL." When using Apollo Client, you don't have to learn
+anything special about the query syntax, since everything is just standard GraphQL. Anything you can
+type into the GraphQL query IDE, you can also put into your Apollo Client code.
 
 ## Basic Queries
 
-When we are using a basic query, we can use the `Apollo.watchQuery` method in a
-very simple way. We simply need to parse our query into a GraphQL document using
-the `gql` tag from `apollo-angular` library.
+When we are using a basic query, we can use the `Apollo.watchQuery` method in a very simple way. We
+simply need to parse our query into a GraphQL document using the `gql` tag from `apollo-angular`
+library.
 
-For instance, [in our example](https://graphql-voter-app.herokuapp.com/), we want to display a list of posts in `Posts` component:
+For instance, [in our example](https://graphql-voter-app.herokuapp.com/), we want to display a list
+of posts in `Posts` component:
 
 ```typescript
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -65,56 +64,54 @@ class PostsComponent implements OnInit, OnDestroy {
 }
 ```
 
-The `watchQuery` method returns a `QueryRef` object which has the `valueChanges`
-property that is an `Observable`.
+The `watchQuery` method returns a `QueryRef` object which has the `valueChanges` property that is an
+`Observable`.
 
-We can see that the result object contains `loading`, a Boolean indicating if
-the query is "in-flight." The observable will only emit once when the query is
-complete, and `loading` will be set to false unless you set the `watchQuery`
-parameters `notifyOnNetworkStatusChange` to true. Once
-the query has completed, it will also contain a `data` object with
-`posts`, the field we've picked out in `GetPosts` operation.
+We can see that the result object contains `loading`, a Boolean indicating if the query is
+"in-flight." The observable will only emit once when the query is complete, and `loading` will be
+set to false unless you set the `watchQuery` parameters `notifyOnNetworkStatusChange` to true. Once
+the query has completed, it will also contain a `data` object with `posts`, the field we've picked
+out in `GetPosts` operation.
 
-It's also possible to fetch data only once. The `query` method of `Apollo`
-service returns an `Observable` that also resolves with the same result as
-above.
+It's also possible to fetch data only once. The `query` method of `Apollo` service returns an
+`Observable` that also resolves with the same result as above.
 
-Imagine you have two views (routes), one of them has the `Posts` component. When you switch between views, you'll notice that the list of posts loads instantly the second time. This is the Apollo cache at work!
+Imagine you have two views (routes), one of them has the `Posts` component. When you switch between
+views, you'll notice that the list of posts loads instantly the second time. This is the Apollo
+cache at work!
 
 ### What is QueryRef
 
-As you know, `Apollo.query` method returns an Observable that emits a result,
-just once. `Apollo.watchQuery` also does the same, except it can emit multiple
-results. (The GraphQL query itself is still only sent once, but the `watchQuery`
-observable can also update if, for example, another query causes the object to
-be updated within Apollo Client's global cache.)
+As you know, `Apollo.query` method returns an Observable that emits a result, just once.
+`Apollo.watchQuery` also does the same, except it can emit multiple results. (The GraphQL query
+itself is still only sent once, but the `watchQuery` observable can also update if, for example,
+another query causes the object to be updated within Apollo Client's global cache.)
 
 So why doesn't `Apollo.watchQuery` expose an Observable?
 
-Apollo service and ApolloClient share pretty much the same API. It makes things
-easy to understand and use. No reason to change it.
+Apollo service and ApolloClient share pretty much the same API. It makes things easy to understand
+and use. No reason to change it.
 
-In `ApolloClient.watchQuery` returns an Observable, but not a standard one, it
-contains many useful methods (like `refetch()`) to manipulate the watched query.
-A normal Observable, has only one method, `subscribe()`.
+In `ApolloClient.watchQuery` returns an Observable, but not a standard one, it contains many useful
+methods (like `refetch()`) to manipulate the watched query. A normal Observable, has only one
+method, `subscribe()`.
 
-To use that Apollo's Observable in RxJS, we would have to drop those methods.
-Since they are necessary to use Apollo to its full potential, we had to come up
-with a solution.
+To use that Apollo's Observable in RxJS, we would have to drop those methods. Since they are
+necessary to use Apollo to its full potential, we had to come up with a solution.
 
 This is why we created `QueryRef`.
 
-The API of `QueryRef` is very simple. It has the same methods as the Apollo
-Observable we talked about. To subscribe to query results, you have to access its
-`valueChanges` property which exposes a clean RxJS Observable.
+The API of `QueryRef` is very simple. It has the same methods as the Apollo Observable we talked
+about. To subscribe to query results, you have to access its `valueChanges` property which exposes a
+clean RxJS Observable.
 
 It's worth mentioning that `QueryRef` accepts two generic types.
 
 ## Providing `options`
 
-The `watchQuery` and `query` methods expect one argument, an object with options. If
-you want to configure the query, you can provide any available option in the
-same object where the `query` key lives.
+The `watchQuery` and `query` methods expect one argument, an object with options. If you want to
+configure the query, you can provide any available option in the same object where the `query` key
+lives.
 
 If your query takes variables, this is the place to pass them in:
 
@@ -155,24 +152,23 @@ class PostsOfUserComponent implements OnInit, OnDestroy {
 
 ## Using with AsyncPipe
 
-In Angular, the simplest way of displaying data that comes from Observable is to
-put `AsyncPipe` on top of the property inside the UI. You can also achieve this
-with Apollo.
+In Angular, the simplest way of displaying data that comes from Observable is to put `AsyncPipe` on
+top of the property inside the UI. You can also achieve this with Apollo.
 
 <Callout>
-  **Note**: Using async pipe more than once in your template will trigger the query for each pipe. To avoid this
-  situation, subscribe to the data in the component, and display the data from the component's property.
+  **Note**: Using async pipe more than once in your template will trigger the query for each pipe.
+  To avoid this situation, subscribe to the data in the component, and display the data from the
+  component's property.
 </Callout>
 
-An Observable returned by `watchQuery().valueChanges` holds the actual result
-under the `data` field, so you can not directly access one of the properties of
-that object.
+An Observable returned by `watchQuery().valueChanges` holds the actual result under the `data`
+field, so you can not directly access one of the properties of that object.
 
 ```typescript
-import { Component, OnInit } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 
 const GET_FEED = gql`
   query GetFeed {
@@ -203,7 +199,9 @@ class FeedComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.posts = this.apollo.watchQuery({ query: GET_FEED }).valueChanges.pipe(map(result => result.data.posts));
+    this.posts = this.apollo
+      .watchQuery({ query: GET_FEED })
+      .valueChanges.pipe(map(result => result.data.posts));
   }
 }
 ```
@@ -219,16 +217,19 @@ The result of the query has this structure:
 }
 ```
 
-Without using the `map` operator, you would get the whole object instead of only the
-`data.posts`.
+Without using the `map` operator, you would get the whole object instead of only the `data.posts`.
 
 ## Updating Cached Query Results
 
-Caching query results is handy and easy to do, but sometimes you want to make sure that cached data is up-to-date with your server. Apollo Client supports two strategies for this: **polling** and **refetching**.
+Caching query results is handy and easy to do, but sometimes you want to make sure that cached data
+is up-to-date with your server. Apollo Client supports two strategies for this: **polling** and
+**refetching**.
 
 ### Polling
 
-Polling provides near-real-time synchronization with your server by causing a query to execute periodically at a specified interval. To enable polling for a query, pass a `pollInterval` configuration option to the `Apollo.watchQuery` with an interval in milliseconds:
+Polling provides near-real-time synchronization with your server by causing a query to execute
+periodically at a specified interval. To enable polling for a query, pass a `pollInterval`
+configuration option to the `Apollo.watchQuery` with an interval in milliseconds:
 
 ```typescript
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -272,22 +273,26 @@ class PostsComponent implements OnInit, OnDestroy {
 }
 ```
 
-By setting the `pollInterval` to `500`, you'll fetch the list of posts from the server every 0.5 seconds. Note that if you set `pollInterval` to `0`, the query will **not** poll.
+By setting the `pollInterval` to `500`, you'll fetch the list of posts from the server every 0.5
+seconds. Note that if you set `pollInterval` to `0`, the query will **not** poll.
 
 <Callout>
-  You can also start and stop polling dynamically with the `startPolling` and `stopPolling` functions that are available
-  in the `QueryRef` object returned by `Apollo.watchQuery()`
+  You can also start and stop polling dynamically with the `startPolling` and `stopPolling`
+  functions that are available in the `QueryRef` object returned by `Apollo.watchQuery()`
 </Callout>
 
 ### Refetching
 
-Refetching enables you to refresh query results in response to a particular user action, as opposed to using a fixed interval.
+Refetching enables you to refresh query results in response to a particular user action, as opposed
+to using a fixed interval.
 
-Let's add a button to our `Posts` component that calls our query's refetch function whenever it's clicked.
+Let's add a button to our `Posts` component that calls our query's refetch function whenever it's
+clicked.
 
 <Callout>
-  You can optionally provide a new `variables` object to the refetch function. If you don't (as is the case in the
-  following example), the query uses the same variables that it used in its previous execution.
+  You can optionally provide a new `variables` object to the refetch function. If you don't (as is
+  the case in the following example), the query uses the same variables that it used in its previous
+  execution.
 </Callout>
 
 ```typescript
@@ -338,22 +343,30 @@ class PostsComponent implements OnInit, OnDestroy {
 }
 ```
 
-Call the `refresh` method and notice that the UI updates with a new dog photo. Refetching is an excellent way to guarantee fresh data, but it introduces some complexity with loading state. In the next section, we'll cover strategies for handling complex loading and error state.
+Call the `refresh` method and notice that the UI updates with a new dog photo. Refetching is an
+excellent way to guarantee fresh data, but it introduces some complexity with loading state. In the
+next section, we'll cover strategies for handling complex loading and error state.
 
 ## Inspecting Error States
 
-You can customize your query error handling by providing the `errorPolicy` configuration option to `Apollo.watchQuery` or `Apollo.query`. The default value is `none`, which tells Apollo Angular to treat all GraphQL errors as runtime errors. In this case, Apollo Angular discards any query response data returned by the server and sets the error property in the result object to true.
+You can customize your query error handling by providing the `errorPolicy` configuration option to
+`Apollo.watchQuery` or `Apollo.query`. The default value is `none`, which tells Apollo Angular to
+treat all GraphQL errors as runtime errors. In this case, Apollo Angular discards any query response
+data returned by the server and sets the error property in the result object to true.
 
-If you set `errorPolicy` to `all`, Apollo Angular does not discard query response data, allowing you to render partial results.
+If you set `errorPolicy` to `all`, Apollo Angular does not discard query response data, allowing you
+to render partial results.
 
 ## Loading State
 
-Every response you get from `Apollo.watchQuery()` contains `loading` property. By default, it's always `false` and the first result is emitted with the response from the ApolloLink execution chain. In order to correct it you can enable `useInitialLoading` flag in configuration.
+Every response you get from `Apollo.watchQuery()` contains `loading` property. By default, it's
+always `false` and the first result is emitted with the response from the ApolloLink execution
+chain. In order to correct it you can enable `useInitialLoading` flag in configuration.
 
 ```typescript
-import { HttpClientModule } from '@angular/common/http';
-import { ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS } from 'apollo-angular';
+import { APOLLO_FLAGS, APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
@@ -383,5 +396,6 @@ export class AppModule {}
 ```
 
 <Callout>
-  `useInitialLoading` is disabled to avoid any breaking changes, this may be enabled in next major version.
+  `useInitialLoading` is disabled to avoid any breaking changes, this may be enabled in next major
+  version.
 </Callout>

@@ -1,17 +1,23 @@
-import { NgModule, Component, destroyPlatform, getPlatform, ApplicationRef, CompilerFactory } from '@angular/core';
+import { filter, first } from 'rxjs/operators';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import {
-  ServerModule,
+  ApplicationRef,
+  CompilerFactory,
+  Component,
+  destroyPlatform,
+  getPlatform,
+  NgModule,
+} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import {
+  INITIAL_CONFIG,
+  platformDynamicServer,
+  PlatformState,
   renderModule,
   renderModuleFactory,
-  INITIAL_CONFIG,
-  PlatformState,
-  platformDynamicServer,
+  ServerModule,
 } from '@angular/platform-server';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { BrowserModule } from '@angular/platform-browser';
 import { execute, gql } from '@apollo/client/core';
-import { filter, first } from 'rxjs/operators';
-
 import { HttpLink } from '../src/http-link';
 
 describe.skip('integration', () => {
@@ -56,14 +62,20 @@ describe.skip('integration', () => {
         });
 
         this.httpBackend
-          .match(req => req.url === 'graphql' && req.params.get('operationName') === 'websiteInfo')[0]
+          .match(
+            req => req.url === 'graphql' && req.params.get('operationName') === 'websiteInfo',
+          )[0]
           .flush({ data });
       }
     }
 
     @NgModule({
       declarations: [AsyncServerApp],
-      imports: [BrowserModule.withServerTransition({ appId: 'async-server' }), ServerModule, HttpClientTestingModule],
+      imports: [
+        BrowserModule.withServerTransition({ appId: 'async-server' }),
+        ServerModule,
+        HttpClientTestingModule,
+      ],
       providers: [HttpLink],
       bootstrap: [AsyncServerApp],
     })
@@ -83,7 +95,7 @@ describe.skip('integration', () => {
       await applicationRef.isStable
         .pipe(
           filter((isStable: boolean) => isStable),
-          first()
+          first(),
         )
         .toPromise();
       const str = platform.injector.get(PlatformState).renderToString();

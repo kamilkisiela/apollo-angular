@@ -4,9 +4,14 @@ description: How to build UI features before your GraphQL API supports them
 
 # Mocking New Schema Capabilities
 
-Imagine we're building out a new feature in our Space Explorer app — we'd like to display a description of each rocket we can choose — but the backend support for this feature isn't going to be available for another few weeks. In keeping with schema-first design, the team has decided that we'll be adding a new field called `description` to an existing type in our schema called `Rocket`.
+Imagine we're building out a new feature in our Space Explorer app — we'd like to display a
+description of each rocket we can choose — but the backend support for this feature isn't going to
+be available for another few weeks. In keeping with schema-first design, the team has decided that
+we'll be adding a new field called `description` to an existing type in our schema called `Rocket`.
 
-Even though this field doesn't exist in the schema yet, we can take advantage of client schemas to document it as a client-side field. In this guide, we'll walk through a simple recipe for this technique:
+Even though this field doesn't exist in the schema yet, we can take advantage of client schemas to
+document it as a client-side field. In this guide, we'll walk through a simple recipe for this
+technique:
 
 - declare client-side extensions to the schema using Apollo Client
 - enhance client resolvers with mock data
@@ -14,7 +19,10 @@ Even though this field doesn't exist in the schema yet, we can take advantage of
 
 ## 1. Extend your server schema with a client-only field
 
-Before we can include this data in the UI, we'll need to define a client schema that extends our server schema. We'll start by constructing an instance of ApolloClient with a few small additions. Simply pass in `typeDefs` with extensions to the schema and `resolvers` which actually provide the mock data:
+Before we can include this data in the UI, we'll need to define a client schema that extends our
+server schema. We'll start by constructing an instance of ApolloClient with a few small additions.
+Simply pass in `typeDefs` with extensions to the schema and `resolvers` which actually provide the
+mock data:
 
 ```typescript
 const typeDefs = gql`
@@ -48,11 +56,18 @@ const resolvers = {
 export class AppModule {}
 ```
 
-Documenting your client-side API in Schema Definition Language is incredibly valuable, as other developers can easily see what client state is available in your app. Developers familiar with GraphQL schemas should quickly be able to understand how to query for these fields in other places throughout your app.
+Documenting your client-side API in Schema Definition Language is incredibly valuable, as other
+developers can easily see what client state is available in your app. Developers familiar with
+GraphQL schemas should quickly be able to understand how to query for these fields in other places
+throughout your app.
 
 ## 2. Introduce richer mock data
 
-Now that we have a basic resolver, we might find that during testing it's a bit boring to show the same boilerplate text every time. In fact we might want to test different lengths of text to make sure our layout still looks good. Introducing a mock data helper library such as [faker.js](https://github.com/marak/Faker.js/) can help keep the mock data varied while testing. We can incorporate it easily into this workflow:
+Now that we have a basic resolver, we might find that during testing it's a bit boring to show the
+same boilerplate text every time. In fact we might want to test different lengths of text to make
+sure our layout still looks good. Introducing a mock data helper library such as
+[faker.js](https://github.com/marak/Faker.js/) can help keep the mock data varied while testing. We
+can incorporate it easily into this workflow:
 
 ```typescript
 import faker from 'faker/locale/en';
@@ -69,7 +84,8 @@ const resolvers = {
 
 ## 3. Query the mocked field with the @client directive
 
-Now, you’re ready to query your new field inside the `RocketDetails` component. Just add your new field to the query and specify the `@client` directive, and start using it in your UI.
+Now, you’re ready to query your new field inside the `RocketDetails` component. Just add your new
+field to the query and specify the `@client` directive, and start using it in your UI.
 
 ```typescript
 const GET_ROCKET_DETAILS = gql`
@@ -98,4 +114,6 @@ export class RocketDetailsComponent {
 
 ## 4. Toggle on "real" data
 
-Once the feature is ready on the backend, just remove the `@client` directive from your query. You should now be able to see your real production data returned instead. It's probably a good idea to clean up any unused client schema and resolvers at this time.
+Once the feature is ready on the backend, just remove the `@client` directive from your query. You
+should now be able to see your real production data returned instead. It's probably a good idea to
+clean up any unused client schema and resolvers at this time.

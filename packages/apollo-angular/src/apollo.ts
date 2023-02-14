@@ -1,40 +1,43 @@
-import { Injectable, Optional, Inject, NgZone } from '@angular/core';
+import { from, Observable } from 'rxjs';
+import { Inject, Injectable, NgZone, Optional } from '@angular/core';
 import type {
-  QueryOptions,
-  ApolloQueryResult,
-  SubscriptionOptions,
   ApolloClientOptions,
-  ObservableQuery,
+  ApolloQueryResult,
   FetchResult,
+  ObservableQuery,
   OperationVariables,
+  QueryOptions,
+  SubscriptionOptions,
 } from '@apollo/client/core';
 import { ApolloClient } from '@apollo/client/core';
-import { Observable, from } from 'rxjs';
-
 import { QueryRef } from './query-ref';
+import { APOLLO_FLAGS, APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS } from './tokens';
 import type {
-  WatchQueryOptions,
-  ExtraSubscriptionOptions,
   EmptyObject,
-  NamedOptions,
+  ExtraSubscriptionOptions,
   Flags,
-  MutationResult,
   MutationOptions,
+  MutationResult,
+  NamedOptions,
+  WatchQueryOptions,
 } from './types';
-import { APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS, APOLLO_FLAGS } from './tokens';
-import { fromPromise, useMutationLoading, wrapWithZone, fixObservable, pickFlag } from './utils';
+import { fixObservable, fromPromise, pickFlag, useMutationLoading, wrapWithZone } from './utils';
 
 export class ApolloBase<TCacheShape = any> {
   private useInitialLoading: boolean;
   private useMutationLoading: boolean;
 
-  constructor(protected ngZone: NgZone, protected flags?: Flags, protected _client?: ApolloClient<TCacheShape>) {
+  constructor(
+    protected ngZone: NgZone,
+    protected flags?: Flags,
+    protected _client?: ApolloClient<TCacheShape>,
+  ) {
     this.useInitialLoading = pickFlag(flags, 'useInitialLoading', false);
     this.useMutationLoading = pickFlag(flags, 'useMutationLoading', false);
   }
 
   public watchQuery<TData, TVariables extends OperationVariables = EmptyObject>(
-    options: WatchQueryOptions<TVariables, TData>
+    options: WatchQueryOptions<TVariables, TData>,
   ): QueryRef<TData, TVariables> {
     return new QueryRef<TData, TVariables>(
       this.ensureClient().watchQuery<TData, TVariables>({
@@ -44,7 +47,7 @@ export class ApolloBase<TCacheShape = any> {
       {
         useInitialLoading: this.useInitialLoading,
         ...options,
-      }
+      },
     );
   }
 
@@ -55,13 +58,13 @@ export class ApolloBase<TCacheShape = any> {
   public mutate<T, V = EmptyObject>(options: MutationOptions<T, V>): Observable<MutationResult<T>> {
     return useMutationLoading(
       fromPromise(() => this.ensureClient().mutate<T, V>({ ...options })),
-      options.useMutationLoading ?? this.useMutationLoading
+      options.useMutationLoading ?? this.useMutationLoading,
     );
   }
 
   public subscribe<T, V = EmptyObject>(
     options: SubscriptionOptions<V, T>,
-    extra?: ExtraSubscriptionOptions
+    extra?: ExtraSubscriptionOptions,
   ): Observable<FetchResult<T>> {
     const obs = from(fixObservable(this.ensureClient().subscribe<T, V>({ ...options })));
 
@@ -131,7 +134,7 @@ export class Apollo extends ApolloBase<any> {
     @Inject(APOLLO_OPTIONS)
     apolloOptions?: ApolloClientOptions<any>,
     @Inject(APOLLO_NAMED_OPTIONS) @Optional() apolloNamedOptions?: NamedOptions,
-    @Inject(APOLLO_FLAGS) @Optional() flags?: Flags
+    @Inject(APOLLO_FLAGS) @Optional() flags?: Flags,
   ) {
     super(_ngZone, flags);
 
@@ -201,7 +204,10 @@ export class Apollo extends ApolloBase<any> {
     if (this.map.has(name)) {
       throw new Error(`Client ${name} has been already created`);
     }
-    this.map.set(name, new ApolloBase(this._ngZone, this.flags, new ApolloClient<TCacheShape>(options)));
+    this.map.set(
+      name,
+      new ApolloBase(this._ngZone, this.flags, new ApolloClient<TCacheShape>(options)),
+    );
   }
 
   /**

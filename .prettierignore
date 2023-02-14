@@ -62,3 +62,6 @@ website/public/_redirects
 website/out/
 .angular/
 dist/
+
+# Because if mess up import order
+/packages/apollo-angular/tests/_setup.ts

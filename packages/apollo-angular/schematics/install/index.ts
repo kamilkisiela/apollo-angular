@@ -1,13 +1,22 @@
 import { dirname } from 'path';
-import { apply, chain, url, template, Tree, Rule, SchematicContext, mergeWith, move } from '@angular-devkit/schematics';
+import { CompilerOptions } from 'typescript';
+import { tags } from '@angular-devkit/core';
+import {
+  apply,
+  chain,
+  mergeWith,
+  move,
+  Rule,
+  SchematicContext,
+  template,
+  Tree,
+  url,
+} from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
-import { tags } from '@angular-devkit/core';
-import { CompilerOptions } from 'typescript';
-
 import { getJsonFile, getMainPath } from '../utils';
-import { Schema } from './schema';
 import { addModuleImportToRootModule } from '../utils/ast';
+import { Schema } from './schema';
 
 export function factory(options: Schema): Rule {
   return chain([
@@ -66,21 +75,28 @@ function includeAsyncIterableLib() {
   function updateFn(tsconfig: any) {
     const compilerOptions: CompilerOptions = tsconfig.compilerOptions;
 
-    if (compilerOptions && compilerOptions.lib && !compilerOptions.lib.find(lib => lib.toLowerCase() === requiredLib)) {
+    if (
+      compilerOptions &&
+      compilerOptions.lib &&
+      !compilerOptions.lib.find(lib => lib.toLowerCase() === requiredLib)
+    ) {
       compilerOptions.lib.push(requiredLib);
       return true;
     }
   }
 
   return (host: Tree) => {
-    if (!updateTSConfig('tsconfig.json', host, updateFn) && !updateTSConfig('tsconfig.base.json', host, updateFn)) {
+    if (
+      !updateTSConfig('tsconfig.json', host, updateFn) &&
+      !updateTSConfig('tsconfig.base.json', host, updateFn)
+    ) {
       console.error(
         '\n' +
           tags.stripIndent`
               We couldn't find '${requiredLib}' in the list of library files to be included in the compilation.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
-          '\n'
+          '\n',
       );
     }
 
@@ -88,7 +104,11 @@ function includeAsyncIterableLib() {
   };
 }
 
-function updateTSConfig(tsconfigPath: string, host: Tree, updateFn: (tsconfig: any) => boolean): boolean {
+function updateTSConfig(
+  tsconfigPath: string,
+  host: Tree,
+  updateFn: (tsconfig: any) => boolean,
+): boolean {
   try {
     const tsconfig = getJsonFile(host, tsconfigPath);
 
@@ -117,14 +137,17 @@ function allowSyntheticDefaultImports() {
   }
 
   return (host: Tree) => {
-    if (!updateTSConfig('tsconfig.json', host, updateFn) && !updateTSConfig('tsconfig.base.json', host, updateFn)) {
+    if (
+      !updateTSConfig('tsconfig.json', host, updateFn) &&
+      !updateTSConfig('tsconfig.base.json', host, updateFn)
+    ) {
       console.error(
         '\n' +
           tags.stripIndent`
               We couldn't enable 'allowSyntheticDefaultImports' flag.
               It's required by '@apollo/client/core' package so please add it to your tsconfig.
             ` +
-          '\n'
+          '\n',
       );
     }
 

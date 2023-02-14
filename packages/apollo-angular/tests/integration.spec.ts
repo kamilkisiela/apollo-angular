@@ -1,9 +1,8 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
 import { InMemoryCache } from '@apollo/client/core';
 import { mockSingleLink } from '@apollo/client/testing';
-
-import { ApolloModule, Apollo, APOLLO_OPTIONS } from '../src';
+import { Apollo, APOLLO_OPTIONS, ApolloModule } from '../src';
 
 describe('Integration', () => {
   describe('default', () => {

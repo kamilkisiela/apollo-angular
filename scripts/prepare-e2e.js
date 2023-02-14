@@ -25,7 +25,7 @@ function updateCypress() {
     .readFileSync(filepath, 'utf8')
     .replace(
       `cy.contains('sandbox app is running!')`,
-      `cy.window().its('GRAPHQL_VERSION').should('equal', ${version})`
+      `cy.window().its('GRAPHQL_VERSION').should('equal', ${version})`,
     );
 
   fs.writeFileSync(filepath, code, 'utf8');
@@ -36,7 +36,7 @@ function updateCypress() {
     import failOnConsoleError from 'cypress-fail-on-console-error';
     failOnConsoleError();
   `,
-    'utf8'
+    'utf8',
   );
 }
 

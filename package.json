@@ -1,26 +1,26 @@
 {
   "name": "apollo-angular-monorepo",
-  "private": true,
   "license": "MIT",
-  "engines": {
-    "node": ">=14"
-  },
-  "scripts": {
-    "prerelease": "yarn build",
-    "release": "changeset publish",
-    "prebuild": "rimraf packages/*/build/",
-    "build": "yarn workspaces run build",
-    "test": "yarn workspaces run test",
-    "format": "prettier --write \"packages/**/*.ts\"",
-    "deploy": "yarn workspaces run deploy",
-    "now-build": "(cd website && yarn && yarn build && mv build ../public)",
-    "ci-only:integration": "./scripts/integration tests"
-  },
+  "private": true,
   "workspaces": {
     "packages": [
       "packages/*",
       "website"
     ]
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "ci-only:integration": "./scripts/integration tests",
+    "deploy": "yarn workspaces run deploy",
+    "format": "prettier --write \"packages/**/*.ts\"",
+    "now-build": "(cd website && yarn && yarn build && mv build ../public)",
+    "prebuild": "rimraf packages/*/build/",
+    "prerelease": "yarn build",
+    "release": "changeset publish",
+    "test": "yarn workspaces run test"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.1.5",
@@ -65,6 +65,11 @@
     "typescript": "^4.8.4",
     "zone.js": "~0.12.0"
   },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -74,10 +79,5 @@
     "packages/**/{src,tests}/**/*.ts": [
       "prettier --write"
     ]
-  },
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "maintained node versions"
-  ]
+  }
 }

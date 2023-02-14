@@ -1,19 +1,18 @@
+import { from, Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 import type {
-  ApolloQueryResult,
-  ObservableQuery,
   ApolloError,
+  ApolloQueryResult,
   FetchMoreQueryOptions,
-  SubscribeToMoreOptions,
-  UpdateQueryOptions,
-  TypedDocumentNode,
+  ObservableQuery,
   OperationVariables,
+  SubscribeToMoreOptions,
+  TypedDocumentNode,
+  UpdateQueryOptions,
 } from '@apollo/client/core';
 import { NetworkStatus } from '@apollo/client/core';
-import { Observable, from } from 'rxjs';
-
-import { wrapWithZone, fixObservable } from './utils';
-import { WatchQueryOptions, EmptyObject } from './types';
+import { EmptyObject, WatchQueryOptions } from './types';
+import { fixObservable, wrapWithZone } from './utils';
 
 function useInitialLoading<T, V extends OperationVariables>(obsQuery: ObservableQuery<T, V>) {
   return function useInitialLoadingOperator<T>(source: Observable<T>): Observable<T> {
@@ -44,7 +43,10 @@ function useInitialLoading<T, V extends OperationVariables>(obsQuery: Observable
   };
 }
 
-export type QueryRefFromDocument<T extends TypedDocumentNode> = T extends TypedDocumentNode<infer R, infer V>
+export type QueryRefFromDocument<T extends TypedDocumentNode> = T extends TypedDocumentNode<
+  infer R,
+  infer V
+>
   ? QueryRef<R, V & OperationVariables>
   : never;
 
@@ -52,10 +54,16 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
   public queryId: ObservableQuery<T, V>['queryId'];
 
-  constructor(private obsQuery: ObservableQuery<T, V>, ngZone: NgZone, options: WatchQueryOptions<V, T>) {
+  constructor(
+    private obsQuery: ObservableQuery<T, V>,
+    ngZone: NgZone,
+    options: WatchQueryOptions<V, T>,
+  ) {
     const wrapped = wrapWithZone(from(fixObservable(this.obsQuery)), ngZone);
 
-    this.valueChanges = options.useInitialLoading ? wrapped.pipe(useInitialLoading(this.obsQuery)) : wrapped;
+    this.valueChanges = options.useInitialLoading
+      ? wrapped.pipe(useInitialLoading(this.obsQuery))
+      : wrapped;
     this.queryId = this.obsQuery.queryId;
   }
 
@@ -93,11 +101,15 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
     return this.obsQuery.refetch(variables);
   }
 
-  public fetchMore<K = V>(fetchMoreOptions: FetchMoreQueryOptions<K, T>): Promise<ApolloQueryResult<T>> {
+  public fetchMore<K = V>(
+    fetchMoreOptions: FetchMoreQueryOptions<K, T>,
+  ): Promise<ApolloQueryResult<T>> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
-  public subscribeToMore<MT = any, MV = EmptyObject>(options: SubscribeToMoreOptions<T, MV, MT>): () => void {
+  public subscribeToMore<MT = any, MV = EmptyObject>(
+    options: SubscribeToMoreOptions<T, MV, MT>,
+  ): () => void {
     // XXX: there's a bug in apollo-client typings
     // it should not inherit types from ObservableQuery
     return this.obsQuery.subscribeToMore(options as any);

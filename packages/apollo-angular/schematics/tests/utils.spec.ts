@@ -11,8 +11,8 @@ test('support // comments', () => {
         "bar": true
       }
     }
-  `
-    )
+  `,
+    ),
   ).toMatchObject({
     foo: {
       bar: true,
@@ -31,8 +31,8 @@ test('support /* */ comments', () => {
         "bar": true
       }
     }
-  `
-    )
+  `,
+    ),
   ).toMatchObject({
     foo: {
       bar: true,

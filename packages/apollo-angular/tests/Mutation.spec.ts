@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-
-import { Mutation, Apollo, gql } from '../src';
+import { Apollo, gql, Mutation } from '../src';
 
 const mutation = gql`
   mutation addHero($name: String) {

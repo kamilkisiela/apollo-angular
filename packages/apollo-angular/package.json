@@ -1,25 +1,24 @@
 {
   "name": "apollo-angular",
-  "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
   "version": "4.2.1",
+  "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilkisiela/apollo-angular",
+    "directory": "packages/apollo-angular"
+  },
+  "homepage": "https://www.apollo-angular.com/",
   "author": {
     "name": "Kamil Kisiela",
     "email": "kamil.kisiela@gmail.com",
     "url": "https://github.com/kamilkisiela/"
   },
   "license": "MIT",
-  "sideEffects": false,
   "engines": {
     "node": ">=14"
   },
   "module": "build/fesm2020/ngApollo.mjs",
   "typings": "build/index.d.ts",
-  "homepage": "https://www.apollo-angular.com/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kamilkisiela/apollo-angular",
-    "directory": "packages/apollo-angular"
-  },
   "keywords": [
     "apollo",
     "graphql",
@@ -30,9 +29,9 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.json && yarn build:schematics",
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
-    "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js",
     "prebuild": "rm -rf build/",
-    "release": "yarn build && changeset publish"
+    "release": "yarn build && changeset publish",
+    "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js"
   },
   "peerDependencies": {
     "@angular/core": "^14.0.0 || ^15.0.0",
@@ -47,7 +46,7 @@
     "directory": "build",
     "access": "public"
   },
-  "schematics": "./schematics/collection.json",
+  "sideEffects": false,
   "ng-update": {
     "requirements": {},
     "migrations": "./schematics/migrations.json",
@@ -57,5 +56,6 @@
       "@apollo/client",
       "graphql"
     ]
-  }
+  },
+  "schematics": "./schematics/collection.json"
 }

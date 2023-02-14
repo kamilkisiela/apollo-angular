@@ -1,6 +1,6 @@
-import { ApolloError, Operation as LinkOperation, FetchResult } from '@apollo/client/core';
-import { GraphQLError, ExecutionResult } from 'graphql';
+import { ExecutionResult, GraphQLError } from 'graphql';
 import { Observer } from 'rxjs';
+import { ApolloError, FetchResult, Operation as LinkOperation } from '@apollo/client/core';
 
 const isApolloError = (err: any): err is ApolloError => err && err.hasOwnProperty('graphQLErrors');
 

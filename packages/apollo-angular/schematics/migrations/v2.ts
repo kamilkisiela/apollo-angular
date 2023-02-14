@@ -1,8 +1,8 @@
-import { Rule, Tree, chain, SchematicContext, UpdateRecorder } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as ts from 'typescript';
-import { getJsonFile } from '../utils';
+import { chain, Rule, SchematicContext, Tree, UpdateRecorder } from '@angular-devkit/schematics';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { createDependenciesMap } from '../install/index';
+import { getJsonFile } from '../utils';
 
 export default function (): Rule {
   return chain([migrateImports, migrateTsConfig, migrateDependencies]);
@@ -99,7 +99,7 @@ export async function migrateTsConfig(tree: Tree) {
 
 function getIdentifiers(
   namedBindings: ts.NamedImportBindings,
-  onIdentifier: (event: { name: string; alias?: string }) => void
+  onIdentifier: (event: { name: string; alias?: string }) => void,
 ) {
   namedBindings.forEachChild(named => {
     if (ts.isImportSpecifier(named)) {
@@ -196,14 +196,21 @@ export async function migrateImports(tree: Tree) {
       }
     }
 
-    const sourceFile = ts.createSourceFile(path, tree.read(path).toString(), ts.ScriptTarget.Latest, true);
+    const sourceFile = ts.createSourceFile(
+      path,
+      tree.read(path).toString(),
+      ts.ScriptTarget.Latest,
+      true,
+    );
 
     const recorder = tree.beginUpdate(path);
 
     sourceFile.statements.forEach(statement => {
       if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier)) {
         const nodeText = statement.moduleSpecifier.getText(sourceFile);
-        const modulePath = statement.moduleSpecifier.getText(sourceFile).substr(1, nodeText.length - 2);
+        const modulePath = statement.moduleSpecifier
+          .getText(sourceFile)
+          .substr(1, nodeText.length - 2);
 
         redirectImport({
           source: 'apollo-cache-inmemory',

@@ -1,15 +1,15 @@
-import { HttpHeaders, HttpResponse, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-import { Request, Body, ExtractFiles } from './types';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Body, ExtractFiles, Request } from './types';
 
 export const fetch = (
   req: Request,
   httpClient: HttpClient,
-  extractFiles?: ExtractFiles
+  extractFiles?: ExtractFiles,
 ): Observable<HttpResponse<Object>> => {
   const shouldUseBody = ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
-  const shouldStringify = (param: string) => ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
+  const shouldStringify = (param: string) =>
+    ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
   const isBatching = (req.body as Body[]).length;
   let shouldUseMultipart = req.options && req.options.useMultipart;
   let multipartInfo: {
@@ -20,21 +20,23 @@ export const fetch = (
   if (shouldUseMultipart) {
     if (isBatching) {
       return new Observable(observer =>
-        observer.error(new Error('File upload is not available when combined with Batching'))
+        observer.error(new Error('File upload is not available when combined with Batching')),
       );
     }
 
     if (!shouldUseBody) {
-      return new Observable(observer => observer.error(new Error('File upload is not available when GET is used')));
+      return new Observable(observer =>
+        observer.error(new Error('File upload is not available when GET is used')),
+      );
     }
 
     if (!extractFiles) {
       return new Observable(observer =>
         observer.error(
           new Error(
-            `To use File upload you need to pass "extractFiles" function from "extract-files" library to HttpLink's options`
-          )
-        )
+            `To use File upload you need to pass "extractFiles" function from "extract-files" library to HttpLink's options`,
+          ),
+        ),
       );
     }
 
@@ -48,7 +50,9 @@ export const fetch = (
 
   if (isBatching) {
     if (!shouldUseBody) {
-      return new Observable(observer => observer.error(new Error('Batching is not available for GET requests')));
+      return new Observable(observer =>
+        observer.error(new Error('Batching is not available for GET requests')),
+      );
     }
 
     bodyOrParams = {
@@ -107,7 +111,9 @@ export const fetch = (
 
 export const mergeHeaders = (source: HttpHeaders, destination: HttpHeaders): HttpHeaders => {
   if (source && destination) {
-    const merged = destination.keys().reduce((headers, name) => headers.set(name, destination.getAll(name)), source);
+    const merged = destination
+      .keys()
+      .reduce((headers, name) => headers.set(name, destination.getAll(name)), source);
 
     return merged;
   }
@@ -131,7 +137,9 @@ export function createHeadersWithClientAwareness(context: Record<string, any>) {
   // set first, followed by the rest of the headers pulled from
   // `context.headers`.
   let headers =
-    context.headers && context.headers instanceof HttpHeaders ? context.headers : new HttpHeaders(context.headers);
+    context.headers && context.headers instanceof HttpHeaders
+      ? context.headers
+      : new HttpHeaders(context.headers);
 
   if (context.clientAwareness) {
     const { name, version } = context.clientAwareness;

@@ -1,8 +1,13 @@
+import type { SchedulerAction, SchedulerLike, Subscription } from 'rxjs';
+import { Observable, observable, queueScheduler } from 'rxjs';
+import { map, observeOn, startWith } from 'rxjs/operators';
 import { NgZone } from '@angular/core';
-import { observeOn, startWith, map } from 'rxjs/operators';
-import type { ObservableQuery, ApolloQueryResult, FetchResult, Observable as AObservable } from '@apollo/client/core';
-import type { Subscription, SchedulerLike, SchedulerAction } from 'rxjs';
-import { Observable, queueScheduler, observable } from 'rxjs';
+import type {
+  Observable as AObservable,
+  ApolloQueryResult,
+  FetchResult,
+  ObservableQuery,
+} from '@apollo/client/core';
 import type { MutationResult } from './types';
 
 export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
@@ -18,7 +23,7 @@ export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
         if (!subscriber.closed) {
           subscriber.error(error);
         }
-      }
+      },
     );
 
     return () => subscriber.unsubscribe();
@@ -31,7 +36,7 @@ export function useMutationLoading<T>(source: Observable<FetchResult<T>>, enable
       map<FetchResult<T>, MutationResult<T>>(result => ({
         ...result,
         loading: false,
-      }))
+      })),
     );
   }
 
@@ -42,7 +47,7 @@ export function useMutationLoading<T>(source: Observable<FetchResult<T>>, enable
     map<MutationResult<T>, MutationResult<T>>(result => ({
       ...result,
       loading: !!result.loading,
-    }))
+    })),
   );
 }
 
@@ -51,7 +56,11 @@ export class ZoneScheduler implements SchedulerLike {
 
   public now = Date.now ? Date.now : () => +new Date();
 
-  public schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay: number = 0, state?: T): Subscription {
+  public schedule<T>(
+    work: (this: SchedulerAction<T>, state?: T) => void,
+    delay: number = 0,
+    state?: T,
+  ): Subscription {
     return this.zone.run(() => queueScheduler.schedule(work, delay, state)) as Subscription;
   }
 }
@@ -62,7 +71,7 @@ export class ZoneScheduler implements SchedulerLike {
 export function fixObservable<T>(obs: ObservableQuery<T>): Observable<ApolloQueryResult<T>>;
 export function fixObservable<T>(obs: AObservable<T>): Observable<T>;
 export function fixObservable<T>(
-  obs: AObservable<T> | ObservableQuery<T>
+  obs: AObservable<T> | ObservableQuery<T>,
 ): Observable<ApolloQueryResult<T>> | Observable<T> {
   (obs as any)[observable] = () => obs;
   return obs as any;
@@ -75,7 +84,7 @@ export function wrapWithZone<T>(obs: Observable<T>, ngZone: NgZone): Observable<
 export function pickFlag<TFlags, K extends keyof TFlags>(
   flags: TFlags | undefined,
   flag: K,
-  defaultValue: TFlags[K]
+  defaultValue: TFlags[K],
 ): TFlags[K] {
   return flags && typeof flags[flag] !== 'undefined' ? flags[flag] : defaultValue;
 }
