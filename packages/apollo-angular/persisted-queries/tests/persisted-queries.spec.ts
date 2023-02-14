@@ -1,12 +1,6 @@
-import {
-  gql,
-  ApolloLink,
-  execute,
-  Observable,
-  Operation,
-} from '@apollo/client/core';
+import { gql, ApolloLink, execute, Observable, Operation } from '@apollo/client/core';
 
-import {createPersistedQueryLink} from '../src';
+import { createPersistedQueryLink } from '../src';
 
 const query = gql`
   query heroes {
@@ -16,7 +10,7 @@ const query = gql`
     }
   }
 `;
-const data = {heroes: [{name: 'Foo', __typename: 'Hero'}]};
+const data = { heroes: [{ name: 'Foo', __typename: 'Hero' }] };
 
 class MockLink extends ApolloLink {
   public showNotFound: boolean = true;
@@ -24,13 +18,13 @@ class MockLink extends ApolloLink {
   public requester(_: any): any {
     return this.showNotFound
       ? {
-          errors: [{message: 'PersistedQueryNotFound'}],
+          errors: [{ message: 'PersistedQueryNotFound' }],
         }
       : data;
   }
 
   public request(operation: Operation) {
-    return new Observable((observer) => {
+    return new Observable(observer => {
       const request: any = {};
 
       if (operation.getContext().includeQuery) {
@@ -71,12 +65,8 @@ describe('createPersistedQueryLink', () => {
       expect(secondOp.extensions.persistedQuery.sha256Hash).toBeDefined();
 
       // should be compatible with apollo-angular-link-http
-      expect(secondContext.includeQuery).toEqual(
-        secondContext.http.includeQuery,
-      );
-      expect(secondContext.includeExtensions).toEqual(
-        secondContext.http.includeExtensions,
-      );
+      expect(secondContext.includeQuery).toEqual(secondContext.http.includeQuery);
+      expect(secondContext.includeExtensions).toEqual(secondContext.http.includeExtensions);
 
       // end
       done();

@@ -2,7 +2,7 @@
 description: How to build UI features before your GraphQL API supports them
 ---
 
-#  Mocking New Schema Capabilities
+# Mocking New Schema Capabilities
 
 Imagine we're building out a new feature in our Space Explorer app — we'd like to display a description of each rocket we can choose — but the backend support for this feature isn't going to be available for another few weeks. In keeping with schema-first design, the team has decided that we'll be adding a new field called `description` to an existing type in our schema called `Rocket`.
 
@@ -58,8 +58,7 @@ Now that we have a basic resolver, we might find that during testing it's a bit 
 import faker from 'faker/locale/en';
 
 // returns either 1 or 2 latin sentences
-const oneOrTwoSentences = () =>
-  faker.lorem.sentences(Math.random() < 0.5 ? 1 : 2);
+const oneOrTwoSentences = () => faker.lorem.sentences(Math.random() < 0.5 ? 1 : 2);
 
 const resolvers = {
   Rocket: {
@@ -91,8 +90,8 @@ export class RocketDetailsComponent {
   constructor(apollo: Apollo) {
     this.apollo.watchQuery({
       query: GET_ROCKET_DETAILS,
-      variables: { rocketId }
-    })
+      variables: { rocketId },
+    });
   }
 }
 ```
@@ -100,5 +99,3 @@ export class RocketDetailsComponent {
 ## 4. Toggle on "Real" Data
 
 Once the feature is ready on the backend, just remove the `@client` directive from your query. You should now be able to see your real production data returned instead. It's probably a good idea to clean up any unused client schema and resolvers at this time.
-
-

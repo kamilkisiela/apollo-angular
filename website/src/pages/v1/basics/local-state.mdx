@@ -2,7 +2,7 @@
 description: Learn how to store your local data in Apollo Angular
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Local State Management
 
@@ -27,23 +27,24 @@ import { resolvers, typeDefs } from './resolvers';
 
 @NgModule({
   // ...
-  providers: [{
-    provide: APOLLO_OPTIONS,
-    useFactory: (httpLink: HttpLink) => {
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        const http = httpLink.create({
+          uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
+        });
 
-      const http = httpLink.create({
-        uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
-      });
-
-      return {
-        cache: new InMemoryCache(),
-        link: local.concat(http),
-        resolvers,
-        typeDefs
-      }
+        return {
+          cache: new InMemoryCache(),
+          link: local.concat(http),
+          resolvers,
+          typeDefs,
+        };
+      },
+      deps: [HttpLink],
     },
-    deps: [HttpLink]
-  }],
+  ],
   // ...
 })
 export class AppModule {}
@@ -72,8 +73,8 @@ Direct writes to the cache do not require a GraphQL mutation or a resolver funct
 Here's what a direct write looks like on our Blog app:
 
 ```ts
-import {Component, OnInit, Input} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, OnInit, Input } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 
 @Component({
   selector: 'filter-link',
@@ -91,7 +92,7 @@ export class FilterLinkComponent implements OnInit {
 
   setFilter() {
     this.apollo.getClient().writeData({
-      data: {visibilityFilter: this.filter},
+      data: { visibilityFilter: this.filter },
     });
   }
 }
@@ -103,11 +104,11 @@ From the client instance, you can directly call `client.writeData` and pass in t
 What if we want to immediately subscribe to the data we just wrote to the cache? Let's create an `active` property on the link that marks the link's filter as active if it's the same as the current `visibilityFilter` in the cache. To immediately subscribe to a client-side mutation, use `Apollo.watchQuery` in a component.
 
 ```ts
-import {Component, OnInit, Input} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, OnInit, Input } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const GET_VISIBILITY_FILTER = gql`
   {
@@ -135,9 +136,7 @@ export class FilterLinkComponent implements OnInit {
       .watchQuery({
         query: GET_VISIBILITY_FILTER,
       })
-      .valueChanges.pipe(
-        map(result => result.data && result.data.visibilityFilter),
-      );
+      .valueChanges.pipe(map(result => result.data && result.data.visibilityFilter));
   }
 
   // ...
@@ -166,16 +165,16 @@ Let's take a look at an example of a resolver where we toggle a todos completed 
 ```ts
 export const resolvers = {
   Mutation: {
-    toggleTodo: (_, variables, {cache, getCacheKey}) => {
-      const id = getCacheKey({__typename: 'TodoItem', id: variables.id});
+    toggleTodo: (_, variables, { cache, getCacheKey }) => {
+      const id = getCacheKey({ __typename: 'TodoItem', id: variables.id });
       const fragment = gql`
         fragment completeTodo on TodoItem {
           completed
         }
       `;
-      const todo = cache.readFragment({fragment, id});
-      const data = {...todo, completed: !todo.completed};
-      cache.writeData({id, data});
+      const todo = cache.readFragment({ fragment, id });
+      const data = { ...todo, completed: !todo.completed };
+      cache.writeData({ id, data });
       return null;
     },
   },
@@ -189,8 +188,8 @@ Once we read the fragment, we toggle the todo's completed status and write the u
 Let's learn how to trigger our `toggleTodo` mutation from our component:
 
 ```ts
-import {Component, Input} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, Input } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 const TOGGLE_TODO = gql`
@@ -202,12 +201,8 @@ const TOGGLE_TODO = gql`
 @Component({
   selector: 'todo',
   template: `
-    <li
-      *ngIf="task"
-      (click)="toggle()"
-      [ngStyle]="{'textDecoration': task.completed ? 'line-through' : 'none' }"
-    >
-      {{task.text}}
+    <li *ngIf="task" (click)="toggle()" [ngStyle]="{ textDecoration: task.completed ? 'line-through' : 'none' }">
+      {{ task.text }}
     </li>
   `,
 })
@@ -239,11 +234,11 @@ If you'd like to see an example of a local mutation adding a todo to a list, che
 Querying the Apollo cache is similar to querying your GraphQL server. The only difference is that you add a `@client` directive on your local fields to indicate they should be resolved from the cache. Let's look at an example:
 
 ```ts
-import {Component, OnInit} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, OnInit } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const GET_TODOS = gql`
   {
@@ -274,11 +269,7 @@ export class TodoListComponent implements OnInit {
       .watchQuery({
         query: GET_TODOS,
       })
-      .valueChanges.pipe(
-        map(({data}) =>
-          this.getVisibleTodos(data.todos, data.visibilityFilter),
-        ),
-      );
+      .valueChanges.pipe(map(({ data }) => this.getVisibleTodos(data.todos, data.visibilityFilter)));
   }
 
   private getVisibleTodos(todos, filter) {
@@ -344,57 +335,59 @@ Updating your application to use Apollo Client's local state management features
 
 2. Using `withClientState` is no longer supported. The following
 
-  ```js
-  const cache = new InMemoryCache();
-  const stateLink = withClientState({ cache, resolvers: { ... } });
-  const link = ApolloLink.from([stateLink, new HttpLink({ uri: '...' })]);
-  const client = new ApolloClient({
-    cache,
-    link,
-  });
-  ```
-  becomes
+```js
+const cache = new InMemoryCache();
+const stateLink = withClientState({ cache, resolvers: { ... } });
+const link = ApolloLink.from([stateLink, new HttpLink({ uri: '...' })]);
+const client = new ApolloClient({
+  cache,
+  link,
+});
+```
 
-  ```js
-  const client = new ApolloClient({
-    cache: new InMemoryCache(),
-    link: new HttpLink({ uri: '...' }),
-    resolvers: { ... },
-  });
-  ```
+becomes
+
+```js
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({ uri: '...' }),
+  resolvers: { ... },
+});
+```
 
 3. `defaults` are no longer supported. To prep the cache, use [`cache.writeData`](#direct-writes) directly instead. So
 
-  ```js
-  const cache = new InMemoryCache();
-  const stateLink = withClientState({
-    cache,
-    resolvers: { ... },
-    defaults: {
-      someField: 'some value',
-    },
-  });
-  const link = ApolloLink.from([stateLink, new HttpLink({ uri: '...' })]);
-  const client = new ApolloClient({
-    cache,
-    link,
-  });
-  ```
-  becomes:
+```js
+const cache = new InMemoryCache();
+const stateLink = withClientState({
+  cache,
+  resolvers: { ... },
+  defaults: {
+    someField: 'some value',
+  },
+});
+const link = ApolloLink.from([stateLink, new HttpLink({ uri: '...' })]);
+const client = new ApolloClient({
+  cache,
+  link,
+});
+```
 
-  ```js
-  const cache = new InMemoryCache();
-  const client = new ApolloClient({
-    cache,
-    link: new HttpLink({ uri: '...' }),
-    resolvers: { ... },
-  });
-  cache.writeData({
-    data: {
-      someField: 'some value',
-    },
-  });
-  ```
+becomes:
+
+```js
+const cache = new InMemoryCache();
+const client = new ApolloClient({
+  cache,
+  link: new HttpLink({ uri: '...' }),
+  resolvers: { ... },
+});
+cache.writeData({
+  data: {
+    someField: 'some value',
+  },
+});
+```
 
 4. If you're using Apollo Boost, you shouldn't have to change anything. Apollo Boost has been updated to use Apollo Client's integrated local state handling, which means it is no longer using `apollo-link-state`. Behind the scenes, the Apollo Boost `clientState` constructor parameter now feeds the necessary local state initialization directly into Apollo Client.
 

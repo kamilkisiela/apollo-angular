@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import type {DocumentNode} from 'graphql';
+import { Injectable } from '@angular/core';
+import type { DocumentNode } from 'graphql';
 import type { ApolloQueryResult, TypedDocumentNode, OperationVariables } from '@apollo/client/core';
-import type {Observable} from 'rxjs';
+import type { Observable } from 'rxjs';
 
-import {Apollo} from './apollo';
-import {QueryRef} from './query-ref';
-import {WatchQueryOptionsAlone, QueryOptionsAlone, EmptyObject} from './types';
+import { Apollo } from './apollo';
+import { QueryRef } from './query-ref';
+import { WatchQueryOptionsAlone, QueryOptionsAlone, EmptyObject } from './types';
 
 @Injectable()
 export class Query<T = {}, V extends OperationVariables = EmptyObject> {
@@ -14,10 +14,7 @@ export class Query<T = {}, V extends OperationVariables = EmptyObject> {
 
   constructor(protected apollo: Apollo) {}
 
-  public watch(
-    variables?: V,
-    options?: WatchQueryOptionsAlone<V, T>,
-  ): QueryRef<T, V> {
+  public watch(variables?: V, options?: WatchQueryOptionsAlone<V, T>): QueryRef<T, V> {
     return this.apollo.use(this.client).watchQuery<T, V>({
       ...options,
       variables,
@@ -25,10 +22,7 @@ export class Query<T = {}, V extends OperationVariables = EmptyObject> {
     });
   }
 
-  public fetch(
-    variables?: V,
-    options?: QueryOptionsAlone<V, T>,
-  ): Observable<ApolloQueryResult<T>> {
+  public fetch(variables?: V, options?: QueryOptionsAlone<V, T>): Observable<ApolloQueryResult<T>> {
     return this.apollo.use(this.client).query<T, V>({
       ...options,
       variables,

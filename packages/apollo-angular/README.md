@@ -35,7 +35,7 @@ That’s it! You may now use Apollo Angular in any of your Angular environments.
 For an amazing developer experience you may also install the [Apollo Client Developer tools for Chrome](https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm) which will give you inspectability into your Apollo Angular data.
 
 - If you are using Apollo-Client v3, please make sure to use `apollo-angular@v3`
-> If you are using Apollo-Client v2, please make sure to use `apollo-angular@v1` (and for Angular 10 support, make sure to use `v1.10.0`)
+  > If you are using Apollo-Client v2, please make sure to use `apollo-angular@v1` (and for Angular 10 support, make sure to use `v1.10.0`)
 
 ## Usage
 
@@ -44,8 +44,8 @@ Now you may create components that are connected to your GraphQL API.
 Finally, to demonstrate the power of Apollo Angular in building interactive UIs let us connect one of your components to your GraphQL server using the `Apollo` service:
 
 ```ts
-import {Component, OnInit} from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
+import { Component, OnInit } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 const GET_DOGS = gql`
   {
@@ -61,7 +61,7 @@ const GET_DOGS = gql`
   template: `
     <ul>
       <li *ngFor="let dog of dogs | async">
-        {{dog.breed}}
+        {{ dog.breed }}
       </li>
     </ul>
   `,

@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {PostsPageComponent} from './posts-page.component';
-import {UpvoterComponent} from './upvoter.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { PostsPageComponent } from './posts-page.component';
+import { UpvoterComponent } from './upvoter.component';
 
 const routes: Routes = [
   {

@@ -17,13 +17,10 @@ import { HttpLink } from 'apollo-angular/http';
   // ...
 })
 class AppModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
     const link = httpLink.create({
       uri: '/graphql',
-      withCredentials: true
+      withCredentials: true,
     });
 
     apollo.create({
@@ -49,7 +46,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule, Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { InMemoryCache,ApolloLink } from '@apollo/client/core';
+import { InMemoryCache, ApolloLink } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 
 const uri = '/graphql';
@@ -57,8 +54,8 @@ const uri = '/graphql';
 export function createApollo(httpLink: HttpLink) {
   const basic = setContext((operation, context) => ({
     headers: {
-      Accept: 'charset=utf-8'
-    }
+      Accept: 'charset=utf-8',
+    },
   }));
 
   const auth = setContext((operation, context) => {
@@ -69,8 +66,8 @@ export function createApollo(httpLink: HttpLink) {
     } else {
       return {
         headers: {
-          Authorization: `JWT ${token}`
-        }
+          Authorization: `JWT ${token}`,
+        },
       };
     }
   });
@@ -80,23 +77,21 @@ export function createApollo(httpLink: HttpLink) {
 
   return {
     link,
-    cache
-  }
+    cache,
+  };
 }
 
 @NgModule({
-  exports: [
-    HttpClientModule,
-    ApolloModule,
+  exports: [HttpClientModule, ApolloModule],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: createApollo,
+      deps: [HttpLink],
+    },
   ],
-  providers: [{
-    provide: APOLLO_OPTIONS,
-    useFactory: createApollo,
-    deps: [HttpLink]
-  }]
 })
 export class GraphQLModule {}
-
 ```
 
 The server can use that header to authenticate the user and attach it to the GraphQL execution context, so resolvers can modify their behavior based on a user's role and permissions.
@@ -108,7 +103,7 @@ In the case that you need to a refresh a token, for example when using the [adal
 ```typescript
 import { setContext } from '@apollo/client/link/context';
 
-const auth = setContext(async(_, { headers }) => {
+const auth = setContext(async (_, { headers }) => {
   // Grab token if there is one in storage or hasn't expired
   let token = this.auth.getCachedAccessToken();
 
@@ -151,7 +146,7 @@ const PROFILE_QUERY = gql`
 
 @Injectable()
 class AuthService {
-constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo) {}
   logout() {
     // some app logic
 
@@ -168,7 +163,7 @@ constructor(private apollo: Apollo) {}
     </ng-template>
 
     <button *ngIf="!loggedIn" (click)="goToLoginPage()">Go SignIn</button>
-  `
+  `,
 })
 class ProfileComponent {
   apollo: Apollo;
@@ -177,12 +172,14 @@ class ProfileComponent {
   loggedIn: boolean;
 
   ngOnInit() {
-    this.apollo.query({
-      query: PROFILE_QUERY,
-      fetchPolicy: 'network-only'
-    }).subscribe(({data}) => {
-      this.user = data.currentUser;
-    });
+    this.apollo
+      .query({
+        query: PROFILE_QUERY,
+        fetchPolicy: 'network-only',
+      })
+      .subscribe(({ data }) => {
+        this.user = data.currentUser;
+      });
   }
 
   logout() {

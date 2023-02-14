@@ -58,8 +58,7 @@ Now that we have a basic resolver, we might find that during testing it's a bit 
 import faker from 'faker/locale/en';
 
 // returns either 1 or 2 latin sentences
-const oneOrTwoSentences = () =>
-  faker.lorem.sentences(Math.random() < 0.5 ? 1 : 2);
+const oneOrTwoSentences = () => faker.lorem.sentences(Math.random() < 0.5 ? 1 : 2);
 
 const resolvers = {
   Rocket: {
@@ -100,5 +99,3 @@ export class RocketDetailsComponent {
 ## 4. Toggle on "real" data
 
 Once the feature is ready on the backend, just remove the `@client` directive from your query. You should now be able to see your real production data returned instead. It's probably a good idea to clean up any unused client schema and resolvers at this time.
-
-

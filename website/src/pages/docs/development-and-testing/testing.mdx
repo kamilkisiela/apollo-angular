@@ -2,7 +2,7 @@
 description: Have peace of mind when using apollo-angular in production and learn how to test GraphQL in Angular
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Testing
 
@@ -17,10 +17,10 @@ This guide will explain step-by-step how to test `apollo-angular` code. The foll
 Consider the component below, which makes a basic query, and displays its results:
 
 ```ts
-import {Component, OnInit, Input} from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
-import {Observable} from 'rxjs';
-import {shareReplay, pluck} from 'rxjs/operators';
+import { Component, OnInit, Input } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { shareReplay, pluck } from 'rxjs/operators';
 
 // Make sure the query is also exported -- not just the component
 export const GET_DOG_QUERY = gql`
@@ -38,9 +38,7 @@ export const GET_DOG_QUERY = gql`
   template: `
     <div *ngIf="loading$">Loading ...</div>
     <div *ngIf="error$">Error!</div>
-    <p *ngIf="dog$ | async as dog">
-      {{dog.name}} is a {{dog.breed}}
-    </p>
+    <p *ngIf="dog$ | async as dog">{{ dog.name }} is a {{ dog.breed }}</p>
   `,
 })
 export class DogComponent implements OnInit {
@@ -84,10 +82,7 @@ Here's an example of a test for the above `Dog` component using `ApolloTestingCo
 But first, we need to set everything up.
 
 ```ts
-import {
-  ApolloTestingModule,
-  ApolloTestingController,
-} from 'apollo-angular/testing';
+import { ApolloTestingModule, ApolloTestingController } from 'apollo-angular/testing';
 
 describe('DogComponent', () => {
   let controller: ApolloTestingController;
@@ -108,9 +103,9 @@ describe('DogComponent', () => {
 
 As you can see, it feels a lot like `HttpTestingController`, it has pretty much the same API so nothing new for you!
 
-
 <Callout>
-We recommend you to read ["Testing HTTP requests"](https://angular.io/guide/http#testing-http-requests) chapter of Angular docs.
+  We recommend you to read ["Testing HTTP requests"](https://angular.io/guide/http#testing-http-requests) chapter of
+  Angular docs.
 </Callout>
 
 In this configuration, we get mock `Apollo` service by importing `ApolloTestingModule` and we make sure there is no open operations thanks to `controller.verify()`.
@@ -128,7 +123,7 @@ test('expect and answer', () => {
   component = fixture.componentInstance;
 
   //Call the relevant method
-  component.getDog().subscribe((dog) => {
+  component.getDog().subscribe(dog => {
     //Make some assertion about the result;
     expect(dog.id).toEqual(0);
     expect(dog.name).toEqual('Mr Apollo');
@@ -163,7 +158,7 @@ When it receives a `GET_DOG_QUERY` with matching `variables`, it returns the cor
 For mutation, `expectOne` should use a function to check the query definitions and return a boolean:
 
 ```ts
-const op = controller.expectOne((operation) => {
+const op = controller.expectOne(operation => {
   expect(operation.query.definitions).toEqual(MODIFY_DOG_QUERY.definitions);
   return true;
 });
@@ -210,10 +205,7 @@ It's an object returned by `expectOne` and `match` methods.
 The process is pretty much the same as using a default client but the setup is a bit different:
 
 ```ts
-import {
-  ApolloTestingModule,
-  ApolloTestingController,
-} from 'apollo-angular/testing';
+import { ApolloTestingModule, ApolloTestingController } from 'apollo-angular/testing';
 
 describe('DogComponent', () => {
   let controller: ApolloTestingController;
@@ -279,7 +271,7 @@ By default, every ApolloCache is created with these options:
 If you would like to change it in the default client, do the following:
 
 ```ts
-import {APOLLO_TESTING_CACHE} from 'apollo-angular/testing';
+import { APOLLO_TESTING_CACHE } from 'apollo-angular/testing';
 
 beforeEach(() => {
   TestBed.configureTestingModule({
@@ -301,7 +293,7 @@ beforeEach(() => {
 For named clients:
 
 ```ts
-import {APOLLO_TESTING_NAMED_CACHE} from 'apollo-angular/testing';
+import { APOLLO_TESTING_NAMED_CACHE } from 'apollo-angular/testing';
 
 beforeEach(() => {
   TestBed.configureTestingModule({

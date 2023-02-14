@@ -1,17 +1,15 @@
-import {HttpHeaders, HttpResponse, HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpHeaders, HttpResponse, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import {Request, Body, ExtractFiles} from './types';
+import { Request, Body, ExtractFiles } from './types';
 
 export const fetch = (
   req: Request,
   httpClient: HttpClient,
-  extractFiles?: ExtractFiles,
+  extractFiles?: ExtractFiles
 ): Observable<HttpResponse<Object>> => {
-  const shouldUseBody =
-    ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
-  const shouldStringify = (param: string) =>
-    ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
+  const shouldUseBody = ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
+  const shouldStringify = (param: string) => ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
   const isBatching = (req.body as Body[]).length;
   let shouldUseMultipart = req.options && req.options.useMultipart;
   let multipartInfo: {
@@ -21,28 +19,22 @@ export const fetch = (
 
   if (shouldUseMultipart) {
     if (isBatching) {
-      return new Observable((observer) =>
-        observer.error(
-          new Error('File upload is not available when combined with Batching'),
-        ),
+      return new Observable(observer =>
+        observer.error(new Error('File upload is not available when combined with Batching'))
       );
     }
 
     if (!shouldUseBody) {
-      return new Observable((observer) =>
-        observer.error(
-          new Error('File upload is not available when GET is used'),
-        ),
-      );
+      return new Observable(observer => observer.error(new Error('File upload is not available when GET is used')));
     }
 
     if (!extractFiles) {
-      return new Observable((observer) =>
+      return new Observable(observer =>
         observer.error(
           new Error(
-            `To use File upload you need to pass "extractFiles" function from "extract-files" library to HttpLink's options`,
-          ),
-        ),
+            `To use File upload you need to pass "extractFiles" function from "extract-files" library to HttpLink's options`
+          )
+        )
       );
     }
 
@@ -56,9 +48,7 @@ export const fetch = (
 
   if (isBatching) {
     if (!shouldUseBody) {
-      return new Observable((observer) =>
-        observer.error(new Error('Batching is not available for GET requests')),
-      );
+      return new Observable(observer => observer.error(new Error('Batching is not available for GET requests')));
     }
 
     bodyOrParams = {
@@ -78,7 +68,7 @@ export const fetch = (
         return obj;
       }, {});
 
-      bodyOrParams = {params: params};
+      bodyOrParams = { params: params };
     }
   }
 
@@ -91,7 +81,7 @@ export const fetch = (
     const files = multipartInfo!.files;
 
     let i = 0;
-    files.forEach((paths) => {
+    files.forEach(paths => {
       map[++i] = paths;
     });
 
@@ -115,17 +105,9 @@ export const fetch = (
   });
 };
 
-export const mergeHeaders = (
-  source: HttpHeaders,
-  destination: HttpHeaders,
-): HttpHeaders => {
+export const mergeHeaders = (source: HttpHeaders, destination: HttpHeaders): HttpHeaders => {
   if (source && destination) {
-    const merged = destination
-      .keys()
-      .reduce(
-        (headers, name) => headers.set(name, destination.getAll(name)),
-        source,
-      );
+    const merged = destination.keys().reduce((headers, name) => headers.set(name, destination.getAll(name)), source);
 
     return merged;
   }
@@ -134,7 +116,7 @@ export const mergeHeaders = (
 };
 
 export function prioritize<T>(...values: T[]): T {
-  const picked = values.find((val) => typeof val !== 'undefined');
+  const picked = values.find(val => typeof val !== 'undefined');
 
   if (typeof picked === 'undefined') {
     return values[values.length - 1];
@@ -149,12 +131,10 @@ export function createHeadersWithClientAwareness(context: Record<string, any>) {
   // set first, followed by the rest of the headers pulled from
   // `context.headers`.
   let headers =
-    context.headers && context.headers instanceof HttpHeaders
-      ? context.headers
-      : new HttpHeaders(context.headers);
+    context.headers && context.headers instanceof HttpHeaders ? context.headers : new HttpHeaders(context.headers);
 
   if (context.clientAwareness) {
-    const {name, version} = context.clientAwareness;
+    const { name, version } = context.clientAwareness;
 
     // If desired, `apollographql-client-*` headers set by
     // the `clientAwareness` object can be overridden by

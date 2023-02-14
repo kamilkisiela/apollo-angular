@@ -2,7 +2,7 @@
 description: Updating your app to Apollo Client 2.0 and Angular Apollo 1.0
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Migration Guide
 
@@ -84,8 +84,8 @@ function provideClient() {
 @NgModule({
   imports: [
     // ... other modules
-    ApolloModule.forRoot(provideClient)
-  ]
+    ApolloModule.forRoot(provideClient),
+  ],
 })
 class AppModule {}
 ```
@@ -104,17 +104,14 @@ import { ApolloModule, Apollo } from 'apollo-angular';
     // ... other modules
     HttpClientModule,
     HttpLinkModule,
-    ApolloModule
-  ]
+    ApolloModule,
+  ],
 })
 class AppModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
     apollo.create({
       link: httpLink.create({ uri: 'http://localhost:3000' }),
-      cache: new InMemoryCache()
+      cache: new InMemoryCache(),
     });
   }
 }
@@ -211,7 +208,9 @@ class AppModule {
 ```
 
 <Callout>
-**Note:** If you were using `customResolvers`, the name of that has been changed to be `cacheResolvers` to be more descriptive of what it does. `customResolvers` will still be supported throughout the 2.0 though to be backwards compatible and ease the upgrade path.
+  **Note:** If you were using `customResolvers`, the name of that has been changed to be `cacheResolvers` to be more
+  descriptive of what it does. `customResolvers` will still be supported throughout the 2.0 though to be backwards
+  compatible and ease the upgrade path.
 </Callout>
 
 ## Cache extraction
@@ -238,16 +237,13 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-angular-link-http';
 
 class AppModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
     const link = httpLink.create();
     const cache = new InMemoryCache();
 
     apollo.create({
       link,
-      cache
+      cache,
     });
 
     const state = cache.extract();
@@ -268,15 +264,17 @@ import { createNetworkInterface } from 'apollo-client';
 
 const networkInterface = createNetworkInterface({ uri: '/graphql' });
 
-networkInterface.use([{
-  applyMiddleware(req, next) {
-    if (!req.options.headers) {
-      req.options.headers = {};  // Create the header object if needed.
-    }
-    req.options.headers['authorization'] = localStorage.getItem('token') ? localStorage.getItem('token') : null;
-    next();
-  }
-}]);
+networkInterface.use([
+  {
+    applyMiddleware(req, next) {
+      if (!req.options.headers) {
+        req.options.headers = {}; // Create the header object if needed.
+      }
+      req.options.headers['authorization'] = localStorage.getItem('token') ? localStorage.getItem('token') : null;
+      next();
+    },
+  },
+]);
 ```
 
 **After**
@@ -290,7 +288,7 @@ class AppModule {
     const http = httpLink.create({ uri: '/graphql' });
 
     const middleware = setContext(() => ({
-      headers: new HttpHeaders().set('Authorization', localStorage.getItem('token') || null)
+      headers: new HttpHeaders().set('Authorization', localStorage.getItem('token') || null),
     }));
 
     // use with Apollo.create()
@@ -309,14 +307,16 @@ import { logout } from './logout';
 
 const networkInterface = createNetworkInterface({ uri: '/graphql' });
 
-networkInterface.useAfter([{
-  applyAfterware({ response }, next) {
-    if (response.status === 401) {
-      logout();
-    }
-    next();
-  }
-}]);
+networkInterface.useAfter([
+  {
+    applyAfterware({ response }, next) {
+      if (response.status === 401) {
+        logout();
+      }
+      next();
+    },
+  },
+]);
 ```
 
 **After**
@@ -335,7 +335,7 @@ class AppModule {
       if (networkError.statusCode === 401) {
         logout();
       }
-    })
+    });
 
     // use with Apollo.create()
     const link = error.concat(http);
@@ -352,14 +352,16 @@ import { createNetworkInterface } from 'apollo-client';
 
 const networkInterface = createNetworkInterface({ uri: '/graphql' });
 
-networkInterface.useAfter([{
-  applyAfterware({ response }, next) {
-    if (response.data.user.lastLoginDate) {
-      response.data.user.lastLoginDate = new Date(response.data.user.lastLoginDate)
-    }
-    next();
-  }
-}]);
+networkInterface.useAfter([
+  {
+    applyAfterware({ response }, next) {
+      if (response.data.user.lastLoginDate) {
+        response.data.user.lastLoginDate = new Date(response.data.user.lastLoginDate);
+      }
+      next();
+    },
+  },
+]);
 ```
 
 **After**
@@ -372,12 +374,12 @@ class AppModule {
   constructor(httpLink: HttpLink) {
     const http = httpLink.create({ uri: '/graphql' });
     const addDates = new ApolloLink((operation, forward) => {
-      return forward(operation).map((response) => {
+      return forward(operation).map(response => {
         if (response.data.user.lastLoginDate) {
-          response.data.user.lastLoginDate = new Date(response.data.user.lastLoginDate)
+          response.data.user.lastLoginDate = new Date(response.data.user.lastLoginDate);
         }
         return response;
-      })
+      });
     });
 
     // use with Apollo.create()
@@ -397,10 +399,10 @@ import { ApolloLink } from 'apollo-link';
 
 const logger = new ApolloLink((operation, forward) => {
   console.log(operation.operationName);
-  return forward(operation).map((result) => {
+  return forward(operation).map(result => {
     console.log(`received result from ${operation.operationName}`);
     return result;
-  })
+  });
 });
 ```
 
@@ -410,36 +412,34 @@ Ultimately we think the move off Redux will open the door for more powerful cach
 
 Query reducers have been finally removed in the 2.0, instead we recommend using the more flexible [`update`](./features/cache-updates#updating-after-a-mutation) API instead of reducer.
 
-
 ## Observable variables
 
 Apollo 2.0 doesn't ([currently](https://github.com/kamilkisiela/apollo-angular/issues/425)) support passing observables as query variables. For now you can work around this by using `switchMap` on the observable:
 
-***Before***
+**_Before_**
 
 ```js
-this.apollo.watchQuery({
+this.apollo
+  .watchQuery({
     query: 'foo',
     variables: { id: id$ },
   })
-    .valueChanges
-    .subscribe((foo) => {
-      this.foo = foo;
-    });
+  .valueChanges.subscribe(foo => {
+    this.foo = foo;
+  });
 ```
 
-***After***
+**_After_**
 
 ```js
 id$
-  .switchMap((id) => {
+  .switchMap(id => {
     return this.apollo.watchQuery({
       query: 'foo',
-      variables: { id }
-    })
-      .valueChanges;
+      variables: { id },
+    }).valueChanges;
   })
-    .subscribe((foo) => {
-      this.foo = foo;
-    });
+  .subscribe(foo => {
+    this.foo = foo;
+  });
 ```

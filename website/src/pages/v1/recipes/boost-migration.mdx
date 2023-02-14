@@ -43,12 +43,12 @@ To create a basic client with the same defaults as Apollo Angular Boost, first y
 
 ```bash
 npm install --save \
-apollo-angular \
-apollo-angular-link-http \
-apollo-client \
-apollo-cache-inmemory \
-graphql-tag \
-graphql
+  apollo-angular \
+  apollo-angular-link-http \
+  apollo-client \
+  apollo-cache-inmemory \
+  graphql-tag \
+  graphql
 ```
 
 - apollo-client - core functionality for Apollo ecosystem
@@ -107,6 +107,7 @@ The `InMemoryCache` is our recommended cache implementation for Apollo Client. T
 If you are using configuration options on Apollo Angular Boost, your migration path will vary depending on which ones you use.
 
 Type your configuration options object as ApolloClientOptions so you can use IntelliSense features on your editor.
+
 ```ts
 export function createApollo(httpLink: HttpLink) {
   return {
@@ -154,6 +155,7 @@ This one, you put to `HttpLink.create()`.
 ### clientState
 
 You can pass all the proprieties of the object to `apollo-link-state` by also including ApolloCache.
+
 ```ts
 {
     cache: new InMemoryCache(),

@@ -1,14 +1,10 @@
-import {Apollo} from 'apollo-angular';
-import {InMemoryCache, gql} from '@apollo/client/core';
-import {TestBed} from '@angular/core/testing';
-import {addTypenameToDocument} from '@apollo/client/utilities';
-import {print} from 'graphql';
+import { Apollo } from 'apollo-angular';
+import { InMemoryCache, gql } from '@apollo/client/core';
+import { TestBed } from '@angular/core/testing';
+import { addTypenameToDocument } from '@apollo/client/utilities';
+import { print } from 'graphql';
 
-import {
-  ApolloTestingModule,
-  ApolloTestingController,
-  APOLLO_TESTING_CACHE,
-} from '../src';
+import { ApolloTestingModule, ApolloTestingController, APOLLO_TESTING_CACHE } from '../src';
 
 describe('Integration', () => {
   let apollo: Apollo;
@@ -56,7 +52,7 @@ describe('Integration', () => {
       },
     });
 
-    backend.expectOne(op.query).flush({data});
+    backend.expectOne(op.query).flush({ data });
   });
 
   test('should match operation based on Operation', (done: jest.DoneCallback) => {
@@ -89,7 +85,7 @@ describe('Integration', () => {
       },
     });
 
-    backend.expectOne(op as any).flush({data});
+    backend.expectOne(op as any).flush({ data });
   });
 
   test('should match operation based on name', (done: jest.DoneCallback) => {
@@ -122,7 +118,7 @@ describe('Integration', () => {
       },
     });
 
-    backend.expectOne(op.operationName).flush({data});
+    backend.expectOne(op.operationName).flush({ data });
   });
 
   test('should match operation based on function', (done: jest.DoneCallback) => {
@@ -159,32 +155,30 @@ describe('Integration', () => {
     });
 
     backend
-      .expectOne((operation) => {
+      .expectOne(operation => {
         expect(operation.operationName).toBe(op.operationName);
         expect(operation.variables).toEqual(op.variables);
         expect(print(operation.query)).toBe(print(op.query));
 
         return true;
       })
-      .flush({data});
+      .flush({ data });
   });
 
-  test('it should be able to test with fragments', (done) => {
+  test('it should be able to test with fragments', done => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
       providers: [
         {
           provide: APOLLO_TESTING_CACHE,
-          useValue: new InMemoryCache({addTypename: true}),
+          useValue: new InMemoryCache({ addTypename: true }),
         },
       ],
     });
 
     const apollo: Apollo = TestBed.get(Apollo);
-    const backend: ApolloTestingController = TestBed.get(
-      ApolloTestingController,
-    );
+    const backend: ApolloTestingController = TestBed.get(ApolloTestingController);
 
     const query = gql`
       {
@@ -217,6 +211,6 @@ describe('Integration', () => {
       },
     });
 
-    backend.expectOne(addTypenameToDocument(query)).flush({data});
+    backend.expectOne(addTypenameToDocument(query)).flush({ data });
   });
 });

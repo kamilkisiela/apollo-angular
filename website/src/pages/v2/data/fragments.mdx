@@ -28,7 +28,7 @@ The most straightforward use of fragments is to reuse parts of queries (or mutat
 To do so, we can simply share a fragment describing the fields we need for a comment:
 
 ```typescript
-import {gql} from 'apollo-angular';
+import { gql } from 'apollo-angular';
 
 CommentsPage.fragments = {
   comment: gql`
@@ -52,10 +52,7 @@ When it's time to embed the fragment in a query, we simply use the `...Name` syn
 ```typescript
 const SUBMIT_COMMENT_MUTATION = gql`
   mutation submitComment($repoFullName: String!, $commentContent: String!) {
-    submitComment(
-      repoFullName: $repoFullName
-      commentContent: $commentContent
-    ) {
+    submitComment(repoFullName: $repoFullName, commentContent: $commentContent) {
       ...CommentsPageComment
     }
   }

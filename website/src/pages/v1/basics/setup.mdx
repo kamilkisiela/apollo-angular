@@ -1,4 +1,4 @@
-import { Callout, PackageCmd } from '@theguild/components'
+import { Callout, PackageCmd } from '@theguild/components';
 
 # Setup and Options
 
@@ -28,11 +28,13 @@ const uri = 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'; // Our test Graphql
 
 If you want to setup Apollo without the help of Angular Schematics, first, let's install some packages:
 
-<PackageCmd packages={[
-  "apollo-angular apollo-angular-link-http",
-  "apollo-link apollo-client apollo-cache-inmemory",
-  "graphql-tag graphql"
-]} />
+<PackageCmd
+  packages={[
+    'apollo-angular apollo-angular-link-http',
+    'apollo-link apollo-client apollo-cache-inmemory',
+    'graphql-tag graphql',
+  ]}
+/>
 
 - `apollo-client`: Where the magic happens
 - `apollo-angular`: Bridge between Angular and Apollo Client
@@ -47,11 +49,7 @@ The `apollo-client` package requires `AsyncIterable` so make sure your tsconfig.
 {
   "compilerOptions": {
     // ...
-    "lib": [
-      "es2017",
-      "dom",
-      "esnext.asynciterable"
-    ]
+    "lib": ["es2017", "dom", "esnext.asynciterable"]
   }
 }
 ```
@@ -61,30 +59,27 @@ Great, now that you have all the dependencies you need, let's create your first 
 In our `app.module.ts` file use `ApolloModule` and `APOLLO_OPTIONS` token to configure Apollo Client:
 
 ```ts
-import { HttpClientModule } from "@angular/common/http";
-import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
-import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    ApolloModule,
-    HttpLinkModule
-  ],
-  providers: [{
-    provide: APOLLO_OPTIONS,
-    useFactory: (httpLink: HttpLink) => {
-      return {
-        cache: new InMemoryCache(),
-        link: httpLink.create({
-          uri: "https://o5x5jzoo7z.sse.codesandbox.io/graphql"
-        })
-      }
+  imports: [BrowserModule, HttpClientModule, ApolloModule, HttpLinkModule],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
+          }),
+        };
+      },
+      deps: [HttpLink],
     },
-    deps: [HttpLink]
-  }],
+  ],
 })
 export class AppModule {}
 ```
@@ -123,9 +118,9 @@ property that is an `Observable`.
 An object passed through an Observable contains `loading`, `error`, and `data` properties. Apollo Client tracks error and loading state for you, which will be reflected in the `loading` and `error` properties. Once the result of your query comes back, it will be attached to the `data` property.
 
 <Callout>
-It's also possible to fetch data only once. The `query` method of `Apollo` service returns an `Observable` that also resolves with the same result as above.
+  It's also possible to fetch data only once. The `query` method of `Apollo` service returns an `Observable` that also
+  resolves with the same result as above.
 </Callout>
-
 
 Let's create an `ExchangeRates` component to see the `Apollo` service in action!
 
@@ -134,22 +129,18 @@ Let's create an `ExchangeRates` component to see the `Apollo` service in action!
 If you want to see how easy it is to fetch data from a GraphQL server with Apollo, you can use the `query` method. It is as easy as this:
 
 ```ts
-import {Component, OnInit} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, OnInit } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 @Component({
   selector: 'exchange-rates',
   template: `
-    <div *ngIf="loading">
-      Loading...
-    </div>
-    <div *ngIf="error">
-      Error :(
-    </div>
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="error">Error :(</div>
     <div *ngIf="rates">
       <div *ngFor="let rate of rates">
-        <p>{{rate.currency}}: {{rate.rate}}</p>
+        <p>{{ rate.currency }}: {{ rate.rate }}</p>
       </div>
     </div>
   `,

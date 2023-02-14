@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {TestBed} from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-import {Subscription, Apollo, gql} from '../src';
+import { Subscription, Apollo, gql } from '../src';
 
 const query = gql`
   query heroes {
@@ -17,7 +17,7 @@ export class HeroesSubscription extends Subscription {
 }
 
 describe('Subscription', () => {
-  let apolloMock: Apollo & {subscribe: jest.Mock};
+  let apolloMock: Apollo & { subscribe: jest.Mock };
   let heroes: HeroesSubscription;
 
   function createApollo() {
@@ -60,16 +60,16 @@ describe('Subscription', () => {
   });
 
   test('should pass variables to Apollo.subscribe', () => {
-    heroes.subscribe({foo: 1});
+    heroes.subscribe({ foo: 1 });
 
     expect(apolloMock.subscribe).toBeCalled();
     expect(apolloMock.subscribe.mock.calls[0][0]).toMatchObject({
-      variables: {foo: 1},
+      variables: { foo: 1 },
     });
   });
 
   test('should pass options to Apollo.subscribe', () => {
-    heroes.subscribe({}, {fetchPolicy: 'network-only'});
+    heroes.subscribe({}, { fetchPolicy: 'network-only' });
 
     expect(apolloMock.subscribe).toBeCalled();
     expect(apolloMock.subscribe.mock.calls[0][0]).toMatchObject({
@@ -78,7 +78,7 @@ describe('Subscription', () => {
   });
 
   test('should not overwrite query when options object is provided', () => {
-    heroes.subscribe({}, {query: 'asd', fetchPolicy: 'cache-first'} as any);
+    heroes.subscribe({}, { query: 'asd', fetchPolicy: 'cache-first' } as any);
 
     expect(apolloMock.subscribe).toBeCalled();
     expect(apolloMock.subscribe.mock.calls[0][0]).toMatchObject({

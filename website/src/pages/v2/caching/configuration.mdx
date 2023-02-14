@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Configuring the Cache
 
@@ -15,8 +15,8 @@ As of Apollo Client 3.0, the `InMemoryCache` class is provided by the `@apollo/c
 Create an `InMemoryCache` object and provide it to the `APOLLO_OPTIONS` token, like so:
 
 ```typescript
-import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-import {InMemoryCache} from '@apollo/client/core';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [ApolloModule],
@@ -50,13 +50,13 @@ Although the cache's default behavior is suitable for a wide variety of applicat
 
 To customize cache behavior, provide an `options` object to the `InMemoryCache` constructor. This object supports the following fields:
 
-| Name | Type | Description |
-| ----------------------------------- | ------- | --------- |
-| `addTypename`                       | boolean | <p>If `true`, the cache automatically adds `__typename` fields to all outgoing queries, removing the need to add them manually.</p><p>Default: `true`</p> |
-| `resultCaching`                     | boolean | <p>If `true`, the cache returns an identical (`===`) response object for every execution of the same query, as long as the underlying data remains unchanged. This makes it easier to detect changes to a query's result.</p><p>Default: `true`</p> |
-| `possibleTypes`                     | `{ [supertype: string]: string[] }` | <p>Include this object to define polymorphic relationships between your schema's types. Doing so enables you to look up cached data by interface or by union.</p><p>The key for each entry is the `__typename` of an interface or union, and the value is an array of the `__typename`s of the types that either belong to the corresponding union or implement the corresponding interface.</p> |
-| `typePolicies`                      | `{ [typename: string]: TypePolicy }` | <p>Include this object to customize the cache's behavior on a type-by-type basis.</p><p>The key for each entry is a type's `__typename`. For details, see [`TypePolicy` fields](#typepolicy-fields).</p> |
-| `dataIdFromObject` **(deprecated)** | function | <p>A function that takes a response object and returns a unique identifier to be used when normalizing the data in the store.</p><p>Deprecated in favor of the `keyFields` option of the `TypePolicy` object.</p> |
+| Name                                | Type                                 | Description                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `addTypename`                       | boolean                              | <p>If `true`, the cache automatically adds `__typename` fields to all outgoing queries, removing the need to add them manually.</p><p>Default: `true`</p>                                                                                                                                                                                                                                        |
+| `resultCaching`                     | boolean                              | <p>If `true`, the cache returns an identical (`===`) response object for every execution of the same query, as long as the underlying data remains unchanged. This makes it easier to detect changes to a query's result.</p><p>Default: `true`</p>                                                                                                                                              |
+| `possibleTypes`                     | `{ [supertype: string]: string[] }`  | <p>Include this object to define polymorphic relationships between your schema's types. Doing so enables you to look up cached data by interface or by union.</p><p>The key for each entry is the `__typename` of an interface or union, and the value is an array of the `__typename`s of the types that either belong to the corresponding union or implement the corresponding interface.</p> |
+| `typePolicies`                      | `{ [typename: string]: TypePolicy }` | <p>Include this object to customize the cache's behavior on a type-by-type basis.</p><p>The key for each entry is a type's `__typename`. For details, see [`TypePolicy` fields](#typepolicy-fields).</p>                                                                                                                                                                                         |
+| `dataIdFromObject` **(deprecated)** | function                             | <p>A function that takes a response object and returns a unique identifier to be used when normalizing the data in the store.</p><p>Deprecated in favor of the `keyFields` option of the `TypePolicy` object.</p>                                                                                                                                                                                |
 
 ## Data Normalization
 
@@ -65,15 +65,16 @@ The `InMemoryCache` **normalizes** query response objects before it saves them t
 1. The cache [generates a unique ID](#generating-unique-identifiers) for every identifiable object included in the response.
 2. The cache stores the objects by ID in a flat lookup table.
 3. Whenever an incoming object is stored with the same ID as an _existing_ object, the fields of those objects are _merged_.
-    * If the incoming object and the existing object share any fields, the incoming object _overwrites_ the cached values for those fields.
-    * Fields that appear in _only_ the existing object or _only_ the incoming object are preserved.
+   - If the incoming object and the existing object share any fields, the incoming object _overwrites_ the cached values for those fields.
+   - Fields that appear in _only_ the existing object or _only_ the incoming object are preserved.
 
 Normalization constructs a partial copy of your data graph on your client, in a format that's optimized for reading and updating the graph as your application changes state.
 
 ### Generating Unique Identifiers
 
 <Callout>
-In Apollo Client 3 and later, the `InMemoryCache` never creates a fallback, "fake" identifier for an object when identifier generation fails or is disabled.
+  In Apollo Client 3 and later, the `InMemoryCache` never creates a fallback, "fake" identifier for an object when
+  identifier generation fails or is disabled.
 </Callout>
 
 #### Default Identifier Generation
@@ -94,18 +95,18 @@ const cache = new InMemoryCache({
     Product: {
       // In most inventory management systems, a single UPC code uniquely
       // identifies any product.
-      keyFields: ["upc"],
+      keyFields: ['upc'],
     },
     Person: {
       // In some user account systems, names or emails alone do not have to
       // be unique, but the combination of a person's name and email is
       // uniquely identifying.
-      keyFields: ["name", "email"],
+      keyFields: ['name', 'email'],
     },
     Book: {
       // If one of the keyFields is an object with fields of its own, you can
       // include those nested keyFields by using a nested array of strings:
-      keyFields: ["title", "author", ["name"]],
+      keyFields: ['title', 'author', ['name']],
     },
   },
 });
@@ -141,16 +142,20 @@ import { defaultDataIdFromObject } from '@apollo/client/core';
 const cache = new InMemoryCache({
   dataIdFromObject(responseObject) {
     switch (responseObject.__typename) {
-      case 'Product': return `Product:${responseObject.upc}`;
-      case 'Person': return `Person:${responseObject.name}:${responseObject.email}`;
-      default: return defaultDataIdFromObject(responseObject);
+      case 'Product':
+        return `Product:${responseObject.upc}`;
+      case 'Person':
+        return `Person:${responseObject.name}:${responseObject.email}`;
+      default:
+        return defaultDataIdFromObject(responseObject);
     }
-  }
+  },
 });
 ```
 
 <Callout>
-The `dataIdFromObject` API is included in Apollo Client 3.0 to ease the transition from Apollo Client 2.x. The API might be removed in a future version of `@apollo/client`.
+  The `dataIdFromObject` API is included in Apollo Client 3.0 to ease the transition from Apollo Client 2.x. The API
+  might be removed in a future version of `@apollo/client`.
 </Callout>
 
 Notice that the above function still uses different logic to generate keys based on an object's `__typename`. In the above case, you might as well define `keyFields` arrays for the `Product` and `Person` types via `typePolicies`. Also, this code is sensitive to aliasing mistakes, it does nothing to protect against undefined `object` properties, and accidentally using different key fields at different times can cause inconsistencies in the cache.
@@ -179,15 +184,13 @@ type TypePolicy = {
   // If your schema uses a custom __typename for any of the root Query,
   // Mutation, and/or Subscription types (rare), set the corresponding
   // field below to true to indicate that this type serves as that type.
-  queryType?: true,
-  mutationType?: true,
-  subscriptionType?: true,
+  queryType?: true;
+  mutationType?: true;
+  subscriptionType?: true;
 
   fields?: {
-    [fieldName: string]:
-      | FieldPolicy<StoreValue>
-      | FieldReadFunction<StoreValue>;
-  }
+    [fieldName: string]: FieldPolicy<StoreValue> | FieldReadFunction<StoreValue>;
+  };
 };
 
 // Recursive type aliases are coming in TypeScript 3.7, so this isn't the
@@ -200,7 +203,7 @@ type KeyFieldsFunction = (
     typename: string;
     selectionSet?: SelectionSetNode;
     fragmentMap?: FragmentMap;
-  },
+  }
 ) => string | null | void;
 ```
 

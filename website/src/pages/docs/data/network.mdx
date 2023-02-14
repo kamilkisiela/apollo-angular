@@ -2,7 +2,7 @@
 description: How to interact with your GraphQL API
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Network Layer
 
@@ -17,8 +17,8 @@ Why not `@apollo/client/link/http`? You get SSR for free, ability to use Http In
 ## Usage
 
 ```ts
-import { HttpLink } from 'apollo-angular/http'
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular'
+import { HttpLink } from 'apollo-angular/http';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 
 @NgModule({
   imports: [ApolloModule],
@@ -28,12 +28,12 @@ import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular'
       useFactory(httpLink: HttpLink) {
         return {
           // other options
-          link: httpLink.create({ uri: '/graphql' })
-        }
+          link: httpLink.create({ uri: '/graphql' }),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 class AppModule {}
 ```
@@ -81,10 +81,10 @@ Options, this one will be used.
 | useMultipart      | boolean     | as in options | false    |
 
 ```ts
-import { HttpLink } from 'apollo-link/http'
-import { APOLLO_OPTIONS } from 'apollo-angular'
-import { InMemoryCache } from '@apollo/client/core'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpLink } from 'apollo-link/http';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { InMemoryCache } from '@apollo/client/core';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModules({
   imports: [ApolloModule, HttpClientModule],
@@ -94,12 +94,12 @@ import { HttpClientModule } from '@angular/common/http'
       useFactory(httpLink: HttpLink) {
         return {
           link: httpLink.create({ uri: '/graphql' }),
-          cache: new InMemoryCache()
-        }
+          cache: new InMemoryCache(),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 class AppModule {}
 
@@ -109,9 +109,9 @@ apollo.query({
   query: MY_QUERY,
   context: {
     // example of setting the headers with context per operation
-    headers: new HttpHeaders().set('X-Custom-Header', 'custom-value')
-  }
-})
+    headers: new HttpHeaders().set('X-Custom-Header', 'custom-value'),
+  },
+});
 ```
 
 ### Uri as Function
@@ -126,15 +126,15 @@ apollo.query({
         return {
           link: httpLink.create({
             uri(operation) {
-              return operation.operationName === 'login' ? '/auth' : '/graphq'
-            }
+              return operation.operationName === 'login' ? '/auth' : '/graphq';
+            },
           }),
-          cache: new InMemoryCache()
-        }
+          cache: new InMemoryCache(),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 class AppModule {}
 ```
@@ -147,15 +147,15 @@ In order to upload a file, you need to turn on `useMultipart` flag:
 apollo.query({
   query: MY_QUERY,
   context: {
-    useMultipart: true
-  }
-})
+    useMultipart: true,
+  },
+});
 ```
 
 You also have to define `extractFiles` function:
 
 ```ts
-import extractFiles from 'extract-files/extractFiles.mjs' // the import depends on the version of `extract-files`
+import extractFiles from 'extract-files/extractFiles.mjs'; // the import depends on the version of `extract-files`
 
 @NgModules({
   imports: [ApolloModule, HttpClientModule],
@@ -166,14 +166,14 @@ import extractFiles from 'extract-files/extractFiles.mjs' // the import depends 
         return {
           link: httpLink.create({
             uri: '/graphql',
-            extractFiles // <-
+            extractFiles, // <-
           }),
-          cache: new InMemoryCache()
-        }
+          cache: new InMemoryCache(),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 class AppModule {}
 ```
@@ -181,8 +181,8 @@ class AppModule {}
 ### Middleware
 
 ```ts
-import { ApolloLink } from '@apollo/client/core'
-import { HttpLink } from 'apollo-angular/http'
+import { ApolloLink } from '@apollo/client/core';
+import { HttpLink } from 'apollo-angular/http';
 
 @NgModules({
   imports: [ApolloModule, HttpClientModule],
@@ -190,24 +190,24 @@ import { HttpLink } from 'apollo-angular/http'
     {
       provide: APOLLO_OPTIONS,
       useFactory(httpLink: HttpLink) {
-        const http = httpLink.create({ uri: '/graphql' })
+        const http = httpLink.create({ uri: '/graphql' });
         const middleware = new ApolloLink((operation, forward) => {
           operation.setContext({
-            headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token') || null}`)
-          })
-          return forward(operation)
-        })
+            headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token') || null}`),
+          });
+          return forward(operation);
+        });
 
-        const link = middleware.concat(http)
+        const link = middleware.concat(http);
 
         return {
           link,
-          cache: new InMemoryCache()
-        }
+          cache: new InMemoryCache(),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 class AppModule {}
 ```
@@ -215,11 +215,11 @@ class AppModule {}
 ### Afterware (error)
 
 ```ts
-import { ApolloLink } from '@apollo/client/core'
-import { HttpLink } from 'apollo-angular/http'
-import { onError } from '@apollo/client/link/error'
+import { ApolloLink } from '@apollo/client/core';
+import { HttpLink } from 'apollo-angular/http';
+import { onError } from '@apollo/client/link/error';
 
-import { Auth } from './auth.service'
+import { Auth } from './auth.service';
 
 @NgModules({
   imports: [ApolloModule, HttpClientModule],
@@ -227,23 +227,23 @@ import { Auth } from './auth.service'
     {
       provide: APOLLO_OPTIONS,
       useFactory(httpLink: HttpLink) {
-        const http = httpLink.create({ uri: '/graphql' })
+        const http = httpLink.create({ uri: '/graphql' });
         const error = onError(({ networkError }) => {
           if (networkError.status === 401) {
-            auth.logout()
+            auth.logout();
           }
-        })
+        });
 
-        const link = error.concat(http)
+        const link = error.concat(http);
 
         return {
           link,
-          cache: new InMemoryCache()
-        }
+          cache: new InMemoryCache(),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 class AppModule {}
 ```
@@ -255,7 +255,7 @@ An Apollo Link to combine multiple GraphQL operations into single HTTP request.
 ### Usage
 
 ```ts
-import { HttpBatchLink } from 'apollo-angular/http'
+import { HttpBatchLink } from 'apollo-angular/http';
 
 @NgModule({
   imports: [ApolloModule],
@@ -265,12 +265,12 @@ import { HttpBatchLink } from 'apollo-angular/http'
       useFactory(httpLink: HttpBatchLink) {
         return {
           // other options
-          link: httpLink.create({ uri: '/graphql' })
-        }
+          link: httpLink.create({ uri: '/graphql' }),
+        };
       },
-      deps: [HttpBatchLink]
-    }
-  ]
+      deps: [HttpBatchLink],
+    },
+  ],
 })
 class AppModule {}
 ```
@@ -298,7 +298,7 @@ The batching options indicate how operations are batched together.
 - `batchMax` - the size of batches
 - `batchKey` a function that accepts an operation and returns a string key, which uniquely names the batch the operation belongs to, defaults to returning the same string
 
-<Callout type="warning" >
+<Callout type="warning">
   **Note**: `batchKey` by default batches together requests with the same uri and the same options. Since options from
   an operation's context overwrites those from a link you could end up with few different keys and what it means, few
   separate requests.

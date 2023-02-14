@@ -2,7 +2,7 @@
 description: Interacting with local data in Apollo Client
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Managing State with Field Policies
 
@@ -17,7 +17,8 @@ Let's say we're building an e-commerce application. Most of a product's details 
 A field policy specifies custom logic for how a single GraphQL field is fetched from and written to your Apollo Client cache. You can define field policies for both local-only fields and remotely fetched fields.
 
 <Callout>
-Field policies are primarily documented in [Customizing the behavior of cached fields](../caching/field-behavior). This article specifically describes how to use them with local-only fields.
+  Field policies are primarily documented in [Customizing the behavior of cached fields](../caching/field-behavior).
+  This article specifically describes how to use them with local-only fields.
 </Callout>
 
 You define your application's field policies in a map that you provide to the constructor of Apollo Client's `InMemoryCache`. Each field policy is a child of a particular _type_ policy (much like the corresponding field is a child of a particular type).
@@ -33,7 +34,7 @@ const cache = new InMemoryCache({
         // Field policy map for the Product type
         isInCart: {
           // Field policy for the isInCart field
-          read(_, {variables}) {
+          read(_, { variables }) {
             // The read function for the isInCart field
             return localStorage.getItem('CART').includes(variables.productId);
           },
@@ -54,7 +55,8 @@ You can use `read` functions to perform any sort of logic you want, including:
 - Logging usage metrics
 
 <Callout>
-If you query a local-only field that _doesn't_ define a `read` function, Apollo Client performs a default cache lookup for the field. See [Storing local state in the cache](#storing-local-state-in-the-cache) for details.
+  If you query a local-only field that _doesn't_ define a `read` function, Apollo Client performs a default cache lookup
+  for the field. See [Storing local state in the cache](#storing-local-state-in-the-cache) for details.
 </Callout>
 
 ## Querying
@@ -225,7 +227,7 @@ export class AppComponent {
       .watchQuery({
         query: IS_LOGGED_IN,
       })
-      .valueChanges.pipe(map((result) => result.data.isLoggedIn));
+      .valueChanges.pipe(map(result => result.data.isLoggedIn));
   }
 }
 ```
@@ -272,7 +274,9 @@ You can do this even if `postCount` is _also_ a local-only field (i.e., if it's 
 - At first glance, the `@export` directive appears to violate the [GraphQL specification's requirement](https://graphql.github.io/graphql-spec/draft/#sec-Normal-and-Serial-Execution) that the execution order of an operation must not affect its result:
 
 <Callout>
-…the resolution of fields other than top‐level mutation fields must always be side effect‐free and idempotent, the execution order must not affect the result, and hence the server has the freedom to execute the field entries in whatever order it deems optimal.
+  …the resolution of fields other than top‐level mutation fields must always be side effect‐free and idempotent, the
+  execution order must not affect the result, and hence the server has the freedom to execute the field entries in
+  whatever order it deems optimal.
 </Callout>
 
 However, all `@export`ed variable values are populated _before_ an operation is sent to a remote server. Only local-only fields can use the `@export` directive, and those fields are stripped from operations before they're transmitted.

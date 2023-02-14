@@ -2,7 +2,7 @@
 description: Get real-time updates from your GraphQL server
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Subscriptions
 
@@ -64,7 +64,7 @@ Because subscriptions maintain a persistent connection, they can't use the defau
 Let's look at how to add support for this transport to Apollo Client.
 
 ```typescript
-import {WebSocketLink} from '@apollo/client/link/ws';
+import { WebSocketLink } from '@apollo/client/link/ws';
 
 const wsClient = new WebSocketLink({
   uri: `ws://localhost:5000/graphql`,
@@ -75,11 +75,11 @@ const wsClient = new WebSocketLink({
 ```
 
 ```typescript
-import {APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {split, ApolloClientOptions} from '@apollo/client/core';
-import {WebSocketLink} from '@apollo/client/link/ws';
-import {getMainDefinition} from '@apollo/client/utilities';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { split, ApolloClientOptions } from '@apollo/client/core';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 @NgModule({
   providers: [
@@ -103,14 +103,12 @@ import {getMainDefinition} from '@apollo/client/utilities';
         // depending on what kind of operation is being sent
         const link = split(
           // split based on operation type
-          ({query}) => {
-            const {kind, operation} = getMainDefinition(query);
-            return (
-              kind === 'OperationDefinition' && operation === 'subscription'
-            );
+          ({ query }) => {
+            const { kind, operation } = getMainDefinition(query);
+            return kind === 'OperationDefinition' && operation === 'subscription';
           },
           ws,
-          http,
+          http
         );
 
         return {
@@ -275,16 +273,18 @@ class CommentsComponent {
 ## subscribe vs subscribeToMore
 
 In short:
- - `subscribe` listens to results emitted by a GraphQL Subscription and lets you update one or many queries.
- - `subscribeToMore` listens to GraphQL Subscription as well but is tightly connected with one query.
+
+- `subscribe` listens to results emitted by a GraphQL Subscription and lets you update one or many queries.
+- `subscribeToMore` listens to GraphQL Subscription as well but is tightly connected with one query.
 
 We recommend to use `subscribe` in most cases and leave `subscribeToMore` for things like pagination.
+
 ## Authentication over WebSocket
 
 In many cases it is necessary to authenticate clients before allowing them to receive subscription results. To do this, the `SubscriptionClient` constructor accepts a `connectionParams` field, which passes a custom object that the server can use to validate the connection before setting up any subscriptions.
 
 ```typescript
-import {WebSocketLink} from 'apollo-link-ws';
+import { WebSocketLink } from 'apollo-link-ws';
 
 const wsLink = new WebSocketLink({
   uri: `ws://localhost:5000/graphql`,
@@ -298,5 +298,6 @@ const wsLink = new WebSocketLink({
 ```
 
 <Callout>
-You can use `connectionParams` for anything else you might need, not only authentication, and check its payload on the server side with [SubscriptionsServer](https://www.apollographql.com/docs/graphql-subscriptions/authentication/).
+  You can use `connectionParams` for anything else you might need, not only authentication, and check its payload on the
+  server side with [SubscriptionsServer](https://www.apollographql.com/docs/graphql-subscriptions/authentication/).
 </Callout>

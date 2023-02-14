@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Apollo, gql} from 'apollo-angular';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 interface Post {
   id: number;
@@ -48,6 +48,6 @@ export class AuthorPageComponent implements OnInit {
           authorId: parseInt(this.route.snapshot.paramMap.get('id'), 10),
         },
       })
-      .valueChanges.pipe(map((result) => result.data.postsOf));
+      .valueChanges.pipe(map(result => result.data.postsOf));
   }
 }

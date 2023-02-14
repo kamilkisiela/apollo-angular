@@ -1,12 +1,8 @@
-import {Apollo} from 'apollo-angular';
-import {TestBed} from '@angular/core/testing';
-import {InMemoryCache, ApolloReducerConfig, gql} from '@apollo/client/core';
+import { Apollo } from 'apollo-angular';
+import { TestBed } from '@angular/core/testing';
+import { InMemoryCache, ApolloReducerConfig, gql } from '@apollo/client/core';
 
-import {
-  ApolloTestingModule,
-  APOLLO_TESTING_CACHE,
-  ApolloTestingController,
-} from '../src';
+import { ApolloTestingModule, APOLLO_TESTING_CACHE, ApolloTestingController } from '../src';
 
 describe('ApolloTestingModule', () => {
   test('should provide a default ApolloCache', () => {
@@ -23,7 +19,7 @@ describe('ApolloTestingModule', () => {
   });
 
   test('should allow to use custom ApolloCache', () => {
-    const cache = new InMemoryCache({addTypename: true});
+    const cache = new InMemoryCache({ addTypename: true });
 
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
@@ -40,7 +36,7 @@ describe('ApolloTestingModule', () => {
     expect(apollo.client.cache).toBe(cache);
   });
 
-  test('should not modify test data', (done) => {
+  test('should not modify test data', done => {
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
     });

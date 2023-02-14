@@ -146,11 +146,13 @@ import { filter } from 'graphql-anywhere';
 <VoteButtons
   entry={filter(VoteButtons.fragments.entry, entry)}
   canVote={loggedIn}
-  onVote={type => onVote({
-    repoFullName: full_name,
-    type,
-  })}
-/>
+  onVote={type =>
+    onVote({
+      repoFullName: full_name,
+      type,
+    })
+  }
+/>;
 ```
 
 The `filter()` function will grab exactly the fields from the `entry` that the fragment defines.

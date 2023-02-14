@@ -28,17 +28,19 @@ const updateComment = gql`
 })
 class AppComponent {
   submit({ commentId, commentContent }) {
-    this.apollo.mutate({
-      variables: { commentId, commentContent },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        updateComment: {
-          id: commentId,
-          __typename: 'Comment',
-          content: commentContent,
+    this.apollo
+      .mutate({
+        variables: { commentId, commentContent },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          updateComment: {
+            id: commentId,
+            __typename: 'Comment',
+            content: commentContent,
+          },
         },
-      },
-    }).subscribe();
+      })
+      .subscribe();
   }
 }
 ```
@@ -74,26 +76,28 @@ const SUBMIT_COMMENT_MUTATION = gql`
 })
 class AppComponent {
   submit({ repoFullName, commentContent }) {
-    this.apollo.mutate({
-      variables: { repoFullName, commentContent },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        submitComment: {
-          __typename: 'Comment',
-          postedBy: ownProps.currentUser,
-          createdAt: +new Date,
-          content: commentContent,
+    this.apollo
+      .mutate({
+        variables: { repoFullName, commentContent },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          submitComment: {
+            __typename: 'Comment',
+            postedBy: ownProps.currentUser,
+            createdAt: +new Date(),
+            content: commentContent,
+          },
         },
-      },
-      update(proxy, { data: { submitComment } }) {
-        // Read the data from our cache for this query.
-        const data = proxy.readQuery({ query: CommentAppQuery });
-        // Add our comment from the mutation to the end.
-        data.comments.push(submitComment);
-        // Write our data back to the cache.
-        proxy.writeQuery({ query: CommentAppQuery, data });
-      },
-    }).subscribe();
+        update(proxy, { data: { submitComment } }) {
+          // Read the data from our cache for this query.
+          const data = proxy.readQuery({ query: CommentAppQuery });
+          // Add our comment from the mutation to the end.
+          data.comments.push(submitComment);
+          // Write our data back to the cache.
+          proxy.writeQuery({ query: CommentAppQuery, data });
+        },
+      })
+      .subscribe();
   }
 }
 ```

@@ -134,4 +134,3 @@ jobs:
 
       - name: ng e2e
         run: (cd testapp && yarn ng run testapp:cypress-run:production)
-

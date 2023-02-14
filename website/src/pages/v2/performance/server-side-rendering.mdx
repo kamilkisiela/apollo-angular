@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Server Side Rendering
 
@@ -15,13 +15,13 @@ Before we dive more into SSR, let's create an example to work on.
 
 ```typescript
 // Angular
-import {NgModule, InjectionToken} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import { NgModule, InjectionToken } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 // Apollo
-import {ApolloModule, Apollo, APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { ApolloModule, Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
 
@@ -42,7 +42,7 @@ const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
       provide: APOLLO_OPTIONS,
       useFactory(httpLink: HttpLink, cache: InMemoryCache) {
         return {
-          link: httpLink.create({uri: '/graphql'}),
+          link: httpLink.create({ uri: '/graphql' }),
           cache,
         };
       },
@@ -64,6 +64,7 @@ No changes are required to client queries to support this, so your Apollo-based 
 SSR works out of the box when using `HttpLink` from `apollo-angular/http` because it uses Angular's `HttpClient` internally.
 
 This wouldn't be that easy with `apollo-link-http`. That non-angular Link uses Fetch API which would have to schedule a macroTask (Zone.js) so Angular could wait for the request to finish.
+
 </Callout>
 
 ## Store rehydration
@@ -74,18 +75,13 @@ For example, a typical approach is to use `TransferState` and `BrowserTransferSt
 
 ```typescript
 // Angular
-import {NgModule, InjectionToken} from '@angular/core';
-import {
-  BrowserModule,
-  BrowserTransferStateModule,
-  TransferState,
-  makeStateKey,
-} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import { NgModule, InjectionToken } from '@angular/core';
+import { BrowserModule, BrowserTransferStateModule, TransferState, makeStateKey } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 // Apollo
-import {Apollo, APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
 const STATE_KEY = makeStateKey<any>('apollo.state');
@@ -103,11 +99,7 @@ const STATE_KEY = makeStateKey<any>('apollo.state');
     },
     {
       provide: APOLLO_OPTIONS,
-      useFactory(
-        httpLink: HttpLink,
-        cache: InMemoryCache,
-        transferState: TransferState,
-      ) {
+      useFactory(httpLink: HttpLink, cache: InMemoryCache, transferState: TransferState) {
         const isBrowser = transferState.hasKey<any>(STATE_KEY);
 
         if (isBrowser) {
@@ -122,7 +114,7 @@ const STATE_KEY = makeStateKey<any>('apollo.state');
         }
 
         return {
-          link: httpLink.create({uri: '/graphql'}),
+          link: httpLink.create({ uri: '/graphql' }),
           cache,
         };
       },

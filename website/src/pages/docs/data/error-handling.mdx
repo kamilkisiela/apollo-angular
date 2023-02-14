@@ -28,7 +28,7 @@ const MY_QUERY = gql`
     badField
     goodField
   }
-`
+`;
 
 @Component({
   // ...
@@ -37,8 +37,8 @@ class ShowingSomeErrorsComponent {
   constructor(private apollo: Apollo) {
     this.myQuery = this.apollo.watchQuery({
       query: MY_QUERY,
-      errorPolicy: 'all'
-    })
+      errorPolicy: 'all',
+    });
   }
 }
 ```
@@ -50,16 +50,16 @@ Any errors reported will come under an `error` prop alongside the data returned 
 When using `Apollo Link`, the ability to handle network errors is way more powerful. The best way to do this is to use the `@apollo/client/link/error` to catch and handle server errors, network errors, and GraphQL errors.
 
 ```ts
-import { onError } from '@apollo/client/link/error'
+import { onError } from '@apollo/client/link/error';
 
 const link = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-    )
+    );
 
-  if (networkError) console.log(`[Network error]: ${networkError}`)
-})
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 ```
 
 Error Link takes a function that is called in the event of an error. This function is called with an object containing the following keys:
@@ -76,7 +76,7 @@ If you want to conditionally ignore errors, you can set `response.errors = null`
 ```ts
 onError(({ response, operation }) => {
   if (operation.operationName === 'IgnoreErrorsQuery') {
-    response.errors = null
+    response.errors = null;
   }
-})
+});
 ```

@@ -1,4 +1,4 @@
-import { PackageCmd } from '@theguild/components'
+import { PackageCmd } from '@theguild/components';
 
 # Webpack Loader
 
@@ -25,9 +25,9 @@ rules: [
   {
     test: /\.(graphql|gql)$/,
     exclude: /node_modules/,
-    loader: '@graphql-tools/webpack-loader'
-  }
-]
+    loader: '@graphql-tools/webpack-loader',
+  },
+];
 ```
 
 As you can see, `.graphql` or `.gql` files will be parsed whenever imported:
@@ -42,17 +42,13 @@ import currentUserQuery from './currentUser.graphql';
   // ...
 })
 class ProfileComponent {
-  constructor(
-    apollo: Apollo
-  ) {
-    apollo.query({ query: currentUserQuery })
-      .subscribe(result => {
-        // ...
-      });
+  constructor(apollo: Apollo) {
+    apollo.query({ query: currentUserQuery }).subscribe(result => {
+      // ...
+    });
   }
 }
 ```
-
 
 ## Optional: Install and Configure a Custom webpack Configuration (When Using Angular CLI)
 
@@ -69,21 +65,21 @@ module.exports = {
       {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
-        loader: '@graphql-tools/webpack-loader'
-      }
-    ]
-  }
-}
+        loader: '@graphql-tools/webpack-loader',
+      },
+    ],
+  },
+};
 ```
 
 After that, create your type-definition for your `.graphql` files, so TypeScript will transform them into importable objects with `src/@types/graphql.d.ts`:
 
 ```ts filename="graphql.d.ts"
 declare module '*.graphql' {
-  import { DocumentNode } from 'graphql'
-  const schema: DocumentNode
+  import { DocumentNode } from 'graphql';
+  const schema: DocumentNode;
 
-  export = schema
+  export = schema;
 }
 ```
 
@@ -121,12 +117,12 @@ Finally, you have to manipulate your `angular.json` to accept your customized we
             "customWebpackConfig": {
               "path": "./webpack.config.js",
               "replaceDuplicatePlugins": true
-            },
+            }
           }
         },
         "serve": {
           // ...
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server"
         }
       }
     }
@@ -135,7 +131,6 @@ Finally, you have to manipulate your `angular.json` to accept your customized we
 ```
 
 _(Based on [How to resolve import for the .graphql file with typescript and webpack](https://dev.to/open-graphql/how-to-resolve-import-for-the-graphql-file-with-typescript-and-webpack-35lf))_
-
 
 ### Jest
 

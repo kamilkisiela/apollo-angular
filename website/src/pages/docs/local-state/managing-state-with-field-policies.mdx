@@ -2,7 +2,7 @@
 description: Interacting with local data in Apollo Client
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Managing State with Field Policies
 
@@ -36,13 +36,13 @@ const cache = new InMemoryCache({
           // Field policy for the isInCart field
           read(_, { variables }) {
             // The read function for the isInCart field
-            return localStorage.getItem('CART').includes(variables.productId)
-          }
-        }
-      }
-    }
-  }
-})
+            return localStorage.getItem('CART').includes(variables.productId);
+          },
+        },
+      },
+    },
+  },
+});
 ```
 
 The field policy above defines a [`read` function](../caching/field-behavior#the-read-function) for the `isInCart` field. Whenever you query a field that has a `read` function, the cache calls that function to calculate the field's value. In this case, the `read` function returns whether the queried product's ID is in the `CART` array in `localStorage`.
@@ -72,7 +72,7 @@ const GET_PRODUCT_DETAILS = gql`
       isInCart @client
     }
   }
-`
+`;
 ```
 
 That's it! The `@client` directive tells Apollo Client that `isInCart` is a local-only field. Because `isInCart` is local-only, Apollo Client omits it from the query it sends to our server to fetch `name` and `price`. The final query result is returned only after all local _and_ remote fields are populated.
@@ -101,13 +101,13 @@ export const GET_CART_ITEMS = gql`
   query GetCartItems {
     cartItems @client
   }
-`
+`;
 ```
 
 Let's initialize a reactive variable to store our local list of cart items, like so:
 
 ```ts
-export const cartItemsVar = makeVar([])
+export const cartItemsVar = makeVar([]);
 ```
 
 This initializes a reactive variable that contains an empty array. We can get this variable's current value by calling `cartItemsVar()`, and we can set a _new_ value by calling `cartItemsVar(newValue)`.
@@ -121,13 +121,13 @@ export const cache = new InMemoryCache({
       fields: {
         cartItems: {
           read() {
-            return cartItemsVar()
-          }
-        }
-      }
-    }
-  }
-})
+            return cartItemsVar();
+          },
+        },
+      },
+    },
+  },
+});
 ```
 
 This `read` function returns the value of our reactive variable whenever `cartItems` is queried.
@@ -135,18 +135,18 @@ This `read` function returns the value of our reactive variable whenever `cartIt
 Now, let's create a button component that enables the user to add a product to their cart:
 
 ```ts
-import { cartItemsVar } from './cache'
+import { cartItemsVar } from './cache';
 // ... other imports
 
 @Component({
   // ...
 })
 export class AddToCardComponent {
-  @Input() productId: number
+  @Input() productId: number;
 
   submit() {
-    const cartItems = cartItemsVar()
-    cartItemsVar([...cartItems, this.productId])
+    const cartItems = cartItemsVar();
+    cartItemsVar([...cartItems, this.productId]);
   }
 }
 ```
@@ -160,19 +160,19 @@ export const GET_CART_ITEMS = gql`
   query GetCartItems {
     cartItems @client
   }
-`
+`;
 
 @Component({
   // ...
 })
 export class CartComponent {
-  data: Observable<any>
+  data: Observable<any>;
 
   constructor(private apollo: Apollo) {
     // Emits a new result when cartItemsVar changes its value
     this.data = this.apollo.watchQuery({
-      query: GET_CART_ITEMS
-    }).valueChanges
+      query: GET_CART_ITEMS,
+    }).valueChanges;
   }
 }
 ```
@@ -193,7 +193,7 @@ const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
   }
-`
+`;
 ```
 
 The `isLoggedIn` field of this query is a local-only field. We can use [the `writeQuery` method](../caching/interaction#writequery-and-writefragment) to write a value for this field directly to the Apollo Client cache, like so:
@@ -202,9 +202,9 @@ The `isLoggedIn` field of this query is a local-only field. We can use [the `wri
 cache.writeQuery({
   query: IS_LOGGED_IN,
   data: {
-    isLoggedIn: !!localStorage.getItem('token')
-  }
-})
+    isLoggedIn: !!localStorage.getItem('token'),
+  },
+});
 ```
 
 This writes a boolean value according to whether `localStorage` includes a `token` item, indicating an active session.
@@ -221,17 +221,17 @@ Now our application's components can render according to the value of the `isLog
     <ng-template #loginBlock>
       <app-login />
     </ng-template>
-  `
+  `,
 })
 export class AppComponent {
-  isLoggedIn: Observable<boolean>
+  isLoggedIn: Observable<boolean>;
 
   constructor(private apollo: Apollo) {
     this.isLoggedIn = this.apollo
       .watchQuery({
-        query: IS_LOGGED_IN
+        query: IS_LOGGED_IN,
       })
-      .valueChanges.pipe(map(result => result.data.isLoggedIn))
+      .valueChanges.pipe(map(result => result.data.isLoggedIn));
   }
 }
 ```
@@ -260,7 +260,7 @@ const GET_CURRENT_AUTHOR_POST_COUNT = gql`
     currentAuthorId @client @export(as: "authorId")
     postCount(authorId: $authorId)
   }
-`
+`;
 ```
 
 In the query above, the result of the local-only field `currentAuthorId` is used as the value of the `$authorId` variable that's passed to `postCount`.

@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 interface Post {
   id: number;
@@ -24,9 +24,7 @@ interface Query {
     <ul>
       <li *ngFor="let post of posts | async">
         {{ post.title }} by
-        <a [routerLink]="['/author', post.author.id]"
-          >{{ post.author.firstName }} {{ post.author.lastName }}</a
-        >
+        <a [routerLink]="['/author', post.author.id]">{{ post.author.firstName }} {{ post.author.lastName }}</a>
         ({{ post.votes }} votes)
         <app-upvoter [postId]="post.id"></app-upvoter>
       </li>
@@ -55,6 +53,6 @@ export class PostsPageComponent implements OnInit {
           }
         `,
       })
-      .valueChanges.pipe(map((result) => result.data.posts));
+      .valueChanges.pipe(map(result => result.data.posts));
   }
 }

@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Multiple Clients
 
@@ -32,7 +32,8 @@ apollo.create(extraOptions, 'extra');
 Now you have the default client and one called `extra`.
 
 <Callout>
-Important thing to know is if you want to define a default client, simply do not use any `name` argument or set it to `default`.
+  Important thing to know is if you want to define a default client, simply do not use any `name` argument or set it to
+  `default`.
 </Callout>
 
 The other way is to use helper methods.
@@ -48,10 +49,10 @@ apollo.createNamed(name, options);
 In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo Client:
 
 ```typescript
-import {HttpClientModule} from '@angular/common/http';
-import {ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],

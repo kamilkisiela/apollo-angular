@@ -1,21 +1,21 @@
 {
-    "$schema": "http://json-schema.org/schema",
-    "$id": "SchematicsApolloAngularInstall",
-    "title": "Apollo Angular Install Options Schema",
-    "type": "object",
-    "properties": {
-      "endpoint": {
-        "type": "string",
-        "minLength": 0,
-        "default": "",
-        "x-prompt": "Url to your GraphQL API"
-      },
-      "graphql": {
-        "type": "string",
-        "minLength": 0,
-        "default": "16",
-        "x-prompt": "Version of GraphQL"
-      }
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsApolloAngularInstall",
+  "title": "Apollo Angular Install Options Schema",
+  "type": "object",
+  "properties": {
+    "endpoint": {
+      "type": "string",
+      "minLength": 0,
+      "default": "",
+      "x-prompt": "Url to your GraphQL API"
     },
-    "required": []
-  }
+    "graphql": {
+      "type": "string",
+      "minLength": 0,
+      "default": "16",
+      "x-prompt": "Version of GraphQL"
+    }
+  },
+  "required": []
+}

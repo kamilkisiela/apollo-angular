@@ -1,9 +1,9 @@
 import * as api from '../src';
 
-import {ApolloModule} from '../src/apollo-module';
-import {Apollo} from '../src/apollo';
-import {QueryRef} from '../src/query-ref';
-import {gql, graphql} from '../src/gql';
+import { ApolloModule } from '../src/apollo-module';
+import { Apollo } from '../src/apollo';
+import { QueryRef } from '../src/query-ref';
+import { gql, graphql } from '../src/gql';
 
 describe('public api', () => {
   test('should export Apollo', () => {

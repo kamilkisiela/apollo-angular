@@ -2,7 +2,7 @@
 description: A guide to customizing and directly accessing your Apollo cache
 ---
 
-import { PackageCmd, Callout } from '@theguild/components'
+import { PackageCmd, Callout } from '@theguild/components';
 
 # Apollo Cache
 
@@ -43,7 +43,7 @@ class AppModule {
 
 The `InMemoryCache` constructor takes an optional config object with properties to customize your cache:
 
-- addTypename: A boolean to determine whether to add __typename to the document (default: `true`)
+- addTypename: A boolean to determine whether to add \_\_typename to the document (default: `true`)
 - dataIdFromObject: A function that takes a data object and returns a unique identifier to be used when normalizing the data in the store. Learn more about how to customize `dataIdFromObject` in the [Normalization](#normalization) section.
 - fragmentMatcher: By default, the `InMemoryCache` uses a heuristic fragment matcher. If you are using fragments on unions and interfaces, you will need to use an `IntrospectionFragmentMatcher`. For more information, please read [our guide to setting up fragment matching for unions & interfaces].
 - cacheRedirects (previously known as cacheResolvers or customResolvers): A map of custom ways to resolve data from other parts of the cache.
@@ -60,21 +60,24 @@ For example, if you wanted to key off of the `key` field for all of your data, y
 
 ```js
 const cache = new InMemoryCache({
-  dataIdFromObject: object => object.key
+  dataIdFromObject: object => object.key,
 });
 ```
 
-This also allows you to use different unique identifiers for different data types by keying off of the `__typename` property attached to every object typed by GraphQL.  For example:
+This also allows you to use different unique identifiers for different data types by keying off of the `__typename` property attached to every object typed by GraphQL. For example:
 
 ```js
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
-      case 'foo': return object.key; // use `key` as the primary key
-      case 'bar': return object.blah; // use `blah` as the primary key
-      default: return object.id || object._id; // fall back to `id` and `_id` for all other types
+      case 'foo':
+        return object.key; // use `key` as the primary key
+      case 'bar':
+        return object.blah; // use `blah` as the primary key
+      default:
+        return object.id || object._id; // fall back to `id` and `_id` for all other types
     }
-  }
+  },
 });
 ```
 
@@ -190,16 +193,17 @@ class AppComponent {
 ```
 
 <Callout>
-**Note**: Most people add a `__typename` to the id in `dataIdFromObject`. If you do this then don’t forget to add the `__typename` when you are reading a fragment as well. So for example your id may be `Todo_5` and not just `5`.
+  **Note**: Most people add a `__typename` to the id in `dataIdFromObject`. If you do this then don’t forget to add the
+  `__typename` when you are reading a fragment as well. So for example your id may be `Todo_5` and not just `5`.
 </Callout>
 
 If a todo with that id does not exist in the cache you will get `null` back. If a todo of that id does exist in the cache, but that todo does not have the `text` field then an error will be thrown.
 
 The beauty of `readFragment` is that the todo could have come from anywhere! The todo could have been selected as a singleton (`{ todo(id: 5) { ... } }`), the todo could have come from a list of todos (`{ todos { ... } }`), or the todo could have come from a mutation (`mutation { createTodo { ... } }`). As long as at some point your GraphQL server gave you a todo with the provided id and fields `id`, `text`, and `completed` you can read it from the cache at any part of your code.
 
-### writeQuery` and `writeFragment
+### writeQuery`and`writeFragment
 
-Not only can you read arbitrary data from the Apollo Client cache, but you can also write any data that you would like to the cache. The methods you use to do this are `writeQuery` and `writeFragment`. They will allow you to change data in your local cache, but it is important to remember that *they will not change any data on your server*. If you reload your environment then changes made with `writeQuery` and `writeFragment` will disappear.
+Not only can you read arbitrary data from the Apollo Client cache, but you can also write any data that you would like to the cache. The methods you use to do this are `writeQuery` and `writeFragment`. They will allow you to change data in your local cache, but it is important to remember that _they will not change any data on your server_. If you reload your environment then changes made with `writeQuery` and `writeFragment` will disappear.
 
 These methods have the same signature as their `readQuery` and `readFragment` counterparts except they also require an additional `data` variable. So for example, if you wanted to update the `completed` flag locally for your todo with id `'5'` you could execute the following:
 
@@ -225,7 +229,8 @@ class AppComponent {
 Any subscriber to the Apollo Client store will instantly see this update and render new UI accordingly.
 
 <Callout>
-**Note**: Again, remember that using `writeQuery` or `writeFragment` only changes data *locally*. If you reload your environment then changes made with these methods will no longer exist.
+  **Note**: Again, remember that using `writeQuery` or `writeFragment` only changes data *locally*. If you reload your
+  environment then changes made with these methods will no longer exist.
 </Callout>
 
 Or if you wanted to add a new todo to a list fetched from the server, you could use `readQuery` and `writeQuery` together.
@@ -269,4 +274,3 @@ Here are some common situations where you would need to access the cache directl
 ### Server side rendering
 
 If you would like to learn more about server side rendering, please check out more in depth guide [here](../recipes/server-side-rendering).
-

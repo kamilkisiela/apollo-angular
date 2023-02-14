@@ -3,8 +3,8 @@
 /// @ts-check
 const fs = require('fs');
 const globby = require('globby');
-const {resolve} = require('path');
-const {execSync} = require('child_process');
+const { resolve } = require('path');
+const { execSync } = require('child_process');
 
 async function main() {
   const rootPkg = readJSON(resolve(__dirname, '../package.json'));
