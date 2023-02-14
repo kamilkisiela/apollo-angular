@@ -1,10 +1,9 @@
 import { resolve } from 'path';
+import { CompilerOptions } from 'typescript';
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
-import { CompilerOptions } from 'typescript';
-
-import { createTestApp, getFileContent, getJsonFile } from '../utils';
 import { createDependenciesMap } from '../install';
+import { createTestApp, getFileContent, getJsonFile } from '../utils';
 
 const collectionPath = resolve(__dirname, '../collection.json');
 

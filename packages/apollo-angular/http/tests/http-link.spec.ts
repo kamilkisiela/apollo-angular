@@ -1,11 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import { print, stripIgnoredCharacters } from 'graphql';
+import { mergeMap } from 'rxjs/operators';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { ApolloLink, execute, gql, InMemoryCache } from '@apollo/client/core';
 import { Apollo, ApolloModule } from '../../src';
-import { execute, ApolloLink, InMemoryCache, gql } from '@apollo/client/core';
-import { mergeMap } from 'rxjs/operators';
-import { stripIgnoredCharacters, print } from 'graphql';
-
 import { HttpLink } from '../src/http-link';
 
 const noop = () => {
@@ -216,10 +215,10 @@ describe('HttpLink', () => {
     httpBackend.match(req => {
       expect(req.method).toBe('GET');
       expect(req.urlWithParams).not.toEqual(
-        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%20%7B%0A%20%20heroes%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A'
+        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%20%7B%0A%20%20heroes%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A',
       );
       expect(req.urlWithParams).toEqual(
-        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%7Bheroes%7Bname%7D%7D'
+        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%7Bheroes%7Bname%7D%7D',
       );
       return true;
     });
@@ -485,7 +484,7 @@ describe('HttpLink', () => {
     const link = middleware.concat(
       httpLink.create({
         uri: 'graphql',
-      })
+      }),
     );
 
     execute(link, {
@@ -524,7 +523,7 @@ describe('HttpLink', () => {
     const link = afterware.concat(
       httpLink.create({
         uri: 'graphql',
-      })
+      }),
     );
 
     const data = {
@@ -595,7 +594,7 @@ describe('HttpLink', () => {
         });
 
         return m2;
-      })
+      }),
     ).subscribe({
       next(result: any) {
         expect(result.data).toMatchObject(data2);

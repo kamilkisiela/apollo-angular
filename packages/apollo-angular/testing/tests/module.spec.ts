@@ -1,8 +1,7 @@
 import { Apollo } from 'apollo-angular';
 import { TestBed } from '@angular/core/testing';
-import { InMemoryCache, ApolloReducerConfig, gql } from '@apollo/client/core';
-
-import { ApolloTestingModule, APOLLO_TESTING_CACHE, ApolloTestingController } from '../src';
+import { ApolloReducerConfig, gql, InMemoryCache } from '@apollo/client/core';
+import { APOLLO_TESTING_CACHE, ApolloTestingController, ApolloTestingModule } from '../src';
 
 describe('ApolloTestingModule', () => {
   test('should provide a default ApolloCache', () => {

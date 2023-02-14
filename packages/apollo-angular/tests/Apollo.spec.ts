@@ -1,10 +1,9 @@
-import { NgZone } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { NgZone } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { ApolloLink, InMemoryCache, NetworkStatus } from '@apollo/client/core';
 import { mockSingleLink } from '@apollo/client/testing';
-
 import { Apollo, ApolloBase } from '../src/apollo';
 import { gql } from '../src/gql';
 import { ZoneScheduler } from '../src/utils';
@@ -57,7 +56,7 @@ describe('Apollo', () => {
           link: mockSingleLink(),
           cache: new InMemoryCache(),
         },
-        'extra'
+        'extra',
       );
 
       expect(apollo.use('extra') instanceof ApolloBase).toBe(true);
@@ -114,7 +113,7 @@ describe('Apollo', () => {
         {
           request: { query, variables: variables2 },
           result: { data: data2 },
-        }
+        },
       );
 
       const apollo = mockApollo(link, ngZone);
@@ -323,7 +322,7 @@ describe('Apollo', () => {
       client.mutate = jest.fn().mockReturnValue(
         Promise.resolve({
           data: 'mutation',
-        })
+        }),
       );
 
       const obs = apollo.mutate<any, { foo: string }>(options);
@@ -438,7 +437,7 @@ describe('Apollo', () => {
           {
             request: op2,
             result: { data: data2 },
-          }
+          },
         ),
         cache: new InMemoryCache(),
       });
@@ -572,7 +571,7 @@ describe('Apollo', () => {
       client.subscribe = jest.fn().mockReturnValue(
         of({
           data: 'subscription',
-        })
+        }),
       );
 
       const options = { query: 'gql' } as any;
@@ -669,7 +668,7 @@ describe('Apollo', () => {
         {
           request: { query: mutation, variables },
           result: { data: dataMutation },
-        }
+        },
       );
       const apollo = mockApollo(link, ngZone);
 
@@ -749,7 +748,7 @@ describe('Apollo', () => {
         {
           request: { query: mutation, variables },
           result: { data: dataMutation },
-        }
+        },
       );
       const apollo = mockApollo(link, ngZone);
 

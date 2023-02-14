@@ -1,10 +1,9 @@
 import { Apollo } from 'apollo-angular';
-import { InMemoryCache, gql } from '@apollo/client/core';
-import { TestBed } from '@angular/core/testing';
-import { addTypenameToDocument } from '@apollo/client/utilities';
 import { print } from 'graphql';
-
-import { ApolloTestingModule, ApolloTestingController, APOLLO_TESTING_CACHE } from '../src';
+import { TestBed } from '@angular/core/testing';
+import { gql, InMemoryCache } from '@apollo/client/core';
+import { addTypenameToDocument } from '@apollo/client/utilities';
+import { APOLLO_TESTING_CACHE, ApolloTestingController, ApolloTestingModule } from '../src';
 
 describe('Integration', () => {
   let apollo: Apollo;

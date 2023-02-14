@@ -21,11 +21,17 @@ There are two principal uses for fragments in Apollo:
 - Sharing fields between multiple queries, mutations or subscriptions.
 - Breaking your queries up to allow you to co-locate field access with the places they are used.
 
-In this document we'll outline patterns to do both; we'll also make use of utilities in the [`graphql-anywhere`](https://github.com/apollographql/apollo-client) and [`graphql-tag`](https://github.com/apollographql/graphql-tag) packages which aim to help us, especially with the second problem.
+In this document we'll outline patterns to do both; we'll also make use of utilities in the
+[`graphql-anywhere`](https://github.com/apollographql/apollo-client) and
+[`graphql-tag`](https://github.com/apollographql/graphql-tag) packages which aim to help us,
+especially with the second problem.
 
 ## Reusing Fragments
 
-The most straightforward use of fragments is to reuse parts of queries (or mutations or subscriptions) in various parts of your application. For instance, in GitHunt on the comments page, we want to fetch the same fields after posting a comment as we originally query. This way we can be sure that we render consistent comment objects as the data changes.
+The most straightforward use of fragments is to reuse parts of queries (or mutations or
+subscriptions) in various parts of your application. For instance, in GitHunt on the comments page,
+we want to fetch the same fields after posting a comment as we originally query. This way we can be
+sure that we render consistent comment objects as the data changes.
 
 To do so, we can simply share a fragment describing the fields we need for a comment:
 
@@ -47,9 +53,11 @@ CommentsPage.fragments = {
 };
 ```
 
-We put the fragment on `CommentsPage.fragments.comment` by convention, and use the familiar `gql` helper to create it.
+We put the fragment on `CommentsPage.fragments.comment` by convention, and use the familiar `gql`
+helper to create it.
 
-When it's time to embed the fragment in a query, we simply use the `...Name` syntax in our GraphQL, and embed the fragment inside our query GraphQL document:
+When it's time to embed the fragment in a query, we simply use the `...Name` syntax in our GraphQL,
+and embed the fragment inside our query GraphQL document:
 
 ```ts
 const SUBMIT_COMMENT_MUTATION = gql`
@@ -78,9 +86,14 @@ export const COMMENT_QUERY = gql`
 
 ## Collocating Fragments
 
-A key advantage of GraphQL is the tree-like nature of the response data, which in many cases mirrors your rendered component hierarchy. This, combined with GraphQL's support for fragments, allows you to split your queries up in such a way that the various fields fetched by the queries are located right alongside the code that uses the field.
+A key advantage of GraphQL is the tree-like nature of the response data, which in many cases mirrors
+your rendered component hierarchy. This, combined with GraphQL's support for fragments, allows you
+to split your queries up in such a way that the various fields fetched by the queries are located
+right alongside the code that uses the field.
 
-Although this technique doesn't always make sense (for instance it's not always the case that the GraphQL schema is driven by the UI requirements), when it does, it's possible to use some patterns in Apollo client to take full advantage of it.
+Although this technique doesn't always make sense (for instance it's not always the case that the
+GraphQL schema is driven by the UI requirements), when it does, it's possible to use some patterns
+in Apollo client to take full advantage of it.
 
 Imagine this view hierarchy:
 
@@ -92,13 +105,17 @@ FeedPage
         └── VoteButtons
 ```
 
-The `FeedPage` conducts a query to fetch a list of `Entry`s, and each of the subcomponents requires different subfields of each `Entry`.
+The `FeedPage` conducts a query to fetch a list of `Entry`s, and each of the subcomponents requires
+different subfields of each `Entry`.
 
-The `graphql-anywhere` package gives us tools to easily construct a single query that provides all the fields that each subcomponent needs, and allows to easily pass the exact field that a component needs to it.
+The `graphql-anywhere` package gives us tools to easily construct a single query that provides all
+the fields that each subcomponent needs, and allows to easily pass the exact field that a component
+needs to it.
 
 ### Creating Fragments
 
-To create the fragments, we again use the `gql` helper and attach to subfields of `ComponentClass.fragments`, for example:
+To create the fragments, we again use the `gql` helper and attach to subfields of
+`ComponentClass.fragments`, for example:
 
 ```js
 VoteButtons.fragments = {
@@ -138,7 +155,8 @@ FeedEntry.fragments = {
 
 ### Filtering With Fragments
 
-We can also use the `graphql-anywhere` package to filter the exact fields from the `entry` before passing them to the subcomponent. So when we render a `VoteButtons`, we can simply do:
+We can also use the `graphql-anywhere` package to filter the exact fields from the `entry` before
+passing them to the subcomponent. So when we render a `VoteButtons`, we can simply do:
 
 ```jsx
 import { filter } from 'graphql-anywhere';
@@ -159,10 +177,13 @@ The `filter()` function will grab exactly the fields from the `entry` that the f
 
 ### Importing fragments when using Webpack
 
-When loading `.graphql` files with [graphql-tag/loader](https://github.com/apollographql/graphql-tag/blob/master/loader.js), we can include fragments using `import` statements. For example:
+When loading `.graphql` files with
+[graphql-tag/loader](https://github.com/apollographql/graphql-tag/blob/master/loader.js), we can
+include fragments using `import` statements. For example:
 
 ```graphql
 #import "./someFragment.graphql"
 ```
 
-Will make the contents of `someFragment.graphql` available to the current file. See the [Webpack Fragments](../recipes/webpack#fragments) section for additional details.
+Will make the contents of `someFragment.graphql` available to the current file. See the
+[Webpack Fragments](../recipes/webpack#fragments) section for additional details.

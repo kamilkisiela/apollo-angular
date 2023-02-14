@@ -1,18 +1,28 @@
-import { ApolloModule, Apollo } from 'apollo-angular';
-import { ApolloLink, Operation as LinkOperation, InMemoryCache, ApolloCache } from '@apollo/client/core';
-import { NgModule, InjectionToken, Inject, Optional } from '@angular/core';
-
-import { ApolloTestingController } from './controller';
+import { Apollo, ApolloModule } from 'apollo-angular';
+import { Inject, InjectionToken, NgModule, Optional } from '@angular/core';
+import {
+  ApolloCache,
+  ApolloLink,
+  InMemoryCache,
+  Operation as LinkOperation,
+} from '@apollo/client/core';
 import { ApolloTestingBackend } from './backend';
+import { ApolloTestingController } from './controller';
 import { Operation } from './operation';
 
 export type NamedCaches = Record<string, ApolloCache<any> | undefined | null>;
 
-export const APOLLO_TESTING_CACHE = new InjectionToken<ApolloCache<any>>('apollo-angular/testing cache');
+export const APOLLO_TESTING_CACHE = new InjectionToken<ApolloCache<any>>(
+  'apollo-angular/testing cache',
+);
 
-export const APOLLO_TESTING_NAMED_CACHE = new InjectionToken<NamedCaches>('apollo-angular/testing named cache');
+export const APOLLO_TESTING_NAMED_CACHE = new InjectionToken<NamedCaches>(
+  'apollo-angular/testing named cache',
+);
 
-export const APOLLO_TESTING_CLIENTS = new InjectionToken<string[]>('apollo-angular/testing named clients');
+export const APOLLO_TESTING_CLIENTS = new InjectionToken<string[]>(
+  'apollo-angular/testing named clients',
+);
 
 function addClient(name: string, op: LinkOperation): Operation {
   (op as Operation).clientName = name;
@@ -22,7 +32,10 @@ function addClient(name: string, op: LinkOperation): Operation {
 
 @NgModule({
   imports: [ApolloModule],
-  providers: [ApolloTestingBackend, { provide: ApolloTestingController, useExisting: ApolloTestingBackend }],
+  providers: [
+    ApolloTestingBackend,
+    { provide: ApolloTestingController, useExisting: ApolloTestingBackend },
+  ],
 })
 export class ApolloTestingModuleCore {
   constructor(
@@ -36,7 +49,7 @@ export class ApolloTestingModuleCore {
     cache?: ApolloCache<any>,
     @Optional()
     @Inject(APOLLO_TESTING_NAMED_CACHE)
-    namedCaches?: any // FIX: using NamedCaches here makes ngc fail
+    namedCaches?: any, // FIX: using NamedCaches here makes ngc fail
   ) {
     function createOptions(name: string, c?: ApolloCache<any> | null) {
       return {

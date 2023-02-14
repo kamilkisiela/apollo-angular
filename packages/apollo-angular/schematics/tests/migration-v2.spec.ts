@@ -1,10 +1,9 @@
 import { resolve } from 'path';
+import { CompilerOptions } from 'typescript';
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
-import { CompilerOptions } from 'typescript';
-
-import { createTestApp, getJsonFile, parseJSON } from '../utils';
 import { createDependenciesMap } from '../install';
+import { createTestApp, getJsonFile, parseJSON } from '../utils';
 
 const migrationsPath = resolve(__dirname, '../migrations.json');
 const migrationName = 'migration-2.0.0';
@@ -30,12 +29,14 @@ describe('Migration: Apollo Angular V2', () => {
         import { HttpLink } from 'apollo-angular-link-http';
         import { Apollo } from 'apollo-angular';
         import gql from 'graphql-tag';
-      `
+      `,
     );
     const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
     const file = tree.readContent('file.ts').trim();
 
-    expect(file).toContain(`import {InMemoryCache, ApolloClient, ApolloLink} from '@apollo/client/core';`);
+    expect(file).toContain(
+      `import {InMemoryCache, ApolloClient, ApolloLink} from '@apollo/client/core';`,
+    );
     expect(file).toContain(`import {onError} from '@apollo/client/link/error';`);
     expect(file).toContain(`import {HttpLink} from 'apollo-angular/http';`);
     expect(file).toContain(`import {Apollo, gql} from 'apollo-angular';`);
@@ -53,13 +54,15 @@ describe('Migration: Apollo Angular V2', () => {
         import { HttpLink } from 'apollo-angular-link-http';
         import { Apollo } from 'apollo-angular';
         import graphql from 'graphql-tag';
-      `
+      `,
     );
     const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
 
     const file = tree.readContent('file.ts').trim();
 
-    expect(file).toContain(`import {InMemoryCache, ApolloClient, ApolloLink} from '@apollo/client/core';`);
+    expect(file).toContain(
+      `import {InMemoryCache, ApolloClient, ApolloLink} from '@apollo/client/core';`,
+    );
     expect(file).toContain(`import {onError} from '@apollo/client/link/error';`);
     expect(file).toContain(`import {HttpLink} from 'apollo-angular/http';`);
     expect(file).toContain(`import {Apollo, gql as graphql} from 'apollo-angular';`);
@@ -75,7 +78,7 @@ describe('Migration: Apollo Angular V2', () => {
       import { Apollo, ApolloBase } from 'apollo-angular'
       import { ApolloError } from '@apollo/client/core'
       import { HttpLink } from 'apollo-angular-link-http'
-    `
+    `,
     );
     const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
 
@@ -94,7 +97,7 @@ describe('Migration: Apollo Angular V2', () => {
       'file.ts',
       `
         import ApolloClient from 'apollo-client';
-      `
+      `,
     );
     const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
     const file = tree.readContent('file.ts').trim();
@@ -108,7 +111,7 @@ describe('Migration: Apollo Angular V2', () => {
       `
         import { ApolloClient } from 'apollo-client';
         import { ApolloLink } from 'apollo-link';
-      `
+      `,
     );
 
     appTree.create(
@@ -116,7 +119,7 @@ describe('Migration: Apollo Angular V2', () => {
       `
         import { InMemoryCache } from 'apollo-cache-inmemory';
         import { ApolloClient } from 'apollo-client';
-      `
+      `,
     );
     const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
 
@@ -136,7 +139,10 @@ describe('Migration: Apollo Angular V2', () => {
   });
 
   test('should update package.json', async () => {
-    const oldPackageJson = parseJSON('package.json', appTree.read('package.json').toString('utf-8'));
+    const oldPackageJson = parseJSON(
+      'package.json',
+      appTree.read('package.json').toString('utf-8'),
+    );
 
     oldPackageJson.dependencies = {
       ...oldPackageJson.dependencies,

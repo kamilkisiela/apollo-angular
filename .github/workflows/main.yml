@@ -35,7 +35,9 @@ jobs:
           key: ${{ github.sha }}
 
       - name: Pack
-        run: (cd packages/apollo-angular/build && yarn pack --filename apollo-angular.tgz && mv apollo-angular.tgz ../apollo-angular.tgz)
+        run:
+          (cd packages/apollo-angular/build && yarn pack --filename apollo-angular.tgz && mv
+          apollo-angular.tgz ../apollo-angular.tgz)
 
       - uses: actions/cache@v3
         name: Share tarball
@@ -83,7 +85,9 @@ jobs:
         run: yarn test --ci
 
   angular:
-    name: Test on Angular ${{ matrix.angular_version }} GraphQL ${{ matrix.graphql_version }} Node ${{ matrix.node_version }}
+    name:
+      Test on Angular ${{ matrix.angular_version }} GraphQL ${{ matrix.graphql_version }} Node ${{
+      matrix.node_version }}
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -116,7 +120,9 @@ jobs:
         run: ng new testapp --package-manager yarn --defaults --minimal --skip-git
 
       - name: ng add apollo-angular
-        run: (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --graphql '${{ matrix.graphql_version }}.0.0' --defaults --verbose --skip-confirmation)
+        run:
+          (cd testapp && ng add ../packages/apollo-angular/apollo-angular.tgz --graphql '${{
+          matrix.graphql_version }}.0.0' --defaults --verbose --skip-confirmation)
 
       - name: ng build
         run: (cd testapp && yarn ng run testapp:build:production)

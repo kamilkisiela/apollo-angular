@@ -1,6 +1,5 @@
-import { ApolloLink, execute, Observable as LinkObservable, gql } from '@apollo/client/core';
 import { HttpHeaders } from '@angular/common/http';
-
+import { ApolloLink, execute, gql, Observable as LinkObservable } from '@apollo/client/core';
 import { httpHeaders } from '../src';
 
 const query = gql`

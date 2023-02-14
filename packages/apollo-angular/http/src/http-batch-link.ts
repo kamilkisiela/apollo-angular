@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ApolloLink, Observable as LinkObservable, Operation, FetchResult } from '@apollo/client/core';
-import { BatchLink, BatchHandler } from '@apollo/client/link/batch';
 import { print } from 'graphql';
-import { Body, Context, Request, Options, OperationPrinter } from './types';
-import { createHeadersWithClientAwareness, fetch, mergeHeaders, prioritize } from './utils';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import {
+  ApolloLink,
+  FetchResult,
+  Observable as LinkObservable,
+  Operation,
+} from '@apollo/client/core';
+import { BatchHandler, BatchLink } from '@apollo/client/link/batch';
+import { Body, Context, OperationPrinter, Options, Request } from './types';
 import { BatchOptions } from './types';
+import { createHeadersWithClientAwareness, fetch, mergeHeaders, prioritize } from './utils';
 
 const defaults = {
   batchInterval: 10,
@@ -96,9 +100,13 @@ export class HttpBatchLinkHandler extends ApolloLink {
       const includeExtensions = prioritize(
         operation.getContext().includeExtensions,
         this.options.includeExtensions,
-        false
+        false,
       );
-      const includeQuery = prioritize(operation.getContext().includeQuery, this.options.includeQuery, true);
+      const includeQuery = prioritize(
+        operation.getContext().includeQuery,
+        this.options.includeQuery,
+        true,
+      );
 
       const body: Body = {
         operationName: operation.operationName,
@@ -125,7 +133,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
       createHeadersWithClientAwareness({
         headers: this.options.headers,
         clientAwareness: operations[0]?.getContext()?.clientAwareness,
-      })
+      }),
     );
   }
 
@@ -136,7 +144,8 @@ export class HttpBatchLinkHandler extends ApolloLink {
       return Math.random().toString(36).substr(2, 9);
     }
 
-    const headers = context.headers && context.headers.keys().map((k: string) => context.headers.get(k));
+    const headers =
+      context.headers && context.headers.keys().map((k: string) => context.headers.get(k));
 
     const opts = JSON.stringify({
       includeQuery: context.includeQuery,

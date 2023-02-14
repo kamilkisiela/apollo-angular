@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { Tree, SchematicsException } from '@angular-devkit/schematics';
+import { SchematicsException, Tree } from '@angular-devkit/schematics';
 
 export function getFileContent(host: Tree, path: string): string {
   const buffer = host.read(path);

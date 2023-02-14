@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { DocumentNode, print } from 'graphql';
 import { Observer } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { FetchResult, Observable as LinkObservable } from '@apollo/client/core';
-import { print, DocumentNode } from 'graphql';
-
 import { ApolloTestingController, MatchOperation } from './controller';
-import { TestOperation, Operation } from './operation';
+import { Operation, TestOperation } from './operation';
 
 /**
  * A testing backend for `Apollo`.
@@ -97,7 +96,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
     const matches = this.match(match);
     if (matches.length > 1) {
       throw new Error(
-        `Expected one matching operation for criteria "${description}", found ${matches.length} operations.`
+        `Expected one matching operation for criteria "${description}", found ${matches.length} operations.`,
       );
     }
     if (matches.length === 0) {
@@ -114,7 +113,9 @@ export class ApolloTestingBackend implements ApolloTestingController {
     description = description || this.descriptionFromMatcher(match);
     const matches = this.match(match);
     if (matches.length > 0) {
-      throw new Error(`Expected zero matching operations for criteria "${description}", found ${matches.length}.`);
+      throw new Error(
+        `Expected zero matching operations for criteria "${description}", found ${matches.length}.`,
+      );
     }
   }
 

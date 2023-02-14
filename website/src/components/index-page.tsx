@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
-import { HeroGradient, FeatureList } from '@theguild/components';
-import UndrawNavigator from 'public/assets/undraw_navigator.svg';
+import { FeatureList, HeroGradient } from '@theguild/components';
 import UndrawBusiness from 'public/assets/undraw_business.svg';
 import UndrawFormingIdeas from 'public/assets/undraw_forming_ideas.svg';
+import UndrawNavigator from 'public/assets/undraw_navigator.svg';
 
 export function IndexPage(): ReactElement {
   return (
@@ -44,7 +44,8 @@ export function IndexPage(): ReactElement {
           },
           {
             title: 'Customisable',
-            description: 'Extend or customize your GraphQL setup. Apollo Angular can be extended on any level.',
+            description:
+              'Extend or customize your GraphQL setup. Apollo Angular can be extended on any level.',
             image: {
               src: UndrawFormingIdeas,
               loading: 'eager',

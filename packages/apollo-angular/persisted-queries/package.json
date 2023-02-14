@@ -7,7 +7,7 @@
     "url": "https://github.com/kamilkisiela/"
   },
   "license": "MIT",
-  "sideEffects": false,
   "module": "../build/fesm2020/ngApolloLinkPersisted.mjs",
-  "typings": "../build/persisted-queries/index.d.ts"
+  "typings": "../build/persisted-queries/index.d.ts",
+  "sideEffects": false
 }

@@ -6,17 +6,21 @@ import { Callout } from '@theguild/components';
 
 # Query, Mutation, Subscription Services
 
-If you're familiar with the library, you already know the Apollo service.
-It is a regular Angular service, pretty much the only one you need to use.
+If you're familiar with the library, you already know the Apollo service. It is a regular Angular
+service, pretty much the only one you need to use.
 
-The API is straightforward, `query` and `watchQuery` methods for Queries, `mutate` and `subscribe` accordingly for Mutations and Subscriptions. There is more than that but if you don't do anything advanced that's all you really need.
+The API is straightforward, `query` and `watchQuery` methods for Queries, `mutate` and `subscribe`
+accordingly for Mutations and Subscriptions. There is more than that but if you don't do anything
+advanced that's all you really need.
 
 We decided to introduce a new approach of working with GraphQL in Angular.
 
-There are now 3 new APIs: `Query`, `Mutation` and `Subscription`. Each of them allows to define the shape of a result & variables.
-The only thing you need to do is to set the document property. That’s it, you use it as a regular Angular service.
+There are now 3 new APIs: `Query`, `Mutation` and `Subscription`. Each of them allows to define the
+shape of a result & variables. The only thing you need to do is to set the document property. That’s
+it, you use it as a regular Angular service.
 
-In this approach GraphQL Documents are first-class citizens, you think about the query, for example, as a main subject.
+In this approach GraphQL Documents are first-class citizens, you think about the query, for example,
+as a main subject.
 
 <Callout>
 The best part about the new API is that you don't have to create those services, there's a tool that does it for you.
@@ -29,11 +33,12 @@ To read more about it, go to ["Code Generation"](#code-generation) section
 
 To get started with the new API, let's see how you define queries with it.
 
-You create a service and extend it with a `Query` class from `apollo-angular`. Only thing you need to set is a `document` property.
+You create a service and extend it with a `Query` class from `apollo-angular`. Only thing you need
+to set is a `document` property.
 
 ```typescript
+import { gql, Query } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-import { Query, gql } from 'apollo-angular';
 
 export interface Post {
   id: string;
@@ -130,16 +135,18 @@ export class ListComponent implements OnInit {
 
 `Query` class has two methods:
 
-- `watch(variables?, options?)` - it's the same as `Apollo.watchQuery` except it accepts variables as a first argument and regular options as the second one
+- `watch(variables?, options?)` - it's the same as `Apollo.watchQuery` except it accepts variables
+  as a first argument and regular options as the second one
 - `fetch(variables?, options?)` - same as `Apollo.query`, it fetches data once.
 
 ## Mutation
 
-You create a service and extend it with a `Mutation` class from `apollo-angular`. Only thing you need to set is a `document` property.
+You create a service and extend it with a `Mutation` class from `apollo-angular`. Only thing you
+need to set is a `document` property.
 
 ```typescript
+import { gql, Mutation } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-import { Mutation, gql } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -190,15 +197,17 @@ export class UpvoterComponent {
 
 `Mutation` class has only one method:
 
-- `mutate(variables?, options?)` - it's the same as `Apollo.mutate` except it accepts variables as a first argument and regular options as the second one.
+- `mutate(variables?, options?)` - it's the same as `Apollo.mutate` except it accepts variables as a
+  first argument and regular options as the second one.
 
 ## Subscription
 
-You create a service and extend it with a `Subscription` class from `apollo-angular`. Only thing you need to set is a `document` property.
+You create a service and extend it with a `Subscription` class from `apollo-angular`. Only thing you
+need to set is a `document` property.
 
 ```typescript
+import { gql, Subscription } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-import { Subscription, gql } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -237,11 +246,13 @@ export class ActivityComponent {
 
 `Subscription` class has only one method:
 
-- `subscribe(variables?, options?, extraOptions?)` - it's the same as `Apollo.subscribe` except its first argument expect variables.
+- `subscribe(variables?, options?, extraOptions?)` - it's the same as `Apollo.subscribe` except its
+  first argument expect variables.
 
 ## Code Generation
 
-There's a tool to generate a ready to use in your component, strongly typed Angular services, for every defined query, mutation or subscription.
+There's a tool to generate a ready to use in your component, strongly typed Angular services, for
+every defined query, mutation or subscription.
 
 In short, you define a query in `.graphql` file so your IDE gives you autocompletion and validation.
 
@@ -260,7 +271,8 @@ query allPosts {
 }
 ```
 
-Code generation tool outputs to a file, a fully featured service called `AllPostsGQL` with every interface you will need.
+Code generation tool outputs to a file, a fully featured service called `AllPostsGQL` with every
+interface you will need.
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
@@ -288,4 +300,7 @@ export class ListComponent implements OnInit {
 }
 ```
 
-To learn more about the tool, please read the ["Apollo-Angular 1.2  —  using GraphQL in your apps just got a whole lot easier!"](https://medium.com/the-guild/apollo-angular-code-generation-7903da1f8559) article or go straight to [documentation](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular).
+To learn more about the tool, please read the
+["Apollo-Angular 1.2  —  using GraphQL in your apps just got a whole lot easier!"](https://medium.com/the-guild/apollo-angular-code-generation-7903da1f8559)
+article or go straight to
+[documentation](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular).

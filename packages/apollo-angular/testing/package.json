@@ -3,7 +3,7 @@
   "description": "A testing backend for Apollo",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
-  "sideEffects": false,
   "module": "../build/fesm2020/ngApolloTesting.mjs",
-  "typings": "../build/testing/index.d.ts"
+  "typings": "../build/testing/index.d.ts",
+  "sideEffects": false
 }

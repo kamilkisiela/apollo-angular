@@ -1,6 +1,5 @@
 import { DocumentNode } from 'graphql';
-
-import { TestOperation, Operation } from './operation';
+import { Operation, TestOperation } from './operation';
 
 export type MatchOperationFn = (op: Operation) => boolean;
 export type MatchOperation = string | DocumentNode | Operation | MatchOperationFn;

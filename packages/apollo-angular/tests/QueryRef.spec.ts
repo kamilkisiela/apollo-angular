@@ -1,11 +1,10 @@
-import { NgZone } from '@angular/core';
-import { ApolloClient, ObservableQuery, ApolloLink, InMemoryCache } from '@apollo/client/core';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { NgZone } from '@angular/core';
+import { ApolloClient, ApolloLink, InMemoryCache, ObservableQuery } from '@apollo/client/core';
 import { mockSingleLink } from '@apollo/client/testing';
-
-import { QueryRef } from '../src/query-ref';
 import { gql } from '../src/gql';
+import { QueryRef } from '../src/query-ref';
 
 const createClient = (link: ApolloLink) =>
   new ApolloClient({
@@ -54,7 +53,7 @@ describe('QueryRef', () => {
       {
         request: heroesOperation,
         result: { data: { heroes: [Superman, Batman] } },
-      }
+      },
     );
 
     client = createClient(mockedLink);

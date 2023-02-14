@@ -1,5 +1,4 @@
-import { Tree, SchematicsException } from '@angular-devkit/schematics';
-
+import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { getJsonFile } from '.';
 
 export function getMainPath(host: Tree, name?: string) {
@@ -47,7 +46,8 @@ function getWorkspacePath(host: Tree): string {
 
   if (!path) {
     throw new SchematicsException(
-      `Couldn't find Angular configuration file! ` + `Execute in a project, created with Angular CLI ^6.0.`
+      `Couldn't find Angular configuration file! ` +
+        `Execute in a project, created with Angular CLI ^6.0.`,
     );
   }
 

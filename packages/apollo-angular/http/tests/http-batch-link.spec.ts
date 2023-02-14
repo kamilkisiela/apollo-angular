@@ -1,8 +1,7 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { execute, ApolloLink, Operation, gql } from '@apollo/client/core';
-
+import { TestBed } from '@angular/core/testing';
+import { ApolloLink, execute, gql, Operation } from '@apollo/client/core';
 import { HttpBatchLink } from '../src/http-batch-link';
 
 const noop = () => {
@@ -506,7 +505,7 @@ describe('HttpBatchLink', () => {
       httpLink.create({
         uri: 'graphql',
         batchKey: () => 'bachKey',
-      })
+      }),
     );
 
     execute(link, {

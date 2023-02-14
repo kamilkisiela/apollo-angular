@@ -4,13 +4,19 @@ description: Learn how to set up Apollo Angular manually without Apollo Angular 
 
 # Apollo Angular Boost Migration
 
-Apollo Angular Boost is a great way to get started with Apollo Angular quickly, but there are some advanced features it doesn't support out of the box. If you'd like to use subscriptions, swap out the Apollo cache, or add an existing Apollo Link to your network stack that isn't already included, you will have to set Apollo Angular up manually.
+Apollo Angular Boost is a great way to get started with Apollo Angular quickly, but there are some
+advanced features it doesn't support out of the box. If you'd like to use subscriptions, swap out
+the Apollo cache, or add an existing Apollo Link to your network stack that isn't already included,
+you will have to set Apollo Angular up manually.
 
-We're working on an eject feature (maybe Angular's schematic) for Apollo Angular Boost that will make migration easier in the future, but for now, let's walk through how to migrate off of Apollo Boost.
+We're working on an eject feature (maybe Angular's schematic) for Apollo Angular Boost that will
+make migration easier in the future, but for now, let's walk through how to migrate off of Apollo
+Boost.
 
 ## Basic Migration
 
-If you're not using any configuration options on Apollo Angular Boost, migration should be relatively simple. All you will have to change is the file where you initialize Apollo.
+If you're not using any configuration options on Apollo Angular Boost, migration should be
+relatively simple. All you will have to change is the file where you initialize Apollo.
 
 ### Before
 
@@ -39,7 +45,8 @@ export class AppModule {
 
 ### After
 
-To create a basic client with the same defaults as Apollo Angular Boost, first you need to install some packages:
+To create a basic client with the same defaults as Apollo Angular Boost, first you need to install
+some packages:
 
 ```bash
 npm install --save \
@@ -100,13 +107,19 @@ export class AppModule {
 }
 ```
 
-The `InMemoryCache` is our recommended cache implementation for Apollo Client. The `HttpLink` is an Apollo Link that sends HTTP requests through Angular's HttpClient. Your network stack can be made up of one or more links, which you can chain together to create a customizable network stack. Learn more in our [network layer](../basics/network-layer) guide or the [Apollo Link](https://www.apollographql.com/docs/link/) docs.
+The `InMemoryCache` is our recommended cache implementation for Apollo Client. The `HttpLink` is an
+Apollo Link that sends HTTP requests through Angular's HttpClient. Your network stack can be made up
+of one or more links, which you can chain together to create a customizable network stack. Learn
+more in our [network layer](../basics/network-layer) guide or the
+[Apollo Link](https://www.apollographql.com/docs/link/) docs.
 
 ## Advanced Migration
 
-If you are using configuration options on Apollo Angular Boost, your migration path will vary depending on which ones you use.
+If you are using configuration options on Apollo Angular Boost, your migration path will vary
+depending on which ones you use.
 
-Type your configuration options object as ApolloClientOptions so you can use IntelliSense features on your editor.
+Type your configuration options object as ApolloClientOptions so you can use IntelliSense features
+on your editor.
 
 ```ts
 export function createApollo(httpLink: HttpLink) {
@@ -177,4 +190,5 @@ Whatever you have here, just pass it to `apollo-cache-inmemory`.
 
 ## Summary
 
-That's it! If something is hard to think about or understand feel free to open an issue, we will help you and by doing this you will help others!
+That's it! If something is hard to think about or understand feel free to open an issue, we will
+help you and by doing this you will help others!

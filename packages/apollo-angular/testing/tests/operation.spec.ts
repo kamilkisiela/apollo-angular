@@ -1,7 +1,6 @@
-import { execute, ApolloLink, gql } from '@apollo/client/core';
-
-import { buildOperationForLink } from './utils';
+import { ApolloLink, execute, gql } from '@apollo/client/core';
 import { ApolloTestingBackend } from '../src/backend';
+import { buildOperationForLink } from './utils';
 
 const testQuery = gql`
   query allHeroes {
@@ -21,7 +20,7 @@ describe('TestOperation', () => {
       mock.handle({
         ...op,
         clientName: 'default',
-      })
+      }),
     );
   });
 

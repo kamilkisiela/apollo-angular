@@ -1,8 +1,7 @@
-import { Tree, SchematicsException } from '@angular-devkit/schematics';
-import { InsertChange, Change } from '@schematics/angular/utility/change';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
 import * as ts from 'typescript';
-
+import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import { Change, InsertChange } from '@schematics/angular/utility/change';
+import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
 import { getMainPath, getTypeScriptSourceFile } from '.';
 
 /**
@@ -16,7 +15,7 @@ export function addModuleImportToRootModule(
   host: Tree,
   importedModuleName: string,
   importedModulePath: string,
-  projectName?: string
+  projectName?: string,
 ) {
   const mainPath = getMainPath(host, projectName);
   const appModulePath = getAppModulePath(host, mainPath);
@@ -35,7 +34,7 @@ function addModuleImportToModule(
   host: Tree,
   moduleToImportIn: string,
   importedModuleName: string,
-  importedModulePath: string
+  importedModulePath: string,
 ) {
   const moduleSource = getTypeScriptSourceFile(host, moduleToImportIn);
 
@@ -46,7 +45,12 @@ function addModuleImportToModule(
   const changes = addImportToModule(moduleSource, importedModulePath, importedModuleName);
   const recorder = host.beginUpdate(moduleToImportIn);
 
-  const inserted = insertImport(moduleSource, moduleToImportIn, importedModuleName, importedModulePath);
+  const inserted = insertImport(
+    moduleSource,
+    moduleToImportIn,
+    importedModuleName,
+    importedModulePath,
+  );
 
   if (inserted && inserted instanceof InsertChange) {
     recorder.insertLeft(inserted.pos, inserted.toAdd);
@@ -59,7 +63,11 @@ function addModuleImportToModule(
   host.commitUpdate(recorder);
 }
 
-function addImportToModule(source: ts.SourceFile, modulePath: string, symbolName: string): Change[] {
+function addImportToModule(
+  source: ts.SourceFile,
+  modulePath: string,
+  symbolName: string,
+): Change[] {
   return _addSymbolToNgModuleMetadata(source, modulePath, 'imports', symbolName);
 }
 
@@ -67,7 +75,7 @@ function _addSymbolToNgModuleMetadata(
   source: ts.SourceFile,
   ngModulePath: string,
   metadataField: string,
-  expression: string
+  expression: string,
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'NgModule', '@angular/core');
   let node: any = nodes[0];
@@ -77,7 +85,9 @@ function _addSymbolToNgModuleMetadata(
     return [];
   }
   // Get all the children property assignment of object literals.
-  const matchingProperties: ts.ObjectLiteralElement[] = (node as ts.ObjectLiteralExpression).properties
+  const matchingProperties: ts.ObjectLiteralElement[] = (
+    node as ts.ObjectLiteralExpression
+  ).properties
     .filter(prop => prop.kind == ts.SyntaxKind.PropertyAssignment)
     // Filter out every fields that's not "metadataField". Also handles string literals
     // (but not expressions).
@@ -189,8 +199,15 @@ function _addSymbolToNgModuleMetadata(
   return [insert];
 }
 
-function getDecoratorMetadata(source: ts.SourceFile, identifier: string, module: string): ts.Node[] {
-  const angularImports: { [name: string]: string } = findNodes(source, ts.SyntaxKind.ImportDeclaration)
+function getDecoratorMetadata(
+  source: ts.SourceFile,
+  identifier: string,
+  module: string,
+): ts.Node[] {
+  const angularImports: { [name: string]: string } = findNodes(
+    source,
+    ts.SyntaxKind.ImportDeclaration,
+  )
     .map((node: ts.ImportDeclaration) => _angularImportsFromNode(node, source))
     .reduce((acc: { [name: string]: string }, current: { [name: string]: string }) => {
       for (const key of Object.keys(current)) {
@@ -203,7 +220,8 @@ function getDecoratorMetadata(source: ts.SourceFile, identifier: string, module:
   return getSourceNodes(source)
     .filter(node => {
       return (
-        node.kind == ts.SyntaxKind.Decorator && (node as ts.Decorator).expression.kind == ts.SyntaxKind.CallExpression
+        node.kind == ts.SyntaxKind.Decorator &&
+        (node as ts.Decorator).expression.kind == ts.SyntaxKind.CallExpression
       );
     })
     .map(node => (node as ts.Decorator).expression as ts.CallExpression)
@@ -211,7 +229,9 @@ function getDecoratorMetadata(source: ts.SourceFile, identifier: string, module:
       if (expr.expression.kind == ts.SyntaxKind.Identifier) {
         const id = expr.expression as ts.Identifier;
 
-        return id.getFullText(source) == identifier && angularImports[id.getFullText(source)] === module;
+        return (
+          id.getFullText(source) == identifier && angularImports[id.getFullText(source)] === module
+        );
       } else if (expr.expression.kind == ts.SyntaxKind.PropertyAccessExpression) {
         // This covers foo.NgModule when importing * as foo.
         const paExpr = expr.expression as ts.PropertyAccessExpression;
@@ -228,7 +248,9 @@ function getDecoratorMetadata(source: ts.SourceFile, identifier: string, module:
 
       return false;
     })
-    .filter(expr => expr.arguments[0] && expr.arguments[0].kind == ts.SyntaxKind.ObjectLiteralExpression)
+    .filter(
+      expr => expr.arguments[0] && expr.arguments[0].kind == ts.SyntaxKind.ObjectLiteralExpression,
+    )
     .map(expr => expr.arguments[0] as ts.ObjectLiteralExpression);
 }
 
@@ -250,7 +272,11 @@ function getSourceNodes(sourceFile: ts.SourceFile): ts.Node[] {
   return result;
 }
 
-function findNodes(node: ts.Node, kind: ts.SyntaxKind | ts.SyntaxKind[], max = Infinity): ts.Node[] {
+function findNodes(
+  node: ts.Node,
+  kind: ts.SyntaxKind | ts.SyntaxKind[],
+  max = Infinity,
+): ts.Node[] {
   if (!node || max == 0) {
     return [];
   }
@@ -279,7 +305,10 @@ function findNodes(node: ts.Node, kind: ts.SyntaxKind | ts.SyntaxKind[], max = I
   return arr;
 }
 
-function _angularImportsFromNode(node: ts.ImportDeclaration, _sourceFile: ts.SourceFile): { [name: string]: string } {
+function _angularImportsFromNode(
+  node: ts.ImportDeclaration,
+  _sourceFile: ts.SourceFile,
+): { [name: string]: string } {
   const ms = node.moduleSpecifier;
   let modulePath: string;
   switch (ms.kind) {
@@ -331,7 +360,7 @@ export function insertImport(
   fileToEdit: string,
   symbolName: string,
   fileName: string,
-  isDefault = false
+  isDefault = false,
 ) {
   const rootNode = source;
   const allImports = findNodes(rootNode, ts.SyntaxKind.ImportDeclaration);
@@ -379,7 +408,7 @@ export function insertImport(
 
   // no such import declaration exists
   const useStrict = findNodes(rootNode, ts.SyntaxKind.StringLiteral).filter(
-    (n: ts.StringLiteral) => n.text === 'use strict'
+    (n: ts.StringLiteral) => n.text === 'use strict',
   );
   let fallbackPos = 0;
   if (useStrict.length > 0) {
@@ -391,9 +420,16 @@ export function insertImport(
   const insertAtBeginning = allImports.length === 0 && useStrict.length === 0;
   const separator = insertAtBeginning ? '' : ';\n';
   const toInsert =
-    `${separator}import ${open}${symbolName}${close}` + ` from '${fileName}'${insertAtBeginning ? ';\n' : ''}`;
+    `${separator}import ${open}${symbolName}${close}` +
+    ` from '${fileName}'${insertAtBeginning ? ';\n' : ''}`;
 
-  return insertAfterLastOccurrence(allImports, toInsert, fileToEdit, fallbackPos, ts.SyntaxKind.StringLiteral);
+  return insertAfterLastOccurrence(
+    allImports,
+    toInsert,
+    fileToEdit,
+    fallbackPos,
+    ts.SyntaxKind.StringLiteral,
+  );
 }
 
 function insertAfterLastOccurrence(
@@ -401,7 +437,7 @@ function insertAfterLastOccurrence(
   toInsert: string,
   file: string,
   fallbackPos: number,
-  syntaxKind?: ts.SyntaxKind
+  syntaxKind?: ts.SyntaxKind,
 ): Change {
   // sort() has a side effect, so make a copy so that we won't overwrite the parent's object.
   let lastItem = [...nodes].sort(nodesByPosition).pop();
