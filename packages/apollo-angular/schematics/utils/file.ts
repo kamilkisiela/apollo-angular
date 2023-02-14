@@ -1,6 +1,16 @@
 import * as ts from 'typescript';
 import {Tree, SchematicsException} from '@angular-devkit/schematics';
 
+export function getFileContent(host: Tree, path: string):string {
+  const buffer = host.read(path);
+
+  if (buffer === null) {
+    throw new SchematicsException(`Couldn't read ${path}!`);
+  }
+
+  return buffer.toString('utf-8');
+}
+
 export function parseJSON(path: string, content: string) {
   const {config, error} = ts.readConfigFile(path, () => content);
 
@@ -17,13 +27,7 @@ export function parseJSON(path: string, content: string) {
  * @param path {String} The path to the file to read. Relative to the root of the tree.
  */
 export function getJsonFile(host: Tree, path: string) {
-  const buffer = host.read(path);
-
-  if (buffer === null) {
-    throw new SchematicsException(`Couldn't read ${path}!`);
-  }
-
-  return parseJSON(path, buffer.toString('utf-8'));
+  return parseJSON(path, getFileContent(host, path));
 }
 
 /**
