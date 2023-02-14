@@ -2,7 +2,7 @@
 description: Fetch data with the Apollo service
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Queries
 
@@ -160,19 +160,19 @@ put `AsyncPipe` on top of the property inside the UI. You can also achieve this
 with Apollo.
 
 <Callout>
-**Note**: Using async pipe more than once in your template will trigger the query for each pipe. To avoid this situation, subscribe to the data in the component, and display the data from the component's property.
+  **Note**: Using async pipe more than once in your template will trigger the query for each pipe. To avoid this
+  situation, subscribe to the data in the component, and display the data from the component's property.
 </Callout>
-
 
 An Observable returned by `watchQuery().valueChanges` holds the actual result
 under the `data` field, so you can not directly access one of the properties of
 that object.
 
 ```typescript
-import {Component, OnInit} from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const GET_FEED = gql`
   query GetFeed {
@@ -203,9 +203,7 @@ class FeedComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.posts = this.apollo
-      .watchQuery({query: GET_FEED})
-      .valueChanges.pipe(map((result) => result.data.posts));
+    this.posts = this.apollo.watchQuery({ query: GET_FEED }).valueChanges.pipe(map(result => result.data.posts));
   }
 }
 ```
@@ -277,7 +275,8 @@ class PostsComponent implements OnInit, OnDestroy {
 By setting the `pollInterval` to `500`, you'll fetch the list of posts from the server every 0.5 seconds. Note that if you set `pollInterval` to `0`, the query will **not** poll.
 
 <Callout>
-You can also start and stop polling dynamically with the `startPolling` and `stopPolling` functions that are available in the `QueryRef` object returned by `Apollo.watchQuery()`
+  You can also start and stop polling dynamically with the `startPolling` and `stopPolling` functions that are available
+  in the `QueryRef` object returned by `Apollo.watchQuery()`
 </Callout>
 
 ### Refetching
@@ -287,7 +286,8 @@ Refetching enables you to refresh query results in response to a particular user
 Let's add a button to our `Posts` component that calls our query's refetch function whenever it's clicked.
 
 <Callout>
-You can optionally provide a new `variables` object to the refetch function. If you don't (as is the case in the following example), the query uses the same variables that it used in its previous execution.
+  You can optionally provide a new `variables` object to the refetch function. If you don't (as is the case in the
+  following example), the query uses the same variables that it used in its previous execution.
 </Callout>
 
 ```typescript
@@ -351,10 +351,10 @@ If you set `errorPolicy` to `all`, Apollo Angular does not discard query respons
 Every response you get from `Apollo.watchQuery()` contains `loading` property. By default, it's always `false` and the first result is emitted with the response from the ApolloLink execution chain. In order to correct it you can enable `useInitialLoading` flag in configuration.
 
 ```typescript
-import {HttpClientModule} from '@angular/common/http';
-import {ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -383,5 +383,5 @@ export class AppModule {}
 ```
 
 <Callout>
-`useInitialLoading` is disabled to avoid any breaking changes, this may be enabled in next major version.
+  `useInitialLoading` is disabled to avoid any breaking changes, this may be enabled in next major version.
 </Callout>

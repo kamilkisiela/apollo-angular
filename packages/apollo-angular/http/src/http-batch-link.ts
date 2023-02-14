@@ -1,22 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {
-  ApolloLink,
-  Observable as LinkObservable,
-  Operation,
-  FetchResult,
-} from '@apollo/client/core';
-import {BatchLink, BatchHandler} from '@apollo/client/link/batch';
-import {print} from 'graphql';
-import {Body, Context, Request, Options, OperationPrinter} from './types';
-import {
-  createHeadersWithClientAwareness,
-  fetch,
-  mergeHeaders,
-  prioritize,
-} from './utils';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ApolloLink, Observable as LinkObservable, Operation, FetchResult } from '@apollo/client/core';
+import { BatchLink, BatchHandler } from '@apollo/client/link/batch';
+import { print } from 'graphql';
+import { Body, Context, Request, Options, OperationPrinter } from './types';
+import { createHeadersWithClientAwareness, fetch, mergeHeaders, prioritize } from './utils';
 
-import {BatchOptions} from './types';
+import { BatchOptions } from './types';
 
 const defaults = {
   batchInterval: 10,
@@ -45,7 +35,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
       return new LinkObservable((observer: any) => {
         const body = this.createBody(operations);
         const headers = this.createHeaders(operations);
-        const {method, uri, withCredentials} = this.createOptions(operations);
+        const { method, uri, withCredentials } = this.createOptions(operations);
 
         if (typeof uri === 'function') {
           throw new Error(`Option 'uri' is a function, should be a string`);
@@ -62,12 +52,10 @@ export class HttpBatchLinkHandler extends ApolloLink {
         };
 
         const sub = fetch(req, this.httpClient, () => {
-          throw new Error(
-            'File upload is not available when combined with Batching',
-          );
+          throw new Error('File upload is not available when combined with Batching');
         }).subscribe({
-          next: (result) => observer.next(result.body),
-          error: (err) => observer.error(err),
+          next: result => observer.next(result.body),
+          error: err => observer.error(err),
           complete: () => observer.complete(),
         });
 
@@ -99,25 +87,18 @@ export class HttpBatchLinkHandler extends ApolloLink {
     return {
       method: prioritize(context.method, this.options.method, defaults.method),
       uri: prioritize(context.uri, this.options.uri, defaults.uri),
-      withCredentials: prioritize(
-        context.withCredentials,
-        this.options.withCredentials,
-      ),
+      withCredentials: prioritize(context.withCredentials, this.options.withCredentials),
     };
   }
 
   private createBody(operations: Operation[]): Body[] {
-    return operations.map((operation) => {
+    return operations.map(operation => {
       const includeExtensions = prioritize(
         operation.getContext().includeExtensions,
         this.options.includeExtensions,
-        false,
+        false
       );
-      const includeQuery = prioritize(
-        operation.getContext().includeQuery,
-        this.options.includeQuery,
-        true,
-      );
+      const includeQuery = prioritize(operation.getContext().includeQuery, this.options.includeQuery, true);
 
       const body: Body = {
         operationName: operation.operationName,
@@ -144,20 +125,18 @@ export class HttpBatchLinkHandler extends ApolloLink {
       createHeadersWithClientAwareness({
         headers: this.options.headers,
         clientAwareness: operations[0]?.getContext()?.clientAwareness,
-      }),
+      })
     );
   }
 
   private createBatchKey(operation: Operation): string {
-    const context: Context & {skipBatching?: boolean} = operation.getContext();
+    const context: Context & { skipBatching?: boolean } = operation.getContext();
 
     if (context.skipBatching) {
       return Math.random().toString(36).substr(2, 9);
     }
 
-    const headers =
-      context.headers &&
-      context.headers.keys().map((k: string) => context.headers.get(k));
+    const headers = context.headers && context.headers.keys().map((k: string) => context.headers.get(k));
 
     const opts = JSON.stringify({
       includeQuery: context.includeQuery,

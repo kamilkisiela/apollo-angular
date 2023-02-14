@@ -1,10 +1,7 @@
-import {DocumentNode} from 'graphql';
-import {getOperationName} from '@apollo/client/utilities';
+import { DocumentNode } from 'graphql';
+import { getOperationName } from '@apollo/client/utilities';
 
-export const buildOperationForLink = (
-  document: DocumentNode,
-  variables: any,
-) => {
+export const buildOperationForLink = (document: DocumentNode, variables: any) => {
   return {
     query: document,
     variables,

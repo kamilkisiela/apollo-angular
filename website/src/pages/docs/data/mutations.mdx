@@ -2,7 +2,7 @@
 description: Update data with the Apollo.mutate
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Mutations
 
@@ -42,8 +42,8 @@ When we use mutations in Apollo, the result is typically integrated into the cac
 Using `Apollo` it's easy to call mutation. You can simply use `mutate` method.
 
 ```ts
-import { Component } from '@angular/core'
-import { Apollo, gql } from 'apollo-angular'
+import { Component } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 const UPVOTE_POST = gql`
   mutation UpvotePost {
@@ -52,7 +52,7 @@ const UPVOTE_POST = gql`
       votes
     }
   }
-`
+`;
 
 @Component({
   // ...
@@ -61,7 +61,7 @@ class UpvotePostComponent {
   constructor(private apollo: Apollo) {}
 
   newRepository() {
-    this.apollo.mutate({ mutation: UPVOTE_POST }).subscribe()
+    this.apollo.mutate({ mutation: UPVOTE_POST }).subscribe();
   }
 }
 ```
@@ -71,9 +71,9 @@ class UpvotePostComponent {
 Most mutations will require arguments in the form of query variables, and you may wish to provide other options to [ApolloClient#mutate](https://www.apollographql.com/docs/react/api/apollo-client/#ApolloClient.mutate). You can directly pass options to `mutate` when you call it in the wrapped component:
 
 ```ts
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
 
-import { Apollo, gql } from 'apollo-angular'
+import { Apollo, gql } from 'apollo-angular';
 
 const UPVOTE_POST = gql`
   mutation UpvotePost($postId: Int!) {
@@ -82,7 +82,7 @@ const UPVOTE_POST = gql`
       votes
     }
   }
-`
+`;
 
 @Component({
   // ...
@@ -95,17 +95,17 @@ class UpvotePostComponent {
       .mutate({
         mutation: UPVOTE_POST,
         variables: {
-          postId: 12
-        }
+          postId: 12,
+        },
       })
       .subscribe(
         ({ data }) => {
-          console.log('got data', data)
+          console.log('got data', data);
         },
         error => {
-          console.log('there was an error sending the query', error)
+          console.log('there was an error sending the query', error);
         }
-      )
+      );
   }
 }
 ```
@@ -115,8 +115,8 @@ As you can see, `mutate` method returns an `Observable` that resolves with `Apol
 However, typically you'd want to keep the concern of understanding the mutation's structure out of your presentational component. The best way to do this is to use a service to bind your mutate function:
 
 ```ts
-import { Component, Injectable } from '@angular/core'
-import { Apollo, gql } from 'apollo-angular'
+import { Component, Injectable } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 const UPVOTE_POST = gql`
   mutation UpvotePost($postId: Int!) {
@@ -125,10 +125,10 @@ const UPVOTE_POST = gql`
       votes
     }
   }
-`
+`;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 class UpvoteService {
   constructor(private apollo: Apollo) {}
@@ -137,9 +137,9 @@ class UpvoteService {
     return this.apollo.mutate({
       mutation: UPVOTE_POST,
       variables: {
-        postId
-      }
-    })
+        postId,
+      },
+    });
   }
 }
 
@@ -152,12 +152,12 @@ class UpvoteComponent {
   newRepository() {
     this.upvoteService.upvote(12).subscribe(
       ({ data }) => {
-        console.log('got data', data)
+        console.log('got data', data);
       },
       error => {
-        console.log('there was an error sending the query', error)
+        console.log('there was an error sending the query', error);
       }
-    )
+    );
   }
 }
 ```
@@ -176,9 +176,9 @@ Sometimes your client code can easily predict the result of the mutation, if it 
 Apollo Client gives you a way to specify the `optimisticResponse` option, that will be used to update active queries immediately, in the same way that the server's mutation response will. Once the actual mutation response returns, the optimistic part will be thrown away and replaced with the real result.
 
 ```ts
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
 
-import { Apollo, gql } from 'apollo-angular'
+import { Apollo, gql } from 'apollo-angular';
 
 const CHANGE_POST_TITLE = gql`
   mutation ChangePostTitle($postId: Int!, $title: String!) {
@@ -187,13 +187,13 @@ const CHANGE_POST_TITLE = gql`
       title
     }
   }
-`
+`;
 
 @Component({
   // ...
 })
 class PostComponent {
-  currentUser: User
+  currentUser: User;
 
   constructor(private apollo: Apollo) {}
 
@@ -207,11 +207,11 @@ class PostComponent {
           changePostTitle: {
             __typename: 'Post',
             id: postId,
-            title
-          }
-        }
+            title,
+          },
+        },
       })
-      .subscribe()
+      .subscribe();
   }
 }
 ```
@@ -229,10 +229,10 @@ For the example above, it is easy to construct an optimistic response, since we 
 The result of `Apollo.mutate()` contains `loading` property. By default, it's always `false` and the result is emitted with the response from the ApolloLink execution chain. In order to correct it you can enable `useMutationLoading` flag in configuration.
 
 ```ts
-import { HttpClientModule } from '@angular/common/http'
-import { ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS } from 'apollo-angular'
-import { HttpLink } from 'apollo-angular/http'
-import { InMemoryCache } from '@apollo/client/core'
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -240,8 +240,8 @@ import { InMemoryCache } from '@apollo/client/core'
     {
       provide: APOLLO_FLAGS,
       useValue: {
-        useMutationLoading: true // enable it here
-      }
+        useMutationLoading: true, // enable it here
+      },
     },
     {
       provide: APOLLO_OPTIONS,
@@ -249,24 +249,24 @@ import { InMemoryCache } from '@apollo/client/core'
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://48p1r2roz4.sse.codesandbox.io'
-          })
-        }
+            uri: 'https://48p1r2roz4.sse.codesandbox.io',
+          }),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 export class AppModule {}
 ```
 
-<Callout type="warning" >
+<Callout type="warning">
   `useMutationLoading` is disabled to avoid any breaking changes, this may be enabled in next major version.
 </Callout>
 
 ```typescript
-import { Injectable } from '@angular/core'
-import { Apollo, gql } from 'apollo-angular'
+import { Injectable } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 const UPVOTE_POST = gql`
   mutation UpvotePost($postId: Int!) {
@@ -275,10 +275,10 @@ const UPVOTE_POST = gql`
       votes
     }
   }
-`
+`;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 class UpvoteService {
   constructor(private apollo: Apollo) {}
@@ -287,19 +287,19 @@ class UpvoteService {
     return this.apollo
       .mutate({
         mutation: UPVOTE_POST,
-        variables: { postId }
+        variables: { postId },
       })
       .subscribe(result => {
         console.log({
           loading: result.loading,
-          data: result.data
-        })
+          data: result.data,
+        });
 
         // First call:
         //  { loading: true }
         // Second call:
         //  { loading: false, data: {...} }
-      })
+      });
   }
 }
 ```

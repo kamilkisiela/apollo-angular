@@ -2,7 +2,7 @@
 description: Fetch data with the Apollo service
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Queries
 
@@ -25,9 +25,9 @@ the `gql` tag from `apollo-angular` library.
 For instance, [in our example](https://graphql-voter-app.herokuapp.com), we want to display a list of posts in `Posts` component:
 
 ```ts
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Subscription } from 'rxjs'
-import { Apollo, gql } from 'apollo-angular'
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Apollo, gql } from 'apollo-angular';
 
 // We use the gql tag to parse our query string into a query document
 const GET_POSTS = gql`
@@ -37,32 +37,32 @@ const GET_POSTS = gql`
       title
     }
   }
-`
+`;
 
 @Component({
   // ...
 })
 class PostsComponent implements OnInit, OnDestroy {
-  loading: boolean
-  posts: any
+  loading: boolean;
+  posts: any;
 
-  private querySubscription: Subscription
+  private querySubscription: Subscription;
 
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
     this.querySubscription = this.apollo
       .watchQuery<any>({
-        query: GET_POSTS
+        query: GET_POSTS,
       })
       .valueChanges.subscribe(({ data, loading }) => {
-        this.loading = loading
-        this.posts = data.posts
-      })
+        this.loading = loading;
+        this.posts = data.posts;
+      });
   }
 
   ngOnDestroy() {
-    this.querySubscription.unsubscribe()
+    this.querySubscription.unsubscribe();
   }
 }
 ```
@@ -129,30 +129,30 @@ const GET_POSTS_OF_AUTHOR = gql`
       title
     }
   }
-`
+`;
 
 @Component({
   // ...
 })
 class PostsOfUserComponent implements OnInit, OnDestroy {
-  posts: any
+  posts: any;
 
-  private querySubscription: Subscription
+  private querySubscription: Subscription;
 
   ngOnInit() {
     this.querySubscription = this.apollo
       .watchQuery({
         query: GET_POSTS_OF_AUTHOR,
         variables: {
-          authorId: 12
-        }
+          authorId: 12,
+        },
       })
       .valueChanges.subscribe(({ data }) => {
-        this.posts = data.postsOf
-      })
+        this.posts = data.postsOf;
+      });
   }
   ngOnDestroy() {
-    this.querySubscription.unsubscribe()
+    this.querySubscription.unsubscribe();
   }
 }
 ```
@@ -163,7 +163,7 @@ In Angular, the simplest way of displaying data that comes from Observable is to
 put `AsyncPipe` on top of the property inside the UI. You can also achieve this
 with Apollo.
 
-<Callout type="warning" >
+<Callout type="warning">
   **Note**: Using async pipe more than once in your template will trigger the query for each pipe. To avoid this
   situation, subscribe to the data in the component, and display the data from the component's property.
 </Callout>
@@ -173,10 +173,10 @@ under the `data` field, so you can not directly access one of the properties of
 that object.
 
 ```ts
-import { Component, OnInit } from '@angular/core'
-import { Apollo, gql } from 'apollo-angular'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Component, OnInit } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const GET_FEED = gql`
   query GetFeed {
@@ -190,7 +190,7 @@ const GET_FEED = gql`
       title
     }
   }
-`
+`;
 
 @Component({
   template: `
@@ -199,15 +199,15 @@ const GET_FEED = gql`
         {{ post.title }}
       </li>
     </ul>
-  `
+  `,
 })
 class FeedComponent implements OnInit {
-  posts: Observable<any>
+  posts: Observable<any>;
 
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.posts = this.apollo.watchQuery({ query: GET_FEED }).valueChanges.pipe(map(result => result.data.posts))
+    this.posts = this.apollo.watchQuery({ query: GET_FEED }).valueChanges.pipe(map(result => result.data.posts));
   }
 }
 ```
@@ -235,9 +235,9 @@ Caching query results is handy and easy to do, but sometimes you want to make su
 Polling provides near-real-time synchronization with your server by causing a query to execute periodically at a specified interval. To enable polling for a query, pass a `pollInterval` configuration option to the `Apollo.watchQuery` with an interval in milliseconds:
 
 ```ts
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Subscription } from 'rxjs'
-import { Apollo, gql } from 'apollo-angular'
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Apollo, gql } from 'apollo-angular';
 
 // We use the gql tag to parse our query string into a query document
 const GET_POSTS = gql`
@@ -247,16 +247,16 @@ const GET_POSTS = gql`
       title
     }
   }
-`
+`;
 
 @Component({
   // ...
 })
 class PostsComponent implements OnInit, OnDestroy {
-  loading: boolean
-  posts: any
+  loading: boolean;
+  posts: any;
 
-  private querySubscription: Subscription
+  private querySubscription: Subscription;
 
   constructor(private apollo: Apollo) {}
 
@@ -264,16 +264,16 @@ class PostsComponent implements OnInit, OnDestroy {
     this.querySubscription = this.apollo
       .watchQuery<any>({
         query: GET_POSTS,
-        pollInterval: 500
+        pollInterval: 500,
       })
       .valueChanges.subscribe(({ data, loading }) => {
-        this.loading = loading
-        this.posts = data.posts
-      })
+        this.loading = loading;
+        this.posts = data.posts;
+      });
   }
 
   ngOnDestroy() {
-    this.querySubscription.unsubscribe()
+    this.querySubscription.unsubscribe();
   }
 }
 ```
@@ -357,10 +357,10 @@ If you set `errorPolicy` to `all`, Apollo Angular does not discard query respons
 Every response you get from `Apollo.watchQuery()` contains `loading` property. By default, it's always `false` and the first result is emitted with the response from the ApolloLink execution chain. In order to correct it you can enable `useInitialLoading` flag in configuration.
 
 ```ts
-import { HttpClientModule } from '@angular/common/http'
-import { ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS } from 'apollo-angular'
-import { HttpLink } from 'apollo-angular/http'
-import { InMemoryCache } from '@apollo/client/core'
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -368,8 +368,8 @@ import { InMemoryCache } from '@apollo/client/core'
     {
       provide: APOLLO_FLAGS,
       useValue: {
-        useInitialLoading: true // enable it here
-      }
+        useInitialLoading: true, // enable it here
+      },
     },
     {
       provide: APOLLO_OPTIONS,
@@ -377,13 +377,13 @@ import { InMemoryCache } from '@apollo/client/core'
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://48p1r2roz4.sse.codesandbox.io'
-          })
-        }
+            uri: 'https://48p1r2roz4.sse.codesandbox.io',
+          }),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 export class AppModule {}
 ```

@@ -21,10 +21,7 @@ import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 
 @NgModule({
-  imports: [
-    ApolloModule,
-    HttpLinkModule
-  ]
+  imports: [ApolloModule, HttpLinkModule],
 })
 class AppModule {}
 ```
@@ -39,11 +36,7 @@ import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-    ApolloModule,
-    HttpLinkModule
-  ]
+  imports: [HttpClientModule, ApolloModule, HttpLinkModule],
 })
 class AppModule {}
 ```
@@ -56,17 +49,10 @@ import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-    ApolloModule,
-    HttpLinkModule
-  ]
+  imports: [HttpClientModule, ApolloModule, HttpLinkModule],
 })
 class AppModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
     const link = httpLink.create({ uri: 'https://example.com/graphql' });
 
     apollo.create({
@@ -184,7 +170,7 @@ class AppModule {
 }
 ```
 
-Given the above code, the header's `Authorization` value will be that of `token` and the `recent-activity` value will be that of `lastOnlineTime`. This example shows how you can use more than one middleware to make multiple/separate modifications to the request being processed in the form of a chain.  This example doesn't show the use of `localStorage`, but is instead just meant to demonstrate the use of more than one middleware using Apollo Link.
+Given the above code, the header's `Authorization` value will be that of `token` and the `recent-activity` value will be that of `lastOnlineTime`. This example shows how you can use more than one middleware to make multiple/separate modifications to the request being processed in the form of a chain. This example doesn't show the use of `localStorage`, but is instead just meant to demonstrate the use of more than one middleware using Apollo Link.
 
 ### Afterware
 
@@ -230,7 +216,7 @@ logout the user from the application.
 
 Query deduplication can help reduce the number of queries that are sent over the wire. It is turned on by default, but can be turned off by passing `queryDeduplication: false` to the context on each requests or using the `defaultOptions` key on Apollo Client setup. If turned on, query deduplication happens before the query hits the network layer.
 
- Query deduplication can be useful if many components display the same data, but you don't want to fetch that data from the server many times. It works by comparing a query to all queries currently in flight. If an identical query is currently in flight, the new query will be mapped to the same promise and resolved when the currently in-flight query returns.
+Query deduplication can be useful if many components display the same data, but you don't want to fetch that data from the server many times. It works by comparing a query to all queries currently in flight. If an identical query is currently in flight, the new query will be mapped to the same promise and resolved when the currently in-flight query returns.
 
 ## Other links
 

@@ -54,14 +54,14 @@ const HERO_QUERY = gql<Response>`
   // ...
 })
 class AppComponent {
-  response
+  response;
   constructor(apollo: Apollo) {
-    apollo.watchQuery({
-      query: HERO_QUERY,
-      variables: { episode: 'JEDI' }
-    })
-      .valueChanges
-      .subscribe(result => {
+    apollo
+      .watchQuery({
+        query: HERO_QUERY,
+        variables: { episode: 'JEDI' },
+      })
+      .valueChanges.subscribe(result => {
         console.log(result.data.hero); // no TypeScript errors
       });
   }
@@ -93,7 +93,7 @@ type Response = {
 };
 
 type Variables = {
-  episode: string
+  episode: string;
 };
 
 const HERO_QUERY = gql<Response, Variables>`
@@ -115,12 +115,12 @@ const HERO_QUERY = gql<Response, Variables>`
 })
 class AppComponent {
   constructor(apollo: Apollo) {
-    apollo.watchQuery({
-      query: HERO_QUERY,
-      variables: { episode: 'JEDI' } // controlled by TypeScript
-    })
-      .valueChanges
-      .subscribe(result => {
+    apollo
+      .watchQuery({
+        query: HERO_QUERY,
+        variables: { episode: 'JEDI' }, // controlled by TypeScript
+      })
+      .valueChanges.subscribe(result => {
         console.log(result.data.hero);
       });
   }
@@ -151,7 +151,7 @@ type Response = {
 };
 
 type Variables = {
-  episode: string
+  episode: string;
 };
 
 @Component({
@@ -162,7 +162,7 @@ class AppComponent {
 
   changeEpisode(episode: string) {
     this.heroQuery.setVariables({
-      episode: 'JEDI'
+      episode: 'JEDI',
     });
   }
 }

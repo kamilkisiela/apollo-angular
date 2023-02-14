@@ -1,14 +1,8 @@
-import {
-  Rule,
-  Tree,
-  chain,
-  SchematicContext,
-  UpdateRecorder,
-} from '@angular-devkit/schematics';
-import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
+import { Rule, Tree, chain, SchematicContext, UpdateRecorder } from '@angular-devkit/schematics';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as ts from 'typescript';
-import {getJsonFile} from '../utils';
-import {createDependenciesMap} from '../install/index';
+import { getJsonFile } from '../utils';
+import { createDependenciesMap } from '../install/index';
 
 export default function (): Rule {
   return chain([migrateImports, migrateTsConfig, migrateDependencies]);
@@ -51,7 +45,7 @@ function migrateDependencies() {
 
     const removedPackages: string[] = [];
 
-    packagesToRemove.forEach((packageName) => {
+    packagesToRemove.forEach(packageName => {
       let removed = false;
 
       if (packageJson.dependencies?.[packageName]) {
@@ -69,7 +63,7 @@ function migrateDependencies() {
       }
     });
 
-    removedPackages.forEach((packageName) => {
+    removedPackages.forEach(packageName => {
       context.logger.info(`Removed ${packageName} dependency`);
     });
 
@@ -94,8 +88,7 @@ export async function migrateTsConfig(tree: Tree) {
   } else {
     const tsconfigBasePath = 'tsconfig.base.json';
     const tsconfigBase = getJsonFile(tree, tsconfigBasePath);
-    const baseCompilerOptions: ts.CompilerOptions =
-      tsconfigBase.compilerOptions;
+    const baseCompilerOptions: ts.CompilerOptions = tsconfigBase.compilerOptions;
 
     if (baseCompilerOptions) {
       baseCompilerOptions.allowSyntheticDefaultImports = true;
@@ -106,9 +99,9 @@ export async function migrateTsConfig(tree: Tree) {
 
 function getIdentifiers(
   namedBindings: ts.NamedImportBindings,
-  onIdentifier: (event: {name: string; alias?: string}) => void,
+  onIdentifier: (event: { name: string; alias?: string }) => void
 ) {
-  namedBindings.forEachChild((named) => {
+  namedBindings.forEachChild(named => {
     if (ts.isImportSpecifier(named)) {
       const name =
         named.propertyName && typeof named.propertyName !== 'undefined'
@@ -124,7 +117,7 @@ function getIdentifiers(
 }
 
 export async function migrateImports(tree: Tree) {
-  tree.visit((path) => {
+  tree.visit(path => {
     if (path.includes('node_modules') || !path.endsWith('.ts')) {
       return;
     }
@@ -137,11 +130,8 @@ export async function migrateImports(tree: Tree) {
       }>
     > = {};
 
-    function collectIdentifiers(
-      packageName: string,
-      namedBindings: ts.NamedImportBindings,
-    ) {
-      getIdentifiers(namedBindings, ({name, alias}) => {
+    function collectIdentifiers(packageName: string, namedBindings: ts.NamedImportBindings) {
+      getIdentifiers(namedBindings, ({ name, alias }) => {
         if (!importsMap[packageName]) {
           importsMap[packageName] = [];
         }
@@ -206,24 +196,14 @@ export async function migrateImports(tree: Tree) {
       }
     }
 
-    const sourceFile = ts.createSourceFile(
-      path,
-      tree.read(path).toString(),
-      ts.ScriptTarget.Latest,
-      true,
-    );
+    const sourceFile = ts.createSourceFile(path, tree.read(path).toString(), ts.ScriptTarget.Latest, true);
 
     const recorder = tree.beginUpdate(path);
 
-    sourceFile.statements.forEach((statement) => {
-      if (
-        ts.isImportDeclaration(statement) &&
-        ts.isStringLiteral(statement.moduleSpecifier)
-      ) {
+    sourceFile.statements.forEach(statement => {
+      if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier)) {
         const nodeText = statement.moduleSpecifier.getText(sourceFile);
-        const modulePath = statement.moduleSpecifier
-          .getText(sourceFile)
-          .substr(1, nodeText.length - 2);
+        const modulePath = statement.moduleSpecifier.getText(sourceFile).substr(1, nodeText.length - 2);
 
         redirectImport({
           source: 'apollo-cache-inmemory',
@@ -367,21 +347,18 @@ export async function migrateImports(tree: Tree) {
 
     const importSources = Object.keys(importsMap);
 
-    importSources.forEach((importSource) => {
+    importSources.forEach(importSource => {
       const props = importsMap[importSource]
         .filter((im, i, all) => {
           if (im.alias) {
-            return all.findIndex((f) => f.alias === im.alias) === i;
+            return all.findIndex(f => f.alias === im.alias) === i;
           }
 
-          return all.findIndex((f) => f.name === im.name) === i;
+          return all.findIndex(f => f.name === im.name) === i;
         })
-        .map((im) => (im.alias ? `${im.name} as ${im.alias}` : im.name))
+        .map(im => (im.alias ? `${im.name} as ${im.alias}` : im.name))
         .join(', ');
-      recorder.insertLeft(
-        sourceFile.getStart(),
-        `import {${props}} from '${importSource}';\n`,
-      );
+      recorder.insertLeft(sourceFile.getStart(), `import {${props}} from '${importSource}';\n`);
     });
 
     if (importSources.length) {

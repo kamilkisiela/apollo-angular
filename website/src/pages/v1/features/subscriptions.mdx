@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Subscriptions
 
@@ -68,7 +68,7 @@ npm install apollo-link-ws
 Then, initialize a GraphQL subscriptions transport link:
 
 ```ts
-import {WebSocketLink} from 'apollo-link-ws';
+import { WebSocketLink } from 'apollo-link-ws';
 
 const wsClient = new WebSocketLink({
   uri: `ws://localhost:5000/`,
@@ -248,12 +248,13 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-        authToken: user.authToken,
+      authToken: user.authToken,
     },
-  }
+  },
 });
 ```
 
 <Callout>
-You can use `connectionParams` for anything else you might need, not only authentication, and check its payload on the server side with [SubscriptionsServer](https://www.apollographql.com/docs/graphql-subscriptions/authentication/).
+  You can use `connectionParams` for anything else you might need, not only authentication, and check its payload on the
+  server side with [SubscriptionsServer](https://www.apollographql.com/docs/graphql-subscriptions/authentication/).
 </Callout>

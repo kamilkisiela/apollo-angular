@@ -1,11 +1,4 @@
-import {
-  NgModule,
-  Component,
-  destroyPlatform,
-  getPlatform,
-  ApplicationRef,
-  CompilerFactory,
-} from '@angular/core';
+import { NgModule, Component, destroyPlatform, getPlatform, ApplicationRef, CompilerFactory } from '@angular/core';
 import {
   ServerModule,
   renderModule,
@@ -14,15 +7,12 @@ import {
   PlatformState,
   platformDynamicServer,
 } from '@angular/platform-server';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import {BrowserModule} from '@angular/platform-browser';
-import {execute, gql} from '@apollo/client/core';
-import {filter, first} from 'rxjs/operators';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { BrowserModule } from '@angular/platform-browser';
+import { execute, gql } from '@apollo/client/core';
+import { filter, first } from 'rxjs/operators';
 
-import {HttpLink} from '../src/http-link';
+import { HttpLink } from '../src/http-link';
 
 describe.skip('integration', () => {
   let doc: string;
@@ -56,35 +46,24 @@ describe.skip('integration', () => {
     class AsyncServerApp {
       public text = 'online';
 
-      constructor(
-        private httpLink: HttpLink,
-        private httpBackend: HttpTestingController,
-      ) {}
+      constructor(private httpLink: HttpLink, private httpBackend: HttpTestingController) {}
 
       public ngOnInit() {
-        execute(this.httpLink.create({uri: 'graphql', method: 'GET'}), {
+        execute(this.httpLink.create({ uri: 'graphql', method: 'GET' }), {
           query,
         }).subscribe((result: any) => {
           this.text = result.data.website.status;
         });
 
         this.httpBackend
-          .match(
-            (req) =>
-              req.url === 'graphql' &&
-              req.params.get('operationName') === 'websiteInfo',
-          )[0]
-          .flush({data});
+          .match(req => req.url === 'graphql' && req.params.get('operationName') === 'websiteInfo')[0]
+          .flush({ data });
       }
     }
 
     @NgModule({
       declarations: [AsyncServerApp],
-      imports: [
-        BrowserModule.withServerTransition({appId: 'async-server'}),
-        ServerModule,
-        HttpClientTestingModule,
-      ],
+      imports: [BrowserModule.withServerTransition({ appId: 'async-server' }), ServerModule, HttpClientTestingModule],
       providers: [HttpLink],
       bootstrap: [AsyncServerApp],
     })
@@ -100,12 +79,11 @@ describe.skip('integration', () => {
         },
       ]);
       const moduleRef = await platform.bootstrapModule(AsyncServerModule);
-      const applicationRef: ApplicationRef =
-        moduleRef.injector.get(ApplicationRef);
+      const applicationRef: ApplicationRef = moduleRef.injector.get(ApplicationRef);
       await applicationRef.isStable
         .pipe(
           filter((isStable: boolean) => isStable),
-          first(),
+          first()
         )
         .toPromise();
       const str = platform.injector.get(PlatformState).renderToString();
@@ -115,7 +93,7 @@ describe.skip('integration', () => {
     });
 
     test('using renderModule should work', async () => {
-      const output = await renderModule(AsyncServerModule, {document: doc});
+      const output = await renderModule(AsyncServerModule, { document: doc });
       expect(clearNgVersion(output)).toMatchSnapshot();
     });
 
@@ -128,15 +106,10 @@ describe.skip('integration', () => {
           },
         },
       ]);
-      const compilerFactory: CompilerFactory = platform.injector.get(
-        CompilerFactory,
-        null,
-      );
-      const moduleFactory = compilerFactory
-        .createCompiler()
-        .compileModuleSync(AsyncServerModule);
+      const compilerFactory: CompilerFactory = platform.injector.get(CompilerFactory, null);
+      const moduleFactory = compilerFactory.createCompiler().compileModuleSync(AsyncServerModule);
 
-      const output = await renderModuleFactory(moduleFactory, {document: doc});
+      const output = await renderModuleFactory(moduleFactory, { document: doc });
       expect(clearNgVersion(output)).toMatchSnapshot();
     });
   });

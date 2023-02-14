@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Server Side Rendering
 
@@ -29,17 +29,14 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
     BrowserModule,
     HttpClientModule,
     ApolloModule,
-    HttpLinkModule
+    HttpLinkModule,
   ],
   // ...
 })
 class AppModule {
   cache: InMemoryCache;
 
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink
-  ) {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
     this.cache = new InMemoryCache();
 
     apollo.create({
@@ -60,6 +57,7 @@ No changes are required to client queries to support this, so your Apollo-based 
 SSR works out of the box when using `HttpLink` from `apollo-angular-link-http` because it uses Angular's `HttpClient` internally.
 
 This wouldn't be that easy with `apollo-link-http`. That non-angular Link uses Fetch API which would have to schedule a macroTask (Zone.js) so Angular could wait for the request to finish.
+
 </Callout>
 
 ## Store rehydration
@@ -86,18 +84,14 @@ const STATE_KEY = makeStateKey<any>('apollo.state');
     BrowserModule,
     HttpClientModule,
     ApolloModule,
-    HttpLinkModule
+    HttpLinkModule,
   ],
   // ...
 })
 class AppModule {
   cache: InMemoryCache;
 
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink,
-    private readonly transferState: TransferState,
-  ) {
+  constructor(apollo: Apollo, httpLink: HttpLink, private readonly transferState: TransferState) {
     this.cache = new InMemoryCache();
 
     apollo.create({

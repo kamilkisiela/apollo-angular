@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Advanced Topics on Caching
 
@@ -34,7 +34,7 @@ apollo.mutate({
           }
         }
       `,
-      variables: {repoName: 'apollographql/apollo-client'},
+      variables: { repoName: 'apollographql/apollo-client' },
     },
   ],
 });
@@ -52,7 +52,7 @@ apollo.mutate({
   refetchQueries: [
     {
       query: RepoCommentsQuery,
-      variables: {repoFullName: 'apollographql/apollo-client'},
+      variables: { repoFullName: 'apollographql/apollo-client' },
     },
   ],
 });
@@ -180,8 +180,7 @@ To use the `@connection` directive, simply add the directive to the segment of t
 ```typescript
 const query = gql`
   query Feed($type: FeedType!, $offset: Int, $limit: Int) {
-    feed(type: $type, offset: $offset, limit: $limit)
-      @connection(key: "feed", filter: ["type"]) {
+    feed(type: $type, offset: $offset, limit: $limit) @connection(key: "feed", filter: ["type"]) {
       ...FeedEntry
     }
   }
@@ -215,7 +214,8 @@ Note that because we are only using the `type` argument in the store key, we don
 ## Cache redirects using field policy `read` functions
 
 <Callout type="warning">
-**Note**: Apollo Client >= 3.0 no longer supports the `ApolloClient` `cacheRedirects` constructor option. Equivalent `cacheRedirects` functionality can now be handled with field policy `read` functions, and is explained below.
+  **Note**: Apollo Client >= 3.0 no longer supports the `ApolloClient` `cacheRedirects` constructor option. Equivalent
+  `cacheRedirects` functionality can now be handled with field policy `read` functions, and is explained below.
 </Callout>
 
 In some cases, a query requests data that already exists in the cache under a different reference. A very common example of this is when your UI has a list view and a detail view that both use the same data. The list view might run the following query:
@@ -245,13 +245,13 @@ query Book($id: ID!) {
 We know that the data is most likely already in the client cache, but because it was requested with a different query, Apollo Client doesn't know that. To tell Apollo Client where to look for the existing `book` data, we can define a field policy `read` function for the `book` field:
 
 ```typescript
-import {InMemoryCache} from '@apollo/client/core';
+import { InMemoryCache } from '@apollo/client/core';
 
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        book(_, {args, toReference}) {
+        book(_, { args, toReference }) {
           return toReference({
             __typename: 'Book',
             id: args.id,
@@ -266,7 +266,10 @@ const cache = new InMemoryCache({
 Now whenever a query is run that includes a `book` field, the `read` function above will be executed, and return a reference that points to the book entity that was already created in the cache when the `Books` list view query ran. Apollo Client will use the reference returned by the `read` function to look up the item in its cache. `toReference` is a helper utility that is passed into `read` functions as part of the second parameter options object, and is used to generate an entity reference based on its `__typename` and `id`.
 
 <Callout type="warning">
-**Note**: For the above to work properly, the data returned by the list query has to include all of the data the specific detail query needs. If the specific detail query fetches a field that the list query doesn't return, Apollo Client will consider the cache hit to be incomplete, and will attempt to fetch the full data set over the network (if network requests are enabled).
+  **Note**: For the above to work properly, the data returned by the list query has to include all of the data the
+  specific detail query needs. If the specific detail query fetches a field that the list query doesn't return, Apollo
+  Client will consider the cache hit to be incomplete, and will attempt to fetch the full data set over the network (if
+  network requests are enabled).
 </Callout>
 
 ## Resetting the Store
@@ -289,8 +292,8 @@ If you would like to persist and rehydrate your Apollo Cache from a storage prov
 To get started, simply pass your Apollo Cache and a storage provider to `persistCacheSync`. By default, the contents of your Apollo Cache will be immediately restored, and persisted upon every write to the cache with a short configurable debounce interval.
 
 ```typescript
-import {InMemoryCache} from '@apollo/client/core';
-import {persistCacheSync, LocalStorageWrapper} from 'apollo3-cache-persist';
+import { InMemoryCache } from '@apollo/client/core';
+import { persistCacheSync, LocalStorageWrapper } from 'apollo3-cache-persist';
 
 const cache = new InMemoryCache();
 

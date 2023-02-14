@@ -44,9 +44,9 @@ apollo.create({
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
-      errorPolicy: 'all'
-    }
-  }
+      errorPolicy: 'all',
+    },
+  },
 });
 ```
 
@@ -64,9 +64,7 @@ import { onError } from 'apollo-link-error';
 const link = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      ),
+      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
     );
 
   if (networkError) console.log(`[Network error]: ${networkError}`);
@@ -91,5 +89,5 @@ onError(({ response, operation }) => {
   if (operation.operationName === 'IgnoreErrorsQuery') {
     response.errors = null;
   }
-})
+});
 ```

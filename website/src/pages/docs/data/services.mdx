@@ -2,7 +2,7 @@
 description: Additional API to use GraphQL in Angular
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Query, Mutation, Subscription Services
 
@@ -22,7 +22,8 @@ In this approach GraphQL Documents are first-class citizens, you think about the
   The best part about the new API is that you don't have to create those services, there's a tool
   that does it for you.
 
-  To read more about it, go to ["Code Generation"](#code-generation) section.
+To read more about it, go to ["Code Generation"](#code-generation) section.
+
 </Callout>
 
 ## Query
@@ -32,25 +33,25 @@ To get started with the new API, let's see how you define queries with it.
 You create a service and extend it with a `Query` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
 ```ts
-import { Injectable } from '@angular/core'
-import { Query, gql } from 'apollo-angular'
+import { Injectable } from '@angular/core';
+import { Query, gql } from 'apollo-angular';
 
 export interface Post {
-  id: string
-  title: string
-  votes: number
+  id: string;
+  title: string;
+  votes: number;
   author: {
-    id: string
-    firstName: string
-    lastName: string
-  }
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
 }
 export interface Response {
-  posts: Post[]
+  posts: Post[];
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AllPostsGQL extends Query<Response> {
   document = gql`
@@ -66,7 +67,7 @@ export class AllPostsGQL extends Query<Response> {
         }
       }
     }
-  `
+  `;
 }
 ```
 
@@ -77,25 +78,25 @@ We have now a ready to use GraphQL Query that takes advantage of `Apollo` servic
 Let's see how to actually use it in a component:
 
 ```ts
-import { Component, OnInit } from '@angular/core'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // import a service
-import { Post, AllPostsGQL } from './graphql'
+import { Post, AllPostsGQL } from './graphql';
 
 @Component({
   // ...
 })
 export class ListComponent implements OnInit {
-  posts: Observable<Post[]>
+  posts: Observable<Post[]>;
 
   // inject it
   constructor(private allPostsGQL: AllPostsGQL) {}
 
   ngOnInit() {
     // use it!
-    this.posts = this.allPostsGQL.watch().valueChanges.pipe(map(result => result.data.posts))
+    this.posts = this.allPostsGQL.watch().valueChanges.pipe(map(result => result.data.posts));
   }
 }
 ```
@@ -115,13 +116,13 @@ export class ListComponent implements OnInit {
     this.posts = this.allPostsGQL
       .watch(
         {
-          first: 10
+          first: 10,
         },
         {
-          fetchPolicy: 'network-only'
+          fetchPolicy: 'network-only',
         }
       )
-      .valueChanges.pipe(map(result => result.data.posts))
+      .valueChanges.pipe(map(result => result.data.posts));
   }
 }
 ```
@@ -138,11 +139,11 @@ export class ListComponent implements OnInit {
 You create a service and extend it with a `Mutation` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
 ```ts
-import { Injectable } from '@angular/core'
-import { Mutation, gql } from 'apollo-angular'
+import { Injectable } from '@angular/core';
+import { Mutation, gql } from 'apollo-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UpvotePostGQL extends Mutation {
   document = gql`
@@ -152,7 +153,7 @@ export class UpvotePostGQL extends Mutation {
         votes
       }
     }
-  `
+  `;
 }
 ```
 
@@ -163,25 +164,25 @@ We have now a ready to use GraphQL Mutation.
 Let's see how to actually use it in a component:
 
 ```ts
-import { Component, Input } from '@angular/core'
-import { UpvotePostGQL } from './graphql'
+import { Component, Input } from '@angular/core';
+import { UpvotePostGQL } from './graphql';
 
 @Component({
   selector: 'app-upvoter',
-  template: `<button (click)="upvote()">Upvote</button>`
+  template: `<button (click)="upvote()">Upvote</button>`,
 })
 export class UpvoterComponent {
   @Input()
-  postId: number
+  postId: number;
 
   constructor(private upvotePostGQL: UpvotePostGQL) {}
 
   upvote() {
     this.upvotePostGQL
       .mutate({
-        postId: this.postId
+        postId: this.postId,
       })
-      .subscribe()
+      .subscribe();
   }
 }
 ```
@@ -197,11 +198,11 @@ export class UpvoterComponent {
 You create a service and extend it with a `Subscription` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
 ```ts
-import { Injectable } from '@angular/core'
-import { Subscription, gql } from 'apollo-angular'
+import { Injectable } from '@angular/core';
+import { Subscription, gql } from 'apollo-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NewPostGQL extends Subscription {
   document = gql`
@@ -211,7 +212,7 @@ export class NewPostGQL extends Subscription {
         title
       }
     }
-  `
+  `;
 }
 ```
 
@@ -222,15 +223,15 @@ We have now a ready to use GraphQL Subscription.
 Let's see how to actually use it in a component:
 
 ```ts
-import { Component } from '@angular/core'
-import { NewPostGQL } from './graphql'
+import { Component } from '@angular/core';
+import { NewPostGQL } from './graphql';
 
 @Component({
   // ...
 })
 export class ActivityComponent {
   constructor(newPostGQL: NewPostGQL) {
-    this.lastPost = newPostGQL.subscribe()
+    this.lastPost = newPostGQL.subscribe();
   }
 }
 ```
@@ -265,25 +266,25 @@ query allPosts {
 Code generation tool outputs to a file, a fully featured service called `AllPostsGQL` with every interface you will need.
 
 ```ts
-import { Component, OnInit } from '@angular/core'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // import a service and a type from the generated output
-import { Post, AllPostsGQL } from './generated'
+import { Post, AllPostsGQL } from './generated';
 
 @Component({
   // ...
 })
 export class ListComponent implements OnInit {
-  posts: Observable<Post[]>
+  posts: Observable<Post[]>;
 
   // inject it
   constructor(private allPostsGQL: AllPostsGQL) {}
 
   ngOnInit() {
     // use it!
-    this.posts = this.allPostsGQL.watch().valueChanges.pipe(map(result => result.data.posts))
+    this.posts = this.allPostsGQL.watch().valueChanges.pipe(map(result => result.data.posts));
   }
 }
 ```

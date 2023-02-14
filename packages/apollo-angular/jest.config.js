@@ -8,12 +8,10 @@ module.exports = {
   },
   globals: {
     'ts-jest': {
-      tsconfig: 'tsconfig.test.json'
-    }
+      tsconfig: 'tsconfig.test.json',
+    },
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!.*\\.mjs$)'
-  ],
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   preset: 'jest-preset-angular',
   resolver: '<rootDir>/../../node_modules/jest-preset-angular/build/resolvers/ng-jest-resolver.js',
   moduleFileExtensions: ['js', 'ts', 'mjs'],
@@ -25,6 +23,6 @@ module.exports = {
   errorOnDeprecated: true,
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: 'http://localhost/'
-  }
+    url: 'http://localhost/',
+  },
 };

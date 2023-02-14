@@ -1,13 +1,9 @@
-import {DocumentNode} from 'graphql';
+import { DocumentNode } from 'graphql';
 
-import {TestOperation, Operation} from './operation';
+import { TestOperation, Operation } from './operation';
 
 export type MatchOperationFn = (op: Operation) => boolean;
-export type MatchOperation =
-  | string
-  | DocumentNode
-  | Operation
-  | MatchOperationFn;
+export type MatchOperation = string | DocumentNode | Operation | MatchOperationFn;
 
 /**
  * Controller to be injected into tests, that allows for mocking and flushing
@@ -28,10 +24,7 @@ export abstract class ApolloTestingController {
    * If no such operation has been made, or more than one such operation has been made, fail with an
    * error message including the given operation description, if any.
    */
-  public abstract expectOne(
-    operationName: string,
-    description?: string,
-  ): TestOperation;
+  public abstract expectOne(operationName: string, description?: string): TestOperation;
 
   /**
    * Expect that a single operation has been made which matches the given parameters, and return
@@ -49,10 +42,7 @@ export abstract class ApolloTestingController {
    * If no such operation has been made, or more than one such operation has been made, fail with an
    * error message including the given operation description, if any.
    */
-  public abstract expectOne(
-    matchFn: MatchOperationFn,
-    description?: string,
-  ): TestOperation;
+  public abstract expectOne(matchFn: MatchOperationFn, description?: string): TestOperation;
 
   /**
    * Expect that a single operation has been made which matches the given condition, and return
@@ -61,10 +51,7 @@ export abstract class ApolloTestingController {
    * If no such operation has been made, or more than one such operation has been made, fail with an
    * error message including the given operation description, if any.
    */
-  public abstract expectOne(
-    match: MatchOperation,
-    description?: string,
-  ): TestOperation;
+  public abstract expectOne(match: MatchOperation, description?: string): TestOperation;
 
   /**
    * Expect that no operations have been made which match the given URL.
@@ -88,10 +75,7 @@ export abstract class ApolloTestingController {
    * If a matching operation has been made, fail with an error message including the given
    * description, if any.
    */
-  public abstract expectNone(
-    matchFn: MatchOperationFn,
-    description?: string,
-  ): void;
+  public abstract expectNone(matchFn: MatchOperationFn, description?: string): void;
 
   /**
    * Expect that no operations have been made which match the given condition.

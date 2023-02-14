@@ -9,9 +9,6 @@
     "target": "es6",
     "module": "commonjs"
   },
-  "files": [
-    "install/index.ts",
-    "migrations/v2.ts"
-  ],
+  "files": ["install/index.ts", "migrations/v2.ts"],
   "include": []
 }

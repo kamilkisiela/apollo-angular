@@ -1,15 +1,12 @@
-import {TestBed} from '@angular/core/testing';
-import {HttpClientModule, HttpHeaders} from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import {Apollo, ApolloModule} from '../../src';
-import {execute, ApolloLink, InMemoryCache, gql} from '@apollo/client/core';
-import {mergeMap} from 'rxjs/operators';
-import {stripIgnoredCharacters, print} from 'graphql';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Apollo, ApolloModule } from '../../src';
+import { execute, ApolloLink, InMemoryCache, gql } from '@apollo/client/core';
+import { mergeMap } from 'rxjs/operators';
+import { stripIgnoredCharacters, print } from 'graphql';
 
-import {HttpLink} from '../src/http-link';
+import { HttpLink } from '../src/http-link';
 
 const noop = () => {
   //
@@ -33,7 +30,7 @@ describe('HttpLink', () => {
   });
 
   test('should use HttpClient', () => {
-    const link = httpLink.create({uri: 'graphql'});
+    const link = httpLink.create({ uri: 'graphql' });
     const op = {
       query: gql`
         query heroes {
@@ -46,21 +43,21 @@ describe('HttpLink', () => {
       variables: {},
     };
     const data = {
-      heroes: [{name: 'Superman'}],
+      heroes: [{ name: 'Superman' }],
     };
 
     execute(link, op).subscribe({
-      next: (result: any) => expect(result).toEqual({data}),
+      next: (result: any) => expect(result).toEqual({ data }),
       error: () => {
         throw new Error('Should not be here');
       },
     });
 
-    httpBackend.expectOne('graphql').flush({data});
+    httpBackend.expectOne('graphql').flush({ data });
   });
 
   test('should handle uri as function', () => {
-    const link = httpLink.create({uri: () => 'custom'});
+    const link = httpLink.create({ uri: () => 'custom' });
     const op = {
       query: gql`
         query heroes {
@@ -73,17 +70,17 @@ describe('HttpLink', () => {
       variables: {},
     };
     const data = {
-      heroes: [{name: 'Superman'}],
+      heroes: [{ name: 'Superman' }],
     };
 
     execute(link, op).subscribe({
-      next: (result: any) => expect(result).toEqual({data}),
+      next: (result: any) => expect(result).toEqual({ data }),
       error: () => {
         throw new Error('Should not be here');
       },
     });
 
-    httpBackend.expectOne('custom').flush({data});
+    httpBackend.expectOne('custom').flush({ data });
   });
 
   test('should use /graphql by default', () => {
@@ -100,21 +97,21 @@ describe('HttpLink', () => {
       variables: {},
     };
     const data = {
-      heroes: [{name: 'Superman'}],
+      heroes: [{ name: 'Superman' }],
     };
 
     execute(link, op).subscribe({
-      next: (result: any) => expect(result).toEqual({data}),
+      next: (result: any) => expect(result).toEqual({ data }),
       error: () => {
         throw new Error('Should not be here');
       },
     });
 
-    httpBackend.expectOne('graphql').flush({data});
+    httpBackend.expectOne('graphql').flush({ data });
   });
 
   test('should send it as JSON with right body and headers', () => {
-    const link = httpLink.create({uri: 'graphql'});
+    const link = httpLink.create({ uri: 'graphql' });
     const op = {
       query: gql`
         query heroes {
@@ -129,7 +126,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.body.operationName).toBe(op.operationName);
       expect(req.reportProgress).toBe(false);
       expect(req.responseType).toBe('json');
@@ -139,7 +136,7 @@ describe('HttpLink', () => {
   });
 
   test('should use POST by default', () => {
-    const link = httpLink.create({uri: 'graphql'});
+    const link = httpLink.create({ uri: 'graphql' });
     const op = {
       query: gql`
         query heroes {
@@ -154,7 +151,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.method).toBe('POST');
       expect(req.body.operationName).toBe(op.operationName);
       expect(req.detectContentTypeHeader()).toBe('application/json');
@@ -177,13 +174,13 @@ describe('HttpLink', () => {
         }
       `,
       operationName: 'heroes',
-      variables: {up: 'dog'},
-      extensions: {what: 'what'},
+      variables: { up: 'dog' },
+      extensions: { what: 'what' },
     };
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.method).toBe('GET');
       expect(req.params.get('variables')).toBe(JSON.stringify(op.variables));
       expect(req.params.get('extensions')).toBe(JSON.stringify(op.extensions));
@@ -210,19 +207,19 @@ describe('HttpLink', () => {
         }
       `,
       operationName: 'heroes',
-      variables: {up: 'dog'},
-      extensions: {what: 'what'},
+      variables: { up: 'dog' },
+      extensions: { what: 'what' },
     };
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.method).toBe('GET');
       expect(req.urlWithParams).not.toEqual(
-        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%20%7B%0A%20%20heroes%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A',
+        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%20%7B%0A%20%20heroes%20%7B%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A'
       );
       expect(req.urlWithParams).toEqual(
-        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%7Bheroes%7Bname%7D%7D',
+        'graphql?operationName=heroes&variables=%7B%22up%22:%22dog%22%7D&query=query%20heroes%7Bheroes%7Bname%7D%7D'
       );
       return true;
     });
@@ -248,7 +245,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.body.extensions.fooExt).toBe(true);
       return true;
     });
@@ -274,7 +271,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.body.extensions).toBeUndefined();
       return true;
     });
@@ -297,7 +294,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.withCredentials).toBe(true);
       return true;
     });
@@ -320,7 +317,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.headers.get('X-Custom-Header')).toBe('foo');
       return true;
     });
@@ -345,7 +342,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.headers.get('X-Custom-Header')).toBe('foo');
       return true;
     });
@@ -374,13 +371,9 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
-      expect(req.headers.get('apollographql-client-name')).toBe(
-        clientAwareness.name,
-      );
-      expect(req.headers.get('apollographql-client-version')).toBe(
-        clientAwareness.version,
-      );
+    httpBackend.match(req => {
+      expect(req.headers.get('apollographql-client-name')).toBe(clientAwareness.name);
+      expect(req.headers.get('apollographql-client-version')).toBe(clientAwareness.version);
       return true;
     });
   });
@@ -405,7 +398,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.headers.get('X-Custom-Foo')).toBe('foo');
       expect(req.headers.get('X-Custom-Bar')).toBe('bar');
       return true;
@@ -466,7 +459,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.url).toBe('external-graphql');
       expect(req.method).toBe('POST');
       expect(req.withCredentials).toBe(false);
@@ -484,7 +477,7 @@ describe('HttpLink', () => {
         includeExtensions: true,
       });
 
-      op.extensions.persistedQuery = {hash: '1234'};
+      op.extensions.persistedQuery = { hash: '1234' };
 
       return forward(op);
     });
@@ -492,7 +485,7 @@ describe('HttpLink', () => {
     const link = middleware.concat(
       httpLink.create({
         uri: 'graphql',
-      }),
+      })
     );
 
     execute(link, {
@@ -508,10 +501,10 @@ describe('HttpLink', () => {
       },
     }).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.body.query).not.toBeDefined();
       expect(req.body.extensions).toEqual({
-        persistedQuery: {hash: '1234'},
+        persistedQuery: { hash: '1234' },
       });
       return true;
     });
@@ -531,11 +524,11 @@ describe('HttpLink', () => {
     const link = afterware.concat(
       httpLink.create({
         uri: 'graphql',
-      }),
+      })
     );
 
     const data = {
-      heroes: [{name: 'Superman'}],
+      heroes: [{ name: 'Superman' }],
     };
 
     execute(link, {
@@ -548,10 +541,10 @@ describe('HttpLink', () => {
       `,
     }).subscribe(noop);
 
-    httpBackend.expectOne('graphql').flush({data});
+    httpBackend.expectOne('graphql').flush({ data });
   });
 
-  test('should work with mergeMap', (done) => {
+  test('should work with mergeMap', done => {
     const apollo: Apollo = TestBed.get(Apollo);
 
     const op1 = {
@@ -595,14 +588,14 @@ describe('HttpLink', () => {
         setTimeout(() => {
           // Resolve second mutation
           httpBackend
-            .expectOne((req) => req.body.operationName === 'second')
+            .expectOne(req => req.body.operationName === 'second')
             .flush({
               data: data2,
             });
         });
 
         return m2;
-      }),
+      })
     ).subscribe({
       next(result: any) {
         expect(result.data).toMatchObject(data2);
@@ -615,7 +608,7 @@ describe('HttpLink', () => {
 
     // Resolve first mutation
     httpBackend
-      .expectOne((req) => req.body.operationName === 'first')
+      .expectOne(req => req.body.operationName === 'first')
       .flush({
         data: data1,
       });
@@ -636,13 +629,13 @@ describe('HttpLink', () => {
         }
       `,
       operationName: 'heroes',
-      variables: {up: 'dog'},
-      extensions: {what: 'what'},
+      variables: { up: 'dog' },
+      extensions: { what: 'what' },
     };
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.method).toBe('GET');
       expect(req.params.get('variables')).toBe(JSON.stringify(op.variables));
       expect(req.params.get('extensions')).toBe(JSON.stringify(op.extensions));
@@ -669,7 +662,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.method).toBe('POST');
       expect(req.body.operationName).toBe(op.operationName);
       return true;
@@ -693,7 +686,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.method).toBe('POST');
       expect(req.body.query).toMatch(',');
       expect(req.body.operationName).toBe(op.operationName);
@@ -718,7 +711,7 @@ describe('HttpLink', () => {
 
     execute(link, op).subscribe(noop);
 
-    httpBackend.match((req) => {
+    httpBackend.match(req => {
       expect(req.method).toBe('POST');
       expect(req.body.query).toMatch(',');
       expect(req.body.operationName).toBe(op.operationName);
@@ -727,7 +720,7 @@ describe('HttpLink', () => {
   });
 
   test('should cancel XHR when unsubscribing', () => {
-    const link = httpLink.create({uri: 'graphql'});
+    const link = httpLink.create({ uri: 'graphql' });
     const op = {
       query: gql`
         query heroes {

@@ -83,10 +83,7 @@ Here's an example of a test for the above `Dog` component using `ApolloTestingCo
 But first, we need to set everything up.
 
 ```ts
-import {
-  ApolloTestingModule,
-  ApolloTestingController,
-} from 'apollo-angular/testing';
+import { ApolloTestingModule, ApolloTestingController } from 'apollo-angular/testing';
 
 describe('DogComponent', () => {
   controller: ApolloTestingController;
@@ -197,10 +194,7 @@ It's an object returned by `expectOne` and `match` methods.
 The process is pretty much the same as using a default client but the setup is a bit different:
 
 ```ts
-import {
-  ApolloTestingModule,
-  ApolloTestingController,
-} from 'apollo-angular/testing';
+import { ApolloTestingModule, ApolloTestingController } from 'apollo-angular/testing';
 
 describe('DogComponent', () => {
   controller: ApolloTestingController;
@@ -266,7 +260,7 @@ By default, every ApolloCache is created with these options:
 If you would like to change it in the default client, do the following:
 
 ```ts
-import {APOLLO_TESTING_CACHE} from 'apollo-angular/testing';
+import { APOLLO_TESTING_CACHE } from 'apollo-angular/testing';
 
 beforeEach(() => {
   TestBed.configureTestingModule({
@@ -288,7 +282,7 @@ beforeEach(() => {
 For named clients:
 
 ```ts
-import {APOLLO_TESTING_NAMED_CACHE} from 'apollo-angular/testing';
+import { APOLLO_TESTING_NAMED_CACHE } from 'apollo-angular/testing';
 
 beforeEach(() => {
   TestBed.configureTestingModule({
@@ -302,7 +296,7 @@ beforeEach(() => {
           },
           clientB: {
             addTypename: true,
-          }
+          },
         },
       },
     ],

@@ -28,9 +28,7 @@ const GET_DOG_PHOTO = gql`
 
 @Component({
   selector: 'dog-photo',
-  template: `
-    <img *ngIf="data" [src]="data.dog.displayImage" />
-  `,
+  template: ` <img *ngIf="data" [src]="data.dog.displayImage" /> `,
 })
 class DogPhotoComponent {
   @Input()
@@ -42,7 +40,7 @@ class DogPhotoComponent {
     apollo
       .watchQuery({
         query: GET_DOG_PHOTO,
-        variables: {breed},
+        variables: { breed },
       })
       .valueChanges.subscribe(result => {
         this.data = result.data;

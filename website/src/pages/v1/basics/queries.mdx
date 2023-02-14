@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Queries
 
@@ -133,9 +133,7 @@ const CurrentUserForProfile = gql`
 `;
 
 @Component({
-  template: `
-    Login: {{currentUser?.profile}}
-  `,
+  template: ` Login: {{ currentUser?.profile }} `,
 })
 class ProfileComponent implements OnInit, OnDestroy {
   currentUser: any;
@@ -148,7 +146,7 @@ class ProfileComponent implements OnInit, OnDestroy {
           avatarSize: 100,
         },
       })
-      .valueChanges.subscribe(({data}) => {
+      .valueChanges.subscribe(({ data }) => {
         this.currentUser = data.currentUser;
       });
   }
@@ -165,7 +163,8 @@ put `AsyncPipe` on top of the property inside the UI. You can also achieve this
 with Apollo.
 
 <Callout>
-**Note**: Using async pipe more than once in your template will trigger the query for each pipe. To avoid this situation, subscribe to the data in the component, and display the data from the component's property.
+  **Note**: Using async pipe more than once in your template will trigger the query for each pipe. To avoid this
+  situation, subscribe to the data in the component, and display the data from the component's property.
 </Callout>
 
 An Observable returned by `watchQuery().valueChanges` holds the actual result
@@ -176,9 +175,9 @@ This is why we created `SelectPipe`. The only argument it receives is the name
 of the property you want to get from `data`.
 
 ```ts
-import {Component, OnInit} from '@angular/core';
-import {Apollo} from 'apollo-angular';
-import {Observable} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { Observable } from 'rxjs';
 import gql from 'graphql-tag';
 
 const FeedQuery = gql`
@@ -195,8 +194,11 @@ const FeedQuery = gql`
 
 @Component({
   template: `
-    <ul *ngFor="let entry of data | async | select: 'feed'">
-      Score: {{entry.score}}
+    <ul *ngFor="let entry of data | async | select : 'feed'">
+      Score:
+      {{
+        entry.score
+      }}
     </ul>
   `,
 })
@@ -206,7 +208,7 @@ class FeedComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.data = this.apollo.watchQuery({query: FeedQuery}).valueChanges;
+    this.data = this.apollo.watchQuery({ query: FeedQuery }).valueChanges;
   }
 }
 ```
@@ -233,10 +235,10 @@ operators.
 What's really interesting is that, because of this, you can avoid using `SelectPipe`:
 
 ```ts
-import {Component, OnInit} from '@angular/core';
-import {Apollo} from 'apollo-angular';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import gql from 'graphql-tag';
 
 const FeedQuery = gql`
@@ -254,7 +256,10 @@ const FeedQuery = gql`
 @Component({
   template: `
     <ul *ngFor="let entry of data | async">
-      Score: {{entry.score}}
+      Score:
+      {{
+        entry.score
+      }}
     </ul>
   `,
 })
@@ -264,9 +269,7 @@ class FeedComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.data = this.apollo
-      .watchQuery({query: FeedQuery})
-      .valueChanges.pipe(map(({data}) => data.feed));
+    this.data = this.apollo.watchQuery({ query: FeedQuery }).valueChanges.pipe(map(({ data }) => data.feed));
   }
 }
 ```

@@ -1,25 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {
-  ApolloLink,
-  Observable as LinkObservable,
-  Operation,
-  FetchResult,
-} from '@apollo/client/core';
-import {print} from 'graphql';
-import {Options, Body, Request, Context, OperationPrinter} from './types';
-import {
-  createHeadersWithClientAwareness,
-  fetch,
-  mergeHeaders,
-  prioritize,
-} from './utils';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ApolloLink, Observable as LinkObservable, Operation, FetchResult } from '@apollo/client/core';
+import { print } from 'graphql';
+import { Options, Body, Request, Context, OperationPrinter } from './types';
+import { createHeadersWithClientAwareness, fetch, mergeHeaders, prioritize } from './utils';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
-  public requester: (
-    operation: Operation,
-  ) => LinkObservable<FetchResult> | null;
+  public requester: (operation: Operation) => LinkObservable<FetchResult> | null;
   private print: OperationPrinter = print;
 
   constructor(private httpClient: HttpClient, private options: Options) {
@@ -34,10 +22,7 @@ export class HttpLinkHandler extends ApolloLink {
         const context: Context = operation.getContext();
 
         // decides which value to pick, Context, Options or to just use the default
-        const pick = <K extends keyof Context>(
-          key: K,
-          init?: Context[K] | Options[K],
-        ): Context[K] | Options[K] => {
+        const pick = <K extends keyof Context>(key: K, init?: Context[K] | Options[K]): Context[K] | Options[K] => {
           return prioritize(context[key], this.options[key], init);
         };
 
@@ -50,8 +35,7 @@ export class HttpLinkHandler extends ApolloLink {
         const useGETForQueries = this.options.useGETForQueries === true;
 
         const isQuery = operation.query.definitions.some(
-          (def) =>
-            def.kind === 'OperationDefinition' && def.operation === 'query',
+          def => def.kind === 'OperationDefinition' && def.operation === 'query'
         );
 
         if (useGETForQueries && isQuery) {
@@ -84,16 +68,12 @@ export class HttpLinkHandler extends ApolloLink {
 
         req.options.headers = mergeHeaders(req.options.headers, headers);
 
-        const sub = fetch(
-          req,
-          this.httpClient,
-          this.options.extractFiles,
-        ).subscribe({
-          next: (response) => {
-            operation.setContext({response});
+        const sub = fetch(req, this.httpClient, this.options.extractFiles).subscribe({
+          next: response => {
+            operation.setContext({ response });
             observer.next(response.body);
           },
-          error: (err) => observer.error(err),
+          error: err => observer.error(err),
           complete: () => observer.complete(),
         });
 

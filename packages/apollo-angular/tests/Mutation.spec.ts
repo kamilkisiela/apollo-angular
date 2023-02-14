@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {TestBed} from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-import {Mutation, Apollo, gql} from '../src';
+import { Mutation, Apollo, gql } from '../src';
 
 const mutation = gql`
   mutation addHero($name: String) {
@@ -17,7 +17,7 @@ export class AddHeroMutation extends Mutation {
 }
 
 describe('Mutation', () => {
-  let apolloMock: Apollo & {mutate: jest.Mock};
+  let apolloMock: Apollo & { mutate: jest.Mock };
   let addHero: AddHeroMutation;
 
   function createApollo() {
@@ -61,16 +61,16 @@ describe('Mutation', () => {
   });
 
   test('should pass variables to Apollo.mutate', () => {
-    addHero.mutate({foo: 1});
+    addHero.mutate({ foo: 1 });
 
     expect(apolloMock.mutate).toBeCalled();
     expect(apolloMock.mutate.mock.calls[0][0]).toMatchObject({
-      variables: {foo: 1},
+      variables: { foo: 1 },
     });
   });
 
   test('should pass options to Apollo.mutate', () => {
-    addHero.mutate({}, {fetchPolicy: 'no-cache'});
+    addHero.mutate({}, { fetchPolicy: 'no-cache' });
 
     expect(apolloMock.mutate).toBeCalled();
     expect(apolloMock.mutate.mock.calls[0][0]).toMatchObject({
@@ -79,7 +79,7 @@ describe('Mutation', () => {
   });
 
   test('should not overwrite query when options object is provided', () => {
-    addHero.mutate({}, {query: 'asd', fetchPolicy: 'cache-first'} as any);
+    addHero.mutate({}, { query: 'asd', fetchPolicy: 'cache-first' } as any);
 
     expect(apolloMock.mutate).toBeCalled();
     expect(apolloMock.mutate.mock.calls[0][0]).toMatchObject({

@@ -2,7 +2,7 @@
   description: Prevents production or dev due to perf, bug, build error, etc..
   name: blocking
 - color: ee0701
-  description: ""
+  description: ''
   name: bug
 - color: 0366d6
   description: Pull requests that update a dependency file
@@ -11,7 +11,7 @@
   description: Focuses on documentation changes
   name: docs
 - color: 84b6eb
-  description: ""
+  description: ''
   name: enhancement
 - color: a2eeef
   description: New addition or enhancement to existing solutions
@@ -26,26 +26,26 @@
   description: ❤ Has a reproduction in a codesandbox or single minimal repository
   name: has-reproduction
 - color: 128A0C
-  description: ""
+  description: ''
   name: help wanted
 - color: fbca04
-  description: ""
+  description: ''
   name: idea
 - color: 006b75
-  description: ""
+  description: ''
   name: in progress
 - color: 013f5b
   description: source of problem is not clear yet. the reproduction might help
   name: needs triage
 - color: cc317c
-  description: ""
+  description: ''
   name: question
 - color: 1d76db
-  description: ""
+  description: ''
   name: ready
 - color: 621b8e
-  description: ""
+  description: ''
   name: waiting-for-answer
 - color: ffffff
-  description: ""
+  description: ''
   name: wontfix

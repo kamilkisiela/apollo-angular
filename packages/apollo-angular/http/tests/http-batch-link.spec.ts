@@ -725,7 +725,7 @@ describe('HttpBatchLink', () => {
   });
 
   test('should cancel XHR when unsubscribing', (done: jest.DoneCallback) => {
-    const link = httpLink.create({uri: 'graphql', batchMax: 1});
+    const link = httpLink.create({ uri: 'graphql', batchMax: 1 });
     const op = {
       query: gql`
         query heroes {

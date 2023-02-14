@@ -2,7 +2,7 @@
 description: Update data with the Apollo.mutate
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Mutations
 
@@ -155,7 +155,10 @@ class UpvoteComponent {
 ```
 
 <Callout>
-Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an [`updateQueries`](../caching/interaction#updatequeries) callback to update the result of relevant queries with your mutation results.
+  Note that in general you shouldn't attempt to use the results from the mutation callback directly, instead you can
+  rely on Apollo's id-based cache updating to take care of it for you, or if necessary passing an
+  [`updateQueries`](../caching/interaction#updatequeries) callback to update the result of relevant queries with your
+  mutation results.
 </Callout>
 
 ## Optimistic UI
@@ -204,7 +207,9 @@ class PostComponent {
 For the example above, it is easy to construct an optimistic response, since we know the shape of the new comment and can approximately predict the created date. The optimistic response doesn't have to be exactly correct because it will always will be replaced with the real result from the server, but it should be close enough to make users feel like there is no delay.
 
 <Callout>
-As this comment is _new_ and not visible in the UI before the mutation, it won't appear automatically on the screen as a result of the mutation. You can use [`updateQueries`](../caching/interaction#updatequeries) to make it appear in this case.
+  As this comment is _new_ and not visible in the UI before the mutation, it won't appear automatically on the screen as
+  a result of the mutation. You can use [`updateQueries`](../caching/interaction#updatequeries) to make it appear in
+  this case.
 </Callout>
 
 ## Loading State
@@ -212,10 +217,10 @@ As this comment is _new_ and not visible in the UI before the mutation, it won't
 The result of `Apollo.mutate()` contains `loading` property. By default, it's always `false` and the result is emitted with the response from the ApolloLink execution chain. In order to correct it you can enable `useMutationLoading` flag in configuration.
 
 ```typescript
-import {HttpClientModule} from '@angular/common/http';
-import {ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS, APOLLO_FLAGS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -242,13 +247,14 @@ import {InMemoryCache} from '@apollo/client/core';
 })
 export class AppModule {}
 ```
+
 <Callout>
-`useMutationLoading` is disabled to avoid any breaking changes, this may be enabled in next major version.
+  `useMutationLoading` is disabled to avoid any breaking changes, this may be enabled in next major version.
 </Callout>
 
 ```typescript
-import {Component, Injectable} from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
+import { Component, Injectable } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 const UPVOTE_POST = gql`
   mutation UpvotePost($postId: Int!) {
@@ -273,7 +279,7 @@ class UpvoteService {
           postId,
         },
       })
-      .subscribe((result) => {
+      .subscribe(result => {
         console.log({
           loading: result.loading,
           data: result.data,

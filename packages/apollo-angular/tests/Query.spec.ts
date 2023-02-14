@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {TestBed} from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-import {Query, Apollo, gql} from '../src';
+import { Query, Apollo, gql } from '../src';
 
 const query = gql`
   query heroes {
@@ -28,7 +28,7 @@ describe('Query', () => {
     query: jest.Mock;
     use: (name: string) => Apollo;
   };
-  let apolloCustomMock: Apollo & {watchQuery: jest.Mock; query: jest.Mock};
+  let apolloCustomMock: Apollo & { watchQuery: jest.Mock; query: jest.Mock };
   let heroesQuery: HeroesQuery;
   let heroesNamedQuery: HeroesNamedQuery;
 
@@ -84,16 +84,16 @@ describe('Query', () => {
     });
 
     test('should pass variables to Apollo.watchQuery', () => {
-      heroesQuery.watch({foo: 1});
+      heroesQuery.watch({ foo: 1 });
 
       expect(apolloMock.watchQuery).toBeCalled();
       expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
-        variables: {foo: 1},
+        variables: { foo: 1 },
       });
     });
 
     test('should pass options to Apollo.watchQuery', () => {
-      heroesQuery.watch({}, {fetchPolicy: 'network-only'});
+      heroesQuery.watch({}, { fetchPolicy: 'network-only' });
 
       expect(apolloMock.watchQuery).toBeCalled();
       expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
@@ -102,7 +102,7 @@ describe('Query', () => {
     });
 
     test('should not overwrite query when options object is provided', () => {
-      heroesQuery.watch({}, {query: 'asd', fetchPolicy: 'cache-first'} as any);
+      heroesQuery.watch({}, { query: 'asd', fetchPolicy: 'cache-first' } as any);
 
       expect(apolloMock.watchQuery).toBeCalled();
       expect(apolloMock.watchQuery.mock.calls[0][0]).toMatchObject({
@@ -133,16 +133,16 @@ describe('Query', () => {
     });
 
     test('should pass variables to Apollo.query', () => {
-      heroesQuery.fetch({foo: 1});
+      heroesQuery.fetch({ foo: 1 });
 
       expect(apolloMock.query).toBeCalled();
       expect(apolloMock.query.mock.calls[0][0]).toMatchObject({
-        variables: {foo: 1},
+        variables: { foo: 1 },
       });
     });
 
     test('should pass options to Apollo.query', () => {
-      heroesQuery.fetch({}, {fetchPolicy: 'network-only'});
+      heroesQuery.fetch({}, { fetchPolicy: 'network-only' });
 
       expect(apolloMock.query).toBeCalled();
       expect(apolloMock.query.mock.calls[0][0]).toMatchObject({
@@ -151,7 +151,7 @@ describe('Query', () => {
     });
 
     test('should not overwrite query when options object is provided', () => {
-      heroesQuery.fetch({}, {query: 'asd', fetchPolicy: 'cache-first'} as any);
+      heroesQuery.fetch({}, { query: 'asd', fetchPolicy: 'cache-first' } as any);
 
       expect(apolloMock.query).toBeCalled();
       expect(apolloMock.query.mock.calls[0][0]).toMatchObject({

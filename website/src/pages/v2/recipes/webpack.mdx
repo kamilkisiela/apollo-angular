@@ -1,4 +1,4 @@
-import { PackageCmd } from '@theguild/components'
+import { PackageCmd } from '@theguild/components';
 
 # Webpack Loader
 
@@ -25,9 +25,9 @@ rules: [
   {
     test: /\.(graphql|gql)$/,
     exclude: /node_modules/,
-    loader: '@graphql-tools/webpack-loader'
-  }
-]
+    loader: '@graphql-tools/webpack-loader',
+  },
+];
 ```
 
 As you can see, `.graphql` or `.gql` files will be parsed whenever imported:
@@ -48,7 +48,6 @@ class ProfileComponent {
   }
 }
 ```
-
 
 ### Optional: Install and configure a custom Webpack configuration (when using Angular CLI)
 
@@ -131,8 +130,8 @@ Finally you have to manipulate your `angular.json` to accept your customized Web
   }
 }
 ```
-_(Based on [How to resolve import for the .graphql file with typescript and webpack](https://dev.to/open-graphql/how-to-resolve-import-for-the-graphql-file-with-typescript-and-webpack-35lf))_
 
+_(Based on [How to resolve import for the .graphql file with typescript and webpack](https://dev.to/open-graphql/how-to-resolve-import-for-the-graphql-file-with-typescript-and-webpack-35lf))_
 
 ## Jest
 

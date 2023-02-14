@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
+import { Component, Input } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 @Component({
   selector: 'app-upvoter',

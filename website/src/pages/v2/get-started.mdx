@@ -2,7 +2,7 @@
 description: Set up Apollo in your Angular app
 ---
 
-import { PackageCmd, Callout } from '@theguild/components'
+import { PackageCmd, Callout } from '@theguild/components';
 
 # Get Started
 
@@ -46,11 +46,7 @@ The `@apollo/client` package requires `AsyncIterable` so make sure your tsconfig
 {
   "compilerOptions": {
     // ...
-    "lib": [
-      "es2017",
-      "dom",
-      "esnext.asynciterable"
-    ]
+    "lib": ["es2017", "dom", "esnext.asynciterable"]
   }
 }
 ```
@@ -60,10 +56,10 @@ Great, now that you have all the dependencies you need, let's create your first 
 In our `app.module.ts` file use `APOLLO_OPTIONS` token to configure Apollo:
 
 ```typescript
-import {HttpClientModule} from '@angular/common/http';
-import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -119,7 +115,8 @@ property that is an `Observable`.
 An object passed through an Observable contains `loading`, `error`, and `data` properties. Apollo Client tracks error and loading state for you, which will be reflected in the `loading` and `error` properties. Once the result of your query comes back, it will be attached to the `data` property.
 
 <Callout>
-It's also possible to fetch data only once. The `query` method of `Apollo` service returns an `Observable` that also resolves with the same result as above.
+  It's also possible to fetch data only once. The `query` method of `Apollo` service returns an `Observable` that also
+  resolves with the same result as above.
 </Callout>
 
 Let's create an `ExchangeRates` component to see the `Apollo` service in action!
@@ -129,18 +126,14 @@ Let's create an `ExchangeRates` component to see the `Apollo` service in action!
 If you want to see how easy it is to fetch data from a GraphQL server with Apollo, you can use the `query` method. It is as easy as this:
 
 ```typescript
-import {Component, OnInit} from '@angular/core';
-import {Apollo, gql} from 'apollo-angular';
+import { Component, OnInit } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 @Component({
   selector: 'exchange-rates',
   template: `
-    <div *ngIf="loading">
-      Loading...
-    </div>
-    <div *ngIf="error">
-      Error :(
-    </div>
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="error">Error :(</div>
     <div *ngIf="rates">
       <div *ngFor="let rate of rates">
         <p>{{ rate.currency }}: {{ rate.rate }}</p>
@@ -187,10 +180,10 @@ It is possible to have several apollo clients in the application, for example po
 In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo Client:
 
 ```typescript
-import {HttpClientModule} from '@angular/common/http';
-import {ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -218,8 +211,8 @@ export class AppModule {}
 ### Basic Usage
 
 ```typescript
-import {Injectable} from '@angular/core';
-import {Apollo, ApolloBase, gql} from 'apollo-angular';
+import { Injectable } from '@angular/core';
+import { Apollo, ApolloBase, gql } from 'apollo-angular';
 
 @Injectable()
 class ApiService {

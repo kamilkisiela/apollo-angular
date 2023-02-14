@@ -2,7 +2,7 @@
 description: Additional API to use GraphQL in Angular
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Query, Mutation, Subscription Services
 
@@ -22,6 +22,7 @@ In this approach GraphQL Documents are first-class citizens, you think about the
 The best part about the new API is that you don't have to create those services, there's a tool that does it for you.
 
 To read more about it, go to ["Code Generation"](#code-generation) section
+
 </Callout>
 
 ## Query
@@ -31,8 +32,8 @@ To get started with the new API, let's see how you define queries with it.
 You create a service and extend it with a `Query` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
 ```typescript
-import {Injectable} from '@angular/core';
-import {Query, gql} from 'apollo-angular';
+import { Injectable } from '@angular/core';
+import { Query, gql } from 'apollo-angular';
 
 export interface Post {
   id: string;
@@ -47,7 +48,6 @@ export interface Post {
 export interface Response {
   posts: Post[];
 }
-
 
 @Injectable({
   providedIn: 'root',
@@ -138,8 +138,8 @@ export class ListComponent implements OnInit {
 You create a service and extend it with a `Mutation` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
 ```typescript
-import {Injectable} from '@angular/core';
-import {Mutation, gql} from 'apollo-angular';
+import { Injectable } from '@angular/core';
+import { Mutation, gql } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -163,16 +163,12 @@ We have now a ready to use GraphQL Mutation.
 Let's see how to actually use it in a component:
 
 ```typescript
-import {Component, Input} from '@angular/core';
-import {UpvotePostGQL} from './graphql';
+import { Component, Input } from '@angular/core';
+import { UpvotePostGQL } from './graphql';
 
 @Component({
   selector: 'app-upvoter',
-  template: `
-    <button (click)="upvote()">
-      Upvote
-    </button>
-  `,
+  template: ` <button (click)="upvote()">Upvote</button> `,
 })
 export class UpvoterComponent {
   @Input()
@@ -201,8 +197,8 @@ export class UpvoterComponent {
 You create a service and extend it with a `Subscription` class from `apollo-angular`. Only thing you need to set is a `document` property.
 
 ```typescript
-import {Injectable} from '@angular/core';
-import {Subscription, gql} from 'apollo-angular';
+import { Injectable } from '@angular/core';
+import { Subscription, gql } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root',

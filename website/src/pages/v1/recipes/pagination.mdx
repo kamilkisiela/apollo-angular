@@ -6,7 +6,6 @@ There are basically two ways of fetching paginated data: numbered pages, and cur
 
 In this article, we'll cover the technical details of using Apollo to implement both approaches.
 
-
 ## Using `fetchMore`
 
 Apollo lets you do pagination with a method called [`fetchMore`](../features/cache-updates#incremental-loading-fetchmore). You need to specify what query and variables to use for the update, and how to merge the new query result with the existing data on the client. How exactly you do that will determine what kind of pagination you are implementing.
@@ -78,6 +77,7 @@ class FeedComponent implements OnInit {
   }
 }
 ```
+
 [source code](https://github.com/apollographql/githunt-angular)
 
 As you can see, `fetchMore` is accessible through the `QueryRef` object.
@@ -89,15 +89,10 @@ In the example above, the `fetchMore` function is called from the UI component:
 ```html
 <loading *ngIf="loading"></loading>
 <div *ngIf="!loading">
-  <feed-entry
-    *ngFor="let entry of feed"
-    [entry]="entry"
-    [currentUser]="currentUser"
-    (onVote)="onVote($event)">
+  <feed-entry *ngFor="let entry of feed" [entry]="entry" [currentUser]="currentUser" (onVote)="onVote($event)">
   </feed-entry>
 
   <a (click)="fetchMore()">Load more</a>
-
 </div>
 ```
 

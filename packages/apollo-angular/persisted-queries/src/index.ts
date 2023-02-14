@@ -1,6 +1,6 @@
-import {ApolloLink} from '@apollo/client/link/core';
-import {setContext} from '@apollo/client/link/context';
-import {createPersistedQueryLink as _createPersistedQueryLink} from '@apollo/client/link/persisted-queries';
+import { ApolloLink } from '@apollo/client/link/core';
+import { setContext } from '@apollo/client/link/context';
+import { createPersistedQueryLink as _createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
 
 export type Options = Parameters<typeof _createPersistedQueryLink>[0];
 

@@ -1,4 +1,4 @@
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Advanced Topics on Caching
 
@@ -34,10 +34,10 @@ apollo.mutate({
           }
         }
       `,
-      variables: { repoName: 'apollographql/apollo-client' }
-    }
-  ]
-})
+      variables: { repoName: 'apollographql/apollo-client' },
+    },
+  ],
+});
 ```
 
 Please note that if you call `refetchQueries` with an array of strings, then Apollo Client will look for any previously called queries that have the same names as the provided strings. It will then refetch those queries with their current variables.
@@ -45,17 +45,17 @@ Please note that if you call `refetchQueries` with an array of strings, then Apo
 A very common way of using `refetchQueries` is to import queries defined for other components to make sure that those components will be updated:
 
 ```ts
-import RepoCommentsQuery from '../queries/RepoCommentsQuery'
+import RepoCommentsQuery from '../queries/RepoCommentsQuery';
 
 apollo.mutate({
   //... insert comment mutation
   refetchQueries: [
     {
       query: RepoCommentsQuery,
-      variables: { repoFullName: 'apollographql/apollo-client' }
-    }
-  ]
-})
+      variables: { repoFullName: 'apollographql/apollo-client' },
+    },
+  ],
+});
 ```
 
 Using `update` gives you full control over the cache, allowing you to make changes to your data model in response to a mutation in any way you like. `update` is the recommended way of updating the cache after a query. It is explained in full [here](../data/mutations).
@@ -118,47 +118,47 @@ const FEED_QUERY = gql`
       # ...
     }
   }
-`
+`;
 
 @Component({
   // ...
 })
 class FeedComponent {
-  feedQuery: QueryRef<any>
-  feed: Observable<any>
-  offset: number
+  feedQuery: QueryRef<any>;
+  feed: Observable<any>;
+  offset: number;
 
   constructor(private apollo: Apollo) {
     this.feedQuery = this.apollo.watchQuery({
       query: FEED_QUERY,
       variables: {
         offset: 0,
-        limit: 10
+        limit: 10,
       },
-      fetchPolicy: 'cache-and-network'
-    })
+      fetchPolicy: 'cache-and-network',
+    });
 
     this.feed = this.feedQuery.valueChanges.pipe(
       tap(result => {
-        this.offset = result.data.feed.length
+        this.offset = result.data.feed.length;
       }),
       map(result => result.data.feed)
-    )
+    );
   }
 
   loadMore() {
     this.feedQuery.fetchMore({
       variables: {
-        offset: this.offset
+        offset: this.offset,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev
+        if (!fetchMoreResult) return prev;
 
         return Object.assign({}, prev, {
-          feed: [...prev.feed, ...fetchMoreResult.feed]
-        })
-      }
-    })
+          feed: [...prev.feed, ...fetchMoreResult.feed],
+        });
+      },
+    });
   }
 }
 ```
@@ -188,7 +188,7 @@ const query = gql`
       ...FeedEntry
     }
   }
-`
+`;
 ```
 
 With the above query, even with multiple `fetchMore`s, the results of each feed update will always result in the `feed` key in the store being updated with the latest accumulated values. In this example, we also use the `@connection` directive's optional `filter` argument to include the `type` query argument in the store key, which results in multiple store values that accumulate queries from each type of feed.
@@ -205,12 +205,12 @@ cache.writeQuery({
     }
   `,
   variables: {
-    type: 'top'
+    type: 'top',
   },
   data: {
-    feed: []
-  }
-})
+    feed: [],
+  },
+});
 ```
 
 Note that because we are only using the `type` argument in the store key, we don't have to provide `offset` or `limit`.
@@ -249,7 +249,7 @@ query Book($id: ID!) {
 We know that the data is most likely already in the client cache, but because it was requested with a different query, Apollo Client doesn't know that. To tell Apollo Client where to look for the existing `book` data, we can define a field policy `read` function for the `book` field:
 
 ```ts
-import { InMemoryCache } from '@apollo/client/core'
+import { InMemoryCache } from '@apollo/client/core';
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -258,13 +258,13 @@ const cache = new InMemoryCache({
         book(_, { args, toReference }) {
           return toReference({
             __typename: 'Book',
-            id: args.id
-          })
-        }
-      }
-    }
-  }
-})
+            id: args.id,
+          });
+        },
+      },
+    },
+  },
+});
 ```
 
 Now whenever a query is run that includes a `book` field, the `read` function above will be executed, and return a reference that points to the book entity that was already created in the cache when the `Books` list view query ran. Apollo Client will use the reference returned by the `read` function to look up the item in its cache. `toReference` is a helper utility that is passed into `read` functions as part of the second parameter options object, and is used to generate an entity reference based on its `__typename` and `id`.
@@ -296,15 +296,15 @@ If you would like to persist and rehydrate your Apollo Cache from a storage prov
 To get started, simply pass your Apollo Cache and a storage provider to `persistCacheSync`. By default, the contents of your Apollo Cache will be immediately restored, and persisted upon every write to the cache with a short configurable debounce interval.
 
 ```ts
-import { InMemoryCache } from '@apollo/client/core'
-import { persistCacheSync, LocalStorageWrapper } from 'apollo3-cache-persist'
+import { InMemoryCache } from '@apollo/client/core';
+import { persistCacheSync, LocalStorageWrapper } from 'apollo3-cache-persist';
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 
 persistCacheSync({
   cache,
-  storage: new LocalStorageWrapper(window.LocalStorage)
-})
+  storage: new LocalStorageWrapper(window.LocalStorage),
+});
 ```
 
 For more advanced usage, such as persisting the cache when the app is in the background, and additional configuration options, please check the [README of `apollo3-cache-persist`](https://github.com/apollographql/apollo-cache-persist).

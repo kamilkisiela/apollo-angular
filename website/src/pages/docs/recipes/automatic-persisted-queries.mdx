@@ -1,4 +1,4 @@
-import { PackageCmd } from '@theguild/components'
+import { PackageCmd } from '@theguild/components';
 
 # Automatic Persisted Queries
 
@@ -31,8 +31,8 @@ This link doesn't include an SHA-256 hash function by default, to avoid forcing 
 Use `createPersistedQueryLink` function and put it before `HttpLink` in the link chain.
 
 ```ts
-import {HttpLink} from 'apollo-angular/http'; // or batch link
-import {createPersistedQueryLink} from 'apollo-angular/persisted-queries';
+import { HttpLink } from 'apollo-angular/http'; // or batch link
+import { createPersistedQueryLink } from 'apollo-angular/persisted-queries';
 import { sha256 } from 'crypto-hash';
 
 @NgModule({
@@ -41,10 +41,8 @@ import { sha256 } from 'crypto-hash';
 class AppModule {
   constructor(httpLink: HttpLink) {
     const link = createPersistedQueryLink({
-      sha256
-    }).concat(
-      httpLink.create({uri: '/graphql'}),
-    );
+      sha256,
+    }).concat(httpLink.create({ uri: '/graphql' }));
   }
 }
 ```

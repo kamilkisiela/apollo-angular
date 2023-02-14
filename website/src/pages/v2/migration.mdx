@@ -2,10 +2,9 @@
 description: Updating your app to Angular Apollo 2.0 and Apollo Client 3.0
 ---
 
-import { Tabs, Tab, Callout } from '@theguild/components'
+import { Tabs, Tab, Callout } from '@theguild/components';
 
 # Migration Guide
-
 
 - Apollo Client is now distributed as the `@apollo/client` package (previous versions are distributed as `apollo-client`).
 - The `@apollo/client` package includes both core logic and GraphQL request handling, which previously required installing separate packages.
@@ -22,22 +21,25 @@ Apollo Angular comes with set of migration schematics:
     ng update apollo-angular
 
 <Callout type="warning">
-Important! Migration doesn't cover all use-cases and NgModules like `ApolloModule` or `HttpLinkModule` have to be deleted manually. To improve the migration script, please open issues and PRs!
+  Important! Migration doesn't cover all use-cases and NgModules like `ApolloModule` or `HttpLinkModule` have to be
+  deleted manually. To improve the migration script, please open issues and PRs!
 </Callout>
 
 ## Installation
 
 To get started with the v2.0, you will change your imports to use the two packages. A typical upgrade looks like this:
+
 <Tabs items={['Before', 'After', 'Diff']}>
 <Tab>
 
 ```typescript
-import {ApolloClient} from 'apollo-client';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {Apollo} from 'apollo-angular';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {HttpLink} from 'apollo-angular-link-http';
+import { HttpLink } from 'apollo-angular-link-http';
 ```
+
 </Tab>
 <Tab>
 ```typescript
@@ -74,29 +76,30 @@ import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 @NgModule({
-  imports: [
-    // ... other modules
-    HttpClientModule,
-    HttpLinkModule,
-    ApolloModule,
-  ],
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink) {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: 'http://localhost:3000',
-          }),
-        };
-      },
-      deps: [HttpLink],
-    },
-  ],
+imports: [
+// ... other modules
+HttpClientModule,
+HttpLinkModule,
+ApolloModule,
+],
+providers: [
+{
+provide: APOLLO_OPTIONS,
+useFactory(httpLink: HttpLink) {
+return {
+cache: new InMemoryCache(),
+link: httpLink.create({
+uri: 'http://localhost:3000',
+}),
+};
+},
+deps: [HttpLink],
+},
+],
 })
 class AppModule {}
-```
+
+````
 </Tab>
 <Tab>
 
@@ -128,7 +131,8 @@ import {InMemoryCache} from '@apollo/client/core';
   ],
 })
 class AppModule {}
-```
+````
+
 </Tab>
 <Tab>
 
@@ -167,6 +171,7 @@ import {HttpClientModule} from '@angular/common/http';
 })
 class AppModule {}
 ```
+
 </Tab>
 </Tabs>
 
@@ -186,7 +191,7 @@ Few things to be explained.
 Dropping `SelectPipe` allowed us to completely remove the need for `ApolloModule` (`NgModule`). There are two reasons. We haven't seen any big applications using the pipe and the logic there is very simple to recreate.
 
 ```typescript
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'select',
@@ -227,7 +232,7 @@ The separate `apollo-link-*` packages, that were previously maintained in the ht
 The `apollo-angular` package includes `graphql-tag` as a dependency and re-exports `gql`. To simplify your dependencies, we recommend importing `gql` from `apollo-angular` and removing all `graphql-tag` dependencies.
 
 ```typescript
-import {gql} from 'apollo-angular';
+import { gql } from 'apollo-angular';
 ```
 
 ### Using apollo-utilities without the rest of Apollo Client
@@ -235,7 +240,7 @@ import {gql} from 'apollo-angular';
 The `apollo-utilities` package has been removed, but you can access the utilities themselves from the `@apollo/client/utilities` entry point:
 
 ```typescript
-import {isReference, isInlineFragment} from '@apollo/client/utilities';
+import { isReference, isInlineFragment } from '@apollo/client/utilities';
 ```
 
 ### Using apollo-cache and/or apollo-cache-inmemory without the rest of Apollo Client
@@ -243,7 +248,7 @@ import {isReference, isInlineFragment} from '@apollo/client/utilities';
 The `apollo-cache` and `apollo-cache-inmemory` packages have been removed, but if you're interested in using Apollo Client's cache by itself, you can access their contents with the `@apollo/client/cache` entry point:
 
 ```typescript
-import {ApolloCache, InMemoryCache} from '@apollo/client/cache';
+import { ApolloCache, InMemoryCache } from '@apollo/client/cache';
 ```
 
 ### Breaking cache changes

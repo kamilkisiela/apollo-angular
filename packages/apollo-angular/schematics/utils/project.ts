@@ -1,6 +1,6 @@
-import {Tree, SchematicsException} from '@angular-devkit/schematics';
+import { Tree, SchematicsException } from '@angular-devkit/schematics';
 
-import {getJsonFile} from '.';
+import { getJsonFile } from '.';
 
 export function getMainPath(host: Tree, name?: string) {
   const project = getProject(host, name);
@@ -22,13 +22,11 @@ function getProject(host: Tree, name?: string) {
 
   const projectNames = Object.keys(config.projects);
   if (projectNames.length === 0) {
-    throw new SchematicsException(
-      `Invalid configuration object! No project found!`,
-    );
+    throw new SchematicsException(`Invalid configuration object! No project found!`);
   }
 
   if (projectNames.length > 1) {
-    const {defaultProject} = config;
+    const { defaultProject } = config;
     return config.projects[defaultProject];
   }
 
@@ -45,12 +43,11 @@ function getWorkspaceConfig(host: Tree): any {
 
 function getWorkspacePath(host: Tree): string {
   const possibleFiles = ['/angular.json', '/.angular.json'];
-  const path = possibleFiles.find((path) => host.exists(path));
+  const path = possibleFiles.find(path => host.exists(path));
 
   if (!path) {
     throw new SchematicsException(
-      `Couldn't find Angular configuration file! ` +
-        `Execute in a project, created with Angular CLI ^6.0.`,
+      `Couldn't find Angular configuration file! ` + `Execute in a project, created with Angular CLI ^6.0.`
     );
   }
 

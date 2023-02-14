@@ -1,6 +1,6 @@
 // http
-export {HttpLink, HttpLinkHandler} from './http-link';
+export { HttpLink, HttpLinkHandler } from './http-link';
 // http-batch
-export {HttpBatchLink, HttpBatchLinkHandler} from './http-batch-link';
+export { HttpBatchLink, HttpBatchLinkHandler } from './http-batch-link';
 // common
-export {BatchOptions, Options} from './types';
+export { BatchOptions, Options } from './types';

@@ -2,7 +2,7 @@
 description: Get real-time updates from your GraphQL server
 ---
 
-import { Callout } from '@theguild/components'
+import { Callout } from '@theguild/components';
 
 # Subscriptions
 
@@ -64,22 +64,22 @@ Because subscriptions maintain a persistent connection, they can't use the defau
 Let's look at how to add support for this transport to Apollo Client.
 
 ```ts
-import { WebSocketLink } from '@apollo/client/link/ws'
+import { WebSocketLink } from '@apollo/client/link/ws';
 
 const wsClient = new WebSocketLink({
   uri: 'ws://localhost:5000/graphql',
   options: {
-    reconnect: true
-  }
-})
+    reconnect: true,
+  },
+});
 ```
 
 ```ts
-import { APOLLO_OPTIONS } from 'apollo-angular'
-import { HttpLink } from 'apollo-angular/http'
-import { split, ApolloClientOptions } from '@apollo/client/core'
-import { WebSocketLink } from '@apollo/client/link/ws'
-import { getMainDefinition } from '@apollo/client/utilities'
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { split, ApolloClientOptions } from '@apollo/client/core';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 @NgModule({
   providers: [
@@ -88,37 +88,37 @@ import { getMainDefinition } from '@apollo/client/utilities'
       useFactory(httpLink: HttpLink): ApolloClientOptions {
         // Create an http link:
         const http = httpLink.create({
-          uri: 'http://localhost:3000/graphql'
-        })
+          uri: 'http://localhost:3000/graphql',
+        });
 
         // Create a WebSocket link:
         const ws = new WebSocketLink({
           uri: 'ws://localhost:5000/',
           options: {
-            reconnect: true
-          }
-        })
+            reconnect: true,
+          },
+        });
 
         // using the ability to split links, you can send data to each link
         // depending on what kind of operation is being sent
         const link = split(
           // split based on operation type
           ({ query }) => {
-            const { kind, operation } = getMainDefinition(query)
-            return kind === 'OperationDefinition' && operation === 'subscription'
+            const { kind, operation } = getMainDefinition(query);
+            return kind === 'OperationDefinition' && operation === 'subscription';
           },
           ws,
           http
-        )
+        );
 
         return {
-          link
+          link,
           // ... options
-        }
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 class AppModule {}
 ```
@@ -175,8 +175,8 @@ The `subscribeToMore` is a bit different from `subscribe`. It is a method availa
 Here is a regular query:
 
 ```typescript
-import { Apollo, QueryRef, gql } from 'apollo-angular'
-import { Observable } from 'rxjs'
+import { Apollo, QueryRef, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
 
 const COMMENT_QUERY = gql`
   query Comment($repoName: String!) {
@@ -187,25 +187,25 @@ const COMMENT_QUERY = gql`
       }
     }
   }
-`
+`;
 
 @Component({
   // ...
 })
 class CommentsComponent {
-  commentsQuery: QueryRef<any>
-  comments: Observable<any>
-  params: any
+  commentsQuery: QueryRef<any>;
+  comments: Observable<any>;
+  params: any;
 
   constructor(apollo: Apollo) {
     this.commentsQuery = apollo.watchQuery({
       query: COMMENT_QUERY,
       variables: {
-        repoName: `${params.org}/${params.repoName}`
-      }
-    })
+        repoName: `${params.org}/${params.repoName}`,
+      },
+    });
 
-    this.comments = this.commentsQuery.valueChanges // async results
+    this.comments = this.commentsQuery.valueChanges; // async results
   }
 }
 ```
@@ -224,13 +224,13 @@ const COMMENTS_SUBSCRIPTION = gql`
       content
     }
   }
-`
+`;
 
 @Component({
   // ...
 })
 class CommentsComponent {
-  commentsQuery: QueryRef<any>
+  commentsQuery: QueryRef<any>;
 
   // ... it is the same component as one above
 
@@ -238,23 +238,23 @@ class CommentsComponent {
     this.commentsQuery.subscribeToMore({
       document: COMMENTS_SUBSCRIPTION,
       variables: {
-        repoName: params.repoFullName
+        repoName: params.repoFullName,
       },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) {
-          return prev
+          return prev;
         }
 
-        const newFeedItem = subscriptionData.data.commentAdded
+        const newFeedItem = subscriptionData.data.commentAdded;
 
         return {
           ...prev,
           entry: {
-            comments: [newFeedItem, ...prev.entry.comments]
-          }
-        }
-      }
-    })
+            comments: [newFeedItem, ...prev.entry.comments],
+          },
+        };
+      },
+    });
   }
 }
 ```
@@ -270,8 +270,8 @@ class CommentsComponent {
 
   ngOnInit() {
     this.subscribeToNewComments({
-      repoFullName: params.repoFullName
-    })
+      repoFullName: params.repoFullName,
+    });
   }
 }
 ```
@@ -290,17 +290,17 @@ We recommend to use `subscribe` in most cases and leave `subscribeToMore` for th
 In many cases it is necessary to authenticate clients before allowing them to receive subscription results. To do this, the `SubscriptionClient` constructor accepts a `connectionParams` field, which passes a custom object that the server can use to validate the connection before setting up any subscriptions.
 
 ```ts
-import { WebSocketLink } from 'apollo-link-ws'
+import { WebSocketLink } from 'apollo-link-ws';
 
 const wsLink = new WebSocketLink({
   uri: `ws://localhost:5000/graphql`,
   options: {
     reconnect: true,
     connectionParams: {
-      authToken: user.authToken
-    }
-  }
-})
+      authToken: user.authToken,
+    },
+  },
+});
 ```
 
 <Callout>

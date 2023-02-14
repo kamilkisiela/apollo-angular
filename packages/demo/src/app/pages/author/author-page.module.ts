@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {AuthorPageComponent} from './author-page.component';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AuthorPageComponent } from './author-page.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {

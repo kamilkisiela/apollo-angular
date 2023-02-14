@@ -2,7 +2,7 @@
 description: Set up Apollo in your Angular app
 ---
 
-import { PackageCmd, Callout } from '@theguild/components'
+import { PackageCmd, Callout } from '@theguild/components';
 
 # Get Started
 
@@ -25,7 +25,7 @@ ng add apollo-angular
 One thing you need to set is the URL of your GraphQL Server, so open `src/app/graphql.module.ts` and set `uri` variables:
 
 ```ts filename="src/app/graphql.module.ts"
-const uri = 'https://48p1r2roz4.sse.codesandbox.io' // our GraphQL API
+const uri = 'https://48p1r2roz4.sse.codesandbox.io'; // our GraphQL API
 ```
 
 **Done!** You can now create your first query, [let's go through it together here](#request-data).
@@ -56,10 +56,10 @@ Great, now that you have all the dependencies you need, let's create your first 
 In our `app.module.ts` file use `APOLLO_OPTIONS` token to configure Apollo:
 
 ```ts filename="app.module.ts" {10}
-import { HttpClientModule } from '@angular/common/http'
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular'
-import { HttpLink } from 'apollo-angular/http'
-import { InMemoryCache } from '@apollo/client/core'
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -70,13 +70,13 @@ import { InMemoryCache } from '@apollo/client/core'
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://48p1r2roz4.sse.codesandbox.io'
-          })
-        }
+            uri: 'https://48p1r2roz4.sse.codesandbox.io',
+          }),
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 export class AppModule {}
 ```
@@ -126,8 +126,8 @@ Let's create an `ExchangeRates` component to see the `Apollo` service in action!
 If you want to see how easy it is to fetch data from a GraphQL server with Apollo, you can use the `query` method. It is as easy as this:
 
 ```ts
-import { Component, OnInit } from '@angular/core'
-import { Apollo, gql } from 'apollo-angular'
+import { Component, OnInit } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 @Component({
   selector: 'exchange-rates',
@@ -139,12 +139,12 @@ import { Apollo, gql } from 'apollo-angular'
         <p>{{ rate.currency }}: {{ rate.rate }}</p>
       </div>
     </div>
-  `
+  `,
 })
 export class ExchangeRates implements OnInit {
-  rates: any[]
-  loading = true
-  error: any
+  rates: any[];
+  loading = true;
+  error: any;
 
   constructor(private apollo: Apollo) {}
 
@@ -158,13 +158,13 @@ export class ExchangeRates implements OnInit {
               rate
             }
           }
-        `
+        `,
       })
       .valueChanges.subscribe((result: any) => {
-        this.rates = result.data?.rates
-        this.loading = result.loading
-        this.error = result.error
-      })
+        this.rates = result.data?.rates;
+        this.loading = result.loading;
+        this.error = result.error;
+      });
   }
 }
 ```
@@ -180,10 +180,10 @@ It is possible to have several apollo clients in the application, for example po
 In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo Client:
 
 ```ts filename="app.module.ts"
-import { HttpClientModule } from '@angular/common/http'
-import { ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions } from 'apollo-angular'
-import { HttpLink } from 'apollo-angular/http'
-import { InMemoryCache } from '@apollo/client/core'
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_NAMED_OPTIONS, NamedOptions } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   imports: [BrowserModule, ApolloModule, HttpClientModule],
@@ -196,14 +196,14 @@ import { InMemoryCache } from '@apollo/client/core'
             // <-- This settings will be saved by name: newClientName
             cache: new InMemoryCache(),
             link: httpLink.create({
-              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'
-            })
-          }
-        }
+              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
+            }),
+          },
+        };
       },
-      deps: [HttpLink]
-    }
-  ]
+      deps: [HttpLink],
+    },
+  ],
 })
 export class AppModule {}
 ```
@@ -211,15 +211,15 @@ export class AppModule {}
 ### Basic Usage
 
 ```ts
-import { Injectable } from '@angular/core'
-import { Apollo, ApolloBase, gql } from 'apollo-angular'
+import { Injectable } from '@angular/core';
+import { Apollo, ApolloBase, gql } from 'apollo-angular';
 
 @Injectable()
 class ApiService {
-  private apollo: ApolloBase
+  private apollo: ApolloBase;
 
   constructor(private apolloProvider: Apollo) {
-    this.apollo = this.apolloProvider.use('newClientName')
+    this.apollo = this.apolloProvider.use('newClientName');
   }
 
   getData(): Observable<ApolloQueryResult> {
@@ -231,8 +231,8 @@ class ApiService {
             rate
           }
         }
-      `
-    })
+      `,
+    });
   }
 }
 ```
