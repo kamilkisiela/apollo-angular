@@ -364,17 +364,6 @@
     "@angular-devkit/architect" "0.1501.5"
     rxjs "6.6.7"
 
-"@angular-devkit/core@14.2.10":
-  version "14.2.10"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-14.2.10.tgz#9eedb7cf783030252f0c7546ce80fc321633b499"
-  integrity sha512-K4AO7mROTdbhQ7chtyQd6oPwmuL+BPUh+wn6Aq1qrmYJK4UZYFOPp8fi/Ehs8meCEeywtrssOPfrOE4Gsre9dg==
-  dependencies:
-    ajv "8.11.0"
-    ajv-formats "2.1.1"
-    jsonc-parser "3.1.0"
-    rxjs "6.6.7"
-    source-map "0.7.4"
-
 "@angular-devkit/core@15.1.5", "@angular-devkit/core@^15.1.5":
   version "15.1.5"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-15.1.5.tgz#e0b3cf7e41c95357ad6f5592491f67d5fe39f85b"
@@ -385,17 +374,6 @@
     jsonc-parser "3.2.0"
     rxjs "6.6.7"
     source-map "0.7.4"
-
-"@angular-devkit/schematics@14.2.10":
-  version "14.2.10"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-14.2.10.tgz#91fcc85199aa7fa9a3a0cb49d8a5266421f9d5e3"
-  integrity sha512-MMp31KpJTwKHisXOq+6VOXYApq97hZxFaFmZk396X5aIFTCELUwjcezQDk+u2nEs5iK/COUfnN3plGcfJxYhQA==
-  dependencies:
-    "@angular-devkit/core" "14.2.10"
-    jsonc-parser "3.1.0"
-    magic-string "0.26.2"
-    ora "5.4.1"
-    rxjs "6.6.7"
 
 "@angular-devkit/schematics@15.1.5", "@angular-devkit/schematics@^15.1.5":
   version "15.1.5"
@@ -2883,7 +2861,7 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@schematics/angular@15.1.5":
+"@schematics/angular@15.1.5", "@schematics/angular@^15.0.0":
   version "15.1.5"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-15.1.5.tgz#ef7d00129169d2707dab6a527a5648c217cfeba2"
   integrity sha512-mw5adVNSLX8h6c8F0tNEe11LVOlj100c1PrPggZNVz9nd2fwb32SVFSx+FmOxLVfE1kfnPgsvLpDH23z8SF6bg==
@@ -2891,15 +2869,6 @@
     "@angular-devkit/core" "15.1.5"
     "@angular-devkit/schematics" "15.1.5"
     jsonc-parser "3.2.0"
-
-"@schematics/angular@^14.0.6":
-  version "14.2.10"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-14.2.10.tgz#676b045ea647e8908ade169ebb688e40b158ca83"
-  integrity sha512-YFTc/9QJdx422XcApizEcVLKoyknu8b9zHIlAepZCu7WkV8GPT0hvVEHQ7KBWys5aQ7pPZMT0JpZLeAz0F2xYQ==
-  dependencies:
-    "@angular-devkit/core" "14.2.10"
-    "@angular-devkit/schematics" "14.2.10"
-    jsonc-parser "3.1.0"
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.51"
@@ -3648,16 +3617,6 @@ ajv-keywords@^5.0.0:
   integrity sha512-YCS/JNFAUyr5vAuhk1DWm1CBxRHW9LbJ2ozWeemrIqpbsqKjHVxYPyi5GC0rjZIT5JxJ3virVTS8wk4i/Z+krw==
   dependencies:
     fast-deep-equal "^3.1.3"
-
-ajv@8.11.0:
-  version "8.11.0"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.11.0.tgz#977e91dd96ca669f54a11e23e378e33b884a565f"
-  integrity sha512-wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==
-  dependencies:
-    fast-deep-equal "^3.1.1"
-    json-schema-traverse "^1.0.0"
-    require-from-string "^2.0.2"
-    uri-js "^4.2.2"
 
 ajv@8.12.0, ajv@^8.0.0, ajv@^8.10.0, ajv@^8.8.0:
   version "8.12.0"
@@ -8592,11 +8551,6 @@ json5@^2.1.2, json5@^2.2.1, json5@^2.2.2:
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
-jsonc-parser@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/jsonc-parser/-/jsonc-parser-3.1.0.tgz#73b8f0e5c940b83d03476bc2e51a20ef0932615d"
-  integrity sha512-DRf0QjnNeCUds3xTjKlQQ3DpJD51GvDjJfnxUVWg6PZTo2otSm+slzNAxU/35hF8/oJIKoG9slq30JYOsF2azg==
-
 jsonc-parser@3.2.0, jsonc-parser@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/jsonc-parser/-/jsonc-parser-3.2.0.tgz#31ff3f4c2b9793f89c67212627c51c6394f88e76"
@@ -8941,13 +8895,6 @@ lru-cache@^7.4.4, lru-cache@^7.5.1, lru-cache@^7.7.1:
   version "7.14.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.14.1.tgz#8da8d2f5f59827edb388e63e459ac23d6d408fea"
   integrity sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==
-
-magic-string@0.26.2:
-  version "0.26.2"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.26.2.tgz#5331700e4158cd6befda738bb6b0c7b93c0d4432"
-  integrity sha512-NzzlXpclt5zAbmo6h6jNc8zl2gNRGHvmsZW4IvZhTC4W7k4OlLP+S5YLussa/r3ixNT66KOQfNORlXHSOy/X4A==
-  dependencies:
-    sourcemap-codec "^1.4.8"
 
 magic-string@0.27.0, magic-string@^0.27.0:
   version "0.27.0"
@@ -12651,11 +12598,6 @@ source-map@^0.5.6:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
-
-sourcemap-codec@^1.4.8:
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
-  integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
 
 space-separated-tokens@^2.0.0:
   version "2.0.2"
