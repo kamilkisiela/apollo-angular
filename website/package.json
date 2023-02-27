@@ -18,7 +18,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@theguild/algolia": "1.1.2",
+    "@theguild/algolia": "1.1.4",
     "@theguild/tailwind-config": "0.2.1",
     "@types/node": "18.14.1",
     "@types/react": "18.0.28",
