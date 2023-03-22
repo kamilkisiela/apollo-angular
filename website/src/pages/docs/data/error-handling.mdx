@@ -84,7 +84,28 @@ object containing the following keys:
 - `graphQLErrors`: An array of errors from the GraphQL endpoint
 - `networkError`: any error during the link execution or server response
 
-Ignoring errors
+### Using the error link
+
+To incoporate the error link into the apollo client,
+it must be combined with other links using `ApolloLink.from({...})`:
+
+```ts
+import { onError } from '@apollo/client/link/error';
+import { ApolloLink } from '@apollo/client/core';
+import { HttpLink } from 'apollo-angular/http';
+
+const httpLink = new HttpLink({
+  uri: 'http://localhost:8080/graphql'
+});
+const errorLink = onError(({...}) => {...});
+
+apollo.create({
+  link: ApolloLink.from([errorLink, httpLink]),
+  cache: new InMemoryCache(),
+});
+```
+
+### Ignoring errors
 
 If you want to conditionally ignore errors, you can set `response.errors = null` within the error
 handler:
