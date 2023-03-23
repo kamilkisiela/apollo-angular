@@ -383,9 +383,9 @@
     rxjs "6.6.7"
 
 "@angular/animations@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-15.2.3.tgz#51777b635d8f52bc462fe6702e1766259dd40a46"
-  integrity sha512-65MTsTGAoJXtfSek6Scc3g9ZD6abs+QzcWjgFek0hFX2Lgc144lhEBBmTolFEjPFAS23hjdPQHztegIT92WPAA==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-15.2.4.tgz#aff4b90c69ea501355b0117f46cd5a65200164d6"
+  integrity sha512-0qMtJgWWfqOaVp3BhoMWd2SNFaOWUjl1DYaNTfYiqMGWk6H2ULE2Yog4hZNJAkOsCApEF2BNlL1O8arPzTswCQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -414,16 +414,16 @@
     yargs "17.6.2"
 
 "@angular/common@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-15.2.3.tgz#7a54c9a388a8187837d6b604ed546fdd523aceb5"
-  integrity sha512-J68CSb57XadC2weHw7kmHjCdrHNgxPv8ZW6KlnmYvIRJrkKsZuCl+PvFe90VMDvHtlBnSnz8sjAPqoUxesMRNg==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-15.2.4.tgz#37931aff2506af5f27fed0266b0cdb80ed98a890"
+  integrity sha512-RT6bo3RB768alor27i4KG9rTcsya58f2Pda/MjcNC5iR7WpmA4tE4h9x4JnI/1GCR3U1KAa4qrDrEFUJZoFofw==
   dependencies:
     tslib "^2.3.0"
 
 "@angular/compiler-cli@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-15.2.3.tgz#2a9fd73508ebad5cd594f6eb34fa86b64fd054ce"
-  integrity sha512-n52yntOPnVeQdNq612YyQ1KW27+BZq1YIxtkST6Xmrv6rFuduLVtBLMl+CpZ3vONBzMI1fY6svck6fPb0x4kbQ==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-15.2.4.tgz#9572eca21514c65327e8a94b87f27e57a4240bec"
+  integrity sha512-FCRNZ60PIKRt3rmjab7ca1E5Mc8Zt2izwD+VrzWeyBc51g5dVD+T/CRamJbmqRGw1hnn6BBM/VP9oDRcMVwGlg==
   dependencies:
     "@babel/core" "7.19.3"
     "@jridgewell/sourcemap-codec" "^1.4.14"
@@ -437,46 +437,46 @@
     yargs "^17.2.1"
 
 "@angular/compiler@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-15.2.3.tgz#d1ea195550fd3844e4c55bd5d234e616e723863b"
-  integrity sha512-KdEb5vWptRON6lXhhu93DLog4ekfrlHD74bOWbGQ2F40mycXqLNigOxbDCYifIAeE0xmRxbyV9KBvS6LKLC9uA==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-15.2.4.tgz#9c68fdd8b46ea09ae5c5f7cf52ad2e48a20c73bf"
+  integrity sha512-M4zqNCiSsNH2tc12yux9ZpGfSQ4vJ08iYxq6RJmS3CFJtDIw0SFc14ycHX+8rXYfLw92j0UTaDEAhjruAM51Zw==
   dependencies:
     tslib "^2.3.0"
 
 "@angular/core@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-15.2.3.tgz#48b06281561a3776f378045b16985f5608eae193"
-  integrity sha512-e+d6upOqAyqE7MxxRthd1ZJILSKX+hXHCmujc48id8G3zhP0tD59iZ03KgUe8RMvXMlSBUhwOwDX39tr701eig==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-15.2.4.tgz#a529e92c8063cdef6210b581994cf7173ae9bf6a"
+  integrity sha512-ApWxICIOK47F/yh0Di/SFR3qMXZPpVLFainlIEauwpULKCLrYSJSnlF+zaDB6mMI1754skZZE69lX4uS2Byi+w==
   dependencies:
     tslib "^2.3.0"
 
 "@angular/platform-browser-dynamic@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-15.2.3.tgz#cacdbc4ffc083a00cbd1808f292dc9ba40475732"
-  integrity sha512-HQ+xJzSa1O75s8Trcem8TnFu1rjbrzyRXfus/9Dpxam46ywIt1VuowSegz8K4hBaXnNFn53mZVpyK1hBtPq/bg==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-15.2.4.tgz#ef21dddc1aa4c2ca52dd7473ff178b7624caffd1"
+  integrity sha512-WNEIjzrgmaouXVkIoUwe/kl8IjpZS5Ar2zDx9Twx/onngc/Nta0X5xLYTNNVM4u8pJSHObupeTMF4CY7ZLEQ+Q==
   dependencies:
     tslib "^2.3.0"
 
 "@angular/platform-browser@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-15.2.3.tgz#064bdc3a409aa7caa88facb3a428c341b534f8a4"
-  integrity sha512-73EdTiw9jR/l/t9MBKD5slWcIiaE3bHQY4oCKzywMYu6ANci+WkCu7Ek2SGGq69M4+bKRo1/e/5XF4vvmNOBYQ==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-15.2.4.tgz#25fbc75e68c6166f4e1771063257f0aa1ca2af56"
+  integrity sha512-RVMqnVNy6kgtyZM7gRJF1nrsFBaGltySeyc4jvTIms7fpqxHvJFJ32r24h5QbgYbq18YwnWmcEkqZqg3nnyOaA==
   dependencies:
     tslib "^2.3.0"
 
 "@angular/platform-server@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-15.2.3.tgz#646a07279ce9a441d10e9aad295d719b541226f7"
-  integrity sha512-mANFWq9Dsd9rPJJvq99HdRhbTeYpWq88ltJ3ILpAiARY5k0wG7yx7npbg+mT5bIJDwzvGqeKCwnVnQYqUB9PnA==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-15.2.4.tgz#6797097c5a1dfc0521202693d901d9eb0198b833"
+  integrity sha512-YiF9LINVo+qurdsJ0F1FKY9dYS3tqkBolw0TXEgx+OkVAk56LDcmuxGcmFJsXW1+NDtR38MyZ4hdLqOD63JaTA==
   dependencies:
     domino "^2.1.2"
     tslib "^2.3.0"
     xhr2 "^0.2.0"
 
 "@angular/router@^15.1.4":
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/router/-/router-15.2.3.tgz#86b5d004571716f8cf2dfc5bfdcb8cc0c8c22c74"
-  integrity sha512-rbgAANRKsx6KPg/oTubyMjGfvSTh+42vj2/fUsARtIqi+kwr1FK/NM/64b1cv+oGYdxZsUkSxNPv4lONjh/DZg==
+  version "15.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-15.2.4.tgz#b37e18e3a8525c01a9cea0baf7c7b1dbf8b47b78"
+  integrity sha512-9cE35O/uC3QcbWuvmv0gO+x57glMJTw4/HoKmjZdozTPq/6XLFhBnpqNzOyMVs9+VtFsvVuR/ah9aucyx4ISog==
   dependencies:
     tslib "^2.3.0"
 
@@ -5683,9 +5683,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.284:
-  version "1.4.335"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.335.tgz#69c08baa608bbb58e290d83320190fa82c835efe"
-  integrity sha512-l/eowQqTnrq3gu+WSrdfkhfNHnPgYqlKAwxz7MTOj6mom19vpEDHNXl6dxDxyTiYuhemydprKr/HCrHfgk+OfQ==
+  version "1.4.336"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.336.tgz#3e97b6752f76d24565df545a1f36bfd3aea34ae3"
+  integrity sha512-yLaoSY/ngjgRpEGU4ueeW0vlj456idQBn74r6s1yutoOIadvd7rwt05TGenPj0PoetJ5pEHomVkmfTdIgqPfJw==
 
 elkjs@^0.8.2:
   version "0.8.2"
