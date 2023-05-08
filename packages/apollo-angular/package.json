@@ -34,7 +34,7 @@
     "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js"
   },
   "peerDependencies": {
-    "@angular/core": "^14.0.0 || ^15.0.0",
+    "@angular/core": "^14.0.0 || ^15.0.0 || ^16.0.0",
     "@apollo/client": "^3.0.0",
     "graphql": "^15.0.0 || ^16.0.0",
     "rxjs": "^6.0.0 || ^7.0.0"
