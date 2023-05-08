@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES2022",
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,

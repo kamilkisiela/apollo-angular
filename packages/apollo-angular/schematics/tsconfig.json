@@ -6,7 +6,7 @@
     "rootDir": ".",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "target": "es6",
+    "target": "ES2022",
     "module": "commonjs"
   },
   "files": ["install/index.ts", "migrations/v2.ts"],

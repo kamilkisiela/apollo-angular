@@ -2,7 +2,6 @@ import { filter, first } from 'rxjs/operators';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import {
   ApplicationRef,
-  CompilerFactory,
   Component,
   destroyPlatform,
   getPlatform,
@@ -11,10 +10,9 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import {
   INITIAL_CONFIG,
-  platformDynamicServer,
   PlatformState,
   renderModule,
-  renderModuleFactory,
+  platformServer,
   ServerModule,
 } from '@angular/platform-server';
 import { execute, gql } from '@apollo/client/core';
@@ -82,7 +80,7 @@ describe.skip('integration', () => {
     class AsyncServerModule {}
 
     test('using long form should work', async () => {
-      const platform = platformDynamicServer([
+      const platform = platformServer([
         {
           provide: INITIAL_CONFIG,
           useValue: {
@@ -106,22 +104,6 @@ describe.skip('integration', () => {
 
     test('using renderModule should work', async () => {
       const output = await renderModule(AsyncServerModule, { document: doc });
-      expect(clearNgVersion(output)).toMatchSnapshot();
-    });
-
-    test('using renderModuleFactory should work', async () => {
-      const platform = platformDynamicServer([
-        {
-          provide: INITIAL_CONFIG,
-          useValue: {
-            document: doc,
-          },
-        },
-      ]);
-      const compilerFactory: CompilerFactory = platform.injector.get(CompilerFactory, null);
-      const moduleFactory = compilerFactory.createCompiler().compileModuleSync(AsyncServerModule);
-
-      const output = await renderModuleFactory(moduleFactory, { document: doc });
       expect(clearNgVersion(output)).toMatchSnapshot();
     });
   });
