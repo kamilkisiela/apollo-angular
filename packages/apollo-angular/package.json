@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "module": "build/fesm2020/ngApollo.mjs",
   "typings": "build/index.d.ts",
