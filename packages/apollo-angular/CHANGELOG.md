@@ -1,5 +1,16 @@
 # Change log
 
+## 5.0.0
+
+### Major Changes
+
+- [#2010](https://github.com/kamilkisiela/apollo-angular/pull/2010)
+  [`ea8b7034`](https://github.com/kamilkisiela/apollo-angular/commit/ea8b70343ef024e1d24eccf578909704f5de2ebe)
+  Thanks [@HendrikJanssen](https://github.com/HendrikJanssen)! - Support Angular 16
+
+  This is a breaking change because support for node v14 must be dropped to follow Angular 16
+  requirements.
+
 ## 4.2.1
 
 ### Patch Changes
