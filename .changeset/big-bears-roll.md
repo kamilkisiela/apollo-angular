@@ -1,6 +1,5 @@
 ---
 "apollo-angular": major
-"demo": major
 ---
 
 Support Angular 16
