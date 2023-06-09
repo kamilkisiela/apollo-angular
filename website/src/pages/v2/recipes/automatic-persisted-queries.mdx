@@ -1,7 +1,6 @@
 ---
 description: Automatic Persisted Queries for Apollo Angular. Improve GraphQL performance with Automatic Persisted Queries.
 ---
-import { PackageCmd } from '@theguild/components';
 
 # Automatic Persisted Queries
 
@@ -32,12 +31,16 @@ Read more about
 
 ## Installation
 
-<PackageCmd packages={['apollo-angular']} />
+```sh npm2yarn
+npm i apollo-angular
+```
 
 If you do not already have a SHA-256 based hashing function available in your application, you will
 need to install one separately. For example:
 
-<PackageCmd packages={['crypto-hash']} />
+```sh npm2yarn
+npm i crypto-hash
+```
 
 This link doesn't include a SHA-256 hash function by default, to avoid forcing one as a dependency.
 Developers should pick the most appropriate SHA-256 function (sync or async) for their

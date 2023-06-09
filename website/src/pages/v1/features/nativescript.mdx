@@ -1,7 +1,7 @@
 ---
 description: Integrate Apollo with NativeScript. Learn how to use Apollo with NativeScript.
 ---
-import { Callout, PackageCmd } from '@theguild/components';
+import { Callout } from '@theguild/components';
 
 # Integrating with NativeScript
 
@@ -10,7 +10,9 @@ You can use Apollo with NativeScript exactly as you would with normal Angular ap
 To introduce Apollo to your app, install `apollo-angular` and `apollo-angular-link-http` from npm
 and use them in your app as outlined in the [setup](../basics/setup) article:
 
-<PackageCmd packages={['apollo-angular apollo-angular-link-http']} />
+```sh npm2yarn
+npm i apollo-angular apollo-angular-link-http
+```
 
 <Callout>
   **Note**: There are more packages to be installed, so check out the "initialization" article.
