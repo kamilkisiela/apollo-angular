@@ -2,7 +2,7 @@
 description: A guide to customizing and directly accessing your Apollo cache. Learn how to read and write data to your cache, and how to configure your cache to work with your data.
 ---
 
-import { Callout, PackageCmd } from '@theguild/components';
+import { Callout } from '@theguild/components';
 
 # Apollo Cache
 
@@ -17,7 +17,9 @@ mutation. We'll cover some common use cases [here](#recipes).
 
 ## Installation
 
-<PackageCmd packages={['apollo-cache-inmemory']} />
+```sh npm2yarn
+npm i apollo-cache-inmemory
+```
 
 After installing the package, you'll want to initialize the cache constructor. Then, you can pass in
 your newly created cache to ApolloClient.

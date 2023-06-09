@@ -1,7 +1,6 @@
 ---
 description: How to use the Webpack Loader. Learn how to load GraphQL queries over `.graphql` files using Webpack.
 ---
-import { PackageCmd } from '@theguild/components';
 
 # Webpack Loader
 
@@ -58,7 +57,9 @@ class ProfileComponent {
 
 Install `@angular-builders/custom-webpack`:
 
-<PackageCmd packages={['@angular-builders/custom-webpack']} />
+```sh npm2yarn
+npm i @angular-builders/custom-webpack
+```
 
 Then create a webpack configuration file `webpack.config.js` in your application root containing
 your Webpack configuration (as listed above):
