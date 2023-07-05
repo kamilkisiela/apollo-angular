@@ -55,7 +55,7 @@
     "jest-zone-patch": "^0.0.10",
     "lint-staged": "^13.1.2",
     "ng-packagr": "^16.0.0",
-    "prettier": "^2.8.4",
+    "prettier": "^3.0.0",
     "react": "^18.2.0",
     "rimraf": "^4.1.2",
     "rxjs": "^7.8.0",
