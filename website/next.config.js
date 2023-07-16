@@ -95,6 +95,9 @@ export default withGuildDocs({
       '/docs/1.0/features/subscriptions': '/v1/features/subscriptions',
       '/docs/features/fragments': '/docs/data/fragments',
       '/get-started': '/docs/get-started',
+      '/docs/data/setup#using-dependency-injection': '/docs/data/queries',
+      '/docs/data/setup': '/docs/data/queries',
+      '/v1/performance/improving-performance': '/docs/performance/improving-performance',
     }).map(([from, to]) => ({
       source: from,
       destination: to,
