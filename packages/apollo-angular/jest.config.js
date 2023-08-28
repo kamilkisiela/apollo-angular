@@ -2,10 +2,11 @@ module.exports = {
   rootDir: '.',
   transform: {
     '^.+\\.(ts|mjs|js)$': [
-        'jest-preset-angular', {
-          tsconfig: '<rootDir>/tsconfig.test.json',
-        }
-      ],
+      'jest-preset-angular',
+      {
+        tsconfig: '<rootDir>/tsconfig.test.json',
+      },
+    ],
   },
   moduleNameMapper: {
     '^apollo-angular': '<rootDir>/src/',
