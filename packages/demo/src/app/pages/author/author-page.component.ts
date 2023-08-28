@@ -26,7 +26,10 @@ interface Query {
 })
 export class AuthorPageComponent implements OnInit {
   posts: Observable<Post[]>;
-  constructor(private apollo: Apollo, private route: ActivatedRoute) {}
+  constructor(
+    private apollo: Apollo,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.posts = this.apollo

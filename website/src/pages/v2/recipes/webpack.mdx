@@ -1,5 +1,6 @@
 ---
-description: Webpack loader for GraphQL files. Load GraphQL queries over .graphql files using Webpack.
+description:
+  Webpack loader for GraphQL files. Load GraphQL queries over .graphql files using Webpack.
 ---
 
 # Webpack Loader
@@ -66,16 +67,16 @@ your Webpack configuration (as listed above):
 
 ```js filename="webpack.config.js"
 module.exports = {
-    module: {
-        rules: [
-            {
-                test: /\.(graphql|gql)$/,
-                exclude: /node_modules/,
-                loader: '@graphql-tools/webpack-loader'
-            }
-        ]
-    }
-}
+  module: {
+    rules: [
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: '@graphql-tools/webpack-loader',
+      },
+    ],
+  },
+};
 ```
 
 After that, create your type-definition for your `.graphql` files, so TypeScript will transform them
@@ -83,10 +84,10 @@ into importable objects with `src/@types/graphql.d.ts`:
 
 ```ts filename="src/@types/graphql.d.ts"
 declare module '*.graphql' {
-    import { DocumentNode } from 'graphql'
-    const schema: DocumentNode
+  import { DocumentNode } from 'graphql';
+  const schema: DocumentNode;
 
-    export = schema
+  export = schema;
 }
 ```
 

@@ -1,6 +1,9 @@
 ---
-description: Learn how to use Apollo Client with Angular to build a GraphQL-powered app. This guide covers everything from setting up Apollo Client to querying GraphQL data.
+description:
+  Learn how to use Apollo Client with Angular to build a GraphQL-powered app. This guide covers
+  everything from setting up Apollo Client to querying GraphQL data.
 ---
+
 import { Callout } from '@theguild/components';
 
 # Queries
@@ -187,7 +190,7 @@ const FeedQuery = gql`
 
 @Component({
   template: `
-    <ul *ngFor="let entry of data | async | select : 'feed'">
+    <ul *ngFor="let entry of data | async | select: 'feed'">
       Score:
       {{
         entry.score
