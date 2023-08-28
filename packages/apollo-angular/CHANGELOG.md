@@ -1,5 +1,15 @@
 # Change log
 
+## 5.0.1
+
+### Patch Changes
+
+- [#2065](https://github.com/kamilkisiela/apollo-angular/pull/2065)
+  [`78947ba5`](https://github.com/kamilkisiela/apollo-angular/commit/78947ba59d5fe791fb813471c7823fc931279f11)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+  - Updated dependency [`tslib@^2.6.2` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.2) (from
+    `^2.0.0`, in `dependencies`)
+
 ## 5.0.0
 
 ### Major Changes
