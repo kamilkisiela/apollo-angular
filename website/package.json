@@ -11,7 +11,7 @@
     "test": "echo 'nothing to do here'"
   },
   "dependencies": {
-    "@theguild/components": "5.2.2",
+    "@theguild/components": "6.0.0",
     "next": "13.4.19",
     "next-sitemap": "4.2.2",
     "react": "18.2.0",
