@@ -1,10 +1,10 @@
 export default {
-  "queries": "Queries",
-  "mutations": "Mutations",
-  "subscriptions": "Subscriptions",
-  "services": "Query, Mutation, Subscription Services",
-  "network": "Network Layer",
-  "pagination": "Pagination",
-  "fragments": "Using Fragments",
-  "error-handling": "Error Handling"
-}
+  queries: 'Queries',
+  mutations: 'Mutations',
+  subscriptions: 'Subscriptions',
+  services: 'Query, Mutation, Subscription Services',
+  network: 'Network Layer',
+  pagination: 'Pagination',
+  fragments: 'Using Fragments',
+  'error-handling': 'Error Handling',
+};
