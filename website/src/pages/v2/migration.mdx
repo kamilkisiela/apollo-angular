@@ -4,7 +4,7 @@ description:
   the new version.
 ---
 
-import { Callout, Tab, Tabs } from '@theguild/components';
+import { Callout, Tabs } from '@theguild/components';
 
 # Migration Guide
 
@@ -40,7 +40,7 @@ To get started with the v2.0, you will change your imports to use the two packag
 upgrade looks like this:
 
 <Tabs items={['Before', 'After', 'Diff']}>
-<Tab>
+<Tabs.Tab>
 
 ```typescript
 import { Apollo } from 'apollo-angular';
@@ -50,15 +50,15 @@ import { ApolloClient } from 'apollo-client';
 import gql from 'graphql-tag';
 ```
 
-</Tab>
-<Tab>
+</Tabs.Tab>
+<Tabs.Tab>
 ```typescript
 import {ApolloClient, InMemoryCache} from '@apollo/client/core';
 import {Apollo, gql} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 ```
-</Tab>
-<Tab>
+</Tabs.Tab>
+<Tabs.Tab>
 ```diff
 -import {ApolloClient} from 'apollo-client';
 -import {InMemoryCache} from 'apollo-cache-inmemory';
@@ -69,7 +69,7 @@ import {HttpLink} from 'apollo-angular/http';
 -import {HttpLink} from 'apollo-angular-link-http';
 +import {HttpLink} from 'apollo-angular/http';
 ```
-</Tab>
+</Tabs.Tab>
 </Tabs>
 
 ## Basic Updates
@@ -77,7 +77,7 @@ import {HttpLink} from 'apollo-angular/http';
 A simple usage of Apollo Angular upgrading to the 2.0 would look like this:
 
 <Tabs items={['Before', 'After', 'Diff']}>
-<Tab>
+<Tabs.Tab>
 ```typescript
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
@@ -91,8 +91,8 @@ InMemoryCache(), link: httpLink.create({ uri: 'http://localhost:3000', }), }; },
 }, ], }) class AppModule {}
 
 ````
-</Tab>
-<Tab>
+</Tabs.Tab>
+<Tabs.Tab>
 
 ```typescript
 import {NgModule} from '@angular/core';
@@ -124,8 +124,8 @@ import {InMemoryCache} from '@apollo/client/core';
 class AppModule {}
 ````
 
-</Tab>
-<Tab>
+</Tabs.Tab>
+<Tabs.Tab>
 
 ```diff language="typescript"
 import {NgModule} from '@angular/core';
@@ -163,7 +163,7 @@ import {HttpClientModule} from '@angular/common/http';
 class AppModule {}
 ```
 
-</Tab>
+</Tabs.Tab>
 </Tabs>
 
 What's different?
@@ -284,7 +284,7 @@ upgrade to Apollo Client 3.0.
   `(client/cache).writeFragment`, and/or `cache.modify` can be used to update the cache.
 
 <Tabs items={['Before', 'After']}>
-<Tab>
+<Tabs.Tab>
   ```typescript
 client.writeData({
   data: {
@@ -292,8 +292,8 @@ client.writeData({
   },
 });
 ```
-</Tab>
-<Tab>
+</Tabs.Tab>
+<Tabs.Tab>
 ```typescript
 client.writeQuery({
   query: gql`
@@ -306,7 +306,7 @@ client.writeQuery({
   },
 });
 ```
-</Tab>
+</Tabs.Tab>
 </Tabs>
 
 For more details around why writeData has been removed, see
