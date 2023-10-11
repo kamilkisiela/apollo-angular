@@ -1,4 +1,4 @@
-{
+export default {
   "index": "Introduction",
   "migration": "Migration Guide",
   "basics": "Basics",

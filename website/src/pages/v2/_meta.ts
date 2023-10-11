@@ -1,4 +1,4 @@
-{
+export default {
   "index": "Introduction",
   "get-started": "Getting Started",
   "data": "Fetching",

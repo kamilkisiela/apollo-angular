@@ -1,4 +1,4 @@
-{
+export default {
   "configuration": "Configuring the Cache",
   "interaction": "Reading and Writing Data to the Cache",
   "garbage-collection": "Garbage Collection and Cache Eviction",

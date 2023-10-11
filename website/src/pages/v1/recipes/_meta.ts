@@ -1,4 +1,4 @@
-{
+export default {
   "simple-example": "Small Example",
   "query-splitting": "Query Splitting",
   "pagination": "Pagination",

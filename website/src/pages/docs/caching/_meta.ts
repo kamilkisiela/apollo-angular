@@ -1,4 +1,4 @@
-{
+export default {
   "configuration": "Configuration",
   "interaction": "Reading and Writing",
   "garbage-collection": "Garbage Collection",

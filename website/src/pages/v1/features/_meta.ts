@@ -1,4 +1,4 @@
-{
+export default {
   "error-handling": "Error Handling",
   "caching": "Direct Cache Access",
   "optimistic-ui": "Optimistic UI",

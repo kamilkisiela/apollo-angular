@@ -1,4 +1,4 @@
-{
+export default {
   "setup": "Setup and Options",
   "queries": "Queries",
   "mutations": "Mutations",
