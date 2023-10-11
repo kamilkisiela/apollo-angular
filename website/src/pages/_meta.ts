@@ -10,16 +10,13 @@ export default {
   docs: {
     title: 'v3 (latest)',
     type: 'page',
-    versioned: true,
   },
   v2: {
     title: 'v2',
     type: 'page',
-    versioned: true,
   },
   v1: {
     title: 'v1',
     type: 'page',
-    versioned: true,
   },
 };
