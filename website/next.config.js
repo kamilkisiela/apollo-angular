@@ -54,7 +54,6 @@ export default withGuildDocs({
       '/docs/1.0': '/v1', // Redirect direct to path
       '/docs/basics/:slug*': '/docs/data/:slug',
       '/docs/1.0/features/cache-updates': '/v1/features/caching',
-      '/docs/data': '/docs/data/queries',
       '/docs/features/developer-tooling': '/docs/development-and-testing/developer-tools',
       '/docs/features/developer-tooling.html': '/docs/development-and-testing/developer-tools',
       '/docs/features/multiple-clients.html': '/docs/recipes/multiple-clients',
