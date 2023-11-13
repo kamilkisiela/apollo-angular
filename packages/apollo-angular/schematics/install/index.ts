@@ -13,7 +13,6 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
 import { getJsonFile, getMainPath } from '../utils';
 import { addModuleImportToRootModule } from '../utils/ast';
 import { Schema } from './schema';
@@ -158,8 +157,7 @@ function allowSyntheticDefaultImports() {
 function addSetupFiles(options: Schema) {
   return (host: Tree) => {
     const mainPath = getMainPath(host, options.project);
-    const appModulePath = getAppModulePath(host, mainPath);
-    const appModuleDirectory = dirname(appModulePath);
+    const appModuleDirectory = dirname(mainPath);
 
     const templateSource = apply(url('./files'), [
       template({

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
 import { getMainPath, getTypeScriptSourceFile } from '.';
 
 /**
@@ -18,9 +17,8 @@ export function addModuleImportToRootModule(
   projectName?: string,
 ) {
   const mainPath = getMainPath(host, projectName);
-  const appModulePath = getAppModulePath(host, mainPath);
 
-  addModuleImportToModule(host, appModulePath, importedModuleName, importedModulePath);
+  addModuleImportToModule(host, mainPath, importedModuleName, importedModulePath);
 }
 
 /**

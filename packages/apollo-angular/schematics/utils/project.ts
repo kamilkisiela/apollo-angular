@@ -5,7 +5,7 @@ export function getMainPath(host: Tree, name?: string) {
   const project = getProject(host, name);
   // XXX: it seems like a breaking change in @angular-devkit/schematics
   // between version 0.7 and 0.8
-  return (project.architect || project.targets).build.options.main;
+  return (project.architect || project.targets).build.options.browser;
 }
 
 function getProject(host: Tree, name?: string) {
