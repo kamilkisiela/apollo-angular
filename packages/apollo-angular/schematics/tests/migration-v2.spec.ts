@@ -31,7 +31,7 @@ describe('Migration: Apollo Angular V2', () => {
         import gql from 'graphql-tag';
       `,
     );
-    const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
+    const tree = await runner.runSchematic(migrationName, {}, appTree)
     const file = tree.readContent('file.ts').trim();
 
     expect(file).toContain(
@@ -56,7 +56,7 @@ describe('Migration: Apollo Angular V2', () => {
         import graphql from 'graphql-tag';
       `,
     );
-    const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
+    const tree = await runner.runSchematic(migrationName, {}, appTree)
 
     const file = tree.readContent('file.ts').trim();
 
@@ -80,7 +80,7 @@ describe('Migration: Apollo Angular V2', () => {
       import { HttpLink } from 'apollo-angular-link-http'
     `,
     );
-    const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
+    const tree = await runner.runSchematic(migrationName, {}, appTree)
 
     const file = tree.readContent('file.ts').trim();
 
@@ -99,7 +99,7 @@ describe('Migration: Apollo Angular V2', () => {
         import ApolloClient from 'apollo-client';
       `,
     );
-    const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
+    const tree = await runner.runSchematic(migrationName, {}, appTree)
     const file = tree.readContent('file.ts').trim();
 
     expect(file).toContain(`import {ApolloClient} from '@apollo/client/core';`);
@@ -121,7 +121,7 @@ describe('Migration: Apollo Angular V2', () => {
         import { ApolloClient } from 'apollo-client';
       `,
     );
-    const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
+    const tree = await runner.runSchematic(migrationName, {}, appTree)
 
     const file1 = tree.readContent('file1.ts').trim();
     const file2 = tree.readContent('file2.ts').trim();
@@ -131,7 +131,7 @@ describe('Migration: Apollo Angular V2', () => {
   });
 
   test('should enable allowSyntheticDefaultImports in tsconfig.json', async () => {
-    const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
+    const tree = await runner.runSchematic(migrationName, {}, appTree)
     const rootModulePath = '/tsconfig.json';
     const compilerOptions: CompilerOptions = getJsonFile(tree, rootModulePath).compilerOptions;
 
@@ -157,7 +157,7 @@ describe('Migration: Apollo Angular V2', () => {
 
     appTree.overwrite('package.json', JSON.stringify(oldPackageJson, null, 2));
 
-    const tree = await runner.runSchematicAsync(migrationName, {}, appTree).toPromise();
+    const tree = await runner.runSchematic(migrationName, {}, appTree)
 
     const packageJson = parseJSON('package.json', tree.readContent('package.json'));
 
