@@ -7,15 +7,14 @@ export async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
   const runner = new SchematicTestRunner('apollo-angular', collectionPath);
 
   const workspaceTree = await runner
-    .runExternalSchematicAsync('@schematics/angular', 'workspace', {
+    .runExternalSchematic('@schematics/angular', 'workspace', {
       name: 'workspace',
       version: '11.0.0',
       newProjectRoot: 'projects',
     })
-    .toPromise();
 
   return runner
-    .runExternalSchematicAsync(
+    .runExternalSchematic(
       '@schematics/angular',
       'application',
       {
@@ -24,5 +23,4 @@ export async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
       },
       workspaceTree,
     )
-    .toPromise();
 }
