@@ -1,5 +1,3 @@
-import { dirname } from 'path';
-import { CompilerOptions } from 'typescript';
 import { tags } from '@angular-devkit/core';
 import {
   apply,
@@ -13,10 +11,12 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
+import { CompilerOptions } from 'typescript';
 import { getJsonFile, getMainPath } from '../utils';
-import { addModuleImportToRootModule } from '../utils/ast';
 import { Schema } from './schema';
+import { addModuleImportToRootModule} from './../utils/ast'
+import { getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
+import { dirname } from 'path';
 
 export function factory(options: Schema): Rule {
   return chain([
@@ -157,25 +157,40 @@ function allowSyntheticDefaultImports() {
 
 function addSetupFiles(options: Schema) {
   return (host: Tree) => {
+
+
     const mainPath = getMainPath(host, options.project);
-    const appModulePath = getAppModulePath(host, mainPath);
-    const appModuleDirectory = dirname(appModulePath);
+    if (isStandaloneApp(host, mainPath)){
+      const templateSource = apply(url('./files'), [
+        template({
+          endpoint: options.endpoint,
+        }),
+        move('projects/apollo/src/app'),
+      ]);
 
-    const templateSource = apply(url('./files'), [
-      template({
-        endpoint: options.endpoint,
-      }),
-      move(appModuleDirectory),
-    ]);
+      return mergeWith(templateSource);
 
-    return mergeWith(templateSource);
+    }else{
+      const appModulePath = getAppModulePath(host, mainPath);
+      const appModuleDirectory = dirname(appModulePath);
+      const templateSource = apply(url('./files'), [
+        template({
+          endpoint: options.endpoint,
+        }),
+        move(appModuleDirectory),
+      ]);
+
+      return mergeWith(templateSource);
+    }
+
+
+
   };
 }
 
 function importSetupModule(options: Schema) {
   return (host: Tree) => {
     addModuleImportToRootModule(host, 'GraphQLModule', './graphql.module', options.project);
-
     return host;
   };
 }

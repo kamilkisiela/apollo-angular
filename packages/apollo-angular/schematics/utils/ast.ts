@@ -1,8 +1,13 @@
 import * as ts from 'typescript';
-import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import {  SchematicsException, Tree } from '@angular-devkit/schematics';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
+import {  getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 import { getMainPath, getTypeScriptSourceFile } from '.';
+import {
+  addFunctionalProvidersToStandaloneBootstrap,
+} from '@schematics/angular/private/components';
+
+// import {addRootProvider} from '@schematics/angular/utility'
 
 /**
  * Import and add module to the root module.
@@ -18,10 +23,15 @@ export function addModuleImportToRootModule(
   projectName?: string,
 ) {
   const mainPath = getMainPath(host, projectName);
-  const appModulePath = getAppModulePath(host, mainPath);
-
-  addModuleImportToModule(host, appModulePath, importedModuleName, importedModulePath);
+  if (isStandaloneApp(host, mainPath)) {
+    addFunctionalProvidersToStandaloneBootstrap(host, mainPath, importedModuleName, importedModulePath);
+  } else {
+    const appModulePath = getAppModulePath(host, mainPath);
+    addModuleImportToModule(host, appModulePath, importedModuleName, importedModulePath);
+  }
 }
+
+
 
 /**
  * Import and add module to specific module path.
