@@ -1,22 +1,13 @@
 import { dirname } from 'path';
 import { CompilerOptions } from 'typescript';
 import { tags } from '@angular-devkit/core';
-import {
-  apply,
-  chain,
-  mergeWith,
-  move,
-  Rule,
-  SchematicContext,
-  template,
-  Tree,
-  url,
-} from '@angular-devkit/schematics';
+import { apply, chain, mergeWith, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
+import { getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 import { getJsonFile, getMainPath } from '../utils';
-import { addModuleImportToRootModule } from '../utils/ast';
+import { addModuleImportToRootModule } from './../utils/ast';
 import { Schema } from './schema';
+import {addRootProvider} from "@schematics/angular/utility";
 
 export function factory(options: Schema): Rule {
   return chain([
@@ -24,8 +15,8 @@ export function factory(options: Schema): Rule {
     includeAsyncIterableLib(),
     allowSyntheticDefaultImports(),
     addSetupFiles(options),
-    importSetupModule(options),
-    importHttpClientModule(options),
+    importHttpClient(options),
+    importSetup(options),
   ]);
 }
 
@@ -157,31 +148,56 @@ function allowSyntheticDefaultImports() {
 
 function addSetupFiles(options: Schema) {
   return (host: Tree) => {
+
     const mainPath = getMainPath(host, options.project);
-    const appModulePath = getAppModulePath(host, mainPath);
-    const appModuleDirectory = dirname(appModulePath);
+    if (isStandaloneApp(host, mainPath)) {
+      const templateSource = apply(url('./files/standalone'), [
+        template({
+          endpoint: options.endpoint,
+        }),
+        move('projects/apollo/src/app'),
+      ]);
 
-    const templateSource = apply(url('./files'), [
-      template({
-        endpoint: options.endpoint,
-      }),
-      move(appModuleDirectory),
-    ]);
+      return mergeWith(templateSource);
 
-    return mergeWith(templateSource);
+    } else {
+      const appModulePath = getAppModulePath(host, mainPath);
+      const appModuleDirectory = dirname(appModulePath);
+      const templateSource = apply(url('./files/module'), [
+        template({
+          endpoint: options.endpoint,
+        }),
+        move(appModuleDirectory),
+      ]);
+
+      return mergeWith(templateSource);
+    }
   };
 }
 
-function importSetupModule(options: Schema) {
+function importSetup(options: Schema) {
   return (host: Tree) => {
-    addModuleImportToRootModule(host, 'GraphQLModule', './graphql.module', options.project);
-
+    const mainPath = getMainPath(host, options.project);
+    if (isStandaloneApp(host, mainPath)) {
+      return addRootProvider('apollo', ({code, external}) => {
+        return code`${external('graphqlProvider', './graphql.provider')}`;
+      });
+    } else {
+      addModuleImportToRootModule(host, 'GraphQLModule', './graphql.module', options.project);
+    }
     return host;
   };
 }
 
-function importHttpClientModule(options: Schema) {
+function importHttpClient(options: Schema) {
   return (host: Tree) => {
-    addModuleImportToRootModule(host, 'HttpClientModule', '@angular/common/http', options.project);
+    const mainPath = getMainPath(host, options.project);
+    if (isStandaloneApp(host, mainPath)) {
+      return addRootProvider('apollo', ({code, external}) => {
+        return code`${external('provideHttpClient', '@angular/common/http')}()`;
+      });
+    } else {
+      addModuleImportToRootModule(host, 'HttpClientModule', '@angular/common/http', options.project);
+    }
   };
 }

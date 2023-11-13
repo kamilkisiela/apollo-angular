@@ -3,19 +3,18 @@ import { getJsonFile } from '.';
 
 export function getMainPath(host: Tree, name?: string) {
   const project = getProject(host, name);
-  // XXX: it seems like a breaking change in @angular-devkit/schematics
-  // between version 0.7 and 0.8
-  return (project.architect || project.targets).build.options.main;
+
+  return project.architect.build.options.browser;
 }
 
 function getProject(host: Tree, name?: string) {
+
   const config = getWorkspaceConfig(host);
   if (name) {
     const project = config.projects[name];
     if (!project) {
       throw new SchematicsException(`Couldn't file project ${name}`);
     }
-
     return config.projects[name];
   }
 
@@ -36,7 +35,6 @@ function getProject(host: Tree, name?: string) {
 function getWorkspaceConfig(host: Tree): any {
   const path = getWorkspacePath(host);
   const config = getJsonFile(host, path);
-
   return config;
 }
 
