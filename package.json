@@ -20,7 +20,8 @@
     "prebuild": "rimraf packages/*/build/",
     "prerelease": "yarn build",
     "release": "changeset publish",
-    "test": "yarn workspaces run test"
+    "test": "yarn workspaces run test",
+    "test:e2e": "./scripts/run-e2e-locally.sh"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.0",
