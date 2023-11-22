@@ -2,10 +2,11 @@ import * as ts from 'typescript';
 import {  SchematicsException, Tree } from '@angular-devkit/schematics';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 import {  getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
-import { getMainPath, getTypeScriptSourceFile } from '.';
+import {  getTypeScriptSourceFile } from '.';
 import {
   addFunctionalProvidersToStandaloneBootstrap,
 } from '@schematics/angular/private/components';
+import {getMainFilePath} from "@schematics/angular/utility/standalone/util";
 
 /**
  * Import and add module to the root module.
@@ -14,13 +15,13 @@ import {
  * @param importedModulePath {String} The location of the imported module.
  * @param projectName {String} The name of the project.
  */
-export function addModuleImportToRootModule(
+export async function addModuleImportToRootModule(
   host: Tree,
   importedModuleName: string,
   importedModulePath: string,
   projectName?: string,
 ) {
-  const mainPath = getMainPath(host, projectName);
+  const mainPath = await getMainFilePath(host, projectName);
   if (isStandaloneApp(host, mainPath)) {
     addFunctionalProvidersToStandaloneBootstrap(host, mainPath, importedModuleName, importedModulePath);
   } else {
