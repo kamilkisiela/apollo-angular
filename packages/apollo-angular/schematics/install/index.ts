@@ -160,12 +160,13 @@ function allowSyntheticDefaultImports(): Rule {
 function addSetupFiles(options: Schema): Rule {
   return async (host: Tree) => {
     const mainPath = await getMainFilePath(host, options.project);
+    const mainDirectory = dirname(mainPath);
     if (isStandaloneApp(host, mainPath)) {
       const templateSource = apply(url('./files/standalone'), [
         template({
           endpoint: options.endpoint,
         }),
-        move('projects/apollo/src/app'),
+        move(mainDirectory),
       ]);
 
       return mergeWith(templateSource);
