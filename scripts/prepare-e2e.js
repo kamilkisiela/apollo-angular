@@ -14,7 +14,7 @@ function updateComponent() {
     fs
       .readFileSync(filepath, 'utf8')
       .replace('AppComponent {', 'AppComponent { constructor(private apollo: Apollo) {}')
-      .replace('imports: [', 'imports: [ApolloModule, ')+
+      .replace('imports: [', 'imports: [ApolloModule, ') +
     `\n (window as any).GRAPHQL_VERSION = versionInfo.major;`;
 
   fs.writeFileSync(filepath, code, 'utf8');
