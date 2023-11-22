@@ -44,7 +44,7 @@
     "@schematics/angular": "^16.2.0",
     "@theguild/prettier-config": "^2.0.1",
     "@types/jest": "^29.5.4",
-    "@types/node": "^18.13.0",
+    "@types/node": "^20.0.0",
     "babel-jest": "^29.6.4",
     "browserlist": "^1.0.1",
     "cpx": "^1.5.0",
