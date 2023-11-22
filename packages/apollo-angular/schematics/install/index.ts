@@ -13,12 +13,12 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { addRootProvider } from '@schematics/angular/utility';
 import { getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 import { getMainFilePath } from '@schematics/angular/utility/standalone/util';
 import { getJsonFile } from '../utils';
 import { addModuleImportToRootModule } from '../utils/ast';
 import { Schema } from './schema';
-import { addRootProvider } from '@schematics/angular/utility';
 
 export function factory(options: Schema): Rule {
   return chain([
@@ -170,7 +170,6 @@ function addSetupFiles(options: Schema): Rule {
       ]);
 
       return mergeWith(templateSource);
-
     } else {
       const appModulePath = getAppModulePath(host, mainPath);
       const appModuleDirectory = dirname(appModulePath);
