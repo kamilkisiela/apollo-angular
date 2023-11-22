@@ -6,23 +6,21 @@ const collectionPath = join(__dirname, '../collection.json');
 async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
   const runner = new SchematicTestRunner('apollo-angular', collectionPath);
 
-  const workspaceTree = await runner
-    .runExternalSchematic('@schematics/angular', 'workspace', {
-      name: 'workspace',
-      version: '11.0.0',
-      newProjectRoot: 'projects',
-    })
+  const workspaceTree = await runner.runExternalSchematic('@schematics/angular', 'workspace', {
+    name: 'workspace',
+    version: '11.0.0',
+    newProjectRoot: 'projects',
+  });
 
-  return runner
-    .runExternalSchematic(
-      '@schematics/angular',
-      'application',
-      {
-        ...appOptions,
-        name: 'apollo',
-      },
-      workspaceTree,
-    )
+  return runner.runExternalSchematic(
+    '@schematics/angular',
+    'application',
+    {
+      ...appOptions,
+      name: 'apollo',
+    },
+    workspaceTree,
+  );
 }
 
 export async function runNgAdd(standalone: boolean): Promise<UnitTestTree> {
