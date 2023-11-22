@@ -53,6 +53,7 @@ export class ApolloTestingModuleCore {
   ) {
     function createOptions(name: string, c?: ApolloCache<any> | null) {
       return {
+        connectToDevTools: false,
         link: new ApolloLink(operation => backend.handle(addClient(name, operation))),
         cache:
           c ||

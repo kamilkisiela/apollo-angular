@@ -3,26 +3,31 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
 
 const collectionPath = join(__dirname, '../collection.json');
 
-export async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
+async function createTestApp(appOptions = {}): Promise<UnitTestTree> {
   const runner = new SchematicTestRunner('apollo-angular', collectionPath);
 
-  const workspaceTree = await runner
-    .runExternalSchematicAsync('@schematics/angular', 'workspace', {
-      name: 'workspace',
-      version: '11.0.0',
-      newProjectRoot: 'projects',
-    })
-    .toPromise();
+  const workspaceTree = await runner.runExternalSchematic('@schematics/angular', 'workspace', {
+    name: 'workspace',
+    version: '11.0.0',
+    newProjectRoot: 'projects',
+  });
 
-  return runner
-    .runExternalSchematicAsync(
-      '@schematics/angular',
-      'application',
-      {
-        ...appOptions,
-        name: 'apollo',
-      },
-      workspaceTree,
-    )
-    .toPromise();
+  return runner.runExternalSchematic(
+    '@schematics/angular',
+    'application',
+    {
+      ...appOptions,
+      name: 'apollo',
+    },
+    workspaceTree,
+  );
+}
+
+export async function runNgAdd(standalone: boolean): Promise<UnitTestTree> {
+  const projectName = 'apollo';
+  const appTree = await createTestApp({ standalone: standalone, name: projectName });
+
+  const runner = new SchematicTestRunner('apollo-angular', collectionPath);
+
+  return await runner.runSchematic('ng-add', { project: projectName }, appTree);
 }

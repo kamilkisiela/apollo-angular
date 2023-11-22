@@ -1,5 +1,13 @@
 # Change log
 
+## 5.0.2
+
+### Patch Changes
+
+- [#2074](https://github.com/kamilkisiela/apollo-angular/pull/2074)
+  [`f014edcb`](https://github.com/kamilkisiela/apollo-angular/commit/f014edcbfc3396de52c70c5deea194049ac7e746)
+  Thanks [@vz-tl](https://github.com/vz-tl)! - Disable dev-tool check when using ApolloTestingModule
+
 ## 5.0.1
 
 ### Patch Changes

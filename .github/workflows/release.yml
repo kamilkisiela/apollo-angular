@@ -10,7 +10,7 @@ jobs:
     with:
       createGithubReleases: true
       releaseScript: release
-      nodeVersion: 16
+      nodeVersion: 18
     secrets:
       githubToken: ${{ secrets.GUILD_BOT_TOKEN }}
       npmToken: ${{ secrets.NPM_TOKEN }}
