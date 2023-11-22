@@ -50,15 +50,5 @@
     "access": "public"
   },
   "sideEffects": false,
-  "ng-update": {
-    "requirements": {},
-    "migrations": "./schematics/migrations.json",
-    "packageGroupName": "apollo-angular",
-    "packageGroup": [
-      "apollo-angular",
-      "@apollo/client",
-      "graphql"
-    ]
-  },
   "schematics": "./schematics/collection.json"
 }
