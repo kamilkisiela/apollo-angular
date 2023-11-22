@@ -1,7 +1,7 @@
 ---
-description: Webpack loader for GraphQL files. Load GraphQL queries over .graphql files using Webpack.
+description:
+  Webpack loader for GraphQL files. Load GraphQL queries over .graphql files using Webpack.
 ---
-import { PackageCmd } from '@theguild/components';
 
 # Webpack Loader
 
@@ -58,68 +58,68 @@ class ProfileComponent {
 
 Install `@angular-builders/custom-webpack` with the following command:
 
-<PackageCmd packages={['-D @angular-builders/custom-webpack']} />
-
-(Or alternative command when using yarn or another package-manager)
+```sh npm2yarn
+npm i -D @angular-builders/custom-webpack
+```
 
 Then create a Webpack-configuration file `webpack.config.js` in your application root containing
 your Webpack configuration (as listed above):
 
-```
+```js filename="webpack.config.js"
 module.exports = {
-    module: {
-        rules: [
-            {
-                test: /\.(graphql|gql)$/,
-                exclude: /node_modules/,
-                loader: '@graphql-tools/webpack-loader'
-            }
-        ]
-    }
-}
+  module: {
+    rules: [
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: '@graphql-tools/webpack-loader',
+      },
+    ],
+  },
+};
 ```
 
 After that, create your type-definition for your `.graphql` files, so TypeScript will transform them
 into importable objects with `src/@types/graphql.d.ts`:
 
-```
+```ts filename="src/@types/graphql.d.ts"
 declare module '*.graphql' {
-    import { DocumentNode } from 'graphql'
-    const schema: DocumentNode
+  import { DocumentNode } from 'graphql';
+  const schema: DocumentNode;
 
-    export = schema
+  export = schema;
 }
 ```
 
 Next, update your TSConfig (`tsconfig.json`):
 
-```
+```jsonc filename="tsconfig.json"
 {
-  ...
+  // ...
   "files": [
-    ...
+    // ...
     "src/@types/graphql.d.ts"
   ],
   "compilerOptions": {
     "typeRoots": [
-      ...
+      // ...
       "src/@types"
     ]
   }
 }
 ```
 
-Finally you have to manipulate your `angular.json` to accept your customized Webpack configuration:
+Finally, you have to manipulate your `angular.json` to accept your customized Webpack configuration:
 
-```
+```jsonc filename="angular.json"
 {
-  ...
+  // ...
   "projects": {
     "<Your project name here>": {
-      ...
+      // ...
       "architect": {
         "build": {
-          ...
+          // ...
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "customWebpackConfig": {
@@ -129,7 +129,7 @@ Finally you have to manipulate your `angular.json` to accept your customized Web
           }
         }
         "serve": {
-          ...
+          // ...
           "builder": "@angular-builders/custom-webpack:dev-server",
         }
       }

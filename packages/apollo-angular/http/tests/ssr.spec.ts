@@ -1,18 +1,12 @@
 import { filter, first } from 'rxjs/operators';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import {
-  ApplicationRef,
-  Component,
-  destroyPlatform,
-  getPlatform,
-  NgModule,
-} from '@angular/core';
+import { ApplicationRef, Component, destroyPlatform, getPlatform, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {
   INITIAL_CONFIG,
+  platformServer,
   PlatformState,
   renderModule,
-  platformServer,
   ServerModule,
 } from '@angular/platform-server';
 import { execute, gql } from '@apollo/client/core';
@@ -50,7 +44,10 @@ describe.skip('integration', () => {
     class AsyncServerApp {
       public text = 'online';
 
-      constructor(private httpLink: HttpLink, private httpBackend: HttpTestingController) {}
+      constructor(
+        private httpLink: HttpLink,
+        private httpBackend: HttpTestingController,
+      ) {}
 
       public ngOnInit() {
         execute(this.httpLink.create({ uri: 'graphql', method: 'GET' }), {

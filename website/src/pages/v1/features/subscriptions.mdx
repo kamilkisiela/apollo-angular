@@ -1,6 +1,9 @@
 ---
-description: GraphQL subscriptions are a way to push data from the server to the clients that choose to listen to real time messages from the server.
+description:
+  GraphQL subscriptions are a way to push data from the server to the clients that choose to listen
+  to real time messages from the server.
 ---
+
 import { Callout } from '@theguild/components';
 
 # Subscriptions
@@ -87,8 +90,8 @@ Let's look at how to add support for this transport to Apollo Client.
 
 First, install the WebSocket Apollo Link (`apollo-link-ws`) from npm:
 
-```shell
-npm install apollo-link-ws
+```sh npm2yarn
+npm i apollo-link-ws
 ```
 
 Then, initialize a GraphQL subscriptions transport link:

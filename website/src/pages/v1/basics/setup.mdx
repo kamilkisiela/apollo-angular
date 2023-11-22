@@ -1,7 +1,10 @@
 ---
-description: Apollo Angular is a community-maintained Angular integration for Apollo Client. It provides you with everything you need to use Apollo Client in your Angular app.
+description:
+  Apollo Angular is a community-maintained Angular integration for Apollo Client. It provides you
+  with everything you need to use Apollo Client in your Angular app.
 ---
-import { Callout, PackageCmd } from '@theguild/components';
+
+import { Callout } from '@theguild/components';
 
 # Setup and Options
 
@@ -34,13 +37,11 @@ const uri = 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'; // Our test Graphql
 If you want to setup Apollo without the help of Angular Schematics, first, let's install some
 packages:
 
-<PackageCmd
-  packages={[
-    'apollo-angular apollo-angular-link-http',
-    'apollo-link apollo-client apollo-cache-inmemory',
-    'graphql-tag graphql',
-  ]}
-/>
+```sh npm2yarn
+npm i apollo-angular apollo-angular-link-http
+npm i apollo-link apollo-client apollo-cache-inmemory
+npm i graphql-tag graphql
+```
 
 - `apollo-client`: Where the magic happens
 - `apollo-angular`: Bridge between Angular and Apollo Client

@@ -8,8 +8,7 @@ import {
   Operation,
 } from '@apollo/client/core';
 import { BatchHandler, BatchLink } from '@apollo/client/link/batch';
-import { Body, Context, OperationPrinter, Options, Request } from './types';
-import { BatchOptions } from './types';
+import { BatchOptions, Body, Context, OperationPrinter, Options, Request } from './types';
 import { createHeadersWithClientAwareness, fetch, mergeHeaders, prioritize } from './utils';
 
 const defaults = {
@@ -25,7 +24,10 @@ export class HttpBatchLinkHandler extends ApolloLink {
   private batchMax: number;
   private print: OperationPrinter = print;
 
-  constructor(private httpClient: HttpClient, private options: BatchOptions) {
+  constructor(
+    private httpClient: HttpClient,
+    private options: BatchOptions,
+  ) {
     super();
 
     this.batchInterval = options.batchInterval || defaults.batchInterval;

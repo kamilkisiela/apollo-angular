@@ -1,5 +1,23 @@
 # Change log
 
+## 5.0.2
+
+### Patch Changes
+
+- [#2074](https://github.com/kamilkisiela/apollo-angular/pull/2074)
+  [`f014edcb`](https://github.com/kamilkisiela/apollo-angular/commit/f014edcbfc3396de52c70c5deea194049ac7e746)
+  Thanks [@vz-tl](https://github.com/vz-tl)! - Disable dev-tool check when using ApolloTestingModule
+
+## 5.0.1
+
+### Patch Changes
+
+- [#2065](https://github.com/kamilkisiela/apollo-angular/pull/2065)
+  [`78947ba5`](https://github.com/kamilkisiela/apollo-angular/commit/78947ba59d5fe791fb813471c7823fc931279f11)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+  - Updated dependency [`tslib@^2.6.2` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.2) (from
+    `^2.0.0`, in `dependencies`)
+
 ## 5.0.0
 
 ### Major Changes

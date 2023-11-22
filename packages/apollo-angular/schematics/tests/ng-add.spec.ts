@@ -1,23 +1,16 @@
-import { resolve } from 'path';
 import { CompilerOptions } from 'typescript';
-import { Tree } from '@angular-devkit/schematics';
-import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import { UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createDependenciesMap } from '../install';
-import { createTestApp, getFileContent, getJsonFile } from '../utils';
+import { getFileContent, getJsonFile, runNgAdd } from '../utils';
 
-const collectionPath = resolve(__dirname, '../collection.json');
-
-describe('ng-add', () => {
-  let runner: SchematicTestRunner;
-  let appTree: Tree;
+describe('ng-add with module', () => {
+  let tree: UnitTestTree;
 
   beforeEach(async () => {
-    appTree = await createTestApp();
-    runner = new SchematicTestRunner('apollo-angular', collectionPath);
+    tree = await runNgAdd(false);
   });
 
   test('should update package.json dependencies', async () => {
-    const tree = await runner.runSchematicAsync('ng-add', {}, appTree).toPromise();
     const packageJsonPath = '/package.json';
     expect(tree.files).toContain(packageJsonPath);
 
@@ -38,7 +31,6 @@ describe('ng-add', () => {
   });
 
   test('should add NgModule with GraphQL setup', async () => {
-    const tree = await runner.runSchematicAsync('ng-add', {}, appTree).toPromise();
     const modulePath = '/projects/apollo/src/app/graphql.module.ts';
     expect(tree.files).toContain(modulePath);
 
@@ -47,25 +39,73 @@ describe('ng-add', () => {
   });
 
   test('should import the NgModule with GraphQL setup to the root module', async () => {
-    const tree = await runner.runSchematicAsync('ng-add', {}, appTree).toPromise();
-    const rootModulePath = '/projects/apollo/src/app/app.module.ts';
-    const content = getFileContent(tree, rootModulePath);
-
+    const content = getFileContent(tree, '/projects/apollo/src/app/app.module.ts');
     expect(content).toMatch(/import { GraphQLModule } from '.\/graphql.module'/);
   });
 
   test('should import HttpClientModule to the root module', async () => {
-    const tree = await runner.runSchematicAsync('ng-add', {}, appTree).toPromise();
-    const rootModulePath = '/projects/apollo/src/app/app.module.ts';
-    const content = getFileContent(tree, rootModulePath);
+    const content = getFileContent(tree, '/projects/apollo/src/app/app.module.ts');
 
     expect(content).toMatch(/import { HttpClientModule } from '@angular\/common\/http'/);
   });
 
   test('should add esnext.asynciterable to tsconfig.json', async () => {
-    const tree = await runner.runSchematicAsync('ng-add', {}, appTree).toPromise();
-    const rootModulePath = '/tsconfig.json';
-    const config = getJsonFile(tree, rootModulePath);
+    const config = getJsonFile(tree, '/tsconfig.json');
+    const compilerOptions: CompilerOptions = config.compilerOptions;
+
+    expect(compilerOptions.lib).toContain('esnext.asynciterable');
+  });
+});
+
+describe('ng-add with standalone', () => {
+  let tree: UnitTestTree;
+
+  beforeEach(async () => {
+    tree = await runNgAdd(true);
+  });
+
+  test('should update package.json dependencies', async () => {
+    const packageJsonPath = '/package.json';
+    expect(tree.files).toContain(packageJsonPath);
+
+    const packageJson = getJsonFile(tree, packageJsonPath);
+    const { dependencies } = packageJson;
+
+    const dependenciesMap = createDependenciesMap({
+      graphql: '16',
+    });
+
+    for (const dependency in dependenciesMap) {
+      if (dependenciesMap.hasOwnProperty(dependency)) {
+        const version = dependenciesMap[dependency];
+
+        expect(dependencies[dependency]).toBe(version);
+      }
+    }
+  });
+
+  test('should add graphqlProviders with GraphQL setup', async () => {
+    const providerPath = '/projects/apollo/src/app/graphql.provider.ts';
+    expect(tree.files).toContain(providerPath);
+
+    const content = getFileContent(tree, providerPath);
+    expect(content).toMatch('export const graphqlProvider');
+  });
+
+  test('should import the NgModule with GraphQL setup to the root module', async () => {
+    const content = getFileContent(tree, '/projects/apollo/src/app/app.config.ts');
+
+    expect(content).toMatch(/import { graphqlProvider } from '.\/graphql.provider'/);
+  });
+
+  test('should import HttpClientModule to the root module', async () => {
+    const content = getFileContent(tree, '/projects/apollo/src/app/app.config.ts');
+
+    expect(content).toMatch(/import { provideHttpClient } from '@angular\/common\/http'/);
+  });
+
+  test('should add esnext.asynciterable to tsconfig.json', async () => {
+    const config = getJsonFile(tree, '/tsconfig.json');
     const compilerOptions: CompilerOptions = config.compilerOptions;
 
     expect(compilerOptions.lib).toContain('esnext.asynciterable');

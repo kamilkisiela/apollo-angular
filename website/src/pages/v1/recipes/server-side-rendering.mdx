@@ -1,6 +1,9 @@
 ---
-description: Learn how to use Apollo with Angular to build a GraphQL-powered app. This tutorial covers everything from setting up Apollo Client to querying data with GraphQL.
+description:
+  Learn how to use Apollo with Angular to build a GraphQL-powered app. This tutorial covers
+  everything from setting up Apollo Client to querying data with GraphQL.
 ---
+
 import { Callout } from '@theguild/components';
 
 # Server Side Rendering
@@ -108,7 +111,11 @@ const STATE_KEY = makeStateKey<any>('apollo.state');
 class AppModule {
   cache: InMemoryCache;
 
-  constructor(apollo: Apollo, httpLink: HttpLink, private readonly transferState: TransferState) {
+  constructor(
+    apollo: Apollo,
+    httpLink: HttpLink,
+    private readonly transferState: TransferState,
+  ) {
     this.cache = new InMemoryCache();
 
     apollo.create({

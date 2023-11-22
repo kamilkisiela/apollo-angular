@@ -1,8 +1,8 @@
 ---
-description: Discover essential developer tools for Apollo Angular including GraphQL Inspector, GraphQL Codegen, and more. Improve and maintain your GraphQL API with these powerful tools.
+description:
+  Discover essential developer tools for Apollo Angular including GraphQL Inspector, GraphQL
+  Codegen, and more. Improve and maintain your GraphQL API with these powerful tools.
 ---
-
-import { PackageCmd } from '@theguild/components';
 
 # Developer Tools
 
@@ -47,13 +47,15 @@ documentation.
 
 [Read documentation](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular).
 
-<PackageCmd packages={['-D @graphql-codegen/cli @graphql-codegen/typescript-apollo-angular']} />
+```sh npm2yarn
+npm i -D @graphql-codegen/cli @graphql-codegen/typescript-apollo-angular
+```
 
 ## GraphQL ESLint
 
-[GraphQL ESLint](https://github.com/dotansimha/graphql-eslint/) is a parser, plugin and set rules
-for GraphQL (for schema and operations). Easily customizable with custom rules. Integrates with IDEs
-and modern GraphQL tools.
+[GraphQL ESLint](https://github.com/B2o5T/graphql-eslint) is a parser, plugin and set rules for
+GraphQL (for schema and operations). Easily customizable with custom rules. Integrates with IDEs and
+modern GraphQL tools.
 
 - Integrates with ESLint core (as a ESTree parser).
 - Works on `.graphql` files, `gql` or `graphql` usages and `/* GraphQL */` magic comments.
@@ -68,7 +70,7 @@ and modern GraphQL tools.
 
 ## Collection of GraphQL Scalars
 
-[GraphQL Scalars](https://github.com/Urigo/graphql-scalars/) is a library of custom GraphQL Scalars
+[GraphQL Scalars](https://github.com/Urigo/graphql-scalars) is a library of custom GraphQL Scalars
 for creating precise type-safe GraphQL schemas.
 
 ## Generate REST API Out of GraphQL

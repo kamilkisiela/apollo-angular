@@ -1,8 +1,10 @@
 ---
-description: Set up Apollo in your Angular app, and start fetching data with GraphQL. Learn how to use Apollo Client with Angular to build a simple app.
+description:
+  Set up Apollo in your Angular app, and start fetching data with GraphQL. Learn how to use Apollo
+  Client with Angular to build a simple app.
 ---
 
-import { Callout, PackageCmd } from '@theguild/components';
+import { Callout } from '@theguild/components';
 
 # Get Started
 
@@ -37,7 +39,9 @@ const uri = 'https://48p1r2roz4.sse.codesandbox.io'; // our GraphQL API
 If you want to setup Apollo without the help of Angular Schematics, first, let's install some
 packages:
 
-<PackageCmd packages={['apollo-angular @apollo/client graphql']} />
+```sh npm2yarn
+npm i apollo-angular @apollo/client graphql
+```
 
 - `@apollo/client`: Where the magic happens
 - `apollo-angular`: Bridge between Angular and Apollo Client
