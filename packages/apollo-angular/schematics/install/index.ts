@@ -160,13 +160,13 @@ function allowSyntheticDefaultImports(): Rule {
 function addSetupFiles(options: Schema): Rule {
   return async (host: Tree) => {
     const mainPath = await getMainFilePath(host, options.project);
-    const mainDirectory = dirname(mainPath);
+    const appModuleDirectory = dirname(mainPath) + '/app';
     if (isStandaloneApp(host, mainPath)) {
       const templateSource = apply(url('./files/standalone'), [
         template({
           endpoint: options.endpoint,
         }),
-        move(mainDirectory),
+        move(appModuleDirectory),
       ]);
 
       return mergeWith(templateSource);
