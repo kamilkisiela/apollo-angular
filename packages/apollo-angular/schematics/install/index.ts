@@ -13,8 +13,10 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
-import { getJsonFile, getMainPath } from '../utils';
+import { addRootProvider } from '@schematics/angular/utility';
+import { getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
+import { getMainFilePath } from '@schematics/angular/utility/standalone/util';
+import { getJsonFile } from '../utils';
 import { addModuleImportToRootModule } from '../utils/ast';
 import { Schema } from './schema';
 
@@ -24,8 +26,8 @@ export function factory(options: Schema): Rule {
     includeAsyncIterableLib(),
     allowSyntheticDefaultImports(),
     addSetupFiles(options),
-    importSetupModule(options),
-    importHttpClientModule(options),
+    importHttpClient(options),
+    importSetup(options),
   ]);
 }
 
@@ -42,7 +44,7 @@ export function createDependenciesMap(options: Schema): Record<string, string> {
  * as dependencies in the package.json
  * and installs them by running `npm install`.
  */
-function addDependencies(options: Schema) {
+function addDependencies(options: Schema): Rule {
   return (host: Tree, context: SchematicContext) => {
     const packageJsonPath = 'package.json';
     const packageJson = getJsonFile(host, packageJsonPath);
@@ -69,7 +71,7 @@ function addDependencies(options: Schema) {
   };
 }
 
-function includeAsyncIterableLib() {
+function includeAsyncIterableLib(): Rule {
   const requiredLib = 'esnext.asynciterable';
 
   function updateFn(tsconfig: any) {
@@ -124,7 +126,7 @@ function updateTSConfig(
   return false;
 }
 
-function allowSyntheticDefaultImports() {
+function allowSyntheticDefaultImports(): Rule {
   function updateFn(tsconfig: any) {
     if (
       tsconfig?.compilerOptions &&
@@ -155,33 +157,61 @@ function allowSyntheticDefaultImports() {
   };
 }
 
-function addSetupFiles(options: Schema) {
-  return (host: Tree) => {
-    const mainPath = getMainPath(host, options.project);
-    const appModulePath = getAppModulePath(host, mainPath);
-    const appModuleDirectory = dirname(appModulePath);
+function addSetupFiles(options: Schema): Rule {
+  return async (host: Tree) => {
+    const mainPath = await getMainFilePath(host, options.project);
+    const appModuleDirectory = dirname(mainPath) + '/app';
+    if (isStandaloneApp(host, mainPath)) {
+      const templateSource = apply(url('./files/standalone'), [
+        template({
+          endpoint: options.endpoint,
+        }),
+        move(appModuleDirectory),
+      ]);
 
-    const templateSource = apply(url('./files'), [
-      template({
-        endpoint: options.endpoint,
-      }),
-      move(appModuleDirectory),
-    ]);
+      return mergeWith(templateSource);
+    } else {
+      const appModulePath = getAppModulePath(host, mainPath);
+      const appModuleDirectory = dirname(appModulePath);
+      const templateSource = apply(url('./files/module'), [
+        template({
+          endpoint: options.endpoint,
+        }),
+        move(appModuleDirectory),
+      ]);
 
-    return mergeWith(templateSource);
+      return mergeWith(templateSource);
+    }
   };
 }
 
-function importSetupModule(options: Schema) {
-  return (host: Tree) => {
-    addModuleImportToRootModule(host, 'GraphQLModule', './graphql.module', options.project);
-
-    return host;
+function importSetup(options: Schema): Rule {
+  return async (host: Tree) => {
+    const mainPath = await getMainFilePath(host, options.project);
+    if (isStandaloneApp(host, mainPath)) {
+      return addRootProvider(options.project, ({ code, external }) => {
+        return code`${external('graphqlProvider', './graphql.provider')}`;
+      });
+    } else {
+      await addModuleImportToRootModule(host, 'GraphQLModule', './graphql.module', options.project);
+    }
   };
 }
 
-function importHttpClientModule(options: Schema) {
-  return (host: Tree) => {
-    addModuleImportToRootModule(host, 'HttpClientModule', '@angular/common/http', options.project);
+function importHttpClient(options: Schema): Rule {
+  return async (host: Tree) => {
+    const mainPath = await getMainFilePath(host, options.project);
+    if (isStandaloneApp(host, mainPath)) {
+      return addRootProvider(options.project, ({ code, external }) => {
+        return code`${external('provideHttpClient', '@angular/common/http')}()`;
+      });
+    } else {
+      await addModuleImportToRootModule(
+        host,
+        'HttpClientModule',
+        '@angular/common/http',
+        options.project,
+      );
+    }
   };
 }
