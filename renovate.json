@@ -1,3 +1,10 @@
 {
-  "extends": ["github>the-guild-org/shared-config:renovate"]
+  "extends": ["github>the-guild-org/shared-config:renovate"],
+  "automerge": true,
+  "packageRules": [
+    {
+      "groupName": "angular",
+      "matchPackagePrefixes": ["@angular", "@schematics"]
+    }
+  ]
 }
