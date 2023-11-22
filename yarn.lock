@@ -3667,9 +3667,7 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@^29.5.4":
-  version "29.5.4"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.4.tgz#9d0a16edaa009a71e6a71a999acd582514dab566"
-  integrity sha512-PhglGmhWeD46FYOVLt3X7TiWjzwuVGW9wG/4qocPevXMjCmrIc5b6db9WjeGE4QYVpUAWMDv3v0IiBwObY289A==
+  version "29.5.10"
   dependencies:
     expect "^29.0.0"
     pretty-format "^29.0.0"
@@ -4439,9 +4437,7 @@ axios@0.21.4:
     follow-redirects "^1.14.0"
 
 babel-jest@^29.6.4:
-  version "29.6.4"
-  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-29.6.4.tgz#98dbc45d1c93319c82a8ab4a478b670655dd2585"
-  integrity sha512-meLj23UlSLddj6PC+YTOFRgDAtjnZom8w/ACsrx0gtPtv5cJZk0A5Unk5bV4wixD7XaPCN1fQvpww8czkZURmw==
+  version "29.7.0"
   dependencies:
     "@jest/transform" "^29.6.4"
     "@types/babel__core" "^7.1.14"
