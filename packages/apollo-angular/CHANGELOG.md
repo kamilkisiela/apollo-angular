@@ -1,5 +1,24 @@
 # Change log
 
+## 6.0.0
+
+### Major Changes
+
+- [#2093](https://github.com/kamilkisiela/apollo-angular/pull/2093)
+  [`fbd86daf`](https://github.com/kamilkisiela/apollo-angular/commit/fbd86daf1a413695ad1f5dfcddd652ce73590b42)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - - Add Angular 17 Support
+  - Drop support for Angular 14, 15 and 16
+  - Support for `ng add` schematics for standalone apps or module apps
+
+### Patch Changes
+
+- [#2093](https://github.com/kamilkisiela/apollo-angular/pull/2093)
+  [`e0bec09a`](https://github.com/kamilkisiela/apollo-angular/commit/e0bec09a877cb617d96dea0f3379925d39458e6a)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+  - Updated dependency
+    [`@angular/core@^17.0.0` ↗︎](https://www.npmjs.com/package/@angular/core/v/17.0.0) (from
+    `^14.0.0 || ^15.0.0 || ^16.0.0`, in `peerDependencies`)
+
 ## 5.0.2
 
 ### Patch Changes
