@@ -85,7 +85,7 @@ describe('ng-add with standalone', () => {
   });
 
   test('should add graphqlProviders with GraphQL setup', async () => {
-    const providerPath = '/projects/apollo/src/graphql.provider.ts';
+    const providerPath = '/projects/apollo/src/app/graphql.provider.ts';
     expect(tree.files).toContain(providerPath);
 
     const content = getFileContent(tree, providerPath);
