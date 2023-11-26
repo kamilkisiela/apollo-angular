@@ -84,6 +84,29 @@ jobs:
       - name: Test
         run: yarn test --ci
 
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@master
+        with:
+          node-version: 18
+
+      - uses: actions/cache@v3
+        name: Cache node_modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install
+        run: yarn
+
+      - run: ./node_modules/.bin/prettier --check .
+
   angular:
     name:
       Test on Angular ${{ matrix.angular_version }} GraphQL ${{ matrix.graphql_version }} Node ${{
