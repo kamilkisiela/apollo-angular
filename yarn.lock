@@ -8171,10 +8171,10 @@ jest-pnp-resolver@^1.2.2:
   resolved "https://registry.yarnpkg.com/jest-pnp-resolver/-/jest-pnp-resolver-1.2.3.tgz#930b1546164d4ad5937d5540e711d4d38d4cad2e"
   integrity sha512-+3NpwQEnRoIBtx4fyhblQDPgJI0H1IEIkX7ShLUjPGA7TtUTvI1oiKi3SR4oBR0hQhQR80l4WAe5RrXBwWMA8w==
 
-jest-preset-angular@^13.1.3:
-  version "13.1.6"
-  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-13.1.6.tgz#c32af7b3071a917c7fc75534f5aa00db1f36700a"
-  integrity sha512-0pXSm6168Qn+qKp7DpzYoaIp0uyMHdQaWYVp8jlw7Mh+NEBtrBjKqts3kLeBHgAhGMQArp07S2IxZ6eCr8fc7Q==
+jest-preset-angular@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-14.0.0.tgz#5062a4ec6992388ae17b3df60d4539715d2c6f8b"
+  integrity sha512-gXGgzuGbpw3MRBMe/NGCu3r2E//GKmhtFveo0XUIXMvQ3je0vcOtK+WYjxtxFTTh2xFgrA/loY5BxBcKia/GaA==
   dependencies:
     bs-logger "^0.2.6"
     esbuild-wasm ">=0.13.8"
