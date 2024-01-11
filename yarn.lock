@@ -836,7 +836,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-transform-async-generator-functions@7.23.2":
+"@babel/plugin-transform-async-generator-functions@7.23.2", "@babel/plugin-transform-async-generator-functions@^7.23.2":
   version "7.23.2"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-async-generator-functions/-/plugin-transform-async-generator-functions-7.23.2.tgz#054afe290d64c6f576f371ccc321772c8ea87ebb"
   integrity sha512-BBYVGxbDVHfoeXbOwcagAkOQAm9NxoTdMGfTqghu1GrvadSaw6iW3Je6IcL5PNOw8VwjxqBECXy50/iCQSY/lQ==
@@ -846,17 +846,7 @@
     "@babel/helper-remap-async-to-generator" "^7.22.20"
     "@babel/plugin-syntax-async-generators" "^7.8.4"
 
-"@babel/plugin-transform-async-generator-functions@^7.23.2":
-  version "7.23.7"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-async-generator-functions/-/plugin-transform-async-generator-functions-7.23.7.tgz#3aa0b4f2fa3788b5226ef9346cf6d16ec61f99cd"
-  integrity sha512-PdxEpL71bJp1byMG0va5gwQcXHxuEYC/BgI/e88mGTtohbZN28O5Yit0Plkkm/dBzCF/BxmbNcses1RH1T+urA==
-  dependencies:
-    "@babel/helper-environment-visitor" "^7.22.20"
-    "@babel/helper-plugin-utils" "^7.22.5"
-    "@babel/helper-remap-async-to-generator" "^7.22.20"
-    "@babel/plugin-syntax-async-generators" "^7.8.4"
-
-"@babel/plugin-transform-async-to-generator@7.22.5":
+"@babel/plugin-transform-async-to-generator@7.22.5", "@babel/plugin-transform-async-to-generator@^7.22.5":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-async-to-generator/-/plugin-transform-async-to-generator-7.22.5.tgz#c7a85f44e46f8952f6d27fe57c2ed3cc084c3775"
   integrity sha512-b1A8D8ZzE/VhNDoV1MSJTnpKkCG5bJo+19R4o4oy03zM7ws8yEMK755j61Dc3EyvdysbqH5BOOTquJ7ZX9C6vQ==
@@ -864,15 +854,6 @@
     "@babel/helper-module-imports" "^7.22.5"
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/helper-remap-async-to-generator" "^7.22.5"
-
-"@babel/plugin-transform-async-to-generator@^7.22.5":
-  version "7.23.3"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-async-to-generator/-/plugin-transform-async-to-generator-7.23.3.tgz#d1f513c7a8a506d43f47df2bf25f9254b0b051fa"
-  integrity sha512-A7LFsKi4U4fomjqXJlZg/u0ft/n8/7n7lpffUP/ZULx/DtV9SGlNKZolHH6PE8Xl1ngCc0M11OaeZptXVkfKSw==
-  dependencies:
-    "@babel/helper-module-imports" "^7.22.15"
-    "@babel/helper-plugin-utils" "^7.22.5"
-    "@babel/helper-remap-async-to-generator" "^7.22.20"
 
 "@babel/plugin-transform-block-scoped-functions@^7.22.5":
   version "7.23.3"
@@ -8191,9 +8172,9 @@ jest-pnp-resolver@^1.2.2:
   integrity sha512-+3NpwQEnRoIBtx4fyhblQDPgJI0H1IEIkX7ShLUjPGA7TtUTvI1oiKi3SR4oBR0hQhQR80l4WAe5RrXBwWMA8w==
 
 jest-preset-angular@^13.1.3:
-  version "13.1.5"
-  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-13.1.5.tgz#5e31102acdd864dbb3a8f79f4fe7f1d0cab23825"
-  integrity sha512-jslbUX0SXK+JjB3Kxx2cS3i2qQM1Gvf5WMbKKPOpWp93qAaUnoyLsa0lxIHLHDON1Q/D8vchCPRVY4nfyVaqkQ==
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-13.1.6.tgz#c32af7b3071a917c7fc75534f5aa00db1f36700a"
+  integrity sha512-0pXSm6168Qn+qKp7DpzYoaIp0uyMHdQaWYVp8jlw7Mh+NEBtrBjKqts3kLeBHgAhGMQArp07S2IxZ6eCr8fc7Q==
   dependencies:
     bs-logger "^0.2.6"
     esbuild-wasm ">=0.13.8"
