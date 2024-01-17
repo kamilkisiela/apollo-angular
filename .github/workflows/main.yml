@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 18
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Cache node_modules
         with:
           path: '**/node_modules'
@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: yarn build
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Share build
         with:
           path: 'packages/apollo-angular/build'
@@ -39,13 +39,13 @@ jobs:
           (cd packages/apollo-angular/build && yarn pack --filename apollo-angular.tgz && mv
           apollo-angular.tgz ../apollo-angular.tgz)
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Share tarball
         with:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Share script
         with:
           path: 'scripts/prepare-e2e.js'
@@ -64,7 +64,7 @@ jobs:
         with:
           node-version: 18
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Cache node_modules
         with:
           path: '**/node_modules'
@@ -75,7 +75,7 @@ jobs:
       - name: Install
         run: yarn
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Share build
         with:
           path: 'packages/apollo-angular/build'
@@ -94,7 +94,7 @@ jobs:
         with:
           node-version: 18
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Cache node_modules
         with:
           path: '**/node_modules'
@@ -124,13 +124,13 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Share tarball
         with:
           path: 'packages/apollo-angular/apollo-angular.tgz'
           key: ${{ github.sha }}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Share script
         with:
           path: 'scripts/prepare-e2e.js'
