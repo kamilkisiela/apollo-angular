@@ -380,9 +380,9 @@
     tslib "^2.3.0"
 
 "@apollo/client@^3.8.1":
-  version "3.9.8"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.9.8.tgz#d038ce72e26e75ab3624669664d79bc1dc842b15"
-  integrity sha512-ausPftEb2xAUkZqz+VkSSIhNxKraShJXdV2/NJ7JbHAAciGsFlapGtZ++b7lF0/+3Jp/p34g/i6dvO8b4WjQig==
+  version "3.9.9"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.9.9.tgz#38f983a1ad24e2687abfced0a9c1c3bef8d32616"
+  integrity sha512-/sMecU/M0WK9knrguts1lSLV8xFKzIgOMVb4mi6MOxgJXjliDB8PvOtmXhTqh2cVMMR4TzXgOnb+af/690zlQw==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/caches" "^1.0.0"
