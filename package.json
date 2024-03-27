@@ -63,7 +63,7 @@
     "shelljs": "^0.8.5",
     "ts-jest": "^29.1.1",
     "tslib": "^2.3.0",
-    "typescript": "5.2.2",
+    "typescript": "5.4.3",
     "zone.js": "~0.14.2"
   },
   "husky": {
