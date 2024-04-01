@@ -172,7 +172,8 @@ test('expect and answer', () => {
 ```
 
 When it receives a `GET_DOG_QUERY` with matching `variables`, it returns the corresponding object
-that has been flushed.
+that has been flushed. If the query is using fragments the mock data additionally needs to specify
+the `__typename`. Otherwise an empty object is received from the query.
 
 For mutation, `expectOne` should use a function to check the query definitions and return a boolean:
 
