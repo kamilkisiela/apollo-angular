@@ -65,3 +65,6 @@ dist/
 
 # Because if mess up import order
 /packages/apollo-angular/tests/_setup.ts
+
+# Prettier errors on this file
+/.devcontainer/base.Dockerfile
