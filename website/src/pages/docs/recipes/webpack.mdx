@@ -99,14 +99,14 @@ Next, update your TSConfig:
   // ...
   "files": [
     // ...
-    "src/@types/graphql.d.ts"
+    "src/@types/graphql.d.ts",
   ],
   "compilerOptions": {
     "typeRoots": [
       // ...
-      "src/@types"
-    ]
-  }
+      "src/@types",
+    ],
+  },
 }
 ```
 
@@ -125,17 +125,17 @@ Finally, you have to manipulate your `angular.json` to accept your customized we
           "options": {
             "customWebpackConfig": {
               "path": "./webpack.config.js",
-              "replaceDuplicatePlugins": true
-            }
-          }
+              "replaceDuplicatePlugins": true,
+            },
+          },
         },
         "serve": {
           // ...
-          "builder": "@angular-builders/custom-webpack:dev-server"
-        }
-      }
-    }
-  }
+          "builder": "@angular-builders/custom-webpack:dev-server",
+        },
+      },
+    },
+  },
 }
 ```
 
