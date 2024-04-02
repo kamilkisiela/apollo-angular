@@ -43,12 +43,8 @@ function useInitialLoading<T, V extends OperationVariables>(obsQuery: Observable
   };
 }
 
-export type QueryRefFromDocument<T extends TypedDocumentNode> = T extends TypedDocumentNode<
-  infer R,
-  infer V
->
-  ? QueryRef<R, V & OperationVariables>
-  : never;
+export type QueryRefFromDocument<T extends TypedDocumentNode> =
+  T extends TypedDocumentNode<infer R, infer V> ? QueryRef<R, V & OperationVariables> : never;
 
 export class QueryRef<T, V extends OperationVariables = EmptyObject> {
   public valueChanges: Observable<ApolloQueryResult<T>>;
