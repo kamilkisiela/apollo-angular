@@ -5692,9 +5692,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.668:
-  version "1.4.724"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.724.tgz#e0a86fe4d3d0e05a4d7b032549d79608078f830d"
-  integrity sha512-RTRvkmRkGhNBPPpdrgtDKvmOEYTrPlXDfc0J/Nfq5s29tEahAwhiX4mmhNzj6febWMleulxVYPh7QwCSL/EldA==
+  version "1.4.725"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.725.tgz#a599369caa3619ca3ba90a61c0ad03e28158681e"
+  integrity sha512-OGkMXLY7XH6ykHE5ZOVVIMHaGAvvxqw98cswTKB683dntBJre7ufm9wouJ0ExDm0VXhHenU8mREvxIbV5nNoVQ==
 
 elkjs@^0.8.2:
   version "0.8.2"
