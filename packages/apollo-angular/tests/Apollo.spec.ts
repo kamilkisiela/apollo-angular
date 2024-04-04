@@ -631,6 +631,38 @@ describe('Apollo', () => {
     });
   });
 
+  describe('watchFragment', () => {
+    test('should be called with the same options', () => {
+      const apollo = new Apollo(ngZone);
+
+      apollo.create({
+        link: mockSingleLink(),
+        cache: new InMemoryCache(),
+      });
+
+      const client = apollo.client;
+
+      const fragment = gql`
+        fragment ItemFragment on Item {
+          id
+          text
+        }
+      `;
+
+      const from = 'Item:1';
+
+      const options = {
+        fragment,
+        from,
+      };
+
+      client.watchFragment = jest.fn().mockReturnValue(new Observable());
+      apollo.watchFragment(options);
+
+      expect(client.watchFragment).toBeCalledWith(options);
+    });
+  });
+
   describe('query updates', () => {
     test('should update a query after mutation', (done: jest.DoneCallback) => {
       expect.assertions(3);
