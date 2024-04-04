@@ -77,25 +77,6 @@ export class ApolloBase<TCacheShape = any> {
 
   /**
    * Get an instance of ApolloClient
-   * @deprecated use `apollo.client` instead
-   */
-  public getClient() {
-    return this.client;
-  }
-
-  /**
-   * Set a new instance of ApolloClient
-   * Remember to clean up the store before setting a new client.
-   * @deprecated use `apollo.client = client` instead
-   *
-   * @param client ApolloClient instance
-   */
-  public setClient(client: ApolloClient<TCacheShape>) {
-    this.client = client;
-  }
-
-  /**
-   * Get an instance of ApolloClient
    */
   public get client(): ApolloClient<TCacheShape> {
     return this.ensureClient();
