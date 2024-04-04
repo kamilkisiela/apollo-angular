@@ -135,7 +135,7 @@ describe('Apollo', () => {
             } else if (calls > 2) {
               throw new Error('Called third time');
             }
-          } catch (e) {
+          } catch (e: any) {
             done.fail(e);
           }
         },
@@ -148,7 +148,7 @@ describe('Apollo', () => {
         obs.refetch(variables2).then(({ data }) => {
           try {
             expect(data).toMatchObject(data2);
-          } catch (e) {
+          } catch (e: any) {
             done.fail(e);
           }
         });
@@ -1029,7 +1029,7 @@ describe('Apollo', () => {
 
     apollo.removeClient();
 
-    expect(apollo.client).toBeUndefined();
+    expect(() => apollo.client).toThrow('Client has not been defined yet');
   });
 
   test('should remove named client', () => {

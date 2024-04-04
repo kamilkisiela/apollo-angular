@@ -109,11 +109,14 @@ export const fetch = (
   });
 };
 
-export const mergeHeaders = (source: HttpHeaders, destination: HttpHeaders): HttpHeaders => {
+export const mergeHeaders = (
+  source: HttpHeaders | undefined,
+  destination: HttpHeaders,
+): HttpHeaders => {
   if (source && destination) {
     const merged = destination
       .keys()
-      .reduce((headers, name) => headers.set(name, destination.getAll(name)), source);
+      .reduce((headers, name) => headers.set(name, destination.getAll(name)!), source);
 
     return merged;
   }
@@ -121,14 +124,10 @@ export const mergeHeaders = (source: HttpHeaders, destination: HttpHeaders): Htt
   return destination || source;
 };
 
-export function prioritize<T>(...values: T[]): T {
-  const picked = values.find(val => typeof val !== 'undefined');
-
-  if (typeof picked === 'undefined') {
-    return values[values.length - 1];
-  }
-
-  return picked;
+export function prioritize<T>(
+  ...values: [NonNullable<T>, ...T[]] | [...T[], NonNullable<T>]
+): NonNullable<T> {
+  return values.find(val => typeof val !== 'undefined') as NonNullable<T>;
 }
 
 export function createHeadersWithClientAwareness(context: Record<string, any>) {

@@ -74,7 +74,7 @@ function addDependencies(options: Schema): Rule {
 function includeAsyncIterableLib(): Rule {
   const requiredLib = 'esnext.asynciterable';
 
-  function updateFn(tsconfig: any) {
+  function updateFn(tsconfig: any): boolean {
     const compilerOptions: CompilerOptions = tsconfig.compilerOptions;
 
     if (
@@ -85,6 +85,8 @@ function includeAsyncIterableLib(): Rule {
       compilerOptions.lib.push(requiredLib);
       return true;
     }
+
+    return false;
   }
 
   return (host: Tree) => {
@@ -127,7 +129,7 @@ function updateTSConfig(
 }
 
 function allowSyntheticDefaultImports(): Rule {
-  function updateFn(tsconfig: any) {
+  function updateFn(tsconfig: any): boolean {
     if (
       tsconfig?.compilerOptions &&
       tsconfig?.compilerOptions?.lib &&
@@ -136,6 +138,8 @@ function allowSyntheticDefaultImports(): Rule {
       tsconfig.compilerOptions.allowSyntheticDefaultImports = true;
       return true;
     }
+
+    return false;
   }
 
   return (host: Tree) => {

@@ -24,7 +24,7 @@ export interface ExtraSubscriptionOptions {
 }
 
 export type MutationResult<TData = any> = FetchResult<TData> & {
-  loading: boolean;
+  loading?: boolean;
 };
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

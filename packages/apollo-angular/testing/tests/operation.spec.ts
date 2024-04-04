@@ -32,7 +32,7 @@ describe('TestOperation', () => {
       done();
     });
 
-    mock.expectOne(testQuery).flush(null);
+    mock.expectOne(testQuery).flush(null!);
   });
 
   test('should accepts data for flush operation', done => {
