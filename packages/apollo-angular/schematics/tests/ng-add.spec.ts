@@ -18,6 +18,7 @@ describe('ng-add with module', () => {
     const { dependencies } = packageJson;
 
     const dependenciesMap = createDependenciesMap({
+      project: 'my-project',
       graphql: '16',
     });
 
@@ -72,6 +73,7 @@ describe('ng-add with standalone', () => {
     const { dependencies } = packageJson;
 
     const dependenciesMap = createDependenciesMap({
+      project: 'my-project',
       graphql: '16',
     });
 

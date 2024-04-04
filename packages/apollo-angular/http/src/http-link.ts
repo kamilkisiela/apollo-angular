@@ -7,8 +7,9 @@ import {
   Observable as LinkObservable,
   Operation,
 } from '@apollo/client/core';
+import { pick } from './http-batch-link';
 import { Body, Context, OperationPrinter, Options, Request } from './types';
-import { createHeadersWithClientAwareness, fetch, mergeHeaders, prioritize } from './utils';
+import { createHeadersWithClientAwareness, fetch, mergeHeaders } from './utils';
 
 // XXX find a better name for it
 export class HttpLinkHandler extends ApolloLink {
@@ -29,20 +30,12 @@ export class HttpLinkHandler extends ApolloLink {
       new LinkObservable((observer: any) => {
         const context: Context = operation.getContext();
 
-        // decides which value to pick, Context, Options or to just use the default
-        const pick = <K extends keyof Context>(
-          key: K,
-          init?: Context[K] | Options[K],
-        ): Context[K] | Options[K] => {
-          return prioritize(context[key], this.options[key], init);
-        };
-
-        let method = pick('method', 'POST');
-        const includeQuery = pick('includeQuery', true);
-        const includeExtensions = pick('includeExtensions', false);
-        const url = pick('uri', 'graphql');
-        const withCredentials = pick('withCredentials');
-        const useMultipart = pick('useMultipart');
+        let method = pick(context, this.options, 'method');
+        const includeQuery = pick(context, this.options, 'includeQuery');
+        const includeExtensions = pick(context, this.options, 'includeExtensions');
+        const url = pick(context, this.options, 'uri');
+        const withCredentials = pick(context, this.options, 'withCredentials');
+        const useMultipart = pick(context, this.options, 'useMultipart');
         const useGETForQueries = this.options.useGETForQueries === true;
 
         const isQuery = operation.query.definitions.some(

@@ -19,5 +19,5 @@ const transformLink = setContext((_, context) => {
   return ctx;
 });
 
-export const createPersistedQueryLink = (options?: Options) =>
+export const createPersistedQueryLink = (options: Options) =>
   ApolloLink.from([_createPersistedQueryLink(options), transformLink as any]);

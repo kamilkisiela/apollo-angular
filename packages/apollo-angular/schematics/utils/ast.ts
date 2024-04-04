@@ -17,7 +17,7 @@ export async function addModuleImportToRootModule(
   host: Tree,
   importedModuleName: string,
   importedModulePath: string,
-  projectName?: string,
+  projectName: string,
 ) {
   const mainPath = await getMainFilePath(host, projectName);
   if (isStandaloneApp(host, mainPath)) {
@@ -67,7 +67,7 @@ function addModuleImportToModule(
   }
 
   changes
-    .filter((change: Change) => change instanceof InsertChange)
+    .filter((change: Change): change is InsertChange => change instanceof InsertChange)
     .forEach((change: InsertChange) => recorder.insertLeft(change.pos, change.toAdd));
 
   host.commitUpdate(recorder);
@@ -98,7 +98,7 @@ function _addSymbolToNgModuleMetadata(
   const matchingProperties: ts.ObjectLiteralElement[] = (
     node as ts.ObjectLiteralExpression
   ).properties
-    .filter(prop => prop.kind == ts.SyntaxKind.PropertyAssignment)
+    .filter((prop): prop is ts.PropertyAssignment => prop.kind == ts.SyntaxKind.PropertyAssignment)
     // Filter out every fields that's not "metadataField". Also handles string literals
     // (but not expressions).
     .filter((prop: ts.PropertyAssignment) => {
@@ -218,7 +218,7 @@ function getDecoratorMetadata(
     source,
     ts.SyntaxKind.ImportDeclaration,
   )
-    .map((node: ts.ImportDeclaration) => _angularImportsFromNode(node, source))
+    .map(node => _angularImportsFromNode(node as ts.ImportDeclaration, source))
     .reduce((acc: { [name: string]: string }, current: { [name: string]: string }) => {
       for (const key of Object.keys(current)) {
         acc[key] = current[key];
@@ -418,7 +418,7 @@ export function insertImport(
 
   // no such import declaration exists
   const useStrict = findNodes(rootNode, ts.SyntaxKind.StringLiteral).filter(
-    (n: ts.StringLiteral) => n.text === 'use strict',
+    n => (n as ts.StringLiteral).text === 'use strict',
   );
   let fallbackPos = 0;
   if (useStrict.length > 0) {

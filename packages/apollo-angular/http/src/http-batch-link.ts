@@ -11,12 +11,27 @@ import { BatchHandler, BatchLink } from '@apollo/client/link/batch';
 import { BatchOptions, Body, Context, OperationPrinter, Options, Request } from './types';
 import { createHeadersWithClientAwareness, fetch, mergeHeaders, prioritize } from './utils';
 
-const defaults = {
+export const defaults = {
   batchInterval: 10,
   batchMax: 10,
   uri: 'graphql',
   method: 'POST',
-};
+  withCredentials: false,
+  includeQuery: true,
+  includeExtensions: false,
+  useMultipart: false,
+} as const;
+
+/**
+ * Decides which value to pick from Context, Options or defaults
+ */
+export function pick<K extends keyof Omit<typeof defaults, 'batchInterval' | 'batchMax'>>(
+  context: Context,
+  options: Options,
+  key: K,
+): ReturnType<typeof prioritize<Context[K] | Options[K] | (typeof defaults)[K]>> {
+  return prioritize(context[key], options[key], defaults[key]);
+}
 
 export class HttpBatchLinkHandler extends ApolloLink {
   public batcher: ApolloLink;
@@ -87,13 +102,15 @@ export class HttpBatchLinkHandler extends ApolloLink {
     });
   }
 
-  private createOptions(operations: Operation[]): Options {
+  private createOptions(
+    operations: Operation[],
+  ): Required<Pick<Options, 'method' | 'uri' | 'withCredentials'>> {
     const context: Context = operations[0].getContext();
 
     return {
-      method: prioritize(context.method, this.options.method, defaults.method),
-      uri: prioritize(context.uri, this.options.uri, defaults.uri),
-      withCredentials: prioritize(context.withCredentials, this.options.withCredentials),
+      method: pick(context, this.options, 'method'),
+      uri: pick(context, this.options, 'uri'),
+      withCredentials: pick(context, this.options, 'withCredentials'),
     };
   }
 
@@ -147,7 +164,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
     }
 
     const headers =
-      context.headers && context.headers.keys().map((k: string) => context.headers.get(k));
+      context.headers && context.headers.keys().map((k: string) => context.headers!.get(k));
 
     const opts = JSON.stringify({
       includeQuery: context.includeQuery,
@@ -155,7 +172,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
       headers,
     });
 
-    return prioritize(context.uri, this.options.uri) + opts;
+    return prioritize(context.uri, this.options.uri, '') + opts;
   }
 
   public request(op: Operation): LinkObservable<FetchResult> | null {
