@@ -1,5 +1,6 @@
 import { from, Observable } from 'rxjs';
 import { Inject, Injectable, NgZone, Optional } from '@angular/core';
+import { WatchFragmentOptions, WatchFragmentResult } from '@apollo/client/cache/core/cache';
 import type {
   ApolloClientOptions,
   ApolloQueryResult,
@@ -60,6 +61,20 @@ export class ApolloBase<TCacheShape = any> {
       fromPromise(() => this.ensureClient().mutate<T, V>({ ...options })),
       options.useMutationLoading ?? this.useMutationLoading,
     );
+  }
+
+  public watchFragment<
+    TFragmentData = unknown,
+    TVariables extends OperationVariables = EmptyObject,
+  >(
+    options: WatchFragmentOptions<TFragmentData, TVariables>,
+    extra?: ExtraSubscriptionOptions,
+  ): Observable<WatchFragmentResult<TFragmentData>> {
+    const obs = from(
+      fixObservable(this.ensureClient().watchFragment<TFragmentData, TVariables>({ ...options })),
+    );
+
+    return extra && extra.useZone !== true ? obs : wrapWithZone(obs, this.ngZone);
   }
 
   public subscribe<T, V = EmptyObject>(
