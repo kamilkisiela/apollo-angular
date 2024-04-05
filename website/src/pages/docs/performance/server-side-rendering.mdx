@@ -183,20 +183,21 @@ plugin can cause the server to hang for about 10s.
 To avoid this, you can set the `connectToDevTools` option to `false` as below:
 
 ```ts
-...
-useFactory(...) {
-  ...
-  return {
-    ....
-    connectToDevTools: false
-  };
+// When providing options
+{
+  provide: APOLLO_OPTIONS,
+  useFactory: () {
+    return {
+      connectToDevTools: false
+      // ...
+    };
+  },
 },
 
 // Or when creating the client
-
 apollo.create({
-  ...
   connectToDevTools: false
+  // ...
 })
 ```
 
