@@ -15,7 +15,7 @@
     "build": "yarn workspaces run build",
     "ci-only:integration": "./scripts/integration tests",
     "deploy": "yarn workspaces run deploy",
-    "format": "prettier --write \"packages/**/*.ts\"",
+    "format": "prettier --write \"{packages,website}/**/*.{ts,tsx,json}\"",
     "now-build": "(cd website && yarn && yarn build && mv build ../public)",
     "prebuild": "rimraf packages/*/build/",
     "prerelease": "yarn build",
