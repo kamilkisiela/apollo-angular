@@ -1,6 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
-module.exports = {
+export default {
   siteUrl: process.env.SITE_URL || 'https://the-guild.dev/graphql/apollo-angular',
   generateIndexSitemap: false,
   exclude: ['*/_meta'],
+  output: 'export',
 };
