@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "@angular/core": "^17.0.0",
-    "@apollo/client": "0.0.0-pr-11754-20240404204940",
+    "@apollo/client": "3.10.0-rc.1",
     "graphql": "^15.0.0 || ^16.0.0",
     "rxjs": "^6.0.0 || ^7.0.0"
   },

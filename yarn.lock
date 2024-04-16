@@ -379,10 +379,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@apollo/client@0.0.0-pr-11754-20240404204940":
-  version "0.0.0-pr-11754-20240404204940"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-0.0.0-pr-11754-20240404204940.tgz#b13a9989e23aff8e6b95396e4c152c5f37bfb993"
-  integrity sha512-3o2lP5+KPqiuyosW8PHSpXgBOHm3ZXKnpDfZ6LEjqEC2jpzBNObg7cG6dAtUEej4vCg5/bQl5mhiIatLb8M77w==
+"@apollo/client@3.10.0-rc.1":
+  version "3.10.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.10.0-rc.1.tgz#883a636cabafedd1d3ba60ce542993f1afe53be7"
+  integrity sha512-J09x3pCDoONbOUlkHhaA5vPSc1Ga4WPWiXGHE4ZzaWGCj0ielhlMQvuT4ycmAp9pCCHPcahO42pItAV0SIj9eQ==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/caches" "^1.0.0"
