@@ -23,7 +23,7 @@ import type {
   WatchFragmentOptions,
   WatchQueryOptions,
 } from './types';
-import { fixObservable, fromPromise, pickFlag, useMutationLoading, wrapWithZone } from './utils';
+import { fixObservable, fromPromise, useMutationLoading, wrapWithZone } from './utils';
 
 export class ApolloBase<TCacheShape = any> {
   private useInitialLoading: boolean;
@@ -34,8 +34,8 @@ export class ApolloBase<TCacheShape = any> {
     protected flags?: Flags,
     protected _client?: ApolloClient<TCacheShape>,
   ) {
-    this.useInitialLoading = pickFlag(flags, 'useInitialLoading', false);
-    this.useMutationLoading = pickFlag(flags, 'useMutationLoading', false);
+    this.useInitialLoading = flags?.useInitialLoading ?? false;
+    this.useMutationLoading = flags?.useMutationLoading ?? false;
   }
 
   public watchQuery<TData, TVariables extends OperationVariables = EmptyObject>(
@@ -53,11 +53,15 @@ export class ApolloBase<TCacheShape = any> {
     );
   }
 
-  public query<T, V = EmptyObject>(options: QueryOptions<V, T>): Observable<ApolloQueryResult<T>> {
+  public query<T, V extends OperationVariables = EmptyObject>(
+    options: QueryOptions<V, T>,
+  ): Observable<ApolloQueryResult<T>> {
     return fromPromise<ApolloQueryResult<T>>(() => this.ensureClient().query<T, V>({ ...options }));
   }
 
-  public mutate<T, V = EmptyObject>(options: MutationOptions<T, V>): Observable<MutationResult<T>> {
+  public mutate<T, V extends OperationVariables = EmptyObject>(
+    options: MutationOptions<T, V>,
+  ): Observable<MutationResult<T>> {
     return useMutationLoading(
       fromPromise(() => this.ensureClient().mutate<T, V>({ ...options })),
       options.useMutationLoading ?? this.useMutationLoading,
@@ -78,7 +82,7 @@ export class ApolloBase<TCacheShape = any> {
     return extra && extra.useZone !== true ? obs : wrapWithZone(obs, this.ngZone);
   }
 
-  public subscribe<T, V = EmptyObject>(
+  public subscribe<T, V extends OperationVariables = EmptyObject>(
     options: SubscriptionOptions<V, T>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<FetchResult<T>> {
@@ -89,28 +93,9 @@ export class ApolloBase<TCacheShape = any> {
 
   /**
    * Get an instance of ApolloClient
-   * @deprecated use `apollo.client` instead
-   */
-  public getClient() {
-    return this.client;
-  }
-
-  /**
-   * Set a new instance of ApolloClient
-   * Remember to clean up the store before setting a new client.
-   * @deprecated use `apollo.client = client` instead
-   *
-   * @param client ApolloClient instance
-   */
-  public setClient(client: ApolloClient<TCacheShape>) {
-    this.client = client;
-  }
-
-  /**
-   * Get an instance of ApolloClient
    */
   public get client(): ApolloClient<TCacheShape> {
-    return this._client;
+    return this.ensureClient();
   }
 
   /**
@@ -127,14 +112,16 @@ export class ApolloBase<TCacheShape = any> {
     this._client = client;
   }
 
-  private ensureClient() {
+  private ensureClient(): ApolloClient<TCacheShape> {
     this.checkInstance();
 
-    return this._client;
+    return this._client!;
   }
 
-  private checkInstance(): void {
-    if (!this._client) {
+  private checkInstance(): this is { _client: ApolloClient<TCacheShape> } {
+    if (this._client) {
+      return true;
+    } else {
       throw new Error('Client has not been defined yet');
     }
   }
@@ -174,10 +161,10 @@ export class Apollo extends ApolloBase<any> {
    * @param name client's name
    */
   public create<TCacheShape>(options: ApolloClientOptions<TCacheShape>, name?: string): void {
-    if (isDefault(name)) {
-      this.createDefault<TCacheShape>(options);
-    } else {
+    if (isNamed(name)) {
       this.createNamed<TCacheShape>(name, options);
+    } else {
+      this.createDefault<TCacheShape>(options);
     }
   }
 
@@ -193,10 +180,11 @@ export class Apollo extends ApolloBase<any> {
    * @param name client's name
    */
   public use(name: string): ApolloBase<any> {
-    if (isDefault(name)) {
+    if (isNamed(name)) {
+      return this.map.get(name)!;
+    } else {
       return this.default();
     }
-    return this.map.get(name);
   }
 
   /**
@@ -204,11 +192,11 @@ export class Apollo extends ApolloBase<any> {
    * @param options ApolloClient's options
    */
   public createDefault<TCacheShape>(options: ApolloClientOptions<TCacheShape>): void {
-    if (this.getClient()) {
+    if (this._client) {
       throw new Error('Apollo has been already created.');
     }
 
-    return this.setClient(new ApolloClient<TCacheShape>(options));
+    this.client = new ApolloClient<TCacheShape>(options);
   }
 
   /**
@@ -231,14 +219,14 @@ export class Apollo extends ApolloBase<any> {
    * @param name client's name
    */
   public removeClient(name?: string): void {
-    if (isDefault(name)) {
-      this._client = undefined;
-    } else {
+    if (isNamed(name)) {
       this.map.delete(name);
+    } else {
+      this._client = undefined;
     }
   }
 }
 
-function isDefault(name?: string): boolean {
-  return !name || name === 'default';
+function isNamed(name?: string): name is string {
+  return !!name && name !== 'default';
 }

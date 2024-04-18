@@ -7,8 +7,8 @@ import { QueryRef } from './query-ref';
 import { EmptyObject, QueryOptionsAlone, WatchQueryOptionsAlone } from './types';
 
 @Injectable()
-export class Query<T = {}, V extends OperationVariables = EmptyObject> {
-  public readonly document: DocumentNode | TypedDocumentNode<T, V>;
+export abstract class Query<T = {}, V extends OperationVariables = EmptyObject> {
+  public abstract readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
   constructor(protected apollo: Apollo) {}

@@ -1,13 +1,13 @@
 import type { DocumentNode } from 'graphql';
 import type { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import type { TypedDocumentNode } from '@apollo/client/core';
+import type { OperationVariables, TypedDocumentNode } from '@apollo/client/core';
 import { Apollo } from './apollo';
 import type { EmptyObject, MutationOptionsAlone, MutationResult } from './types';
 
 @Injectable()
-export class Mutation<T = {}, V = EmptyObject> {
-  public readonly document: DocumentNode | TypedDocumentNode<T, V>;
+export abstract class Mutation<T = {}, V extends OperationVariables = EmptyObject> {
+  public abstract readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
   constructor(protected apollo: Apollo) {}
