@@ -1,4 +1,4 @@
-import { ApolloLink, execute, gql, Observable, Operation } from '@apollo/client/core';
+import { ApolloLink, execute, FetchResult, gql, Observable, Operation } from '@apollo/client/core';
 import { createPersistedQueryLink } from '../src';
 
 const query = gql`
@@ -23,7 +23,7 @@ class MockLink extends ApolloLink {
   }
 
   public request(operation: Operation) {
-    return new Observable(observer => {
+    return new Observable<FetchResult>(observer => {
       const request: any = {};
 
       if (operation.getContext().includeQuery) {

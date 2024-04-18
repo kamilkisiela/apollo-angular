@@ -8,7 +8,7 @@ import type {
   FetchResult,
   ObservableQuery,
 } from '@apollo/client/core';
-import type { MutationResult } from './types';
+import { MutationResult } from './types';
 
 export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {
   return new Observable<T>(subscriber => {
@@ -79,12 +79,4 @@ export function fixObservable<T>(
 
 export function wrapWithZone<T>(obs: Observable<T>, ngZone: NgZone): Observable<T> {
   return obs.pipe(observeOn(new ZoneScheduler(ngZone)));
-}
-
-export function pickFlag<TFlags, K extends keyof TFlags>(
-  flags: TFlags | undefined,
-  flag: K,
-  defaultValue: TFlags[K],
-): TFlags[K] {
-  return flags && typeof flags[flag] !== 'undefined' ? flags[flag] : defaultValue;
 }

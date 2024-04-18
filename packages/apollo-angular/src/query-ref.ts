@@ -81,11 +81,11 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
     return this.obsQuery.getCurrentResult();
   }
 
-  public getLastResult(): ApolloQueryResult<T> {
+  public getLastResult(): ApolloQueryResult<T> | undefined {
     return this.obsQuery.getLastResult();
   }
 
-  public getLastError(): ApolloError {
+  public getLastError(): ApolloError | undefined {
     return this.obsQuery.getLastError();
   }
 
@@ -110,6 +110,7 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
     // it should not inherit types from ObservableQuery
     return this.obsQuery.subscribeToMore(options as any);
   }
+
   public updateQuery(mapFn: (previousQueryResult: T, options: UpdateQueryOptions<V>) => T): void {
     return this.obsQuery.updateQuery(mapFn);
   }
