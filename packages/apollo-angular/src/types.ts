@@ -5,7 +5,6 @@ import type {
   QueryOptions as CoreQueryOptions,
   SubscriptionOptions as CoreSubscriptionOptions,
   WatchFragmentOptions as CoreWatchFragmentOptions,
-  WatchFragmentResult as CoreWatchFragmentResult,
   WatchQueryOptions as CoreWatchQueryOptions,
   FetchResult,
   OperationVariables,
