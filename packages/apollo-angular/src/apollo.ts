@@ -1,6 +1,6 @@
 import { from, Observable } from 'rxjs';
 import { Inject, Injectable, NgZone, Optional } from '@angular/core';
-import { WatchFragmentOptions, WatchFragmentResult } from '@apollo/client/cache/core/cache';
+import type { WatchFragmentResult } from '@apollo/client';
 import type {
   ApolloClientOptions,
   ApolloQueryResult,
@@ -20,6 +20,7 @@ import type {
   MutationOptions,
   MutationResult,
   NamedOptions,
+  WatchFragmentOptions,
   WatchQueryOptions,
 } from './types';
 import { fixObservable, fromPromise, pickFlag, useMutationLoading, wrapWithZone } from './utils';

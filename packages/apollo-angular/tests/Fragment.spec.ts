@@ -14,7 +14,7 @@ export class ItemFragment extends Fragment {
   public document = fragment;
 }
 
-describe('Subscription', () => {
+describe('Fragment', () => {
   let apolloMock: Apollo & { watchFragment: jest.Mock };
   let items: ItemFragment;
 
@@ -51,9 +51,34 @@ describe('Subscription', () => {
   test('should use watchFragment under the hood', () => {
     apolloMock.watchFragment.mockReturnValue('FragmentResult');
 
-    const result = items.watchFragment();
+    const result = items.watch();
 
-    expect(apolloMock.watchFragment).toBeCalled();
+    expect(apolloMock.watchFragment).toHaveBeenCalled();
     expect(result).toEqual('FragmentResult');
+  });
+
+  test('should pass variables to Apollo.watchFragment', () => {
+    items.watch({ foo: 1 });
+
+    expect(apolloMock.watchFragment).toHaveBeenCalled();
+    expect(apolloMock.watchFragment.mock.calls[0][0]).toMatchObject({
+      variables: { foo: 1 },
+    });
+  });
+
+  test('should pass options to Apollo.watchQuery', () => {
+    items.watch(
+      {},
+      { from: 'Item:1', optimistic: true, canonizeResults: true, fragmentName: 'ItemFragment' },
+    );
+
+    expect(apolloMock.watchFragment).toHaveBeenCalled();
+    expect(apolloMock.watchFragment.mock.calls[0][0]).toMatchObject({
+      variables: {},
+      from: 'Item:1',
+      fragmentName: 'ItemFragment',
+      canonizeResults: true,
+      optimistic: true,
+    });
   });
 });
