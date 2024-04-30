@@ -151,8 +151,8 @@ Since Apollo caches all of your query results, it's important to get rid of them
 state changes.
 
 The easiest way to ensure that the UI and store state reflects the current user's permissions is to
-call `Apollo.getClient().resetStore()` after your login or logout process has completed. This will
-cause the store to be cleared and all active queries to be refetched.
+call `Apollo.client.resetStore()` after your login or logout process has completed. This will cause
+the store to be cleared and all active queries to be refetched.
 
 Another option is to reload the page, which will have a similar effect.
 
@@ -175,7 +175,7 @@ class AuthService {
     // some app logic
 
     // reset the store after that
-    this.apollo.getClient().resetStore();
+    this.apollo.client.resetStore();
   }
 }
 
