@@ -35,7 +35,7 @@ interface Query {
 })
 export class PostsPageComponent implements OnInit {
   posts: Observable<Post[]>;
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   ngOnInit() {
     this.posts = this.apollo

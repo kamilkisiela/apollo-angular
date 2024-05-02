@@ -10,8 +10,8 @@ export type Operation = LinkOperation & {
 
 export class TestOperation<T = { [key: string]: any }> {
   constructor(
-    public operation: Operation,
-    private observer: Observer<FetchResult<T>>,
+    public readonly operation: Operation,
+    private readonly observer: Observer<FetchResult<T>>,
   ) {}
 
   public flush(result: ExecutionResult | ApolloError): void {

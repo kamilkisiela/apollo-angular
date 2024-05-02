@@ -50,7 +50,7 @@ class PostsComponent implements OnInit, OnDestroy {
 
   private querySubscription: Subscription;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   ngOnInit() {
     this.querySubscription = this.apollo
@@ -203,7 +203,7 @@ const GET_FEED = gql`
 class FeedComponent implements OnInit {
   posts: Observable<any>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   ngOnInit() {
     this.posts = this.apollo
@@ -262,7 +262,7 @@ class PostsComponent implements OnInit, OnDestroy {
 
   private querySubscription: Subscription;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   ngOnInit() {
     this.querySubscription = this.apollo
@@ -327,7 +327,7 @@ class PostsComponent implements OnInit, OnDestroy {
 
   private querySubscription: Subscription;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   ngOnInit() {
     this.postsQuery = this.apollo.watchQuery<any>({

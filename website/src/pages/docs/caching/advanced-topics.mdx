@@ -104,7 +104,7 @@ const SUBMIT_COMMENT_MUTATION = gql`
   // ...
 })
 class CommentsPageComponent {
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   submit({repoFullName, commentContent}) {
     this.apollo.mutate({

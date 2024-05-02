@@ -44,7 +44,7 @@ class RepoInfoComponent {
   repoName: string;
   entry: any;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   prefetchComments(repoFullName: string) {
     this.apollo
