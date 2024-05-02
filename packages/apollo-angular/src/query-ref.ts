@@ -51,7 +51,7 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
   public queryId: ObservableQuery<T, V>['queryId'];
 
   constructor(
-    private obsQuery: ObservableQuery<T, V>,
+    private readonly obsQuery: ObservableQuery<T, V>,
     ngZone: NgZone,
     options: WatchQueryOptions<V, T>,
   ) {

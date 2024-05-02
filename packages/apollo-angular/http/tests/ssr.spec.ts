@@ -45,8 +45,8 @@ describe.skip('integration', () => {
       public text = 'online';
 
       constructor(
-        private httpLink: HttpLink,
-        private httpBackend: HttpTestingController,
+        private readonly httpLink: HttpLink,
+        private readonly httpBackend: HttpTestingController,
       ) {}
 
       public ngOnInit() {

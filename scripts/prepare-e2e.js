@@ -13,7 +13,7 @@ function updateComponent() {
     `import { versionInfo } from 'graphql';\n` +
     fs
       .readFileSync(filepath, 'utf8')
-      .replace('AppComponent {', 'AppComponent { constructor(private apollo: Apollo) {}')
+      .replace('AppComponent {', 'AppComponent { constructor(private readonly apollo: Apollo) {}')
       .replace('imports: [', 'imports: [ApolloModule, ') +
     `\n (window as any).GRAPHQL_VERSION = versionInfo.major;`;
 

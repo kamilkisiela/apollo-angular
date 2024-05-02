@@ -17,8 +17,8 @@ export class HttpLinkHandler extends ApolloLink {
   private print: OperationPrinter = print;
 
   constructor(
-    private httpClient: HttpClient,
-    private options: Options,
+    private readonly httpClient: HttpClient,
+    private readonly options: Options,
   ) {
     super();
 
@@ -98,7 +98,7 @@ export class HttpLinkHandler extends ApolloLink {
   providedIn: 'root',
 })
 export class HttpLink {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   public create(options: Options): HttpLinkHandler {
     return new HttpLinkHandler(this.httpClient, options);

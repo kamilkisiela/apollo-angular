@@ -28,8 +28,8 @@ export class ApolloBase<TCacheShape = any> {
   private useMutationLoading: boolean;
 
   constructor(
-    protected ngZone: NgZone,
-    protected flags?: Flags,
+    protected readonly ngZone: NgZone,
+    protected readonly flags?: Flags,
     protected _client?: ApolloClient<TCacheShape>,
   ) {
     this.useInitialLoading = flags?.useInitialLoading ?? false;

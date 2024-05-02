@@ -15,7 +15,7 @@ export abstract class Subscription<T = any, V extends OperationVariables = Empty
   public abstract readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
-  constructor(protected apollo: Apollo) {}
+  constructor(protected readonly apollo: Apollo) {}
 
   public subscribe(
     variables?: V,
