@@ -116,14 +116,14 @@ export class Apollo extends ApolloBase<any> {
   private map: Map<string, ApolloBase<any>> = new Map<string, ApolloBase<any>>();
 
   constructor(
-    private _ngZone: NgZone,
+    ngZone: NgZone,
     @Optional()
     @Inject(APOLLO_OPTIONS)
     apolloOptions?: ApolloClientOptions<any>,
     @Inject(APOLLO_NAMED_OPTIONS) @Optional() apolloNamedOptions?: NamedOptions,
     @Inject(APOLLO_FLAGS) @Optional() flags?: Flags,
   ) {
-    super(_ngZone, flags);
+    super(ngZone, flags);
 
     if (apolloOptions) {
       this.createDefault(apolloOptions);
@@ -180,7 +180,7 @@ export class Apollo extends ApolloBase<any> {
       throw new Error('Apollo has been already created.');
     }
 
-    this.client = new ApolloClient<TCacheShape>(options);
+    this.client = this.ngZone.runOutsideAngular(() => new ApolloClient<TCacheShape>(options));
   }
 
   /**
@@ -194,7 +194,11 @@ export class Apollo extends ApolloBase<any> {
     }
     this.map.set(
       name,
-      new ApolloBase(this._ngZone, this.flags, new ApolloClient<TCacheShape>(options)),
+      new ApolloBase(
+        this.ngZone,
+        this.flags,
+        this.ngZone.runOutsideAngular(() => new ApolloClient<TCacheShape>(options)),
+      ),
     );
   }
 
