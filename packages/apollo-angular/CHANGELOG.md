@@ -1,5 +1,11 @@
 # Change log
 
+## 7.0.1
+
+### Patch Changes
+
+- [#2252](https://github.com/kamilkisiela/apollo-angular/pull/2252) [`67ba1e8`](https://github.com/kamilkisiela/apollo-angular/commit/67ba1e88ed6aa231bff4b7e794b5b864d5b3a114) Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - ApolloClient does not delay the application becoming stable
+
 ## 7.0.0
 
 ### Major Changes
