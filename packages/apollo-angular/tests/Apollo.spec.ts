@@ -29,7 +29,8 @@ describe('Apollo', () => {
     });
 
     ngZone = {
-      run: jest.fn(cb => cb()),
+      run: (cb: () => unknown) => cb(),
+      runOutsideAngular: (cb: () => unknown) => cb(),
     } as any;
   });
 
