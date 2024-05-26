@@ -115,9 +115,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        angular_version: [17]
+        angular_version: [17, 18]
         graphql_version: [15, 16]
-        node_version: [18]
+        node_version: [18, 20]
     steps:
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@master
