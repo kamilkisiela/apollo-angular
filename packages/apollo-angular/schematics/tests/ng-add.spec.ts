@@ -1,11 +1,11 @@
+import { TextDecoder, TextEncoder } from 'util';
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder as any;
+
 import { CompilerOptions } from 'typescript';
 import { UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createDependenciesMap } from '../install';
 import { getFileContent, getJsonFile, runNgAdd } from '../utils';
-
-const { TextEncoder, TextDecoder } = require('util');
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
 
 describe('ng-add with module', () => {
   let tree: UnitTestTree;
