@@ -1,16 +1,45 @@
 # Change log
 
+## 7.0.2
+
+### Patch Changes
+
+- [#2259](https://github.com/kamilkisiela/apollo-angular/pull/2259)
+  [`78f319a`](https://github.com/kamilkisiela/apollo-angular/commit/78f319a6a93268144bbb9dc42c84bd45f50ff606)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+
+  - Updated dependency
+    [`@angular/core@^17.0.0 || ^18.0.0` ↗︎](https://www.npmjs.com/package/@angular/core/v/17.0.0)
+    (from `^17.0.0`, in `peerDependencies`)
+
+- [#2259](https://github.com/kamilkisiela/apollo-angular/pull/2259)
+  [`97fba6a`](https://github.com/kamilkisiela/apollo-angular/commit/97fba6ab7909c2d65bd58f7e376a94c0b4394249)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+
+  - Updated dependency
+    [`@angular/core@^17.0.0 || ^18.0.0` ↗︎](https://www.npmjs.com/package/@angular/core/v/17.0.0)
+    (from `^17.0.0`, in `peerDependencies`)
+
+- [#2259](https://github.com/kamilkisiela/apollo-angular/pull/2259)
+  [`29b9fdc`](https://github.com/kamilkisiela/apollo-angular/commit/29b9fdc2279d3e48a46db0a8e811dac0a3b72c00)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Allow Angular 18
+
 ## 7.0.1
 
 ### Patch Changes
 
-- [#2252](https://github.com/kamilkisiela/apollo-angular/pull/2252) [`67ba1e8`](https://github.com/kamilkisiela/apollo-angular/commit/67ba1e88ed6aa231bff4b7e794b5b864d5b3a114) Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - ApolloClient does not delay the application becoming stable
+- [#2252](https://github.com/kamilkisiela/apollo-angular/pull/2252)
+  [`67ba1e8`](https://github.com/kamilkisiela/apollo-angular/commit/67ba1e88ed6aa231bff4b7e794b5b864d5b3a114)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - ApolloClient does not delay the application
+  becoming stable
 
 ## 7.0.0
 
 ### Major Changes
 
-- [#2225](https://github.com/kamilkisiela/apollo-angular/pull/2225) [`712205f`](https://github.com/kamilkisiela/apollo-angular/commit/712205fd8762b1125d614cb58c9fcffcc9135a55) Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - BREAKING use Typescript strict mode
+- [#2225](https://github.com/kamilkisiela/apollo-angular/pull/2225)
+  [`712205f`](https://github.com/kamilkisiela/apollo-angular/commit/712205fd8762b1125d614cb58c9fcffcc9135a55)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - BREAKING use Typescript strict mode
 
   This is breaking because:
 
@@ -18,16 +47,16 @@
     matches the typing that always declared a client existed. In most cases, you should pass either
     `apolloOptions` or `apolloNamedOptions` to `Apollo.constructor` to create the client immediately
     upon construction.
-  - `ApolloBase.query()`, `ApolloBase.mutate()` and `ApolloBase.subscribe()` all have a new constraint
-    on `V`. If you inherit from this class, you might need to adjust your typing.
+  - `ApolloBase.query()`, `ApolloBase.mutate()` and `ApolloBase.subscribe()` all have a new
+    constraint on `V`. If you inherit from this class, you might need to adjust your typing.
   - Classes that inherit `Query`, `Mutation` and `Subscription` must declare the `document` member.
-    This requirement always existed at runtime but was not enforced at compile time until now. If you
-    generated code, you have nothing to do.
-  - `QueryRef.getLastResult()` and `QueryRef.getLastError()` might return `undefined`. This was always
-    the case, but was typed incorrectly until now.
+    This requirement always existed at runtime but was not enforced at compile time until now. If
+    you generated code, you have nothing to do.
+  - `QueryRef.getLastResult()` and `QueryRef.getLastError()` might return `undefined`. This was
+    always the case, but was typed incorrectly until now.
   - `pickFlag()` was dropped without any replacement.
-  - `createPersistedQueryLink()` requires options. This was always the case but was typed incorrectly
-    until now.
+  - `createPersistedQueryLink()` requires options. This was always the case but was typed
+    incorrectly until now.
 
 ## 6.0.0
 
