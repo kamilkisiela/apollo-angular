@@ -1,8 +1,8 @@
+import { parseJSON } from '../utils';
+
 const { TextEncoder, TextDecoder } = require('util');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
-
-import { parseJSON } from '../utils';
 
 test('support // comments', () => {
   expect(

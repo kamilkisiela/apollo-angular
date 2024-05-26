@@ -16,7 +16,7 @@ module.exports = {
   resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
   moduleFileExtensions: ['js', 'ts', 'mjs'],
   testRegex: '\\.spec\\.ts$',
-  setupFilesAfterEnv: ['<rootDir>/tests/_setup.ts'],
+  setupFilesAfterEnv: ['jest-preset-angular/setup-jest'],
   collectCoverage: false,
   verbose: false,
   // notify: true,
