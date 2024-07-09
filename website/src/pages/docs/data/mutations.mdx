@@ -67,7 +67,7 @@ const UPVOTE_POST = gql`
   // ...
 })
 class UpvotePostComponent {
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   newRepository() {
     this.apollo.mutate({ mutation: UPVOTE_POST }).subscribe();
@@ -99,7 +99,7 @@ const UPVOTE_POST = gql`
   // ...
 })
 class UpvotePostComponent {
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   upvote() {
     this.apollo
@@ -145,7 +145,7 @@ const UPVOTE_POST = gql`
   providedIn: 'root',
 })
 class UpvoteService {
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   upvote(postId: string) {
     return this.apollo.mutate({
@@ -161,7 +161,7 @@ class UpvoteService {
   // ...
 })
 class UpvoteComponent {
-  constructor(private upvoteService: UpvoteService) {}
+  constructor(private readonly upvoteService: UpvoteService) {}
 
   newRepository() {
     this.upvoteService.upvote(12).subscribe(
@@ -216,7 +216,7 @@ const CHANGE_POST_TITLE = gql`
 class PostComponent {
   currentUser: User;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   upvote({ postId, title }) {
     this.apollo
@@ -308,7 +308,7 @@ const UPVOTE_POST = gql`
   providedIn: 'root',
 })
 class UpvoteService {
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   upvote(postId: string) {
     return this.apollo

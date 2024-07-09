@@ -50,7 +50,7 @@ const MY_QUERY = gql`
   // ...
 })
 class ShowingSomeErrorsComponent {
-  constructor(private apollo: Apollo) {
+  constructor(private readonly apollo: Apollo) {
     this.myQuery = this.apollo.watchQuery({
       query: MY_QUERY,
       errorPolicy: 'all',

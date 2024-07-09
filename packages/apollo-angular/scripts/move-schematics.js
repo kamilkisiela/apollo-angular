@@ -1,4 +1,4 @@
-const cpx = require('cpx');
+const cpx = require('cpx2');
 
 cpx.copySync('schematics/install/files/**/*', 'build/schematics/install/files');
 cpx.copySync('schematics/README.md', 'build/schematics');

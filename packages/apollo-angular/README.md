@@ -84,7 +84,7 @@ const GET_DOGS = gql`
 export class DogsComponent implements OnInit {
   dogs: Observable<any>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   ngOnInit() {
     this.dogs = this.apollo

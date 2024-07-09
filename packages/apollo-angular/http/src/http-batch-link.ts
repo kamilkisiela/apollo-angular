@@ -40,8 +40,8 @@ export class HttpBatchLinkHandler extends ApolloLink {
   private print: OperationPrinter = print;
 
   constructor(
-    private httpClient: HttpClient,
-    private options: BatchOptions,
+    private readonly httpClient: HttpClient,
+    private readonly options: BatchOptions,
   ) {
     super();
 
@@ -184,7 +184,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
   providedIn: 'root',
 })
 export class HttpBatchLink {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   public create(options: BatchOptions): HttpBatchLinkHandler {
     return new HttpBatchLinkHandler(this.httpClient, options);

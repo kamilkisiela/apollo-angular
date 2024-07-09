@@ -99,7 +99,7 @@ export class ListComponent implements OnInit {
   posts: Observable<Post[]>;
 
   // inject it
-  constructor(private allPostsGQL: AllPostsGQL) {}
+  constructor(private readonly allPostsGQL: AllPostsGQL) {}
 
   ngOnInit() {
     // use it!
@@ -184,7 +184,7 @@ export class UpvoterComponent {
   @Input()
   postId: number;
 
-  constructor(private upvotePostGQL: UpvotePostGQL) {}
+  constructor(private readonly upvotePostGQL: UpvotePostGQL) {}
 
   upvote() {
     this.upvotePostGQL
@@ -293,7 +293,7 @@ export class ListComponent implements OnInit {
   posts: Observable<Post[]>;
 
   // inject it
-  constructor(private allPostsGQL: AllPostsGQL) {}
+  constructor(private readonly allPostsGQL: AllPostsGQL) {}
 
   ngOnInit() {
     // use it!

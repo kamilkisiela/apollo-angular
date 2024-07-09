@@ -10,7 +10,7 @@ export abstract class Mutation<T = {}, V extends OperationVariables = EmptyObjec
   public abstract readonly document: DocumentNode | TypedDocumentNode<T, V>;
   public client = 'default';
 
-  constructor(protected apollo: Apollo) {}
+  constructor(protected readonly apollo: Apollo) {}
 
   public mutate(
     variables?: V,
