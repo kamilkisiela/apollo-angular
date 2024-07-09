@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { addFunctionalProvidersToStandaloneBootstrap } from '@schematics/angular/private/components';
+import { addRootProvider } from '@schematics/angular/utility';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 import { getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 import { getMainFilePath } from '@schematics/angular/utility/standalone/util';
@@ -21,12 +21,9 @@ export async function addModuleImportToRootModule(
 ) {
   const mainPath = await getMainFilePath(host, projectName);
   if (isStandaloneApp(host, mainPath)) {
-    addFunctionalProvidersToStandaloneBootstrap(
-      host,
-      mainPath,
-      importedModuleName,
-      importedModulePath,
-    );
+    addRootProvider(projectName, ({ code, external }) => {
+      return code`${external(importedModuleName, importedModulePath)}()`;
+    });
   } else {
     const appModulePath = getAppModulePath(host, mainPath);
     addModuleImportToModule(host, appModulePath, importedModuleName, importedModulePath);

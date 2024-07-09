@@ -52,7 +52,7 @@ export function useMutationLoading<T>(source: Observable<FetchResult<T>>, enable
 }
 
 export class ZoneScheduler implements SchedulerLike {
-  constructor(private zone: NgZone) {}
+  constructor(private readonly zone: NgZone) {}
 
   public now = Date.now ? Date.now : () => +new Date();
 

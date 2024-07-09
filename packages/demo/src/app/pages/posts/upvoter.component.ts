@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class UpvoterComponent {
   @Input() postId: number;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private readonly apollo: Apollo) {}
 
   upvote() {
     this.apollo

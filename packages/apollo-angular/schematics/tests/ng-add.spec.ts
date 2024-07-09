@@ -1,3 +1,7 @@
+import { TextDecoder, TextEncoder } from 'util';
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder as any;
+
 import { CompilerOptions } from 'typescript';
 import { UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createDependenciesMap } from '../install';
