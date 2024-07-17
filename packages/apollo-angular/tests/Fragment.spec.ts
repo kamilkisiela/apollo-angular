@@ -11,7 +11,7 @@ const fragment = gql`
 
 @Injectable()
 export class ItemFragment extends Fragment {
-  public document = fragment;
+  public fragment = fragment;
 }
 
 describe('Fragment', () => {
@@ -45,20 +45,20 @@ describe('Fragment', () => {
   });
 
   test('should have fragment document defined', () => {
-    expect(items.document).toEqual(fragment);
+    expect(items.fragment).toEqual(fragment);
   });
 
   test('should use watchFragment under the hood', () => {
     apolloMock.watchFragment.mockReturnValue('FragmentResult');
 
-    const result = items.watch();
+    const result = items.watch({ from: 'Item:1 ' });
 
     expect(apolloMock.watchFragment).toHaveBeenCalled();
     expect(result).toEqual('FragmentResult');
   });
 
   test('should pass variables to Apollo.watchFragment', () => {
-    items.watch({ foo: 1 });
+    items.watch({ from: 'Item:1' }, { foo: 1 });
 
     expect(apolloMock.watchFragment).toHaveBeenCalled();
     expect(apolloMock.watchFragment.mock.calls[0][0]).toMatchObject({
@@ -68,8 +68,8 @@ describe('Fragment', () => {
 
   test('should pass options to Apollo.watchQuery', () => {
     items.watch(
-      {},
       { from: 'Item:1', optimistic: true, canonizeResults: true, fragmentName: 'ItemFragment' },
+      {},
     );
 
     expect(apolloMock.watchFragment).toHaveBeenCalled();
