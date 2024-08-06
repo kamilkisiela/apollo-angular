@@ -33,7 +33,7 @@ export function factory(options: Schema): Rule {
 
 export function createDependenciesMap(options: Schema): Record<string, string> {
   return {
-    'apollo-angular': '^4.2.0',
+    'apollo-angular': '^7.0.0',
     '@apollo/client': '^3.0.0',
     graphql: `^${options.graphql ?? '16.0.0'}`,
   };

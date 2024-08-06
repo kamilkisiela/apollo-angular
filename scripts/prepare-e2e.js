@@ -25,7 +25,7 @@ function updateCypress() {
   const code = fs
     .readFileSync(filepath, 'utf8')
     .replace(
-      `cy.contains('app is running!')`,
+      `cy.contains('app is running')`,
       `cy.window().its('GRAPHQL_VERSION').should('equal', ${version})`,
     );
 
