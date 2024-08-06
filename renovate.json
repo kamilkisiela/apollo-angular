@@ -1,11 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>the-guild-org/shared-config:renovate", "schedule:quarterly"],
-  "automerge": true,
-  "packageRules": [
-    {
-      "groupName": "angular",
-      "matchPackagePrefixes": ["@angular", "@schematics"]
-    }
-  ]
+  "enabled": false
 }
