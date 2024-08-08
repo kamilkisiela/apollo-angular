@@ -5,6 +5,7 @@ export { QueryRef, QueryRefFromDocument } from './query-ref';
 export { Query } from './query';
 export { Mutation } from './mutation';
 export { Subscription } from './subscription';
+export { Fragment } from './fragment';
 export { APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS, APOLLO_FLAGS } from './tokens';
 export type {
   NamedOptions,

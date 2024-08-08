@@ -4,6 +4,7 @@ import type {
   MutationOptions as CoreMutationOptions,
   QueryOptions as CoreQueryOptions,
   SubscriptionOptions as CoreSubscriptionOptions,
+  WatchFragmentOptions as CoreWatchFragmentOptions,
   WatchQueryOptions as CoreWatchQueryOptions,
   FetchResult,
   OperationVariables,
@@ -43,6 +44,11 @@ export interface MutationOptionsAlone<TData = EmptyObject, TVariables = any>
 export interface SubscriptionOptionsAlone<TVariables = EmptyObject, TData = any>
   extends Omit<CoreSubscriptionOptions<TVariables, TData>, 'query' | 'variables'> {}
 
+export interface WatchFragmentOptionsAlone<
+  TVariables extends OperationVariables = EmptyObject,
+  TData = any,
+> extends Omit<CoreWatchFragmentOptions<TVariables, TData>, 'fragment' | 'variables'> {}
+
 export interface WatchQueryOptions<TVariables extends OperationVariables = EmptyObject, TData = any>
   extends CoreWatchQueryOptions<TVariables, TData> {
   /**
@@ -64,6 +70,9 @@ export interface MutationOptions<TData = any, TVariables = EmptyObject>
    */
   useMutationLoading?: boolean;
 }
+
+export interface WatchFragmentOptions<TData = any, TVariables = EmptyObject>
+  extends CoreWatchFragmentOptions<TData, TVariables> {}
 
 export interface SubscriptionResult<TData> extends ExecutionResult<TData> {}
 
