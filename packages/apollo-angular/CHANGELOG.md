@@ -1,5 +1,14 @@
 # Change log
 
+## 7.1.0
+
+### Minor Changes
+
+- [#2226](https://github.com/kamilkisiela/apollo-angular/pull/2226)
+  [`4ca9c4a`](https://github.com/kamilkisiela/apollo-angular/commit/4ca9c4a09446be00ba5882bd80e397f70cd9fb51)
+  Thanks [@alessbell](https://github.com/alessbell)! - Exposes `watchFragment` method on the
+  `ApolloBase` class.
+
 ## 7.0.2
 
 ### Patch Changes
