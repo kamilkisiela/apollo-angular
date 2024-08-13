@@ -47,7 +47,8 @@
   },
   "publishConfig": {
     "directory": "build",
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "sideEffects": false,
   "schematics": "./schematics/collection.json"
