@@ -1,5 +1,13 @@
 # Change log
 
+## 7.1.1
+
+### Patch Changes
+
+- [#2286](https://github.com/kamilkisiela/apollo-angular/pull/2286)
+  [`dbd4f68`](https://github.com/kamilkisiela/apollo-angular/commit/dbd4f6885da9d897fe41d6625a1090454ce996ab)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Permissions for release provenance
+
 ## 7.1.0
 
 ### Minor Changes
