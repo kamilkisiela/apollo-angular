@@ -8,7 +8,7 @@ import type {
   OperationVariables,
   QueryOptions,
   SubscriptionOptions,
-  WatchFragmentResult
+  WatchFragmentResult,
 } from '@apollo/client/core';
 import { ApolloClient } from '@apollo/client/core';
 import { QueryRef } from './query-ref';
