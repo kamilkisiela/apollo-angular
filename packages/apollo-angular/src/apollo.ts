@@ -1,6 +1,5 @@
 import { from, Observable } from 'rxjs';
 import { Inject, Injectable, NgZone, Optional } from '@angular/core';
-import type { WatchFragmentResult } from '@apollo/client';
 import type {
   ApolloClientOptions,
   ApolloQueryResult,
@@ -9,6 +8,7 @@ import type {
   OperationVariables,
   QueryOptions,
   SubscriptionOptions,
+  WatchFragmentResult
 } from '@apollo/client/core';
 import { ApolloClient } from '@apollo/client/core';
 import { QueryRef } from './query-ref';
