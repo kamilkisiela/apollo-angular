@@ -1,5 +1,14 @@
 # Change log
 
+## 7.1.2
+
+### Patch Changes
+
+- [#2289](https://github.com/kamilkisiela/apollo-angular/pull/2289)
+  [`d78cc8d`](https://github.com/kamilkisiela/apollo-angular/commit/d78cc8d27a8d6aca805f0da1eb4e0764c7fb6212)
+  Thanks [@richard-elastique](https://github.com/richard-elastique)! - Don't require a dependency on
+  React
+
 ## 7.1.1
 
 ### Patch Changes
