@@ -16,10 +16,7 @@ export class HttpLinkHandler extends ApolloLink {
   public requester: (operation: Operation) => LinkObservable<FetchResult> | null;
   private print: OperationPrinter = print;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly options: Options,
-  ) {
+  constructor(private readonly httpClient: HttpClient, private readonly options: Options) {
     super();
 
     if (this.options.operationPrinter) {
