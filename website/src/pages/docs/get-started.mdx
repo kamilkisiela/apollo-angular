@@ -8,27 +8,14 @@ import { Callout } from '@theguild/components';
 
 # Get Started
 
-This short set of instructions gets you up and running with Apollo Angular.
-
 ## Installation
-
-The simplest way to get started with Apollo Angular is by running `ng add apollo-angular` command.
 
 ### Installation with Angular Schematics
 
-We support `ng-add` command now.
-
-To start using Apollo Angular simply run:
+The simplest way to get started with Apollo Angular is by executing the schematic like this:
 
 ```sh
 ng add apollo-angular
-```
-
-One thing you need to set is the URL of your GraphQL Server, so open `src/app/graphql.module.ts` and
-set `uri` variables:
-
-```ts filename="src/app/graphql.module.ts"
-const uri = 'https://48p1r2roz4.sse.codesandbox.io'; // our GraphQL API
 ```
 
 **Done!** You can now create your first query, [let's go through it together here](#request-data).
@@ -46,10 +33,10 @@ npm i apollo-angular @apollo/client graphql
 - `apollo-angular`: Bridge between Angular and Apollo Client
 - `graphql`: Second most important package
 
-The `@apollo/client` package requires `AsyncIterable` so make sure your tsconfig.json includes
-`es2020`:
+The `@apollo/client` package requires `AsyncIterable` so make sure your `tsconfig.json` includes
+`ES2020` or later:
 
-```jsonc /"es2020"/
+```jsonc filename="tsconfig.json" /"es2020"/
 {
   "compilerOptions": {
     // ...
@@ -60,32 +47,26 @@ The `@apollo/client` package requires `AsyncIterable` so make sure your tsconfig
 
 Great, now that you have all the dependencies you need, let's create your first Apollo Client.
 
-In our `app.module.ts` file use `APOLLO_OPTIONS` token to configure Apollo:
+In `graphql.provider.ts` file use `APOLLO_OPTIONS` token to configure Apollo:
 
-```ts filename="app.module.ts" {10}
-import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+```ts filename="graphql.provider.ts"
+import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { InMemoryCache } from '@apollo/client/core';
-
-@NgModule({
-  imports: [BrowserModule, ApolloModule, HttpClientModule],
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink) {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: 'https://48p1r2roz4.sse.codesandbox.io',
-          }),
-        };
-      },
-      deps: [HttpLink],
-    },
-  ],
-})
-export class AppModule {}
+import { inject, Provider } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpLink = inject(HttpLink);
+  return {
+    link: httpLink.create({ uri: '/graphql' }),
+    cache: new InMemoryCache(), options ...
+  };
+}
+  };
+}
+export const graphqlProvider: Provider = [
+  Apollo,
+  { provide: APOLLO_OPTIONS, useFactory: apolloOptionsFactory },
+];
 ```
 
 Take a closer look what we did there:
@@ -95,8 +76,22 @@ Take a closer look what we did there:
 1. Thanks to `@apollo/client/core` and `InMemoryCache` we have a place to store data in
 1. `APOLLO_OPTIONS` provides options to Apollo Client
 
-The `HttpLink` requires `HttpClient` so that's why we also used `HttpClientModule` from
-`@angular/common/http`.
+Finally, the `graphqlProvider` must be used somewhere and the `HttpLink` must be provided too. This
+happens in `app.config.ts`:
+
+```ts filename="app.config.ts"
+import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig } from '@angular/core';
+import { graphqlProvider } from './graphql.provider';
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    graphqlProvider, r providers for your application ...
+  ]
+};
+  ],
+};
+```
 
 ## Links and Cache
 
@@ -197,69 +192,10 @@ more components with `Apollo` service and experimenting with the concepts you ju
 
 ## Named Clients
 
-It is possible to have several apollo clients in the application, for example pointing to different
+It is possible to have several apollo clients in the application, for example, pointing to different
 endpoints.
 
-In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo
-Client:
-
-```ts filename="app.module.ts"
-import { APOLLO_NAMED_OPTIONS, ApolloModule, NamedOptions } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { InMemoryCache } from '@apollo/client/core';
-
-@NgModule({
-  imports: [BrowserModule, ApolloModule, HttpClientModule],
-  providers: [
-    {
-      provide: APOLLO_NAMED_OPTIONS, // <-- Different from standard initialization
-      useFactory(httpLink: HttpLink): NamedOptions {
-        return {
-          newClientName: {
-            // <-- This settings will be saved by name: newClientName
-            cache: new InMemoryCache(),
-            link: httpLink.create({
-              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
-            }),
-          },
-        };
-      },
-      deps: [HttpLink],
-    },
-  ],
-})
-export class AppModule {}
-```
-
-### Basic Usage
-
-```ts
-import { Apollo, ApolloBase, gql } from 'apollo-angular';
-import { Injectable } from '@angular/core';
-
-@Injectable()
-class ApiService {
-  private apollo: ApolloBase;
-
-  constructor(private apolloProvider: Apollo) {
-    this.apollo = this.apolloProvider.use('newClientName');
-  }
-
-  getData(): Observable<ApolloQueryResult> {
-    return this.apollo.watchQuery({
-      query: gql`
-        {
-          rates(currency: "USD") {
-            currency
-            rate
-          }
-        }
-      `,
-    });
-  }
-}
-```
+See [how to use multiple clients](./recipes/multiple-clients).
 
 ## Next Steps
 

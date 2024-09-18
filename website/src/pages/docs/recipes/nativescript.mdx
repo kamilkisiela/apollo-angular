@@ -21,28 +21,32 @@ npm i apollo-angular
   **Note**: There are more packages to be installed, so check out the "initialization" article.
 </Callout>
 
-```ts
-import { Apollo, ApolloModule } from 'apollo-angular';
+```ts filename="graphql.provider.ts"
+import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
+import { importProvidersFrom, inject, Provider } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 
-@NgModule({
-  imports: [
-    NativeScriptModule,
-    NativeScriptHttpClientModule, // this provides HttpClient
-    ApolloModule,
-  ],
-})
-export class AppModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    // create Apollo
-    apollo.create({
-      link: httpLink.create({ uri }),
-      // other options like cache
-    });
-  }
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpLink = inject(HttpLink);
+
+  return {
+    link: httpLink.create({ uri: '/graphql' }),
+    cache: new InMemoryCache(),
+    // other options ...
+  };
 }
+
+export const graphqlProvider: Provider = [
+  Apollo,
+  importProvidersFrom(NativeScriptModule, NativeScriptHttpClientModule), // this provides HttpClient
+  {
+    provide: APOLLO_OPTIONS,
+    useFactory: apolloOptionsFactory,
+  },
+];
 ```
 
 If you are new to using Apollo with Angular, you should probably read the [Angular guide](/).

@@ -20,26 +20,22 @@ includes several options for authentication.
 If your app is browser based, and you are using cookies for login and session management with a
 backend, it is very easy to tell your network interface to send the cookie along with every request.
 
-```ts
-import { Apollo, ApolloModule } from 'apollo-angular';
+```ts filename="graphql.provider.ts"
 import { HttpLink } from 'apollo-angular/http';
+import { inject } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 
-@NgModule({
-  imports: [ApolloModule],
-  // ...
-})
-class AppModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    const link = httpLink.create({
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpLink = inject(HttpLink);
+
+  return {
+    link: httpLink.create({
       uri: '/graphql',
       withCredentials: true,
-    });
-
-    apollo.create({
-      link,
-      // other options like cache
-    });
-  }
+    }),
+    cache: new InMemoryCache(),
+    // other options ...
+  };
 }
 ```
 
@@ -59,17 +55,15 @@ Apollo Links make creating middlewares that lets you modify requests before they
 server. It's easy to add an `Authorization` header to every HTTP request. In this example, we'll
 pull the login token from `localStorage` every time a request is sent.
 
-```ts filename="graphql.module.ts"
-import { Apollo, APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+```ts filename="graphql.provider.ts"
 import { HttpLink } from 'apollo-angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { inject } from '@angular/core';
+import { ApolloClientOptions, ApolloLink, InMemoryCache } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 
-const uri = '/graphql';
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpLink = inject(HttpLink);
 
-export function createApollo(httpLink: HttpLink) {
   const basic = setContext((operation, context) => ({
     headers: {
       Accept: 'charset=utf-8',
@@ -90,26 +84,12 @@ export function createApollo(httpLink: HttpLink) {
     }
   });
 
-  const link = ApolloLink.from([basic, auth, httpLink.create({ uri })]);
-  const cache = new InMemoryCache();
-
   return {
-    link,
-    cache,
+    link: ApolloLink.from([basic, auth, httpLink.create({ uri })]),
+    cache: new InMemoryCache(),
+    // other options ...
   };
 }
-
-@NgModule({
-  exports: [HttpClientModule, ApolloModule],
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: createApollo,
-      deps: [HttpLink],
-    },
-  ],
-})
-export class GraphQLModule {}
 ```
 
 The server can use that header to authenticate the user and attach it to the GraphQL execution
