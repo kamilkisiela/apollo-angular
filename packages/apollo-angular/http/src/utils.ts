@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import {Body, ExtractedFiles, ExtractFiles, Request} from './types';
+import { Body, ExtractedFiles, ExtractFiles, Request } from './types';
 
 export const fetch = (
   req: Request,
