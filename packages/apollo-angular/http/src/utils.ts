@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Body, ExtractFiles, Request } from './types';
+import {Body, ExtractedFiles, ExtractFiles, Request} from './types';
 
 export const fetch = (
   req: Request,
@@ -12,10 +12,7 @@ export const fetch = (
     ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
   const isBatching = (req.body as Body[]).length;
   let shouldUseMultipart = req.options && req.options.useMultipart;
-  let multipartInfo: {
-    clone: Body;
-    files: Map<any, any>;
-  };
+  let multipartInfo: ExtractedFiles;
 
   if (shouldUseMultipart) {
     if (isBatching) {
