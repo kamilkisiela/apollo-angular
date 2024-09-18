@@ -1,6 +1,10 @@
 /.changeset/
 /.devcontainer/
 /packages/apollo-angular/CHANGELOG.md
+/packages/apollo-angular/dist/
+/packages/demo/.angular/
+/packages/demo/dist/
+/scripts/
 
 # Needed because TextEncoder workaround must happen before importing @angular-devkit/schematics
 /packages/apollo-angular/schematics/tests/ng-add.spec.ts
