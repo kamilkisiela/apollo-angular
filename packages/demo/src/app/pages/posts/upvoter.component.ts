@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   template: ` <button (click)="upvote()">Upvote</button> `,
 })
 export class UpvoterComponent {
-  @Input() postId: number;
+  @Input() postId!: number;
 
   constructor(private readonly apollo: Apollo) {}
 
