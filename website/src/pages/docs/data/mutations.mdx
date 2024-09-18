@@ -254,36 +254,31 @@ The result of `Apollo.mutate()` contains `loading` property. By default, it's al
 result is emitted with the response from the ApolloLink execution chain. In order to correct it you
 can enable `useMutationLoading` flag in configuration.
 
-```ts
-import { APOLLO_FLAGS, APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+```ts filename="graphql.provider.ts"
+import { Apollo, APOLLO_FLAGS, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { InMemoryCache } from '@apollo/client/core';
-
-@NgModule({
-  imports: [BrowserModule, ApolloModule, HttpClientModule],
-  providers: [
-    {
-      provide: APOLLO_FLAGS,
-      useValue: {
-        useMutationLoading: true, // enable it here
-      },
+import { inject, Provider } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpLink = inject(HttpLink);
+  return {
+    link: httpLink.create({ uri: '/graphql' }),
+    cache: new InMemoryCache(), options ...
+  };
+}
+  };
+}
+export const graphqlProvider: Provider = [
+  Apollo,
+  { provide: APOLLO_OPTIONS, useFactory: apolloOptionsFactory },
+  {
+    provide: APOLLO_FLAGS,
+    useValue: {
+      useMutationLoading: true,  it here
     },
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: (httpLink: HttpLink) => {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: 'https://48p1r2roz4.sse.codesandbox.io',
-          }),
-        };
-      },
-      deps: [HttpLink],
     },
-  ],
-})
-export class AppModule {}
+  },
+];
 ```
 
 <Callout type="warning">

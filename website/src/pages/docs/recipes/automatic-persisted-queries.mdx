@@ -52,21 +52,21 @@ needs/environment.
 
 Use `createPersistedQueryLink` function and put it before `HttpLink` in the link chain.
 
-```ts
+```ts filename="graphql.provider.ts"
 import { HttpLink } from 'apollo-angular/http';
-// or batch link
 import { createPersistedQueryLink } from 'apollo-angular/persisted-queries';
 import { sha256 } from 'crypto-hash';
+import { inject } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 
-@NgModule({
-  imports: [],
-})
-class AppModule {
-  constructor(httpLink: HttpLink) {
-    const link = createPersistedQueryLink({
-      sha256,
-    }).concat(httpLink.create({ uri: '/graphql' }));
-  }
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpLink = inject(HttpLink);
+
+  return {
+    link: createPersistedQueryLink({ sha256 }).concat(httpLink.create({ uri: '/graphql' })),
+    cache: new InMemoryCache(),
+    // other options ...
+  };
 }
 ```
 

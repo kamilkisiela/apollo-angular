@@ -23,39 +23,30 @@ technique:
 
 Before we can include this data in the UI, we'll need to define a client schema that extends our
 server schema. We'll start by constructing an instance of ApolloClient with a few small additions.
-Simply pass in `typeDefs` with extensions to the schema and `resolvers` which actually provide the
-mock data:
+Pass in `typeDefs` with extensions to the schema and `resolvers` which actually provide the mock
+data:
 
-```ts
+```ts filename="graphql.provider.ts"
+import { HttpLink } from 'apollo-angular/http';
+import { inject } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 const typeDefs = gql`
   extend type Rocket {
     description: String!
   }
 `;
-
-const resolvers = {
-  Rocket: {
-    description: () => 'A boilerplate standard space rocket',
-  },
-};
-
-@NgModule({
-  import: [ApolloModule],
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory() {
-        return {
-          cache,
-          link,
-          typeDefs,
-          resolvers,
-        };
-      },
-    },
-  ],
-})
-export class AppModule {}
+const resolvers = { Rocket: { description: () => 'A boilerplate standard space rocket' } };
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpLink = inject(HttpLink);
+  return {
+    link: httpLink.create({ uri: '/graphql' }),
+    cache: new InMemoryCache(),
+    typeDefs,
+    resolvers, r options ...
+  };
+}
+  };
+}
 ```
 
 Documenting your client-side API in Schema Definition Language is incredibly valuable, as other

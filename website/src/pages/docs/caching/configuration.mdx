@@ -24,25 +24,21 @@ additional libraries are required.
 
 Create an `InMemoryCache` object and provide it to the `APOLLO_OPTIONS` token, like so:
 
-```ts
-import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
-import { InMemoryCache } from '@apollo/client/core';
-
-@NgModule({
-  imports: [ApolloModule],
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory() {
-        return {
-          // ...other arguments...
-          cache: new InMemoryCache(options),
-        };
-      },
-    },
-  ],
-})
-class AppModule {}
+```ts filename="graphql.provider.ts"
+import { HttpBatchLink } from 'apollo-angular/http';
+import { inject } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+function apolloOptionsFactory(): ApolloClientOptions<any> {
+  const httpBatchLink = inject(HttpBatchLink);
+  return {
+    link: httpBatchLink.create({ uri: '/graphql' }),
+    cache: new InMemoryCache({
+      /* your options here */
+    }), r options ...
+  };
+}
+  };
+}
 ```
 
 The `InMemoryCache` constructor accepts a variety of

@@ -56,37 +56,37 @@ In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token 
 Client:
 
 ```ts filename="app.module.ts"
-import { APOLLO_NAMED_OPTIONS, ApolloModule, NamedOptions } from 'apollo-angular';
+import { Apollo, APOLLO_NAMED_OPTIONS, NamedOptions } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { inject, Provider } from '@angular/core';
 import { InMemoryCache } from '@apollo/client/core';
 
-@NgModule({
-  imports: [BrowserModule, ApolloModule, HttpClientModule],
-  providers: [
-    {
-      provide: APOLLO_NAMED_OPTIONS, // <-- Different from standard initialization
-      useFactory(httpLink: HttpLink): NamedOptions {
-        return {
-          default: /* <-- This settings will be saved as default client */ {
-            cache: new InMemoryCache(),
-            link: httpLink.create({
-              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
-            }),
-          },
-          newClientName: /* <-- These settings will be saved by name: newClientName */ {
-            cache: new InMemoryCache(),
-            link: httpLink.create({
-              uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql',
-            }),
-          },
-        };
-      },
-      deps: [HttpLink],
+function apolloOptionsFactory(): NamedOptions {
+  const httpLink = inject(HttpLink);
+
+  return {
+    default: /* <-- This settings will be saved as default client */ {
+      link: httpLink.create({
+        uri: '/graphql',
+      }),
+      cache: new InMemoryCache(),
     },
-  ],
-})
-export class AppModule {}
+    newClientName: /* <-- These settings will be saved by name: newClientName */ {
+      link: httpLink.create({
+        uri: '/alternative-graphql',
+      }),
+      cache: new InMemoryCache(),
+    },
+  };
+}
+
+export const graphqlProvider: Provider = [
+  Apollo,
+  {
+    provide: APOLLO_NAMED_OPTIONS, // <-- Different from standard initialization
+    useFactory: apolloOptionsFactory,
+  },
+];
 ```
 
 ## Using Apollo
@@ -95,7 +95,7 @@ Since we have our clients available in an app, now is the time to see how to use
 
 If a client is defined as the default, you can directly use all methods of the `Apollo` service.
 
-About named clients, simply use the method called `use(name: string)`.
+About named clients, use the method called `use(name: string)`.
 
 ```typescript
 import { Apollo, QueryRef } from 'apollo-angular';
@@ -114,7 +114,7 @@ export class AppComponent {
     });
 
     // use extra client
-    this.feedQuery = apollo.use('extra').watchQuery({
+    this.feedQuery = apollo.use('myAlternativeGraphQl').watchQuery({
       /* ... */
     });
   }
