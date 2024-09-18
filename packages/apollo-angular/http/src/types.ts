@@ -41,10 +41,12 @@ export type Request = {
   options: HttpRequestOptions;
 };
 
-export type ExtractFiles = (body: Body | Body[]) => {
-  clone: Body;
+export type ExtractedFiles = {
+  clone: unknown;
   files: Map<any, any>;
 };
+
+export type ExtractFiles = (body: Body | Body[]) => ExtractedFiles;
 
 export type BatchOptions = {
   batchMax?: number;
