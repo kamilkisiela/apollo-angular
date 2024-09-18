@@ -158,6 +158,7 @@ You also have to define `extractFiles` function:
 
 ```ts
 import extractFiles from 'extract-files/extractFiles.mjs';
+import isExtractableFile from 'extract-files/isExtractableFile.mjs';
 
 // the import depends on the version of `extract-files`
 
@@ -170,7 +171,7 @@ import extractFiles from 'extract-files/extractFiles.mjs';
         return {
           link: httpLink.create({
             uri: '/graphql',
-            extractFiles, // <-
+            extractFiles: body => extractFiles(body, isExtractableFile), // <-
           }),
           cache: new InMemoryCache(),
         };
