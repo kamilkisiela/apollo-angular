@@ -25,7 +25,7 @@ interface Query {
   `,
 })
 export class AuthorPageComponent implements OnInit {
-  posts: Observable<Post[]>;
+  posts!: Observable<Post[]>;
   constructor(
     private readonly apollo: Apollo,
     private readonly route: ActivatedRoute,
@@ -48,7 +48,7 @@ export class AuthorPageComponent implements OnInit {
           }
         `,
         variables: {
-          authorId: parseInt(this.route.snapshot.paramMap.get('id'), 10),
+          authorId: parseInt(this.route.snapshot.paramMap.get('id') as string, 10),
         },
       })
       .valueChanges.pipe(map(result => result.data.postsOf));
