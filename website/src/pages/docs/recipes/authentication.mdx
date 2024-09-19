@@ -1,7 +1,7 @@
 ---
 description:
-  Learn how to secure your Apollo Client using authentication headers or cookies. See examples of
-  authenticating with JWT tokens and resetting the store on login/logout.
+Learn how to secure your Apollo Client using authentication headers or cookies. See examples of
+authenticating with JWT tokens and resetting the store on login/logout.
 ---
 
 import { Callout } from '@theguild/components';
@@ -138,6 +138,7 @@ Another option is to reload the page, which will have a similar effect.
 
 ```ts
 import { Apollo, gql } from 'apollo-angular';
+import { Component, Injectable } from '@angular/core';
 
 const PROFILE_QUERY = gql`
   query CurrentUserForLayout {
@@ -151,6 +152,7 @@ const PROFILE_QUERY = gql`
 @Injectable()
 class AuthService {
   constructor(private readonly apollo: Apollo) {}
+
   logout() {
     // some app logic
 
@@ -161,19 +163,22 @@ class AuthService {
 
 @Component({
   template: `
-    <ng-template *ngIf="loggedIn">
-      <user-card [user]="user"></user-card>
+    @if (loggedIn) {
+      <user-card [user]="user" />
       <button (click)="logout()">Logout</button>
-    </ng-template>
-
-    <button *ngIf="!loggedIn" (click)="goToLoginPage()">Go SignIn</button>
+    } @else {
+      <button (click)="goToLoginPage()">Go SignIn</button>
+    }
   `,
 })
 class ProfileComponent {
-  apollo: Apollo;
-  auth: Auth;
   user: any;
   loggedIn: boolean;
+
+  constructor(
+    private readonly apollo: Apollo,
+    private readonly auth: AuthService,
+  ) {}
 
   ngOnInit() {
     this.apollo

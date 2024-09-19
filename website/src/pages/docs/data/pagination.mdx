@@ -119,17 +119,13 @@ your UI component.
 In the example above, the `fetchMore` function is called from the UI component:
 
 ```html
-<loading *ngIf="loading"></loading>
-<div *ngIf="!loading">
-  <feed-entry
-    *ngFor="let entry of feed"
-    [entry]="entry"
-    [currentUser]="currentUser"
-    (onVote)="onVote($event)"
-  >
-  </feed-entry>
-  <a (click)="fetchMore()">Load more</a>
-</div>
+@if (loading) {
+<loading />
+} @else { @for (entry of feed; track $index) {
+<feed-entry [entry]="entry" [currentUser]="currentUser" (onVote)="onVote($event)" />
+}
+<a (click)="fetchMore()">Load more</a>
+}
 ```
 
 One downside of pagination with numbered pages or offsets is that an item can be skipped or returned

@@ -254,13 +254,11 @@ _without_ our needing to define a `read` function for it:
 ```ts
 @Component({
   template: `
-    <div *ngIf="isLoggedIn | async; else loginBlock">
+    @if (isLoggedIn | async) {
       <app-pages />
-    </div>
-
-    <ng-template #loginBlock>
+    } @else {
       <app-login />
-    </ng-template>
+    }
   `,
 })
 export class AppComponent {

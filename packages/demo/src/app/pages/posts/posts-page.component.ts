@@ -22,14 +22,16 @@ interface Query {
   selector: 'posts-page',
   template: `
     <ul>
-      <li *ngFor="let post of posts | async">
-        {{ post.title }} by
-        <a [routerLink]="['/author', post.author.id]"
-          >{{ post.author.firstName }} {{ post.author.lastName }}</a
-        >
-        ({{ post.votes }} votes)
-        <app-upvoter [postId]="post.id"></app-upvoter>
-      </li>
+      @for (post of posts | async; track post.id) {
+        <li>
+          {{ post.title }} by
+          <a [routerLink]="['/author', post.author.id]"
+            >{{ post.author.firstName }} {{ post.author.lastName }}</a
+          >
+          ({{ post.votes }} votes)
+          <app-upvoter [postId]="post.id"></app-upvoter>
+        </li>
+      }
     </ul>
   `,
 })
