@@ -24,7 +24,6 @@ export default withGuildDocs({
       '/docs/features/fragments.html': '/docs/data/fragments',
       '/docs/guides/testing.html': '/docs/development-and-testing/testing',
       '/docs/guides/testing': '/docs/development-and-testing/testing',
-      '/docs/recipes': '/docs/recipes/simple-example',
       '/docs/data': '/docs/data/queries',
       '/docs/caching': '/docs/caching/configuration',
       '/docs/local-state': '/docs/local-state/management',
