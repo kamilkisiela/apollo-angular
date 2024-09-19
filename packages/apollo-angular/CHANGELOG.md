@@ -1,5 +1,25 @@
 # Change log
 
+## 7.2.0
+
+### Minor Changes
+
+- [#2296](https://github.com/kamilkisiela/apollo-angular/pull/2296)
+  [`6a45784`](https://github.com/kamilkisiela/apollo-angular/commit/6a45784ce4e916e9e2df1ee11f579b70edd8445d)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - New `provideApollo()` and
+  `provideNamedApollo()`
+
+### Patch Changes
+
+- [#2294](https://github.com/kamilkisiela/apollo-angular/pull/2294)
+  [`d56c5cb`](https://github.com/kamilkisiela/apollo-angular/commit/d56c5cb169847b3d65724c00bcc8c3223de05bac)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Update documentation to standalone usage
+
+- [#2292](https://github.com/kamilkisiela/apollo-angular/pull/2292)
+  [`04fdd28`](https://github.com/kamilkisiela/apollo-angular/commit/04fdd28ff6aa3b4b844488c5b20a55f0bfa60e19)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Relax type to be able to use `extract-files`
+  properly
+
 ## 7.1.2
 
 ### Patch Changes
