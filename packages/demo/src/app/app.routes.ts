@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
-import { AuthorPageComponent } from './pages/author/author-page.component';
-import { PostsPageComponent } from './pages/posts/posts-page.component';
+import { MoviePageComponent } from './pages/movie/movie-page.component';
+import { MoviesPageComponent } from './pages/movies/movies-page.component';
 
 export const routes: Routes = [
   {
-    path: 'posts',
-    component: PostsPageComponent,
+    path: 'movie',
+    component: MoviesPageComponent,
   },
   {
-    path: 'author/:id',
-    component: AuthorPageComponent,
+    path: 'movie/:id',
+    component: MoviePageComponent,
   },
   {
     path: '**',
-    redirectTo: '/posts',
+    redirectTo: '/movie',
   },
 ];
