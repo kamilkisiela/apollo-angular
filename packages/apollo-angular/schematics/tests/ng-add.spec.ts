@@ -90,18 +90,10 @@ describe('ng-add with standalone', () => {
     }
   });
 
-  test('should add graphqlProviders with GraphQL setup', async () => {
-    const providerPath = '/projects/apollo/src/app/graphql.provider.ts';
-    expect(tree.files).toContain(providerPath);
-
-    const content = getFileContent(tree, providerPath);
-    expect(content).toMatch('export const graphqlProvider');
-  });
-
-  test('should import the NgModule with GraphQL setup to the root module', async () => {
+  test('should use `provideApollo()` to provide Apollo', async () => {
     const content = getFileContent(tree, '/projects/apollo/src/app/app.config.ts');
 
-    expect(content).toMatch(/import { graphqlProvider } from '.\/graphql.provider'/);
+    expect(content).toMatch(/provideApollo\(\(\) => {/);
   });
 
   test('should import HttpClientModule to the root module', async () => {

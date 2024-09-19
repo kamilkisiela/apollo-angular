@@ -1,14 +1,25 @@
+import { provideApollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { InMemoryCache } from '@apollo/client/core';
 import { routes } from './app.routes';
-import { graphqlProvider } from './graphql.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    graphqlProvider,
+    provideApollo(() => {
+      const httpLink = inject(HttpLink);
+
+      return {
+        link: httpLink.create({
+          uri: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
+        }),
+        cache: new InMemoryCache(),
+      };
+    }),
   ],
 };

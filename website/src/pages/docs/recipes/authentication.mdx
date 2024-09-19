@@ -20,12 +20,13 @@ includes several options for authentication.
 If your app is browser based, and you are using cookies for login and session management with a
 backend, it is very easy to tell your network interface to send the cookie along with every request.
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+import { InMemoryCache } from '@apollo/client/core';
 
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+provideApollo(() => {
   const httpLink = inject(HttpLink);
 
   return {
@@ -36,7 +37,7 @@ function apolloOptionsFactory(): ApolloClientOptions<any> {
     cache: new InMemoryCache(),
     // other options ...
   };
-}
+});
 ```
 
 `withCredentials` is simply passed to the
@@ -55,13 +56,14 @@ Apollo Links make creating middlewares that lets you modify requests before they
 server. It's easy to add an `Authorization` header to every HTTP request. In this example, we'll
 pull the login token from `localStorage` every time a request is sent.
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+provideApollo(() => {
   const httpLink = inject(HttpLink);
 
   const basic = setContext((operation, context) => ({
@@ -85,11 +87,11 @@ function apolloOptionsFactory(): ApolloClientOptions<any> {
   });
 
   return {
-    link: ApolloLink.from([basic, auth, httpLink.create({ uri })]),
+    link: ApolloLink.from([basic, auth, httpLink.create({ uri: '/graphql' })]),
     cache: new InMemoryCache(),
     // other options ...
   };
-}
+});
 ```
 
 The server can use that header to authenticate the user and attach it to the GraphQL execution

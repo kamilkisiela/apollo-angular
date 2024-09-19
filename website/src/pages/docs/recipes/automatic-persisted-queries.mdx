@@ -52,14 +52,15 @@ needs/environment.
 
 Use `createPersistedQueryLink` function and put it before `HttpLink` in the link chain.
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { createPersistedQueryLink } from 'apollo-angular/persisted-queries';
 import { sha256 } from 'crypto-hash';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+import { InMemoryCache } from '@apollo/client/core';
 
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+provideApollo(() => {
   const httpLink = inject(HttpLink);
 
   return {
@@ -67,7 +68,7 @@ function apolloOptionsFactory(): ApolloClientOptions<any> {
     cache: new InMemoryCache(),
     // other options ...
   };
-}
+});
 ```
 
 That's it! Now your client will start sending query signatures instead of the full text resulting in

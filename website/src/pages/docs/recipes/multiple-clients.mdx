@@ -1,7 +1,7 @@
 ---
 description:
   Learn to use multiple Apollo clients in your Angular application with @apollo_angular. Create
-  named clients and configure using APOLLO_NAMED_OPTIONS token.
+  named clients and configure using `provideNamedApollo()` token.
 ---
 
 import { Callout } from '@theguild/components';
@@ -50,43 +50,36 @@ apollo.createDefault(options);
 apollo.createNamed(name, options);
 ```
 
-## Creating Clients Using `APOLLO_NAMED_OPTIONS`
+## Creating Clients Using `provideNamedApollo()`
 
-In our `app.module.ts` file use `ApolloModule` and `APOLLO_NAMED_OPTIONS` token to configure Apollo
-Client:
+In our `app.config.ts` file use `provideNamedApollo()` token to configure Apollo Client:
 
-```ts filename="app.module.ts"
-import { Apollo, APOLLO_NAMED_OPTIONS, NamedOptions } from 'apollo-angular';
+```ts filename="app.config.ts"
+import { provideNamedApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { inject, Provider } from '@angular/core';
+import { inject } from '@angular/core';
 import { InMemoryCache } from '@apollo/client/core';
 
-function apolloOptionsFactory(): NamedOptions {
+provideNamedApollo(() => {
   const httpLink = inject(HttpLink);
 
   return {
-    default: /* <-- This settings will be saved as default client */ {
+    //  These settings will be saved as default client
+    default: {
       link: httpLink.create({
         uri: '/graphql',
       }),
       cache: new InMemoryCache(),
     },
-    newClientName: /* <-- These settings will be saved by name: newClientName */ {
+    // These settings will be saved by name: myAlternativeGraphQl
+    myAlternativeGraphQl: {
       link: httpLink.create({
         uri: '/alternative-graphql',
       }),
       cache: new InMemoryCache(),
     },
   };
-}
-
-export const graphqlProvider: Provider = [
-  Apollo,
-  {
-    provide: APOLLO_NAMED_OPTIONS, // <-- Different from standard initialization
-    useFactory: apolloOptionsFactory,
-  },
-];
+});
 ```
 
 ## Using Apollo

@@ -99,29 +99,34 @@ const ws = new GraphQLWsLink(
 );
 ```
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { Kind, OperationTypeNode } from 'graphql';
 import { createClient } from 'graphql-ws';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache, split } from '@apollo/client/core';
+import { InMemoryCache, split } from '@apollo/client/core';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+
+provideApollo(() => {
   const httpLink = inject(HttpLink);
-  tp link:
-  const http =
-  const http = httpLink.create({ uri: 'http://localhost:3000/graphql' });
-  Socket link:
-  const ws = n
-  const ws = new GraphQLWsLink(createClient({ url: 'ws://localhost:3000/graphql' }));
-  ility to split links, you can send data to each link
-  // depending
-   what kind of operation is being sent
-  const link =
+  // Create an http link:
+  const http = httpLink.create({
+    uri: 'http://localhost:3000/graphql',
+  });
+
+  // Create a WebSocket link:
+  const ws = new GraphQLWsLink(
+    createClient({
+      url: 'ws://localhost:3000/graphql',
+    }),
+  );
+
+  // Using the ability to split links, you can send data to each link
+  // depending on what kind of operation is being sent
   const link = split(
-    on operation type
-    ({query})
+    // Split based on operation type
     ({ query }) => {
       const definition = getMainDefinition(query);
       return (
@@ -130,16 +135,15 @@ function apolloOptionsFactory(): ApolloClientOptions<any> {
       );
     },
     ws,
-
     http,
   );
+
   return {
     link,
-    cache: new InMemoryCache(), s ...
+    cache: new InMemoryCache(),
+    // other options...
   };
-}
-  };
-}
+});
 ```
 
 Now, queries and mutations will go over HTTP as normal, but subscriptions will be done over the

@@ -20,24 +20,21 @@ easier testing.
 
 ## Usage
 
-```ts filename="graphql.provider.ts"
-import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { inject, Provider } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+import { inject } from '@angular/core';
+import { InMemoryCache } from '@apollo/client/core';
+
+provideApollo(() => {
   const httpLink = inject(HttpLink);
+
   return {
     link: httpLink.create({ uri: '/graphql' }),
-    cache: new InMemoryCache(), options ...
+    cache: new InMemoryCache(),
+    // other options ...
   };
-}
-  };
-}
-export const graphqlProvider: Provider = [
-  Apollo,
-  { provide: APOLLO_OPTIONS, useFactory: apolloOptionsFactory },
-];
+});
 ```
 
 ## `HttpClient`
@@ -95,23 +92,25 @@ apollo.query({
 
 ### Uri as Function
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+import { InMemoryCache } from '@apollo/client/core';
+
+provideApollo(() => {
   const httpLink = inject(HttpLink);
+
   return {
     link: httpLink.create({
       uri(operation) {
         return operation.operationName === 'login' ? '/auth' : '/graphq';
       },
     }),
-    cache: new InMemoryCache(), r options ...
+    cache: new InMemoryCache(),
+    // other options...
   };
-}
-  };
-}
+});
 ```
 
 ### File Upload
@@ -124,25 +123,25 @@ npm i extract-files
 
 Then configure the `extractFiles` function:
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
 import { HttpLink } from 'apollo-angular/http';
 import extractFiles from 'extract-files/extractFiles.mjs';
 import isExtractableFile from 'extract-files/isExtractableFile.mjs';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+import { InMemoryCache } from '@apollo/client/core';
+
+provideApollo(() => {
   const httpLink = inject(HttpLink);
+
   return {
     link: httpLink.create({
       uri: '/graphql',
       extractFiles: body => extractFiles(body, isExtractableFile),
-         })
     }),
-    cache: new InMemoryCache(), r options ...
+    cache: new InMemoryCache(),
+    // other options...
   };
-}
-  };
-}
+});
 ```
 
 And finally turn on the `useMultipart` flag:
@@ -158,14 +157,17 @@ apollo.query({
 
 ### Middleware
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, ApolloLink, InMemoryCache } from '@apollo/client/core';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+
+provideApollo(() => {
   const httpLink = inject(HttpLink);
   const http = httpLink.create({ uri: '/graphql' });
+
   const middleware = new ApolloLink((operation, forward) => {
     operation.setContext({
       headers: new HttpHeaders().set(
@@ -175,24 +177,27 @@ function apolloOptionsFactory(): ApolloClientOptions<any> {
     });
     return forward(operation);
   });
+
   const link = middleware.concat(http);
+
   return {
     link,
-    cache: new InMemoryCache(), options ...
+    cache: new InMemoryCache(),
+    // other options...
   };
-}
-  };
-}
+});
 ```
 
 ### Afterware (error)
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+import { InMemoryCache } from '@apollo/client/core';
 import { onError } from '@apollo/client/link/error';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+
+provideApollo(() => {
   const httpLink = inject(HttpLink);
   const myAuthService = inject(MyAuthService);
   const http = httpLink.create({ uri: '/graphql' });
@@ -202,13 +207,13 @@ function apolloOptionsFactory(): ApolloClientOptions<any> {
     }
   });
   const link = error.concat(http);
+
   return {
     link,
-    cache: new InMemoryCache(), options ...
+    cache: new InMemoryCache(),
+    // other options...
   };
-}
-  };
-}
+});
 ```
 
 ## `HttpBatchLink`
@@ -217,19 +222,21 @@ An Apollo Link to combine multiple GraphQL operations into single HTTP request.
 
 ### Usage
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpBatchLink } from 'apollo-angular/http';
 import { inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
+import { InMemoryCache } from '@apollo/client/core';
+
+provideApollo(() => {
   const httpBatchLink = inject(HttpBatchLink);
+
   return {
     link: httpBatchLink.create({ uri: '/graphql' }),
-    cache: new InMemoryCache(), r options ...
+    cache: new InMemoryCache(),
+    // other options...
   };
-}
-  };
-}
+});
 ```
 
 ### `HttpClient`

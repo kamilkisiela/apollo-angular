@@ -23,27 +23,29 @@ You can use one or both of these techniques to provide a better user experience.
 
 Before we dive more into SSR, let's create an example to work on.
 
-```ts filename="graphql.provider.ts"
-import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { inject, InjectionToken, Provider } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
-function apolloOptionsFactory(): ApolloClientOptions<any> {
-  const httpLink = inject(HttpLink);
-  const cache = inject(APOLLO_CACHE);
-  return {
-    link: httpLink.create({ uri: '/graphql' }),
-    cache: cache, options ...
-  };
-}
-  };
-}
-export const graphqlProvider: Provider = [
-  Apollo,
-  { provide: APOLLO_CACHE, useValue: new InMemoryCache() },
-  { provide: APOLLO_OPTIONS, useFactory: apolloOptionsFactory },
-];
+import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, inject, InjectionToken } from '@angular/core';
+import { InMemoryCache } from '@apollo/client/core';
+
+const MY_APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    { provide: MY_APOLLO_CACHE, useValue: new InMemoryCache() },
+    provideApollo(() => {
+      const httpLink = inject(HttpLink);
+      const cache = inject(MY_APOLLO_CACHE);
+      return {
+        link: httpLink.create({ uri: '/graphql' }),
+        cache: cache,
+      };
+    }),
+  ],
+};
 ```
 
 ## Server-Side Rendering
@@ -71,35 +73,51 @@ since the data is "dehydrated" when it is serialized and included in the initial
 For example, a typical approach is to use `TransferState` and `BrowserTransferStateModule` so you
 can then rehydrate the client using the initial state passed from the server:
 
-```ts filename="graphql.provider.ts"
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { inject, InjectionToken, makeStateKey, TransferState } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client/core';
-const APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
+import { provideHttpClient } from '@angular/common/http';
+import {
+  ApplicationConfig,
+  inject,
+  InjectionToken,
+  makeStateKey,
+  TransferState,
+} from '@angular/core';
+import { InMemoryCache, NormalizedCacheObject } from '@apollo/client/core';
+
+const MY_APOLLO_CACHE = new InjectionToken<InMemoryCache>('apollo-cache');
 const STATE_KEY = makeStateKey<NormalizedCacheObject>('apollo.state');
-function apolloOptionsFactory(): ApolloClientOptions<any> {
-  const httpLink = inject(HttpLink);
-  const cache = inject(APOLLO_CACHE);
-  const transferState = inject(TransferState);
-  const isBrowser = transferState.hasKey(STATE_KEY);
-  if (isBrowser) {
-    const state = transferState.get(STATE_KEY, {});
-    cache.restore(state);
-  } else {
-    transferState.onSerialize(STATE_KEY, () => {
-      const result = cache.extract();
-      t cache after extraction to avoid sharing between requests
-      cache.reset();
-      return result;
-    });
-  }
-  return {
-    link: httpLink.create({ uri: '/graphql' }),
-    cache: cache, r options ...
-  };
-}
-  };
-}
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    { provide: MY_APOLLO_CACHE, useValue: new InMemoryCache() },
+    provideApollo(() => {
+      const httpLink = inject(HttpLink);
+      const cache = inject(MY_APOLLO_CACHE);
+
+      const transferState = inject(TransferState);
+      const isBrowser = transferState.hasKey(STATE_KEY);
+      if (isBrowser) {
+        const state = transferState.get(STATE_KEY, {});
+        cache.restore(state);
+      } else {
+        transferState.onSerialize(STATE_KEY, () => {
+          const result = cache.extract();
+          // Reset cache after extraction to avoid sharing between requests
+          cache.reset();
+          return result;
+        });
+      }
+
+      return {
+        link: httpLink.create({ uri: '/graphql' }),
+        cache: cache,
+      };
+    }),
+  ],
+};
 ```
 
 Adding store rehydration to your app is straightforward since Angular itself has a mechanism to
