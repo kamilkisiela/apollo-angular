@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,7 @@ import { Component } from '@angular/core';
       <router-outlet></router-outlet>
     </main>
   `,
+  standalone: true,
+  imports: [RouterOutlet],
 })
 export class AppComponent {}
