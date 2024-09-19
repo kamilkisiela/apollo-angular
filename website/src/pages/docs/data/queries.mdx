@@ -373,31 +373,23 @@ Every response you get from `Apollo.watchQuery()` contains `loading` property. B
 always `false` and the first result is emitted with the response from the ApolloLink execution
 chain. In order to correct it you can enable `useInitialLoading` flag in configuration.
 
-```ts filename="graphql.provider.ts"
-import { Apollo, APOLLO_FLAGS, APOLLO_OPTIONS } from 'apollo-angular';
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { inject, Provider } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
-  const httpLink = inject(HttpLink);
-  return {
-    link: httpLink.create({ uri: '/graphql' }),
-    cache: new InMemoryCache(), options ...
-  };
-}
-  };
-}
-export const graphqlProvider: Provider = [
-  Apollo,
-  { provide: APOLLO_OPTIONS, useFactory: apolloOptionsFactory },
-  {
-    provide: APOLLO_FLAGS,
-    useValue: {
-      useInitialLoading: true,  it here
-    },
-    },
+import { inject } from '@angular/core';
+import { InMemoryCache } from '@apollo/client/core';
+
+provideApollo(
+  () => {
+    return {
+      link: inject(HttpLink).create({ uri: '/graphql' }),
+      cache: new InMemoryCache(),
+    };
   },
-];
+  {
+    useInitialLoading: true, // enable it here
+  },
+);
 ```
 
 <Callout>

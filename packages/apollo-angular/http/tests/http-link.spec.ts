@@ -4,7 +4,7 @@ import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ApolloLink, execute, gql, InMemoryCache } from '@apollo/client/core';
-import { Apollo, ApolloModule } from '../../src';
+import { Apollo } from '../../src';
 import { HttpLink } from '../src/http-link';
 
 const noop = () => {
@@ -17,8 +17,8 @@ describe('HttpLink', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ApolloModule, HttpClientModule, HttpClientTestingModule],
-      providers: [HttpLink],
+      imports: [HttpClientModule, HttpClientTestingModule],
+      providers: [HttpLink, Apollo],
     });
     httpLink = TestBed.inject(HttpLink);
     httpBackend = TestBed.inject(HttpTestingController);

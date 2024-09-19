@@ -194,7 +194,16 @@ function importSetup(options: Schema): Rule {
     const mainPath = await getMainFilePath(host, options.project);
     if (isStandaloneApp(host, mainPath)) {
       return addRootProvider(options.project, ({ code, external }) => {
-        return code`${external('graphqlProvider', './graphql.provider')}`;
+        return code`${external('provideApollo', 'apollo-angular')}(() => {
+      const httpLink = inject(${external('HttpLink', 'apollo-angular/http')});
+
+      return {
+        link: httpLink.create({
+          uri: '<%= endpoint %>',
+        }),
+        cache: new ${external('InMemoryCache', '@apollo/client/core')}(),
+      };
+    })`;
       });
     } else {
       await addModuleImportToRootModule(host, 'GraphQLModule', './graphql.module', options.project);

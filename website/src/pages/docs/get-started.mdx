@@ -47,26 +47,29 @@ The `@apollo/client` package requires `AsyncIterable` so make sure your `tsconfi
 
 Great, now that you have all the dependencies you need, let's create your first Apollo Client.
 
-In `graphql.provider.ts` file use `APOLLO_OPTIONS` token to configure Apollo:
+In `app.config.ts` file, provide Apollo with some options:
 
-```ts filename="graphql.provider.ts"
-import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+```ts filename="app.config.ts"
+import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { inject, Provider } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-function apolloOptionsFactory(): ApolloClientOptions<any> {
-  const httpLink = inject(HttpLink);
-  return {
-    link: httpLink.create({ uri: '/graphql' }),
-    cache: new InMemoryCache(), options ...
-  };
-}
-  };
-}
-export const graphqlProvider: Provider = [
-  Apollo,
-  { provide: APOLLO_OPTIONS, useFactory: apolloOptionsFactory },
-];
+import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, inject } from '@angular/core';
+import { InMemoryCache } from '@apollo/client/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    provideApollo(() => {
+      const httpLink = inject(HttpLink);
+
+      return {
+        link: httpLink.create({ uri: '/graphql' }),
+        cache: new InMemoryCache(),
+        // other options...
+      };
+    }),
+  ],
+};
 ```
 
 Take a closer look what we did there:
@@ -74,24 +77,6 @@ Take a closer look what we did there:
 1. With `apollo-angular/http` and `HttpLink` service we connect our client to an external GraphQL
    Server
 1. Thanks to `@apollo/client/core` and `InMemoryCache` we have a place to store data in
-1. `APOLLO_OPTIONS` provides options to Apollo Client
-
-Finally, the `graphqlProvider` must be used somewhere and the `HttpLink` must be provided too. This
-happens in `app.config.ts`:
-
-```ts filename="app.config.ts"
-import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig } from '@angular/core';
-import { graphqlProvider } from './graphql.provider';
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(),
-    graphqlProvider, r providers for your application ...
-  ]
-};
-  ],
-};
-```
 
 ## Links and Cache
 
