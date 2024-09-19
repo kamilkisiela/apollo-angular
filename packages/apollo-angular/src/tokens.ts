@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import type { ApolloClientOptions } from '@apollo/client/core';
+import type { ApolloClientOptions } from '@apollo/client/core/index.js';
 import type { Flags, NamedOptions } from './types';
 
 export const APOLLO_FLAGS = new InjectionToken<Flags>('APOLLO_FLAGS');

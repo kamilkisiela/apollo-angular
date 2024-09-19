@@ -1,7 +1,7 @@
 import { Apollo } from 'apollo-angular';
 import { print } from 'graphql';
 import { TestBed } from '@angular/core/testing';
-import { gql, InMemoryCache } from '@apollo/client/core';
+import { gql, InMemoryCache } from '@apollo/client/core/index.js';
 import { addTypenameToDocument } from '@apollo/client/utilities';
 import { APOLLO_TESTING_CACHE, ApolloTestingController, ApolloTestingModule } from '../src';
 

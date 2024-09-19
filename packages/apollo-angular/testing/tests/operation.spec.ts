@@ -1,4 +1,4 @@
-import { ApolloLink, execute, gql } from '@apollo/client/core';
+import { ApolloLink, execute, gql } from '@apollo/client/core/index.js';
 import { ApolloTestingBackend } from '../src/backend';
 import { buildOperationForLink } from './utils';
 

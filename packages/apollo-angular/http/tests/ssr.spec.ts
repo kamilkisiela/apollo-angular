@@ -9,7 +9,7 @@ import {
   renderModule,
   ServerModule,
 } from '@angular/platform-server';
-import { execute, gql } from '@apollo/client/core';
+import { execute, gql } from '@apollo/client/core/index.js';
 import { HttpLink } from '../src/http-link';
 
 describe.skip('integration', () => {

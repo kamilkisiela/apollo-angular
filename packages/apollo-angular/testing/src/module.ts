@@ -5,7 +5,7 @@ import {
   ApolloLink,
   InMemoryCache,
   Operation as LinkOperation,
-} from '@apollo/client/core';
+} from '@apollo/client/core/index.js';
 import { ApolloTestingBackend } from './backend';
 import { ApolloTestingController } from './controller';
 import { Operation } from './operation';
