@@ -218,7 +218,7 @@ class PostComponent {
 
   constructor(private readonly apollo: Apollo) {}
 
-  upvote({ postId, title }) {
+  changePostTitle({ postId, title }) {
     this.apollo
       .mutate({
         mutation: CHANGE_POST_TITLE,
@@ -238,9 +238,9 @@ class PostComponent {
 ```
 
 For the example above, it is easy to construct an optimistic response, since we know the shape of
-the new comment and can approximately predict the created date. The optimistic response doesn't have
-to be exactly correct because it will always will be replaced with the real result from the server,
-but it should be close enough to make users feel like there is no delay.
+the new post and can predict the new title. The optimistic response doesn't have to be exactly
+correct because it will always be replaced with the real result from the server, but it should be
+close enough to make users feel like there is no delay.
 
 <Callout>
   As this comment is *new* and not visible in the UI before the mutation, it won't appear
