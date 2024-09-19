@@ -1,8 +1,8 @@
 ---
 description:
-  Learn how to test apollo-angular code using Jest with ApolloTestingModule. It allows for easy
-  mocking of calls to the GraphQL endpoint, so tests can run in isolation and produce consistent
-  results.
+Learn how to test apollo-angular code using Jest with ApolloTestingModule. It allows for easy
+mocking of calls to the GraphQL endpoint, so tests can run in isolation and produce consistent
+results.
 ---
 
 import { Callout } from '@theguild/components';
@@ -45,17 +45,23 @@ export const GET_DOG_QUERY = gql`
 @Component({
   selector: 'dog',
   template: `
-    <div *ngIf="loading$">Loading ...</div>
-    <div *ngIf="error$">Error!</div>
-    <p *ngIf="dog$ | async as dog">{{ dog.name }} is a {{ dog.breed }}</p>
+    @if (loading$ | async) {
+      <div>Loading ...</div>
+    }
+    @if (error$ | async) {
+      <div>Error!</div>
+    }
+    @if (dog$ | async; as dog) {
+      <p>{{ dog.name }} is a {{ dog.breed }}</p>
+    }
   `,
 })
 export class DogComponent implements OnInit {
-  @Input() name: string;
+  @Input({ required: true }) name!: string;
 
-  loading$: Observable<boolean>;
-  error$: Observable<any>;
-  dog$: Observable<any>;
+  loading$!: Observable<boolean>;
+  error$!: Observable<any>;
+  dog$!: Observable<any>;
 
   constructor(private readonly apollo: Apollo) {}
 

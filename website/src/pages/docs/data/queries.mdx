@@ -194,9 +194,11 @@ const GET_FEED = gql`
 @Component({
   template: `
     <ul>
-      <li *ngFor="let post of posts | async">
-        {{ post.title }}
-      </li>
+      @for (post of posts | async; track post.id) {
+        <li>
+          {{ post.title }}
+        </li>
+      }
     </ul>
   `,
 })

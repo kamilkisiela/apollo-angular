@@ -60,6 +60,8 @@ of your components to your GraphQL server using the `Apollo` service:
 
 ```ts
 import { Apollo, gql } from 'apollo-angular';
+import { map, Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 const GET_DOGS = gql`
@@ -75,14 +77,16 @@ const GET_DOGS = gql`
   selector: 'dogs',
   template: `
     <ul>
-      <li *ngFor="let dog of dogs | async">
-        {{ dog.breed }}
-      </li>
+      @for (dog of dogs | async; track dog.id) {
+        <li>
+          {{ dog.breed }}
+        </li>
+      }
     </ul>
   `,
 })
 export class DogsComponent implements OnInit {
-  dogs: Observable<any>;
+  public dogs!: Observable<any>;
 
   constructor(private readonly apollo: Apollo) {}
 

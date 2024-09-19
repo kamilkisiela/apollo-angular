@@ -17,15 +17,18 @@ interface Query {
   selector: 'author-page',
   template: `
     <ul>
-      <li *ngFor="let post of posts | async">
-        {{ post.title }}
-      </li>
+      @for (post of posts | async; track post.id) {
+        <li>
+          {{ post.title }}
+        </li>
+      }
     </ul>
     <a routerLink="/posts">Back to posts</a>
   `,
 })
 export class AuthorPageComponent implements OnInit {
   posts!: Observable<Post[]>;
+
   constructor(
     private readonly apollo: Apollo,
     private readonly route: ActivatedRoute,

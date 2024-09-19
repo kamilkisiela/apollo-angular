@@ -144,13 +144,17 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'exchange-rates',
   template: `
-    <div *ngIf="loading">Loading...</div>
-    <div *ngIf="error">Error :(</div>
-    <div *ngIf="rates">
-      <div *ngFor="let rate of rates">
+    @if (loading) {
+      <div>Loading...</div>
+    }
+    @if (error) {
+      <div>Error :(</div>
+    }
+    @if (rates) {
+      @for (rate of rates; track $index) {
         <p>{{ rate.currency }}: {{ rate.rate }}</p>
-      </div>
-    </div>
+      }
+    }
   `,
 })
 export class ExchangeRates implements OnInit {
