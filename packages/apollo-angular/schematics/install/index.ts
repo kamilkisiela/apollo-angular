@@ -195,7 +195,7 @@ function importSetup(options: Schema): Rule {
     if (isStandaloneApp(host, mainPath)) {
       return addRootProvider(options.project, ({ code, external }) => {
         return code`${external('provideApollo', 'apollo-angular')}(() => {
-      const httpLink = inject(${external('HttpLink', 'apollo-angular/http')});
+      const httpLink = ${external('inject', '@angular/core')}(${external('HttpLink', 'apollo-angular/http')});
 
       return {
         link: httpLink.create({
