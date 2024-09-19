@@ -1,8 +1,9 @@
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 interface Post {
   id: number;
@@ -25,6 +26,8 @@ interface Query {
     </ul>
     <a routerLink="/posts">Back to posts</a>
   `,
+  standalone: true,
+  imports: [RouterLink, AsyncPipe],
 })
 export class AuthorPageComponent implements OnInit {
   posts!: Observable<Post[]>;

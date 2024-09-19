@@ -1,7 +1,10 @@
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { UpvoterComponent } from './upvoter.component';
 
 interface Post {
   id: number;
@@ -34,6 +37,8 @@ interface Query {
       }
     </ul>
   `,
+  standalone: true,
+  imports: [RouterLink, UpvoterComponent, AsyncPipe],
 })
 export class PostsPageComponent implements OnInit {
   posts!: Observable<Post[]>;
