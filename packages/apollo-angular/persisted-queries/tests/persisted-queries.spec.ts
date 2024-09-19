@@ -1,4 +1,11 @@
-import { ApolloLink, execute, FetchResult, gql, Observable, Operation } from '@apollo/client/core';
+import {
+  ApolloLink,
+  execute,
+  FetchResult,
+  gql,
+  Observable,
+  Operation,
+} from '@apollo/client/core/index.js';
 import { createPersistedQueryLink } from '../src';
 
 const query = gql`

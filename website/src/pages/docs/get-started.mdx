@@ -54,7 +54,7 @@ import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, inject } from '@angular/core';
-import { InMemoryCache } from '@apollo/client/core';
+import { InMemoryCache } from '@apollo/client/core/index.js';
 
 export const appConfig: ApplicationConfig = {
   providers: [

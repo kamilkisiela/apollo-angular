@@ -9,7 +9,7 @@ import type {
   FetchResult,
   OperationVariables,
   TypedDocumentNode,
-} from '@apollo/client/core';
+} from '@apollo/client/core/index.js';
 
 export type EmptyObject = {
   [key: string]: any;

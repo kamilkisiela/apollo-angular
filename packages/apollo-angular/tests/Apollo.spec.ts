@@ -2,7 +2,7 @@ import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ApolloLink, InMemoryCache, NetworkStatus } from '@apollo/client/core';
+import { ApolloLink, InMemoryCache, NetworkStatus } from '@apollo/client/core/index.js';
 import { mockSingleLink } from '@apollo/client/testing';
 import { Apollo, ApolloBase } from '../src/apollo';
 import { gql } from '../src/gql';

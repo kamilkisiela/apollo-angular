@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { InMemoryCache } from '@apollo/client/core';
+import { InMemoryCache } from '@apollo/client/core/index.js';
 import { mockSingleLink } from '@apollo/client/testing';
 import { Apollo, provideApollo } from '../src';
 
