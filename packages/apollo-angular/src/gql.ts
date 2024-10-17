@@ -1,11 +1,9 @@
 import { gql as gqlTag, TypedDocumentNode } from '@apollo/client/core';
 
-function typedGQLTag<Result, Variables>(
+const typedGQLTag: <Result, Variables>(
   literals: ReadonlyArray<string> | Readonly<string>,
   ...placeholders: any[]
-): TypedDocumentNode<Result, Variables> {
-  return gqlTag(literals, ...placeholders);
-}
+) => TypedDocumentNode<Result, Variables> = gqlTag;
 
 export const gql = typedGQLTag;
 export const graphql = typedGQLTag;
