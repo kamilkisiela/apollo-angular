@@ -9,8 +9,8 @@ import type {
   QueryOptions,
   SubscriptionOptions,
   WatchFragmentResult,
-} from '@apollo/client/core';
-import { ApolloClient } from '@apollo/client/core';
+} from '@apollo/client/core/index.js';
+import { ApolloClient } from '@apollo/client/core/index.js';
 import { QueryRef } from './query-ref';
 import { APOLLO_FLAGS, APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS } from './tokens';
 import type {

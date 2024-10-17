@@ -7,7 +7,7 @@ import type {
   ApolloQueryResult,
   FetchResult,
   ObservableQuery,
-} from '@apollo/client/core';
+} from '@apollo/client/core/index.js';
 import { MutationResult } from './types';
 
 export function fromPromise<T>(promiseFn: () => Promise<T>): Observable<T> {

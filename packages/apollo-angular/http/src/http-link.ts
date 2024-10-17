@@ -6,7 +6,7 @@ import {
   FetchResult,
   Observable as LinkObservable,
   Operation,
-} from '@apollo/client/core';
+} from '@apollo/client/core/index.js';
 import { pick } from './http-batch-link';
 import { Body, Context, OperationPrinter, Options, Request } from './types';
 import { createHeadersWithClientAwareness, fetch, mergeHeaders } from './utils';

@@ -1,4 +1,4 @@
-export type { TypedDocumentNode } from '@apollo/client/core';
+export type { TypedDocumentNode } from '@apollo/client/core/index.js';
 export { ApolloModule, provideApollo, provideNamedApollo } from './apollo-module';
 export { Apollo, ApolloBase } from './apollo';
 export { QueryRef, QueryRefFromDocument } from './query-ref';

@@ -9,8 +9,8 @@ import type {
   SubscribeToMoreOptions,
   TypedDocumentNode,
   UpdateQueryOptions,
-} from '@apollo/client/core';
-import { NetworkStatus } from '@apollo/client/core';
+} from '@apollo/client/core/index.js';
+import { NetworkStatus } from '@apollo/client/core/index.js';
 import { EmptyObject, WatchQueryOptions } from './types';
 import { fixObservable, wrapWithZone } from './utils';
 

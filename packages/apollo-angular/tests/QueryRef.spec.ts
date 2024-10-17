@@ -1,7 +1,12 @@
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { NgZone } from '@angular/core';
-import { ApolloClient, ApolloLink, InMemoryCache, ObservableQuery } from '@apollo/client/core';
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  ObservableQuery,
+} from '@apollo/client/core/index.js';
 import { mockSingleLink } from '@apollo/client/testing';
 import { gql } from '../src/gql';
 import { QueryRef } from '../src/query-ref';

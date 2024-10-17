@@ -1,7 +1,7 @@
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApolloLink, execute, gql, Operation } from '@apollo/client/core';
+import { ApolloLink, execute, gql, Operation } from '@apollo/client/core/index.js';
 import { HttpBatchLink } from '../src/http-batch-link';
 
 const noop = () => {
