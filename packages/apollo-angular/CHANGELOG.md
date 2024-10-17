@@ -1,5 +1,25 @@
 # Change log
 
+## 7.2.1
+
+### Patch Changes
+
+- [#2312](https://github.com/kamilkisiela/apollo-angular/pull/2312)
+  [`8bbdc6b`](https://github.com/kamilkisiela/apollo-angular/commit/8bbdc6be14b389d9bcb52887fadb4e239e85a58d)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Smaller bundle for `gql`
+
+- [#2314](https://github.com/kamilkisiela/apollo-angular/pull/2314)
+  [`e98e06a`](https://github.com/kamilkisiela/apollo-angular/commit/e98e06a1a9d9da9e81becf905c738171d797f745)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Deprecate `graphql` alias for `gql` tag
+  function
+
+  Because importing the same thing from two different import points will increase the final bundle
+  size. If you want a different name for the tag function, then use `as` syntax, such as:
+
+  ```ts
+  import { gql as graphql } from 'apollo-angular';
+  ```
+
 ## 7.2.0
 
 ### Minor Changes
