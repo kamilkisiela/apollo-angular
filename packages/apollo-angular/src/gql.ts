@@ -6,4 +6,8 @@ const typedGQLTag: <Result, Variables>(
 ) => TypedDocumentNode<Result, Variables> = gqlTag;
 
 export const gql = typedGQLTag;
+
+/**
+ * @deprecated Instead, use `import {gql as graphql} from 'apollo-angular';`. Because different exports for the same thing will increase the final bundle size.
+ */
 export const graphql = typedGQLTag;
