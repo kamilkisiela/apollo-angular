@@ -1,10 +1,24 @@
-import { ApolloLink, execute, gql } from '@apollo/client/core';
+import { ApolloLink, execute, FetchResult, gql } from '@apollo/client/core';
 import { ApolloTestingBackend } from '../src/backend';
 import { buildOperationForLink } from './utils';
 
 const testQuery = gql`
   query allHeroes {
     heroes {
+      name
+    }
+  }
+`;
+const testSubscription = gql`
+  subscription newHeroes {
+    heroes {
+      name
+    }
+  }
+`;
+const testMutation = gql`
+  mutation addHero($hero: String!) {
+    addHero(hero: $hero) {
       name
     }
   }
@@ -50,6 +64,106 @@ describe('TestOperation', () => {
 
     mock.expectOne(testQuery).flushData({
       heroes: [],
+    });
+  });
+
+  test('should leave the operation open for a subscription', done => {
+    const operation = buildOperationForLink(testSubscription, {});
+    const emittedResults: FetchResult[] = [];
+
+    execute(link, operation).subscribe({
+      next(result) {
+        emittedResults.push(result);
+      },
+      complete() {
+        expect(emittedResults).toEqual([
+          {
+            data: {
+              heroes: ['first Hero'],
+            },
+          },
+          {
+            data: {
+              heroes: ['second Hero'],
+            },
+          },
+        ]);
+        done();
+      },
+    });
+
+    const testOperation = mock.expectOne(testSubscription);
+
+    testOperation.flushData({
+      heroes: ['first Hero'],
+    });
+
+    testOperation.flushData({
+      heroes: ['second Hero'],
+    });
+
+    testOperation.complete();
+  });
+
+  test('should close the operation after a query', done => {
+    const operation = buildOperationForLink(testQuery, {});
+    const emittedResults: FetchResult[] = [];
+
+    execute(link, operation).subscribe({
+      next(result) {
+        emittedResults.push(result);
+      },
+      complete() {
+        expect(emittedResults).toEqual([
+          {
+            data: {
+              heroes: ['first Hero'],
+            },
+          },
+        ]);
+        done();
+      },
+    });
+
+    const testOperation = mock.expectOne(testQuery);
+
+    testOperation.flushData({
+      heroes: ['first Hero'],
+    });
+
+    testOperation.flushData({
+      heroes: ['second Hero'],
+    });
+  });
+
+  test('should close the operation after a mutation', done => {
+    const operation = buildOperationForLink(testMutation, { hero: 'firstHero' });
+    const emittedResults: FetchResult[] = [];
+
+    execute(link, operation).subscribe({
+      next(result) {
+        emittedResults.push(result);
+      },
+      complete() {
+        expect(emittedResults).toEqual([
+          {
+            data: {
+              heroes: ['first Hero'],
+            },
+          },
+        ]);
+        done();
+      },
+    });
+
+    const testOperation = mock.expectOne(testMutation);
+
+    testOperation.flushData({
+      heroes: ['first Hero'],
+    });
+
+    testOperation.flushData({
+      heroes: ['second Hero'],
     });
   });
 });
