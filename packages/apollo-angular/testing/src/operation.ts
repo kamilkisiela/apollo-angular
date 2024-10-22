@@ -1,10 +1,9 @@
-import { ExecutionResult, GraphQLError } from 'graphql';
+import { ExecutionResult, GraphQLError, Kind, OperationTypeNode } from 'graphql';
 import { Observer } from 'rxjs';
 import { ApolloError, FetchResult, Operation as LinkOperation } from '@apollo/client/core';
+import { getMainDefinition } from '@apollo/client/utilities';
 
-function isApolloError(error: unknown): error is ApolloError {
-  return !!error && error.hasOwnProperty('graphQLErrors');
-}
+const isApolloError = (err: any): err is ApolloError => err && err.hasOwnProperty('graphQLErrors');
 
 export type Operation = LinkOperation & {
   clientName: string;
@@ -22,8 +21,20 @@ export class TestOperation<T = { [key: string]: any }> {
     } else {
       const fetchResult = result ? { ...result } : result;
       this.observer.next(fetchResult);
-      this.observer.complete();
+
+      const definition = getMainDefinition(this.operation.query);
+
+      if (
+        definition.kind === Kind.OPERATION_DEFINITION &&
+        definition.operation !== OperationTypeNode.SUBSCRIPTION
+      ) {
+        this.complete();
+      }
     }
+  }
+
+  public complete() {
+    this.observer.complete();
   }
 
   public flushData(data: T | null): void {

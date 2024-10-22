@@ -230,6 +230,7 @@ It's an object returned by `expectOne` and `match` methods.
   ApolloError instance
 - `networkError(error: Error): void{:ts}` - to flush an operation with a network error
 - `graphqlErrors(errors: GraphQLError[]): void{:ts}` - to flush an operation with graphql errors
+- `complete(): void{:ts}` - manually complete the connection, useful for subscription based testing
 
 ## Using Named Clients
 
