@@ -217,7 +217,7 @@ describe('Apollo', () => {
           obs.subscribe({
             error,
             complete: () => {
-              expect(error).not.toBeCalled();
+              expect(error).not.toHaveBeenCalled();
               done();
             },
           });
@@ -240,11 +240,11 @@ describe('Apollo', () => {
 
       const obs = apollo.query({} as any);
 
-      expect(client.query).not.toBeCalled();
+      expect(client.query).not.toHaveBeenCalled();
 
       obs.subscribe({
         complete: () => {
-          expect(client.query).toBeCalled();
+          expect(client.query).toHaveBeenCalled();
           done();
         },
       });
@@ -371,7 +371,7 @@ describe('Apollo', () => {
           obs.subscribe({
             error,
             complete: () => {
-              expect(error).not.toBeCalled();
+              expect(error).not.toHaveBeenCalled();
               done();
             },
           });
@@ -394,11 +394,11 @@ describe('Apollo', () => {
 
       const obs = apollo.mutate({} as any);
 
-      expect(client.mutate).not.toBeCalled();
+      expect(client.mutate).not.toHaveBeenCalled();
 
       obs.subscribe({
         complete: () => {
-          expect(client.mutate).toBeCalled();
+          expect(client.mutate).toHaveBeenCalled();
           done();
         },
       });

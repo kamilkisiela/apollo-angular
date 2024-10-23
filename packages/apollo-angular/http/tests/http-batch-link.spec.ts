@@ -1,5 +1,5 @@
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ApolloLink, execute, gql, Operation } from '@apollo/client/core';
 import { HttpBatchLink } from '../src/http-batch-link';
@@ -14,8 +14,7 @@ describe('HttpBatchLink', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
-      providers: [HttpBatchLink],
+      providers: [provideHttpClient(), provideHttpClientTesting(), HttpBatchLink],
     });
     httpLink = TestBed.inject(HttpBatchLink);
     httpBackend = TestBed.inject(HttpTestingController);
