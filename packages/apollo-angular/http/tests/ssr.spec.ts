@@ -1,7 +1,7 @@
-import { filter, first } from 'rxjs/operators';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { firstValueFrom } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ApplicationRef, Component, destroyPlatform, getPlatform, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import {
   INITIAL_CONFIG,
   platformServer,
@@ -66,12 +66,8 @@ describe.skip('integration', () => {
 
     @NgModule({
       declarations: [AsyncServerApp],
-      imports: [
-        BrowserModule.withServerTransition({ appId: 'async-server' }),
-        ServerModule,
-        HttpClientTestingModule,
-      ],
-      providers: [HttpLink],
+      imports: [ServerModule],
+      providers: [provideHttpClientTesting(), HttpLink],
       bootstrap: [AsyncServerApp],
     })
     class AsyncServerModule {}
@@ -87,12 +83,7 @@ describe.skip('integration', () => {
       ]);
       const moduleRef = await platform.bootstrapModule(AsyncServerModule);
       const applicationRef: ApplicationRef = moduleRef.injector.get(ApplicationRef);
-      await applicationRef.isStable
-        .pipe(
-          filter((isStable: boolean) => isStable),
-          first(),
-        )
-        .toPromise();
+      await firstValueFrom(applicationRef.isStable.pipe(filter(isStable => isStable)));
       const str = platform.injector.get(PlatformState).renderToString();
 
       expect(clearNgVersion(str)).toMatchSnapshot();

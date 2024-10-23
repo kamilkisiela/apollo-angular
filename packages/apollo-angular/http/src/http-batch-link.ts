@@ -160,7 +160,7 @@ export class HttpBatchLinkHandler extends ApolloLink {
     const context: Context & { skipBatching?: boolean } = operation.getContext();
 
     if (context.skipBatching) {
-      return Math.random().toString(36).substr(2, 9);
+      return Math.random().toString(36).substring(2, 11);
     }
 
     const headers =

@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { InMemoryCache } from '@apollo/client/core';
 import { mockSingleLink } from '@apollo/client/testing';
@@ -8,8 +8,8 @@ describe('Integration', () => {
   describe('default', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule],
         providers: [
+          provideHttpClient(),
           provideApollo(() => {
             return {
               link: mockSingleLink(),

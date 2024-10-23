@@ -1,7 +1,7 @@
 import { print, stripIgnoredCharacters } from 'graphql';
 import { mergeMap } from 'rxjs/operators';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ApolloLink, execute, gql, InMemoryCache } from '@apollo/client/core';
 import { Apollo } from '../../src';
@@ -17,8 +17,7 @@ describe('HttpLink', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
-      providers: [HttpLink, Apollo],
+      providers: [provideHttpClient(), provideHttpClientTesting(), HttpLink, Apollo],
     });
     httpLink = TestBed.inject(HttpLink);
     httpBackend = TestBed.inject(HttpTestingController);
@@ -544,7 +543,7 @@ describe('HttpLink', () => {
   });
 
   test('should work with mergeMap', done => {
-    const apollo: Apollo = TestBed.get(Apollo);
+    const apollo = TestBed.inject(Apollo);
 
     const op1 = {
       query: gql`
