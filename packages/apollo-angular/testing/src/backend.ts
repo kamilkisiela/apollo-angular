@@ -62,8 +62,7 @@ export class ApolloTestingBackend implements ApolloTestingController {
   }
 
   private compare(expected?: string, value?: Object | string): boolean {
-    const prepare = (val: any) => (typeof val === 'string' ? val : JSON.stringify(val));
-    const received = prepare(value);
+    const received = typeof value === 'string' ? value : JSON.stringify(value);
 
     return !expected || received === expected;
   }

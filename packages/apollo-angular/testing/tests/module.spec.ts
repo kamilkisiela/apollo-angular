@@ -68,10 +68,10 @@ describe('ApolloTestingModule', () => {
     };
 
     apollo
-      .query({
+      .query<any>({
         query: testQuery,
       })
-      .subscribe((result: any) => {
+      .subscribe(result => {
         expect(result.data.heroes[0].name).toBe('Spiderman');
         done();
       });

@@ -112,8 +112,8 @@ describe('QueryRef', () => {
     let calls = 0;
     const obs = queryRef.valueChanges;
 
-    obs.pipe(map((result: any) => result.data)).subscribe({
-      next: (result: any) => {
+    obs.pipe(map(result => result.data)).subscribe({
+      next: result => {
         calls++;
 
         if (calls === 1) {
@@ -124,7 +124,7 @@ describe('QueryRef', () => {
           done();
         }
       },
-      error: (e: any) => {
+      error: e => {
         done.fail(e);
       },
       complete: () => {
@@ -139,7 +139,7 @@ describe('QueryRef', () => {
 
   test('should be able to call updateQuery()', () => {
     const mockCallback = jest.fn();
-    const mapFn: any = () => ({});
+    const mapFn = () => ({});
     obsQuery.updateQuery = mockCallback;
 
     queryRef.updateQuery(mapFn);
@@ -162,8 +162,8 @@ describe('QueryRef', () => {
     let calls = 0;
     const obs = queryRef.valueChanges;
 
-    obs.pipe(map((result: any) => result.data)).subscribe({
-      next: (result: any) => {
+    obs.pipe(map(result => result.data)).subscribe({
+      next: result => {
         calls++;
         const currentResult = queryRef.getCurrentResult();
         expect(currentResult.data.heroes.length).toBe(result.heroes.length);
@@ -172,7 +172,7 @@ describe('QueryRef', () => {
           done();
         }
       },
-      error: (e: any) => {
+      error: e => {
         done.fail(e);
       },
       complete: () => {

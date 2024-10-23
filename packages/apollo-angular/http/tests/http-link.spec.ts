@@ -46,7 +46,7 @@ describe('HttpLink', () => {
     };
 
     execute(link, op).subscribe({
-      next: (result: any) => expect(result).toEqual({ data }),
+      next: result => expect(result).toEqual({ data }),
       error: () => {
         throw new Error('Should not be here');
       },
@@ -73,7 +73,7 @@ describe('HttpLink', () => {
     };
 
     execute(link, op).subscribe({
-      next: (result: any) => expect(result).toEqual({ data }),
+      next: result => expect(result).toEqual({ data }),
       error: () => {
         throw new Error('Should not be here');
       },
@@ -100,7 +100,7 @@ describe('HttpLink', () => {
     };
 
     execute(link, op).subscribe({
-      next: (result: any) => expect(result).toEqual({ data }),
+      next: result => expect(result).toEqual({ data }),
       error: () => {
         throw new Error('Should not be here');
       },
@@ -511,7 +511,7 @@ describe('HttpLink', () => {
 
   test('should set response in context', (done: jest.DoneCallback) => {
     const afterware = new ApolloLink((op, forward) => {
-      return forward(op).map((response: any) => {
+      return forward(op).map(response => {
         const context = op.getContext();
 
         expect(context.response).toBeDefined();
@@ -596,11 +596,11 @@ describe('HttpLink', () => {
         return m2;
       }),
     ).subscribe({
-      next(result: any) {
+      next(result) {
         expect(result.data).toMatchObject(data2);
         done();
       },
-      error(error: any) {
+      error(error) {
         done.fail(error);
       },
     });

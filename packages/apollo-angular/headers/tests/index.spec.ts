@@ -34,7 +34,7 @@ describe('httpHeaders', () => {
           Authorization: 'Bearer Foo',
         },
       },
-    }).subscribe((result: any) => {
+    }).subscribe(result => {
       expect(result.data).toEqual(data);
       done();
     });
@@ -55,7 +55,7 @@ describe('httpHeaders', () => {
 
     execute(link, {
       query,
-    }).subscribe((result: any) => {
+    }).subscribe(result => {
       expect(result.data).toEqual(data);
       done();
     });
