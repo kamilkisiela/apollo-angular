@@ -2,7 +2,9 @@ import { ExecutionResult, GraphQLError } from 'graphql';
 import { Observer } from 'rxjs';
 import { ApolloError, FetchResult, Operation as LinkOperation } from '@apollo/client/core';
 
-const isApolloError = (err: any): err is ApolloError => err && err.hasOwnProperty('graphQLErrors');
+function isApolloError(error: unknown): error is ApolloError {
+  return !!error && error.hasOwnProperty('graphQLErrors');
+}
 
 export type Operation = LinkOperation & {
   clientName: string;
@@ -14,17 +16,17 @@ export class TestOperation<T = { [key: string]: any }> {
     private readonly observer: Observer<FetchResult<T>>,
   ) {}
 
-  public flush(result: ExecutionResult | ApolloError): void {
+  public flush(result: ExecutionResult<T> | ApolloError): void {
     if (isApolloError(result)) {
       this.observer.error(result);
     } else {
       const fetchResult = result ? { ...result } : result;
-      this.observer.next(fetchResult as any);
+      this.observer.next(fetchResult);
       this.observer.complete();
     }
   }
 
-  public flushData(data: { [key: string]: any } | null): void {
+  public flushData(data: T | null): void {
     this.flush({
       data,
     });

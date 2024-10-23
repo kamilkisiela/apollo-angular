@@ -43,7 +43,7 @@ describe('HttpBatchLink', () => {
     };
 
     execute(link, op).subscribe({
-      next: (result: any) => {
+      next: result => {
         expect(result).toEqual({ data });
         done();
       },

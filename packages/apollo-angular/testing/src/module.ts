@@ -49,7 +49,7 @@ export class ApolloTestingModuleCore {
     cache?: ApolloCache<any>,
     @Optional()
     @Inject(APOLLO_TESTING_NAMED_CACHE)
-    namedCaches?: any, // FIX: using NamedCaches here makes ngc fail
+    namedCaches?: NamedCaches,
   ) {
     function createOptions(name: string, c?: ApolloCache<any> | null) {
       return {

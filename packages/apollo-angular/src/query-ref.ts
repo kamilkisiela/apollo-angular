@@ -123,7 +123,7 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
     return this.obsQuery.startPolling(pollInterval);
   }
 
-  public setOptions(opts: any) {
+  public setOptions(opts: Partial<WatchQueryOptions<V, T>>) {
     return this.obsQuery.setOptions(opts);
   }
 

@@ -124,7 +124,7 @@ describe('Apollo', () => {
       let calls = 0;
 
       obs.valueChanges.subscribe({
-        next: ({ data }: any) => {
+        next: ({ data }) => {
           calls++;
 
           try {
@@ -766,7 +766,7 @@ describe('Apollo', () => {
 
       const FooHero = { id: 1, name: 'Foo', __typename };
       const BarHero = { id: 2, name: 'Bar', __typename };
-      const OptimisticHero: any = { id: null, name: 'Temp', __typename };
+      const OptimisticHero = { id: null, name: 'Temp', __typename };
 
       const data1 = { allHeroes: [FooHero] };
       const dataMutation = { addHero: BarHero };
