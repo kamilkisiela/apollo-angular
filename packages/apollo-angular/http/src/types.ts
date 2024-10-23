@@ -1,6 +1,6 @@
 import { DocumentNode } from 'graphql';
 import { HttpHeaders } from '@angular/common/http';
-import { Operation } from '@apollo/client/core';
+import { Operation } from '@apollo/client/core/index.js';
 
 export type HttpRequestOptions = {
   headers?: HttpHeaders;

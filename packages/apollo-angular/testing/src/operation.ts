@@ -1,6 +1,6 @@
 import { ExecutionResult, GraphQLError } from 'graphql';
 import { Observer } from 'rxjs';
-import { ApolloError, FetchResult, Operation as LinkOperation } from '@apollo/client/core';
+import { ApolloError, FetchResult, Operation as LinkOperation } from '@apollo/client/core/index.js';
 
 function isApolloError(error: unknown): error is ApolloError {
   return !!error && error.hasOwnProperty('graphQLErrors');

@@ -1,7 +1,11 @@
 import type { DocumentNode } from 'graphql';
 import type { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import type { ApolloQueryResult, OperationVariables, TypedDocumentNode } from '@apollo/client/core';
+import type {
+  ApolloQueryResult,
+  OperationVariables,
+  TypedDocumentNode,
+} from '@apollo/client/core/index.js';
 import { Apollo } from './apollo';
 import { QueryRef } from './query-ref';
 import { EmptyObject, QueryOptionsAlone, WatchQueryOptionsAlone } from './types';

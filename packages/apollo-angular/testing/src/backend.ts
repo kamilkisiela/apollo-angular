@@ -1,7 +1,7 @@
 import { DocumentNode, print } from 'graphql';
 import { Observer } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { FetchResult, Observable as LinkObservable } from '@apollo/client/core';
+import { FetchResult, Observable as LinkObservable } from '@apollo/client/core/index.js';
 import { ApolloTestingController, MatchOperation } from './controller';
 import { Operation, TestOperation } from './operation';
 

@@ -3,7 +3,7 @@ import { mergeMap } from 'rxjs/operators';
 import { HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApolloLink, execute, gql, InMemoryCache } from '@apollo/client/core';
+import { ApolloLink, execute, gql, InMemoryCache } from '@apollo/client/core/index.js';
 import { Apollo } from '../../src';
 import { HttpLink } from '../src/http-link';
 
