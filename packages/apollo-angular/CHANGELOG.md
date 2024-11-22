@@ -1,5 +1,34 @@
 # Change log
 
+## 8.0.0
+
+### Major Changes
+
+- [#2316](https://github.com/kamilkisiela/apollo-angular/pull/2316)
+  [`8c75368`](https://github.com/kamilkisiela/apollo-angular/commit/8c75368d4c433fdb0fd5b0615e5eda404e14b1aa)
+  Thanks [@Frozen-byte](https://github.com/Frozen-byte)! - added a `complete()` method for
+  `TestOperation` object to cancel subscriptions after `flush()`
+
+  BREAKING CHANGE: subscription observables must be manually completed by the `complete()` method.
+
+### Patch Changes
+
+- [#2323](https://github.com/kamilkisiela/apollo-angular/pull/2323)
+  [`095457d`](https://github.com/kamilkisiela/apollo-angular/commit/095457d609239ee2de636376b62159e420e1df54)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+
+  - Updated dependency
+    [`@angular/core@^17.0.0 || ^18.0.0 || ^19.0.0` ↗︎](https://www.npmjs.com/package/@angular/core/v/17.0.0)
+    (from `^17.0.0 || ^18.0.0`, in `peerDependencies`)
+
+- [#2319](https://github.com/kamilkisiela/apollo-angular/pull/2319)
+  [`cafb23a`](https://github.com/kamilkisiela/apollo-angular/commit/cafb23a797371b2f4df5aae4891cf528cdbcfa58)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Move away from deprecated things
+
+- [#2317](https://github.com/kamilkisiela/apollo-angular/pull/2317)
+  [`a564953`](https://github.com/kamilkisiela/apollo-angular/commit/a5649533e12a589e8d7171ad2b320ee426c8c21d)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Let typing flow better
+
 ## 7.2.1
 
 ### Patch Changes
