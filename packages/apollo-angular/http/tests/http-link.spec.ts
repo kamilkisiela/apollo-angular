@@ -1,9 +1,15 @@
 import { print, stripIgnoredCharacters } from 'graphql';
 import { mergeMap } from 'rxjs/operators';
-import { HttpHeaders, provideHttpClient } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpEventType,
+  HttpHeaders,
+  HttpResponse,
+  provideHttpClient,
+} from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApolloLink, execute, gql, InMemoryCache } from '@apollo/client/core';
+import { ApolloLink, execute, FetchResult, gql, InMemoryCache } from '@apollo/client/core';
 import { Apollo } from '../../src';
 import { HttpLink } from '../src/http-link';
 
@@ -743,5 +749,261 @@ describe('HttpLink', () => {
       .unsubscribe();
 
     expect(httpBackend.expectOne('graphql').cancelled).toBe(true);
+  });
+  describe('response types', () => {
+    const query = gql`
+      query heroes {
+        heroes {
+          name
+        }
+      }
+    `;
+
+    test('should handle arraybuffer response type', done => {
+      const link = httpLink.create({
+        uri: 'graphql',
+      });
+
+      execute(link, {
+        query,
+        context: {
+          observe: 'body',
+          responseType: 'arraybuffer',
+        },
+      }).subscribe({
+        next: result => {
+          expect(result).toBeInstanceOf(ArrayBuffer);
+          done();
+        },
+        error: done.fail,
+      });
+
+      const req = httpBackend.expectOne('graphql');
+      expect(req.request.responseType).toBe('arraybuffer');
+      const buffer = new ArrayBuffer(8);
+      req.flush(buffer);
+    });
+
+    test('should handle different observe options', done => {
+      const link = httpLink.create({ uri: 'graphql' });
+      const data = { heroes: [{ name: 'Superman' }] };
+
+      let progressReceived = false;
+      let responseReceived = false;
+
+      execute(link, {
+        query,
+        context: {
+          observe: 'events',
+          reportProgress: true,
+        },
+      }).subscribe({
+        next: (result: FetchResult) => {
+          if (result.extensions?.httpEvent) {
+            const event = result.extensions.httpEvent;
+            if (event.type === HttpEventType.DownloadProgress) {
+              expect(event.loaded).toBe(50);
+              expect(event.total).toBe(100);
+              progressReceived = true;
+            }
+          } else {
+            expect(result.data).toEqual(data);
+            responseReceived = true;
+          }
+
+          if (progressReceived && responseReceived) {
+            done();
+          }
+        },
+        error: done.fail,
+      });
+
+      const req = httpBackend.expectOne('graphql');
+      expect(req.request.reportProgress).toBe(true);
+
+      // Send progress event
+      req.event({
+        type: HttpEventType.DownloadProgress,
+        loaded: 50,
+        total: 100,
+      } as HttpEvent<any>);
+
+      // Send final response
+      req.flush({ data });
+    });
+
+    test('should handle text response type', done => {
+      const link = httpLink.create({
+        uri: 'graphql',
+      });
+
+      execute(link, {
+        query,
+        context: {
+          observe: 'body',
+          responseType: 'text',
+        },
+      }).subscribe({
+        next: result => {
+          expect(typeof result).toBe('string');
+          expect(result).toBe('{"data":{"heroes":[{"name":"Superman"}]}}');
+          done();
+        },
+        error: done.fail,
+      });
+
+      const req = httpBackend.expectOne('graphql');
+      expect(req.request.responseType).toBe('text');
+      req.flush('{"data":{"heroes":[{"name":"Superman"}]}}');
+    });
+
+    test('should handle blob response type', done => {
+      const link = httpLink.create({
+        uri: 'graphql',
+      });
+
+      execute(link, {
+        query,
+        context: {
+          responseType: 'blob',
+          observe: 'response', // Changed to 'response' to get the full HttpResponse
+        },
+      }).subscribe({
+        next: (response: any) => {
+          // We should receive an HttpResponse with a Blob body
+          expect(response).toBeInstanceOf(HttpResponse);
+          expect(response.body).toBeInstanceOf(Blob);
+          done();
+        },
+        error: done.fail,
+      });
+
+      const req = httpBackend.expectOne('graphql');
+      expect(req.request.responseType).toBe('blob');
+
+      // Create the response with a proper Blob
+      const blob = new Blob(['{"data":{"heroes":[{"name":"Superman"}]}}'], {
+        type: 'application/json',
+      });
+
+      // Send response as HttpResponse
+      req.flush(blob, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        status: 200,
+        statusText: 'OK',
+      });
+    });
+
+    test('should handle blob response type with body observe', done => {
+      const link = httpLink.create({
+        uri: 'graphql',
+      });
+
+      execute(link, {
+        query,
+        context: {
+          responseType: 'blob',
+          observe: 'body',
+        },
+      }).subscribe({
+        next: (result: any) => {
+          // When observing body, we should get the Blob directly
+          expect(result).toBeInstanceOf(Blob);
+
+          // We can even read the blob to verify its contents
+          const reader = new FileReader();
+          reader.onload = () => {
+            const content = JSON.parse(reader.result as string);
+            expect(content.data.heroes[0].name).toBe('Superman');
+            done();
+          };
+          reader.readAsText(result);
+        },
+        error: done.fail,
+      });
+
+      const req = httpBackend.expectOne('graphql');
+      expect(req.request.responseType).toBe('blob');
+
+      const blob = new Blob(['{"data":{"heroes":[{"name":"Superman"}]}}'], {
+        type: 'application/json',
+      });
+      req.flush(blob);
+    });
+
+    test('should store response in context', done => {
+      const link = httpLink.create({ uri: 'graphql' });
+      const afterware = new ApolloLink((operation, forward) => {
+        return forward(operation).map(result => {
+          const context = operation.getContext();
+          expect(context.response).toBeDefined();
+          if (context.response instanceof HttpResponse) {
+            expect(context.response.body).toBeDefined();
+          }
+          return result;
+        });
+      });
+
+      const composedLink = afterware.concat(link);
+      const data = { heroes: [{ name: 'Superman' }] };
+
+      execute(composedLink, { query }).subscribe({
+        next: () => done(),
+        error: done.fail,
+      });
+
+      httpBackend.expectOne('graphql').flush({ data });
+    });
+
+    test('should handle network errors', done => {
+      const link = httpLink.create({ uri: 'graphql' });
+      const networkError = new ErrorEvent('network error');
+
+      execute(link, { query }).subscribe({
+        next: () => done.fail('Should not emit next'),
+        error: error => {
+          expect(error).toBeDefined();
+          done();
+        },
+      });
+
+      httpBackend.expectOne('graphql').error(networkError);
+    });
+  });
+
+  describe('HttpLink error handling', () => {
+    test('should properly format GraphQL errors', done => {
+      const link = httpLink.create({ uri: 'graphql' });
+      const op = {
+        query: gql`
+          query heroes {
+            heroes {
+              name
+            }
+          }
+        `,
+      };
+
+      execute(link, op).subscribe({
+        next: (result: FetchResult) => {
+          expect(result.errors).toBeDefined();
+          expect(result.errors![0]).toHaveProperty('message');
+          expect(result.errors![0]).toHaveProperty('extensions');
+          done();
+        },
+        error: done.fail,
+      });
+
+      httpBackend.expectOne('graphql').flush({
+        errors: [
+          {
+            message: 'GraphQL error',
+            extensions: { code: 'ERROR_CODE' },
+          },
+        ],
+      });
+    });
   });
 });

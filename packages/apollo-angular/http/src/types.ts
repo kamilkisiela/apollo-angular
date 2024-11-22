@@ -1,12 +1,26 @@
 import { DocumentNode } from 'graphql';
-import { HttpHeaders } from '@angular/common/http';
-import { Operation } from '@apollo/client/core';
+import { HttpContext, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { FetchResult, Operation } from '@apollo/client/core';
 
 export type HttpRequestOptions = {
   headers?: HttpHeaders;
+  context?: HttpContext;
   withCredentials?: boolean;
   useMultipart?: boolean;
+  observe?: 'body' | 'events' | 'response';
+  reportProgress?: boolean;
+  responseType?: 'json' | 'arraybuffer' | 'blob' | 'text';
+  params?: any;
+  body?: any;
 };
+
+export type HttpClientReturn =
+  | Object
+  | ArrayBuffer
+  | Blob
+  | string
+  | HttpResponse<Object | ArrayBuffer | Blob | string>
+  | HttpEvent<Object | ArrayBuffer | Blob | string>;
 
 export type URIFunction = (operation: Operation) => string;
 

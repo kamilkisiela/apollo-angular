@@ -1,5 +1,5 @@
-# Update the VARIANT arg in devcontainer.json to pick a Node.js version: 14, 12, 10 
-ARG VARIANT=14
+# Update the VARIANT arg in devcontainer.json to pick a Node.js version: 14, 12, 10
+ARG VARIANT=18
 FROM node:${VARIANT}
 
 # Options for setup scripts
@@ -10,7 +10,7 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 ENV NVM_DIR=/usr/local/share/nvm
-ENV NVM_SYMLINK_CURRENT=true \ 
+ENV NVM_SYMLINK_CURRENT=true \
     PATH=${NVM_DIR}/current/bin:${PATH}
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
