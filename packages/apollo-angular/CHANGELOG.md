@@ -1,5 +1,22 @@
 # Change log
 
+## 8.0.1
+
+### Patch Changes
+
+- [#2333](https://github.com/kamilkisiela/apollo-angular/pull/2333)
+  [`9866ec6`](https://github.com/kamilkisiela/apollo-angular/commit/9866ec675a0f38602aabe4ca3fd591e4d9f3248f)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+
+  - Updated dependency
+    [`@apollo/client@^3.10.0` ↗︎](https://www.npmjs.com/package/@apollo/client/v/3.10.0) (from
+    `^3.0.0`, in `peerDependencies`)
+
+- [#2333](https://github.com/kamilkisiela/apollo-angular/pull/2333)
+  [`eeec0a9`](https://github.com/kamilkisiela/apollo-angular/commit/eeec0a96c52e891620d072158166f9ad5de6dc00)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Requires @apollo/client ^3.10.0 for
+  watchFragment
+
 ## 8.0.0
 
 ### Major Changes
