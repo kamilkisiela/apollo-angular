@@ -7,13 +7,17 @@ export { Mutation } from './mutation';
 export { Subscription } from './subscription';
 export { APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS, APOLLO_FLAGS } from './tokens';
 export type {
-  NamedOptions,
-  SubscriptionResult,
-  WatchQueryOptions,
   ExtraSubscriptionOptions,
-  MutationResult,
   Flags,
-  VariablesOf,
+  MutationOptionsAlone,
+  MutationResult,
+  NamedOptions,
+  QueryOptionsAlone,
   ResultOf,
+  SubscriptionOptionsAlone,
+  SubscriptionResult,
+  VariablesOf,
+  WatchQueryOptions,
+  WatchQueryOptionsAlone,
 } from './types';
 export { gql, graphql } from './gql';
