@@ -1,5 +1,14 @@
 # Change log
 
+## 8.0.2
+
+### Patch Changes
+
+- [#2336](https://github.com/kamilkisiela/apollo-angular/pull/2336)
+  [`78b0ba1`](https://github.com/kamilkisiela/apollo-angular/commit/78b0ba18706d0cf3dd6a877520ae02bc7ede0220)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Export MutationOptionsAlone,
+  QueryOptionsAlone, SubscriptionOptionsAlone, WatchQueryOptionsAlone from 'apollo-angular'
+
 ## 8.0.1
 
 ### Patch Changes
