@@ -1,12 +1,21 @@
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Body, ExtractedFiles, ExtractFiles, Request } from './types';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  Body,
+  Context,
+  ExtractedFiles,
+  ExtractFiles,
+  HttpClientReturn,
+  HttpRequestOptions,
+  Request,
+} from './types';
 
 export const fetch = (
   req: Request,
   httpClient: HttpClient,
   extractFiles?: ExtractFiles,
-): Observable<HttpResponse<Object>> => {
+): Observable<HttpClientReturn> => {
+  const context: Context = req.options || {};
   const shouldUseBody = ['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) !== -1;
   const shouldStringify = (param: string) =>
     ['variables', 'extensions'].indexOf(param.toLowerCase()) !== -1;
@@ -96,13 +105,21 @@ export const fetch = (
     (bodyOrParams as any).body = form;
   }
 
-  // create a request
-  return httpClient.request<Object>(req.method, req.url, {
-    observe: 'response',
-    responseType: 'json',
-    reportProgress: false,
+  const baseOptions: HttpRequestOptions = {
+    reportProgress: context.reportProgress ?? false,
+    withCredentials: context.withCredentials,
+    headers: context.headers,
     ...bodyOrParams,
     ...req.options,
+  };
+
+  const observe = context.observe || 'response';
+  const responseType = context.responseType || 'json';
+
+  return httpClient.request(req.method, req.url, {
+    ...baseOptions,
+    observe,
+    responseType: responseType as 'json' | 'text' | 'blob' | 'arraybuffer',
   });
 };
 
