@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
 
       return {
         link: httpLink.create({
-          uri: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
+          uri: 'https://swapi-graphql.netlify.app/graphql',
         }),
         cache: new InMemoryCache(),
       };
