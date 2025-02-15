@@ -1,14 +1,9 @@
 import type { DocumentNode } from 'graphql';
 import type { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import type { OperationVariables, TypedDocumentNode } from '@apollo/client/core';
+import type { FetchResult, OperationVariables, TypedDocumentNode } from '@apollo/client/core';
 import { Apollo } from './apollo';
-import {
-  EmptyObject,
-  ExtraSubscriptionOptions,
-  SubscriptionOptionsAlone,
-  SubscriptionResult,
-} from './types';
+import { EmptyObject, ExtraSubscriptionOptions, SubscriptionOptionsAlone } from './types';
 
 @Injectable()
 export abstract class Subscription<T = any, V extends OperationVariables = EmptyObject> {
@@ -21,8 +16,8 @@ export abstract class Subscription<T = any, V extends OperationVariables = Empty
     variables?: V,
     options?: SubscriptionOptionsAlone<V, T>,
     extra?: ExtraSubscriptionOptions,
-  ): Observable<SubscriptionResult<T>> {
-    return this.apollo.use(this.client).subscribe<T, V>(
+  ): Observable<FetchResult<T>> {
+    return this.apollo.use(this.client).subscribe(
       {
         ...options,
         variables,

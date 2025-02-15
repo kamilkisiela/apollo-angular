@@ -8,6 +8,7 @@ import type {
   OperationVariables,
   SubscribeToMoreOptions,
   TypedDocumentNode,
+  Unmasked,
   UpdateQueryOptions,
 } from '@apollo/client/core';
 import { NetworkStatus } from '@apollo/client/core';
@@ -103,7 +104,7 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
-  public subscribeToMore<MT = any, MV = EmptyObject>(
+  public subscribeToMore<MT = any, MV extends OperationVariables = EmptyObject>(
     options: SubscribeToMoreOptions<T, MV, MT>,
   ): () => void {
     // XXX: there's a bug in apollo-client typings
@@ -111,7 +112,9 @@ export class QueryRef<T, V extends OperationVariables = EmptyObject> {
     return this.obsQuery.subscribeToMore(options as any);
   }
 
-  public updateQuery(mapFn: (previousQueryResult: T, options: UpdateQueryOptions<V>) => T): void {
+  public updateQuery(
+    mapFn: (previousQueryResult: Unmasked<T>, options: UpdateQueryOptions<T, V>) => Unmasked<T>,
+  ): void {
     return this.obsQuery.updateQuery(mapFn);
   }
 
