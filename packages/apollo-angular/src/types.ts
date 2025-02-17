@@ -1,4 +1,3 @@
-import type { ExecutionResult } from 'graphql';
 import type {
   ApolloClientOptions,
   MutationOptions as CoreMutationOptions,
@@ -68,8 +67,6 @@ export interface MutationOptions<TData = any, TVariables = EmptyObject>
 
 export interface WatchFragmentOptions<TData = any, TVariables = EmptyObject>
   extends CoreWatchFragmentOptions<TData, TVariables> {}
-
-export interface SubscriptionResult<TData> extends ExecutionResult<TData> {}
 
 export type NamedOptions = Record<string, ApolloClientOptions<any>>;
 

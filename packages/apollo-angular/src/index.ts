@@ -15,7 +15,6 @@ export type {
   QueryOptionsAlone,
   ResultOf,
   SubscriptionOptionsAlone,
-  SubscriptionResult,
   VariablesOf,
   WatchQueryOptions,
   WatchQueryOptionsAlone,
