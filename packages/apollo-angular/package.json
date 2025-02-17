@@ -1,6 +1,6 @@
 {
   "name": "apollo-angular",
-  "version": "8.0.2",
+  "version": "9.0.0",
   "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
   "repository": {
     "type": "git",

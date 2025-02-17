@@ -1,5 +1,30 @@
 # Change log
 
+## 9.0.0
+
+### Major Changes
+
+- [#2340](https://github.com/kamilkisiela/apollo-angular/pull/2340)
+  [`6d3d5ba`](https://github.com/kamilkisiela/apollo-angular/commit/6d3d5ba67a5a8d2778a021f1059559379ff99e8f)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - - Requires `@apollo/client` 3.13.1
+  - Dropped `SubscriptionResult`, because it added extra maintenance work to keep native types in
+    sync, and it brought no value over using native type.
+    `diff     - import type { SubscriptionResult } from 'apollo-angular';     + import type { FetchResult } from '@apollo/client/core';     `
+  - Most methods of `QueryRef` forward types from `@apollo/client`. That should allow always using
+    correct types from whichever `@apollo/client` version is installed without needing to touch
+    `apollo-angular`.
+  - `QueryRef.valueChanges` and `QueryRef.queryId` are readonly, because there is no reason for
+    those to be re-affected.
+
+### Patch Changes
+
+- [#2340](https://github.com/kamilkisiela/apollo-angular/pull/2340)
+  [`88656f0`](https://github.com/kamilkisiela/apollo-angular/commit/88656f00f4f4f8c757ef19e35b172a647e6e2300)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+  - Updated dependency
+    [`@apollo/client@^3.13.1` ↗︎](https://www.npmjs.com/package/@apollo/client/v/3.13.1) (from
+    `^3.10.0`, in `peerDependencies`)
+
 ## 8.0.2
 
 ### Patch Changes
