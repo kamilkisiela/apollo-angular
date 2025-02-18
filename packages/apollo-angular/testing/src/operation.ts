@@ -1,4 +1,4 @@
-import { ExecutionResult, GraphQLError, Kind, OperationTypeNode } from 'graphql';
+import { FormattedExecutionResult, GraphQLError, Kind, OperationTypeNode } from 'graphql';
 import { Observer } from 'rxjs';
 import { ApolloError, FetchResult, Operation as LinkOperation } from '@apollo/client/core';
 import { getMainDefinition } from '@apollo/client/utilities';
@@ -15,7 +15,7 @@ export class TestOperation<T = { [key: string]: any }> {
     private readonly observer: Observer<FetchResult<T>>,
   ) {}
 
-  public flush(result: ExecutionResult<T> | ApolloError): void {
+  public flush(result: FormattedExecutionResult<T> | ApolloError): void {
     if (isApolloError(result)) {
       this.observer.error(result);
     } else {
