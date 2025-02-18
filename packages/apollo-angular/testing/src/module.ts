@@ -1,4 +1,4 @@
-import { Apollo, ApolloModule } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { Inject, InjectionToken, NgModule, Optional } from '@angular/core';
 import {
   ApolloCache,
@@ -31,8 +31,8 @@ function addClient(name: string, op: LinkOperation): Operation {
 }
 
 @NgModule({
-  imports: [ApolloModule],
   providers: [
+    Apollo,
     ApolloTestingBackend,
     { provide: ApolloTestingController, useExisting: ApolloTestingBackend },
   ],

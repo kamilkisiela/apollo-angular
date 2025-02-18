@@ -1,21 +1,8 @@
-import { NgModule, Provider } from '@angular/core';
+import { Provider } from '@angular/core';
 import { ApolloClientOptions } from '@apollo/client/core';
 import { Apollo } from './apollo';
 import { APOLLO_FLAGS, APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS } from './tokens';
 import { Flags, NamedOptions } from './types';
-
-/**
- * This is deprecated and will be removed in the next major version, because
- * Angular is moving toward a moduleless ecosystem.
- *
- * Instead, use either `provideApollo()` or `provideNamedApollo()`.
- *
- * @deprecated
- */
-@NgModule({
-  providers: [Apollo],
-})
-export class ApolloModule {}
 
 export function provideApollo<TCacheShape = any>(
   optionsFactory: () => ApolloClientOptions<TCacheShape>,

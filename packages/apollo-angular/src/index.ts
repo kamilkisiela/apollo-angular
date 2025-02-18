@@ -1,5 +1,5 @@
 export type { TypedDocumentNode } from '@apollo/client/core';
-export { ApolloModule, provideApollo, provideNamedApollo } from './apollo-module';
+export { provideApollo, provideNamedApollo } from './apollo-module';
 export { Apollo, ApolloBase } from './apollo';
 export { QueryRef, QueryRefFromDocument } from './query-ref';
 export { Query } from './query';
@@ -19,4 +19,4 @@ export type {
   WatchQueryOptions,
   WatchQueryOptionsAlone,
 } from './types';
-export { gql, graphql } from './gql';
+export { gql } from './gql';
