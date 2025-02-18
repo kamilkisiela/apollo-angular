@@ -1,5 +1,14 @@
 # Change log
 
+## 10.0.1
+
+### Patch Changes
+
+- [#2344](https://github.com/kamilkisiela/apollo-angular/pull/2344)
+  [`3ef5483`](https://github.com/kamilkisiela/apollo-angular/commit/3ef5483a02b788fe1ce9de7f66f2a71be334f45c)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - `FormattedExecutionResult` instead of
+  `ExecutionResult`
+
 ## 10.0.0
 
 ### Major Changes
