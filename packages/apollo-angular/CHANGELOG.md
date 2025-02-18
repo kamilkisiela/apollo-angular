@@ -1,5 +1,17 @@
 # Change log
 
+## 10.0.0
+
+### Major Changes
+
+- [#2342](https://github.com/kamilkisiela/apollo-angular/pull/2342)
+  [`baf538a`](https://github.com/kamilkisiela/apollo-angular/commit/baf538aeb1f76f0835c84f6979589cbf2dfd0f0b)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Drop deprecated things:
+
+  - Instead of `ApolloModule`, use either `provideApollo()` or `provideNamedApollo()`.
+  - Instead of `import {graphql} from 'apollo-angular';` use
+    `import {gql as graphql} from 'apollo-angular';`
+
 ## 9.0.0
 
 ### Major Changes
