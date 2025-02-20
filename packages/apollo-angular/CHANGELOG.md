@@ -1,5 +1,13 @@
 # Change log
 
+## 10.0.2
+
+### Patch Changes
+
+- [#2347](https://github.com/kamilkisiela/apollo-angular/pull/2347)
+  [`67b8b8c`](https://github.com/kamilkisiela/apollo-angular/commit/67b8b8cb401bdc63222b136133934e67a99dafc1)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - `fetchMore` typing was too loose
+
 ## 10.0.1
 
 ### Patch Changes
