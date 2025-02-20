@@ -97,8 +97,8 @@ export class QueryRef<TData, TVariables extends OperationVariables = EmptyObject
   }
 
   public fetchMore<TFetchVars extends OperationVariables = TVariables>(
-    fetchMoreOptions: Parameters<QueryRef<TData, TFetchVars>['obsQuery']['fetchMore']>[0],
-  ): ReturnType<QueryRef<TData, TFetchVars>['obsQuery']['fetchMore']> {
+    fetchMoreOptions: Parameters<ObservableQuery<TData, TFetchVars>['fetchMore']>[0],
+  ): ReturnType<ObservableQuery<TData, TFetchVars>['fetchMore']> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
