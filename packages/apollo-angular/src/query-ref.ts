@@ -4,7 +4,6 @@ import type {
   ApolloQueryResult,
   ObservableQuery,
   OperationVariables,
-  SubscribeToMoreOptions,
   TypedDocumentNode,
 } from '@apollo/client/core';
 import { NetworkStatus } from '@apollo/client/core';
@@ -43,99 +42,79 @@ function useInitialLoading<T, V extends OperationVariables>(obsQuery: Observable
 export type QueryRefFromDocument<T extends TypedDocumentNode> =
   T extends TypedDocumentNode<infer R, infer V> ? QueryRef<R, V & OperationVariables> : never;
 
-export class QueryRef<TData, TVariables extends OperationVariables = EmptyObject> {
+export class QueryRef<TData, TVariables extends OperationVariables = EmptyObject>
+  implements
+    Pick<
+      ObservableQuery<TData, TVariables>,
+      | 'queryId'
+      | 'options'
+      | 'variables'
+      | 'result'
+      | 'getCurrentResult'
+      | 'getLastResult'
+      | 'getLastError'
+      | 'resetLastResults'
+      | 'refetch'
+      | 'fetchMore'
+      | 'subscribeToMore'
+      | 'updateQuery'
+      | 'stopPolling'
+      | 'startPolling'
+      | 'setOptions'
+      | 'setVariables'
+    >
+{
   public readonly valueChanges: Observable<ApolloQueryResult<TData>>;
-  public readonly queryId: ObservableQuery<TData, TVariables>['queryId'];
+
+  // Types flow straight from ObservableQuery
+  public readonly queryId;
+  public readonly result;
+  public readonly getCurrentResult;
+  public readonly getLastResult;
+  public readonly getLastError;
+  public readonly resetLastResults;
+  public readonly refetch;
+  public readonly fetchMore;
+  public readonly subscribeToMore;
+  public readonly updateQuery;
+  public readonly stopPolling;
+  public readonly startPolling;
+  public readonly setOptions;
+  public readonly setVariables;
 
   constructor(
-    private readonly obsQuery: ObservableQuery<TData, TVariables>,
+    private readonly query: ObservableQuery<TData, TVariables>,
     ngZone: NgZone,
     options: WatchQueryOptions<TVariables, TData>,
   ) {
-    const wrapped = wrapWithZone(from(fixObservable(this.obsQuery)), ngZone);
+    const wrapped = wrapWithZone(from(fixObservable(this.query)), ngZone);
 
     this.valueChanges = options.useInitialLoading
-      ? wrapped.pipe(useInitialLoading(this.obsQuery))
+      ? wrapped.pipe(useInitialLoading(this.query))
       : wrapped;
-    this.queryId = this.obsQuery.queryId;
+    this.queryId = this.query.queryId;
+
+    // ObservableQuery's methods
+    this.result = this.query.result.bind(this.query);
+    this.getCurrentResult = this.query.getCurrentResult.bind(this.query);
+    this.getLastResult = this.query.getLastResult.bind(this.query);
+    this.getLastError = this.query.getLastError.bind(this.query);
+    this.resetLastResults = this.query.resetLastResults.bind(this.query);
+    this.refetch = this.query.refetch.bind(this.query);
+    this.fetchMore = this.query.fetchMore.bind(this.query);
+    this.subscribeToMore = this.query.subscribeToMore.bind(this.query);
+    this.updateQuery = this.query.updateQuery.bind(this.query);
+    this.stopPolling = this.query.stopPolling.bind(this.query);
+    this.startPolling = this.query.startPolling.bind(this.query);
+    this.setOptions = this.query.setOptions.bind(this.query);
+    this.setVariables = this.query.setVariables.bind(this.query);
   }
 
-  // ObservableQuery's methods
-
-  public get options(): ObservableQuery<TData, TVariables>['options'] {
-    return this.obsQuery.options;
+  public get options() {
+    return this.query.options;
   }
 
-  public get variables(): ObservableQuery<TData, TVariables>['variables'] {
-    return this.obsQuery.variables;
-  }
-
-  public result(): ReturnType<ObservableQuery<TData, TVariables>['result']> {
-    return this.obsQuery.result();
-  }
-
-  public getCurrentResult(): ReturnType<ObservableQuery<TData, TVariables>['getCurrentResult']> {
-    return this.obsQuery.getCurrentResult();
-  }
-
-  public getLastResult(): ReturnType<ObservableQuery<TData, TVariables>['getLastResult']> {
-    return this.obsQuery.getLastResult();
-  }
-
-  public getLastError(): ReturnType<ObservableQuery<TData, TVariables>['getLastError']> {
-    return this.obsQuery.getLastError();
-  }
-
-  public resetLastResults(): ReturnType<ObservableQuery<TData, TVariables>['resetLastResults']> {
-    return this.obsQuery.resetLastResults();
-  }
-
-  public refetch(
-    variables?: Parameters<ObservableQuery<TData, TVariables>['refetch']>[0],
-  ): ReturnType<ObservableQuery<TData, TVariables>['refetch']> {
-    return this.obsQuery.refetch(variables);
-  }
-
-  public fetchMore<TFetchVars extends OperationVariables = TVariables>(
-    fetchMoreOptions: Parameters<ObservableQuery<TData, TFetchVars>['fetchMore']>[0],
-  ): ReturnType<ObservableQuery<TData, TFetchVars>['fetchMore']> {
-    return this.obsQuery.fetchMore(fetchMoreOptions);
-  }
-
-  public subscribeToMore<
-    TSubscriptionData = TData,
-    TSubscriptionVariables extends OperationVariables = TVariables,
-  >(
-    options: SubscribeToMoreOptions<TData, TSubscriptionVariables, TSubscriptionData, TVariables>,
-  ): ReturnType<ObservableQuery<TData, TVariables>['subscribeToMore']> {
-    return this.obsQuery.subscribeToMore(options);
-  }
-
-  public updateQuery(
-    mapFn: Parameters<ObservableQuery<TData, TVariables>['updateQuery']>[0],
-  ): ReturnType<ObservableQuery<TData, TVariables>['updateQuery']> {
-    return this.obsQuery.updateQuery(mapFn);
-  }
-
-  public stopPolling(): ReturnType<ObservableQuery<TData, TVariables>['stopPolling']> {
-    return this.obsQuery.stopPolling();
-  }
-
-  public startPolling(
-    pollInterval: Parameters<ObservableQuery<TData, TVariables>['startPolling']>[0],
-  ): ReturnType<ObservableQuery<TData, TVariables>['startPolling']> {
-    return this.obsQuery.startPolling(pollInterval);
-  }
-
-  public setOptions(
-    opts: Parameters<ObservableQuery<TData, TVariables>['setOptions']>[0],
-  ): ReturnType<ObservableQuery<TData, TVariables>['setOptions']> {
-    return this.obsQuery.setOptions(opts);
-  }
-
-  public setVariables(
-    variables: Parameters<ObservableQuery<TData, TVariables>['setVariables']>[0],
-  ): ReturnType<ObservableQuery<TData, TVariables>['setVariables']> {
-    return this.obsQuery.setVariables(variables);
+  public get variables() {
+    return this.query.variables;
   }
 }
