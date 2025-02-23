@@ -83,10 +83,10 @@ describe('Apollo', () => {
         `,
       };
 
-      const spy = jest.spyOn(client, 'watchQuery');
+      client.watchQuery = jest.fn().mockReturnValue(new Observable());
       apollo.watchQuery(options);
 
-      expect(spy).toBeCalledWith(options);
+      expect(client.watchQuery).toBeCalledWith(options);
     });
 
     test('should be able to refetch', (done: jest.DoneCallback) => {
