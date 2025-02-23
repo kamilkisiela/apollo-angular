@@ -1,5 +1,14 @@
 # Change log
 
+## 10.0.3
+
+### Patch Changes
+
+- [#2351](https://github.com/kamilkisiela/apollo-angular/pull/2351)
+  [`61ff0b8`](https://github.com/kamilkisiela/apollo-angular/commit/61ff0b8e5257f20cae45e84fd724498ff63acc44)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - `fetchMore` typing is duplicated from
+  `@apollo/client`
+
 ## 10.0.2
 
 ### Patch Changes
