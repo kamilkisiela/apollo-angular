@@ -2,10 +2,13 @@ import { from, Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 import type {
   ApolloQueryResult,
+  FetchMoreQueryOptions,
+  MaybeMasked,
   ObservableQuery,
   OperationVariables,
   SubscribeToMoreOptions,
   TypedDocumentNode,
+  Unmasked,
 } from '@apollo/client/core';
 import { NetworkStatus } from '@apollo/client/core';
 import { EmptyObject, WatchQueryOptions } from './types';
@@ -96,9 +99,17 @@ export class QueryRef<TData, TVariables extends OperationVariables = EmptyObject
     return this.obsQuery.refetch(variables);
   }
 
-  public fetchMore<TFetchVars extends OperationVariables = TVariables>(
-    fetchMoreOptions: Parameters<ObservableQuery<TData, TFetchVars>['fetchMore']>[0],
-  ): ReturnType<ObservableQuery<TData, TFetchVars>['fetchMore']> {
+  public fetchMore<TFetchData = TData, TFetchVars extends OperationVariables = TVariables>(
+    fetchMoreOptions: FetchMoreQueryOptions<TFetchVars, TFetchData> & {
+      updateQuery?: (
+        previousQueryResult: Unmasked<TData>,
+        options: {
+          fetchMoreResult: Unmasked<TFetchData>;
+          variables: TFetchVars;
+        },
+      ) => Unmasked<TData>;
+    },
+  ): Promise<ApolloQueryResult<MaybeMasked<TFetchData>>> {
     return this.obsQuery.fetchMore(fetchMoreOptions);
   }
 
