@@ -12,16 +12,8 @@ const createClient = (link: ApolloLink) =>
     cache: new InMemoryCache(),
   });
 
-type Result = {
-  heroes: { name: string }[];
-};
-
-type Variables = {
-  foo?: number;
-};
-
 const heroesOperation = {
-  query: gql<Result, Variables>`
+  query: gql`
     query allHeroes {
       heroes {
         name
@@ -48,7 +40,8 @@ const Batman = {
 describe('QueryRef', () => {
   let ngZone: NgZone;
   let client: ApolloClient<any>;
-  let obsQuery: ObservableQuery<Result, Variables>;
+  let obsQuery: ObservableQuery<any>;
+  let queryRef: QueryRef<any>;
 
   beforeEach(() => {
     ngZone = { run: jest.fn(cb => cb()) } as any;
@@ -65,14 +58,10 @@ describe('QueryRef', () => {
 
     client = createClient(mockedLink);
     obsQuery = client.watchQuery(heroesOperation);
+    queryRef = new QueryRef<any>(obsQuery, ngZone, {} as any);
   });
 
-  function createQueryRef(obsQuery: ObservableQuery<Result>): QueryRef<Result, Variables> {
-    return new QueryRef(obsQuery, ngZone, { query: heroesOperation.query });
-  }
-
   test('should listen to changes', done => {
-    const queryRef = createQueryRef(obsQuery);
     queryRef.valueChanges.subscribe({
       next: result => {
         expect(result.data).toBeDefined();
@@ -88,7 +77,6 @@ describe('QueryRef', () => {
     const mockCallback = jest.fn();
     obsQuery.refetch = mockCallback;
 
-    const queryRef = createQueryRef(obsQuery);
     queryRef.refetch();
 
     expect(mockCallback.mock.calls.length).toBe(1);
@@ -97,7 +85,6 @@ describe('QueryRef', () => {
   test('should be able refetch and receive new results', done => {
     let calls = 0;
 
-    const queryRef = createQueryRef(obsQuery);
     queryRef.valueChanges.subscribe({
       next: result => {
         calls++;
@@ -123,7 +110,6 @@ describe('QueryRef', () => {
 
   test('should be able refetch and receive new results after using rxjs operator', done => {
     let calls = 0;
-    const queryRef = createQueryRef(obsQuery);
     const obs = queryRef.valueChanges;
 
     obs.pipe(map(result => result.data)).subscribe({
@@ -153,10 +139,9 @@ describe('QueryRef', () => {
 
   test('should be able to call updateQuery()', () => {
     const mockCallback = jest.fn();
-    const mapFn = () => undefined;
+    const mapFn = () => ({});
     obsQuery.updateQuery = mockCallback;
 
-    const queryRef = createQueryRef(obsQuery);
     queryRef.updateQuery(mapFn);
 
     expect(mockCallback.mock.calls.length).toBe(1);
@@ -167,7 +152,6 @@ describe('QueryRef', () => {
     const mockCallback = jest.fn();
     obsQuery.result = mockCallback.mockReturnValue('expected');
 
-    const queryRef = createQueryRef(obsQuery);
     const result = queryRef.result();
 
     expect(result).toBe('expected');
@@ -176,7 +160,6 @@ describe('QueryRef', () => {
 
   test('should be able to call getCurrentResult() and get updated results', done => {
     let calls = 0;
-    const queryRef = createQueryRef(obsQuery);
     const obs = queryRef.valueChanges;
 
     obs.pipe(map(result => result.data)).subscribe({
@@ -206,7 +189,6 @@ describe('QueryRef', () => {
     const mockCallback = jest.fn();
     obsQuery.getLastResult = mockCallback.mockReturnValue('expected');
 
-    const queryRef = createQueryRef(obsQuery);
     const result = queryRef.getLastResult();
 
     expect(result).toBe('expected');
@@ -217,7 +199,6 @@ describe('QueryRef', () => {
     const mockCallback = jest.fn();
     obsQuery.getLastError = mockCallback.mockReturnValue('expected');
 
-    const queryRef = createQueryRef(obsQuery);
     const result = queryRef.getLastError();
 
     expect(result).toBe('expected');
@@ -228,7 +209,6 @@ describe('QueryRef', () => {
     const mockCallback = jest.fn();
     obsQuery.resetLastResults = mockCallback.mockReturnValue('expected');
 
-    const queryRef = createQueryRef(obsQuery);
     const result = queryRef.resetLastResults();
 
     expect(result).toBe('expected');
@@ -237,11 +217,10 @@ describe('QueryRef', () => {
 
   test('should be able to call fetchMore()', () => {
     const mockCallback = jest.fn();
-    const opts = { variables: { foo: 1 } };
+    const opts = { foo: 1 };
     obsQuery.fetchMore = mockCallback.mockReturnValue('expected');
 
-    const queryRef = createQueryRef(obsQuery);
-    const result = queryRef.fetchMore(opts);
+    const result = queryRef.fetchMore(opts as any);
 
     expect(result).toBe('expected');
     expect(mockCallback.mock.calls.length).toBe(1);
@@ -250,11 +229,10 @@ describe('QueryRef', () => {
 
   test('should be able to call subscribeToMore()', () => {
     const mockCallback = jest.fn();
-    const opts = { document: heroesOperation.query };
+    const opts = { foo: 1 };
     obsQuery.subscribeToMore = mockCallback;
 
-    const queryRef = createQueryRef(obsQuery);
-    queryRef.subscribeToMore(opts);
+    queryRef.subscribeToMore(opts as any);
 
     expect(mockCallback.mock.calls.length).toBe(1);
     expect(mockCallback.mock.calls[0][0]).toBe(opts);
@@ -264,7 +242,6 @@ describe('QueryRef', () => {
     const mockCallback = jest.fn();
     obsQuery.stopPolling = mockCallback;
 
-    const queryRef = createQueryRef(obsQuery);
     queryRef.stopPolling();
 
     expect(mockCallback.mock.calls.length).toBe(1);
@@ -274,7 +251,6 @@ describe('QueryRef', () => {
     const mockCallback = jest.fn();
     obsQuery.startPolling = mockCallback;
 
-    const queryRef = createQueryRef(obsQuery);
     queryRef.startPolling(3000);
 
     expect(mockCallback.mock.calls.length).toBe(1);
@@ -286,7 +262,6 @@ describe('QueryRef', () => {
     const opts = {};
     obsQuery.setOptions = mockCallback.mockReturnValue('expected');
 
-    const queryRef = createQueryRef(obsQuery);
     const result = queryRef.setOptions(opts);
 
     expect(result).toBe('expected');
@@ -299,7 +274,6 @@ describe('QueryRef', () => {
     const variables = {};
     obsQuery.setVariables = mockCallback.mockReturnValue('expected');
 
-    const queryRef = createQueryRef(obsQuery);
     const result = queryRef.setVariables(variables);
 
     expect(result).toBe('expected');
@@ -308,7 +282,6 @@ describe('QueryRef', () => {
   });
 
   test('should handle multiple subscribers', done => {
-    const queryRef = createQueryRef(obsQuery);
     const obsFirst = queryRef.valueChanges;
     const obsSecond = queryRef.valueChanges;
 
@@ -365,7 +338,6 @@ describe('QueryRef', () => {
   });
 
   test('should unsubscribe', done => {
-    const queryRef = createQueryRef(obsQuery);
     const obs = queryRef.valueChanges;
     const id = queryRef.queryId;
 
@@ -384,7 +356,6 @@ describe('QueryRef', () => {
 
   test('should unsubscribe based on rxjs operators', done => {
     const gate = new Subject<void>();
-    const queryRef = createQueryRef(obsQuery);
     const obs = queryRef.valueChanges.pipe(takeUntil(gate));
     const id = queryRef.queryId;
 
