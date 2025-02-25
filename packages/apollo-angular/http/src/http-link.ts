@@ -1,5 +1,5 @@
 import { print } from 'graphql';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   ApolloLink,
@@ -8,7 +8,7 @@ import {
   Operation,
 } from '@apollo/client/core';
 import { pick } from './http-batch-link';
-import { Body, Context, OperationPrinter, Options, Request } from './types';
+import { Body, Context, HttpClientReturn, OperationPrinter, Options, Request } from './types';
 import { createHeadersWithClientAwareness, fetch, mergeHeaders } from './utils';
 
 // XXX find a better name for it
@@ -57,6 +57,9 @@ export class HttpLinkHandler extends ApolloLink {
             withCredentials,
             useMultipart,
             headers: this.options.headers,
+            observe: context.observe,
+            reportProgress: context.reportProgress,
+            responseType: context.responseType,
           },
         };
 
@@ -73,9 +76,25 @@ export class HttpLinkHandler extends ApolloLink {
         req.options.headers = mergeHeaders(req.options.headers, headers);
 
         const sub = fetch(req, this.httpClient, this.options.extractFiles).subscribe({
-          next: response => {
+          next: (response: HttpClientReturn) => {
             operation.setContext({ response });
-            observer.next(response.body);
+
+            if (
+              context.responseType === 'blob' ||
+              context.responseType === 'arraybuffer' ||
+              context.responseType === 'text'
+            ) {
+              observer.next(response);
+              return;
+            }
+
+            if (response instanceof HttpResponse) {
+              observer.next(response.body);
+            } else if (this.isHttpEvent(response)) {
+              this.handleHttpEvent(response, observer);
+            } else {
+              observer.next(response);
+            }
           },
           error: err => observer.error(err),
           complete: () => observer.complete(),
@@ -91,6 +110,42 @@ export class HttpLinkHandler extends ApolloLink {
 
   public request(op: Operation): LinkObservable<FetchResult> | null {
     return this.requester(op);
+  }
+
+  private isHttpEvent(response: HttpClientReturn): response is HttpEvent<any> {
+    return typeof response === 'object' && response !== null && 'type' in response;
+  }
+
+  private handleHttpEvent(event: HttpEvent<any>, observer: any) {
+    switch (event.type) {
+      case HttpEventType.Response:
+        if (event instanceof HttpResponse) {
+          observer.next(event.body);
+        }
+        break;
+      case HttpEventType.DownloadProgress:
+      case HttpEventType.UploadProgress:
+        observer.next({
+          data: null,
+          extensions: {
+            httpEvent: {
+              type: event.type,
+              loaded: 'loaded' in event ? event.loaded : undefined,
+              total: 'total' in event ? event.total : undefined,
+            },
+          },
+        });
+        break;
+      default:
+        observer.next({
+          data: null,
+          extensions: {
+            httpEvent: {
+              type: event.type,
+            },
+          },
+        });
+    }
   }
 }
 

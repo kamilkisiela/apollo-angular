@@ -24,6 +24,6 @@ export abstract class Subscription<T = any, V extends OperationVariables = Empty
         query: this.document,
       },
       extra,
-    );
+    ) as Observable<SubscriptionResult<T>>;
   }
 }
