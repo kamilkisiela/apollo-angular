@@ -4,7 +4,7 @@ import { addRootProvider } from '@schematics/angular/utility';
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 import { getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 import { getMainFilePath } from '@schematics/angular/utility/standalone/util';
-import { getTypeScriptSourceFile } from '.';
+import { getTypeScriptSourceFile } from './file.cjs';
 
 /**
  * Import and add module to the root module.

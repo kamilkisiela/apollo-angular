@@ -9,6 +9,6 @@
     "target": "ES2022",
     "module": "commonjs"
   },
-  "files": ["install/index.ts"],
+  "files": ["install/index.cts"],
   "include": []
 }

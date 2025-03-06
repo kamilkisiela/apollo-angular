@@ -1,5 +1,6 @@
 {
   "name": "apollo-angular/persisted-queries",
+  "type": "module",
   "description": "Use persisted queries with Apollo Link",
   "author": {
     "name": "Kamil Kisiela",

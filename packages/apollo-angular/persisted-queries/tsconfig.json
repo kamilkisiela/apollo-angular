@@ -3,9 +3,9 @@
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",
-    "outDir": "../build/persisted-queries",
+    "outDir": "../build/testing",
     "paths": {
-      "apollo-angular": ["../"]
+      "apollo-angular": ["../src"]
     }
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"]

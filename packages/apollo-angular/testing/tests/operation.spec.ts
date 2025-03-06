@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test } from 'vitest';
 import { ApolloLink, execute, FetchResult, gql } from '@apollo/client/core';
 import { ApolloTestingBackend } from '../src/backend';
 import { buildOperationForLink } from './utils';
@@ -38,132 +39,137 @@ describe('TestOperation', () => {
     );
   });
 
-  test('accepts a null body', done => {
-    const operation = buildOperationForLink(testQuery, {});
+  test('accepts a null body', () =>
+    new Promise<void>(done => {
+      const operation = buildOperationForLink(testQuery, {});
 
-    execute(link, operation).subscribe(result => {
-      expect(result).toBeNull();
-      done();
-    });
+      execute(link, operation).subscribe(result => {
+        expect(result).toBeNull();
+        done();
+      });
 
-    mock.expectOne(testQuery).flush(null!);
-  });
+      mock.expectOne(testQuery).flush(null!);
+    }));
 
-  test('should accepts data for flush operation', done => {
-    const operation = buildOperationForLink(testQuery, {});
+  test('should accepts data for flush operation', () =>
+    new Promise<void>(done => {
+      const operation = buildOperationForLink(testQuery, {});
 
-    execute(link, operation).subscribe(result => {
-      expect(result).toEqual({
-        data: {
-          heroes: [],
+      execute(link, operation).subscribe(result => {
+        expect(result).toEqual({
+          data: {
+            heroes: [],
+          },
+        });
+
+        done();
+      });
+
+      mock.expectOne(testQuery).flushData({
+        heroes: [],
+      });
+    }));
+
+  test('should leave the operation open for a subscription', () =>
+    new Promise<void>(done => {
+      const operation = buildOperationForLink(testSubscription, {});
+      const emittedResults: FetchResult[] = [];
+
+      execute(link, operation).subscribe({
+        next(result) {
+          emittedResults.push(result);
+        },
+        complete() {
+          expect(emittedResults).toEqual([
+            {
+              data: {
+                heroes: ['first Hero'],
+              },
+            },
+            {
+              data: {
+                heroes: ['second Hero'],
+              },
+            },
+          ]);
+          done();
         },
       });
 
-      done();
-    });
+      const testOperation = mock.expectOne(testSubscription);
 
-    mock.expectOne(testQuery).flushData({
-      heroes: [],
-    });
-  });
+      testOperation.flushData({
+        heroes: ['first Hero'],
+      });
 
-  test('should leave the operation open for a subscription', done => {
-    const operation = buildOperationForLink(testSubscription, {});
-    const emittedResults: FetchResult[] = [];
+      testOperation.flushData({
+        heroes: ['second Hero'],
+      });
 
-    execute(link, operation).subscribe({
-      next(result) {
-        emittedResults.push(result);
-      },
-      complete() {
-        expect(emittedResults).toEqual([
-          {
-            data: {
-              heroes: ['first Hero'],
+      testOperation.complete();
+    }));
+
+  test('should close the operation after a query', () =>
+    new Promise<void>(done => {
+      const operation = buildOperationForLink(testQuery, {});
+      const emittedResults: FetchResult[] = [];
+
+      execute(link, operation).subscribe({
+        next(result) {
+          emittedResults.push(result);
+        },
+        complete() {
+          expect(emittedResults).toEqual([
+            {
+              data: {
+                heroes: ['first Hero'],
+              },
             },
-          },
-          {
-            data: {
-              heroes: ['second Hero'],
+          ]);
+          done();
+        },
+      });
+
+      const testOperation = mock.expectOne(testQuery);
+
+      testOperation.flushData({
+        heroes: ['first Hero'],
+      });
+
+      testOperation.flushData({
+        heroes: ['second Hero'],
+      });
+    }));
+
+  test('should close the operation after a mutation', () =>
+    new Promise<void>(done => {
+      const operation = buildOperationForLink(testMutation, { hero: 'firstHero' });
+      const emittedResults: FetchResult[] = [];
+
+      execute(link, operation).subscribe({
+        next(result) {
+          emittedResults.push(result);
+        },
+        complete() {
+          expect(emittedResults).toEqual([
+            {
+              data: {
+                heroes: ['first Hero'],
+              },
             },
-          },
-        ]);
-        done();
-      },
-    });
+          ]);
+          done();
+        },
+      });
 
-    const testOperation = mock.expectOne(testSubscription);
+      const testOperation = mock.expectOne(testMutation);
 
-    testOperation.flushData({
-      heroes: ['first Hero'],
-    });
+      testOperation.flushData({
+        heroes: ['first Hero'],
+      });
 
-    testOperation.flushData({
-      heroes: ['second Hero'],
-    });
-
-    testOperation.complete();
-  });
-
-  test('should close the operation after a query', done => {
-    const operation = buildOperationForLink(testQuery, {});
-    const emittedResults: FetchResult[] = [];
-
-    execute(link, operation).subscribe({
-      next(result) {
-        emittedResults.push(result);
-      },
-      complete() {
-        expect(emittedResults).toEqual([
-          {
-            data: {
-              heroes: ['first Hero'],
-            },
-          },
-        ]);
-        done();
-      },
-    });
-
-    const testOperation = mock.expectOne(testQuery);
-
-    testOperation.flushData({
-      heroes: ['first Hero'],
-    });
-
-    testOperation.flushData({
-      heroes: ['second Hero'],
-    });
-  });
-
-  test('should close the operation after a mutation', done => {
-    const operation = buildOperationForLink(testMutation, { hero: 'firstHero' });
-    const emittedResults: FetchResult[] = [];
-
-    execute(link, operation).subscribe({
-      next(result) {
-        emittedResults.push(result);
-      },
-      complete() {
-        expect(emittedResults).toEqual([
-          {
-            data: {
-              heroes: ['first Hero'],
-            },
-          },
-        ]);
-        done();
-      },
-    });
-
-    const testOperation = mock.expectOne(testMutation);
-
-    testOperation.flushData({
-      heroes: ['first Hero'],
-    });
-
-    testOperation.flushData({
-      heroes: ['second Hero'],
-    });
-  });
+      testOperation.flushData({
+        heroes: ['second Hero'],
+      });
+    }));
 });

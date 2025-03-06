@@ -4,7 +4,7 @@
   "schematics": {
     "ng-add": {
       "description": "Adds Apollo Angular to the application.",
-      "factory": "./install/index#factory",
+      "factory": "./install/index.cjs#factory",
       "schema": "./install/schema.json"
     }
   }
