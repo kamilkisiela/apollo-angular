@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Apollo, gql, Query } from '../src';
@@ -23,24 +24,24 @@ export class HeroesNamedQuery extends Query {
 
 describe('Query', () => {
   let apolloMock: Apollo & {
-    watchQuery: jest.Mock;
-    query: jest.Mock;
+    watchQuery: Mock;
+    query: Mock;
     use: (name: string) => Apollo;
   };
-  let apolloCustomMock: Apollo & { watchQuery: jest.Mock; query: jest.Mock };
+  let apolloCustomMock: Apollo & { watchQuery: Mock; query: Mock };
   let heroesQuery: HeroesQuery;
   let heroesNamedQuery: HeroesNamedQuery;
 
   function createApollo() {
     apolloCustomMock = {
-      watchQuery: jest.fn(),
-      query: jest.fn(),
+      watchQuery: vi.fn(),
+      query: vi.fn(),
     } as any;
 
     apolloMock = {
-      watchQuery: jest.fn(),
-      query: jest.fn(),
-      use: jest.fn((name: string) => {
+      watchQuery: vi.fn(),
+      query: vi.fn(),
+      use: vi.fn((name: string) => {
         if (name === 'default') {
           return apolloMock;
         }

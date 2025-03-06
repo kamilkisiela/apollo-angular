@@ -82,7 +82,7 @@ jobs:
           key: ${{ github.sha }}
 
       - name: Test
-        run: yarn test --ci
+        run: yarn test
 
   prettier:
     runs-on: ubuntu-latest

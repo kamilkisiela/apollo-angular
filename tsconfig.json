@@ -10,7 +10,6 @@
     "declaration": true,
     "outDir": "build",
     "lib": ["es6", "dom", "esnext.asynciterable"],
-    "types": ["jest", "node"],
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,

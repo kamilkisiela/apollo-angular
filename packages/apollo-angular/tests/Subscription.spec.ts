@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Apollo, gql, Subscription } from '../src';
@@ -16,12 +17,12 @@ export class HeroesSubscription extends Subscription {
 }
 
 describe('Subscription', () => {
-  let apolloMock: Apollo & { subscribe: jest.Mock };
+  let apolloMock: Apollo & { subscribe: Mock };
   let heroes: HeroesSubscription;
 
   function createApollo() {
     apolloMock = {
-      subscribe: jest.fn(),
+      subscribe: vi.fn(),
       use(name: string) {
         if (name === 'default') {
           return apolloMock;

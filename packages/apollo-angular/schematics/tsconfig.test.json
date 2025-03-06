@@ -1,8 +1,8 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "include": ["tests/*.spec.cts"]
 }

@@ -1,5 +1,6 @@
 import { print, stripIgnoredCharacters } from 'graphql';
 import { mergeMap } from 'rxjs/operators';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -508,109 +509,111 @@ describe('HttpLink', () => {
     });
   });
 
-  test('should set response in context', (done: jest.DoneCallback) => {
-    const afterware = new ApolloLink((op, forward) => {
-      return forward(op).map(response => {
-        const context = op.getContext();
+  test('should set response in context', () =>
+    new Promise<void>(done => {
+      const afterware = new ApolloLink((op, forward) => {
+        return forward(op).map(response => {
+          const context = op.getContext();
 
-        expect(context.response).toBeDefined();
-        done();
+          expect(context.response).toBeDefined();
+          done();
 
-        return response;
-      });
-    });
-    const link = afterware.concat(
-      httpLink.create({
-        uri: 'graphql',
-      }),
-    );
-
-    const data = {
-      heroes: [{ name: 'Superman' }],
-    };
-
-    execute(link, {
-      query: gql`
-        query heroes {
-          heroes {
-            name
-          }
-        }
-      `,
-    }).subscribe(noop);
-
-    httpBackend.expectOne('graphql').flush({ data });
-  });
-
-  test('should work with mergeMap', done => {
-    const apollo = TestBed.inject(Apollo);
-
-    const op1 = {
-      query: gql`
-        mutation first {
-          foo
-        }
-      `,
-    };
-    const data1 = {
-      foo: true,
-    };
-    const op2 = {
-      query: gql`
-        mutation second {
-          bar
-        }
-      `,
-    };
-    const data2 = {
-      bar: true,
-    };
-
-    apollo.create({
-      link: httpLink.create({
-        uri: 'graphql',
-      }),
-      cache: new InMemoryCache(),
-    });
-
-    const m1 = apollo.mutate({
-      mutation: op1.query,
-    });
-
-    const m2 = apollo.mutate({
-      mutation: op2.query,
-    });
-
-    m1.pipe(
-      mergeMap(() => {
-        setTimeout(() => {
-          // Resolve second mutation
-          httpBackend
-            .expectOne(req => req.body.operationName === 'second')
-            .flush({
-              data: data2,
-            });
+          return response;
         });
-
-        return m2;
-      }),
-    ).subscribe({
-      next(result) {
-        expect(result.data).toMatchObject(data2);
-        done();
-      },
-      error(error) {
-        done.fail(error);
-      },
-    });
-
-    // Resolve first mutation
-    httpBackend
-      .expectOne(req => req.body.operationName === 'first')
-      .flush({
-        data: data1,
       });
-  });
+      const link = afterware.concat(
+        httpLink.create({
+          uri: 'graphql',
+        }),
+      );
+
+      const data = {
+        heroes: [{ name: 'Superman' }],
+      };
+
+      execute(link, {
+        query: gql`
+          query heroes {
+            heroes {
+              name
+            }
+          }
+        `,
+      }).subscribe(noop);
+
+      httpBackend.expectOne('graphql').flush({ data });
+    }));
+
+  test('should work with mergeMap', () =>
+    new Promise<void>(done => {
+      const apollo = TestBed.inject(Apollo);
+
+      const op1 = {
+        query: gql`
+          mutation first {
+            foo
+          }
+        `,
+      };
+      const data1 = {
+        foo: true,
+      };
+      const op2 = {
+        query: gql`
+          mutation second {
+            bar
+          }
+        `,
+      };
+      const data2 = {
+        bar: true,
+      };
+
+      apollo.create({
+        link: httpLink.create({
+          uri: 'graphql',
+        }),
+        cache: new InMemoryCache(),
+      });
+
+      const m1 = apollo.mutate({
+        mutation: op1.query,
+      });
+
+      const m2 = apollo.mutate({
+        mutation: op2.query,
+      });
+
+      m1.pipe(
+        mergeMap(() => {
+          setTimeout(() => {
+            // Resolve second mutation
+            httpBackend
+              .expectOne(req => req.body.operationName === 'second')
+              .flush({
+                data: data2,
+              });
+          });
+
+          return m2;
+        }),
+      ).subscribe({
+        next(result) {
+          expect(result.data).toMatchObject(data2);
+          done();
+        },
+        error(error) {
+          throw error;
+        },
+      });
+
+      // Resolve first mutation
+      httpBackend
+        .expectOne(req => req.body.operationName === 'first')
+        .flush({
+          data: data1,
+        });
+    }));
 
   test('should be able to useGETForQueries', () => {
     const link = httpLink.create({

@@ -2,9 +2,9 @@ import { TextDecoder, TextEncoder } from 'util';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as any;
 
-import { parseJSON } from '../utils';
+import { parseJSON } from '../utils/index.cjs';
 
-test('support // comments', () => {
+it('support // comments', () => {
   expect(
     parseJSON(
       'file.json',
@@ -17,14 +17,14 @@ test('support // comments', () => {
     }
   `,
     ),
-  ).toMatchObject({
+  ).toEqual({
     foo: {
       bar: true,
     },
   });
 });
 
-test('support /* */ comments', () => {
+it('support /* */ comments', () => {
   expect(
     parseJSON(
       'file.json',
@@ -37,7 +37,7 @@ test('support /* */ comments', () => {
     }
   `,
     ),
-  ).toMatchObject({
+  ).toEqual({
     foo: {
       bar: true,
     },

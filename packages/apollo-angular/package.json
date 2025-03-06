@@ -1,6 +1,7 @@
 {
   "name": "apollo-angular",
   "version": "10.0.3",
+  "type": "module",
   "description": "Use your GraphQL data in your Angular app, with the Apollo Client",
   "repository": {
     "type": "git",
@@ -31,7 +32,8 @@
     "build:schematics": "tsc -p schematics/tsconfig.json && node ./scripts/move-schematics.js",
     "prebuild": "rm -rf build/",
     "release": "yarn build && changeset publish",
-    "test": "NODE_OPTIONS=--experimental-modules jest --config jest.config.js"
+    "test": "vitest --run && yarn test:schematics",
+    "test:schematics": "tsc -p schematics/tsconfig.test.json && node scripts/move-schematics.js && jasmine --config=schematics/jasmine.json"
   },
   "peerDependencies": {
     "@angular/core": "^17.0.0 || ^18.0.0 || ^19.0.0",
@@ -43,7 +45,14 @@
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@types/node": "^20.12.12"
+    "@analogjs/vite-plugin-angular": "^1.14.0",
+    "@analogjs/vitest-angular": "^1.14.0",
+    "@types/jasmine": "^5.1.7",
+    "@types/node": "^20.12.12",
+    "jasmine": "^5.6.0",
+    "jsdom": "^26.0.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.7"
   },
   "publishConfig": {
     "directory": "build",

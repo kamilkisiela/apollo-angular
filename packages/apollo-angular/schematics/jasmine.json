@@ -1,0 +1,8 @@
+{
+  "spec_files": ["build/schematics/tests/*spec.cjs"],
+  "env": {
+    "stopSpecOnExpectationFailure": false,
+    "random": false,
+    "forbidDuplicateNames": true
+  }
+}

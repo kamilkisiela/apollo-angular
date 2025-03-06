@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Apollo, gql, Mutation } from '../src';
@@ -16,12 +17,12 @@ export class AddHeroMutation extends Mutation {
 }
 
 describe('Mutation', () => {
-  let apolloMock: Apollo & { mutate: jest.Mock };
+  let apolloMock: Apollo & { mutate: Mock };
   let addHero: AddHeroMutation;
 
   function createApollo() {
     apolloMock = {
-      mutate: jest.fn(),
+      mutate: vi.fn(),
       use(name: string) {
         if (name === 'default') {
           return apolloMock;

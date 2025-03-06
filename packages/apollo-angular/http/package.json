@@ -1,5 +1,6 @@
 {
   "name": "apollo-angular/http",
+  "type": "module",
   "description": "An Apollo Link to allow sending an http request per operation.",
   "author": {
     "name": "Kamil Kisiela",

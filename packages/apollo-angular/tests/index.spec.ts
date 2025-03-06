@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import * as api from '../src';
 import { Apollo } from '../src/apollo';
 import { provideApollo, provideNamedApollo } from '../src/apollo-module';

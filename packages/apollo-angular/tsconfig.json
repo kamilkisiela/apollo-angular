@@ -8,5 +8,12 @@
   "angularCompilerOptions": {
     "enableIvy": false
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"]
+  "include": [
+    "headers/**/*.ts",
+    "http/**/*.ts",
+    "persisted-queries/**/*.ts",
+    "src/**/*.ts",
+    "testing/**/*.ts",
+    "tests/**/*.ts"
+  ]
 }

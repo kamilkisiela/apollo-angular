@@ -7,5 +7,5 @@
 /scripts/
 
 # Needed because TextEncoder workaround must happen before importing @angular-devkit/schematics
-/packages/apollo-angular/schematics/tests/ng-add.spec.ts
-/packages/apollo-angular/schematics/tests/utils.spec.ts
+/packages/apollo-angular/schematics/tests/ng-add.spec.cts
+/packages/apollo-angular/schematics/tests/utils.spec.cts

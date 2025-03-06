@@ -16,9 +16,9 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addRootProvider } from '@schematics/angular/utility';
 import { getAppModulePath, isStandaloneApp } from '@schematics/angular/utility/ng-ast-utils';
 import { getMainFilePath } from '@schematics/angular/utility/standalone/util';
-import { getJsonFile } from '../utils';
-import { addModuleImportToRootModule } from '../utils/ast';
-import { Schema } from './schema';
+import { addModuleImportToRootModule } from '../utils/ast.cjs';
+import { getJsonFile } from '../utils/index.cjs';
+import { Schema } from './schema.cjs';
 
 export function factory(options: Schema): Rule {
   return chain([

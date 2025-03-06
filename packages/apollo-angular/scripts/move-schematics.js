@@ -1,6 +1,6 @@
-const cpx = require('cpx2');
+import { cpSync } from 'node:fs';
 
-cpx.copySync('schematics/install/files/**/*', 'build/schematics/install/files');
-cpx.copySync('schematics/README.md', 'build/schematics');
-cpx.copySync('schematics/collection.json', 'build/schematics');
-cpx.copySync('schematics/install/schema.json', 'build/schematics/install');
+cpSync('schematics/install/files', 'build/schematics/install/files', { recursive: true });
+cpSync('schematics/README.md', 'build/schematics/README.md');
+cpSync('schematics/collection.json', 'build/schematics/collection.json');
+cpSync('schematics/install/schema.json', 'build/schematics/install/schema.json');

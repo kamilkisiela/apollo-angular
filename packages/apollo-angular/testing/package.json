@@ -1,5 +1,6 @@
 {
   "name": "apollo-angular/testing",
+  "type": "module",
   "description": "A testing backend for Apollo",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com> (http://github.com/kamilkisiela/)",
   "license": "MIT",
