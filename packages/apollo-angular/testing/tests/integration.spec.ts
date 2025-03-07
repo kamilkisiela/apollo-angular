@@ -1,10 +1,10 @@
 import { print } from 'graphql';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { TestBed } from '@angular/core/testing';
-import { gql, InMemoryCache } from '@apollo/client/core';
+import { gql } from '@apollo/client/core';
 import { addTypenameToDocument } from '@apollo/client/utilities';
 import { Apollo } from '../../src';
-import { APOLLO_TESTING_CACHE, ApolloTestingController, ApolloTestingModule } from '../src';
+import { ApolloTestingController, ApolloTestingModule } from '../src';
 
 describe('Integration', () => {
   let apollo: Apollo;
@@ -171,17 +171,6 @@ describe('Integration', () => {
 
   test('it should be able to test with fragments', () =>
     new Promise<void>(done => {
-      TestBed.resetTestingModule();
-      TestBed.configureTestingModule({
-        imports: [ApolloTestingModule],
-        providers: [
-          {
-            provide: APOLLO_TESTING_CACHE,
-            useValue: new InMemoryCache({ addTypename: true }),
-          },
-        ],
-      });
-
       const apollo = TestBed.inject(Apollo);
       const backend = TestBed.inject(ApolloTestingController);
 
