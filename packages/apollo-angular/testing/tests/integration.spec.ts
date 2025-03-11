@@ -11,6 +11,7 @@ describe('Integration', () => {
   let backend: ApolloTestingController;
 
   beforeEach(() => {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [ApolloTestingModule],
     });
@@ -131,6 +132,7 @@ describe('Integration', () => {
           query heroes($first: Int!) {
             heroes(first: $first) {
               name
+              __typename
             }
           }
         `,
