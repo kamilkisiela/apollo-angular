@@ -1,5 +1,29 @@
 # Change log
 
+## 11.0.0
+
+### Major Changes
+
+- [#2360](https://github.com/kamilkisiela/apollo-angular/pull/2360)
+  [`20a418e`](https://github.com/kamilkisiela/apollo-angular/commit/20a418e06e09c6cb71ad3c8e4f55b5d6d294876d)
+  Thanks [@mark7-bell](https://github.com/mark7-bell)! - Drop support for Angular 17
+
+- [#2364](https://github.com/kamilkisiela/apollo-angular/pull/2364)
+  [`bdb302a`](https://github.com/kamilkisiela/apollo-angular/commit/bdb302abf042978a3c8f19c9a8d75153ec067ab8)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Drop support for GraphQL 15
+
+- [#2360](https://github.com/kamilkisiela/apollo-angular/pull/2360)
+  [`f311133`](https://github.com/kamilkisiela/apollo-angular/commit/f311133bc45241d002f48234af5fd62afcfbacdc)
+  Thanks [@mark7-bell](https://github.com/mark7-bell)! - Support Angular 20
+
+### Patch Changes
+
+- [#2364](https://github.com/kamilkisiela/apollo-angular/pull/2364)
+  [`bdb302a`](https://github.com/kamilkisiela/apollo-angular/commit/bdb302abf042978a3c8f19c9a8d75153ec067ab8)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - dependencies updates:
+  - Updated dependency [`graphql@^16.0.0` ↗︎](https://www.npmjs.com/package/graphql/v/16.0.0) (from
+    `^15.0.0 || ^16.0.0`, in `peerDependencies`)
+
 ## 10.0.3
 
 ### Patch Changes
