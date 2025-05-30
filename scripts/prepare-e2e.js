@@ -7,7 +7,12 @@ const cwd = process.cwd();
 const [, , name, version] = process.argv;
 
 function updateComponent() {
-  let filepath = path.join(cwd, `./${name}/src/app/app.component.ts`);
+  let filepath =
+    [
+      path.join(cwd, `./${name}/src/app/app.component.ts`),
+      path.join(cwd, `./${name}/src/app/app.ts`),
+    ].find(path => fs.existsSync(path));
+
   const code =
     `import { Apollo } from 'apollo-angular';\n` +
     `import { versionInfo } from 'graphql';\n` +
