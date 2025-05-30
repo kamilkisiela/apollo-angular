@@ -26,6 +26,9 @@ jobs:
           nodeVersion: 22 # change if needed
           packageManager: yarn # change if needed
 
+      - name: Pre-install wrangler
+        run: yarn add wrangler --ignore-workspace-root-check
+
       - uses: the-guild-org/shared-config/website-cf@main
         name: build and deploy website
         env:
