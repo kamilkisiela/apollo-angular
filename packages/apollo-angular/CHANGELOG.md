@@ -1,5 +1,27 @@
 # Change log
 
+## 11.0.1
+
+### Patch Changes
+
+- [#2366](https://github.com/Ecodev/apollo-angular/pull/2366)
+  [`bdff9d9`](https://github.com/Ecodev/apollo-angular/commit/bdff9d9c7f8b4c9758126326bed8e1459fb5a533)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - Drop ESM2022 in favor of FESM2022
+
+- [#2368](https://github.com/Ecodev/apollo-angular/pull/2368)
+  [`0f10355`](https://github.com/Ecodev/apollo-angular/commit/0f103552a78c9031efb4ec732454f6ce17f02f04)
+  Thanks [@PowerKiKi](https://github.com/PowerKiKi)! - New repository owners
+
+  [@kamilkisiela](https://github.com/kamilkisiela), the creator of this library, has found new
+  interests and is not able to contribute like in the past. He gracefully transferred ownership of
+  the repository to me. I have been maintaining this library since 2022, and will continue doing so
+  in the foreseeable future.
+
+  For the package consumers, pretty much nothing will change. The package name, the code, the
+  relation with [The Guild](https://github.com/the-guild-org), and the maintenance style will all
+  remain the same. The only difference is the new repository URL:
+  https://github.com/Ecodev/apollo-angular.
+
 ## 11.0.0
 
 ### Major Changes
@@ -395,10 +417,8 @@
 
 ## v2.3.0
 
-- `830da182` build: Allows zone.js v11
-  [#1629](https://github.com/Ecodev/apollo-angular/pull/1629)
-- `136663f0` docs: Update queries.md
-  [#1616](https://github.com/Ecodev/apollo-angular/pull/1616)
+- `830da182` build: Allows zone.js v11 [#1629](https://github.com/Ecodev/apollo-angular/pull/1629)
+- `136663f0` docs: Update queries.md [#1616](https://github.com/Ecodev/apollo-angular/pull/1616)
 
 ## v2.2.0
 
@@ -407,8 +427,7 @@
 - `d179a66` docs: Integrated documentation changes
   [#1590](https://github.com/Ecodev/apollo-angular/pull/1590)
 - `5d938a3` Update README.md [#1598](https://github.com/Ecodev/apollo-angular/pull/1598)
-- `60b8445` fix: test data modification
-  [#1596](https://github.com/Ecodev/apollo-angular/pull/1596)
+- `60b8445` fix: test data modification [#1596](https://github.com/Ecodev/apollo-angular/pull/1596)
 
 ## v2.1.0
 
@@ -471,13 +490,11 @@ Changes:
 
 - Introduces `APOLLO_NAMED_OPTIONS` token. Allows to create named Apollo clients using Dependency
   Injection ([PR #1365](https://github.com/Ecodev/apollo-angular/pull/1365))
-- Allow to test named Apollo client
-  ([PR #1365](https://github.com/Ecodev/apollo-angular/pull/1365))
+- Allow to test named Apollo client ([PR #1365](https://github.com/Ecodev/apollo-angular/pull/1365))
 
 ## v1.7.0
 
-- Fixed type definition for subscribe
-  [PR #1290](https://github.com/Ecodev/apollo-angular/pull/1290)
+- Fixed type definition for subscribe [PR #1290](https://github.com/Ecodev/apollo-angular/pull/1290)
 - Fix global scope naming for UMD build
   [PR #1305](https://github.com/Ecodev/apollo-angular/pull/1305)
 - Introduce useInitialLoading in watch
@@ -506,8 +523,7 @@ Changes:
 ## v1.3.0
 
 - Make `Subscription` generic [PR #778](https://github.com/Ecodev/apollo-angular/pull/778)
-- Schematics (`ng add apollo-angular`)
-  [PR #779](https://github.com/Ecodev/apollo-angular/pull/779),
+- Schematics (`ng add apollo-angular`) [PR #779](https://github.com/Ecodev/apollo-angular/pull/779),
   [PR #780](https://github.com/Ecodev/apollo-angular/pull/780)
 - Allow to use a custom ApolloCache while testing
   [PR #786](https://github.com/Ecodev/apollo-angular/pull/786)
@@ -538,8 +554,7 @@ Changes:
   ([PR #592](https://github.com/Ecodev/apollo-angular/pull/592))
 - Introduces `APOLLO_OPTIONS` token. Allows to create Apollo using Dependency Injection
   ([PR #607](https://github.com/Ecodev/apollo-angular/pull/607))
-- Adds `sideEffects: false` (webpack)
-  ([PR #580](https://github.com/Ecodev/apollo-angular/pull/580))
+- Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/Ecodev/apollo-angular/pull/580))
 - Supports Angular 6 and RxJS 6 ([PR #580](https://github.com/Ecodev/apollo-angular/pull/580))
 
 ## v1.0.1
@@ -596,8 +611,7 @@ Changes:
 
 ## v0.12.0
 
-- Support `apollo-client@1.0.0-rc.2`
-  ([PR #290](https://github.com/Ecodev/apollo-angular/pull/290))
+- Support `apollo-client@1.0.0-rc.2` ([PR #290](https://github.com/Ecodev/apollo-angular/pull/290))
 - Support `jsnext:main` ([PR #277](https://github.com/Ecodev/apollo-angular/pull/277))
 
 ## v0.11.0
@@ -777,8 +791,7 @@ Behaves the same as the `ObservableQuery` of `apollo-client`.
 
 ## v0.0.2
 
-- Added `@Apollo` decorator
-  ([99fed6e](https://github.com/Ecodev/apollo-angular/commit/99fed6e),
+- Added `@Apollo` decorator ([99fed6e](https://github.com/Ecodev/apollo-angular/commit/99fed6e),
   [9f0107e](https://github.com/Ecodev/apollo-angular/commit/9f0107e))
 
 ## v0.0.1
