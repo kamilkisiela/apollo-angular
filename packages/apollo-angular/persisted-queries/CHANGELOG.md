@@ -20,8 +20,7 @@
 
 ### v1.0.0-beta.2
 
-- Adds `sideEffects: false` (webpack)
-  ([PR #580](https://github.com/kamilkisiela/apollo-angular/pull/580))
+- Adds `sideEffects: false` (webpack) ([PR #580](https://github.com/Ecodev/apollo-angular/pull/580))
 
 ### v1.0.0-beta.0
 
